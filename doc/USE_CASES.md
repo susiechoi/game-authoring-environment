@@ -9,8 +9,8 @@
 7.  User wants another level but is too lazy to populate custom settings (auto-generate new levels).
 8.  User wants to customize how many enemy "waves" there are, and the composition of those waves. 
 9. User wants to return to main menu to start over without saving
-10. User wants to specify which kind of attack ability 
-11. a tower has (i.e. freezing, shooting, etc.)
+10. User wants to specify which kind of attack ability a tower has (i.e. freezing, shooting, etc.)
+11. User is in "Demo" mode and wants to return back to editing the game
 12. User wants to specify custom starting values for Resources (health/currency)
 13. User loads in a new background image
 14. User changes the tower's damage 
