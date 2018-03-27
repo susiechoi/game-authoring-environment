@@ -20,7 +20,8 @@ public interface FileIO {
     public Image getImageFile(String path);
     
     /**
-     * 
+     * Iterates through a directory and creates a File[] object that holds the files
+     * contained within.
      * 
      * @param directory: String name for a directory
      * @return File[]: an array of File objects contained in the directory
