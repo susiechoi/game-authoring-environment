@@ -1,14 +1,15 @@
-import java.util.List;
+package usecases; 
 
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
-class AuthoringView {
+class AuthoringViewExample {
 
 	private FileIO myFileIO; 
 
-	protected AuthoringView(FileIO fileIO) {
+	protected AuthoringViewExample(FileIO fileIO) {
 		myFileIO = fileIO; 
 	}
 
