@@ -1,3 +1,5 @@
+package authoring;
+
 class AuthoringController {
 
 	private FileIO myFileIO; 
