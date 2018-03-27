@@ -1,5 +1,3 @@
-package voogasalad_iftruereturntrue;
-
 class AuthoringController {
 
 	private FileIO myFileIO; 
