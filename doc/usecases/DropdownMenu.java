@@ -1,7 +1,8 @@
+package usecases;
+
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.SingleSelectionModel;
 
 public class DropdownMenu {
 
