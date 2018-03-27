@@ -25,9 +25,18 @@ public interface FileIO {
      * @param directory: String name for a directory
      * @return File[]: an array of File objects contained in the directory
      */
-    public File[] getFiles(String directory);
+    public File[] getFiles(String directory);  
     
+    /**
+     * Locates and returns the game file that contains data required to load a game
+     * 
+     * @return File: the file containing data required to load a game
+     */
+    public File loadState();
     
-    
+    /**
+     * Writes current program data to the file that contains data required to load a game
+     */
+    public void saveState(); 
 
 }
