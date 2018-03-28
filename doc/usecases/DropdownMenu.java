@@ -1,9 +1,9 @@
 /**
  * 
+ * @author Susie Choi 
  * Object that wraps a ComboBox and associates it with a purpose
  * Allows for the population of many ComboBoxes with different purposes 
  * Facilitates the process of connecting user selections with the fields those selections relate to 
- * @author Susie Choi 
  * 
  */
 
