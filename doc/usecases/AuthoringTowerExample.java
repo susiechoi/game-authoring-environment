@@ -10,13 +10,15 @@ import javafx.scene.image.Image;
 
 class AuthoringTowerExample {
 	
+	private String myName; 
+	
 	protected AuthoringTowerExample() {
 		
 	}
 	
-	protected AuthoringTowerExample(Image image, double size, double x, double y, 
+	protected AuthoringTowerExample(String name, Image image, double size, double x, double y, 
 							double health, double effect, double range, double speed, double cost, AuthoringTowerExample upgrade) {
-		
+		myName = name; 
 	}
 	
 	/**
@@ -28,4 +30,8 @@ class AuthoringTowerExample {
 		
 	}
 
+	protected boolean shouldBeAffected(String name) {
+		return myName.equals(name); 
+	}
+	
 }

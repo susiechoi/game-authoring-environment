@@ -6,17 +6,9 @@
  * 
  */
 
-package usecases;
+package authoring;
 
-import java.util.ArrayList;
-
-class AuthoringModelExample {
-
-	private ArrayList<AuthoringTowerExample> myTowers; 
-	
-	protected AuthoringModelExample() {
-		myTowers = new ArrayList<AuthoringTowerExample>(); 
-	}
+class AuthoringModel {
 	
 	/**
 	 * Causes change to appropriate field of appropriate component of Model 
@@ -24,12 +16,8 @@ class AuthoringModelExample {
 	 * @param fieldToChange - field of the object that is to be changed
 	 * @param changeToValue - value to which the fieldToChange should be changed
 	 */
-	protected void applyChange(String affectedObject, String fieldToChange, String changeToValue) {
-		for (AuthoringTowerExample tower : myTowers) {
-			if (tower.shouldBeAffected(affectedObject)) {
-				tower.changeTower(fieldToChange, changeToValue);
-			}
-		}
+	private void applyChange(String affectOject, String fieldToChange, String changeToValue) {
+		
 	}
 	
 }
