@@ -1,5 +1,6 @@
 package authoring;
 
+import java.io.File;
 import java.util.List;
 
 import screen.Screen;
@@ -22,7 +23,7 @@ public class AuthoringView implements Screen {
      * @return List<String>: a list of String objects representing file names
      */
     public List<String> getDisplayOptions(File[] files) {
-	
+	return null;
     }
 
 }

@@ -21,7 +21,7 @@ class AuthoringController implements Controller {
      * @return Scene: the authoring screen to be displayed to the user
      */
     public Scene loadAuthoringStage() {
-	
+	return null;	
     }  
     
     /**
@@ -31,7 +31,7 @@ class AuthoringController implements Controller {
      * @return File: the file containing information required to load the start of a game
      */
     public File loadStartState() {
-	
+	return null;	
     }
     
     /**
