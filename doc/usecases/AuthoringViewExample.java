@@ -10,16 +10,23 @@
 package usecases; 
 
 import java.util.List;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
 class AuthoringViewExample {
 
-	private FileIO myFileIO; 
+	private FileIOExample myFileIO; 
+	private BooleanProperty myUserActed; 
+	private String myChangedField;
+	private String myUserSelection; 
 
-	protected AuthoringViewExample(FileIO fileIO) {
+	protected AuthoringViewExample(FileIOExample fileIO) {
 		myFileIO = fileIO; 
+		myUserActed = new SimpleBooleanProperty(false); 
 	}
 
 	private void populateOptions(String dropdownPurpose, List<String> options) {
@@ -31,9 +38,22 @@ class AuthoringViewExample {
 		menuToPopulate.setItems(optionsAsObservableList);
 		menuToPopulate.selectionReceived().addListener((arg0, arg1, arg2)->{
 			String selection = menuToPopulate.getSelection((int) arg2);
-			// must pass menuToPopulate.getPurpose and selection to AuthoringController to influence Model (temp view) 
+			myUserActed.set(!myUserActed.get());
+			myChangedField = menuToPopulate.getPurpose();
+			myUserSelection = selection;
 		});
 	}
+	
+	protected BooleanProperty myUserActed() {
+		return myUserActed; 
+	}
 
+	protected String getChangedField() {
+		return myChangedField;
+	}
+	
+	protected String getUserSelection() {
+		return myUserSelection; 
+	}
 
 }
