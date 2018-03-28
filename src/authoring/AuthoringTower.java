@@ -1,23 +1,19 @@
 /**
  * 
- * Object to represent (model) towers
+ * Authoring environment view of Tower objects, which are part of the "Model" of the authoring environment
  * @author Susie Choi 
  * 
  */
 
 package authoring;
-
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-class TowerView {
+class AuthoringTower {
 	
-	protected TowerView(Image image, double size, double x, double y, 
-							double effect, double range, double speed, double cost, 
-							TowerView upgrade) {
+	protected AuthoringTower(Image image, double size, double x, double y, 
+							double health, double effect, double range, double speed, double cost, AuthoringTower upgrade) {
 		
 	}
-	
 	
 	/**
 	 * Changes an aspect of a tower

@@ -6,13 +6,12 @@
  */
 
 package usecases;
-
 import javafx.scene.image.Image;
 
-class AuthoringTower {
+class AuthoringTowerExample {
 	
-	protected AuthoringTower(Image image, double size, double x, double y, 
-							double health, double effect, double range, double speed, double cost, AuthoringTower upgrade) {
+	protected AuthoringTowerExample(Image image, double size, double x, double y, 
+							double health, double effect, double range, double speed, double cost, AuthoringTowerExample upgrade) {
 		
 	}
 	
