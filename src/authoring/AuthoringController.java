@@ -7,14 +7,19 @@ import javafx.scene.Scene;
 /**
  * 
  * @author Ben Hodgson 3/27/18
+ * @author susiechoi 
  *
- * Class that handles mediating program functionality specific to authoring. Adheres to the 
- * model-view-controller design patter. 
+ * Class that handles mediating program functionality specific to authoring. 
+ * Represents Controller in MVC of the authoring environment. 
  */
 
 class AuthoringController implements Controller {
 
-    /**
+	private void setUpListeners() {
+		
+	}
+	
+	/**
      * Loads a new Scene object in the program's Stage to display the authoring environment 
      * screen.
      * 

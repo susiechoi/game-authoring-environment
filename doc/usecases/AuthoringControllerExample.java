@@ -31,7 +31,7 @@ class AuthoringControllerExample {
 		myView.myUserActed().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
-				myModel.applyChange(myView.getChangedField(), myView.getUserSelection());
+				myModel.applyChange(myView.getMyAffectedObject(), myView.getChangedField(), myView.getUserSelection());
 			}
 		});
 	}
