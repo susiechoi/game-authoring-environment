@@ -1,3 +1,12 @@
+/**
+ * 
+ * View component of the Authoring environment's MVC 
+ * Takes care of the population of fields/areas in the Authoring environment, and receives user customization 
+ * 		(e.g. when users click options to customize Tower/Enemy/Path)
+ * @author Susie Choi 
+ * 
+ */
+
 package usecases; 
 
 import java.util.List;

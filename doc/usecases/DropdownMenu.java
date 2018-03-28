@@ -1,3 +1,12 @@
+/**
+ * 
+ * Object that wraps a ComboBox and associates it with a purpose
+ * Allows for the population of many ComboBoxes with different purposes 
+ * Facilitates the process of connecting user selections with the fields those selections relate to 
+ * @author Susie Choi 
+ * 
+ */
+
 package usecases;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
@@ -17,7 +26,7 @@ public class DropdownMenu {
 	public String getPurpose() {
 		return myPurpose;
 	}
-	
+
 	public void setItems(ObservableList<String> items) {
 		myComboBox.setItems(items);
 	}
