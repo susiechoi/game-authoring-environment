@@ -15,7 +15,7 @@ public interface Enemy {
      * 
      * @param projectile: the projectile that hit the enemy
      */
-    public void getHitBy(Projectile projectile);
+    public boolean getHitBy(Projectile projectile);
     
     /**
      * Handles updating the enemy position to follow the path
