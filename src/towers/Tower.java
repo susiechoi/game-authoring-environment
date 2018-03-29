@@ -8,5 +8,10 @@ package towers;
  */
 
 public interface Tower {
+    
+    /**
+     * handle upgrading the tower
+     */
+    public void upgrade();
 
 }
