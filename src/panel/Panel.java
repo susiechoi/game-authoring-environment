@@ -1,5 +1,7 @@
 package panel;
 
+import javafx.scene.Node;
+
 /**
  * 
  * @author Ben Hodgson 3/27/18

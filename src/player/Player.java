@@ -19,9 +19,23 @@ public interface Player {
     /**
      * Used to change the player's health by the specified amount. 
      * 
-     * @param health: the amount to change the player's health
+     * @param amount: the amount to change the player's health
      */
-    public void changeHealth(double health);
+    public void changeHealth(double amount);
+    
+    /**
+     * Sets the player's coins
+     * 
+     * @param coins: the coins to give the player
+     */
+    public void setCoins(int coins);
+    
+    /**
+     * Used to change the player's coins by the specified amount. 
+     * 
+     * @param amount: the amount to change the player's coins
+     */
+    public void changeCoins(double amount);
     
     /**
      * Adds points to the player's point total
