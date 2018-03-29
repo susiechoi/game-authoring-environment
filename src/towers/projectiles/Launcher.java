@@ -17,9 +17,18 @@ public class Launcher implements Trigger {
     public void setProjectile() {
 	
     }
+    
+    /**
+     * Updates the tower's projectile fire rate
+     * 
+     * @param rate: the new fire rate 
+     */
+    public void updateFireRate(double rate) {
+	
+    }
 
     @Override
-    public void fire() {
+    public void launch() {
 	// TODO Auto-generated method stub
 	
     }

@@ -12,5 +12,5 @@ public interface Trigger {
     /**
      * Method to trigger the tower to fire
      */
-    public void fire();
+    public void launch();
 }
