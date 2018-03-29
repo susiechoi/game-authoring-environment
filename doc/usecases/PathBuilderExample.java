@@ -7,11 +7,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 
 
-public class PathBuilderPanelExample implements Panel {
+public class PathBuilderExample implements Panel {
 
 	private Node examplePanel;
 
-	public PathBuilderPanelExample(){
+	public PathBuilderExample(){
 		examplePanel = initPanel();
 	}
 

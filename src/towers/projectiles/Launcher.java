@@ -9,7 +9,7 @@ import towers.trigger.Trigger;
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
  * fire projectiles
  */
-public class ProjectileManager implements Trigger {
+public class Launcher implements Trigger {
     
     /**
      * Sets the current projectile type managed by the ProjectileManager
