@@ -1,4 +1,4 @@
-package enemies;
+package physics;
 
 /**
  * 
@@ -16,4 +16,10 @@ public interface Movable {
      * @param newY: the new y position to move the enemy/object to
      */
     public void move(int newX, int newY);
+    
+    /**
+     * 
+     * @param angle
+     */
+    public void rotate(double angle);
 }

@@ -1,5 +1,7 @@
 package enemies;
 
+import physics.Intersect;
+import physics.Movable;
 import towers.projectiles.Projectile;
 
 /**
@@ -8,7 +10,7 @@ import towers.projectiles.Projectile;
  *
  * Interface for enemy functionality
  */
-public interface Enemy {
+public interface Enemy extends Movable, Intersect {
     
     /**
      * Handles when the Enemy is hit by a tower
