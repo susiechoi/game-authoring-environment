@@ -11,4 +11,13 @@ package panel;
 
 public interface Panel {
 
+    /**
+     * Returns the panel object to be loaded on the screen
+     */
+    public Node getPanel();
+    
+    /**
+     * Creates the panel
+     */
+    public void makePanel();
 }
