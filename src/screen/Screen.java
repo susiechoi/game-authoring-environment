@@ -1,5 +1,7 @@
 package screen;
 
+import javafx.scene.Node;
+
 /**
  * 
  * @author Ben Hodgson 3/27/18
@@ -10,6 +12,14 @@ package screen;
 
 public interface Screen {
     
+    /**
+     * Returns the Screen object to be loaded on the screen
+     */
+    public Node getScreen();
     
+    /**
+     * Creates the Screen
+     */
+    public void makeScreen();
 
 }

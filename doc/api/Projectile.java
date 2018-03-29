@@ -1,17 +1,22 @@
 package api;
 
+import physics.Physics;
+
 /**
- * Class is used when a projectile is launched from the Launcher (in Tower and possibly enemy)
- * @author ryanpond
+ * 
+ * @author Ben Hodgson 3/28/18
  *
  */
-public interface Projectile {
-
-	
-	/**
-	 * Called when this projectile hits an enemy. It will destroy itself, as well as
-	 * @return the amount of damage it does. 
-	 */
-	public Integer hitsEnemy();
+public interface Projectile extends Physics {
+    
+    /**
+     * Specifies the effect of the projectile
+     */
+    public void launch();
+    
+    /**
+     * Checks to see if the Projectile hits an Enemy
+     */
+    public void hitsEnemy();
 
 }

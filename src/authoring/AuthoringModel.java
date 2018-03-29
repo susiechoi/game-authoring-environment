@@ -8,16 +8,27 @@
 
 package authoring;
 
+import path.Path;
+
 class AuthoringModel {
+
+    /**
+     * Sets the path to be used in the level
+     * 
+     * @param path: The user generated path object to be used in the game
+     */
+    public void setPath(Path path) {
 	
-	/**
-	 * Causes change to appropriate field of appropriate component of Model 
-	 * @param affectedObject - the name of the affected object
-	 * @param fieldToChange - field of the object that is to be changed
-	 * @param changeToValue - value to which the fieldToChange should be changed
-	 */
-	private void applyChange(String affectOject, String fieldToChange, String changeToValue) {
-		
-	}
-	
+    }
+    
+    /**
+     * Causes change to appropriate field of appropriate component of Model 
+     * @param affectedObject - the name of the affected object
+     * @param fieldToChange - field of the object that is to be changed
+     * @param changeToValue - value to which the fieldToChange should be changed
+     */
+    private void applyChange(String affectOject, String fieldToChange, String changeToValue) {
+
+    }
+
 }

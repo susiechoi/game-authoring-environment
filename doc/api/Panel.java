@@ -1,5 +1,7 @@
 package api;
 
+import javafx.scene.Node;
+
 /**
  * 
  * @author Ben Hodgson 3/27/18
@@ -11,4 +13,13 @@ package api;
 
 public interface Panel {
 
+    /**
+     * Returns the panel object to be loaded on the screen
+     */
+    public Node getPanel();
+    
+    /**
+     * Creates the panel
+     */
+    public void makePanel();
 }

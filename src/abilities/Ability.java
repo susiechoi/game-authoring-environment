@@ -9,4 +9,8 @@ package abilities;
 
 public interface Ability {
 
+    /**
+     * Defines the abilities effect
+     */
+    public void effect();
 }

@@ -7,12 +7,12 @@ package api;
  * @author ryanpond
  *
  */
-public interface Launcher {
+public interface EngineLauncher {
 
 	/**
 	 * Will create a projectile and then return it, like a 'launch'
 	 * @return
 	 */
-	public Projectile launch();
+	public EngineProjectile launch();
 	
 }

@@ -10,7 +10,7 @@ package towers.trigger;
 public class EnemyTrigger implements Trigger {
 
     @Override
-    public void fire() {
+    public void launch() {
 	// TODO Auto-generated method stub
 	
     }

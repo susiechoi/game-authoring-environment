@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.scene.Node;
 import screen.Screen;
 
 /**
@@ -61,6 +62,18 @@ public class AuthoringView implements Screen {
 	 */
 	protected String getUserSelection() {
 		return null; 
+	}
+
+	@Override
+	public Node getScreen() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	public void makeScreen() {
+	    // TODO Auto-generated method stub
+	    
 	}
 
 }
