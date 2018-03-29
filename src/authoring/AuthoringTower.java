@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 class AuthoringTower {
 	
 	protected AuthoringTower(String name, Image image, double size, double x, double y, 
-							double health, double effect, double range, double speed, double cost, AuthoringTower upgrade) {
+							double health, double effect, double range, double speed, double cost) {
 		
 	}
 	
