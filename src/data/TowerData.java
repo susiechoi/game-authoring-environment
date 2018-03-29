@@ -2,6 +2,8 @@ package data;
 
 import java.util.Collection;
 
+import towers.Tower;
+
 /**
  * 
  * @author Ben Hodgson 3/29/18
@@ -10,6 +12,7 @@ import java.util.Collection;
  */
 public class TowerData implements Data {
 
+	
     @Override
     public void data(Collection<?> params) {
 	// TODO Auto-generated method stub
@@ -19,7 +22,7 @@ public class TowerData implements Data {
     @Override
     public void create(String name) {
 	// TODO Auto-generated method stub
-	
+    	
     }
 
 }
