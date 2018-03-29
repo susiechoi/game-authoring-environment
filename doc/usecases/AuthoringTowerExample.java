@@ -17,7 +17,7 @@ class AuthoringTowerExample {
 	}
 	
 	protected AuthoringTowerExample(String name, Image image, double size, double x, double y, 
-							double health, double effect, double range, double speed, double cost, AuthoringTowerExample upgrade) {
+							double health, double effect, double range, double speed, double cost) {
 		myName = name; 
 	}
 	
