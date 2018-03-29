@@ -1,4 +1,6 @@
-package enemies;
+package enemies.wave;
+
+import enemies.Enemy;
 
 /**
  * 
