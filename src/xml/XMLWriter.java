@@ -36,10 +36,10 @@ public interface XMLWriter {
 	 * 
 	 * @param doc: Document to be added
 	 * @param elemName: Name of the node/element
-	 * @param data: A string containing the data to be added
+	 * @param data: The data to be added
 	 * @return A node to be added to the xml file
 	 */
-	public void addData(Document doc, String elemName, String data);
+	public void addData(Document doc, String elemName, Object data);
 	
 	/**
 	 * Creates a new node, adds it to file by appending it to a parent node, then returns that element to be used by other 
