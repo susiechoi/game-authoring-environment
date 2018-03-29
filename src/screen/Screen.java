@@ -18,7 +18,7 @@ public interface Screen {
     public Node getScreen();
     
     /**
-     * Creates the Screen
+     * Creates the Screen 
      */
     public void makeScreen();
 
