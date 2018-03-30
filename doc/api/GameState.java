@@ -40,5 +40,11 @@ public interface GameState {
      * @param hash
      */
     public void upgradeTower();
+    
+    /**
+     * Allows a new tower to be selected and placed by the user
+     * @param tower 
+     */
+    public void unlockTower(Tower tower);
 
 }
