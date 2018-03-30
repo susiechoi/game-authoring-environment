@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<level>
+	<type>Game</type>
+	<author>Brendan Cheng</author>
+	<levelnum>1</levelnum>
+	<health>150</health>
+	<resources>500</resources>
+	<towers>
+		<tower></tower>
+	</towers>
+	<enemies>
+		<enemy></enemy>
+	</enemies>
+	<path>
+		
+	</path>
+</level>
