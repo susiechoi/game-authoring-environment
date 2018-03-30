@@ -26,7 +26,6 @@ public class AuthoringView implements Screen {
 	 * 
 	 */
 	private void populateOptions(String dropdownPurpose, List<String> options) {
-
 	}
 
 	/**
@@ -66,14 +65,11 @@ public class AuthoringView implements Screen {
 
 	@Override
 	public Node getScreen() {
-	    // TODO Auto-generated method stub
 	    return null;
 	}
 
 	@Override
-	public void makeScreen() {
-	    // TODO Auto-generated method stub
-	    
+	public void makeScreen() {	    
 	}
 
 }
