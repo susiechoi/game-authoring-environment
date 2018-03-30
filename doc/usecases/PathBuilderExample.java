@@ -31,4 +31,10 @@ public class PathBuilderExample implements Panel {
 	public Node getPanel() {
 		return examplePanel;
 	}
+
+	@Override
+	public void makePanel() {
+		// TODO Auto-generated method stub
+		
+	}
 }

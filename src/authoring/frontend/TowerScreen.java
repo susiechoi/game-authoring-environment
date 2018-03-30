@@ -6,14 +6,14 @@ class TowerScreen implements Screen {
 
 	@Override
 	public Node getScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		return null; 
 	}
 
 	@Override
 	public void makeScreen() {
-		// TODO Auto-generated method stub
-		
+	}
+	
+	public static void main(String[] args) {
 	}
 
 }

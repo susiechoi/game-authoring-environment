@@ -1,18 +1,28 @@
 package authoring.frontend;
 
-import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 class EnemyScreen implements Screen {
 
 	@Override
-	public Node getScreen() {
-		// TODO Auto-generated method stub
-		return null;
+	public Parent getScreen() {
+		VBox v = new VBox();
+		v.getChildren().add(new Text("well hello there!"));
+		return v; 
 	}
 
 	@Override
 	public void makeScreen() {
-		// TODO Auto-generated method stub
+		System.out.println("hi");
+		Stage s = new Stage(); 
+		EnemyScreen e = new EnemyScreen();
+		Scene sc = new Scene(e.getScreen(), 50, 50);
+		s.setScene(sc);
+		s.show();
 	}
 
 }
