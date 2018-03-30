@@ -27,7 +27,7 @@ Before we delve into the code, there are a few definitions that we use when disc
 
 The high-level design is displayed in the following UML diagram:
 
-**![](https://lh5.googleusercontent.com/nVMH2HVWd4Jv0gvSegsrKvVEbah5Ka2Spl8vO3sHg2nxp2KNqrYplzWEQOlQxIppvjs6Imbct4xodhAFfuJh7WbzXqhKvngFmqx8gnwiIc2Qysu0oH5sptWN02EF38dFTIRITkQt)**
+**![](https://lh6.googleusercontent.com/0AZFTeUKyaGgTb_YQiDVxvHRLE0OXikNMv1pslkOrPiSBBju4OZC5z9woHM1MQFr29YA4Hf_mX1G-Zvtx2Pohb5wTHG-HUMHUVrInDuYhsLCHXIreOypI3lNDWwHJcbjDdE_TLnJ)**
 
 #### Backend Engine
 
