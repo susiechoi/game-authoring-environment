@@ -1,11 +1,13 @@
 package towers.projectiles;
 
+import physics.Physics;
+
 /**
  * 
  * @author Ben Hodgson 3/28/18
  *
  */
-public interface Projectile {
+public interface Projectile extends Physics {
     
     /**
      * Specifies the effect of the projectile

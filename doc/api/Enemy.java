@@ -1,27 +1,32 @@
 package api;
 
-/**
- * This class is the interface for the enemy object. it can getHitBy( Projectile), and attack Tower. 
- * However, if there is an inter
- * @author ryanpond
- *
- */
-public interface Enemy {
+import physics.Intersect;
+import physics.Movable;
+import towers.projectiles.Projectile;
 
-	/**
-	 * Called when this enemy is hit, will cause damage based on how much damage the projectile can do
-	 */
-	public void getHitBy(Projectile myProjectile);
-	
-	/**
-	 * Method called when the enemy comes up to a tower. 
-	 * @return the amount of damage that this enemy does
-	 */
-	public Integer attackTower();
-	
-	/**
-	 * Dependent on animation, but it will follow the path and update the enemy location
-	 */
-	public void followPath();
+/**
+ * 
+ * @author Ben Hodgson 3/28/18
+ *
+ * Interface for enemy functionality
+ */
+public interface Enemy extends Movable, Intersect {
+    
+    /**
+     * Handles when the Enemy is hit by a tower
+     * 
+     * @param projectile: the projectile that hit the enemy
+     */
+    public void getHitBy(Projectile projectile);
+    
+    /**
+     * Handles updating the enemy position to follow the path
+     */
+    public void followPath();
+    
+    /**
+     * Updates the properties of the enemy. For example, health, position, etc.
+     */
+    public void update();
 
 }

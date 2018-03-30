@@ -1,51 +1,38 @@
 package api;
 
 /**
- * This interface has all of the methods that will be called on a tower object, through
- * an event triggered either by the user or by the GameLoop
- * @author ryanpond
+ * 
+ * @author Ben Hodgson 3/28/18
  *
+ * Interface for Tower objects in the game. 
  */
+
 public interface Tower {
+    
+    /**
+     * Sets the tower's health
+     * 
+     * @param health: the health to give the tower
+     */
+    public void setHealth(double health);
+    
+    /**
+     * Changes the tower's health
+     * 
+     * @param amount: the amount to change the tower's health
+     */
+    public void changeHealth(double health);
+    
+    /**
+     * Sets the tower's cost
+     * 
+     * @param cost: the cost for the tower     
+     */
+    public void setCost(double cost);
+    
+    /**
+     * handle upgrading the tower
+     */
+    public void upgrade();
 
-	/**
-	 * Called when the tower is hit by an Enemy (could be projectile or enemy)
-	 * @param attacker -- This 
-	 */
-	public void getHitBy(Enemy attacker);
-
-	/**
-	 * Updates the X and Y coordinates of the tower
-	 * @param newX
-	 * @param newY
-	 */
-	public void move(int newX, int newY);
-	
-	/**
-	 * Called when the tower is sold. Will return how much this costs.
-	 * @return
-	 */
-	public Integer sell(); // all methods dealing with money return cost
-	
-	/**
-	 * Every attribute of the tower is upgraded. Upgrade object is used
-	 */
-	public void upgradeGeneral();
-
-	/**
-	 * Health attribute is upgraded by a specific upgrade amount
-	 */
-	public void upgradeHealth();
-	
-	/**
-	 * Rate of fire is upgraded by a certain amount
-	 */
-	public void upgradeRateOfFire();
-	
-	/**
-	 * Damage is upgraded by a specific amount, specified in myUpgrade object (created by xml)
-	 */
-	public void upgradeDamage();
-
-	
 }
