@@ -104,13 +104,18 @@ The Movable and Intersect interfaces are implemented by all moving objects, and 
 
 The Frontend Engine will hold all pieces responsible for displaying the game. We will separate the engine into four main parts, the ScreenManager, the Screen class, the Panel class, and the Pop-Up class. The different screen implementations are described below in detail in the User Interface section. The Panel class will be extended by subclasses named SpecificPanel, ControlsPanel, GamePanel, TowerPanel, and ScorePanel. The SpecificPanel will be extended further into the UpgradesPanel, BuyPanel, and the TowerInfoPanel. The different panel classes will describe how they will be represented in the different screens as the games play. The Pop-up class will be extended into the DifficultyPopup, LevelPopup, HelpPopup, EndgamePopup, and the NextLevelPopup classes. Their uses are described below as well. The final piece of the Frontend Engine is the ScreenManager. This class will be the highest level class in the manager, holding all of the different screens and panes, and handling the switches between them. The data from the backend about the towers and the enemies will be routed through the ScreenManager as well.
 
+### File I/O
+
+The user never directly interacts with File I/O. File I/O methods are only called when reading or writing an XML file, either as an author or as a game player. Two interfaces, XMLReader and XMLWriter, are implemented in different ways depending on which portion of the program calls it. When the author wishes to save a game that he or she has authored, they will click a button that calls the write() method of the authoring implementation of XMLWriter, which takes in the AuthorModel that has the data for the game that has been authored and writes XML files for each level. These XML files specify tower types available, enemies that will appear, path that enemies should follow, and player info such as starting health and resources.
+
+When a player wishes to save their current Play, the write() method of the player implementation of XMLWriter is called. This takes in a GameState object and saves information including current health, current number of resources, tower locations and upgrades, locations and health of enemies, and locations and velocity of projectiles. When a player wishes to load a saved game, they call the read() method of the implemented XMLReader class which uses XStream to access and generate each object and places it accordingly.
+
+
 ### Game Authoring Environment
 ![](https://i.imgur.com/CxVuxai.png)
 ![](https://i.imgur.com/7YMjY0f.png)
 
 As depicted in the image above, the Game Authoring Environment will be controlled by the AuthoringController, which will mediate between the AuthoringModel and AuthoringView. The AuthoringView will be responsible for controlling classes related to screens/panels/visual aspects of the game authoring environment, while the AuthoringModel class will be responsibile for delegating to FileIO for reading/writing files and for housing/changing Authoring objects such as AuthoringTower, AuthoringEnemy, or AuthoringPathBlock. These objects will hold authoring-specific information and will be compatible with the Gameplay versions of the same objects.
-
-
 
 ## User Interface
 ### Engine
@@ -121,8 +126,6 @@ A picture of what the game screen will look like is attached below. The user can
  If the user selects a game mode that is improperly formatted, they will be prompted with a message that tells them to fix the data file or select a new valid file. If the user attempts to place a tower they do not have enough money for, or tries to upgrade a tower they do not have enough money for, they will be told they do not have enough money to do that. If the user loses they will be asked if they want to restart or quit.
 **![](https://lh3.googleusercontent.com/jHosc5FC3rSKXt1uEPz7811rltC2MOYEHmfOk-XmT4qUjYZgy9yXVrLpRSV5kp0dZE9CO-S2kNqfSS2iXGvW3iPfgKApmlxjgz5WSh2Vgr12Gc_CWOhsgLrW-U2lLU8WcVt2s1Ys)**
 **![](https://lh4.googleusercontent.com/YnZW1DetH4Oer5NLAxsU7TmwlnlrRm31SQyQG1NBFXO1EkB7Xk24O9WqY9kACHHt5vdMDPQ7cfqKSX9HvY0Xy6MEFUU2mLLDjDFAysQvPAiiibsOCo5lMZTl7lUQCo0GbIcOg7xV)**
-
-
 
 ### Game Authoring Environment![](https://i.imgur.com/Yn5dKov.jpg)
 As depicted in the image above, the User Interface for the authoring environment will be based around a central menu, from which users will be able to select which facet of the game they would like to customize. Once users are satisfied with their choices for a certain element, they can click "Apply" to temporarily apply the changes and potentially demo them. Once the user clicks "Save", the game will be permanently saved and available for play. The default game will be functional, and no changes will be allowed that would "break" the game (by enabling/disabling the Apply button), so no errors should need to be reported to the user.
