@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 
 public interface Screen {
     
+	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+	
     /**
      * Creates the Screen
      */
