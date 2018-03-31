@@ -12,7 +12,7 @@ class SpecifyEnemyScreen extends SpecifyObjectScreen {
 	private String DEFAULT_DESCRIPTOR = "Enemy";
 
 	@Override
-	public void makeScreenWithoutStyling() {
+	public Scene makeScreenWithoutStyling() {
 		VBox v = new VBox();
 		ArrayList<String> testingList = new ArrayList<String>();
 		//		Text intro = new Text("Customize "+DEFAULT_DESCRIPTOR); 
@@ -32,9 +32,9 @@ class SpecifyEnemyScreen extends SpecifyObjectScreen {
 		h.getChildren().add(makeTextDropdown(testingList)); 
 		h.getChildren().add(makeGoButton());
 		v.getChildren().add(h);
-
-		myScreen = new Scene(v, 1500, 900);
-		applyDefaultStyling(); 
+		
+		return new Scene(v, 1500, 900); 
+		
 	}
 
 }

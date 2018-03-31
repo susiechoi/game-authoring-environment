@@ -21,14 +21,15 @@ public abstract class Screen {
 	public Screen() {
 		myUIFactory = new PartsFactory();
 	}
+		
 	/**
-	 * Creates the Screen
+	 * Creates & returns the Screen
 	 */
-	public abstract void makeScreen();
+	public abstract Scene makeScreen();
 
 	public void applyDefaultStyling() {
 		if (myScreen == null) {
-			makeScreen(); 
+			myScreen = makeScreen(); 
 		}
 		myScreen.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	}
@@ -39,7 +40,7 @@ public abstract class Screen {
 
 	public void applyStyles(List<String> stylesheets) {
 		if (myScreen == null) {
-			makeScreen();
+			myScreen = makeScreen();
 		}
 		for (String s : stylesheets) {
 			myScreen.getStylesheets().add(s);
@@ -51,7 +52,7 @@ public abstract class Screen {
 	 */
 	public Scene getScreen() {
 		if (myScreen == null) {
-			makeScreen(); 
+			myScreen = makeScreen(); 
 		}
 		return myScreen; 
 	}
@@ -59,6 +60,7 @@ public abstract class Screen {
 	protected void setScreen(Scene newScreen) {
 		myScreen = newScreen;
 	}
+	
 	protected PartsFactory getUIFactory() {
 		return myUIFactory;
 	}

@@ -1,6 +1,8 @@
 package authoring.frontend;
 
 import java.util.List;
+
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
@@ -12,13 +14,14 @@ abstract class SpecifyObjectScreen extends Screen {
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
 	
 	@Override
-	public void makeScreen() {
-		makeScreenWithoutStyling();
+	public Scene makeScreen() {
+		myScreen = makeScreenWithoutStyling();
 		applyDefaultStyling(); 
 		applyStyle(DEFAULT_OWN_STYLESHEET);
+		return myScreen; 
 	}
 	
-	public abstract void makeScreenWithoutStyling();
+	public abstract Scene makeScreenWithoutStyling();
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
 		return getUIFactory().makeTextDropdown(textOptions, 250, 50); 

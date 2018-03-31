@@ -1,9 +1,12 @@
 package authoring.frontend;
 
+import javafx.scene.Scene;
+
 public class SpecifyTowerScreen extends SpecifyObjectScreen {
 
 	@Override
-	public void makeScreenWithoutStyling() {
+	public Scene makeScreenWithoutStyling() {
+		return null; 
 	}
 
 }
