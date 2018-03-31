@@ -1,5 +1,44 @@
 VBox {
+	-fx-background-color: #CDCDCD;
 	-fx-padding: 15;
     -fx-spacing: 20;
     -fx-alignment: center; 
+}
+
+HBox {
+	-fx-background-color: #CDCDCD;
+    -fx-spacing: 20;
+    -fx-alignment: center; 
+}
+
+#intro {
+	-fx-font-family: "Arial";
+    -fx-font-size: 40; 
+}
+
+#or {
+	-fx-font-family: "Arial";
+    -fx-font-size: 18; 
+}
+
+.button, .combo-box {
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(#364156, #011638);
+}
+
+.combo-box .cell {
+    -fx-text-fill: white; 
+    -fx-background-color: linear-gradient(#364156, #011638);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#011638, #364156);
+}
+
+#goButton {
+	-fx-background-color: linear-gradient(#267326, #214E34);
+}
+
+#goButton:hover {
+	-fx-background-color: linear-gradient(#214E34, #267326);
 }

@@ -1,4 +1,6 @@
 package authoring.frontend;
+import java.util.List;
+
 import javafx.scene.Scene;
 
 /**
@@ -10,9 +12,9 @@ import javafx.scene.Scene;
  */
 
 public abstract class Screen {
+
 	private Scene myScreen;
 	private PartsFactory myUIFactory;
-    
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	
 	public Screen() {
@@ -22,6 +24,26 @@ public abstract class Screen {
      * Creates the Screen
      */
     public abstract void makeScreen();
+    
+    public void applyDefaultStyling() {
+    		if (myScreen == null) {
+    			makeScreen(); 
+    		}
+    		myScreen.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+    }
+    
+    public void applyStyle(String stylesheet) {
+    		myScreen.getStylesheets().add(stylesheet);
+    }
+    
+    public void applyStyles(List<String> stylesheets) {
+    		if (myScreen == null) {
+    			makeScreen();
+    		}
+    		for (String s : stylesheets) {
+    			myScreen.getStylesheets().add(s);
+    		}
+    }
     
     /**
      * Returns the Scene object to be loaded on the screen
@@ -39,3 +61,5 @@ public abstract class Screen {
     		return myUIFactory;
     }
 }
+    
+

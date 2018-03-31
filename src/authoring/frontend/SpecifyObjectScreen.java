@@ -1,7 +1,5 @@
 package authoring.frontend;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,18 +10,18 @@ import authoring.frontend.PartsFactory;
 abstract class SpecifyObjectScreen extends Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
+	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
-	protected Scene myScreen;
+	protected Scene myScreen; 
 	
 	@Override
 	public void makeScreen() {
-		ArrayList<String> stylesheets = new ArrayList<String>();
-		stylesheets.add(DEFAULT_SHARED_STYLESHEET);
-		stylesheets.add(DEFAULT_OWN_STYLESHEET);
-		makeScreenWithStyles(stylesheets);
+		makeScreenWithoutStyling();
+		applyDefaultStyling(); 
+		applyStyle(DEFAULT_OWN_STYLESHEET);
 	}
 	
-	protected abstract void makeScreenWithStyles(List<String> stylesheets);
+	public abstract void makeScreenWithoutStyling();
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
 		return getUIFactory().makeTextDropdown(textOptions, 200, 20); 
@@ -34,7 +32,13 @@ abstract class SpecifyObjectScreen extends Screen {
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return getUIFactory().makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 80); 
+		return getUIFactory().makeButton(DEFAULT_NEWOBJECT_TEXT+object, 300, 80); 
+	}
+	
+	protected Button makeGoButton() {
+		Button goButton = getUIFactory().makeButton(DEFAULT_GO_TEXT, 100, 50);
+		goButton.setId("goButton");
+		return goButton; 
 	}
 
 }

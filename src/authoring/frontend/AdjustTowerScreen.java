@@ -13,5 +13,4 @@ class AdjustTowerScreen extends Screen {
 		Scene sc = new Scene(v, 1500, 900);
 		setScreen(sc); 
 	}
-
 }
