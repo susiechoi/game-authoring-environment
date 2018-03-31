@@ -1,5 +1,6 @@
 package engine;
 
+import data.GameData;
 import towers.Tower;
 
 /**
@@ -9,7 +10,7 @@ import towers.Tower;
  * @author Katherine Van Dyk 3/28/18
  *
  */
-public interface GameState {
+public interface GameState extends GameData {
 
     /**
      * Checks for intersections within all moving Towers, Enemies, and Projectiles, and spawns
