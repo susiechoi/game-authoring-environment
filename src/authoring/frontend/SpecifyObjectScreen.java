@@ -26,15 +26,15 @@ abstract class SpecifyObjectScreen extends Screen {
 	protected abstract void makeScreenWithStyles(List<String> stylesheets);
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
-		return PartsFactory.makeTextDropdown(textOptions, 200, 20); 
+		return getUIFactory().makeTextDropdown(textOptions, 200, 20); 
 	}
 	
 	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages) {
-		return PartsFactory.makeImageDropdown(dropdownImages, 200, 20); 
+		return getUIFactory().makeImageDropdown(dropdownImages, 200, 20); 
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 80); 
+		return getUIFactory().makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 80); 
 	}
 
 }
