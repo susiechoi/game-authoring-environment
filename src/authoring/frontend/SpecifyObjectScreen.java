@@ -1,7 +1,5 @@
 package authoring.frontend;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,21 +7,22 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import authoring.frontend.PartsFactory; 
 
-abstract class SpecifyObjectScreen implements Screen {
+abstract class SpecifyObjectScreen extends Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
+	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
 	protected Scene myScreen;
+	protected PartsFactory myPartsFactory = new PartsFactory(); 
 	
 	@Override
 	public void makeScreen() {
-		ArrayList<String> stylesheets = new ArrayList<String>();
-		stylesheets.add(DEFAULT_SHARED_STYLESHEET);
-		stylesheets.add(DEFAULT_OWN_STYLESHEET);
-		makeScreenWithStyles(stylesheets);
+		makeScreenWithoutStyling();
+		applyDefaultStyling(); 
+		applyStyle(DEFAULT_OWN_STYLESHEET);
 	}
 	
-	protected abstract void makeScreenWithStyles(List<String> stylesheets);
+	public abstract void makeScreenWithoutStyling();
 	
 	@Override
 	public Scene getScreen() {
@@ -34,15 +33,21 @@ abstract class SpecifyObjectScreen implements Screen {
 	}
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
-		return PartsFactory.makeTextDropdown(textOptions, 200, 20); 
+		return myPartsFactory.makeTextDropdown(textOptions, 250, 50); 
 	}
 	
 	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages) {
-		return PartsFactory.makeImageDropdown(dropdownImages, 200, 20); 
+		return myPartsFactory.makeImageDropdown(dropdownImages, 250, 50); 
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 80); 
+		return myPartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 300, 80); 
+	}
+	
+	protected Button makeGoButton() {
+		Button goButton = myPartsFactory.makeButton(DEFAULT_GO_TEXT, 100, 50);
+		goButton.setId("goButton");
+		return goButton; 
 	}
 
 }

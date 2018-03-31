@@ -15,14 +15,14 @@ import javafx.scene.text.Text;
 
 public class PartsFactory {
 
-	public static Button makeButton(String buttonText, double length, double height) {
+	public Button makeButton(String buttonText, double length, double height) {
 		Button newButton = new Button(buttonText);
 		newButton.setPrefWidth(length);
 		newButton.setPrefHeight(height);
 		return newButton; 
 	}
 	
-	public static ComboBox<String> makeTextDropdown(List<String> dropdownOptions, double length, double height) {
+	public ComboBox<String> makeTextDropdown(List<String> dropdownOptions, double length, double height) {
 		 ObservableList<String> options = FXCollections.observableArrayList(dropdownOptions);
 		 ComboBox<String> newDropdown = new ComboBox<String>(options);
 		 newDropdown.setPrefWidth(length);
@@ -31,7 +31,7 @@ public class PartsFactory {
 		 return newDropdown; 
 	}
 	
-	public static ComboBox<Image> makeImageDropdown(List<Image> dropdownImages, double length, double height) {
+	public ComboBox<Image> makeImageDropdown(List<Image> dropdownImages, double length, double height) {
 		 ObservableList<Image> imageOptions = FXCollections.observableArrayList(dropdownImages);
 		 ComboBox<Image> newDropdown = new ComboBox<Image>(imageOptions);
 		 newDropdown.setPrefWidth(length);
@@ -40,7 +40,7 @@ public class PartsFactory {
 		 return newDropdown; 
 	}
 	
-	public static ScrollPane makeTextScrollPane(List<String> options, double length, double height) {
+	public ScrollPane makeTextScrollPane(List<String> options, double length, double height) {
 		ScrollPane newPane = new ScrollPane();
 		String allOptions = "";
 		for (String s : options) {
@@ -52,7 +52,7 @@ public class PartsFactory {
 		return newPane; 
 	}
 	
-	public static ScrollPane makeImageScrollPane(File[] files, double length, double height) {
+	public ScrollPane makeImageScrollPane(File[] files, double length, double height) {
 		ScrollPane newPane = new ScrollPane();
 		VBox imageConsolidator = new VBox();
 		for (File f : files) {
