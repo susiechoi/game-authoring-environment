@@ -3,7 +3,7 @@ package authoring.frontend;
 public class SpecifyTowerScreen extends SpecifyObjectScreen {
 
 	@Override
-	public void makeScreen() {
+	protected void makeScreenWithStyle(String stylesheet) {
 		// TODO Auto-generated method stub
 		
 	}

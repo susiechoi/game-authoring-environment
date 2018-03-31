@@ -7,9 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
 public class SpecifyEnemyScreen extends SpecifyObjectScreen {
-
+	
 	@Override
-	public void makeScreen() {
+	protected void makeScreenWithStyle(String stylesheet) {
 		VBox v = new VBox();
 	    v.setPadding(new Insets(50));
 		v.setSpacing(20);
@@ -19,6 +19,7 @@ public class SpecifyEnemyScreen extends SpecifyObjectScreen {
 		testingList.add("option 2");
 		v.getChildren().add(makeTextDropdown(testingList, 60, 20));
 		Scene sc = new Scene(v, 1500, 900);
+		sc.getStylesheets().add(stylesheet);
 		myScreen = sc; 
 	}
 
