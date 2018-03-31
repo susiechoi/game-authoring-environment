@@ -32,8 +32,8 @@ abstract class SpecifyObjectScreen implements Screen {
 		return PartsFactory.makeImageDropdown(dropdownImages, length, height); 
 	}
 	
-	protected Button makeCreateNewObjectButton(String object, double length, double height) {
-		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, length, height); 
+	protected Button makeCreateNewObjectButton(String object) {
+		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 20); 
 	}
 
 
