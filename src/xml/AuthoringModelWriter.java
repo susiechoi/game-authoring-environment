@@ -19,14 +19,14 @@ public class AuthoringModelWriter implements XMLWriter {
 	 * @author Brendan Cheng 3/31/2018
 	 */
 	
-	private Document file;
+	private Document d;
 	
 	/**
 	 * Initializes file that will be written
 	 */
 	public AuthoringModelWriter() {
 		try {
-			file = XMLDocumentBuilder.initializeDoc();
+			d = XMLDocumentBuilder.initializeDoc();
 		} catch (ParserConfigurationException p) {
 			System.out.println("Bad configuration");
 		}
@@ -46,7 +46,7 @@ public class AuthoringModelWriter implements XMLWriter {
 		// Save data
 		File path = new File(filepath + ".xml");
 		try {
-			XMLDocumentBuilder.saveXMLFile(file, path);
+			XMLDocumentBuilder.saveXMLFile(d, path);
 		} catch (TransformerFactoryConfigurationError | TransformerException e) {
 			// TODO replace with error pop up?
 			System.out.println("Error configuring XML file");
