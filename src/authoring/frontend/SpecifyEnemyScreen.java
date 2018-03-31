@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
@@ -12,8 +13,6 @@ public class SpecifyEnemyScreen extends SpecifyObjectScreen {
 	@Override
 	protected void makeScreenWithStyles(List<String> stylesheets) {
 		VBox v = new VBox();
-	    v.setPadding(new Insets(50));
-		v.setSpacing(20);
 		ArrayList<String> testingList = new ArrayList<String>();
 		v.getChildren().add(makeCreateNewObjectButton("button test"));
 		testingList.add("option 1");
