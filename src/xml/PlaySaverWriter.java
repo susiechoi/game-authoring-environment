@@ -8,6 +8,8 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.w3c.dom.Document;
 
+import com.thoughtworks.xstream.XStream;
+
 import data.GameData;
 
 /**

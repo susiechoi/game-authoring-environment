@@ -10,6 +10,8 @@ import org.w3c.dom.Document;
 
 import data.GameData;
 
+import com.thoughtworks.xstream.XStream;
+
 public class AuthoringModelWriter implements XMLWriter {
 
 	/**
