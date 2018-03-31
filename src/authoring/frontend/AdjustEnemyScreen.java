@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-class AdjustEnemyScreen implements Screen {
+class AdjustEnemyScreen extends Screen {
 	
 	private Scene myScreen; 
 	

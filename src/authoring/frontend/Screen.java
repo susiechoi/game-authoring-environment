@@ -1,4 +1,6 @@
 package authoring.frontend;
+import java.util.List;
+
 import javafx.scene.Scene;
 
 /**
@@ -9,18 +11,49 @@ import javafx.scene.Scene;
  * displayed to the user. 
  */
 
-public interface Screen {
+public abstract class Screen {
+	
+	private Scene myScreen;
     
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	
     /**
      * Creates the Screen
      */
-    public void makeScreen();
+    public abstract void makeScreen();
+    
+    public void applyDefaultStyling() {
+    		if (myScreen == null) {
+    			makeScreen(); 
+    		}
+    		myScreen.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+    }
+    
+    public void applyStyle(String stylesheet) {
+    		myScreen.getStylesheets().add(stylesheet);
+    }
+    
+    public void applyStyles(List<String> stylesheets) {
+    		if (myScreen == null) {
+    			makeScreen();
+    		}
+    		for (String s : stylesheets) {
+    			myScreen.getStylesheets().add(s);
+    		}
+    }
     
     /**
-     * Returns the Screen object to be loaded on the screen
+     * Returns the Scene object to be loaded on the screen
      */
-    public Scene getScreen();
-
+    public Scene getScreen() {
+    	if (myScreen == null) {
+			makeScreen(); 
+		}
+		return myScreen; 
+    }
+    
+    protected void setScreen(Scene newScreen) {
+    		myScreen = newScreen;
+    }
+    
 }

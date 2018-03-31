@@ -1,7 +1,6 @@
 package authoring.frontend;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -11,20 +10,20 @@ import javafx.scene.text.Text;
 class SpecifyEnemyScreen extends SpecifyObjectScreen {
 
 	private String DEFAULT_DESCRIPTOR = "Enemy";
-	
+
 	@Override
-	protected void makeScreenWithStyles(List<String> stylesheets) {
+	public void makeScreenWithoutStyling() {
 		VBox v = new VBox();
 		ArrayList<String> testingList = new ArrayList<String>();
-//		Text intro = new Text("Customize "+DEFAULT_DESCRIPTOR); 
-//		intro.setId("intro");		
-//		v.getChildren().add(intro);
-		
+		//		Text intro = new Text("Customize "+DEFAULT_DESCRIPTOR); 
+		//		intro.setId("intro");		
+		//		v.getChildren().add(intro);
+
 		v.getChildren().add(makeCreateNewObjectButton(DEFAULT_DESCRIPTOR));
 		testingList.add("Edit Existing "+DEFAULT_DESCRIPTOR);
 		testingList.add("Enemy 1");
 		testingList.add("Enemy 2");
-		
+
 		Text orText = new Text("or"); 
 		orText.setId("or");
 		v.getChildren().add(orText);
@@ -33,12 +32,9 @@ class SpecifyEnemyScreen extends SpecifyObjectScreen {
 		h.getChildren().add(makeTextDropdown(testingList)); 
 		h.getChildren().add(makeGoButton());
 		v.getChildren().add(h);
-		
-		Scene sc = new Scene(v, 1500, 900);
-		for (String s : stylesheets) {
-			sc.getStylesheets().add(s);
-		}
-		myScreen = sc; 
+
+		myScreen = new Scene(v, 1500, 900);
+		applyDefaultStyling(); 
 	}
 
 }

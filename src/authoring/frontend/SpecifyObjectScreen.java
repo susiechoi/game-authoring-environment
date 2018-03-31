@@ -1,7 +1,5 @@
 package authoring.frontend;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,7 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import authoring.frontend.PartsFactory; 
 
-abstract class SpecifyObjectScreen implements Screen {
+abstract class SpecifyObjectScreen extends Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
@@ -19,13 +17,12 @@ abstract class SpecifyObjectScreen implements Screen {
 	
 	@Override
 	public void makeScreen() {
-		ArrayList<String> stylesheets = new ArrayList<String>();
-		stylesheets.add(DEFAULT_SHARED_STYLESHEET);
-		stylesheets.add(DEFAULT_OWN_STYLESHEET);
-		makeScreenWithStyles(stylesheets);
+		makeScreenWithoutStyling();
+		applyDefaultStyling(); 
+		applyStyle(DEFAULT_OWN_STYLESHEET);
 	}
 	
-	protected abstract void makeScreenWithStyles(List<String> stylesheets);
+	public abstract void makeScreenWithoutStyling();
 	
 	@Override
 	public Scene getScreen() {
