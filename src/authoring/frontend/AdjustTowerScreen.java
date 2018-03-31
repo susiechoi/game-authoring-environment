@@ -11,12 +11,15 @@ class AdjustTowerScreen implements Screen {
 	@Override
 	public void makeScreen() {
 		VBox v = new VBox();
-		v.getChildren().add(new Text("testing enemy screen"));
+		v.getChildren().add(new Text("testing tower screen"));
 		myScreen = v; 
 	}
 
 	@Override
 	public Parent getScreen() {
+		if (myScreen == null) {
+			makeScreen(); 
+		}
 		return myScreen; 
 	}
 

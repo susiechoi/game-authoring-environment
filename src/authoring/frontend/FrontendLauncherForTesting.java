@@ -12,7 +12,7 @@ public class FrontendLauncherForTesting extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		AdjustEnemyScreen e = new AdjustEnemyScreen();
+		SpecifyEnemyScreen e = new SpecifyEnemyScreen();
 		Scene sc = new Scene(e.getScreen(), 400, 400);
 		Stage s = new Stage(); 
 		s.setScene(sc);
