@@ -11,10 +11,15 @@ import authoring.frontend.PartsFactory;
 abstract class SpecifyObjectScreen implements Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
+	public static final String DEFAULT_STYLESHEET = "src/styling/SpecifyObjectScreen.css"; 
 	protected Scene myScreen;
 	
 	@Override
-	public abstract void makeScreen();
+	public void makeScreen() {
+		makeScreenWithStyle(DEFAULT_STYLESHEET);
+	}
+	
+	protected abstract void makeScreenWithStyle(String stylesheet);
 	
 	@Override
 	public Scene getScreen() {
@@ -35,6 +40,5 @@ abstract class SpecifyObjectScreen implements Screen {
 	protected Button makeCreateNewObjectButton(String object) {
 		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 20); 
 	}
-
 
 }
