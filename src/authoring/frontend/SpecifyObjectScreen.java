@@ -2,7 +2,7 @@ package authoring.frontend;
 
 import java.util.List;
 
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
@@ -11,13 +11,13 @@ import authoring.frontend.PartsFactory;
 abstract class SpecifyObjectScreen implements Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
-	protected Parent myScreen;
+	protected Scene myScreen;
 	
 	@Override
 	public abstract void makeScreen();
 	
 	@Override
-	public Parent getScreen() {
+	public Scene getScreen() {
 		if (myScreen == null) {
 			makeScreen(); 
 		}
@@ -32,8 +32,8 @@ abstract class SpecifyObjectScreen implements Screen {
 		return PartsFactory.makeImageDropdown(dropdownImages, length, height); 
 	}
 	
-	protected Button makeCreateNewObjectButton(String object, double length, double height) {
-		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, length, height); 
+	protected Button makeCreateNewObjectButton(String object) {
+		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 20); 
 	}
 
 

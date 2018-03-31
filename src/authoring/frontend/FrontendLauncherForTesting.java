@@ -1,7 +1,6 @@
 package authoring.frontend;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class FrontendLauncherForTesting extends Application {
@@ -13,9 +12,8 @@ public class FrontendLauncherForTesting extends Application {
 	@Override
 	public void start(Stage stage) {
 		SpecifyEnemyScreen e = new SpecifyEnemyScreen();
-		Scene sc = new Scene(e.getScreen(), 400, 400);
 		Stage s = new Stage(); 
-		s.setScene(sc);
+		s.setScene(e.getScreen());
 		s.show();
 	}
 

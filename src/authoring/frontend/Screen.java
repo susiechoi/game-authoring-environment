@@ -1,6 +1,5 @@
 package authoring.frontend;
-
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 /**
  * 
@@ -20,6 +19,6 @@ public interface Screen {
     /**
      * Returns the Screen object to be loaded on the screen
      */
-    public Parent getScreen();
+    public Scene getScreen();
 
 }
