@@ -9,18 +9,26 @@ import javafx.scene.Scene;
  * displayed to the user. 
  */
 
-public interface Screen {
+public abstract class Screen {
+	private Scene myScreen;
     
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	
     /**
      * Creates the Screen
      */
-    public void makeScreen();
+    public abstract void makeScreen();
     
     /**
-     * Returns the Screen object to be loaded on the screen
+     * Returns the Scene object to be loaded on the screen
      */
-    public Scene getScreen();
-
+    public Scene getScreen() {
+    	if (myScreen == null) {
+			makeScreen(); 
+		}
+		return myScreen; 
+    }
+    protected void setScreen(Scene newScreen) {
+    		myScreen = newScreen;
+    }
 }

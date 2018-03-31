@@ -9,7 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import authoring.frontend.PartsFactory; 
 
-abstract class SpecifyObjectScreen implements Screen {
+abstract class SpecifyObjectScreen extends Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
@@ -24,14 +24,6 @@ abstract class SpecifyObjectScreen implements Screen {
 	}
 	
 	protected abstract void makeScreenWithStyles(List<String> stylesheets);
-	
-	@Override
-	public Scene getScreen() {
-		if (myScreen == null) {
-			makeScreen(); 
-		}
-		return myScreen; 
-	}
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
 		return PartsFactory.makeTextDropdown(textOptions, 200, 20); 

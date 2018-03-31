@@ -20,7 +20,7 @@ public class SpecifyEnemyScreen extends SpecifyObjectScreen {
 		for (String s : stylesheets) {
 			sc.getStylesheets().add(s);
 		}
-		myScreen = sc; 
+		setScreen(sc); 
 	}
 
 }
