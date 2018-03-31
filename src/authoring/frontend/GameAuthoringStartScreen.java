@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import javafx.scene.Scene;
+
 /**
  * Class to create the original screen users see when entering the Game Authoring environment. 
  * Dependent on the AuthoringView to create it correctly and on the PartsFactory to make UI
@@ -9,7 +11,7 @@ package authoring.frontend;
  */
 public class GameAuthoringStartScreen extends Screen {
 	@Override
-	public void makeScreen() {
-		
+	public Scene makeScreen() {
+		return null; 
 	}
 }
