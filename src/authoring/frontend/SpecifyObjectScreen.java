@@ -14,6 +14,9 @@ abstract class SpecifyObjectScreen implements Screen {
 	
 	@Override
 	public Parent getScreen() {
+		if (myScreen == null) {
+			makeScreen(); 
+		}
 		return myScreen; 
 	}
 	
