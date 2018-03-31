@@ -12,8 +12,7 @@ abstract class SpecifyObjectScreen extends Screen {
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
-	protected Scene myScreen;
-	protected PartsFactory myPartsFactory = new PartsFactory(); 
+	protected Scene myScreen; 
 	
 	@Override
 	public void makeScreen() {
@@ -24,28 +23,20 @@ abstract class SpecifyObjectScreen extends Screen {
 	
 	public abstract void makeScreenWithoutStyling();
 	
-	@Override
-	public Scene getScreen() {
-		if (myScreen == null) {
-			makeScreen(); 
-		}
-		return myScreen; 
-	}
-	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
-		return myPartsFactory.makeTextDropdown(textOptions, 250, 50); 
+		return getUIFactory().makeTextDropdown(textOptions, 200, 20); 
 	}
 	
 	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages) {
-		return myPartsFactory.makeImageDropdown(dropdownImages, 250, 50); 
+		return getUIFactory().makeImageDropdown(dropdownImages, 200, 20); 
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return myPartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 300, 80); 
+		return getUIFactory().makeButton(DEFAULT_NEWOBJECT_TEXT+object, 300, 80); 
 	}
 	
 	protected Button makeGoButton() {
-		Button goButton = myPartsFactory.makeButton(DEFAULT_GO_TEXT, 100, 50);
+		Button goButton = getUIFactory().makeButton(DEFAULT_GO_TEXT, 100, 50);
 		goButton.setId("goButton");
 		return goButton; 
 	}

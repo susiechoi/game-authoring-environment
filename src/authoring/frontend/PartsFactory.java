@@ -2,6 +2,7 @@ package authoring.frontend;
 
 import java.io.File;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
