@@ -3,6 +3,7 @@ package authoring.frontend;
 import java.util.ArrayList;
 
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
 public class SpecifyEnemyScreen extends SpecifyObjectScreen {
@@ -17,7 +18,8 @@ public class SpecifyEnemyScreen extends SpecifyObjectScreen {
 		testingList.add("option 1");
 		testingList.add("option 2");
 		v.getChildren().add(makeTextDropdown(testingList, 60, 20));
-		myScreen = v; 
+		Scene sc = new Scene(v, 1500, 900);
+		myScreen = sc; 
 	}
 
 }
