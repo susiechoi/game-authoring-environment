@@ -8,15 +8,15 @@ import javafx.scene.control.ScrollPane;
 
 public class PartsFactory {
 
-	public Button makeButton(String buttonText, double xPos, double yPos, double length, double height) {
+	public static Button makeButton(String buttonText, double xPos, double yPos, double length, double height) {
 		return null; 
 	}
 	
-	public ComboBox<String> makeDropDown(List<String> dropdownOptions, double xPos, double yPos, double length, double height) {
+	public static ComboBox<String> makeDropDown(List<String> dropdownOptions, double xPos, double yPos, double length, double height) {
 		return null; 
 	}
 	
-	public ScrollPane makeScrollPane(List<String> fileNames, double xPos, double yPos, double length, double height) {
+	public static ScrollPane makeScrollPane(List<String> fileNames, double xPos, double yPos, double length, double height) {
 		return null; 
 	}
 	
