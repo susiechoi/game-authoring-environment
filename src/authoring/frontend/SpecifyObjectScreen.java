@@ -33,16 +33,16 @@ abstract class SpecifyObjectScreen implements Screen {
 		return myScreen; 
 	}
 	
-	protected ComboBox<String> makeTextDropdown(List<String> textOptions, double length, double height) {
-		return PartsFactory.makeTextDropdown(textOptions, length, height); 
+	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
+		return PartsFactory.makeTextDropdown(textOptions, 200, 20); 
 	}
 	
-	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages, double length, double height) {
-		return PartsFactory.makeImageDropdown(dropdownImages, length, height); 
+	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages) {
+		return PartsFactory.makeImageDropdown(dropdownImages, 200, 20); 
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 20); 
+		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 80); 
 	}
 
 }
