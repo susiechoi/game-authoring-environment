@@ -1,18 +1,15 @@
 package authoring.frontend;
 
 import java.util.List;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
-import authoring.frontend.PartsFactory; 
 
 abstract class SpecifyObjectScreen extends Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
-	protected Scene myScreen; 
 	
 	@Override
 	public void makeScreen() {
