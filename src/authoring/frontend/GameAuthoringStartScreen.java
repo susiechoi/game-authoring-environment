@@ -8,5 +8,8 @@ package authoring.frontend;
  *
  */
 public class GameAuthoringStartScreen extends Screen {
-	
+	@Override
+	public void makeScreen() {
+		
+	}
 }
