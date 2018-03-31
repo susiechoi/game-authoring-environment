@@ -27,6 +27,7 @@ public class PartsFactory {
 		 ComboBox<String> newDropdown = new ComboBox<String>(options);
 		 newDropdown.setPrefWidth(length);
 		 newDropdown.setPrefHeight(height);
+		 newDropdown.getSelectionModel().selectFirst(); 
 		 return newDropdown; 
 	}
 	
@@ -35,6 +36,7 @@ public class PartsFactory {
 		 ComboBox<Image> newDropdown = new ComboBox<Image>(imageOptions);
 		 newDropdown.setPrefWidth(length);
 		 newDropdown.setPrefHeight(height);
+		 newDropdown.getSelectionModel().selectFirst(); 
 		 return newDropdown; 
 	}
 	
