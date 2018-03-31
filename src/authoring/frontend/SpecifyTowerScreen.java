@@ -1,11 +1,11 @@
 package authoring.frontend;
 
+import java.util.List;
+
 public class SpecifyTowerScreen extends SpecifyObjectScreen {
 
 	@Override
-	protected void makeScreenWithStyle(String stylesheet) {
-		// TODO Auto-generated method stub
-		
+	protected void makeScreenWithStyles(List<String> stylesheets) {
 	}
 
 }
