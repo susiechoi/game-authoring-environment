@@ -21,7 +21,7 @@ abstract class SpecifyObjectScreen extends Screen {
 	public abstract void makeScreenWithoutStyling();
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
-		return getUIFactory().makeTextDropdown(textOptions, 200, 20); 
+		return getUIFactory().makeTextDropdown(textOptions, 250, 50); 
 	}
 	
 	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages) {
