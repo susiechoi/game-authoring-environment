@@ -16,8 +16,9 @@ public interface XMLWriter {
 	 * Writes the inputted data to an XML file using XStream and XMLDocumentBuilder methods. Saves the file at a specified filepath.
 	 * 
 	 * @param g		A GameData object (in this case, AuthorModel or GameState) whose data will be read and written to an XML file
+	 * @param filepath		filepath to which file will be saved
 	 */
-	public void write(GameData g);
+	public void write(GameData g, String filepath);
 	
 	/**
 	 * Changes the current GameData object that this is operating on.
