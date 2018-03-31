@@ -12,6 +12,7 @@ import authoring.frontend.PartsFactory;
 abstract class SpecifyObjectScreen implements Screen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
+	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
 	protected Scene myScreen;
 	
@@ -34,15 +35,19 @@ abstract class SpecifyObjectScreen implements Screen {
 	}
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
-		return PartsFactory.makeTextDropdown(textOptions, 200, 20); 
+		return PartsFactory.makeTextDropdown(textOptions, 300, 50); 
 	}
 	
 	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages) {
-		return PartsFactory.makeImageDropdown(dropdownImages, 200, 20); 
+		return PartsFactory.makeImageDropdown(dropdownImages, 300, 50); 
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 80); 
+		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 300, 80); 
+	}
+	
+	protected Button makeGoButton() {
+		return PartsFactory.makeButton(DEFAULT_GO_TEXT, 100, 50);
 	}
 
 }

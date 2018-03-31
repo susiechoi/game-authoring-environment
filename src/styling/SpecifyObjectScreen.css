@@ -1,5 +1,18 @@
 VBox {
+	-fx-background-color: #CDCDCD;
 	-fx-padding: 15;
     -fx-spacing: 20;
     -fx-alignment: center; 
+}
+
+HBox {
+	-fx-background-color: #CDCDCD;
+	-fx-padding: 15;
+    -fx-spacing: 20;
+    -fx-alignment: center; 
+}
+
+Text {
+	-fx-font-family: "Arial";
+    -fx-font-size: 18; 
 }
