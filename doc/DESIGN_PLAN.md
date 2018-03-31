@@ -112,10 +112,10 @@ When a player wishes to save their current Play, the write() method of the playe
 
 
 ### Game Authoring Environment
-![](https://i.imgur.com/CxVuxai.png)
-![](https://i.imgur.com/7YMjY0f.png)
+![](https://i.imgur.com/YmYVY2t.jpg)
 
-As depicted in the image above, the Game Authoring Environment will be controlled by the AuthoringController, which will mediate between the AuthoringModel and AuthoringView. The AuthoringView will be responsible for controlling classes related to screens/panels/visual aspects of the game authoring environment, while the AuthoringModel class will be responsibile for delegating to FileIO for reading/writing files and for housing/changing Authoring objects such as AuthoringTower, AuthoringEnemy, or AuthoringPathBlock. These objects will hold authoring-specific information and will be compatible with the Gameplay versions of the same objects.
+
+As depicted in the UML diagram above, the Game Authoring Environment will be controlled by the AuthoringController, which will mediate between the AuthoringModel and AuthoringView. The AuthoringView will be responsible for controlling classes related to screens/panels/visual aspects of the game authoring environment, while the AuthoringModel class will be responsibile for delegating to FileIO for reading/writing files and for housing/changing Authoring objects such as AuthoringTower, AuthoringEnemy, or AuthoringPathBlock. These objects will hold authoring-specific information and will be compatible with the Gameplay versions of the same objects.
 
 ## User Interface
 ### Engine
@@ -127,8 +127,11 @@ A picture of what the game screen will look like is attached below. The user can
 **![](https://lh3.googleusercontent.com/jHosc5FC3rSKXt1uEPz7811rltC2MOYEHmfOk-XmT4qUjYZgy9yXVrLpRSV5kp0dZE9CO-S2kNqfSS2iXGvW3iPfgKApmlxjgz5WSh2Vgr12Gc_CWOhsgLrW-U2lLU8WcVt2s1Ys)**
 **![](https://lh4.googleusercontent.com/YnZW1DetH4Oer5NLAxsU7TmwlnlrRm31SQyQG1NBFXO1EkB7Xk24O9WqY9kACHHt5vdMDPQ7cfqKSX9HvY0Xy6MEFUU2mLLDjDFAysQvPAiiibsOCo5lMZTl7lUQCo0GbIcOg7xV)**
 
-### Game Authoring Environment![](https://i.imgur.com/Yn5dKov.jpg)
-As depicted in the image above, the User Interface for the authoring environment will be based around a central menu, from which users will be able to select which facet of the game they would like to customize. Once users are satisfied with their choices for a certain element, they can click "Apply" to temporarily apply the changes and potentially demo them. Once the user clicks "Save", the game will be permanently saved and available for play. The default game will be functional, and no changes will be allowed that would "break" the game (by enabling/disabling the Apply button), so no errors should need to be reported to the user.
+### Game Authoring Environment
+![](https://i.imgur.com/CxVuxai.png)
+![](https://i.imgur.com/7YMjY0f.png)
+
+As depicted in the images above, the User Interface for the authoring environment will be based around a central menu, from which users will be able to select which facet of the game they would like to customize. Once users are satisfied with their choices for a certain element, they can click "Apply" to temporarily apply the changes and potentially demo them. Once the user clicks "Save", the game will be permanently saved and available for play. The default game will be functional, and no changes will be allowed that would "break" the game (by enabling/disabling the Apply button), so no errors should need to be reported to the user.
 
 ### File I/O
 
@@ -222,10 +225,21 @@ The Frontend Engine will hold all pieces responsible for displaying the game. We
 
 
 ### Authoring Environment
-#### 1. AuthoringModel
-The AuthoringModel handles creating each Level interface by filling them with the apprpriate data to be written to the xml file. Each level will have its number of waves, the enemies on each wave, the towers available, the path and everything else like background color, theme songs, etc. Each level will then be passed into FileIO and written into xml files. There will also be an overarching game file which will hold the paths to each of the level files.
-#### 2. AuthoringView 
+#### AuthoringModel
+The AuthoringModel handles creating each Level interface by filling them with the appropriate data to be written to the xml file. Each level will have its number of waves, the enemies on each wave, the towers available, the path and everything else like background color, theme songs, etc. Each level will then be passed into FileIO and written into xml files. There will also be an overarching game file which will hold the paths to each of the level files.
+##### Levels
+Each level held within the Authoring Model will contain the necessary information for the Game Engine to create the Game State. This includes Authoring versions of the Tower/Path/Wave/Enemy objects, which will all implement the same interfaces as the corresponding Game Engine objects and will thus be compatible.
+
+##### Triggering a Change
+All information about a specific tower/path/enemy will be held in fields in the current Screen of the AuthoringView while a user is still making selections. When they have finished, they will press the "apply" button, which on each Screen will have a listener on it. This listener will trigger AuthoringController to get the changed information from the AuthoringView fields and subsequently transmit it to the AuthoringModel to change in the correct objects. The user will give each object a String ID, which will then be displayed so that the user can distinguish which objects to edit and will also be used by AuthoringModel to determine the correct objects to change.
+
+
+#### AuthoringView 
 The AuthoringView is the frontend portion of the Authroing Environment. It handles the GUI that enables designers to enter information regarding the game they are builing. This information is extracted and passed to the AuthoringModel by calling methods like addTower from the AuthoringController which passes the parameters into the AuthoringModel where they are added to the level interfaces.
+
+##### Screens
+The user experience for the authoring environment will be composed of several discrete screens that allow the user to change one attribute of the game at a time. Each of these will extend the Screen abstract class, which will contain a UIFactory object that can make basic UI elements (buttons, etc.) for the Screen. The Screen abstract class will also specify the "Apply" button, which will be used to save changes for each screen once the user is satisfied. Each Screen will be composed of Panel objects and will provide differing functionality.
+
 
 
 

@@ -5,6 +5,7 @@
 * Susie - Primary responsibilities are the tower and enemy customization screens 
 * Sarah - Primary responsibilities are the the screen transitions between selecting authoring mode and entering the authoring environment & the settings screen
 * Erik - Primary responsibilities are the path customization screen 
+* Ben - Primary responsibilities are writing/reading data from files and customization screens
 
 ## Engine/Game Play
 

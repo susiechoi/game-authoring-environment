@@ -7,7 +7,7 @@
  * 
  */
 
-package authoring;
+package authoring.frontend;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.ObservableList;
