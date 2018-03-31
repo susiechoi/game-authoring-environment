@@ -1,9 +1,6 @@
 package xml;
 
-import java.io.File;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import data.GameData;
 
 /**
  * @author Brendan Cheng 3/29/2018
@@ -16,38 +13,17 @@ import org.w3c.dom.Element;
 public interface XMLWriter {
 	
 	/**
-	 * Creates new instance of a document to be written to
+	 * Writes the inputted data to an XML file using XStream and XMLDocumentBuilder methods. Saves the file at a specified filepath.
 	 * 
-	 * @return document to be written to
+	 * @param g		A GameData object (in this case, AuthorModel or GameState) whose data will be read and written to an XML file
 	 */
-	public Document initializeDoc();
+	public void write(GameData g);
 	
 	/**
-	 * Transforms a document object that has been written into a Document object into an XML file with the specified filepath and name
+	 * Changes the current GameData object that this is operating on.
 	 * 
-	 * @param doc   Document being saved
-	 * @param file  File object containing filepath to which doc will be written and saved
+	 * @param g 	GameData object to change to
 	 */
-	public void saveXMLFile(Document doc, File file);
-	
-	/**
-	 * Used to add String data to nodes in an XML file. The expected output should be as follows:
-	 * <elemName> data </elemName>
-	 * 
-	 * @param doc: Document to be added
-	 * @param elemName: Name of the node/element
-	 * @param data: The data to be added
-	 * @return A node to be added to the xml file
-	 */
-	public void addData(Document doc, String elemName, Object data);
-	
-	/**
-	 * Creates a new node, adds it to file by appending it to a parent node, then returns that element to be used by other 
-	 * 
-	 * @param parent Parent node to be appended to
-	 * @param name	 Node name/type
-	 * @return		 Node that has been appended to parent
-	 */
-	public Element appendElement(Element parent, String name, Document file);
-	
+	public void change(GameData g);
+
 }
