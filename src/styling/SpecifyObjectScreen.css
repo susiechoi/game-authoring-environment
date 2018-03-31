@@ -26,13 +26,22 @@ HBox {
     -fx-background-color: linear-gradient(#364156, #011638);
 }
 
+.button:hover {
+    -fx-background-color: linear-gradient(#011638, #364156);
+}
+
 .combo-box .cell {
     -fx-text-fill: white; 
     -fx-background-color: linear-gradient(#364156, #011638);
 }
 
-.button:hover {
+.combo-box:hover {
     -fx-background-color: linear-gradient(#011638, #364156);
+}
+
+.combo-box .cell:hover {
+	-fx-text-fill: #011638;
+    -fx-background-color: white;
 }
 
 #goButton {
