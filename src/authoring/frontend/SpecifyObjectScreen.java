@@ -15,6 +15,7 @@ abstract class SpecifyObjectScreen implements Screen {
 	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
 	protected Scene myScreen;
+	protected PartsFactory myPartsFactory = new PartsFactory(); 
 	
 	@Override
 	public void makeScreen() {
@@ -35,19 +36,21 @@ abstract class SpecifyObjectScreen implements Screen {
 	}
 	
 	protected ComboBox<String> makeTextDropdown(List<String> textOptions) {
-		return PartsFactory.makeTextDropdown(textOptions, 300, 50); 
+		return myPartsFactory.makeTextDropdown(textOptions, 250, 50); 
 	}
 	
 	protected ComboBox<Image> makeImageDropdown(List<Image> dropdownImages) {
-		return PartsFactory.makeImageDropdown(dropdownImages, 300, 50); 
+		return myPartsFactory.makeImageDropdown(dropdownImages, 250, 50); 
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return PartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 300, 80); 
+		return myPartsFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 300, 80); 
 	}
 	
 	protected Button makeGoButton() {
-		return PartsFactory.makeButton(DEFAULT_GO_TEXT, 100, 50);
+		Button goButton = myPartsFactory.makeButton(DEFAULT_GO_TEXT, 100, 50);
+		goButton.setId("goButton");
+		return goButton; 
 	}
 
 }

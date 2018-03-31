@@ -16,11 +16,18 @@ class SpecifyEnemyScreen extends SpecifyObjectScreen {
 	protected void makeScreenWithStyles(List<String> stylesheets) {
 		VBox v = new VBox();
 		ArrayList<String> testingList = new ArrayList<String>();
+//		Text intro = new Text("Customize "+DEFAULT_DESCRIPTOR); 
+//		intro.setId("intro");		
+//		v.getChildren().add(intro);
+		
 		v.getChildren().add(makeCreateNewObjectButton(DEFAULT_DESCRIPTOR));
-		testingList.add("Select Existing "+DEFAULT_DESCRIPTOR);
+		testingList.add("Edit Existing "+DEFAULT_DESCRIPTOR);
 		testingList.add("Enemy 1");
 		testingList.add("Enemy 2");
-		v.getChildren().add(new Text("or"));
+		
+		Text orText = new Text("or"); 
+		orText.setId("or");
+		v.getChildren().add(orText);
 
 		HBox h = new HBox(); 
 		h.getChildren().add(makeTextDropdown(testingList)); 
