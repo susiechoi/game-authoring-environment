@@ -39,15 +39,15 @@ class PropertiesReader {
 		return allKeys; 
 	}
 	
-	protected List<Image> allValsAsImages(String filepath, double imageLength, double imageHeight) throws MissingPropertiesException {
-		List<Image> imageList = new ArrayList<Image>();
+	protected Map<String, Image> keyToImageMap(String filepath, double imageLength, double imageHeight) throws MissingPropertiesException {
+		Map<String, Image> imageMap = new HashMap<String, Image>(); 
 		Properties properties = loadProperties(filepath);
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
 			String key = (String)e.nextElement();
 			String val = properties.getProperty(key);
-			imageList.add(new Image(val, imageLength, imageHeight, true, false));
+			imageMap.put(key, new Image(val, imageLength, imageHeight, true, false));
 		}
-		return imageList; 
+		return imageMap; 
 	}
 	
 	private Properties loadProperties(String filepath) throws MissingPropertiesException {

@@ -1,12 +1,14 @@
 package authoring.frontend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.SelectionModel;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,9 +20,9 @@ class AdjustTowerScreen extends AdjustScreen {
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
-	
+
 	private PropertiesReader myPropertiesReader; 
-	
+
 	protected AdjustTowerScreen() {
 		myStylesheet = DEFAULT_OWN_STYLESHEET; 
 		myPropertiesReader = new PropertiesReader();
@@ -32,36 +34,11 @@ class AdjustTowerScreen extends AdjustScreen {
 
 		HBox towerNameSelect = myUIFactory.setupPromptAndTextField("Tower Name: "); 
 
-		List<String> towerImageNames = new ArrayList<String>();
-		try {
-			towerImageNames = myPropertiesReader.allKeys(TOWER_IMAGES);
-		} catch (MissingPropertiesException e) {
-			// TODO FIX
-			e.printStackTrace();
-		}
-		ComboBox<String> towerImageOptions = myUIFactory.makeTextDropdown(towerImageNames);
-		towerImageOptions.getSelectionModel().selectFirst();
-		
-		List<Image> towerImages = new ArrayList<Image>();
-		try {
-			towerImages = myPropertiesReader.allValsAsImages(TOWER_IMAGES, 50, 50);
-		} catch (MissingPropertiesException e) {
-			// TODO FIX
-			e.printStackTrace();
-		}
-		List<Image> finalTowerImages = towerImages; 
-		
-		Text towerImagePrompt = new Text("Tower Image: ");
-		HBox towerImageSelect = new HBox();
-		towerImageSelect.getChildren().add(towerImagePrompt);
-		towerImageSelect.getChildren().add(towerImageOptions);
-		towerImageSelect.setId("imageOptionsDropdown");
 		ImageView towerImageDisplay = new ImageView(); 
-		towerImageOptions.getSelectionModel().selectedIndexProperty().addListener(( arg0, arg1,  arg2) ->{
-		    towerImageDisplay.setImage(finalTowerImages.get((int) arg2));
-		});
-		
-		HBox projectileImage = new HBox(); 
+		HBox towerImageSelect = setupImageSelector("Tower ", TOWER_IMAGES, towerImageDisplay, 100); 
+		ImageView projectileImageDisplay = new ImageView(); 
+		HBox projectileImageSelect = setupImageSelector("Projectile ", PROJECTILE_IMAGES, projectileImageDisplay, 30);
+
 		HBox towerAbility = new HBox(); 
 		HBox towerRange = new HBox(); 
 		HBox towerDamage = new HBox(); 
@@ -71,6 +48,37 @@ class AdjustTowerScreen extends AdjustScreen {
 		vb.getChildren().add(towerNameSelect);
 		vb.getChildren().add(towerImageSelect);
 		vb.getChildren().add(towerImageDisplay);
+		vb.getChildren().add(projectileImageSelect);
+		vb.getChildren().add(projectileImageDisplay);
 		return new Scene(vb, 1500, 900); 
 	}
+
+	private HBox setupImageSelector(String description, String propertiesFilepath, ImageView imageDisplay, double imageSize) {
+		Map<String, Image> towerImageOptions;
+		try {
+			towerImageOptions = myPropertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
+		} catch (MissingPropertiesException e) {
+			return new HBox(); // TODO fix
+		}
+		ArrayList<String> imageNames = new ArrayList<String>(towerImageOptions.keySet());
+		final ArrayList<Image> images = new ArrayList<Image>(towerImageOptions.values()); 
+		imageDisplay.setImage(images.get(0));
+		ComboBox<String> imageOptionsDropdown = myUIFactory.makeTextDropdown(imageNames);
+		imageOptionsDropdown.getSelectionModel().selectFirst();
+		
+		HBox imageSelect = new HBox();
+		Text prompt = new Text(description+"Image: ");
+		Button loadNewImageButton = new Button("Load New Image");
+		imageSelect.getChildren().add(prompt);
+		imageSelect.getChildren().add(imageOptionsDropdown);
+		imageSelect.getChildren().add(loadNewImageButton);
+
+		// image selection view 
+		imageOptionsDropdown.getSelectionModel().selectedIndexProperty().addListener(( arg0, arg1,  arg2) ->{
+			imageDisplay.setImage(images.get((int) arg2));
+		});
+		
+		return imageSelect; 
+	}
+
 }
