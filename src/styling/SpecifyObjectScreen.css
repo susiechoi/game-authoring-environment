@@ -28,3 +28,16 @@ VBox, HBox {
 	-fx-text-fill: #373E40;
     -fx-background-color: white;
 }
+
+#backButton {
+	-fx-border:0;
+    -fx-background-color:transparent;
+}
+
+#applyButton {
+	-fx-background-color: linear-gradient(#364156, #011638);
+}
+
+#goButton:hover, #applyButton:hover {
+	-fx-background-color: linear-gradient(#011638, #364156);
+}
