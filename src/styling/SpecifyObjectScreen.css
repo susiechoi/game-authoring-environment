@@ -17,6 +17,7 @@ VBox, HBox {
 
 .button:hover {
     -fx-background-color: linear-gradient(#77878B, #CDCDCD);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 .combo-box:hover {
@@ -36,10 +37,6 @@ VBox, HBox {
 #backButton {
 	-fx-border:0;
     -fx-background-color:transparent;
-}
-
-#backButton:hover {
-	-fx-background-color: #CDCDCD;
 }
 
 #applyButton {
