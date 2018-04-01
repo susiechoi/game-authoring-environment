@@ -15,7 +15,14 @@ import javafx.scene.text.Text;
 
 public class UIFactory {
 
-	public Button makeButton(String buttonText, double length, double height) {
+	public Button makeImageButton(Image buttonImage) {
+		Button newButton = new Button();
+		ImageView buttonImageView = new ImageView(buttonImage);
+		newButton.setGraphic(buttonImageView);
+		return newButton; 
+	}
+	
+	public Button makeTextButton(String buttonText, double length, double height) {
 		Button newButton = new Button(buttonText);
 		newButton.setPrefWidth(length);
 		newButton.setPrefHeight(height);

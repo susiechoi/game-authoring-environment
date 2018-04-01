@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-abstract class SpecifyObjectScreen extends Screen {
+abstract class SpecifyObjectScreen extends AdjustScreen {
 	
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
@@ -35,20 +35,26 @@ abstract class SpecifyObjectScreen extends Screen {
 		
 		Text orText = new Text("or"); 
 		orText.setId("or");
+	
+		HBox hb = new HBox();
+		Button backButton = setupBackButton();
+		backButton.setId("backButton");
 		
-		HBox h = new HBox(); 
-		h.getChildren().add(makeObjectOptionsDropdown()); 
-		h.getChildren().add(makeGoButton());
-		
+		hb.getChildren().add(backButton);
+		Button applyButton = setupApplyButton();
+		applyButton.setId("applyButton");
+		hb.getChildren().add(applyButton);
+	
 		vb.getChildren().add(makeCreateNewObjectButton(myObjectDescription));
 		vb.getChildren().add(orText);
-		vb.getChildren().add(h);
-
+		vb.getChildren().add(makeObjectOptionsDropdown());
+		vb.getChildren().add(hb);
+		
 		return new Scene(vb, 1500, 900); 
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return myUIFactory.makeButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 50); 
+		return myUIFactory.makeTextButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 50); 
 	}
 		
 	protected ComboBox<String> makeObjectOptionsDropdown() {
@@ -56,12 +62,6 @@ abstract class SpecifyObjectScreen extends Screen {
 		dropdownOptions.add("Edit Existing "+myObjectDescription);
 		dropdownOptions.addAll(myObjectOptions);
 		return myUIFactory.makeTextDropdown(dropdownOptions, 250, 50); 
-	}
-	
-	protected Button makeGoButton() {
-		Button goButton = myUIFactory.makeButton(DEFAULT_GO_TEXT, 75, 50);
-		goButton.setId("goButton");
-		return goButton; 
 	}
 
 }
