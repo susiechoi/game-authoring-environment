@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -14,7 +16,8 @@ public class FrontendLauncherForTesting extends Application {
 //		ArrayList<String> enemyOptions = new ArrayList<String>();
 //		enemyOptions.add("Tower 1");
 //		enemyOptions.add("Tower 2");
-		AdjustEnemyScreen a = new AdjustEnemyScreen();
+//		SpecifyEnemyScreen a = new SpecifyEnemyScreen(enemyOptions);
+		AdjustEnemyScreen a = new AdjustEnemyScreen(); 
 		Stage s = new Stage(); 
 		s.setScene(a.getScreen());
 		s.show();
