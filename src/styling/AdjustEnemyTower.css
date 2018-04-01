@@ -39,3 +39,10 @@ VBox, HBox {
 	-fx-text-fill: #373E40;
     -fx-background-color: white;
 }
+
+#backButton {
+	-fx-min-width: 50;
+	-fx-min-height: 30;
+	-fx-border:0;
+    -fx-background-color:transparent;
+}

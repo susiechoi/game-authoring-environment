@@ -1,3 +1,9 @@
+/**
+ * Class for generating common front end UI elmenets, e.g. comboboxes, sliders
+ * To ensure consistency of front end design
+ * @author susiechoi 
+ */
+
 package authoring.frontend;
 
 import java.io.File;
@@ -8,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,6 +54,34 @@ public class UIFactory {
 		TextField tf = new TextField(); 
 		hb.getChildren().add(prompt);
 		hb.getChildren().add(tf); 
+		return hb; 
+	}
+	
+	/**
+	 * Creates HBox with a text prompt to the left, combobox/dropdown to the right
+	 * @param promptString - text prompt 
+	 * @param dropdownOptions - String options to populate dropdown
+	 * @return HBox 
+	 */
+	protected HBox setupPromptAndDropdown(String promptString, List<String> dropdownOptions) {
+		HBox hb = new HBox(); 
+		Text prompt = new Text(promptString); 
+		ComboBox<String> dropdown = makeTextDropdown(dropdownOptions);
+		dropdown.getSelectionModel().selectFirst();
+		hb.getChildren().add(prompt);
+		hb.getChildren().add(dropdown); 
+		return hb; 
+	}
+	
+	protected HBox setupPromptAndSlider(String promptString, int sliderMax) {
+		HBox hb = new HBox();
+		Text prompt = new Text(promptString);
+		Slider slider = new Slider();
+		slider.setMin(0);
+		slider.setMax(sliderMax);
+		slider.setValue((0 + sliderMax) / 2);
+		hb.getChildren().add(prompt);
+		hb.getChildren().add(slider);
 		return hb; 
 	}
 	
