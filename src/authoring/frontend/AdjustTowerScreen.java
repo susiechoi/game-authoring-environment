@@ -35,17 +35,19 @@ class AdjustTowerScreen extends AdjustScreen {
 		HBox towerNameSelect = myUIFactory.setupPromptAndTextField("Tower Name: "); 
 
 		ImageView towerImageDisplay = new ImageView(); 
-		HBox towerImageSelect = setupImageSelector("Tower ", TOWER_IMAGES, towerImageDisplay, 100); 
+		HBox towerImageSelect = setupImageSelector("Tower ", TOWER_IMAGES, towerImageDisplay, 50); 
 		ImageView projectileImageDisplay = new ImageView(); 
-		HBox projectileImageSelect = setupImageSelector("Projectile ", PROJECTILE_IMAGES, projectileImageDisplay, 30);
+		HBox projectileImageSelect = setupImageSelector("Projectile ", PROJECTILE_IMAGES, projectileImageDisplay, 20);
 
 		ArrayList<String> dummyTowerAbilities = new ArrayList<String>();
 		dummyTowerAbilities.add("Freeze");
 		dummyTowerAbilities.add("Fire");
 		HBox towerAbility = myUIFactory.setupPromptAndDropdown("Tower Ability: ", dummyTowerAbilities);
 		
-		HBox towerRange = myUIFactory.setupPromptAndSlider("Tower Range: ", DEFAULT_TOWER_MAX_RANGE); 
-		HBox towerPrice = myUIFactory.setupPromptAndSlider("Tower Price: ", DEFAULT_TOWER_MAX_PRICE); 
+		VBox towerRange = myUIFactory.setupPromptAndSlider("Tower Range: ", DEFAULT_TOWER_MAX_RANGE); 
+		towerRange.setId("towerRangeSlider");
+		VBox towerPrice = myUIFactory.setupPromptAndSlider("Tower Price: ", DEFAULT_TOWER_MAX_PRICE); 
+		towerPrice.setId("towerPriceSlider");
 		HBox backAndApply = setupBackAndApply(); 
 
 		vb.getChildren().add(towerNameSelect);

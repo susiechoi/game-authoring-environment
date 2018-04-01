@@ -75,7 +75,7 @@ public class UIFactory {
 		return hb; 
 	}
 
-	protected HBox setupPromptAndSlider(String promptString, int sliderMax) {
+	protected VBox setupPromptAndSlider(String promptString, int sliderMax) {
 		HBox hb = new HBox();
 		Text prompt = new Text(promptString);
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
@@ -88,8 +88,10 @@ public class UIFactory {
 		});
 		hb.getChildren().add(prompt);
 		hb.getChildren().add(slider);
-		hb.getChildren().add(sliderValue);
-		return hb; 
+		VBox vb = new VBox();
+		vb.getChildren().add(hb);
+		vb.getChildren().add(sliderValue);
+		return vb; 
 	}
 
 	public ScrollPane makeTextScrollPane(List<String> options) {
