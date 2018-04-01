@@ -1,11 +1,6 @@
-VBox {
+VBox, HBox {
 	-fx-background-color: #B7D5D4;
 	-fx-padding: 15;
-    -fx-spacing: 20;
-    -fx-alignment: center; 
-}
-
-HBox {
     -fx-spacing: 20;
     -fx-alignment: center; 
 }
@@ -38,10 +33,19 @@ HBox {
     -fx-background-color: white;
 }
 
-#goButton {
+#backButton {
+	-fx-border:0;
+    -fx-background-color:transparent;
+}
+
+#backButton:hover {
+	-fx-background-color: #CDCDCD;
+}
+
+#applyButton {
 	-fx-background-color: linear-gradient(#364156, #011638);
 }
 
-#goButton:hover {
+#goButton:hover, #applyButton:hover {
 	-fx-background-color: linear-gradient(#011638, #364156);
 }

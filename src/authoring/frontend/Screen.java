@@ -60,7 +60,7 @@ abstract class Screen {
 	protected void setScreen(Scene newScreen) {
 		myScreen = newScreen;
 	}
-
+	
 }
 
 
