@@ -1,4 +1,4 @@
-package screen;
+package gameplayer.screen;
 
 import javafx.scene.Node;
 

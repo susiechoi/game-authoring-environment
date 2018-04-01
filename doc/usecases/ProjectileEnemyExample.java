@@ -1,9 +1,11 @@
 package usecases;
 
 import java.util.List;
+
+import engine.enemies.Enemy;
+import engine.towers.projectiles.Projectile;
+
 import java.util.ArrayList;
-import enemies.Enemy;
-import towers.projectiles.Projectile;
 
 /**
  * Example code for Use Case 7: Enemy is hit by projectile. This code would be within the Game State
