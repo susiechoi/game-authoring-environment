@@ -36,19 +36,10 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		Text orText = new Text("or"); 
 		orText.setId("or");
 	
-		HBox hb = new HBox();
-		Button backButton = setupBackButton();
-		backButton.setId("backButton");
-		
-		hb.getChildren().add(backButton);
-		Button applyButton = setupApplyButton();
-		applyButton.setId("applyButton");
-		hb.getChildren().add(applyButton);
-	
 		vb.getChildren().add(makeCreateNewObjectButton(myObjectDescription));
 		vb.getChildren().add(orText);
 		vb.getChildren().add(makeObjectOptionsDropdown());
-		vb.getChildren().add(hb);
+		vb.getChildren().add(setupBackAndApply());
 		
 		return new Scene(vb, 1500, 900); 
 	}
