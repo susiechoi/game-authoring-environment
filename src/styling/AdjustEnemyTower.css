@@ -4,3 +4,13 @@ VBox, HBox {
     -fx-spacing: 20;
     -fx-alignment: center; 
 }
+
+.text-field {
+	-fx-min-width: 250;
+	-fx-min-height: 30;
+}
+
+.combo-box {
+	-fx-min-width: 250;
+	-fx-min-height: 30;
+}
