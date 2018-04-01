@@ -39,9 +39,6 @@ VBox, HBox {
     -fx-background-color:transparent;
 }
 
-#backButton:hover {
-}
-
 #applyButton {
 	-fx-background-color: linear-gradient(#364156, #011638);
 }
