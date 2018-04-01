@@ -15,17 +15,25 @@ import javafx.scene.Scene;
 abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+	protected String myStylesheet; 
 	protected Scene myScreen;
 	protected UIFactory myUIFactory;
 
 	protected Screen() {
 		myUIFactory = new UIFactory();
 	}
-		
+
 	/**
-	 * Creates & returns the Screen
+	 * Creates & returns the styled Screen
 	 */
-	protected abstract Scene makeScreen();
+	protected Scene makeScreen() {
+		myScreen = makeScreenWithoutStyling();
+		applyDefaultStyling();
+		applyStyle(myStylesheet);
+		return myScreen; 
+	}
+
+	protected abstract Scene makeScreenWithoutStyling();
 
 	protected void applyDefaultStyling() {
 		if (myScreen == null) {
@@ -56,11 +64,11 @@ abstract class Screen {
 		}
 		return myScreen; 
 	}
-	
+
 	protected void setScreen(Scene newScreen) {
 		myScreen = newScreen;
 	}
-	
+
 }
 
 
