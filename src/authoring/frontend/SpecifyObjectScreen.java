@@ -31,14 +31,13 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(makeCreateNewObjectButton(myObjectDescription));
 		vb.getChildren().add(orText);
 		vb.getChildren().add(makeObjectOptionsDropdown());
-		vb.getChildren().add(setupBackAndApply());
+		vb.getChildren().add(setupBackAndApplyButton());
 		
 		return new Scene(vb, 1500, 900); // TODO move to properties file
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		Button newObjectButton = myUIFactory.makeTextButton(DEFAULT_NEWOBJECT_TEXT+object); 
-		newObjectButton.setId("newObjectButton");
+		Button newObjectButton = myUIFactory.makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		return newObjectButton;
 	}
 		
@@ -46,8 +45,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		ArrayList<String> dropdownOptions = new ArrayList<String>(); 
 		dropdownOptions.add("Edit Existing "+myObjectDescription);
 		dropdownOptions.addAll(myObjectOptions);
-		ComboBox<String> dropdown = myUIFactory.makeTextDropdown(dropdownOptions); 
-		dropdown.setId("objectOptions");
+		ComboBox<String> dropdown = myUIFactory.makeTextDropdown("objectOptions", dropdownOptions); 
 		return dropdown; 
 	}
 

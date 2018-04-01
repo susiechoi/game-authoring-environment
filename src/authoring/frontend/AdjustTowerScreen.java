@@ -31,24 +31,23 @@ class AdjustTowerScreen extends AdjustScreen {
 	@Override
 	protected Scene makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
-
-		HBox towerNameSelect = myUIFactory.setupPromptAndTextField("Tower Name: "); 
+		
+		HBox towerNameSelect = myUIFactory.setupPromptAndTextField("", "Tower Name: "); 
 
 		ImageView towerImageDisplay = new ImageView(); 
 		HBox towerImageSelect = setupImageSelector("Tower ", TOWER_IMAGES, towerImageDisplay, 50); 
 		ImageView projectileImageDisplay = new ImageView(); 
-		HBox projectileImageSelect = setupImageSelector("Projectile ", PROJECTILE_IMAGES, projectileImageDisplay, 20);
+		HBox projectileImageSelect = setupImageSelector("Projectile ", PROJECTILE_IMAGES, projectileImageDisplay, 30);
 
 		ArrayList<String> dummyTowerAbilities = new ArrayList<String>();
 		dummyTowerAbilities.add("Freeze");
 		dummyTowerAbilities.add("Fire");
-		HBox towerAbility = myUIFactory.setupPromptAndDropdown("Tower Ability: ", dummyTowerAbilities);
+		HBox towerAbility = myUIFactory.setupPromptAndDropdown("", "Tower Ability: ", dummyTowerAbilities);
 		
-		VBox towerRange = myUIFactory.setupPromptAndSlider("Tower Range: ", DEFAULT_TOWER_MAX_RANGE); 
-		towerRange.setId("towerRangeSlider");
-		VBox towerPrice = myUIFactory.setupPromptAndSlider("Tower Price: ", DEFAULT_TOWER_MAX_PRICE); 
-		towerPrice.setId("towerPriceSlider");
-		HBox backAndApply = setupBackAndApply(); 
+		VBox towerRange = myUIFactory.setupPromptAndSlider("towerRangeSlider", "Tower Range: ", DEFAULT_TOWER_MAX_RANGE); 
+		VBox towerPrice = myUIFactory.setupPromptAndSlider("towerPriceSlider", "Tower Price: ", DEFAULT_TOWER_MAX_PRICE); 
+		
+		HBox backAndApply = setupBackAndApplyButton(); 
 
 		vb.getChildren().add(towerNameSelect);
 		vb.getChildren().add(towerImageSelect);
@@ -72,12 +71,13 @@ class AdjustTowerScreen extends AdjustScreen {
 		ArrayList<String> imageNames = new ArrayList<String>(towerImageOptions.keySet());
 		final ArrayList<Image> images = new ArrayList<Image>(towerImageOptions.values()); 
 		imageDisplay.setImage(images.get(0));
-		ComboBox<String> imageOptionsDropdown = myUIFactory.makeTextDropdown(imageNames);
+		ComboBox<String> imageOptionsDropdown = myUIFactory.makeTextDropdown("", imageNames);
 		imageOptionsDropdown.getSelectionModel().selectFirst();
 		
 		HBox imageSelect = new HBox();
 		Text prompt = new Text(description+"Image: ");
 		Button loadNewImageButton = new Button("Load New Image");
+		loadNewImageButton.setId("loadButton");
 		imageSelect.getChildren().add(prompt);
 		imageSelect.getChildren().add(imageOptionsDropdown);
 		imageSelect.getChildren().add(loadNewImageButton);

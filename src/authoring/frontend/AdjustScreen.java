@@ -20,7 +20,7 @@ public abstract class AdjustScreen extends Screen {
 	/**
 	 * @return  HBox with back and apply buttons
 	 */
-	protected HBox setupBackAndApply() {
+	protected HBox setupBackAndApplyButton() {
 		HBox hb = new HBox();
 		Button backButton = setupBackButton();
 		hb.getChildren().add(backButton);
@@ -30,16 +30,14 @@ public abstract class AdjustScreen extends Screen {
 	}
 	
 	protected Button setupBackButton() {
-		Image backbuttonImage = new Image(DEFAULT_BACK_URL, 50, 30, true, false); // TODO move to css
-		Button backButton = myUIFactory.makeImageButton(backbuttonImage);
-		backButton.setId("backButton");
+		Image backbuttonImage = new Image(DEFAULT_BACK_URL, 60, 40, true, false); // TODO move to css
+		Button backButton = myUIFactory.makeImageButton("backButton",backbuttonImage);
 		return backButton; 
 	}
 
 	//TODO: set up listener here?
 	protected Button setupApplyButton() {
-		Button applyButton = myUIFactory.makeTextButton("Apply"); //TODO: set up prompts properties file	
-		applyButton.setId("applyButton");
+		Button applyButton = myUIFactory.makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 		return applyButton;
 	}
 
