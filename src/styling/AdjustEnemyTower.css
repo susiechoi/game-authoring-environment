@@ -47,7 +47,16 @@ VBox, HBox {
     -fx-background-color:transparent;
 }
 
+#applyButton, #loadButton {
+    -fx-background-color: linear-gradient(#364156, #011638);
+}
+
+#applyButton:hover, #loadButton:hover {
+    -fx-background-color: linear-gradient(#011638, #364156);
+}
+
 #towerRangeSlider, #towerPriceSlider {
+	-fx-control-inner-background: #011638; 
 	-fx-padding: 15;
     -fx-spacing: 0;
 }

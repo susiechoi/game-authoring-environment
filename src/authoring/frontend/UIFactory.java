@@ -26,22 +26,25 @@ import javafx.scene.text.Text;
 
 public class UIFactory {
 
-	public Button makeImageButton(Image buttonImage) {
+	public Button makeImageButton(String id, Image buttonImage) {
 		Button newButton = new Button();
 		ImageView buttonImageView = new ImageView(buttonImage);
 		newButton.setGraphic(buttonImageView);
+		newButton.setId(id);
 		return newButton; 
 	}
 
-	public Button makeTextButton(String buttonText) {
+	public Button makeTextButton(String id, String buttonText) {
 		Button newButton = new Button(buttonText);
+		newButton.setId(id);
 		return newButton; 
 	}
 
-	public ComboBox<String> makeTextDropdown(List<String> dropdownOptions) {
+	public ComboBox<String> makeTextDropdown(String id, List<String> dropdownOptions) {
 		ObservableList<String> options = FXCollections.observableArrayList(dropdownOptions);
 		ComboBox<String> newDropdown = new ComboBox<String>(options);
 		newDropdown.getSelectionModel().selectFirst(); 
+		newDropdown.setId(id);
 		return newDropdown; 
 	}
 
@@ -50,12 +53,13 @@ public class UIFactory {
 	 * @param promptString - text prompt 
 	 * @return HBox 
 	 */
-	protected HBox setupPromptAndTextField(String promptString) {
+	protected HBox setupPromptAndTextField(String id, String promptString) {
 		HBox hb = new HBox(); 
 		Text prompt = new Text(promptString); 
 		TextField tf = new TextField(); 
 		hb.getChildren().add(prompt);
 		hb.getChildren().add(tf); 
+		hb.setId(id);
 		return hb; 
 	}
 
@@ -65,17 +69,18 @@ public class UIFactory {
 	 * @param dropdownOptions - String options to populate dropdown
 	 * @return HBox 
 	 */
-	protected HBox setupPromptAndDropdown(String promptString, List<String> dropdownOptions) {
+	protected HBox setupPromptAndDropdown(String id, String promptString, List<String> dropdownOptions) {
 		HBox hb = new HBox(); 
 		Text prompt = new Text(promptString); 
-		ComboBox<String> dropdown = makeTextDropdown(dropdownOptions);
+		ComboBox<String> dropdown = makeTextDropdown("", dropdownOptions);
 		dropdown.getSelectionModel().selectFirst();
 		hb.getChildren().add(prompt);
 		hb.getChildren().add(dropdown); 
+		hb.setId(id);
 		return hb; 
 	}
 
-	protected VBox setupPromptAndSlider(String promptString, int sliderMax) {
+	protected VBox setupPromptAndSlider(String id, String promptString, int sliderMax) {
 		HBox hb = new HBox();
 		Text prompt = new Text(promptString);
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
@@ -91,20 +96,22 @@ public class UIFactory {
 		VBox vb = new VBox();
 		vb.getChildren().add(hb);
 		vb.getChildren().add(sliderValue);
+		vb.setId(id);
 		return vb; 
 	}
 
-	public ScrollPane makeTextScrollPane(List<String> options) {
+	public ScrollPane makeTextScrollPane(String id, List<String> options) {
 		ScrollPane newPane = new ScrollPane();
 		String allOptions = "";
 		for (String s : options) {
 			allOptions += s+"\n";
 		}
 		newPane.setContent(new Text(allOptions));
+		newPane.setId(id);
 		return newPane; 
 	}
 
-	public ScrollPane makeImageScrollPane(File[] files) {
+	public ScrollPane makeImageScrollPane(String id, File[] files) {
 		ScrollPane newPane = new ScrollPane();
 		VBox imageConsolidator = new VBox();
 		for (File f : files) {
@@ -113,6 +120,7 @@ public class UIFactory {
 			imageConsolidator.getChildren().add(oneImageView);
 		}
 		newPane.setContent(imageConsolidator);
+		newPane.setId(id);
 		return newPane; 
 	}
 
