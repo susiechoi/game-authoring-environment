@@ -36,23 +36,22 @@ abstract class Screen {
 	protected abstract Scene makeScreenWithoutStyling();
 
 	protected void applyDefaultStyling() {
-		if (myScreen == null) {
-			myScreen = makeScreen(); 
+		if (myScreen != null) {
+			myScreen.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		}
-		myScreen.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	}
 
 	protected void applyStyle(String stylesheet) {
-		myScreen.getStylesheets().add(stylesheet);
+		if (myScreen != null) {
+			myScreen.getStylesheets().add(stylesheet);
+		}
 	}
 
 	protected void applyStyles(List<String> stylesheets) {
-		if (myScreen == null) {
-			myScreen = makeScreen();
-		}
-		for (String s : stylesheets) {
-			myScreen.getStylesheets().add(s);
-		}
+		if (myScreen != null) {
+			for (String s : stylesheets) {
+				myScreen.getStylesheets().add(s);
+			}		}
 	}
 
 	/**

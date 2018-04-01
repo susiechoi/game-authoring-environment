@@ -28,3 +28,28 @@ VBox, HBox {
 	-fx-text-fill: #373E40;
     -fx-background-color: white;
 }
+
+#newObjectButton {
+	-fx-min-width: 200;
+	-fx-min-height: 50;
+}
+
+#objectOptions {
+	-fx-min-width: 250;
+	-fx-min-height: 50;
+}
+
+#backButton {
+	-fx-min-width: 50;
+	-fx-min-height: 30;
+	-fx-border:0;
+    -fx-background-color:transparent;
+}
+
+#applyButton {
+	-fx-background-color: linear-gradient(#364156, #011638);
+}
+
+#goButton:hover, #applyButton:hover {
+	-fx-background-color: linear-gradient(#011638, #364156);
+}

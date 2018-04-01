@@ -33,18 +33,22 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(makeObjectOptionsDropdown());
 		vb.getChildren().add(setupBackAndApply());
 		
-		return new Scene(vb, 1500, 900); 
+		return new Scene(vb, 1500, 900); // TODO move to properties file
 	}
 	
 	protected Button makeCreateNewObjectButton(String object) {
-		return myUIFactory.makeTextButton(DEFAULT_NEWOBJECT_TEXT+object, 200, 50); 
+		Button newObjectButton = myUIFactory.makeTextButton(DEFAULT_NEWOBJECT_TEXT+object); 
+		newObjectButton.setId("newObjectButton");
+		return newObjectButton;
 	}
 		
 	protected ComboBox<String> makeObjectOptionsDropdown() {
 		ArrayList<String> dropdownOptions = new ArrayList<String>(); 
 		dropdownOptions.add("Edit Existing "+myObjectDescription);
 		dropdownOptions.addAll(myObjectOptions);
-		return myUIFactory.makeTextDropdown(dropdownOptions, 250, 50); 
+		ComboBox<String> dropdown = myUIFactory.makeTextDropdown(dropdownOptions); 
+		dropdown.setId("objectOptions");
+		return dropdown; 
 	}
 
 }
