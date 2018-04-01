@@ -1,12 +1,40 @@
 package authoring.frontend;
 
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
-class AdjustEnemyScreen extends Screen {
+class AdjustEnemyScreen extends AdjustScreen {
 	
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
 	
-	@Override
-	public Scene makeScreen() {
-		return null; 
+	protected AdjustEnemyScreen() {
+		myStylesheet = DEFAULT_OWN_STYLESHEET; 
 	}
+	
+	protected Scene makeScreenWithoutStyling() {
+		VBox vb = new VBox(); 
+
+		HBox towerName = new HBox(); 
+		Text towerNameText = new Text("Tower Name: "); 
+		TextField towerNameInput = new TextField(); 
+		towerName.getChildren().add(towerNameText);
+		towerName.getChildren().add(towerNameInput); 
+		
+		HBox towerImage = new HBox(); 
+		HBox projectileImage = new HBox(); 
+		HBox towerAbility = new HBox(); 
+		HBox towerRange = new HBox(); 
+		HBox towerDamage = new HBox(); 
+		HBox towerPrice = new HBox(); 
+		HBox backAndApply = setupBackAndApply(); 
+
+		vb.getChildren().add(towerName);
+		
+		return new Scene(vb, 1500, 900); 
+	}
+	
+	
 }
