@@ -2,6 +2,7 @@ package authoring.frontend;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -45,7 +46,12 @@ class PropertiesReader {
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
 			String key = (String)e.nextElement();
 			String val = properties.getProperty(key);
-			imageMap.put(key, new Image(val, imageLength, imageHeight, true, false));
+			try {
+				imageMap.put(key, new Image(new FileInputStream(val), imageLength, imageHeight, true, false));
+			} catch (FileNotFoundException e1) {
+				System.out.println("noooo "+val);
+				throw new MissingPropertiesException(val);
+			}
 		}
 		return imageMap; 
 	}
