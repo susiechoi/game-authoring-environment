@@ -1,4 +1,4 @@
-package panel;
+package gameplayer.panel;
 
 import javafx.scene.Node;
 

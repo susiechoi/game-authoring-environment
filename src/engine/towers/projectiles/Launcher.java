@@ -1,6 +1,6 @@
-package towers.projectiles;
+package engine.towers.projectiles;
 
-import towers.trigger.Trigger;
+import engine.towers.trigger.Trigger;
 
 /**
  * 

@@ -1,6 +1,6 @@
 package api;
 
-import enemies.Enemy;
+import engine.enemies.Enemy;
 
 /**
  * 

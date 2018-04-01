@@ -1,6 +1,6 @@
 package engine;
 
-import towers.Tower;
+import engine.towers.Tower;
 
 /**
  * Interface for interacting with current state of the Game, including collection/placement of Towers, as well
