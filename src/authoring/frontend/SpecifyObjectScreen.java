@@ -6,7 +6,6 @@ import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -20,14 +19,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	
 	protected SpecifyObjectScreen(List<String> objectOptions) {
 		myObjectOptions = objectOptions; 
-	}
-	
-	@Override
-	protected Scene makeScreen() {
-		myScreen = makeScreenWithoutStyling();
-		applyDefaultStyling(); 
-		applyStyle(DEFAULT_OWN_STYLESHEET);
-		return myScreen; 
+		myStylesheet = DEFAULT_OWN_STYLESHEET;
 	}
 	
 	protected Scene makeScreenWithoutStyling() {

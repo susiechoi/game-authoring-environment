@@ -10,8 +10,10 @@ import javafx.scene.Scene;
  *
  */
 public class GameAuthoringStartScreen extends Screen {
+
 	@Override
-	public Scene makeScreen() {
-		return null; 
+	protected Scene makeScreenWithoutStyling() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

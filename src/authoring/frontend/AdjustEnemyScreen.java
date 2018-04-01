@@ -7,9 +7,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 class AdjustEnemyScreen extends AdjustScreen {
-
-	@Override
-	protected Scene makeScreen() {
+	
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
+	
+	protected AdjustEnemyScreen() {
+		myStylesheet = DEFAULT_OWN_STYLESHEET; 
+	}
+	
+	protected Scene makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 
 		HBox towerName = new HBox(); 

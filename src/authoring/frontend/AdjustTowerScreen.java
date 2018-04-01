@@ -5,7 +5,8 @@ import javafx.scene.Scene;
 class AdjustTowerScreen extends Screen {
 
 	@Override
-	public Scene makeScreen() {
-		return null; 
+	protected Scene makeScreenWithoutStyling() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
