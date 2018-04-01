@@ -9,6 +9,8 @@ package authoring.frontend;
 import java.io.File;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -30,19 +32,19 @@ public class UIFactory {
 		newButton.setGraphic(buttonImageView);
 		return newButton; 
 	}
-	
+
 	public Button makeTextButton(String buttonText) {
 		Button newButton = new Button(buttonText);
 		return newButton; 
 	}
-	
+
 	public ComboBox<String> makeTextDropdown(List<String> dropdownOptions) {
-		 ObservableList<String> options = FXCollections.observableArrayList(dropdownOptions);
-		 ComboBox<String> newDropdown = new ComboBox<String>(options);
-		 newDropdown.getSelectionModel().selectFirst(); 
-		 return newDropdown; 
+		ObservableList<String> options = FXCollections.observableArrayList(dropdownOptions);
+		ComboBox<String> newDropdown = new ComboBox<String>(options);
+		newDropdown.getSelectionModel().selectFirst(); 
+		return newDropdown; 
 	}
-	
+
 	/**
 	 * Creates HBox with a text prompt to the left of a user input text field
 	 * @param promptString - text prompt 
@@ -56,7 +58,7 @@ public class UIFactory {
 		hb.getChildren().add(tf); 
 		return hb; 
 	}
-	
+
 	/**
 	 * Creates HBox with a text prompt to the left, combobox/dropdown to the right
 	 * @param promptString - text prompt 
@@ -72,19 +74,24 @@ public class UIFactory {
 		hb.getChildren().add(dropdown); 
 		return hb; 
 	}
-	
+
 	protected HBox setupPromptAndSlider(String promptString, int sliderMax) {
 		HBox hb = new HBox();
 		Text prompt = new Text(promptString);
-		Slider slider = new Slider();
-		slider.setMin(0);
-		slider.setMax(sliderMax);
-		slider.setValue((0 + sliderMax) / 2);
+		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
+		Text sliderValue = new Text(Double.toString(slider.getValue()));
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> ov,
+					Number old_val, Number new_val) {
+				sliderValue.setText(Integer.toString((int)(double)new_val));
+			}
+		});
 		hb.getChildren().add(prompt);
 		hb.getChildren().add(slider);
+		hb.getChildren().add(sliderValue);
 		return hb; 
 	}
-	
+
 	public ScrollPane makeTextScrollPane(List<String> options) {
 		ScrollPane newPane = new ScrollPane();
 		String allOptions = "";
@@ -94,7 +101,7 @@ public class UIFactory {
 		newPane.setContent(new Text(allOptions));
 		return newPane; 
 	}
-	
+
 	public ScrollPane makeImageScrollPane(File[] files) {
 		ScrollPane newPane = new ScrollPane();
 		VBox imageConsolidator = new VBox();
@@ -106,5 +113,5 @@ public class UIFactory {
 		newPane.setContent(imageConsolidator);
 		return newPane; 
 	}
-	
+
 }
