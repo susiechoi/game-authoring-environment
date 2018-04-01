@@ -1,19 +1,13 @@
 VBox {
-	-fx-background-color: #CDCDCD;
+	-fx-background-color: #B7D5D4;
 	-fx-padding: 15;
     -fx-spacing: 20;
     -fx-alignment: center; 
 }
 
 HBox {
-	-fx-background-color: #CDCDCD;
     -fx-spacing: 20;
     -fx-alignment: center; 
-}
-
-#intro {
-	-fx-font-family: "Arial";
-    -fx-font-size: 40; 
 }
 
 #or {
@@ -23,31 +17,31 @@ HBox {
 
 .button, .combo-box {
     -fx-text-fill: white;
-    -fx-background-color: linear-gradient(#364156, #011638);
+    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#011638, #364156);
+    -fx-background-color: linear-gradient(#77878B, #CDCDCD);
+}
+
+.combo-box:hover {
+    -fx-background-color: linear-gradient(#77878B, #CDCDCD);
 }
 
 .combo-box .cell {
     -fx-text-fill: white; 
-    -fx-background-color: linear-gradient(#364156, #011638);
-}
-
-.combo-box:hover {
-    -fx-background-color: linear-gradient(#011638, #364156);
+    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
 }
 
 .combo-box .cell:hover {
-	-fx-text-fill: #011638;
+	-fx-text-fill: #373E40;
     -fx-background-color: white;
 }
 
 #goButton {
-	-fx-background-color: linear-gradient(#267326, #214E34);
+	-fx-background-color: linear-gradient(#364156, #011638);
 }
 
 #goButton:hover {
-	-fx-background-color: linear-gradient(#214E34, #267326);
+	-fx-background-color: linear-gradient(#011638, #364156);
 }
