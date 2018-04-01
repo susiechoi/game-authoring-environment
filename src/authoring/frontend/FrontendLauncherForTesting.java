@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,7 +13,10 @@ public class FrontendLauncherForTesting extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		SpecifyEnemyScreen e = new SpecifyEnemyScreen();
+		ArrayList<String> enemyOptions = new ArrayList<String>();
+		enemyOptions.add("Enemy 1");
+		enemyOptions.add("Enemy 2");
+		SpecifyEnemyScreen e = new SpecifyEnemyScreen(enemyOptions);
 		Stage s = new Stage(); 
 		s.setScene(e.getScreen());
 		s.show();

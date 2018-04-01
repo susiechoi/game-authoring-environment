@@ -1,10 +1,17 @@
 .button {
-    -fx-text-fill: white;
     -fx-font-family: "Arial";
     -fx-font-size: 18; 
-    -fx-background-color: linear-gradient(#696969, #000000);
+    
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+
 .button:hover {
-    -fx-background-color: linear-gradient(#000000, #696969);
+}
+
+.combo-box {
+}
+
+.combo-box .cell {
+    -fx-font-family: "Arial";
+    -fx-font-size: 18; 
 }

@@ -2,10 +2,20 @@ package authoring.frontend;
 
 import java.util.List;
 
+import javafx.scene.Scene;
+
 public class SpecifyTowerScreen extends SpecifyObjectScreen {
+	
+	public static final String DEFAULT_DESCRIPTION = "Tower";
+
+	protected SpecifyTowerScreen(List<String> objectOptions) {
+		super(objectOptions);
+		myObjectDescription = DEFAULT_DESCRIPTION; 
+	}
 
 	@Override
-	protected void makeScreenWithStyles(List<String> stylesheets) {
+	public Scene makeScreenWithoutStyling() {
+		return null; 
 	}
 
 }
