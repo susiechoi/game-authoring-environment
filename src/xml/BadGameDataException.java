@@ -7,6 +7,10 @@ package xml;
  *
  */
 public class BadGameDataException extends RuntimeException{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7370199345461366056L;
 	public BadGameDataException() {
         super();
     }
