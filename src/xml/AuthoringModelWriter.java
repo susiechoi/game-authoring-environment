@@ -22,6 +22,7 @@ public class AuthoringModelWriter implements XMLWriter {
 	 */
 	
 	private Document d;
+	private XStream parser;
 	
 	/**
 	 * Initializes file that will be written
@@ -32,6 +33,7 @@ public class AuthoringModelWriter implements XMLWriter {
 		} catch (ParserConfigurationException p) {
 			System.out.println("Bad configuration");
 		}
+		parser = new XStream();
 	}
 	
 	/**

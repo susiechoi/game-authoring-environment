@@ -22,7 +22,8 @@ import data.GameData;
 
 public class PlaySaverWriter implements XMLWriter {
 
-	Document d;
+	private Document d;
+	private XStream parser;
 	
 	public PlaySaverWriter() {
 		try {
@@ -30,6 +31,7 @@ public class PlaySaverWriter implements XMLWriter {
 		} catch (ParserConfigurationException p) {
 			System.out.println("Bad configuration");
 		}
+		parser = new XStream();
 	}
 	
 	@Override
