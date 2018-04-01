@@ -2,7 +2,6 @@ package authoring.frontend;
 
 import java.io.File;
 import java.util.List;
-import java.util.function.Consumer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class PartsFactory {
+public class UIFactory {
 
 	public Button makeButton(String buttonText, double length, double height) {
 		Button newButton = new Button(buttonText);

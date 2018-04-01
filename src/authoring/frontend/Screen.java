@@ -12,33 +12,33 @@ import javafx.scene.Scene;
  * displayed to the user. 
  */
 
-public abstract class Screen {
+abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	protected Scene myScreen;
-	protected PartsFactory myUIFactory;
+	protected UIFactory myUIFactory;
 
-	public Screen() {
-		myUIFactory = new PartsFactory();
+	protected Screen() {
+		myUIFactory = new UIFactory();
 	}
 		
 	/**
 	 * Creates & returns the Screen
 	 */
-	public abstract Scene makeScreen();
+	protected abstract Scene makeScreen();
 
-	public void applyDefaultStyling() {
+	protected void applyDefaultStyling() {
 		if (myScreen == null) {
 			myScreen = makeScreen(); 
 		}
 		myScreen.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	}
 
-	public void applyStyle(String stylesheet) {
+	protected void applyStyle(String stylesheet) {
 		myScreen.getStylesheets().add(stylesheet);
 	}
 
-	public void applyStyles(List<String> stylesheets) {
+	protected void applyStyles(List<String> stylesheets) {
 		if (myScreen == null) {
 			myScreen = makeScreen();
 		}
@@ -50,7 +50,7 @@ public abstract class Screen {
 	/**
 	 * Returns the Scene object to be loaded on the screen
 	 */
-	public Scene getScreen() {
+	protected Scene getScreen() {
 		if (myScreen == null) {
 			myScreen = makeScreen(); 
 		}
@@ -60,10 +60,7 @@ public abstract class Screen {
 	protected void setScreen(Scene newScreen) {
 		myScreen = newScreen;
 	}
-	
-	protected PartsFactory getUIFactory() {
-		return myUIFactory;
-	}
+
 }
 
 

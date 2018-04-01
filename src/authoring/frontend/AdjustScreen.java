@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 public abstract class AdjustScreen extends Screen {
 	//TODO: set up listener here?
 	public Button setupApplyButton(double length, double height) {
-		return getUIFactory().makeButton("Apply", length, height); //TODO: set up prompts properties file	
+		return myUIFactory.makeButton("Apply", length, height); //TODO: set up prompts properties file	
 	}
 
 }
