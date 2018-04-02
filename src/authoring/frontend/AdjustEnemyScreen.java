@@ -17,7 +17,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 	private PropertiesReader myPropertiesReader; 
 
 	protected AdjustEnemyScreen() {
-		myStylesheet = DEFAULT_OWN_STYLESHEET; 
+		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 		myPropertiesReader = new PropertiesReader();
 	}
 
@@ -25,19 +25,19 @@ class AdjustEnemyScreen extends AdjustScreen {
 	protected Scene makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 		
-		HBox enemyNameSelect = myUIFactory.setupPromptAndTextField("", "Enemy Name: "); 
+		HBox enemyNameSelect = getUIFactory().setupPromptAndTextField("", "Enemy Name: "); 
 
 		ImageView enemyImageDisplay = new ImageView(); 
 		HBox enemyImageSelect = new HBox();
 		try {
-			enemyImageSelect = myUIFactory.setupImageSelector(myPropertiesReader, "Enemy ", ENEMY_IMAGES, enemyImageDisplay, 100);
+			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "Enemy ", ENEMY_IMAGES, enemyImageDisplay, 100);
 		} catch (MissingPropertiesException e) {
 			// TODO FIX
 		} 
 		
-		VBox enemySpeed = myUIFactory.setupPromptAndSlider("enemySpeedSlider", "Enemy Speed: ", DEFAULT_ENEMY_MAX_SPEED); 
-		VBox enemyHealthImpact = myUIFactory.setupPromptAndSlider("enemyHealthImpactSlider", "Enemy Health Impact: ", DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
-		VBox enemy$Impact = myUIFactory.setupPromptAndSlider("enemyMoneyImpactSlider", "Enemy $ Impact: ", DEFAULT_ENEMY_MAX_$_IMPACT); 
+		VBox enemySpeed = getUIFactory().setupPromptAndSlider("enemySpeedSlider", "Enemy Speed: ", DEFAULT_ENEMY_MAX_SPEED); 
+		VBox enemyHealthImpact = getUIFactory().setupPromptAndSlider("enemyHealthImpactSlider", "Enemy Health Impact: ", DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
+		VBox enemy$Impact = getUIFactory().setupPromptAndSlider("enemyMoneyImpactSlider", "Enemy $ Impact: ", DEFAULT_ENEMY_MAX_$_IMPACT); 
 		
 		HBox backAndApply = setupBackAndApplyButton(); 
 

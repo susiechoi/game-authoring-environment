@@ -2,13 +2,13 @@ VBox, HBox {
 	-fx-background-color: #B7D5D4;
 	-fx-padding: 15;
     -fx-spacing: 10;
-    -fx-alignment: center; 
+    -fx-alignment: center;
 }
 
 .text-field {
 	-fx-min-width: 250;
 	-fx-min-height: 30;
-	-fx-border: 0px; 
+	-fx-border: 0px;
 }
 
 .combo-box {
@@ -31,7 +31,7 @@ VBox, HBox {
 }
 
 .combo-box .cell {
-    -fx-text-fill: white; 
+    -fx-text-fill: white;
     -fx-background-color: linear-gradient(#CDCDCD, #77878B);
 }
 
@@ -55,8 +55,8 @@ VBox, HBox {
     -fx-background-color: linear-gradient(#011638, #364156);
 }
 
-.slider {
-	-fx-control-inner-background: #011638; 
-	-fx-padding: 0;
+#towerRangeSlider, #towerPriceSlider {
+	-fx-control-inner-background: #011638;
+	-fx-padding: 15;
     -fx-spacing: 0;
 }

@@ -6,6 +6,8 @@
 
 package authoring.frontend;
 
+
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -30,6 +34,17 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class UIFactory {
+	
+	/**
+	 * Makes Text object for displaying titles of screens to the user
+	 * @param titleText is String text displayed as title
+	 * @return Text object with this String
+	 */
+	public Text makeScreenTitleText(String titleText) {
+		Text screenTitle = new Text(titleText);
+		screenTitle.setId("screenTitle");
+		return screenTitle;
+	}
 
 	public Button makeImageButton(String id, Image buttonImage) {
 		Button newButton = new Button();
@@ -43,6 +58,20 @@ public class UIFactory {
 		Button newButton = new Button(buttonText);
 		newButton.setId(id);
 		return newButton; 
+	}
+	
+	public ComboBox<String> makeTextDropdownButtonEnable(String id, List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
+			EventHandler<ActionEvent> noChoiceAction, String prompt){
+		ComboBox<String> dropdown = makeTextDropdown(id, dropdownOptions);
+		dropdown.setOnAction( e ->{
+			if(!dropdown.getValue().equals(prompt)){
+				chooseAction.handle(e);
+			}
+			else {
+				noChoiceAction.handle(e);
+			}
+			});
+		return dropdown;
 	}
 
 	public ComboBox<String> makeTextDropdown(String id, List<String> dropdownOptions) {
