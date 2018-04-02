@@ -1,17 +1,17 @@
 package authoring.frontend;
 
 import java.util.ArrayList;
-import java.util.Map;
 
+import java.util.Map;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 class AdjustTowerScreen extends AdjustScreen {
 
@@ -22,7 +22,7 @@ class AdjustTowerScreen extends AdjustScreen {
 	public static final String ENGLISH_ERROR_FILE = "errors/EnglishErrors.properties";
 	public static final int DEFAULT_TOWER_MAX_RANGE = 500; 
 	public static final int DEFAULT_TOWER_MAX_PRICE = 500; 
-	
+
 	private PropertiesReader myPropertiesReader; 
 
 	protected AdjustTowerScreen() {
@@ -47,9 +47,21 @@ class AdjustTowerScreen extends AdjustScreen {
 			towerNameSelect = getUIFactory().setupPromptAndTextField("", "Tower Name: ");
 		}
 		ImageView towerImageDisplay = new ImageView(); 
-		HBox towerImageSelect = setupImageSelector("Tower ", TOWER_IMAGES, towerImageDisplay, 50); 
+		HBox towerImageSelect = new HBox();
+		try {
+			towerImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "Tower ", TOWER_IMAGES, towerImageDisplay, 50);
+		} catch (MissingPropertiesException e) {
+			// TODO FIX
+			e.printStackTrace();
+		} 
 		ImageView projectileImageDisplay = new ImageView(); 
-		HBox projectileImageSelect = setupImageSelector("Projectile ", PROJECTILE_IMAGES, projectileImageDisplay, 30);
+		HBox projectileImageSelect = new HBox(); 
+		try {
+			projectileImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "Projectile ", PROJECTILE_IMAGES, projectileImageDisplay, 30);
+		} catch (MissingPropertiesException e) {
+			// TODO FIX
+			e.printStackTrace();
+		}
 
 		ArrayList<String> dummyTowerAbilities = new ArrayList<String>();
 		dummyTowerAbilities.add("Freeze");
@@ -58,7 +70,6 @@ class AdjustTowerScreen extends AdjustScreen {
 		
 		VBox towerRange = getUIFactory().setupPromptAndSlider("towerRangeSlider", "Tower Range: ", DEFAULT_TOWER_MAX_RANGE); 
 		VBox towerPrice = getUIFactory().setupPromptAndSlider("towerPriceSlider", "Tower Price: ", DEFAULT_TOWER_MAX_PRICE); 
-		
 		HBox backAndApply = setupBackAndApplyButton(); 
 
 		vb.getChildren().add(towerNameSelect);
