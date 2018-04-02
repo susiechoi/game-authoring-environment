@@ -29,7 +29,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 //		ImageView enemyImageDisplay = new ImageView(); 
 		HBox enemyImageSelect = new HBox();
 		try {
-			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "Enemy ", ENEMY_IMAGES, 100);
+			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "Enemy ", ENEMY_IMAGES, 75);
 		} catch (MissingPropertiesException e) {
 			// TODO FIX
 		} 

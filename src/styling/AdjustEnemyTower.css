@@ -1,11 +1,12 @@
 VBox, HBox {
-	-fx-background-color: #B7D5D4;
+	-fx-background-color: #fffffa;
 	-fx-padding: 15;
     -fx-spacing: 10;
     -fx-alignment: center;
 }
 
 .text-field {
+	-fx-background-color: #99ccff;
 	-fx-min-width: 250;
 	-fx-min-height: 30;
 	-fx-border: 0px;
@@ -18,26 +19,25 @@ VBox, HBox {
 
 .button, .combo-box {
     -fx-text-fill: white;
-    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
+    -fx-background-color: #99ccff;
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#77878B, #CDCDCD);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 .combo-box:hover {
-    -fx-background-color: linear-gradient(#77878B, #CDCDCD);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 .combo-box .cell {
     -fx-text-fill: white;
-    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
+    -fx-background-color: #99ccff;
 }
 
 .combo-box .cell:hover {
-	-fx-text-fill: #373E40;
     -fx-background-color: white;
+	-fx-text-fill: #99ccff;
 }
 
 #backButton {
@@ -47,17 +47,14 @@ VBox, HBox {
     -fx-background-color:transparent;
 }
 
-#applyButton, #loadButton {
-    -fx-background-color: linear-gradient(#364156, #011638);
-}
-
-#applyButton:hover, #loadButton:hover {
-    -fx-background-color: linear-gradient(#011638, #364156);
+#applyButton {
+    -fx-background-color: #ffcc66;
 }
 
 .slider {
+	-fx-min-width: 200;
     -fx-alignment: center;
-	-fx-control-inner-background: #011638;
+	-fx-control-inner-background: #ffcc66;
 	-fx-padding: 15;
     -fx-spacing: 0;
 }
