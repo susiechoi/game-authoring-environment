@@ -18,7 +18,7 @@ class AuthoringController implements Controller {
     private final AuthoringView VIEW = new AuthoringView();
    
     public AuthoringController() {
-	
+	Scene StartScreen = VIEW.loadAuthoringView();
     }
     
     /**

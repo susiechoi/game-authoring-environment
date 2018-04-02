@@ -18,11 +18,11 @@ import screen.Screen;
  * 
  */
 
-public class AuthoringView implements Screen {
+public class AuthoringView {
     
     	public Scene loadAuthoringView() {
-    	    //need to make methods public to generate multiple views
-    	    return null;
+    	    Scene StartScreen = new GameAuthoringStartScreen().getScreen();
+    	    return StartScreen;
     	}
 
 	/**

@@ -1,3 +1,7 @@
+package authoring;
+
+import engine.path.Path;
+
 /**
  * 
  * @author Susie Choi 
@@ -5,11 +9,6 @@
  * Receives input from Controller through applyChange method regarding what/how to change an object
  * 
  */
-
-package authoring;
-
-import engine.path.Path;
-
 class AuthoringModel {
 
     private final AuthoringController CONTROLLER = new AuthoringController();
