@@ -19,7 +19,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 	protected SpecifyObjectScreen(List<String> objectOptions) {
 		myObjectOptions = objectOptions; 
-		myStylesheet = DEFAULT_OWN_STYLESHEET;
+		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
 	protected Scene makeScreenWithoutStyling() {
@@ -47,7 +47,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	}
 
 	protected Button makeCreateNewObjectButton(String object) {
-		Button newObjectButton = myUIFactory.makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
+		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		return newObjectButton;
 	}
 
@@ -55,7 +55,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		ArrayList<String> dropdownOptions = new ArrayList<String>(); 
 		dropdownOptions.add("Edit Existing "+myObjectDescription);
 		dropdownOptions.addAll(myObjectOptions);
-		ComboBox<String> dropdown = myUIFactory.makeTextDropdown("objectOptions", dropdownOptions); 
+		ComboBox<String> dropdown = getUIFactory().makeTextDropdown("objectOptions", dropdownOptions); 
 		return dropdown; 
 	}
 

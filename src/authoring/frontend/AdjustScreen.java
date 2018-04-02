@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
  * 
  * Abstract class of Screens where values that need to be communicated to AuthoringModel
  * are changed (i.e. Screens that have some kind of "Apply" button)
- * @author Sarahbland
  * @author susiechoi
  *
  */
@@ -45,7 +44,7 @@ public abstract class AdjustScreen extends Screen {
 
 	//TODO: set up listener here?
 	protected Button setupApplyButton() {
-		Button applyButton = myUIFactory.makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
+		Button applyButton = getUIFactory().makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 		return applyButton;
 	}
 	
