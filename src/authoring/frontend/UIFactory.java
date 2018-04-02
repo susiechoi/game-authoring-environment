@@ -25,6 +25,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class UIFactory {
+	
+	public Text makeScreenTitleText(String titleText) {
+		Text screenTitle = new Text(titleText);
+		screenTitle.setId("screenTitle");
+		return screenTitle;
+	}
 
 	public Button makeImageButton(String id, Image buttonImage) {
 		Button newButton = new Button();

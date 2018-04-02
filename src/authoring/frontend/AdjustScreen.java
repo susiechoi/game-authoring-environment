@@ -30,13 +30,13 @@ public abstract class AdjustScreen extends Screen {
 	
 	protected Button setupBackButton() {
 		Image backbuttonImage = new Image(DEFAULT_BACK_URL, 60, 40, true, false); // TODO move to css
-		Button backButton = myUIFactory.makeImageButton("backButton",backbuttonImage);
+		Button backButton = getUIFactory().makeImageButton("backButton",backbuttonImage);
 		return backButton; 
 	}
 
 	//TODO: set up listener here?
 	protected Button setupApplyButton() {
-		Button applyButton = myUIFactory.makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
+		Button applyButton = getUIFactory().makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 		return applyButton;
 	}
 

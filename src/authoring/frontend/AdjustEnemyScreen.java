@@ -7,7 +7,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
 	
 	protected AdjustEnemyScreen() {
-		myStylesheet = DEFAULT_OWN_STYLESHEET; 
+		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 	}
 	
 	protected Scene makeScreenWithoutStyling() {

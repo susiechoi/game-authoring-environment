@@ -19,12 +19,18 @@ import javafx.scene.control.ButtonType;
 abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-	protected String myStylesheet; 
-	protected Scene myScreen;
-	protected UIFactory myUIFactory;
+	private String myStylesheet; 
+	private Scene myScreen;
+	private UIFactory myUIFactory;
 
 	protected Screen() {
 		myUIFactory = new UIFactory();
+	}
+	protected UIFactory getUIFactory() {
+		return myUIFactory;
+	}
+	protected void setStyleSheet(String stylesheetString) {
+		myStylesheet = stylesheetString;
 	}
 
 	/**

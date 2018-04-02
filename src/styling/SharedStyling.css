@@ -1,11 +1,11 @@
 Text {
 	-fx-font-family: "Georgia";
-    -fx-font-size: 18; 
+    -fx-font-size: 18;
 }
 
 .button {
     -fx-font-family: "Georgia";
-    -fx-font-size: 18; 
+    -fx-font-size: 18;
 }
 
 .button:hover {
@@ -16,8 +16,13 @@ Text {
 
 .combo-box .cell {
     -fx-font-family: "Georgia";
-    -fx-font-size: 18; 
+    -fx-font-size: 18;
 }
 
 .text-field {
+}
+
+#screenTitle {
+  -fx-alignment: center;
+  -fx-font: bold 24pt "Georgia";
 }
