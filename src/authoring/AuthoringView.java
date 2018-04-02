@@ -3,9 +3,10 @@ package authoring;
 import java.io.File;
 import java.util.List;
 
+import authoring.frontend.GameAuthoringStartScreen;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
-import screen.Screen;
+import javafx.scene.Scene;
 
 /**
  * 
@@ -16,7 +17,12 @@ import screen.Screen;
  * 
  */
 
-public class AuthoringView implements Screen {
+public class AuthoringView {
+    
+    	public Scene loadAuthoringView() {
+    	    Scene StartScreen = new GameAuthoringStartScreen().getScreen();
+    	    return StartScreen;
+    	}
 
 	/**
 	 * 
