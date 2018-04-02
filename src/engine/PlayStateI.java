@@ -1,6 +1,7 @@
 package engine;
 
 import engine.towers.Tower;
+import engine.towers.TowerI;
 
 /**
  * Interface for interacting with current state of the Game, including collection/placement of Towers, as well
@@ -9,7 +10,7 @@ import engine.towers.Tower;
  * @author Katherine Van Dyk 3/28/18
  *
  */
-public interface GameState {
+public interface PlayStateI {
 
     /**
      * Checks for intersections within all moving Towers, Enemies, and Projectiles, and spawns
@@ -25,20 +26,20 @@ public interface GameState {
      * @param x: x-position of top-left coordinate of image
      * @param y: y-position of top-left coordinate of image
      */
-    public Tower placeTower(String type, int x, int y);
+    public TowerI placeTower(String type, int x, int y);
     
     /**
      * Prompts user to release tower from collection and add value to current points within GameState.
      * 
-     * @param type: Type of tower being sold
+     * @param Tower: The Tower to be sold
      */
-    public void sellTower();
+    public void sellTower(Tower towerToBeSold);
     
     /**
      * Prompts user to upgrade tower
      * 
-     * @param hash
+     * @param Tower: The tower that is going to be upgraded
      */
-    public void upgradeTower();
+    public void upgradeTower(Tower towerToBeUpgraded );
 
 }

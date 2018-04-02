@@ -2,7 +2,7 @@ package usecases;
 
 import java.util.List;
 
-import engine.enemies.Enemy;
+import engine.enemies.EnemyI;
 import engine.towers.projectiles.Projectile;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class ProjectileEnemyExample {
 
-    private List<Enemy> enemies;
+    private List<EnemyI> enemies;
     private List<Projectile> projectiles;
 
     /**
@@ -31,7 +31,7 @@ public class ProjectileEnemyExample {
      * Update method called for every iteration of the game loop
      */
     public void update() {
-	for(Enemy enemy : enemies) {
+	for(EnemyI enemy : enemies) {
 	    for(Projectile projectile : projectiles) {
 		if(enemy.getHitBy(projectile)) {
 		    projectiles.remove(projectile);
