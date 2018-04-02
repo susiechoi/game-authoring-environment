@@ -1,4 +1,4 @@
-package api;
+package engine.level;
 
 import engine.enemies.wave.Wave;
 import engine.path.Path;
