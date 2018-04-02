@@ -6,13 +6,20 @@
 
 package authoring.frontend;
 
+
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
+import java.util.function.Consumer;
+
+import javax.swing.Action;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -26,6 +33,11 @@ import javafx.scene.text.Text;
 
 public class UIFactory {
 	
+	/**
+	 * Makes Text object for displaying titles of screens to the user
+	 * @param titleText is String text displayed as title
+	 * @return Text object with this String
+	 */
 	public Text makeScreenTitleText(String titleText) {
 		Text screenTitle = new Text(titleText);
 		screenTitle.setId("screenTitle");
@@ -44,6 +56,12 @@ public class UIFactory {
 		Button newButton = new Button(buttonText);
 		newButton.setId(id);
 		return newButton; 
+	}
+	
+	public ComboBox<String> makeTextDropdownButtonEnable(String id, List<String> dropdownOptions, EventHandler<ActionEvent> action){
+		ComboBox<String> dropdown = makeTextDropdown(id, dropdownOptions);
+		dropdown.setOnAction(action);
+		return dropdown;
 	}
 
 	public ComboBox<String> makeTextDropdown(String id, List<String> dropdownOptions) {

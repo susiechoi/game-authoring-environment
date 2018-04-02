@@ -1,14 +1,19 @@
 package authoring.frontend;
 
+import java.util.ArrayList;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
  * Class to create the original screen users see when entering the Game Authoring environment. 
  * Dependent on the AuthoringView to create it correctly and on the PartsFactory to make UI
- * elements.
+ * element
  * @author Sarahbland
  *
  *
@@ -16,6 +21,7 @@ import javafx.scene.text.Text;
 public class GameAuthoringStartScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	private PropertiesReader myPropertiesReader;
+	private Button myEditButton;
 	protected GameAuthoringStartScreen() {
 		myPropertiesReader = new PropertiesReader();
 		setStyleSheet(DEFAULT_OWN_CSS);
@@ -31,7 +37,18 @@ public class GameAuthoringStartScreen extends Screen {
 			System.out.println("not finding file");
 			e.printStackTrace(); //TODO: temporary until errors fixed
 		}
+		ArrayList<String> dummyGameNames = new ArrayList<>();
+		dummyGameNames.add("Vanilla");
+		dummyGameNames.add("Plants vs. Zombies");
+
+	
+		myEditButton = getUIFactory().makeTextButton("editbutton", "Testing Edit button");
+		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyGameNames, e -> {myEditButton.setDisable(false);});
+		myEditButton.setDisable(true);
 		vbox.getChildren().add(startHeading);
+		vbox.getChildren().add(gameChooser);
+		vbox.getChildren().add(myEditButton);
+		
 		return new Scene(vbox, 1500, 900);
 
 	}

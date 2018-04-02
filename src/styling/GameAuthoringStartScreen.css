@@ -1,6 +1,12 @@
 VBox {
-	-fx-background-color: #B7D5D4;
+	-fx-background-color: #77878B;
 	-fx-padding: 15;
     -fx-spacing: 10;
     -fx-alignment: center;
+}
+
+#editbutton {
+		-fx-min-width: 200;
+		-fx-min-height: 50;
+		-fx-background-color: #305252;
 }
