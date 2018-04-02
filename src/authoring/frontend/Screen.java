@@ -34,6 +34,7 @@ abstract class Screen {
 	}
 
 	protected abstract Scene makeScreenWithoutStyling();
+	
 
 	protected void applyDefaultStyling() {
 		if (myScreen != null) {

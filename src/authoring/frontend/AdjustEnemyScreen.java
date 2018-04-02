@@ -14,5 +14,4 @@ class AdjustEnemyScreen extends AdjustScreen {
 		return null; 
 	}
 	
-	
 }
