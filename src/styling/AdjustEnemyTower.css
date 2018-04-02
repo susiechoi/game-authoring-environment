@@ -6,9 +6,17 @@ VBox, HBox {
 }
 
 .text-field {
-	-fx-min-width: 250;
+	-fx-font-family: "Helvetica";
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
+    	-fx-min-width: 250;
 	-fx-min-height: 30;
 	-fx-border: 0px;
+}
+
+.text-field:hover {
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 .combo-box {
@@ -28,10 +36,11 @@ VBox, HBox {
 
 .combo-box:hover {
     -fx-background-color: linear-gradient(#77878B, #CDCDCD);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 .combo-box .cell {
-    -fx-text-fill: white;
+    -fx-text-fill: white; 
     -fx-background-color: linear-gradient(#CDCDCD, #77878B);
 }
 
@@ -47,17 +56,18 @@ VBox, HBox {
     -fx-background-color:transparent;
 }
 
-#applyButton, #loadButton {
-    -fx-background-color: linear-gradient(#364156, #011638);
-}
-
-#applyButton:hover, #loadButton:hover {
-    -fx-background-color: linear-gradient(#011638, #364156);
+#applyButton {
+	-fx-background-color: linear-gradient(#364156, #011638);
 }
 
 .slider {
+	-fx-min-width: 200;
     -fx-alignment: center;
-	-fx-control-inner-background: #011638;
+	-fx-control-inner-background: white;
 	-fx-padding: 15;
     -fx-spacing: 0;
+}
+
+#screenTitle {
+	-fx-font-size: 50; 
 }

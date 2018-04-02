@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -29,7 +30,7 @@ class AdjustTowerScreen extends AdjustScreen {
 		VBox vb = new VBox(); 
 		HBox towerNameSelect = new HBox();
 		try {
-		towerNameSelect = getUIFactory().setupPromptAndTextField("", myPropertiesReader.findVal(ENGLISH_PROMPT_FILE, "TowerName")); 
+			towerNameSelect = getUIFactory().setupPromptAndTextField("", myPropertiesReader.findVal(ENGLISH_PROMPT_FILE, "TowerName")); 
 		}
 		catch(MissingPropertiesException e){
 			try {
@@ -38,8 +39,9 @@ class AdjustTowerScreen extends AdjustScreen {
 			catch (MissingPropertiesException e2) {
 				showError("Missing a properties file! Defaulting to English");
 			}
-			towerNameSelect = getUIFactory().setupPromptAndTextField("", "Tower Name: ");
 		}
+		TextField nameInputField = (TextField) towerNameSelect.getChildren().get(1);
+		
 //		ImageView towerImageDisplay = new ImageView(); 
 		HBox towerImageSelect = new HBox();
 		try {
@@ -66,6 +68,7 @@ class AdjustTowerScreen extends AdjustScreen {
 		HBox towerPrice = getUIFactory().setupPromptAndSlider("towerPriceSlider", "Tower Price: ", DEFAULT_TOWER_MAX_PRICE); 
 		HBox backAndApply = setupBackAndApplyButton(); 
 
+		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Tower"));
 		vb.getChildren().add(towerNameSelect);
 		vb.getChildren().add(towerImageSelect);
 //		vb.getChildren().add(towerImageDisplay);
@@ -75,7 +78,14 @@ class AdjustTowerScreen extends AdjustScreen {
 		vb.getChildren().add(towerRange);
 		vb.getChildren().add(towerPrice);
 		vb.getChildren().add(backAndApply);
-		return new Scene(vb, 1500, 900); 
+		
+		Scene screen = new Scene(vb, 1500, 900); 
+		screen.setOnMousePressed(event -> {
+			if (!nameInputField.equals(event.getSource())) {
+				nameInputField.getParent().requestFocus();
+			}
+		});
+		return screen;
 	}
 
 }
