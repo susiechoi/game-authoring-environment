@@ -22,7 +22,7 @@ public class FrontendLauncherForTesting extends Application {
 		
 		AdjustTowerScreen a = new AdjustTowerScreen(); 
 
-		//AdjustEnemyScreen a = new AdjustEnemyScreen(); 
+//		AdjustEnemyScreen a = new AdjustEnemyScreen(); 
 		Stage s = new Stage(); 
 		s.setScene(a.getScreen());
 		s.show();

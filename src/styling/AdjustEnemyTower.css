@@ -55,7 +55,8 @@ VBox, HBox {
     -fx-background-color: linear-gradient(#011638, #364156);
 }
 
-#towerRangeSlider, #towerPriceSlider {
+.slider {
+    -fx-alignment: center;
 	-fx-control-inner-background: #011638;
 	-fx-padding: 15;
     -fx-spacing: 0;
