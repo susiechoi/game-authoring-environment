@@ -1,38 +1,71 @@
 package engine.towers;
 
-/**
- * 
- * @author Ben Hodgson 3/28/18
- *
- * Interface for Tower objects in the game. 
- */
+import engine.enemies.EnemyI;
 
-public interface Tower {
-    
-    /**
-     * Sets the tower's health
-     * 
-     * @param health: the health to give the tower
-     */
-    public void setHealth(double health);
-    
-    /**
-     * Changes the tower's health
-     * 
-     * @param amount: the amount to change the tower's health
-     */
-    public void changeHealth(double health);
-    
-    /**
-     * Sets the tower's cost
-     * 
-     * @param cost: the cost for the tower     
-     */
-    public void setCost(double cost);
-    
-    /**
-     * handle upgrading the tower
-     */
-    public void upgrade();
+public class Tower implements TowerI{
+
+	public Tower() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void setHealth(double health) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changeHealth(double health) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCost(double cost) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getHitBy(EnemyI myEnemy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void move(int newX, int newY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer sell() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer upgradeGeneral() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer upgradeHealth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer upgradeRateOfFire() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer upgradeDamage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

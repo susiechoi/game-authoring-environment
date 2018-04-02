@@ -7,7 +7,7 @@ package engine;
  * @author Katherine Van Dyk 3/28/18
  *
  */
-public interface Engine {
+public interface EngineControllerI {
    
     /**
      * Pauses Game Loop animation so Game State stays constant
@@ -37,6 +37,18 @@ public interface Engine {
      * @param l: integer denoting level to jump to
      */
     public void jumpLevel(int l);
+    
+    /**
+     * Jumps to a certain level played in the Play
+     * 
+     * @param newLevel : The PlayState object with information about that level
+     */
+    public void setLevel(PlayState newLevel);
+    
+    /**
+     * Restarts the current level
+     */
+    public void restartLevel();
 
 
 }

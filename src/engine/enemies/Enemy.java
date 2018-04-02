@@ -1,32 +1,54 @@
 package engine.enemies;
 
-import engine.physics.Intersect;
-import engine.physics.Movable;
 import engine.towers.projectiles.Projectile;
+import javafx.scene.image.Image;
 
 /**
- * 
- * @author Ben Hodgson 3/28/18
+ * This is used for the Enemy object in the game. It will use composition to implement moveable
+ * and intersectable methods.
+ * @author ryanpond
  *
- * Interface for enemy functionality
  */
-public interface Enemy extends Movable, Intersect {
-    
-    /**
-     * Handles when the Enemy is hit by a tower
-     * 
-     * @param projectile: the projectile that hit the enemy
-     */
-    public boolean getHitBy(Projectile projectile);
-    
-    /**
-     * Handles updating the enemy position to follow the path
-     */
-    public void followPath();
-    
-    /**
-     * Updates the properties of the enemy. For example, health, position, etc.
-     */
-    public void update();
+public class Enemy implements EnemyI{
+
+	public Enemy() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void move(int newX, int newY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotate(double angle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean overlap(Image otherImage) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getHitBy(Projectile projectile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void followPath() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

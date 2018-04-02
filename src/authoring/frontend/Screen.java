@@ -1,7 +1,11 @@
 package authoring.frontend;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 /**
  * 
@@ -16,11 +20,17 @@ abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	protected String myStylesheet; 
-	protected Scene myScreen;
-	protected UIFactory myUIFactory;
+	private Scene myScreen;
+	private UIFactory myUIFactory;
 
 	protected Screen() {
 		myUIFactory = new UIFactory();
+	}
+	protected UIFactory getUIFactory() {
+		return myUIFactory;
+	}
+	protected void setStyleSheet(String stylesheetString) {
+		myStylesheet = stylesheetString;
 	}
 
 	/**
@@ -67,6 +77,11 @@ abstract class Screen {
 
 	protected void setScreen(Scene newScreen) {
 		myScreen = newScreen;
+	}
+	
+	protected void showError(String errorMessage) {
+		Alert errorAlert = new Alert(AlertType.ERROR, errorMessage);
+		errorAlert.showAndWait();
 	}
 
 }

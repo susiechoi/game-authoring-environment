@@ -2,7 +2,7 @@ package data;
 
 import java.util.Collection;
 
-import engine.towers.Tower;
+import engine.towers.TowerI;
 
 /**
  * 

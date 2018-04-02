@@ -6,13 +6,20 @@
 
 package authoring.frontend;
 
-import java.io.File;
-import java.util.List;
 
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -23,8 +30,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class UIFactory {
+	
+	/**
+	 * Makes Text object for displaying titles of screens to the user
+	 * @param titleText is String text displayed as title
+	 * @return Text object with this String
+	 */
+	public Text makeScreenTitleText(String titleText) {
+		Text screenTitle = new Text(titleText);
+		screenTitle.setId("screenTitle");
+		return screenTitle;
+	}
 
 	public Button makeImageButton(String id, Image buttonImage) {
 		Button newButton = new Button();
@@ -38,6 +58,20 @@ public class UIFactory {
 		Button newButton = new Button(buttonText);
 		newButton.setId(id);
 		return newButton; 
+	}
+	
+	public ComboBox<String> makeTextDropdownButtonEnable(String id, List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
+			EventHandler<ActionEvent> noChoiceAction, String prompt){
+		ComboBox<String> dropdown = makeTextDropdown(id, dropdownOptions);
+		dropdown.setOnAction( e ->{
+			if(!dropdown.getValue().equals(prompt)){
+				chooseAction.handle(e);
+			}
+			else {
+				noChoiceAction.handle(e);
+			}
+			});
+		return dropdown;
 	}
 
 	public ComboBox<String> makeTextDropdown(String id, List<String> dropdownOptions) {
@@ -122,6 +156,36 @@ public class UIFactory {
 		newPane.setContent(imageConsolidator);
 		newPane.setId(id);
 		return newPane; 
+	}
+	
+	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, ImageView imageDisplay, double imageSize) throws MissingPropertiesException {
+		Map<String, Image> enemyImageOptions;
+		enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
+
+		ArrayList<String> imageNames = new ArrayList<String>(enemyImageOptions.keySet());
+		final ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
+		imageDisplay.setImage(images.get(0));
+		ComboBox<String> imageOptionsDropdown = makeTextDropdown("", imageNames);
+		imageOptionsDropdown.getSelectionModel().selectFirst();
+		
+		HBox imageSelect = new HBox();
+		Text prompt = new Text(description+"Image: ");
+		
+		final FileChooser fileChooser = new FileChooser();
+		Button loadNewImageButton = makeTextButton("loadButton", "Load New Image");
+		loadNewImageButton.setOnMouseClicked((event)-> {
+			File file = fileChooser.showOpenDialog(new Stage());
+			imageDisplay.setImage(new Image(file.toURI().toString(), imageSize, imageSize, false, false));
+		});
+		imageSelect.getChildren().add(prompt);
+		imageSelect.getChildren().add(imageOptionsDropdown);
+		imageSelect.getChildren().add(loadNewImageButton);
+
+		imageOptionsDropdown.getSelectionModel().selectedIndexProperty().addListener(( arg0, arg1,  arg2) ->{
+			imageDisplay.setImage(images.get((int) arg2));
+		});
+		
+		return imageSelect; 
 	}
 
 }
