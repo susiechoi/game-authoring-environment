@@ -38,16 +38,39 @@ public class GameAuthoringStartScreen extends Screen {
 			e.printStackTrace(); //TODO: temporary until errors fixed
 		}
 		ArrayList<String> dummyGameNames = new ArrayList<>();
+		String prompt = new String();
+		try { //TODO: fix languages/error catching
+			prompt = myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "GameEditSelector");
+		}
+		catch(MissingPropertiesException e) {
+			System.out.println("not finding file");
+			e.printStackTrace(); //TODO: temporary until errors fixed
+		}
+		dummyGameNames.add(prompt);
 		dummyGameNames.add("Vanilla");
 		dummyGameNames.add("Plants vs. Zombies");
-
-	
-		myEditButton = getUIFactory().makeTextButton("editbutton", "Testing Edit button");
-		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyGameNames, e -> {myEditButton.setDisable(false);});
+		Button newGameButton = new Button();
+		try {
+			newGameButton = getUIFactory().makeTextButton("editbutton", myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "NewGameButtonLabel"));
+		}
+		catch(MissingPropertiesException e) {
+			System.out.println("not finding file");
+			e.printStackTrace(); //TODO: temporary until errors fixed
+		}
+		try {
+			myEditButton = getUIFactory().makeTextButton("editbutton", myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "EditButtonLabel"));
+		}
+		catch(MissingPropertiesException e) {
+			System.out.println("not finding file");
+			e.printStackTrace(); //TODO: temporary until errors fixed
+		}
+		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyGameNames, e -> {
+			myEditButton.setDisable(false);}, e -> {myEditButton.setDisable(true);}, prompt);
 		myEditButton.setDisable(true);
 		vbox.getChildren().add(startHeading);
 		vbox.getChildren().add(gameChooser);
 		vbox.getChildren().add(myEditButton);
+		vbox.getChildren().add(newGameButton);
 		
 		return new Scene(vbox, 1500, 900);
 

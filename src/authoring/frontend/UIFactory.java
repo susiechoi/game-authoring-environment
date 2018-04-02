@@ -7,12 +7,9 @@
 package authoring.frontend;
 
 
-import java.awt.event.ActionListener;
+
 import java.io.File;
 import java.util.List;
-import java.util.function.Consumer;
-
-import javax.swing.Action;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -58,9 +55,17 @@ public class UIFactory {
 		return newButton; 
 	}
 	
-	public ComboBox<String> makeTextDropdownButtonEnable(String id, List<String> dropdownOptions, EventHandler<ActionEvent> action){
+	public ComboBox<String> makeTextDropdownButtonEnable(String id, List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
+			EventHandler<ActionEvent> noChoiceAction, String prompt){
 		ComboBox<String> dropdown = makeTextDropdown(id, dropdownOptions);
-		dropdown.setOnAction(action);
+		dropdown.setOnAction( e ->{
+			if(!dropdown.getValue().equals(prompt)){
+				chooseAction.handle(e);
+			}
+			else {
+				noChoiceAction.handle(e);
+			}
+			});
 		return dropdown;
 	}
 
