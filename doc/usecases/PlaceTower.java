@@ -1,7 +1,7 @@
 package usecases;
 
 import api.GameState;
-import data.TowerData;
+import engine.data.TowerData;
 
 /**
  * This class simulates the design flow of when a user places a tower. It will call GameState.placeTower,

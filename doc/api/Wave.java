@@ -1,6 +1,6 @@
 package api;
 
-import enemies.Enemy;
+import engine.enemies.EnemyI;
 
 /**
  * 
@@ -16,6 +16,6 @@ public interface Wave {
      * @param enemy: The type of enemy to be added to the wave
      * @param number: the number of the enemy to be added to the wave
      */
-    public void addEnemy(Enemy enemy, int number);
+    public void addEnemy(EnemyI enemy, int number);
 
 }

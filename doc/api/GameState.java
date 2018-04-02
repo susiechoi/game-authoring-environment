@@ -1,6 +1,6 @@
 package api;
 
-import towers.Tower;
+import engine.towers.TowerI;
 
 /**
  * Interface for interacting with current state of the Game, including collection/placement of Towers, as well
@@ -25,7 +25,7 @@ public interface GameState {
      * @param x: x-position of top-left coordinate of image
      * @param y: y-position of top-left coordinate of image
      */
-    public Tower placeTower(String type, int x, int y);
+    public TowerI placeTower(String type, int x, int y);
     
     /**
      * Prompts user to release tower from collection and add value to current points within GameState.
@@ -45,6 +45,6 @@ public interface GameState {
      * Allows a new tower to be selected and placed by the user
      * @param tower 
      */
-    public void unlockTower(Tower tower);
+    public void unlockTower(TowerI tower);
 
 }

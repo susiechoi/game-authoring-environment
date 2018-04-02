@@ -8,7 +8,7 @@
 
 package authoring;
 
-import path.Path;
+import engine.path.Path;
 
 class AuthoringModel {
 
