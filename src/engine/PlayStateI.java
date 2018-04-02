@@ -1,5 +1,6 @@
-package api;
+package engine;
 
+import engine.towers.Tower;
 import engine.towers.TowerI;
 
 /**
@@ -9,7 +10,7 @@ import engine.towers.TowerI;
  * @author Katherine Van Dyk 3/28/18
  *
  */
-public interface GameState {
+public interface PlayStateI {
 
     /**
      * Checks for intersections within all moving Towers, Enemies, and Projectiles, and spawns
@@ -30,21 +31,15 @@ public interface GameState {
     /**
      * Prompts user to release tower from collection and add value to current points within GameState.
      * 
-     * @param type: Type of tower being sold
+     * @param Tower: The Tower to be sold
      */
-    public void sellTower();
+    public void sellTower(Tower towerToBeSold);
     
     /**
      * Prompts user to upgrade tower
      * 
-     * @param hash
+     * @param Tower: The tower that is going to be upgraded
      */
-    public void upgradeTower();
-    
-    /**
-     * Allows a new tower to be selected and placed by the user
-     * @param tower 
-     */
-    public void unlockTower(TowerI tower);
+    public void upgradeTower(Tower towerToBeUpgraded );
 
 }

@@ -1,9 +1,11 @@
 package usecases;
 
 import java.util.List;
+
+import engine.enemies.EnemyI;
+import engine.towers.projectiles.Projectile;
+
 import java.util.ArrayList;
-import enemies.Enemy;
-import towers.projectiles.Projectile;
 
 /**
  * Example code for Use Case 7: Enemy is hit by projectile. This code would be within the Game State
@@ -14,7 +16,7 @@ import towers.projectiles.Projectile;
  */
 public class ProjectileEnemyExample {
 
-    private List<Enemy> enemies;
+    private List<EnemyI> enemies;
     private List<Projectile> projectiles;
 
     /**
@@ -29,7 +31,7 @@ public class ProjectileEnemyExample {
      * Update method called for every iteration of the game loop
      */
     public void update() {
-	for(Enemy enemy : enemies) {
+	for(EnemyI enemy : enemies) {
 	    for(Projectile projectile : projectiles) {
 		if(enemy.getHitBy(projectile)) {
 		    projectiles.remove(projectile);
