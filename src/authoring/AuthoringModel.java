@@ -12,6 +12,13 @@ import path.Path;
 
 class AuthoringModel {
 
+    private final AuthoringController CONTROLLER = new AuthoringController();
+    
+    public AuthoringModel() {
+	
+    }
+    
+    
     /**
      * Sets the path to be used in the level
      * 

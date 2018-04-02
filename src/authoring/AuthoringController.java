@@ -15,16 +15,20 @@ import javafx.scene.Scene;
 
 class AuthoringController implements Controller {
 
+    private final AuthoringView VIEW = new AuthoringView();
    
-
+    public AuthoringController() {
+	
+    }
+    
     /**
      * Loads a new Scene object in the program's Stage to display the authoring environment 
      * screen.
      * 
-     * @return Scene: the authoring screen to be displayed to the user
+     * @param Scene: the authoring screen to be displayed to the user
      */
-    public Scene loadAuthoringStage() {
-	return null;	
+    public void loadAuthoringStage(Scene screen) {
+	// TODO load this onto the stage. How do we receive access to the stage?	
     }  
 
     /**
