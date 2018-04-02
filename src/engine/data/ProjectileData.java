@@ -1,4 +1,4 @@
-package data;
+package engine.data;
 
 import java.util.Collection;
 
@@ -6,11 +6,11 @@ import java.util.Collection;
  * 
  * @author Ben Hodgson 3/29/18
  *
- * Data necessary for upgrades 
+ * Data necessary for defining a Projectile object
  */
-public class UpgradeData implements Data {
+public class ProjectileData implements Data {
 
-    // params include speed and damage
+    // params include Speed and Damage
     @Override
     public void data(Collection<?> params) {
 	// TODO Auto-generated method stub
@@ -22,7 +22,5 @@ public class UpgradeData implements Data {
 	// TODO Auto-generated method stub
 	
     }
-    
-    
 
 }

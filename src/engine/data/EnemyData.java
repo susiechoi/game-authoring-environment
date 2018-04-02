@@ -1,4 +1,4 @@
-package data;
+package engine.data;
 
 import java.util.Collection;
 
@@ -6,11 +6,10 @@ import java.util.Collection;
  * 
  * @author Ben Hodgson 3/29/18
  *
- * Data necessary for defining a Projectile object
+ * Data necessary for defining an enemy
  */
-public class ProjectileData implements Data {
+public class EnemyData implements Data {
 
-    // params include Speed and Damage
     @Override
     public void data(Collection<?> params) {
 	// TODO Auto-generated method stub
