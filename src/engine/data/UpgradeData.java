@@ -1,4 +1,4 @@
-package data;
+package engine.data;
 
 import java.util.Collection;
 
@@ -6,10 +6,11 @@ import java.util.Collection;
  * 
  * @author Ben Hodgson 3/29/18
  *
- * Data necessary for defining an enemy
+ * Data necessary for upgrades 
  */
-public class EnemyData implements Data {
+public class UpgradeData implements Data {
 
+    // params include speed and damage
     @Override
     public void data(Collection<?> params) {
 	// TODO Auto-generated method stub
@@ -21,5 +22,7 @@ public class EnemyData implements Data {
 	// TODO Auto-generated method stub
 	
     }
+    
+    
 
 }
