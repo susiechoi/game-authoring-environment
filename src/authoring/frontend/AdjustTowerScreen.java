@@ -18,6 +18,7 @@ class AdjustTowerScreen extends AdjustScreen {
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
+	public static final String PROMPT_FILE = "prompts/French.properties"; //TODO: shouldn't be hardcoded! need to get language to frontend
 	public static final int DEFAULT_TOWER_MAX_RANGE = 500; 
 	public static final int DEFAULT_TOWER_MAX_PRICE = 500; 
 	
@@ -31,9 +32,14 @@ class AdjustTowerScreen extends AdjustScreen {
 	@Override
 	protected Scene makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
-		
-		HBox towerNameSelect = myUIFactory.setupPromptAndTextField("", "Tower Name: "); 
-
+		HBox towerNameSelect = new HBox();
+		try {
+		towerNameSelect = myUIFactory.setupPromptAndTextField("", myPropertiesReader.findVal(PROMPT_FILE, "TowerName")); 
+		}
+		catch(MissingPropertiesException e){
+			showError("Missing a prompt file");
+			towerNameSelect = myUIFactory.setupPromptAndTextField("", "Default val: ");
+		}
 		ImageView towerImageDisplay = new ImageView(); 
 		HBox towerImageSelect = setupImageSelector("Tower ", TOWER_IMAGES, towerImageDisplay, 50); 
 		ImageView projectileImageDisplay = new ImageView(); 

@@ -13,7 +13,6 @@ public class GameAuthoringStartScreen extends Screen {
 
 	@Override
 	protected Scene makeScreenWithoutStyling() {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 }

@@ -1,7 +1,11 @@
 package authoring.frontend;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 /**
  * 
@@ -66,6 +70,11 @@ abstract class Screen {
 
 	protected void setScreen(Scene newScreen) {
 		myScreen = newScreen;
+	}
+	
+	protected void showError(String errorMessage) {
+		Alert errorAlert = new Alert(AlertType.ERROR, errorMessage);
+		errorAlert.showAndWait();
 	}
 
 }
