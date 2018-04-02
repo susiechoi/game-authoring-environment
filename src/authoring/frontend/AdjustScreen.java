@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import java.io.File;
+
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -15,7 +17,7 @@ import javafx.scene.layout.HBox;
 
 public abstract class AdjustScreen extends Screen {
 
-	public static final String DEFAULT_BACK_URL = "http://bsa824.org/Troop824/Go-Back-arrow.gif"; 
+	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
 	
 	/**
 	 * @return  HBox with back and apply buttons
@@ -33,7 +35,7 @@ public abstract class AdjustScreen extends Screen {
 	}
 	
 	protected Button setupBackButton() {
-		Image backbuttonImage = new Image(DEFAULT_BACK_URL, 60, 40, true, false); // TODO move to css
+		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
 		Button backButton = myUIFactory.makeImageButton("backButton",backbuttonImage);
 		backButton.setOnMouseClicked((event) -> { 
 			// TODO set up listener for this 
