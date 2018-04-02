@@ -35,7 +35,7 @@ public abstract class AdjustScreen extends Screen {
 	
 	protected Button setupBackButton() {
 		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-		Button backButton = myUIFactory.makeImageButton("backButton",backbuttonImage);
+		Button backButton = getUIFactory().makeImageButton("backButton",backbuttonImage);
 		backButton.setOnMouseClicked((event) -> { 
 			// TODO set up listener for this 
 		}); 
