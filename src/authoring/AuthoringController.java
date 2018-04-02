@@ -3,6 +3,7 @@ package authoring;
 import java.io.File;
 import controller.Controller;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * 
@@ -13,12 +14,20 @@ import javafx.scene.Scene;
  * Represents Controller in MVC of the authoring environment. 
  */
 
-class AuthoringController implements Controller {
+public class AuthoringController implements Controller {
 
+    private final Stage STAGE;
     private final AuthoringView VIEW = new AuthoringView();
+    private final AuthoringModel MODEL = new AuthoringModel();
    
-    public AuthoringController() {
-	Scene StartScreen = VIEW.loadAuthoringView();
+    public AuthoringController(Stage programStage) {
+	STAGE = programStage;
+	Scene startScreen = VIEW.loadAuthoringView();
+	STAGE.setScene(startScreen);
+    }
+    
+    public void show() {
+	STAGE.show();
     }
     
     /**

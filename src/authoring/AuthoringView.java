@@ -7,7 +7,6 @@ import authoring.frontend.GameAuthoringStartScreen;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import screen.Screen;
 
 /**
  * 
