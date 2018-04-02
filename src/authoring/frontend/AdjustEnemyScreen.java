@@ -52,11 +52,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 		vb.getChildren().add(backAndApply);
 
 		Scene screen = new Scene(vb, 1500, 900); 
-		screen.setOnMousePressed(event -> {
-			if (!nameInputField.equals(event.getSource())) {
-				nameInputField.getParent().requestFocus();
-			}
-		});
+		getUIFactory().applyTextFieldFocusAction(screen, nameInputField);
 		return screen;
 	}
 
