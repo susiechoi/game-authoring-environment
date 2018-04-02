@@ -25,6 +25,9 @@ public abstract class AdjustScreen extends Screen {
 		Button backButton = setupBackButton();
 		hb.getChildren().add(backButton);
 		Button applyButton = setupApplyButton();
+		applyButton.setOnMouseClicked((event) -> { 
+			// TODO set up listener for this 
+		});
 		hb.getChildren().add(applyButton);
 		return hb; 
 	}
@@ -32,6 +35,9 @@ public abstract class AdjustScreen extends Screen {
 	protected Button setupBackButton() {
 		Image backbuttonImage = new Image(DEFAULT_BACK_URL, 60, 40, true, false); // TODO move to css
 		Button backButton = myUIFactory.makeImageButton("backButton",backbuttonImage);
+		backButton.setOnMouseClicked((event) -> { 
+			// TODO set up listener for this 
+		}); 
 		return backButton; 
 	}
 
@@ -40,5 +46,5 @@ public abstract class AdjustScreen extends Screen {
 		Button applyButton = myUIFactory.makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 		return applyButton;
 	}
-
+	
 }
