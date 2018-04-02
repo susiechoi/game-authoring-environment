@@ -5,8 +5,15 @@ VBox {
     -fx-alignment: center;
 }
 
-#editbutton {
+.button {
 		-fx-min-width: 200;
 		-fx-min-height: 50;
 		-fx-background-color: #B7D5D4;
+}
+
+ComboBox {
+	-fx-background-color: #488286;
+	-fx-min-width: 200;
+	-fx-min-height: 50;
+
 }
