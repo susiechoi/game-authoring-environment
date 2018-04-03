@@ -92,6 +92,10 @@ public abstract class Screen {
 	protected AuthoringView getView() {
 		return myView; 
 	}
+	
+	protected PropertiesReader getPropertiesReader() {
+		return myPropertiesReader; 
+	}
 
 	protected String getErrorCheckedPrompt(String key, String language) {
 		String value = new String();

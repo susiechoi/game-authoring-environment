@@ -3,7 +3,6 @@ package authoring.frontend;
 import java.util.ArrayList;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -20,12 +19,10 @@ import javafx.scene.text.Text;
  */
 public class GameAuthoringStartScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
-	private PropertiesReader myPropertiesReader;
 	private Button myEditButton;
 	
 	protected GameAuthoringStartScreen(AuthoringView view) {
 		super(view);
-		myPropertiesReader = new PropertiesReader();
 		setStyleSheet(DEFAULT_OWN_CSS);
 	}
 	@Override
@@ -33,7 +30,7 @@ public class GameAuthoringStartScreen extends Screen {
 		Text startHeading = new Text();
 		VBox vbox = new VBox();
 		try { //TODO: fix languages/error catching
-			startHeading = getUIFactory().makeScreenTitleText(myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "StartScreenHeader"));
+			startHeading = getUIFactory().makeScreenTitleText(getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "StartScreenHeader"));
 		}
 		catch(MissingPropertiesException e) {
 			System.out.println("not finding file");
@@ -42,7 +39,7 @@ public class GameAuthoringStartScreen extends Screen {
 		ArrayList<String> dummyGameNames = new ArrayList<>();
 		String prompt = new String();
 		try { //TODO: fix languages/error catching
-			prompt = myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "GameEditSelector");
+			prompt = getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "GameEditSelector");
 		}
 		catch(MissingPropertiesException e) {
 			System.out.println("not finding file");
@@ -53,14 +50,14 @@ public class GameAuthoringStartScreen extends Screen {
 		dummyGameNames.add("Plants vs. Zombies");
 		Button newGameButton = new Button();
 		try {
-			newGameButton = getUIFactory().makeTextButton("editbutton", myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "NewGameButtonLabel"));
+			newGameButton = getUIFactory().makeTextButton("editbutton", getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "NewGameButtonLabel"));
 		}
 		catch(MissingPropertiesException e) {
 			System.out.println("not finding file");
 			e.printStackTrace(); //TODO: temporary until errors fixed
 		}
 		try {
-			myEditButton = getUIFactory().makeTextButton("editbutton", myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "EditButtonLabel"));
+			myEditButton = getUIFactory().makeTextButton("editbutton", getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "EditButtonLabel"));
 		}
 		catch(MissingPropertiesException e) {
 			System.out.println("not finding file");
