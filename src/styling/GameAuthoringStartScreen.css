@@ -1,0 +1,24 @@
+VBox, HBox {
+	-fx-background-color: #77878B;
+	-fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+.button {
+		-fx-min-width: 200;
+		-fx-min-height: 50;
+		-fx-background-color: #B7D5D4;
+}
+
+.button:hover{
+		-fx-font: bold 18pt "Helvetica";
+	  -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+ComboBox {
+	-fx-background-color: #488286;
+	-fx-min-width: 200;
+	-fx-min-height: 50;
+
+}

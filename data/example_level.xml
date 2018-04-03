@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<level>
+	<type>Game</type>
+	<author>Brendan Cheng</author>
+	<levelnum><!-- data specified by XStream --></levelnum>
+	<health><!-- data specified by XStream --></health>
+	<resources><!-- data specified by XStream --></resources>
+	<towers>
+		<tower>
+			<!-- data specified by XStream -->
+		</tower>
+	</towers>
+	<enemies>
+		<enemy>
+		<!-- data specified by XStream -->
+		</enemy>
+	</enemies>
+	<path>
+		 <!-- data specified by XStream --> 
+	</path>
+</level>
