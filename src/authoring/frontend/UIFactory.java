@@ -10,6 +10,7 @@ package authoring.frontend;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -159,7 +160,53 @@ public class UIFactory {
 		return newPane; 
 	}
 
+	public VBox setupFileChooser(String id, String newFilePrompt, String newFileNamePrompt, String propertiesFilepath,
+			EventHandler<ActionEvent> action, Map<String, String> keysAndVals) {
+			VBox vbox = new VBox();
+			HBox imageNamer = setupPromptAndTextField("", newFileNamePrompt);
+			final FileChooser fileChooser = new FileChooser();
+			Button filePrompt = makeTextButton(id, newFilePrompt);
+			filePrompt.setDisable(true);
+			((TextField)(imageNamer.getChildren().get(1))).setOnAction(e -> {filePrompt.setDisable(false);});;
+			filePrompt.setOnAction(e -> {
+				String imageName = ((TextField)(imageNamer.getChildren().get(1))).getText();
+				if(!imageName.equals(null)) {
+					File file = fileChooser.showOpenDialog(new Stage());
+					keysAndVals.put(imageName, file.toURI().toString());
+					PropertiesWriter writer = new PropertiesWriter(propertiesFilepath, keysAndVals);
+					writer.write();
+					action.handle(e);
+				}
+			});
+			vbox.getChildren().add(imageNamer);
+			vbox.getChildren().add(filePrompt);
+			return vbox;
+	}
 	
+	public VBox setupSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath) throws MissingPropertiesException{
+			VBox vb = new VBox();
+			Map<String, String> options = propertiesReader.read(propertiesReader.loadProperties(propertiesFilepath));
+			ArrayList<String> optionsList = new ArrayList<String >(options.keySet());
+			ComboBox<String> dropdown = makeTextDropdown("", optionsList);
+			VBox fc = setupFileChooser("", "test", "test", propertiesFilepath, e -> {
+				optionsList.clear();
+				Map<String, String> options2 = new HashMap<>();
+				try {
+				options2 = propertiesReader.read(propertiesReader.loadProperties(propertiesFilepath));
+				}
+				catch(MissingPropertiesException e2) {
+					e2.printStackTrace();
+					//TODO: temporary
+				}
+				ArrayList<String> optionsList2 = new ArrayList<String >(options2.keySet());
+				optionsList.addAll(optionsList2);
+				dropdown.getItems().clear();
+				dropdown.getItems().addAll(optionsList);
+				}, options);
+			vb.getChildren().add(dropdown);
+			vb.getChildren().add(fc);
+			return vb;
+	}
 
 	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
 			String loadImagePrompt, String imagePrompt) throws MissingPropertiesException {

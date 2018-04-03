@@ -8,7 +8,8 @@ class AuthoringView {
 	
 	protected AuthoringView(Stage stage) {
 		myStage = stage; 
-		myStage.setScene(new SpecifyTowerScreen(this).getScreen());
+		//myStage.setScene(new SpecifyTowerScreen(this).getScreen());
+		myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
 	}
 	
 	protected void goForwardFrom(Screen currentScreen) {

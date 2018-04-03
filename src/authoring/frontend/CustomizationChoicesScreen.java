@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 
 public class CustomizationChoicesScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
+	public static final String TEST_PROPERTIES = "images/TestProperties.properties";
 	private String myLanguage;
 	private String myGameName;
 	
@@ -40,6 +41,13 @@ public class CustomizationChoicesScreen extends Screen {
 		ComboBox<String> levelChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyLevels, e -> {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 		editButton.setDisable(true);
+		VBox testSelector = new VBox();
+		try {
+			testSelector = getUIFactory().setupSelector(getPropertiesReader(), "", TEST_PROPERTIES);
+		}
+		catch(Exception e) {
+			//TODO: just for testing
+		}
 		vbox.getChildren().add(heading);
 		vbox.getChildren().add(settingsButton);
 		vbox.getChildren().add(demoButton);
@@ -50,6 +58,7 @@ public class CustomizationChoicesScreen extends Screen {
 		hbox.getChildren().add(newLevelVBox);
 		vbox.getChildren().add(hbox);
 		vbox.getChildren().add(mainButton);
+		vbox.getChildren().add(testSelector);
 		return new Scene(vbox, 1500, 900);
 		
 	}
