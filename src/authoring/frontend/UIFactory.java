@@ -172,7 +172,7 @@ public class UIFactory {
 				String imageName = ((TextField)(imageNamer.getChildren().get(1))).getText();
 				if(!imageName.equals(null)) {
 					File file = fileChooser.showOpenDialog(new Stage());
-					keysAndVals.put(imageName, file.toURI().toString());
+					keysAndVals.put(imageName, file.getAbsolutePath().replace("\\", "/"));
 					PropertiesWriter writer = new PropertiesWriter(propertiesFilepath, keysAndVals);
 					writer.write();
 					action.handle(e);
@@ -196,7 +196,7 @@ public class UIFactory {
 				}
 				catch(MissingPropertiesException e2) {
 					e2.printStackTrace();
-					//TODO: temporary
+					//TODO: temporary - error like in SLOGO??
 				}
 				ArrayList<String> optionsList2 = new ArrayList<String >(options2.keySet());
 				optionsList.addAll(optionsList2);

@@ -1,6 +1,7 @@
 package authoring.frontend;
 import java.util.ArrayList;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,7 +23,7 @@ public class CustomizationChoicesScreen extends Screen {
 	}
 	
 	@Override
-	protected Scene makeScreenWithoutStyling() {
+	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException {
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
 		Text heading = getUIFactory().makeScreenTitleText(myGameName);
@@ -42,12 +43,7 @@ public class CustomizationChoicesScreen extends Screen {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 		editButton.setDisable(true);
 		VBox testSelector = new VBox();
-		try {
-			testSelector = getUIFactory().setupSelector(getPropertiesReader(), "", TEST_PROPERTIES);
-		}
-		catch(Exception e) {
-			//TODO: just for testing
-		}
+		testSelector = getUIFactory().setupSelector(getPropertiesReader(), "", TEST_PROPERTIES);
 		vbox.getChildren().add(heading);
 		vbox.getChildren().add(settingsButton);
 		vbox.getChildren().add(demoButton);
