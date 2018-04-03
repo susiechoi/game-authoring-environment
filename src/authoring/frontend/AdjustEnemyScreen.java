@@ -31,7 +31,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 		//		ImageView enemyImageDisplay = new ImageView(); 
 		HBox enemyImageSelect = new HBox();
 		try {
-			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "Enemy ", ENEMY_IMAGES, 75);
+			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("Enemy", "English"));
 		} catch (MissingPropertiesException e) {
 			// TODO FIX
 		} 
