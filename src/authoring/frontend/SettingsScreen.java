@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class SettingsScreen extends AdjustScreen {
-	public static final String BACKGROUND_IMAGES = "images/TowerImageNames.properties";
+	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 	PropertiesReader myPropertiesReader;
 	String myLanguage;
 	protected SettingsScreen(String language) {
@@ -23,12 +23,12 @@ public class SettingsScreen extends AdjustScreen {
 		HBox gameName = getUIFactory().setupPromptAndTextField("", getErrorCheckedPrompt("GameName", myLanguage));
 		HBox backgroundImage = new HBox();
 		try {
-			backgroundImage = getUIFactory().setupImageSelector(myPropertiesReader, "", BACKGROUND_IMAGES, 50, getErrorCheckedPrompt("ImageName", myLanguage), 
-					getErrorCheckedPrompt("ImageName","German"));
+			backgroundImage = getUIFactory().setupImageSelector(myPropertiesReader,"", BACKGROUND_IMAGES, 50, getErrorCheckedPrompt("LoadImage", myLanguage), getErrorCheckedPrompt("Background", myLanguage));
 		}
 		catch(MissingPropertiesException e){
 			showDefaultNoFilesError();
 		}
+		vb.getChildren().add(settingsHeading);
 		vb.getChildren().add(gameName);
 		vb.getChildren().add(backgroundImage);
 		return new Scene(vb, 1500, 900);

@@ -157,6 +157,8 @@ public class UIFactory {
 		return newPane; 
 	}
 
+	
+
 	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
 			String loadImagePrompt, String imagePrompt) throws MissingPropertiesException {
 		Map<String, Image> enemyImageOptions;
@@ -172,7 +174,7 @@ public class UIFactory {
 		imageOptionsDropdown.getSelectionModel().selectFirst();
 
 		HBox imageSelect = new HBox();
-		Text prompt = new Text(description+ imagePrompt);
+		Text prompt = new Text(imagePrompt);
 
 		final FileChooser fileChooser = new FileChooser();
 		//		Button loadNewImageButton = makeTextButton("loadButton", "Load New Image");
