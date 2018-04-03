@@ -25,6 +25,13 @@ public interface EnemyI extends Movable, Intersect {
     public void followPath();
     
     /**
+     * Handles returning an enemy's damage after hitting a tower
+     * 
+     * @return Double: damage that Enemy incurs
+     */
+    public Double damage();
+    
+    /**
      * Updates the properties of the enemy. For example, health, position, etc.
      */
     public void update();
