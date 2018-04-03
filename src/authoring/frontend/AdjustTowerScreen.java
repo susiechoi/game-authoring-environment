@@ -20,7 +20,8 @@ class AdjustTowerScreen extends AdjustScreen {
 
 	private PropertiesReader myPropertiesReader; 
 
-	protected AdjustTowerScreen() {
+	protected AdjustTowerScreen(AuthoringView view) {
+		super(view);
 		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 		myPropertiesReader = new PropertiesReader();
 	}
@@ -42,7 +43,6 @@ class AdjustTowerScreen extends AdjustScreen {
 		}
 		TextField nameInputField = (TextField) towerNameSelect.getChildren().get(1);
 		
-//		ImageView towerImageDisplay = new ImageView(); 
 		HBox towerImageSelect = new HBox();
 		try {
 			towerImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, getErrorCheckedPrompt("Tower", "English") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"));
@@ -50,7 +50,6 @@ class AdjustTowerScreen extends AdjustScreen {
 			// TODO FIX
 			e.printStackTrace();
 		} 
-//		ImageView projectileImageDisplay = new ImageView(); 
 		HBox projectileImageSelect = new HBox(); 
 		try {
 			projectileImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"));
@@ -59,7 +58,7 @@ class AdjustTowerScreen extends AdjustScreen {
 			e.printStackTrace();
 		}
 
-		ArrayList<String> dummyTowerAbilities = new ArrayList<String>();
+		ArrayList<String> dummyTowerAbilities = new ArrayList<String>(); // TODO read in abilities
 		dummyTowerAbilities.add("Freeze");
 		dummyTowerAbilities.add("Fire");
 		HBox towerAbility = getUIFactory().setupPromptAndDropdown("", "Tower Ability: ", dummyTowerAbilities);
@@ -71,9 +70,7 @@ class AdjustTowerScreen extends AdjustScreen {
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Tower"));
 		vb.getChildren().add(towerNameSelect);
 		vb.getChildren().add(towerImageSelect);
-//		vb.getChildren().add(towerImageDisplay);
 		vb.getChildren().add(projectileImageSelect);
-//		vb.getChildren().add(projectileImageDisplay);
 		vb.getChildren().add(towerAbility);
 		vb.getChildren().add(towerRange);
 		vb.getChildren().add(towerPrice);
