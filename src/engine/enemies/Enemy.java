@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 /**
  * This is used for the Enemy object in the game. It will use composition to implement moveable
  * and intersectable methods.
+ * 
  * @author ryanpond
  *
  */
@@ -61,6 +62,12 @@ public class Enemy implements EnemyI{
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Double damage() {
+	    // TODO Auto-generated method stub
+	    return null;
 	}
 
 }
