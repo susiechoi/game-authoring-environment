@@ -19,7 +19,6 @@ public class FrontendLauncherForTesting extends Application {
 		
 		CreatePathScreen a = new CreatePathScreen();
 
-	
 //		AdjustTowerScreen a = new AdjustTowerScreen(); 
 
 		//AdjustEnemyScreen a = new AdjustEnemyScreen(); 

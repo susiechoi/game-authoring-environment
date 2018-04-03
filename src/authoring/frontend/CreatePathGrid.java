@@ -1,12 +1,10 @@
 package authoring.frontend;
 
+
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -18,58 +16,28 @@ import javafx.scene.paint.Color;
 //add start/end
 //separate panel containing blocks
 //move drag and drop functionality to separate class (or set up grid in one class, and one for path drag-and-drop)
+//delete button to get rid of path blocks (trash, select all and delete)
 
 public class CreatePathGrid {
 
-	private int pathSize = 50;
+	protected double pathSize = 50;
 	private int colIndex;
 	private int rowIndex;
-	private ImageView pathImage;
 	private GridPane grid;
-
 
 	protected GridPane makePathGrid() {
 		grid = new GridPane();
 		grid.setMaxSize(1000, 1200);
 		populateGrid();
-
-		Image img = new Image("file:images/stone.png");
-		pathImage = new ImageView();
-		pathImage.setImage(img);
-
-		pathImage.setFitWidth(pathSize);
-		pathImage.setFitHeight(pathSize);
-
-
-		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
-			public void handle(MouseEvent event){
-				Dragboard db = pathImage.startDragAndDrop(TransferMode.ANY);
-				ClipboardContent content = new ClipboardContent();
-				content.putImage(pathImage.getImage());
-				db.setContent(content);
-				event.consume();    
-			}
-		});
-
-		pathImage.setOnDragDone(new EventHandler <DragEvent>() {
-			public void handle(DragEvent event){
-				if (event.getTransferMode() == TransferMode.MOVE){
-					pathImage.setImage(null);
-				}
-				event.consume();
-			}
-		});
-
-		grid.getChildren().addAll(pathImage);
 		return grid;
 	}
 
 	private void populateGrid() {
-		for (int x = 0 ; x < 30; x++) {
-			for (int y = 0 ; y < 15; y++) {
+		for (int x = 0 ; x < 1000/pathSize; x++) {
+			for (int y = 0 ; y < 1200/pathSize; y++) {
 				Pane cell = new Pane();
 				cell.setBackground((new Background(new BackgroundFill(Color.LIGHTCYAN, null, null))));
-				cell.setPrefSize(pathSize, pathSize);
+				cell.setPrefSize(pathSize, pathSize); //background
 
 				final int col = x;
 				final int row = y;

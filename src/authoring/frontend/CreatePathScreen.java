@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-
 public class CreatePathScreen extends Screen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
@@ -26,7 +25,6 @@ public class CreatePathScreen extends Screen {
 		CreatePathGrid grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
 		
-		
 		CreatePathPanel panel = new CreatePathPanel();
 		panel.makePanel();
 		pathPanel = panel.getPanel();
@@ -36,10 +34,6 @@ public class CreatePathScreen extends Screen {
 		pathRoot.setAlignment(pathGrid, Pos.CENTER_LEFT);
 		pathRoot.setAlignment(pathPanel, Pos.CENTER_RIGHT);
 		
-		
-		
 		return myScene; 	
 	}
-	
-
 }
