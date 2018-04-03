@@ -20,6 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -34,6 +35,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class UIFactory {
+
+	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
 	
 	/**
 	 * Makes Text object for displaying titles of screens to the user
@@ -59,7 +62,7 @@ public class UIFactory {
 		newButton.setId(id);
 		return newButton; 
 	}
-	
+
 	public ComboBox<String> makeTextDropdownButtonEnable(String id, List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
 			EventHandler<ActionEvent> noChoiceAction, String prompt){
 		ComboBox<String> dropdown = makeTextDropdown(id, dropdownOptions);
@@ -70,7 +73,7 @@ public class UIFactory {
 			else {
 				noChoiceAction.handle(e);
 			}
-			});
+		});
 		return dropdown;
 	}
 
@@ -155,32 +158,29 @@ public class UIFactory {
 		newPane.setId(id);
 		return newPane; 
 	}
+
 	
-	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize) throws MissingPropertiesException {
+
+	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
+			String loadImagePrompt, String imagePrompt) throws MissingPropertiesException {
 		Map<String, Image> enemyImageOptions;
 		enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
 
 		ArrayList<String> imageNames = new ArrayList<String>(enemyImageOptions.keySet());
-		imageNames.add("Load New Image");
-		
+		imageNames.add(loadImagePrompt);
+
 		final ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
 		ImageView imageDisplay = new ImageView(); 
 		imageDisplay.setImage(images.get(0));
 		ComboBox<String> imageOptionsDropdown = makeTextDropdown("", imageNames);
 		imageOptionsDropdown.getSelectionModel().selectFirst();
-		
+
 		HBox imageSelect = new HBox();
-		Text prompt = new Text(description+"Image: ");
-		
+		Text prompt = new Text(imagePrompt);
+
 		final FileChooser fileChooser = new FileChooser();
-//		Button loadNewImageButton = makeTextButton("loadButton", "Load New Image");
-//		loadNewImageButton.setOnMouseClicked((event)-> {
-//			File file = fileChooser.showOpenDialog(new Stage());
-//			imageDisplay.setImage(new Image(file.toURI().toString(), imageSize, imageSize, false, false));
-//		});
 		imageSelect.getChildren().add(prompt);
 		imageSelect.getChildren().add(imageOptionsDropdown);
-//		imageSelect.getChildren().add(loadNewImageButton);
 
 		imageOptionsDropdown.getSelectionModel().selectedIndexProperty().addListener(( arg0, arg1,  arg2) ->{
 			if ((int) arg2 == imageNames.size()-1) {
@@ -192,8 +192,26 @@ public class UIFactory {
 			}
 		});
 		imageSelect.getChildren().add(imageDisplay);
-		
+
 		return imageSelect; 
+	}
+
+	public void applyTextFieldFocusAction(Scene screen, TextField textField) {
+		screen.setOnMousePressed(event -> {
+			if (!textField.equals(event.getSource())) {
+				textField.getParent().requestFocus();
+			}
+		});
+	}
+
+	
+	public Button setupBackButton(AuthoringView view, Screen currentScreen) {
+		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
+		Button backButton = makeImageButton("backButton",backbuttonImage);
+		backButton.setOnMouseClicked((event) -> { 
+			view.goBackFrom(currentScreen);
+		}); 
+		return backButton; 
 	}
 
 }

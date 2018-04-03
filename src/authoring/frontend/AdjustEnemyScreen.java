@@ -16,7 +16,8 @@ class AdjustEnemyScreen extends AdjustScreen {
 
 	private PropertiesReader myPropertiesReader; 
 
-	protected AdjustEnemyScreen() {
+	protected AdjustEnemyScreen(AuthoringView view) {
+		super(view);
 		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 		myPropertiesReader = new PropertiesReader();
 	}
@@ -28,10 +29,9 @@ class AdjustEnemyScreen extends AdjustScreen {
 		HBox enemyNameSelect = getUIFactory().setupPromptAndTextField("", "Enemy Name: "); 
 		TextField nameInputField = (TextField) enemyNameSelect.getChildren().get(1);
 
-		//		ImageView enemyImageDisplay = new ImageView(); 
 		HBox enemyImageSelect = new HBox();
 		try {
-			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "Enemy ", ENEMY_IMAGES, 75);
+			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("Enemy", "English"));
 		} catch (MissingPropertiesException e) {
 			// TODO FIX
 		} 
@@ -41,22 +41,17 @@ class AdjustEnemyScreen extends AdjustScreen {
 		HBox enemy$Impact = getUIFactory().setupPromptAndSlider("enemyMoneyImpactSlider", "Enemy $ Impact: ", DEFAULT_ENEMY_MAX_$_IMPACT); 
 
 		HBox backAndApply = setupBackAndApplyButton(); 
-
+		
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Enemy"));
 		vb.getChildren().add(enemyNameSelect);
 		vb.getChildren().add(enemyImageSelect);
-		//		vb.getChildren().add(enemyImageDisplay);
 		vb.getChildren().add(enemySpeed);
 		vb.getChildren().add(enemyHealthImpact);
 		vb.getChildren().add(enemy$Impact);
 		vb.getChildren().add(backAndApply);
 
 		Scene screen = new Scene(vb, 1500, 900); 
-		screen.setOnMousePressed(event -> {
-			if (!nameInputField.equals(event.getSource())) {
-				nameInputField.getParent().requestFocus();
-			}
-		});
+		getUIFactory().applyTextFieldFocusAction(screen, nameInputField);
 		return screen;
 	}
 

@@ -1,14 +1,12 @@
 package authoring.frontend;
 
-import java.util.List;
-
 class SpecifyEnemyScreen extends SpecifyObjectScreen {
 	
-	public static final String DEFAULT_DESCRIPTOR = "Enemy";
+	public static final String DEFAULT_DESCRIPTION = "Enemy";
 
-	protected SpecifyEnemyScreen(List<String> enemyOptions) {
-		super(enemyOptions);
-		myObjectDescription = DEFAULT_DESCRIPTOR;
+	protected SpecifyEnemyScreen(AuthoringView view) {
+		super(view);
+		setDescription(DEFAULT_DESCRIPTION); 
 	}
 
 }
