@@ -11,8 +11,8 @@ import javafx.scene.text.Text;
 public class SettingsScreen extends AdjustScreen {
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 	public static final String DEFAULT_OWN_CSS = "styling/AdjustEnemyTower.css";
-	PropertiesReader myPropertiesReader;
-	String myLanguage;
+	private PropertiesReader myPropertiesReader;
+	private String myLanguage;
 	protected SettingsScreen(String language) {
 		myPropertiesReader = new PropertiesReader();
 		myLanguage = language;
