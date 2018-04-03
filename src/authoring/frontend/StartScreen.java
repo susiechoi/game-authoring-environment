@@ -2,7 +2,6 @@ package authoring.frontend;
 
 import java.util.ArrayList;
 
-import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,10 +18,10 @@ import javafx.scene.text.Text;
  */
 public class StartScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
-	private PropertiesReader myPropertiesReader;
 	private String myLanguage;
-	protected StartScreen(String language) {
-		myPropertiesReader = new PropertiesReader();
+	
+	protected StartScreen(AuthoringView view, String language) {
+		super(view);
 		setStyleSheet(DEFAULT_OWN_CSS);
 		myLanguage = language;
 	}

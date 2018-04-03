@@ -1,7 +1,6 @@
 package authoring.frontend;
 import java.util.ArrayList;
 
-import authoring.frontend.PropertiesReader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,16 +10,16 @@ import javafx.scene.text.Text;
 
 public class CustomizationChoicesScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
-	private PropertiesReader myPropertiesReader;
 	private String myLanguage;
 	private String myGameName;
 	
-	protected CustomizationChoicesScreen(String language, String gameName) {
-		myPropertiesReader = new PropertiesReader();
+	protected CustomizationChoicesScreen(AuthoringView view, String language, String gameName) {
+		super(view);
 		setStyleSheet(DEFAULT_OWN_CSS);
 		myLanguage = language;
 		myGameName = gameName;
 	}
+	
 	@Override
 	protected Scene makeScreenWithoutStyling() {
 		VBox vbox = new VBox();
