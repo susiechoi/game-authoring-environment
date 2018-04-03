@@ -2,8 +2,8 @@ package usecases;
 
 import java.util.List;
 
-import engine.enemies.EnemyI;
-import engine.towers.projectiles.ProjectileInterface;
+import engine.sprites.enemies.EnemyI;
+import engine.sprites.towers.projectiles.ProjectileInterface;
 
 import java.util.ArrayList;
 

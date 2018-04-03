@@ -1,6 +1,6 @@
 package engine.managers;
 
-import engine.towers.Tower;
+import engine.sprite.towers.Tower;
 
 /**
  * Tower manager uses composite design pattern to handle updating all 

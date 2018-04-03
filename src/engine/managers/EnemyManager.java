@@ -1,6 +1,6 @@
 package engine.managers;
 
-import engine.enemies.Enemy;
+import engine.sprites.enemies.Enemy;
 
 /**
  * Enemy manager uses composite design pattern to handle updating all 
