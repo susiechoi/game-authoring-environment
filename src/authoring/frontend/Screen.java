@@ -2,6 +2,7 @@ package authoring.frontend;
 import java.util.List;
 import java.util.function.Consumer;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -19,12 +20,16 @@ import javafx.scene.control.ButtonType;
 abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+	public static final String DEFAULT_FILE_ERRORMESSAGE = "Neither the properties file requested nor English properties files exist.";
+	public static final String DEFAULT_LANGUAGE = "English";
 	private String myStylesheet; 
 	private Scene myScreen;
 	private UIFactory myUIFactory;
+	private PropertiesReader myPropertiesReader;
 
 	protected Screen() {
 		myUIFactory = new UIFactory();
+		myPropertiesReader = new PropertiesReader();
 	}
 	protected UIFactory getUIFactory() {
 		return myUIFactory;
@@ -82,7 +87,32 @@ abstract class Screen {
 		Alert errorAlert = new Alert(AlertType.ERROR, errorMessage);
 		errorAlert.showAndWait();
 	}
-
+	protected String getErrorCheckedPrompt(String key, String language) {
+		String value = new String();
+		try {
+			value = myPropertiesReader.findVal(makePromptsFilepath(language), key);
+		}
+		catch(MissingPropertiesException e) {
+			try {
+				showError(myPropertiesReader.findVal(makeErrorsFilepath(language), "NoFile"));
+				value = myPropertiesReader.findVal(makePromptsFilepath(DEFAULT_LANGUAGE), key);
+			}
+			catch(MissingPropertiesException e2) {
+				showDefaultNoFilesError();
+			}
+		}
+		return value;
+	}
+	
+	protected void showDefaultNoFilesError() {
+		showError(DEFAULT_FILE_ERRORMESSAGE);
+	}
+	protected String makeErrorsFilepath(String language) {
+		return "languages/"+language+"/Errors.properties";
+	}
+	protected String makePromptsFilepath(String language) {
+		return "languages/"+language+"/Prompts.properties";
+	}
 }
 
 

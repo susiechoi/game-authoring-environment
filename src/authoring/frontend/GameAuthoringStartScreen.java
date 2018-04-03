@@ -3,7 +3,6 @@ package authoring.frontend;
 import java.util.ArrayList;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,54 +21,33 @@ public class GameAuthoringStartScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	private PropertiesReader myPropertiesReader;
 	private Button myEditButton;
-	protected GameAuthoringStartScreen() {
+	private String myLanguage;
+	protected GameAuthoringStartScreen(String language) {
 		myPropertiesReader = new PropertiesReader();
 		setStyleSheet(DEFAULT_OWN_CSS);
+		myLanguage = language;
 	}
 	@Override
 	protected Scene makeScreenWithoutStyling() {
 		Text startHeading = new Text();
 		VBox vbox = new VBox();
-		try { //TODO: fix languages/error catching
-			startHeading = getUIFactory().makeScreenTitleText(myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "StartScreenHeader"));
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
+		startHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("StartScreenHeader", myLanguage));
 		ArrayList<String> dummyGameNames = new ArrayList<>();
+		String gameNamePrompt = getErrorCheckedPrompt("GameEditSelector", myLanguage);
 		String prompt = new String();
-		try { //TODO: fix languages/error catching
-			prompt = myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "GameEditSelector");
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
-		dummyGameNames.add(prompt);
+		dummyGameNames.add(gameNamePrompt);
 		dummyGameNames.add("Vanilla");
 		dummyGameNames.add("Plants vs. Zombies");
 		Button newGameButton = new Button();
-		try {
-			newGameButton = getUIFactory().makeTextButton("editbutton", myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "NewGameButtonLabel"));
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
-		try {
-			myEditButton = getUIFactory().makeTextButton("editbutton", myPropertiesReader.findVal("prompts/EnglishPrompts.properties", "EditButtonLabel"));
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
+		String newGameButtonPrompt = getErrorCheckedPrompt("NewGameButtonLabel", myLanguage);
+		newGameButton = getUIFactory().makeTextButton("editbutton", newGameButtonPrompt);
+		Button editButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel", myLanguage));
 		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyGameNames, e -> {
-			myEditButton.setDisable(false);}, e -> {myEditButton.setDisable(true);}, prompt);
-		myEditButton.setDisable(true);
+			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, prompt);
+		editButton.setDisable(true);
 		vbox.getChildren().add(startHeading);
 		vbox.getChildren().add(gameChooser);
-		vbox.getChildren().add(myEditButton);
+		vbox.getChildren().add(editButton);
 		vbox.getChildren().add(newGameButton);
 		
 		return new Scene(vbox, 1500, 900);

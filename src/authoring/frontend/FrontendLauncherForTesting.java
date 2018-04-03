@@ -18,7 +18,7 @@ public class FrontendLauncherForTesting extends Application {
 //		enemyOptions.add("Tower 2");
 //		SpecifyEnemyScreen a = new SpecifyEnemyScreen(enemyOptions);
 //		AdjustTowerScreen a = new AdjustTowerScreen(); 
-		GameAuthoringStartScreen a = new GameAuthoringStartScreen();
+		GameAuthoringStartScreen a = new GameAuthoringStartScreen("English");
 		
 //		AdjustTowerScreen a = new AdjustTowerScreen(); 
 
