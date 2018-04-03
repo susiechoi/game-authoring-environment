@@ -22,7 +22,9 @@ public class GameAuthoringStartScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	private PropertiesReader myPropertiesReader;
 	private Button myEditButton;
-	protected GameAuthoringStartScreen() {
+	
+	protected GameAuthoringStartScreen(AuthoringView view) {
+		super(view);
 		myPropertiesReader = new PropertiesReader();
 		setStyleSheet(DEFAULT_OWN_CSS);
 	}

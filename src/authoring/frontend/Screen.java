@@ -14,19 +14,23 @@ import javafx.scene.control.Alert.AlertType;
  * displayed to the user. 
  */
 
-abstract class Screen {
+public abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+	private AuthoringView myView; 
 	private String myStylesheet; 
 	private Scene myScreen;
 	private UIFactory myUIFactory;
 
-	protected Screen() {
+	protected Screen(AuthoringView view) {
+		myView = view; 
 		myUIFactory = new UIFactory();
 	}
+	
 	protected UIFactory getUIFactory() {
 		return myUIFactory;
 	}
+	
 	protected void setStyleSheet(String stylesheetString) {
 		myStylesheet = stylesheetString;
 	}
@@ -79,6 +83,10 @@ abstract class Screen {
 	protected void showError(String errorMessage) {
 		Alert errorAlert = new Alert(AlertType.ERROR, errorMessage);
 		errorAlert.showAndWait();
+	}
+	
+	protected AuthoringView getView() {
+		return myView; 
 	}
 
 }

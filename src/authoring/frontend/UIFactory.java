@@ -36,6 +36,8 @@ import javafx.stage.Stage;
 
 public class UIFactory {
 
+	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
+	
 	/**
 	 * Makes Text object for displaying titles of screens to the user
 	 * @param titleText is String text displayed as title
@@ -174,14 +176,8 @@ public class UIFactory {
 		Text prompt = new Text(description+"Image: ");
 
 		final FileChooser fileChooser = new FileChooser();
-		//		Button loadNewImageButton = makeTextButton("loadButton", "Load New Image");
-		//		loadNewImageButton.setOnMouseClicked((event)-> {
-		//			File file = fileChooser.showOpenDialog(new Stage());
-		//			imageDisplay.setImage(new Image(file.toURI().toString(), imageSize, imageSize, false, false));
-		//		});
 		imageSelect.getChildren().add(prompt);
 		imageSelect.getChildren().add(imageOptionsDropdown);
-		//		imageSelect.getChildren().add(loadNewImageButton);
 
 		imageOptionsDropdown.getSelectionModel().selectedIndexProperty().addListener(( arg0, arg1,  arg2) ->{
 			if ((int) arg2 == imageNames.size()-1) {
@@ -203,6 +199,16 @@ public class UIFactory {
 				textField.getParent().requestFocus();
 			}
 		});
+	}
+
+	
+	public Button setupBackButton(AuthoringView view, Screen currentScreen) {
+		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
+		Button backButton = makeImageButton("backButton",backbuttonImage);
+		backButton.setOnMouseClicked((event) -> { 
+			view.goBackFrom(currentScreen);
+		}); 
+		return backButton; 
 	}
 
 }
