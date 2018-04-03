@@ -4,5 +4,4 @@ public interface PropertyI {
     
     public double upgrade(double balance);
     
-
 }
