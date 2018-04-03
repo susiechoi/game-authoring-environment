@@ -11,6 +11,7 @@ import engine.towers.Tower;
  * active Tower objects in the game loop.
  * 
  * @author Katherine Van Dyk
+ * @author Ben Hodgson 4/3/18
  *
  */
 public class TowerManager extends Manager<Tower> {
