@@ -17,12 +17,11 @@ import javafx.scene.text.Text;
  *
  *
  */
-public class GameAuthoringStartScreen extends Screen {
+public class StartScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	private PropertiesReader myPropertiesReader;
-	private Button myEditButton;
 	private String myLanguage;
-	protected GameAuthoringStartScreen(String language) {
+	protected StartScreen(String language) {
 		myPropertiesReader = new PropertiesReader();
 		setStyleSheet(DEFAULT_OWN_CSS);
 		myLanguage = language;
@@ -49,7 +48,6 @@ public class GameAuthoringStartScreen extends Screen {
 		vbox.getChildren().add(gameChooser);
 		vbox.getChildren().add(editButton);
 		vbox.getChildren().add(newGameButton);
-		
 		return new Scene(vbox, 1500, 900);
 
 	}

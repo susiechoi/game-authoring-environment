@@ -18,8 +18,9 @@ import javafx.scene.control.Alert.AlertType;
 abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-	public static final String DEFAULT_FILE_ERRORMESSAGE = "Neither the properties file requested nor English properties files exist.";
+	public static final String DEFAULT_FILE_ERRORMESSAGE = "Missing specified language property files.";
 	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_PROMPT = "";
 	private String myStylesheet; 
 	private Scene myScreen;
 	private UIFactory myUIFactory;
@@ -55,7 +56,7 @@ abstract class Screen {
 	}
 
 	protected void applyStyle(String stylesheet) {
-		if (myScreen != null) {
+		if (myScreen != null && stylesheet != null) {
 			myScreen.getStylesheets().add(stylesheet);
 		}
 	}
@@ -97,6 +98,7 @@ abstract class Screen {
 			}
 			catch(MissingPropertiesException e2) {
 				showDefaultNoFilesError();
+				value = DEFAULT_PROMPT;
 			}
 		}
 		return value;
