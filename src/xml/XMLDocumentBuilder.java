@@ -18,6 +18,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+/**
+ * @author Brendan Cheng
+ * 
+ *	Class containing static methods that are common to writing all XML files.
+ */
+
 public class XMLDocumentBuilder {
 
 	

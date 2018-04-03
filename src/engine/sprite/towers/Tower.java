@@ -1,6 +1,5 @@
 package engine.sprite.towers;
 
-import engine.sprite.properties.DamageProperty;
 import engine.sprite.properties.HealthProperty;
 import engine.sprite.properties.ValueProperty;
 import engine.sprites.Sprite;
@@ -15,6 +14,7 @@ public class Tower extends Sprite implements TowerI {
     private ValueProperty myValue;
 
     public Tower(ImageView image, Launcher launcher, double health, double value) {
+	super(image);
 	myLauncher = launcher;
 	myHealth = new HealthProperty(health);
 	myValue = new ValueProperty(value);

@@ -20,6 +20,7 @@ public class Enemy extends Sprite implements EnemyI{
 	private Intersector myIntersector;
 	
 	public Enemy(ImageView myImage, int maxHealth, int damageInflicted, int rewardForKilling ) {
+	    	super(myImage);
 		myHealth = maxHealth;
 		myDamageInflicted = damageInflicted;
 		rewardForKillingMe = rewardForKilling;
