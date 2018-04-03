@@ -15,20 +15,8 @@ public class FrontendLauncherForTesting extends Application {
 
 	@Override
 	public void start(Stage stage) {
-//		ArrayList<String> enemyOptions = new ArrayList<String>();
-//		enemyOptions.add("Tower 1");
-//		enemyOptions.add("Tower 2");
-//		SpecifyEnemyScreen a = new SpecifyEnemyScreen(enemyOptions);
-//		AdjustTowerScreen a = new AdjustTowerScreen(); 
-//		GameAuthoringStartScreen a = new GameAuthoringStartScreen();
-//		AdjustTowerScreen a = new AdjustTowerScreen(); 
-//		AdjustEnemyScreen a = new AdjustEnemyScreen(); 
-//		Stage s = new Stage(); 
-//		s.setScene(a.getScreen());
-//		s.show();
-	   
-	    AuthoringController authoring = new AuthoringController(stage);
-	    authoring.show();
+		AuthoringView view = new AuthoringView(stage);
+		stage.show();
 	}
 
 }

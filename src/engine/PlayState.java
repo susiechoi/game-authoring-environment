@@ -1,5 +1,7 @@
 package engine;
 
+import engine.managers.EnemyManager;
+import engine.managers.TowerManager;
 import engine.towers.Tower;
 import engine.towers.TowerI;
 
@@ -7,12 +9,16 @@ import engine.towers.TowerI;
  * This class will hold all of the current Play information, such as the list of objects on the screen (enemies,
  * towers, projectiles, etc). Update method will be called every game loop to update the position of every object. 
  * @author ryanpond
+ * @author Ben Hodgson 4/3/18
  *
  */
 public class PlayState implements PlayStateI{
-
+    
+    private final TowerManager TOWERS = new TowerManager();
+    private final EnemyManager ENEMIES = new EnemyManager();
+    
 	public PlayState() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override

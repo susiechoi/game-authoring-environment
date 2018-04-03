@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="doc"/>
-	<classpathentry kind="src" path="prompts"/>
-	<classpathentry kind="src" path="errors"/>
+	<classpathentry kind="src" path="images"/>
+	<classpathentry kind="src" path="languages"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/milestodzo/Downloads/xstream-1.4.10 2/lib/xstream-1.4.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
