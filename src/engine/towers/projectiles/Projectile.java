@@ -1,22 +1,31 @@
 package engine.towers.projectiles;
 
-import engine.physics.Physics;
+import javafx.scene.image.ImageView;
 
-/**
- * 
- * @author Ben Hodgson 3/28/18
- *
- */
-public interface Projectile extends Physics {
-    
-    /**
-     * Specifies the effect of the projectile
-     */
-    public void launch();
-    
-    /**
-     * Checks to see if the Projectile hits an Enemy
-     */
-    public void hitsEnemy();
+public class Projectile implements ProjectileInterface{
+
+	private int myDamage;
+	private ImageView myImage;
+	public Projectile(int damage, ImageView image) {
+		myDamage = damage;
+		myImage = image;
+	}
+
+	@Override
+	public void getCurve(int speed, int xStart, int yStart) {
+		
+	}
+
+	@Override
+	public void launch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hitsEnemy() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -1,8 +1,8 @@
 package engine.enemies;
 
-import engine.physics.Intersect;
+import engine.physics.IntersectInterface;
 import engine.physics.Movable;
-import engine.towers.projectiles.Projectile;
+import engine.towers.projectiles.ProjectileInterface;
 
 /**
  * 
@@ -10,14 +10,14 @@ import engine.towers.projectiles.Projectile;
  *
  * Interface for enemy functionality
  */
-public interface EnemyI extends Movable, Intersect {
+public interface EnemyI extends Movable, IntersectInterface {
     
     /**
      * Handles when the Enemy is hit by a tower
      * 
      * @param projectile: the projectile that hit the enemy
      */
-    public boolean getHitBy(Projectile projectile);
+    public boolean getHitBy(ProjectileInterface projectile);
     
     /**
      * Handles updating the enemy position to follow the path
