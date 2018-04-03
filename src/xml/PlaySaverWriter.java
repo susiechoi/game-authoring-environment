@@ -7,6 +7,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -24,6 +25,7 @@ public class PlaySaverWriter implements XMLWriter {
 
 	private Document d;
 	private XStream parser;
+	private Element game;
 	
 	public PlaySaverWriter() {
 		try {
@@ -32,6 +34,8 @@ public class PlaySaverWriter implements XMLWriter {
 			System.out.println("Bad configuration");
 		}
 		parser = new XStream();
+		game = d.createElement("game");
+		d.appendChild(game);
 	}
 	
 	@Override
