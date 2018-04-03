@@ -1,12 +1,10 @@
 package authoring.frontend;
 import java.util.List;
-import java.util.function.Consumer;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 
 /**
  * 
