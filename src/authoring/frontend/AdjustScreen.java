@@ -1,9 +1,6 @@
 package authoring.frontend;
 
-import java.io.File;
-
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 /**
@@ -14,32 +11,25 @@ import javafx.scene.layout.HBox;
  *
  */
 
-public abstract class AdjustScreen extends Screen {
-
-	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
+abstract class AdjustScreen extends Screen {
+		
+	protected AdjustScreen(AuthoringView view) {
+		super(view);
+	}
 	
 	/**
 	 * @return  HBox with back and apply buttons
 	 */
 	protected HBox setupBackAndApplyButton() {
 		HBox hb = new HBox();
-		Button backButton = setupBackButton();
+		Button backButton = getUIFactory().setupBackButton(getView(), this);
 		hb.getChildren().add(backButton);
 		Button applyButton = setupApplyButton();
 		applyButton.setOnMouseClicked((event) -> { 
-			// TODO set up listener for this 
+			// TODO 
 		});
 		hb.getChildren().add(applyButton);
 		return hb; 
-	}
-	
-	protected Button setupBackButton() {
-		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-		Button backButton = getUIFactory().makeImageButton("backButton",backbuttonImage);
-		backButton.setOnMouseClicked((event) -> { 
-			// TODO set up listener for this 
-		}); 
-		return backButton; 
 	}
 
 	//TODO: set up listener here?
