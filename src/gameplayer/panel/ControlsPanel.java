@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 public class ControlsPanel extends Panel{
     
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
-    private final int DEFAULT_CONTROL_BUTTON_SIZE = 50;
+    private final int DEFAULT_CONTROL_BUTTON_SIZE = 35;
     
     private final GameScreen GAME_SCREEN;
     private final UIFactory UIFACTORY;
@@ -24,9 +24,9 @@ public class ControlsPanel extends Panel{
     private final PropertiesReader PROP_READ;
     
     public ControlsPanel(GameScreen gameScreen) {
-	GAME_SCREEN = gameScreen;
-	UIFACTORY = new UIFactory();
-	PROP_READ = new PropertiesReader();
+		GAME_SCREEN = gameScreen;
+		UIFACTORY = new UIFactory();
+		PROP_READ = new PropertiesReader();
     }
    
 
@@ -62,7 +62,6 @@ public class ControlsPanel extends Panel{
 	    //something went wrong and we don't have the control images
 	    //TODO something reasonable here
 	    	//probably have default images that aren't the ones specified by authoring
-
 	}
     }
 }
