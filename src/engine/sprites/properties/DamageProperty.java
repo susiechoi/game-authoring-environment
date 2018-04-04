@@ -3,6 +3,10 @@ package engine.sprites.properties;
 public class DamageProperty extends Property {
 
     private double myDamage;
+    
+    public DamageProperty(double damage) {
+	myDamage = damage;
+    }
 
     @Override
     public double upgrade(double balance) {

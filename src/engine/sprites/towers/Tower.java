@@ -2,8 +2,7 @@ package engine.sprites.towers;
 
 import engine.sprites.Sprite;
 import engine.sprites.enemies.EnemyI;
-import engine.sprites.properties.HealthProperty;
-import engine.sprites.properties.ValueProperty;
+import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.ImageView;
 
@@ -13,11 +12,11 @@ public class Tower extends Sprite implements TowerI {
     private HealthProperty myHealth;
     private ValueProperty myValue;
 
-    public Tower(ImageView image, Launcher launcher, double health, double value) {
+    public Tower(ImageView image, Launcher launcher, HealthProperty health, ValueProperty value) {
 	super(image);
 	myLauncher = launcher;
-	myHealth = new HealthProperty(health);
-	myValue = new ValueProperty(value);
+	myHealth = health;
+	myValue = value;
     }
 
     @Override
@@ -29,20 +28,9 @@ public class Tower extends Sprite implements TowerI {
     public void getHitBy(EnemyI myEnemy) {
     }
 
-    public void move(double newX, double newY) {
-	myImage.setX(newX);
-	myImage.setY(newY);
-    }
-
     @Override
     public double sell() {
 	return myValue.getProperty();
-    }
-
-    @Override
-    public double upgradeGeneral(double balance) {
-	//TODO balance
-	return balance;
     }
 
     public double upgradeHealth(double balance) {
@@ -59,6 +47,12 @@ public class Tower extends Sprite implements TowerI {
     @Override
     public double upgradeDamage(double balance) {
 	return myLauncher.upgrade(balance);
+    }
+
+    @Override
+    public double upgrade(double balance) {
+	// TODO Auto-generated method stub
+	return 0;
     }
 
 }

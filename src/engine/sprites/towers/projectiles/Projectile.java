@@ -10,7 +10,7 @@ public class Projectile extends Sprite implements ProjectileInterface{
 	
 	public Projectile(int damage, ImageView image) {
 	    	super(image);
-		myDamage = new DamageProperty();
+		myDamage = new DamageProperty(damage);
 	}
 
 	@Override
