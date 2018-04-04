@@ -2,6 +2,8 @@ package authoring.frontend;
 import java.util.List;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import frontend.PropertiesReader;
+import frontend.UIFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

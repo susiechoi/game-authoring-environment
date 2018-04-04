@@ -1,6 +1,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import frontend.PropertiesReader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
