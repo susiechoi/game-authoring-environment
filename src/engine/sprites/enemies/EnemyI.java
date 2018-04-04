@@ -26,7 +26,7 @@ public interface EnemyI {
     /**
      * Handles returning an enemy's damage after hitting a tower
      * 
-     * @return Double: damage that Enemy incurs
+     * @return Double: damage that Enemy incurs on the tower
      */
     public Double damage();
     
