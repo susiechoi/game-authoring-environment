@@ -5,7 +5,7 @@ import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
-import engine.sprites.towers.projectiles.ProjectileInterface;
+import engine.sprites.towers.projectiles.Projectile;
 import javafx.scene.image.ImageView;
 
 /**
@@ -36,8 +36,9 @@ public class Enemy extends Sprite implements EnemyI{
 	}
 
 	@Override
-	public boolean getHitBy(ProjectileInterface projectile) {
-		return false;
+	public boolean getHitBy(Projectile projectile) {
+		myHealth.change(projectile.inflictDamage());
+		return myHealth.isAlive();
 	}
 
 	@Override
