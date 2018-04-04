@@ -11,7 +11,6 @@ class AuthoringView {
 		myLanguage = language;
 		myStage = stage; 
 		myStage.setScene(new AdjustEnemyScreen(this).getScreen());
-//		myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
 	}
 	
 	protected String getLanguage() {

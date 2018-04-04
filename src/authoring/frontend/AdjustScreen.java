@@ -51,6 +51,5 @@ abstract class AdjustScreen extends Screen {
 		}); 
 		return backButton; 
 	}
-
 	
 }
