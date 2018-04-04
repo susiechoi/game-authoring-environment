@@ -7,9 +7,11 @@ import javafx.scene.image.ImageView;
 public class Projectile extends Sprite implements ProjectileInterface{
 
 	private DamageProperty myDamage;
+	private ImageView myImage;
 	
 	public Projectile(int damage, ImageView image) {
 	    	super(image);
+	    	myImage = super.getImage();
 		myDamage = new DamageProperty(damage);
 	}
 
@@ -31,8 +33,8 @@ public class Projectile extends Sprite implements ProjectileInterface{
 
 	@Override
 	public void move(double newX, double newY) {
-	    // TODO Auto-generated method stub
-	    
+	    myImage.setX(newX);
+	    myImage.setY(newY);
 	}
 	
 	public double upgradeDamage(double balance) {
