@@ -1,7 +1,6 @@
-package engine.towers.launcher;
+package engine.sprites.towers.launcher;
 
-import engine.towers.projectiles.Projectile;
-import engine.towers.trigger.Trigger;
+import engine.sprites.towers.projectiles.Projectile;
 
 /**
  * 
@@ -10,7 +9,7 @@ import engine.towers.trigger.Trigger;
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
  * fire projectiles
  */
-public class Launcher implements Trigger {
+public class Launcher {
 	
 	private double myFireRate;
 	private Projectile myProjectile;
@@ -38,7 +37,6 @@ public class Launcher implements Trigger {
 	
     }
 
-    @Override
     public Projectile launch() {
     		long currTime = System.nanoTime();
     		long timeSinceLastShot = currTime - timeLastFired;
@@ -50,5 +48,10 @@ public class Launcher implements Trigger {
     			return null;
     		}
     }
+
+    public double upgrade(double balance) {
+	return myProjectile.upgradeDamage(balance);
+    }
+
 
 }

@@ -1,8 +1,8 @@
-package engine.enemies;
+package engine.sprites.enemies;
 
 import engine.physics.IntersectInterface;
 import engine.physics.Movable;
-import engine.towers.projectiles.ProjectileInterface;
+import engine.sprites.towers.projectiles.ProjectileInterface;
 
 /**
  * 

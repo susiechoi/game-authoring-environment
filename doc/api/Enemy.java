@@ -2,7 +2,7 @@ package api;
 
 import engine.physics.IntersectInterface;
 import engine.physics.Movable;
-import engine.towers.projectiles.ProjectileInterface;
+import engine.sprites.towers.projectiles.ProjectileInterface;
 
 /**
  * 

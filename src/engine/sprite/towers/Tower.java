@@ -1,22 +1,22 @@
-package engine.towers;
+package engine.sprite.towers;
 
-import engine.enemies.EnemyI;
-import engine.properties.HealthProperty;
-import engine.properties.ValueProperty;
-import engine.towers.launcher.Launcher;
+import engine.sprite.properties.HealthProperty;
+import engine.sprite.properties.ValueProperty;
+import engine.sprites.Sprite;
+import engine.sprites.enemies.EnemyI;
+import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.ImageView;
 
-public class Tower implements TowerI{
+public class Tower extends Sprite implements TowerI {
 
     private Launcher myLauncher;
     private HealthProperty myHealth;
-    private ImageView myImage;
     private ValueProperty myValue;
 
     public Tower(ImageView image, Launcher launcher, double health, double value) {
+	super(image);
 	myLauncher = launcher;
 	myHealth = new HealthProperty(health);
-	myImage = image;
 	myValue = new ValueProperty(value);
     }
 
@@ -29,11 +29,9 @@ public class Tower implements TowerI{
     public void getHitBy(EnemyI myEnemy) {
     }
 
-    @Override
     public void move(double newX, double newY) {
 	myImage.setX(newX);
 	myImage.setY(newY);
-
     }
 
     @Override
@@ -47,7 +45,6 @@ public class Tower implements TowerI{
 	return balance;
     }
 
-    @Override
     public double upgradeHealth(double balance) {
 	return myHealth.upgrade(balance);
     }
@@ -61,9 +58,7 @@ public class Tower implements TowerI{
 
     @Override
     public double upgradeDamage(double balance) {
-	return balance;
-	// TODO Auto-generated method stub
-	
+	return myLauncher.upgrade(balance);
     }
 
 }

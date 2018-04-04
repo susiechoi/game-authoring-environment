@@ -1,8 +1,8 @@
-package engine.enemies;
+package engine.sprites.enemies;
 
 import engine.physics.Intersector;
-import engine.towers.projectiles.ProjectileInterface;
-import javafx.scene.image.Image;
+import engine.sprites.Sprite;
+import engine.sprites.towers.projectiles.ProjectileInterface;
 import javafx.scene.image.ImageView;
 
 /**
@@ -12,17 +12,16 @@ import javafx.scene.image.ImageView;
  * @author ryanpond
  *
  */
-public class Enemy implements EnemyI{
+public class Enemy extends Sprite implements EnemyI{
 
-	private ImageView myImage;
 	private int myHealth;
 	private int myDamageInflicted;
 	private int rewardForKillingMe;
 	private Intersector myIntersector;
 	
-	public Enemy(ImageView inputImage, int maxHealth, int damageInflicted, int rewardForKilling ) {
+	public Enemy(ImageView myImage, int maxHealth, int damageInflicted, int rewardForKilling ) {
+	    	super(myImage);
 		myHealth = maxHealth;
-		myImage = inputImage;
 		myDamageInflicted = damageInflicted;
 		rewardForKillingMe = rewardForKilling;
 		myIntersector = new Intersector(myImage);
