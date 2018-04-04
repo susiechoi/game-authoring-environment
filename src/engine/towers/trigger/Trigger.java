@@ -1,5 +1,7 @@
 package engine.towers.trigger;
 
+import engine.towers.projectiles.Projectile;
+
 /**
  * 
  * @author Ben Hodgson 3/28/18
@@ -12,5 +14,5 @@ public interface Trigger {
     /**
      * Method to trigger the tower to fire
      */
-    public void launch();
+    public Projectile launch();
 }
