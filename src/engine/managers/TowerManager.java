@@ -23,6 +23,11 @@ public class TowerManager extends Manager<Tower> {
 	private final List<Tower> availableTowers;
 	private final List<Tower> activeTowers;
 
+	public TowerManager() {
+		super();
+		availableTowers = new ArrayList<Tower>();
+		activeTowers = new ArrayList<Tower>();
+	}
 	/**
 	 * Constructor for super class
 	 */

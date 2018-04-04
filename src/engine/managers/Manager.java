@@ -11,18 +11,16 @@ import javafx.collections.ObservableList;
  * 
  * @author Katherine Van Dyk
  * @author Ryan Pond
+ * @author Miles Todzo
  * @param <E>: The object being managed
  */
-public abstract class Manager<E> {
+public class Manager<Sprite> {
     
-    private List<E> objects;
+    private List<Sprite> active;
+    private List<Sprite> available;
     
-    /**
-     * Constructor, takes in the original list of E objects
-     * @param list: list of objects that are initially active to be managed
-     */
-    public Manager(List<E> list) {
-    		objects = list;
+    public Manager() {
+    	
     }
     
     /**
@@ -30,9 +28,17 @@ public abstract class Manager<E> {
      * 
      * @return
      */
-    public ObservableList<E> getList(){
-    		return (ObservableList<E>) objects;
+    public ObservableList<Sprite> getObservableListOfAvailable(){
+    		return (ObservableList<Sprite>) available;
     }
+    /**
+     * Returns observable list of all active objects
+     * 
+     * @return
+     */
+    public ObservableList<Sprite> getObservableListOfActive(){
+		return (ObservableList<Sprite>) active;
+}
     
-    public abstract void checkForCollisions(List<Sprite> sprites);
+    public void checkForCollisions(List<Sprite> sprites) {}
 }
