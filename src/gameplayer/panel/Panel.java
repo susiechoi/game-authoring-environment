@@ -1,6 +1,7 @@
 package gameplayer.panel;
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
 
 /**
  * 
@@ -11,15 +12,21 @@ import javafx.scene.Node;
  * Panel.
  */
 
-public interface Panel {
+public abstract class Panel {
 
+    protected Parent PANEL;
     /**
      * Returns the panel object to be loaded on the screen
      */
-    public Node getPanel();
+    public Parent getPanel() {
+	if(PANEL == null) {
+	    makePanel();
+	}
+	return PANEL;
+    }
     
     /**
      * Creates the panel
      */
-    public void makePanel();
+    public abstract void makePanel();
 }

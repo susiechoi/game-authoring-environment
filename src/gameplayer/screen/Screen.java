@@ -1,6 +1,6 @@
 package gameplayer.screen;
 
-import javafx.scene.Node;
+import javafx.scene.Parent;
 
 /**
  * 
@@ -10,16 +10,16 @@ import javafx.scene.Node;
  * displayed to the user. 
  */
 
-public interface Screen {
+public abstract class Screen {
     
     /**
      * Returns the Screen object to be loaded on the screen
      */
-    public Node getScreen();
+    public abstract Parent getScreenRoot();
     
     /**
      * Creates the Screen 
      */
-    public void makeScreen();
+    public abstract void makeScreen();
 
 }
