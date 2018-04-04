@@ -9,6 +9,7 @@ package authoring.frontend;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,12 +66,23 @@ public class UIFactory {
 		return newButton; 
 	}
 
-	public ComboBox<String> makeTextDropdownButtonEnable(String id, List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
-			EventHandler<ActionEvent> noChoiceAction, String prompt){
+	public ComboBox<String> makeTextDropdownSelectAction(String id, List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
+			EventHandler<ActionEvent> noChoiceAction, String prompt, StringBuilder currFilepath, Runnable run, 
+			String propFilepath){
 		ComboBox<String> dropdown = makeTextDropdown(id, dropdownOptions);
 		dropdown.setOnAction( e ->{
 			if(!dropdown.getValue().equals(prompt)){
 				chooseAction.handle(e);
+				PropertiesReader propReader = new PropertiesReader();
+				try {
+				currFilepath.replace(0, currFilepath.length(), propReader.findVal(propFilepath, dropdown.getValue()));
+				run.run();
+				}
+				catch(MissingPropertiesException e2) {
+					e2.printStackTrace();
+					//TODO: error?????
+				}
+				
 			}
 			else {
 				noChoiceAction.handle(e);
@@ -93,11 +105,8 @@ public class UIFactory {
 	 * @return HBox 
 	 */
 	protected HBox setupPromptAndTextField(String id, String promptString) {
-		HBox hb = new HBox(); 
-		Text prompt = new Text(promptString); 
 		TextField tf = new TextField(); 
-		hb.setId(id);
-		return hb; 
+		return addPromptAndSetupHBox(id, tf, promptString); 
 	}
 
 	/**
@@ -107,19 +116,11 @@ public class UIFactory {
 	 * @return HBox 
 	 */
 	protected HBox setupPromptAndDropdown(String id, String promptString, List<String> dropdownOptions) {
-		HBox hb = new HBox(); 
-		Text prompt = new Text(promptString); 
 		ComboBox<String> dropdown = makeTextDropdown("", dropdownOptions);
-		dropdown.getSelectionModel().selectFirst();
-		hb.getChildren().add(prompt);
-		hb.getChildren().add(dropdown); 
-		hb.setId(id);
-		return hb; 
+		return addPromptAndSetupHBox(id, dropdown, promptString); 
 	}
 
 	protected HBox setupPromptAndSlider(String id, String promptString, int sliderMax) {
-		HBox hb = new HBox();
-		Text prompt = new Text(promptString);
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
 		Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -128,11 +129,7 @@ public class UIFactory {
 				sliderValue.setText(String.format("%03d", (int)(double)new_val));
 			}
 		});
-		hb.getChildren().add(prompt);
-		hb.getChildren().add(slider);
-		hb.getChildren().add(sliderValue);
-		hb.setId(id);
-		return hb; 
+		return addPromptAndSetupHBox(id, slider, promptString); 
 	}
 
 	public ScrollPane makeTextScrollPane(String id, List<String> options) {
@@ -163,7 +160,7 @@ public class UIFactory {
 			EventHandler<ActionEvent> action, Map<String, String> keysAndVals) {
 			VBox vbox = new VBox();
 			TextField imageNameEntry = new TextField();
-			HBox imageNamer = addPromptAndSetupHBox(imageNameEntry, newFileNamePrompt);
+			HBox imageNamer = addPromptAndSetupHBox("",imageNameEntry, newFileNamePrompt);
 			final FileChooser fileChooser = new FileChooser();
 			Button filePrompt = makeTextButton(id, newFilePrompt);
 			filePrompt.setDisable(true);
@@ -178,17 +175,19 @@ public class UIFactory {
 					action.handle(e);
 				}
 			});
+			vbox.setId(id);
 			vbox.getChildren().add(imageNamer);
 			vbox.getChildren().add(filePrompt);
 			return vbox;
 	}
 	
 	public VBox setupSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath,
-			String newFilePrompt, String newFileNamePrompt) throws MissingPropertiesException{
+			String newFilePrompt, String newFileNamePrompt, StringBuilder currFilepath, Runnable toUpdate) throws MissingPropertiesException{
 			VBox vb = new VBox();
 			Map<String, String> options = propertiesReader.read(propertiesReader.loadProperties(propertiesFilepath));
 			ArrayList<String> optionsList = new ArrayList<String >(options.keySet());
-			ComboBox<String> dropdown = makeTextDropdown("", optionsList);
+			ComboBox<String> dropdown = makeTextDropdownSelectAction("", optionsList, e -> {},
+					e -> {}, "prompt here", currFilepath, toUpdate, propertiesFilepath); //TODO: fix without adding more things you have to pass in??
 			VBox fc = setupFileChooser("", newFilePrompt, newFileNamePrompt, propertiesFilepath, e -> {
 				optionsList.clear();
 				Map<String, String> options2 = new HashMap<>();
@@ -210,41 +209,65 @@ public class UIFactory {
 	}
 
 	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
-			String loadImagePrompt, String imagePrompt) throws MissingPropertiesException {
-		Map<String, Image> enemyImageOptions;
-		enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
-
-		ArrayList<String> imageNames = new ArrayList<String>(enemyImageOptions.keySet());
-		imageNames.add(loadImagePrompt);
-
+			String loadImagePrompt, String imagePrompt, String newImageNamePrompt) throws MissingPropertiesException {
+		Map<String, Image> enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
 		final ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
 		ImageView imageDisplay = new ImageView(); 
 		imageDisplay.setImage(images.get(0));
-		ComboBox<String> imageOptionsDropdown = makeTextDropdown("", imageNames);
-		imageOptionsDropdown.getSelectionModel().selectFirst();
-
-		HBox imageSelect = new HBox();
-		Text prompt = new Text(imagePrompt);
-
-		final FileChooser fileChooser = new FileChooser();
-		imageSelect.getChildren().add(prompt);
-		imageSelect.getChildren().add(imageOptionsDropdown);
-
-		imageOptionsDropdown.getSelectionModel().selectedIndexProperty().addListener(( arg0, arg1,  arg2) ->{
-			if ((int) arg2 == imageNames.size()-1) {
-				File file = fileChooser.showOpenDialog(new Stage());
-				imageDisplay.setImage(new Image(file.toURI().toString(), imageSize, imageSize, false, false));
+		StringBuilder currentFilepath = new StringBuilder();
+		Runnable runner = () -> {
+			System.out.println("inside runnable" + currentFilepath.toString());
+			try {
+			imageDisplay.setImage(new Image(new FileInputStream(currentFilepath.toString()), imageSize, imageSize, false, false));
 			}
-			else {
-				imageDisplay.setImage(images.get((int) arg2));
+			catch(Exception e) {
+				e.printStackTrace();
+				//TODO!!!
 			}
-		});
-		imageSelect.getChildren().add(imageDisplay);
-
-		return imageSelect; 
+			};
+		VBox imageSelect = setupSelector(propertiesReader, description, propertiesFilepath, imagePrompt, newImageNamePrompt,
+				currentFilepath, runner);
+		HBox hb = new HBox();
+		hb.getChildren().add(imageSelect);
+		hb.getChildren().add(imageDisplay);
+		return hb; 
 	}
-	public HBox addPromptAndSetupHBox(Node node, String prompt) {
+//	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
+//			String loadImagePrompt, String imagePrompt) throws MissingPropertiesException {
+//		Map<String, Image> enemyImageOptions;
+//		enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
+//		ArrayList<String> imageNames = new ArrayList<String>(enemyImageOptions.keySet());
+//		imageNames.add(loadImagePrompt);
+//
+//		final ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
+//		ImageView imageDisplay = new ImageView(); 
+//		imageDisplay.setImage(images.get(0));
+//		ComboBox<String> imageOptionsDropdown = makeTextDropdown("", imageNames);
+//		imageOptionsDropdown.getSelectionModel().selectFirst();
+//
+//		HBox imageSelect = new HBox();
+//		Text prompt = new Text(imagePrompt);
+//
+//		final FileChooser fileChooser = new FileChooser();
+//		imageSelect.getChildren().add(prompt);
+//		imageSelect.getChildren().add(imageOptionsDropdown);
+//
+//		imageOptionsDropdown.getSelectionModel().selectedIndexProperty().addListener(( arg0, arg1,  arg2) ->{
+//			if ((int) arg2 == imageNames.size()-1) {
+//				File file = fileChooser.showOpenDialog(new Stage());
+//				imageDisplay.setImage(new Image(file.toURI().toString(), imageSize, imageSize, false, false));
+//			}
+//			else {
+//				imageDisplay.setImage(images.get((int) arg2));
+//			}
+//		});
+//		imageSelect.getChildren().add(imageDisplay);
+//
+//		return imageSelect; 
+//	}
+	public HBox addPromptAndSetupHBox(String id, Node node, String prompt) {
 		HBox hbox = new HBox();
+		hbox.setId(id);
 		Text promptText = new Text(prompt);
 		hbox.getChildren().add(node);
 		hbox.getChildren().add(promptText);

@@ -39,7 +39,7 @@ public class CustomizationChoicesScreen extends Screen {
 		dummyLevels.add("1");
 		dummyLevels.add("2");
 		Button editButton = getUIFactory().makeTextButton("editbutton", levelPrompt);
-		ComboBox<String> levelChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyLevels, e -> {
+		ComboBox<String> levelChooser = getUIFactory().makeTextDropdownSelectAction("", dummyLevels, e -> {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 		editButton.setDisable(true);
 		VBox testSelector = new VBox();

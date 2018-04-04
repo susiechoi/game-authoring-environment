@@ -25,7 +25,8 @@ public class SettingsScreen extends AdjustScreen {
 		HBox gameName = getUIFactory().setupPromptAndTextField("", getErrorCheckedPrompt("GameName", myLanguage));
 		HBox backgroundImage = new HBox();
 		try {
-			backgroundImage = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 50, getErrorCheckedPrompt("LoadImage", myLanguage), getErrorCheckedPrompt("Background", myLanguage));
+			backgroundImage = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 50, getErrorCheckedPrompt("LoadImage", myLanguage), getErrorCheckedPrompt("Background", myLanguage),
+					getErrorCheckedPrompt("NewImage", getView().getLanguage()));
 		}
 		catch(MissingPropertiesException e){
 			showDefaultNoFilesError();
