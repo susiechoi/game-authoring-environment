@@ -1,6 +1,7 @@
 package gameplayer.screen;
 
 import authoring.frontend.UIFactory;
+import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -18,12 +19,14 @@ public class InstructionScreen extends Screen {
     private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
     
     private final ScreenManager SCREEN_MANEGER;
+    private final PromptReader PROMPTS;
     private final UIFactory UIFACTORY;
     private Parent ROOT;
     
-    public InstructionScreen(ScreenManager screenManager) {
+    public InstructionScreen(ScreenManager screenManager, PromptReader promptReader) {
 	SCREEN_MANEGER = screenManager;
 	UIFACTORY = new UIFactory();
+	PROMPTS = promptReader;
 	//setStyleSheet(DEFAULT_OWN_CSS);
     }
 
@@ -45,9 +48,9 @@ public class InstructionScreen extends Screen {
 	textInstructs.setWrapText(true);
 	textInstructs.setText("Instructions");
 	
-	Button newGameButt = UIFACTORY.makeTextButton(".button", "New Game");
+	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 	newGameButt.setOnMouseClicked((arg0) ->SCREEN_MANEGER.loadGameScreenNew());
-	Button continueButt = UIFACTORY.makeTextButton(".button", "Continue");
+	Button continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("Continue"));
 	
 	//this should only be clickable if there is a save file availible
 	Boolean saveAvailable = isSaveAvailable();

@@ -5,6 +5,7 @@ import gameplayer.panel.GamePanel;
 import gameplayer.panel.ScorePanel;
 import gameplayer.panel.ControlsPanel;
 import authoring.frontend.UIFactory;
+import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 
 
@@ -21,19 +22,22 @@ public class GameScreen extends Screen {
     //TODO delete this and re-factor to abstract
     private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
     private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+ 
     
     
     private Parent ROOT;
     private final UIFactory UIFACTORY;
+    private final PromptReader PROMPTS;
     private TowerPanel TOWER_PANEL;
     private GamePanel GAME_PANEL;
     private ScorePanel SCORE_PANEL;
     private ControlsPanel CONTROLS_PANEL;
     private ScreenManager SCREEN_MANAGER;
 
-    public GameScreen(ScreenManager ScreenController) {
+    public GameScreen(ScreenManager ScreenController, PromptReader promptReader) {
         SCREEN_MANAGER = ScreenController;
         UIFACTORY = new UIFactory();
+        PROMPTS = promptReader;
 
     }
 
@@ -41,7 +45,7 @@ public class GameScreen extends Screen {
     public void makeScreen() {
         BorderPane rootPane = new BorderPane();
         rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
-        rootPane.setRight(new TowerPanel(rootPane, this).getPanel());
+        rootPane.setRight(new TowerPanel(rootPane, this, PROMPTS).getPanel());
         rootPane.setTop(new ScorePanel(this).getPanel());
         rootPane.setCenter(new GamePanel(this).getPanel());
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
