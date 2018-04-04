@@ -1,9 +1,18 @@
 package engine;
 
+import authoring.AuthoringModel;
+/**
+ * 
+ * @author milestodzo
+ *
+ */
 public class EngineController implements EngineControllerI {
-
-	public EngineController() {
-		// TODO Auto-generated constructor stub
+	private AuthoringModel myGameModel;
+	private PlayState myPlayState;
+	
+	public EngineController(AuthoringModel gameModel, PlayState playState) {
+		myGameModel = gameModel;
+		myPlayState = playState;
 	}
 
 	@Override

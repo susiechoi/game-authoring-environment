@@ -15,7 +15,7 @@ import engine.towers.Tower;
  * Receives input from Controller through applyChange method regarding what/how to change an object
  * 
  */
-class AuthoringModel {
+public class AuthoringModel {
     
     public AuthoringModel() {
 	// map that maps tower String ID's to tower objects for easy accessing later
