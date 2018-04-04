@@ -6,6 +6,7 @@ import authoring.frontend.PropertiesReader;
 import authoring.frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import gameplayer.screen.GameScreen;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -32,7 +33,10 @@ public class ControlsPanel extends Panel{
     @Override
     public void makePanel() {
 	HBox topControls = new HBox();
+	topControls.setAlignment(Pos.CENTER);
 	HBox botControls = new HBox();
+	botControls.setAlignment(Pos.CENTER);
+
 	makeControlButtons(topControls, botControls);
 	VBox panelRoot = new VBox(topControls, botControls);
 	PANEL = panelRoot;

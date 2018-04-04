@@ -13,6 +13,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class InstructionScreen extends Screen {
+    //TODO re-factor style sheets to abstract
+    private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
     
     private final ScreenManager SCREEN_MANEGER;
     private final UIFactory UIFACTORY;
@@ -55,6 +58,9 @@ public class InstructionScreen extends Screen {
 	HBox buttonBox = new HBox(newGameButt,continueButt);
 	buttonBox.setAlignment(Pos.CENTER);
 	rootBox.getChildren().addAll(textInstructs, buttonBox);
+	
+	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 	ROOT = rootBox;
     }
     
