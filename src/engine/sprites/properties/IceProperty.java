@@ -18,4 +18,10 @@ public class IceProperty extends Property{
 		return 0;
 	}
 
+	@Override
+	public double getProperty() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
