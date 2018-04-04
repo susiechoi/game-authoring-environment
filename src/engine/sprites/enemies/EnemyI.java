@@ -1,8 +1,7 @@
-package engine.enemies;
+package engine.sprites.enemies;
 
-import engine.physics.IntersectInterface;
-import engine.physics.Movable;
-import engine.towers.projectiles.ProjectileInterface;
+import engine.sprites.towers.projectiles.ProjectileInterface;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -10,7 +9,7 @@ import engine.towers.projectiles.ProjectileInterface;
  *
  * Interface for enemy functionality
  */
-public interface EnemyI extends Movable, IntersectInterface {
+public interface EnemyI {
     
     /**
      * Handles when the Enemy is hit by a tower
@@ -35,5 +34,7 @@ public interface EnemyI extends Movable, IntersectInterface {
      * Updates the properties of the enemy. For example, health, position, etc.
      */
     public void update();
+
+    boolean overlap(ImageView otherImage);
 
 }

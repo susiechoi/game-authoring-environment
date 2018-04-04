@@ -6,8 +6,8 @@ import engine.enemies.Enemy;
 import engine.managers.EnemyManager;
 import engine.managers.ProjectileManager;
 import engine.managers.TowerManager;
-import engine.towers.Tower;
-import engine.towers.TowerI;
+import engine.sprites.towers.Tower;
+import engine.sprites.towers.TowerI;
 
 /**
  * This class will hold all of the current Play information, such as the list of objects on the screen (enemies,

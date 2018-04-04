@@ -1,6 +1,6 @@
 package engine.managers;
 
-import engine.towers.projectiles.ProjectileInterface;
+import engine.sprites.towers.projectiles.ProjectileInterface;
 
 /**
  * Projectile manager uses composite design pattern to handle updating all 

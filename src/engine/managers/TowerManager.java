@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import engine.towers.Tower;
+import engine.sprites.towers.Tower;
+
 
 /**
  * Tower manager uses composite design pattern to handle updating all 
  * active Tower objects in the game loop.
  * 
  * @author Katherine Van Dyk
+ * @author Ben Hodgson 4/3/18
  *
  */
 public class TowerManager extends Manager<Tower> {
