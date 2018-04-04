@@ -1,5 +1,6 @@
 package engine.enemies.wave;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -28,6 +29,16 @@ public class Wave {
      */
     public void addEnemy(EnemyI enemy, int number) {
 	ENEMIES.put(enemy, number);
+    }
+    
+    /**
+     * Returns a map that an Enemy type key to an Integer value representing the number
+     * of that type in the wave. 
+     * 
+     * @return Map<EnemyI, Integer>: an unmodifiable map of the Enemies in the wave
+     */
+    public Map<EnemyI, Integer> getUnmodifiableEnemies(){
+	return Collections.unmodifiableMap(ENEMIES);
     }
     
     /**
