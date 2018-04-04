@@ -53,7 +53,9 @@ public class GameScreen extends Screen {
         CONTROLS_PANEL = new ControlsPanel(this);
         SCORE_PANEL = new ScorePanel(this);
         GAME_PANEL = new GamePanel(this);
-        UPGRADE_PANEL = new UpgradePanel(this);
+        UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
+        
+        
         VBox rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
         VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
         
@@ -64,11 +66,9 @@ public class GameScreen extends Screen {
         leftPane.setTop(SCORE_PANEL.getPanel());
         leftPane.setCenter(GAME_PANEL.getPanel());
         leftPane.setBottom(UPGRADE_PANEL.getPanel());
-        rootPane.setLeft(leftPane);
-
-        
 
         rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
+        rootPane.setCenter(leftPane);
         rootPane.setRight(rightPane);
         
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
