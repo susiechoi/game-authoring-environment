@@ -40,7 +40,6 @@ public class UpgradePanel extends SpecificPanel {
     
     @Override
     public void makePanel() {
-
         //TODO read in text from properties file
         Label upgradeText = new Label("Upgrades: ");
         HBox towerUpgrades = new HBox();
