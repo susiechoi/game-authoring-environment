@@ -1,4 +1,4 @@
-package engine.sprite.towers;
+package engine.sprites.towers;
 
 import engine.sprites.enemies.EnemyI;
 

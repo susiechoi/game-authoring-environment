@@ -1,7 +1,7 @@
 package engine.sprites.towers.projectiles;
 
-import engine.sprite.properties.DamageProperty;
 import engine.sprites.Sprite;
+import engine.sprites.properties.DamageProperty;
 import javafx.scene.image.ImageView;
 
 public class Projectile extends Sprite implements ProjectileInterface{
@@ -9,6 +9,7 @@ public class Projectile extends Sprite implements ProjectileInterface{
 	private DamageProperty myDamage;
 	
 	public Projectile(int damage, ImageView image) {
+	    	super(image);
 		myDamage = new DamageProperty();
 	}
 

@@ -1,4 +1,4 @@
-package engine.sprite.properties;
+package engine.sprites.properties;
 
 public abstract class Property implements PropertyI {
     
