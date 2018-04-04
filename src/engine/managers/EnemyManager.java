@@ -1,5 +1,7 @@
 package engine.managers;
 
+import java.util.List;
+
 import engine.sprites.enemies.Enemy;
 
 /**
@@ -14,9 +16,11 @@ public class EnemyManager extends Manager<Enemy> {
     /**
      * Constructor for Enemy manager
      */
-    public EnemyManager() {
-	super();
+    public EnemyManager(List<Enemy> enemies) {
+    		super(enemies);
     }
+    
+    
     
     
 

@@ -18,5 +18,11 @@ public interface ProjectileInterface extends Physics {
      * Checks to see if the Projectile hits an Enemy
      */
     public void hitsEnemy();
+    
+    /**
+     * returns the damage that is inflicted upon the enemy
+     * @return
+     */
+    public double inflictDamage();
 
 }

@@ -6,8 +6,7 @@ import engine.sprites.towers.projectiles.Projectile;
 /**
  * 
  * @author Ben Hodgson 3/28/18
- * @author Katherine Van Dyk 4/3/18
- * 
+ * @author Ryan Pond
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
  * fire projectiles
  */
