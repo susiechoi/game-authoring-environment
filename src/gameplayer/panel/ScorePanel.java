@@ -17,6 +17,5 @@ public class ScorePanel extends Panel{
     public void makePanel() {
 	VBox panelRoot = new VBox();
 	PANEL = panelRoot;
-
     }
 }

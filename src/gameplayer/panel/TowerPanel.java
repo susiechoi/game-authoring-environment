@@ -22,7 +22,7 @@ import gameplayer.screen.GameScreen;
 import file.FileIO;
 
 
-public class TowerPanel extends Panel{
+public class TowerPanel extends Panel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private final int TOWER_IMAGE_SIZE = 50;
@@ -42,82 +42,82 @@ public class TowerPanel extends Panel{
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
 
     public TowerPanel(BorderPane pane, GameScreen gameScreen) {
-	PANE = pane;
-	GAME_SCREEN = gameScreen;
-	PROP_READ = new PropertiesReader();
-	UIFACTORY = new UIFactory();
-	money = GAME_SCREEN.getMoney();
-	bottomPanel = new ControlsPanel(GAME_SCREEN);
+		PANE = pane;
+		GAME_SCREEN = gameScreen;
+		PROP_READ = new PropertiesReader();
+		UIFACTORY = new UIFactory();
+		money = GAME_SCREEN.getMoney();
+		bottomPanel = new ControlsPanel(GAME_SCREEN);
     }
 
 
     @Override
     public void makePanel() {
-	List<Button> buttons = makeButtons();
+		List<Button> buttons = makeButtons();
 
-	VBox towerHolderLeft = new VBox();
-	VBox towerHolderRight = new VBox();
-	
-	fillScrollWithTowers(towerHolderLeft,towerHolderRight);
+		VBox towerHolderLeft = new VBox();
+		VBox towerHolderRight = new VBox();
 
-	towerHolderLeft.setFillWidth(true);
-	towerHolderRight.setFillWidth(true);
+		fillScrollWithTowers(towerHolderLeft,towerHolderRight);
 
-	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
-	//TODO need to check if this static stuff is okay
-	fullTowerHold.setHgrow(towerHolderRight, Priority.ALWAYS);
-	fullTowerHold.setHgrow(towerHolderLeft, Priority.ALWAYS);
+		towerHolderLeft.setFillWidth(true);
+		towerHolderRight.setFillWidth(true);
 
-	fullTowerHold.setAlignment(Pos.CENTER);
-	ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
-	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
+		HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
+		//TODO need to check if this static stuff is okay
+		fullTowerHold.setHgrow(towerHolderRight, Priority.ALWAYS);
+		fullTowerHold.setHgrow(towerHolderLeft, Priority.ALWAYS);
 
-	Button currencyDisplay = new Button();
-	currencyDisplay.setId("currencyButton");
-	currencyDisplay.setText("$" +money.toString());
-	currencyDisplay.setDisable(true);
-	currencyDisplay.setMaxWidth(Double.MAX_VALUE);;
-	VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
-	towersAndCurr.setVgrow(towerDisplay, Priority.ALWAYS);
-	towersAndCurr.setAlignment(Pos.CENTER);
+		fullTowerHold.setAlignment(Pos.CENTER);
+		ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
+		towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
-	VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
+		Button currencyDisplay = new Button();
+		currencyDisplay.setId("currencyButton");
+		currencyDisplay.setText("$" +money.toString());
+		currencyDisplay.setDisable(true);
+		currencyDisplay.setMaxWidth(Double.MAX_VALUE);;
+		VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
+		towersAndCurr.setVgrow(towerDisplay, Priority.ALWAYS);
+		towersAndCurr.setAlignment(Pos.CENTER);
 
-	//might want to remove this as control implementation changes but we'll see
-	panelRoot.setVgrow(towersAndCurr, Priority.ALWAYS); 
+		VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
+
+		//might want to remove this as control implementation changes but we'll see
+		panelRoot.setVgrow(towersAndCurr, Priority.ALWAYS);
 
 
 
-	//  panelRoot.getChildren().addAll(buttons);
-	panelRoot.setId("towerPanel");
-	PANEL = panelRoot;
-	//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
-	//can't do that with interfaces. How would you want to approach that?
+		//  panelRoot.getChildren().addAll(buttons);
+		panelRoot.setId("towerPanel");
+		PANEL = panelRoot;
+		//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
+		//can't do that with interfaces. How would you want to approach that?
     }
 
     private void fillScrollWithTowers(VBox towerHolderLeft, VBox towerHolderRight) {
-	VBox towerHolder;
-	try {
-	    Map<String, Image> towerMap = PROP_READ.keyToImageMap(TOWER_NAMES_FILE_PATH, TOWER_IMAGE_SIZE,TOWER_IMAGE_SIZE);
-	    int alternator = 0;
-	    for(String towerType : towerMap.keySet()) {
-		Button towerButton = UIFACTORY.makeImageButton("button",towerMap.get(towerType));
-		towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(towerType));
-		if(alternator%2 == 0) 
-		    towerHolder = towerHolderLeft;
-		else 
-		    towerHolder = towerHolderRight;
+		VBox towerHolder;
+		try {
+			Map<String, Image> towerMap = PROP_READ.keyToImageMap(TOWER_NAMES_FILE_PATH, TOWER_IMAGE_SIZE,TOWER_IMAGE_SIZE);
+			int alternator = 0;
+			for(String towerType : towerMap.keySet()) {
+			Button towerButton = UIFACTORY.makeImageButton("button",towerMap.get(towerType));
+			towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(towerType));
+			if(alternator%2 == 0)
+				towerHolder = towerHolderLeft;
+			else
+				towerHolder = towerHolderRight;
 
-		towerHolder.getChildren().add(towerButton);
-		towerHolder.setVgrow(towerButton, Priority.ALWAYS);
-		alternator++;
-	    }
-	} catch (MissingPropertiesException e) {
-	    System.out.println("PropertiesReadFailed: TowerPanel");
-	    //something went wrong and we don't have the towers
-	    //TODO something reasonable here
-	    //probably have default images that aren't the ones specified by authoring
-	}
+			towerHolder.getChildren().add(towerButton);
+			towerHolder.setVgrow(towerButton, Priority.ALWAYS);
+			alternator++;
+			}
+		} catch (MissingPropertiesException e) {
+			System.out.println("PropertiesReadFailed: TowerPanel");
+			//something went wrong and we don't have the towers
+			//TODO something reasonable here
+			//probably have default images that aren't the ones specified by authoring
+		}
     }
 
     private void towerSelected(String towerPropName) {
