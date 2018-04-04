@@ -46,8 +46,7 @@ public class GameScreen extends Screen {
         BorderPane rootPane = new BorderPane();
         rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
         rootPane.setRight(new TowerPanel(rootPane, this, PROMPTS).getPanel());
-        rootPane.setTop(new ScorePanel(this).getPanel());
-        rootPane.setCenter(new GamePanel(this).getPanel());
+        rootPane.setLeft(new GamePanel(this).getPanel());
         
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
         rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
