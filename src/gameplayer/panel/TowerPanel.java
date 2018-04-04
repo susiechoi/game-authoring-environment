@@ -51,30 +51,29 @@ public class TowerPanel extends Panel {
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	money = GAME_SCREEN.getMoney();
-	bottomPanel = new ControlsPanel(GAME_SCREEN);
     }
 
 
     @Override
     public void makePanel() {
-		List<Button> buttons = makeButtons();
+	List<Button> buttons = makeButtons();
 
-		VBox towerHolderLeft = new VBox();
-		VBox towerHolderRight = new VBox();
+	VBox towerHolderLeft = new VBox();
+	VBox towerHolderRight = new VBox();
 
-		fillScrollWithTowers(towerHolderLeft,towerHolderRight);
+	fillScrollWithTowers(towerHolderLeft,towerHolderRight);
 
-		towerHolderLeft.setFillWidth(true);
-		towerHolderRight.setFillWidth(true);
+	towerHolderLeft.setFillWidth(true);
+	towerHolderRight.setFillWidth(true);
 
 	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
 	//TODO need to check if this static stuff is okay
 	HBox.setHgrow(towerHolderRight, Priority.ALWAYS);
 	HBox.setHgrow(towerHolderLeft, Priority.ALWAYS);
 
-		fullTowerHold.setAlignment(Pos.CENTER);
-		ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
-		towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
+	fullTowerHold.setAlignment(Pos.CENTER);
+	ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
+	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
 	Button currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
@@ -85,18 +84,16 @@ public class TowerPanel extends Panel {
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
 
-		VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
 
 	//might want to remove this as control implementation changes but we'll see
-	VBox.setVgrow(towersAndCurr, Priority.ALWAYS); 
 
 
 
-		//  panelRoot.getChildren().addAll(buttons);
-		panelRoot.setId("towerPanel");
-		PANEL = panelRoot;
-		//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
-		//can't do that with interfaces. How would you want to approach that?
+	//  panelRoot.getChildren().addAll(buttons);
+	towersAndCurr.setId("towerPanel");
+	PANEL = towersAndCurr;
+	//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
+	//can't do that with interfaces. How would you want to approach that?
     }
 
     private void fillScrollWithTowers(VBox towerHolderLeft, VBox towerHolderRight) {

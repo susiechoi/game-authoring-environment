@@ -21,6 +21,10 @@ public class GamePanel extends Panel{
     public void makePanel() {
 	
 	BorderPane panelRoot = new BorderPane();
+	//panelRoot.setBottom(new Up);
+	panelRoot.setMaxWidth(Double.MAX_VALUE);
+	panelRoot.setMaxHeight(Double.MAX_VALUE);
+
 	PANEL = panelRoot;
     }
 }

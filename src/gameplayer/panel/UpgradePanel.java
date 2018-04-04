@@ -1,6 +1,7 @@
 package gameplayer.panel;
 
 import gameplayer.screen.GameScreen;
+import javafx.scene.layout.HBox;
 
 public class UpgradePanel extends SpecificPanel {
 
@@ -13,6 +14,11 @@ public class UpgradePanel extends SpecificPanel {
     
     @Override
     public void makePanel() {
+	HBox panelRoot = new HBox();
+	panelRoot.setMaxWidth(Double.MAX_VALUE);
+	panelRoot.setMaxHeight(Double.MAX_VALUE);
+
+	PANEL = panelRoot;
 
     }
 }
