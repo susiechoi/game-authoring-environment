@@ -23,7 +23,7 @@ import gameplayer.screen.GameScreen;
 import file.FileIO;
 
 
-public class TowerPanel extends Panel{
+public class TowerPanel extends Panel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private final int TOWER_IMAGE_SIZE = 50;
@@ -43,6 +43,7 @@ public class TowerPanel extends Panel{
 
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
 
+
     public TowerPanel(BorderPane pane, GameScreen gameScreen, PromptReader promptReader) {
 	PANE = pane;
 	GAME_SCREEN = gameScreen;
@@ -56,24 +57,24 @@ public class TowerPanel extends Panel{
 
     @Override
     public void makePanel() {
-	List<Button> buttons = makeButtons();
+		List<Button> buttons = makeButtons();
 
-	VBox towerHolderLeft = new VBox();
-	VBox towerHolderRight = new VBox();
-	
-	fillScrollWithTowers(towerHolderLeft,towerHolderRight);
+		VBox towerHolderLeft = new VBox();
+		VBox towerHolderRight = new VBox();
 
-	towerHolderLeft.setFillWidth(true);
-	towerHolderRight.setFillWidth(true);
+		fillScrollWithTowers(towerHolderLeft,towerHolderRight);
+
+		towerHolderLeft.setFillWidth(true);
+		towerHolderRight.setFillWidth(true);
 
 	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
 	//TODO need to check if this static stuff is okay
 	HBox.setHgrow(towerHolderRight, Priority.ALWAYS);
 	HBox.setHgrow(towerHolderLeft, Priority.ALWAYS);
 
-	fullTowerHold.setAlignment(Pos.CENTER);
-	ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
-	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
+		fullTowerHold.setAlignment(Pos.CENTER);
+		ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
+		towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
 	Button currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
@@ -84,18 +85,18 @@ public class TowerPanel extends Panel{
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
 
-	VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
+		VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
 
 	//might want to remove this as control implementation changes but we'll see
 	VBox.setVgrow(towersAndCurr, Priority.ALWAYS); 
 
 
 
-	//  panelRoot.getChildren().addAll(buttons);
-	panelRoot.setId("towerPanel");
-	PANEL = panelRoot;
-	//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
-	//can't do that with interfaces. How would you want to approach that?
+		//  panelRoot.getChildren().addAll(buttons);
+		panelRoot.setId("towerPanel");
+		PANEL = panelRoot;
+		//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
+		//can't do that with interfaces. How would you want to approach that?
     }
 
     private void fillScrollWithTowers(VBox towerHolderLeft, VBox towerHolderRight) {
