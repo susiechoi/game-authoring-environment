@@ -1,4 +1,4 @@
-package authoring.frontend;
+package frontend;
 
 import java.io.File;
 import java.io.FileInputStream;

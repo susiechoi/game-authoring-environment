@@ -4,16 +4,14 @@
  * @author susiechoi 
  */
 
-package authoring.frontend;
-
-
+package frontend;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import authoring.frontend.Screen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,8 +34,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class UIFactory {
-
-	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
 	
 	/**
 	 * Makes Text object for displaying titles of screens to the user
@@ -91,7 +87,7 @@ public class UIFactory {
 	 * @param promptString - text prompt 
 	 * @return HBox 
 	 */
-	protected HBox setupPromptAndTextField(String id, String promptString) {
+	public HBox setupPromptAndTextField(String id, String promptString) {
 		HBox hb = new HBox(); 
 		Text prompt = new Text(promptString); 
 		TextField tf = new TextField(); 
@@ -107,7 +103,7 @@ public class UIFactory {
 	 * @param dropdownOptions - String options to populate dropdown
 	 * @return HBox 
 	 */
-	protected HBox setupPromptAndDropdown(String id, String promptString, List<String> dropdownOptions) {
+	public HBox setupPromptAndDropdown(String id, String promptString, List<String> dropdownOptions) {
 		HBox hb = new HBox(); 
 		Text prompt = new Text(promptString); 
 		ComboBox<String> dropdown = makeTextDropdown("", dropdownOptions);
@@ -118,7 +114,7 @@ public class UIFactory {
 		return hb; 
 	}
 
-	protected HBox setupPromptAndSlider(String id, String promptString, int sliderMax) {
+	public HBox setupPromptAndSlider(String id, String promptString, int sliderMax) {
 		HBox hb = new HBox();
 		Text prompt = new Text(promptString);
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
@@ -250,16 +246,6 @@ public class UIFactory {
 				textField.getParent().requestFocus();
 			}
 		});
-	}
-
-	
-	public Button setupBackButton(AuthoringView view, Screen currentScreen) {
-		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-		Button backButton = makeImageButton("backButton",backbuttonImage);
-		backButton.setOnMouseClicked((event) -> { 
-			view.goBackFrom(currentScreen);
-		}); 
-		return backButton; 
 	}
 
 }
