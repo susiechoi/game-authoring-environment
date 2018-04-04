@@ -1,4 +1,4 @@
-package engine.sprite.properties;
+package engine.sprites.properties;
 
 public class HealthProperty extends Property {
 

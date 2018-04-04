@@ -1,9 +1,9 @@
 package engine;
 
-import engine.sprite.towers.Tower;
-import engine.sprite.towers.TowerI;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.sprites.towers.Tower;
+import engine.sprites.towers.TowerI;
 
 /**
  * This class will hold all of the current Play information, such as the list of objects on the screen (enemies,

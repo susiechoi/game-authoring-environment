@@ -1,9 +1,9 @@
-package engine.sprite.towers;
+package engine.sprites.towers;
 
-import engine.sprite.properties.HealthProperty;
-import engine.sprite.properties.ValueProperty;
 import engine.sprites.Sprite;
 import engine.sprites.enemies.EnemyI;
+import engine.sprites.properties.HealthProperty;
+import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.ImageView;
 
