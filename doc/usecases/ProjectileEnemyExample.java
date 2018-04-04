@@ -2,8 +2,8 @@ package usecases;
 
 import java.util.List;
 
-import engine.enemies.EnemyI;
-import engine.towers.projectiles.Projectile;
+import engine.sprites.enemies.EnemyI;
+import engine.sprites.towers.projectiles.ProjectileInterface;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ProjectileEnemyExample {
 
     private List<EnemyI> enemies;
-    private List<Projectile> projectiles;
+    private List<ProjectileInterface> projectiles;
 
     /**
      * Constructor that would be included within GameState class
@@ -32,7 +32,7 @@ public class ProjectileEnemyExample {
      */
     public void update() {
 	for(EnemyI enemy : enemies) {
-	    for(Projectile projectile : projectiles) {
+	    for(ProjectileInterface projectile : projectiles) {
 		if(enemy.getHitBy(projectile)) {
 		    projectiles.remove(projectile);
 		}

@@ -1,8 +1,7 @@
-package engine.enemies;
+package engine.sprites.enemies;
 
-import engine.physics.Intersect;
-import engine.physics.Movable;
-import engine.towers.projectiles.Projectile;
+import engine.sprites.towers.projectiles.Projectile;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -10,12 +9,13 @@ import engine.towers.projectiles.Projectile;
  *
  * Interface for enemy functionality
  */
-public interface EnemyI extends Movable, Intersect {
+public interface EnemyI {
     
     /**
      * Handles when the Enemy is hit by a tower
      * 
      * @param projectile: the projectile that hit the enemy
+     * @return : returns true if the enemy is still alive, false if it is dead
      */
     public boolean getHitBy(Projectile projectile);
     
@@ -25,8 +25,17 @@ public interface EnemyI extends Movable, Intersect {
     public void followPath();
     
     /**
+     * Handles returning an enemy's damage after hitting a tower
+     * 
+     * @return Double: damage that Enemy incurs on the tower
+     */
+    public Double damage();
+    
+    /**
      * Updates the properties of the enemy. For example, health, position, etc.
      */
     public void update();
+
+    boolean overlap(ImageView otherImage);
 
 }
