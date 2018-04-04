@@ -17,6 +17,10 @@ abstract class AdjustScreen extends Screen {
 		super(view);
 	}
 	
+	protected void sendInfo() {
+		
+	}
+	
 	/**
 	 * @return  HBox with back and apply buttons
 	 */
