@@ -68,8 +68,8 @@ public class TowerPanel extends Panel{
 
 	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
 	//TODO need to check if this static stuff is okay
-	fullTowerHold.setHgrow(towerHolderRight, Priority.ALWAYS);
-	fullTowerHold.setHgrow(towerHolderLeft, Priority.ALWAYS);
+	HBox.setHgrow(towerHolderRight, Priority.ALWAYS);
+	HBox.setHgrow(towerHolderLeft, Priority.ALWAYS);
 
 	fullTowerHold.setAlignment(Pos.CENTER);
 	ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
@@ -81,13 +81,13 @@ public class TowerPanel extends Panel{
 	currencyDisplay.setDisable(true);
 	currencyDisplay.setMaxWidth(Double.MAX_VALUE);;
 	VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
-	towersAndCurr.setVgrow(towerDisplay, Priority.ALWAYS);
+	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
 
 	VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
 
 	//might want to remove this as control implementation changes but we'll see
-	panelRoot.setVgrow(towersAndCurr, Priority.ALWAYS); 
+	VBox.setVgrow(towersAndCurr, Priority.ALWAYS); 
 
 
 
@@ -112,7 +112,7 @@ public class TowerPanel extends Panel{
 		    towerHolder = towerHolderRight;
 
 		towerHolder.getChildren().add(towerButton);
-		towerHolder.setVgrow(towerButton, Priority.ALWAYS);
+		VBox.setVgrow(towerButton, Priority.ALWAYS);
 		alternator++;
 	    }
 	} catch (MissingPropertiesException e) {
