@@ -21,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -95,8 +96,6 @@ public class UIFactory {
 		HBox hb = new HBox(); 
 		Text prompt = new Text(promptString); 
 		TextField tf = new TextField(); 
-		hb.getChildren().add(prompt);
-		hb.getChildren().add(tf); 
 		hb.setId(id);
 		return hb; 
 	}
@@ -163,13 +162,14 @@ public class UIFactory {
 	public VBox setupFileChooser(String id, String newFilePrompt, String newFileNamePrompt, String propertiesFilepath,
 			EventHandler<ActionEvent> action, Map<String, String> keysAndVals) {
 			VBox vbox = new VBox();
-			HBox imageNamer = setupPromptAndTextField("", newFileNamePrompt);
+			TextField imageNameEntry = new TextField();
+			HBox imageNamer = addPromptAndSetupHBox(imageNameEntry, newFileNamePrompt);
 			final FileChooser fileChooser = new FileChooser();
 			Button filePrompt = makeTextButton(id, newFilePrompt);
 			filePrompt.setDisable(true);
-			((TextField)(imageNamer.getChildren().get(1))).setOnAction(e -> {filePrompt.setDisable(false);});; //TODO: refactor so no casting!
+			imageNameEntry.setOnAction(e -> {filePrompt.setDisable(false);});
 			filePrompt.setOnAction(e -> {
-				String imageName = ((TextField)(imageNamer.getChildren().get(1))).getText();
+				String imageName = imageNameEntry.getText();
 				if(!imageName.equals(null)) {
 					File file = fileChooser.showOpenDialog(new Stage());
 					keysAndVals.put(imageName, file.getAbsolutePath().replace("\\", "/"));
@@ -243,7 +243,13 @@ public class UIFactory {
 
 		return imageSelect; 
 	}
-
+	public HBox addPromptAndSetupHBox(Node node, String prompt) {
+		HBox hbox = new HBox();
+		Text promptText = new Text(prompt);
+		hbox.getChildren().add(node);
+		hbox.getChildren().add(promptText);
+		return hbox;	
+	}
 	public void applyTextFieldFocusAction(Scene screen, TextField textField) {
 		screen.setOnMousePressed(event -> {
 			if (!textField.equals(event.getSource())) {
