@@ -167,7 +167,7 @@ public class UIFactory {
 			final FileChooser fileChooser = new FileChooser();
 			Button filePrompt = makeTextButton(id, newFilePrompt);
 			filePrompt.setDisable(true);
-			((TextField)(imageNamer.getChildren().get(1))).setOnAction(e -> {filePrompt.setDisable(false);});;
+			((TextField)(imageNamer.getChildren().get(1))).setOnAction(e -> {filePrompt.setDisable(false);});; //TODO: refactor so no casting!
 			filePrompt.setOnAction(e -> {
 				String imageName = ((TextField)(imageNamer.getChildren().get(1))).getText();
 				if(!imageName.equals(null)) {
@@ -183,12 +183,13 @@ public class UIFactory {
 			return vbox;
 	}
 	
-	public VBox setupSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath) throws MissingPropertiesException{
+	public VBox setupSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath,
+			String newFilePrompt, String newFileNamePrompt) throws MissingPropertiesException{
 			VBox vb = new VBox();
 			Map<String, String> options = propertiesReader.read(propertiesReader.loadProperties(propertiesFilepath));
 			ArrayList<String> optionsList = new ArrayList<String >(options.keySet());
 			ComboBox<String> dropdown = makeTextDropdown("", optionsList);
-			VBox fc = setupFileChooser("", "test", "test", propertiesFilepath, e -> {
+			VBox fc = setupFileChooser("", newFilePrompt, newFileNamePrompt, propertiesFilepath, e -> {
 				optionsList.clear();
 				Map<String, String> options2 = new HashMap<>();
 				try {

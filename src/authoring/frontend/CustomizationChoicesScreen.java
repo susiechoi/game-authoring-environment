@@ -43,7 +43,8 @@ public class CustomizationChoicesScreen extends Screen {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 		editButton.setDisable(true);
 		VBox testSelector = new VBox();
-		testSelector = getUIFactory().setupSelector(getPropertiesReader(), "", TEST_PROPERTIES);
+		testSelector = getUIFactory().setupSelector(getPropertiesReader(), "", TEST_PROPERTIES, getErrorCheckedPrompt("NewSong", myLanguage),
+				getErrorCheckedPrompt("NewSongName", myLanguage));
 		vbox.getChildren().add(heading);
 		vbox.getChildren().add(settingsButton);
 		vbox.getChildren().add(demoButton);
