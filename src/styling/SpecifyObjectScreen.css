@@ -55,3 +55,7 @@ VBox, HBox {
 #goButton:hover, #applyButton:hover {
 	-fx-background-color: linear-gradient(#011638, #364156);
 }
+
+#startingCurrency {
+	-fx-min-width: 300; 
+}

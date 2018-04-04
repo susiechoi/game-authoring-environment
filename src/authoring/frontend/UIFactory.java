@@ -129,10 +129,10 @@ public class UIFactory {
 				sliderValue.setText(String.format("%03d", (int)(double)new_val));
 			}
 		});
+		slider.setId(id);
 		hb.getChildren().add(prompt);
 		hb.getChildren().add(slider);
 		hb.getChildren().add(sliderValue);
-		hb.setId(id);
 		return hb; 
 	}
 
