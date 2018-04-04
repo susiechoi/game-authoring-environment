@@ -20,6 +20,9 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected SpecifyObjectScreen(AuthoringView view) {
 		super(view);
 		myObjectOptions = new ArrayList<String>(); // TODO read in objects
+		myObjectOptions.add("Dummy Object 1");
+		myObjectOptions.add("Dummy Object 2");
+		myObjectOptions.add("Dummy Object 3");
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
