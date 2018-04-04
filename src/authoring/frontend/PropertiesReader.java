@@ -19,7 +19,7 @@ import javafx.scene.image.Image;
  * Use by creating a PropertiesReader object with the filepath as a String argument. From there, can get a map of 
  * keys->vals in the PropertiesFile, search for a given key/val in the file, etc. 
  */
-class PropertiesReader {
+public class PropertiesReader {
 	
 	protected String findVal(String filepath, String target) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
@@ -40,7 +40,7 @@ class PropertiesReader {
 		return allKeys; 
 	}
 	
-	protected Map<String, Image> keyToImageMap(String filepath, double imageLength, double imageHeight) throws MissingPropertiesException {
+	public Map<String, Image> keyToImageMap(String filepath, double imageLength, double imageHeight) throws MissingPropertiesException {
 		Map<String, Image> imageMap = new HashMap<String, Image>(); 
 		Properties properties = loadProperties(filepath);
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {

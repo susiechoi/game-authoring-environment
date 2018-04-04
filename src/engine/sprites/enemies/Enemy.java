@@ -9,8 +9,8 @@ import engine.sprites.towers.projectiles.ProjectileInterface;
 import javafx.scene.image.ImageView;
 
 /**
- * This is used for the Enemy object in the game. It will use composition to implement moveable
- * and intersectable methods.
+ * This is used for the Enemy object in the game. It will use composition to implement
+ * intersectable methods.
  * 
  * @author ryanpond
  *
@@ -44,13 +44,6 @@ public class Enemy extends Sprite implements EnemyI{
     @Override
     public void followPath() {
 	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void update() {
-	// TODO Auto-generated method stub
-
     }
 
     @Override
