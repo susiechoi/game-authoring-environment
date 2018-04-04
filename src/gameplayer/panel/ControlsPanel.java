@@ -24,9 +24,9 @@ public class ControlsPanel extends Panel{
     private final PropertiesReader PROP_READ;
     
     public ControlsPanel(GameScreen gameScreen) {
-	GAME_SCREEN = gameScreen;
-	UIFACTORY = new UIFactory();
-	PROP_READ = new PropertiesReader();
+		GAME_SCREEN = gameScreen;
+		UIFACTORY = new UIFactory();
+		PROP_READ = new PropertiesReader();
     }
    
 
