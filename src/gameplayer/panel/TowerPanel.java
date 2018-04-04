@@ -26,7 +26,7 @@ import file.FileIO;
 public class TowerPanel extends Panel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
-    private final int TOWER_IMAGE_SIZE = 50;
+    private final int TOWER_IMAGE_SIZE = 70;
 
     private BorderPane PANE;
     private PromptReader PROMPTS;

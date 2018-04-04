@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 public class ControlsPanel extends Panel{
     
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
-    private final int DEFAULT_CONTROL_BUTTON_SIZE = 50;
+    private final int DEFAULT_CONTROL_BUTTON_SIZE = 35;
     
     private final GameScreen GAME_SCREEN;
     private final UIFactory UIFACTORY;
