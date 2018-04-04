@@ -3,7 +3,7 @@ package engine.factories;
 import java.util.Collection;
 import java.util.Map;
 
-import engine.towers.Tower;
+import engine.sprites.towers.Tower;
 
 /**
  * Tower Factory that creates Tower object from parsed parameter values

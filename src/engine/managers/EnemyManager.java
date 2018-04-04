@@ -1,6 +1,8 @@
 package engine.managers;
 
-import engine.enemies.Enemy;
+import java.util.List;
+
+import engine.sprites.enemies.Enemy;
 
 /**
  * Enemy manager uses composite design pattern to handle updating all 
@@ -14,9 +16,11 @@ public class EnemyManager extends Manager<Enemy> {
     /**
      * Constructor for Enemy manager
      */
-    public EnemyManager() {
-	super();
+    public EnemyManager(List<Enemy> enemies) {
+    		super(enemies);
     }
+    
+    
     
     
 

@@ -1,6 +1,6 @@
-package engine.enemies.wave;
+package engine.sprites.enemies.wave;
 
-import engine.enemies.EnemyI;
+import engine.sprites.enemies.EnemyI;
 
 /**
  * 
