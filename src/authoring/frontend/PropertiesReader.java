@@ -55,7 +55,7 @@ public class PropertiesReader {
 		return imageMap; 
 	}
 	
-	private Properties loadProperties(String filepath) throws MissingPropertiesException {
+	public Properties loadProperties(String filepath) throws MissingPropertiesException {
 		Properties properties = new Properties(); 
 		FileInputStream in = null;
 		try {
@@ -67,7 +67,7 @@ public class PropertiesReader {
 		return properties; 
 	}
 
-	private Map<String, String> read(Properties properties) {
+	public Map<String, String> read(Properties properties) {
 		Map<String, String> readInProperties = new HashMap<String, String>(); 
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
 			String key = (String)e.nextElement();
