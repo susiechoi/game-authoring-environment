@@ -39,7 +39,7 @@ public interface TowerI {
      * @param: User's current balance
      * @return: The user's new balance
      */
-    public double upgradeGeneral(double balance);
+    public double upgrade(double balance);
 
     /**
      * Upgrades the health of the tower
