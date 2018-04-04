@@ -46,9 +46,10 @@ public class UpgradePanel extends SpecificPanel {
         fillUpgrades(towerUpgrades);
         towerUpgrades.setFillHeight(true);
         towerUpgrades.setAlignment(Pos.CENTER);
+        towerUpgrades.setMaxWidth(Double.MAX_VALUE);
         ScrollPane upgradeDisplay = new ScrollPane(towerUpgrades);
-        upgradeDisplay.setFitToHeight(true);
-
+        upgradeDisplay.setFitToWidth(true);
+        
         HBox panelRoot = new HBox(upgradeText, upgradeDisplay);
         HBox.setHgrow(upgradeDisplay, Priority.ALWAYS);
         panelRoot.setAlignment(Pos.CENTER);
@@ -65,10 +66,12 @@ public class UpgradePanel extends SpecificPanel {
                 //upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.
                 upgrades.getChildren().add(upgradeButton);
                 HBox.setHgrow(upgradeButton, Priority.ALWAYS);
+                upgradeButton.setMaxWidth(Double.MAX_VALUE);
+                upgradeButton.setMaxHeight(Double.MAX_VALUE);
             }
         }
         catch (MissingPropertiesException e) {
-
+            System.out.println("upgrade image load fail");
         }
     }
 }
