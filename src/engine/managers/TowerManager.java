@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import engine.sprites.Sprite;
 import engine.sprites.towers.Tower;
 
 
@@ -14,18 +15,21 @@ import engine.sprites.towers.Tower;
  * @author Katherine Van Dyk
  * @author Ryan Pond
  * @author Ben Hodgson 4/3/18
+ * @author Miles Todzo 4/4/18
  *
  */
 public class TowerManager extends Manager<Tower> {
 
-	private final List<Tower> AVAILABLE = new ArrayList<Tower>();
-	private final List<Tower> ACTIVE = new ArrayList<Tower>();
+	private final List<Tower> availableTowers;
+	private final List<Tower> activeTowers;
 
 	/**
 	 * Constructor for super class
 	 */
 	public TowerManager(List<Tower> towers) {
 		super(towers);
+		availableTowers = new ArrayList<Tower>();
+		activeTowers = new ArrayList<Tower>();
 	}
 
 	/**
@@ -33,7 +37,7 @@ public class TowerManager extends Manager<Tower> {
 	 * @return List<Tower>: an unmodifiableList of AVAILABLE towers
 	 */
 	public List<Tower> unmodifiableAvailableList() {
-		return Collections.unmodifiableList(AVAILABLE);
+		return Collections.unmodifiableList(availableTowers);
 	}
 
 	/**
@@ -41,7 +45,7 @@ public class TowerManager extends Manager<Tower> {
 	 * @return List<Tower>: an unmodifiableList of ACTIVE towers
 	 */
 	public List<Tower> unmodifiableActiveList() {
-		return Collections.unmodifiableList(ACTIVE);
+		return Collections.unmodifiableList(activeTowers);
 	}
 
 	/**
@@ -53,8 +57,8 @@ public class TowerManager extends Manager<Tower> {
 	public void setTowers(List<Tower> towers) {
 		for (Tower gameTower : towers) {
 			// TODO perform the deep copy
-			Tower copyTower = new Tower(null, null, 0, 0);
-			AVAILABLE.add(copyTower);
+			Tower copyTower = new Tower(null, null, null, null);
+			availableTowers.add(copyTower);
 		}
 	}
 
@@ -64,7 +68,17 @@ public class TowerManager extends Manager<Tower> {
 	 * @param tower: A tower that is Activated in the game
 	 */
 	public void setActive(Tower tower) {
-		ACTIVE.add(tower);
+		activeTowers.add(tower);
+	}
+
+	@Override
+	public void checkForCollisions(List<Sprite> sprites) {
+		for (Tower activeTower: activeTowers) {
+			for (Sprite sprite: sprites) {
+				activeTower.checkForCollision(sprite);
+			}
+		}
+		
 	}
 
 }

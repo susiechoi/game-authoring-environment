@@ -1,6 +1,7 @@
 package engine.sprites.towers;
 
 import engine.sprites.Sprite;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.ImageView;
@@ -9,7 +10,6 @@ import javafx.scene.image.ImageView;
  * Class for tower object in game. Implements Sprite methods.
  * 
  * @author Katherine Van Dyk
- *
  */
 public class Tower extends Sprite implements TowerI {
 

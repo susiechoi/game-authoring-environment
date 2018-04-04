@@ -2,6 +2,7 @@ package engine.managers;
 
 import java.util.List;
 
+import engine.sprites.Sprite;
 import javafx.collections.ObservableList;
 
 /**
@@ -32,5 +33,6 @@ public abstract class Manager<E> {
     public ObservableList<E> getList(){
     		return (ObservableList<E>) objects;
     }
-
+    
+    public abstract void checkForCollisions(List<Sprite> sprites);
 }
