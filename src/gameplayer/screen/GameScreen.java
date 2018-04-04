@@ -48,6 +48,7 @@ public class GameScreen extends Screen {
         rootPane.setRight(new TowerPanel(rootPane, this, PROMPTS).getPanel());
         rootPane.setTop(new ScorePanel(this).getPanel());
         rootPane.setCenter(new GamePanel(this).getPanel());
+        
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
         rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
         ROOT = rootPane;

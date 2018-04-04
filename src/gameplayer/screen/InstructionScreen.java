@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -44,13 +45,14 @@ public class InstructionScreen extends Screen {
     //TODO all text should be read from language properties files
     public void makeScreen() {
 	VBox rootBox = new VBox();
-	TextArea textInstructs = new TextArea();
+	Label textInstructs = new Label();
 	textInstructs.setWrapText(true);
 	textInstructs.setText("Instructions");
+	textInstructs.setAlignment(Pos.CENTER);
 	
 	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 	newGameButt.setOnMouseClicked((arg0) ->SCREEN_MANEGER.loadGameScreenNew());
-	Button continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("Continue"));
+	Button continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
 	
 	//this should only be clickable if there is a save file availible
 	Boolean saveAvailable = isSaveAvailable();

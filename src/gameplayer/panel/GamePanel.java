@@ -4,6 +4,7 @@ import gameplayer.screen.GameScreen;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 
 public class GamePanel extends Panel{
     
@@ -12,12 +13,14 @@ public class GamePanel extends Panel{
     
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
+	
     }
     
 
     @Override
     public void makePanel() {
-	ScrollPane panelRoot = new ScrollPane();
+	
+	BorderPane panelRoot = new BorderPane();
 	PANEL = panelRoot;
     }
 }
