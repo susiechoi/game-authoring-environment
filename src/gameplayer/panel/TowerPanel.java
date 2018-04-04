@@ -76,7 +76,7 @@ public class TowerPanel extends Panel{
 	currencyDisplay.setId("currencyButton");
 	currencyDisplay.setText("$" +money.toString());
 	currencyDisplay.setDisable(true);
-	currencyDisplay.setScaleShape(true);
+	currencyDisplay.setMaxWidth(Double.MAX_VALUE);;
 	VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
 	towersAndCurr.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);

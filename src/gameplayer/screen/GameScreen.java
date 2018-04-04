@@ -20,7 +20,7 @@ public class GameScreen extends Screen {
 
     //TODO delete this and re-factor to abstract
     private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-    private  final String DEFAULT_ENGINE_STYELSHEET = "styling/EngineFrontEnd.css";
+    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
     
     
     private Parent ROOT;
@@ -45,7 +45,7 @@ public class GameScreen extends Screen {
         rootPane.setTop(new ScorePanel(this).getPanel());
         rootPane.setCenter(new GamePanel(this).getPanel());
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-        rootPane.getStylesheets().add(DEFAULT_ENGINE_STYELSHEET);
+        rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
         ROOT = rootPane;
     }
 
