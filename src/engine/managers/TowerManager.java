@@ -18,7 +18,7 @@ import engine.sprites.towers.Tower;
  * @author Miles Todzo 4/4/18
  *
  */
-public class TowerManager extends Manager<Tower> {
+public class TowerManager extends Manager {
 
 	private final List<Tower> availableTowers;
 	private final List<Tower> activeTowers;
@@ -32,7 +32,7 @@ public class TowerManager extends Manager<Tower> {
 	 * Constructor for super class
 	 */
 	public TowerManager(List<Tower> towers) {
-		super(towers);
+		super();
 		availableTowers = new ArrayList<Tower>();
 		activeTowers = new ArrayList<Tower>();
 	}
@@ -75,15 +75,4 @@ public class TowerManager extends Manager<Tower> {
 	public void setActive(Tower tower) {
 		activeTowers.add(tower);
 	}
-
-	@Override
-	public void checkForCollisions(List<Sprite> sprites) {
-		for (Tower activeTower: activeTowers) {
-			for (Sprite sprite: sprites) {
-				activeTower.checkForCollision(sprite);
-			}
-		}
-		
-	}
-
 }

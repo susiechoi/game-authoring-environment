@@ -1,5 +1,6 @@
 package engine.managers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import engine.sprites.Sprite;
@@ -15,13 +16,14 @@ import javafx.collections.ObservableList;
  * @author Miles Todzo
  * @param <E>: The object being managed
  */
-public class Manager<ActiveSprite> {
+public class Manager {
     
     private List<Sprite> active;
     private List<Sprite> available;
     
     public Manager() {
-    	
+    		active = new ArrayList<>();
+    		available = new ArrayList<>();
     }
     
     /**
@@ -38,14 +40,19 @@ public class Manager<ActiveSprite> {
      * @return
      */
     public ObservableList<Sprite> getObservableListOfActive(){
-    	return (ObservableList<Sprite>) active;
+    		return (ObservableList<Sprite>) active;
     }
 
-    public void checkForCollisions(List<Sprite> sprites) {
-    	for (Sprite activeSprite: active) {
-    		for (Sprite passedSprite: sprites) {
-    			activeSprite.checkForCollision(passedSprite);
+    /**
+     * Checks for collisions between between the list of active actors held by the Manager the method
+     * was called on and the list of active actors passed as a parameter
+     * @param passedActors
+     */
+    public void checkForCollisions(List<Sprite> passedActors) {
+    		for (Sprite activeActor: active) {
+    			for (Sprite passedActor: passedActors) {
+    				activeActor.checkForCollision(passedActor);
+    			}
     		}
-    	}
     }
 }

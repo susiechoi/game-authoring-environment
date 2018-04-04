@@ -2,6 +2,7 @@ package engine.managers;
 
 import java.util.List;
 
+import engine.sprites.Sprite;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -11,13 +12,13 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Katherine Van Dyk
  * @author Ryan Pond
  */
-public class ProjectileManager extends Manager<Projectile> {
+public class ProjectileManager extends Manager {
 
 	/**
 	 * Constructor from super class
 	 */
 	public ProjectileManager(List<Projectile> projectiles) {
-		super(projectiles);
+		super();
 	}
 	
 	

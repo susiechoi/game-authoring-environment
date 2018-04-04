@@ -27,12 +27,11 @@ public class PlayState implements PlayStateI{
 	public PlayState() {
 		myTowerManager = new TowerManager();
 		myEnemyManager = new EnemyManager();
-		myProjectileManager = new ProjectileManager();
 	}
 
 	@Override
 	public void update() {
-		List<Enemy> enemyList = myEnemyManager.getList();
+		List<Enemy> enemyList = myEnemyManager.unmodifiableActiveList();
 		myTowerManager.checkForCollisions(enemyList);
 		myProjectileManager.chechForCollisions(enemyList);
 	}
