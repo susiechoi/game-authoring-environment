@@ -5,7 +5,7 @@ import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
-import engine.sprites.towers.projectiles.ProjectileInterface;
+import engine.sprites.towers.projectiles.Projectile;
 import javafx.scene.image.ImageView;
 
 /**
@@ -17,40 +17,41 @@ import javafx.scene.image.ImageView;
  */
 public class Enemy extends Sprite implements EnemyI{
 
-    private HealthProperty myHealth;
-    private DamageProperty myDamage;
-    private ValueProperty myValue;
-    private Intersector myIntersector;
+	private HealthProperty myHealth;
+	private DamageProperty myDamage;
+	private ValueProperty myValue;
+	private Intersector myIntersector;
 
-    public Enemy(ImageView myImage, int health, int damage, int value) {
-	super(myImage);
-	myIntersector = new Intersector(myImage);
-	myHealth = new HealthProperty(health);
-	myDamage = new DamageProperty(damage);
-	myValue = new ValueProperty(value);
-    }
+	public Enemy(ImageView myImage, int health, int damage, int value) {
+		super(myImage);
+		myHealth = new HealthProperty(health);
+		myDamage = new DamageProperty(damage);
+		myValue = new ValueProperty(value);
+		myIntersector = new Intersector(myImage);
+	}
 
-    @Override
-    public boolean overlap(ImageView otherImage) {
-	return myIntersector.overlap(otherImage);
-    }
+	@Override
+	public boolean overlap(ImageView otherImage) {
+		return myIntersector.overlap(otherImage);
+	}
 
-    @Override
-    public boolean getHitBy(ProjectileInterface projectile) {
-	// TODO Auto-generated method stub
-	return false;
-    }
+	@Override
+	public boolean getHitBy(Projectile projectile) {
+		myHealth.change(projectile.inflictDamage());
+		return myHealth.isAlive();
+	}
 
-    @Override
-    public void followPath() {
-	// TODO Auto-generated method stub
-    }
+	@Override
+	public void followPath() {
+		// TODO Auto-generated method stub
 
-    @Override
-    public Double damage() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	}
+
+	@Override
+	public Double damage() {
+		return myDamage.getProperty();
+	}
+
 
 
 }

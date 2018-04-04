@@ -23,6 +23,11 @@ public class Projectile extends Sprite implements ProjectileInterface{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public double inflictDamage() {
+		return myDamage.getProperty();
+	}
 
 	@Override
 	public void move(double newX, double newY) {
