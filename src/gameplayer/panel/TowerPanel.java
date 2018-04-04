@@ -18,6 +18,7 @@ import java.util.Map;
 import authoring.frontend.PropertiesReader;
 import authoring.frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import gameplayer.PromptReader;
 import gameplayer.screen.GameScreen;
 import file.FileIO;
 
@@ -28,6 +29,7 @@ public class TowerPanel extends Panel{
     private final int TOWER_IMAGE_SIZE = 50;
 
     private BorderPane PANE;
+    private PromptReader PROMPTS;
     private GameScreen GAME_SCREEN;
     private PropertiesReader PROP_READ;
     private Integer money;
@@ -41,9 +43,10 @@ public class TowerPanel extends Panel{
 
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
 
-    public TowerPanel(BorderPane pane, GameScreen gameScreen) {
+    public TowerPanel(BorderPane pane, GameScreen gameScreen, PromptReader promptReader) {
 	PANE = pane;
 	GAME_SCREEN = gameScreen;
+	PROMPTS = promptReader;
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	money = GAME_SCREEN.getMoney();

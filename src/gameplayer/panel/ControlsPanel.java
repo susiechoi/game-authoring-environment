@@ -62,7 +62,6 @@ public class ControlsPanel extends Panel{
 	    //something went wrong and we don't have the control images
 	    //TODO something reasonable here
 	    	//probably have default images that aren't the ones specified by authoring
-
 	}
     }
 }
