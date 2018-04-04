@@ -7,7 +7,7 @@ package engine;
  * @author Katherine Van Dyk 3/28/18
  *
  */
-public interface EngineControllerI {
+public interface GameEngineInterface {
    
     /**
      * Pauses Game Loop animation so Game State stays constant
