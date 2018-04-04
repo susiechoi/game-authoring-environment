@@ -267,8 +267,8 @@ public class UIFactory {
 		HBox hbox = new HBox();
 		hbox.setId(id);
 		Text promptText = new Text(prompt);
-		hbox.getChildren().add(node);
 		hbox.getChildren().add(promptText);
+		hbox.getChildren().add(node);
 		return hbox;	
 	}
 	public void applyTextFieldFocusAction(Scene screen, TextField textField) {
