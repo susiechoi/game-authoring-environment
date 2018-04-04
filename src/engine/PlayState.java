@@ -1,6 +1,10 @@
 package engine;
 
+import java.util.List;
+
+import engine.enemies.Enemy;
 import engine.managers.EnemyManager;
+import engine.managers.ProjectileManager;
 import engine.managers.TowerManager;
 import engine.towers.Tower;
 import engine.towers.TowerI;
@@ -15,34 +19,28 @@ import engine.towers.TowerI;
  */
 public class PlayState implements PlayStateI{
     
-    private final TowerManager TOWERS = new TowerManager();
-    private final EnemyManager ENEMIES = new EnemyManager();
+    private TowerManager myTowerManager;
+    private EnemyManager myEnemyManager;
+    private ProjectileManager myProjectileManager;
+    private Level myLevel;
     
 	public PlayState() {
-		
+		myTowerManager = new TowerManager();
+		myEnemyManager = new EnemyManager();
+		myProjectileManager = new ProjectileManager();
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		List<Enemy> enemyList = myEnemyManager.getList();
+		myTowerManager.checkForCollisions(enemyList);
+		myProjectileManager.chechForCollisions(enemyList);
 	}
-
+	
 	@Override
-	public TowerI placeTower(String type, int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void sellTower(Tower towerToBeSold) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void upgradeTower(Tower towerToBeUpgraded) {
-		// TODO Auto-generated method stub
+	public void setLevel(Level newLevel) {
+		myLevel = level;
+		myTowerManager.setTowers(myLevel.getTowers()); //maybe change so that it adds on to the List and doesn't overwrite old towers
 		
 	}
 
