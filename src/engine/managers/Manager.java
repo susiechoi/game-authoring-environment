@@ -3,6 +3,7 @@ package engine.managers;
 import java.util.List;
 
 import engine.sprites.Sprite;
+import engine.sprites.towers.Tower;
 import javafx.collections.ObservableList;
 
 /**
@@ -14,7 +15,7 @@ import javafx.collections.ObservableList;
  * @author Miles Todzo
  * @param <E>: The object being managed
  */
-public class Manager<Sprite> {
+public class Manager<ActiveSprite> {
     
     private List<Sprite> active;
     private List<Sprite> available;
@@ -37,8 +38,14 @@ public class Manager<Sprite> {
      * @return
      */
     public ObservableList<Sprite> getObservableListOfActive(){
-		return (ObservableList<Sprite>) active;
-}
-    
-    public void checkForCollisions(List<Sprite> sprites) {}
+    	return (ObservableList<Sprite>) active;
+    }
+
+    public void checkForCollisions(List<Sprite> sprites) {
+    	for (Sprite activeSprite: active) {
+    		for (Sprite passedSprite: sprites) {
+    			activeSprite.checkForCollision(passedSprite);
+    		}
+    	}
+    }
 }

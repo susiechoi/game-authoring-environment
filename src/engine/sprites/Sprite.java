@@ -9,9 +9,9 @@ import javafx.scene.image.ImageView;
  * 
  * @author Katherine Van Dyk
  * @date 4/3/18
- *
+ * @author Miles Todzo 4/4/18
  */
-public abstract class Sprite  {
+public class Sprite  {
     private ImageView myImage;
 
     /**
@@ -40,6 +40,9 @@ public abstract class Sprite  {
 	myImage.setX(newX);
 	myImage.setY(newY);
     }
-
+    
+    public void checkForCollision(Sprite sprite) {
+    	
+    }
 
 }
