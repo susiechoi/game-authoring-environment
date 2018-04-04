@@ -43,13 +43,18 @@ public abstract class Screen {
 	 * Creates & returns the styled Screen
 	 */
 	protected Scene makeScreen() {
+		try {
 		myScreen = makeScreenWithoutStyling();
+		}
+		catch (MissingPropertiesException e){
+			showError(getErrorCheckedPrompt("NoFile", myView.getLanguage()));
+		}
 		applyDefaultStyling();
 		applyStyle(myStylesheet);
 		return myScreen; 
 	}
 
-	protected abstract Scene makeScreenWithoutStyling();
+	protected abstract Scene makeScreenWithoutStyling() throws MissingPropertiesException;
 
 	protected void applyDefaultStyling() {
 		if (myScreen != null) {
