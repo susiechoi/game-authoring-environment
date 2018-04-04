@@ -18,6 +18,11 @@ import javafx.scene.layout.BorderPane;
 
 public class GameScreen extends Screen {
 
+    //TODO delete this and re-factor to abstract
+    private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+    private  final String DEFAULT_ENGINE_STYELSHEET = "styling/EngineFrontEnd.css";
+    
+    
     private Parent ROOT;
     private final UIFactory UIFACTORY;
     private TowerPanel TOWER_PANEL;
@@ -39,6 +44,8 @@ public class GameScreen extends Screen {
         rootPane.setRight(new TowerPanel(rootPane, this).getPanel());
         rootPane.setTop(new ScorePanel(this).getPanel());
         rootPane.setCenter(new GamePanel(this).getPanel());
+        rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+        rootPane.getStylesheets().add(DEFAULT_ENGINE_STYELSHEET);
         ROOT = rootPane;
     }
 

@@ -72,10 +72,14 @@ public class TowerPanel extends Panel{
 	ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
-	TextArea currencyDisplay = new TextArea();
-	currencyDisplay.setText(money.toString());
+	Button currencyDisplay = new Button();
+	currencyDisplay.setId("currencyButton");
+	currencyDisplay.setText("$" +money.toString());
+	currencyDisplay.setDisable(true);
+	currencyDisplay.setScaleShape(true);
 	VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
 	towersAndCurr.setVgrow(towerDisplay, Priority.ALWAYS);
+	towersAndCurr.setAlignment(Pos.CENTER);
 
 	VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
 

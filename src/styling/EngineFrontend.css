@@ -29,3 +29,16 @@ Text {
   -fx-alignment: center;
   -fx-font: bold 24pt "Helvetica";
 }
+
+#currencyButton {
+	-fx-font-family: "Helvetica";
+    -fx-font-size: 30;
+}
+
+#currencyButton{
+	
+}
+#currencyButton:disabled, #currencyButton:disabled > * {
+		-fx-opacity: 1.0;
+}
+
