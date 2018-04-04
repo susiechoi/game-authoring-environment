@@ -1,7 +1,5 @@
 package engine.sprites.towers;
 
-import engine.sprites.enemies.EnemyI;
-
 /**
  * 
  * @author Ben Hodgson 3/28/18
@@ -24,7 +22,7 @@ public interface TowerI {
      * 
      * @param myEnemy: Enemy that hit the tower
      */
-    public void getHitBy(EnemyI myEnemy);
+    public void getHitBy(double enemyDamage);
 
     /**
      * Sells the Tower
