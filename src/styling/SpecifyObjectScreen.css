@@ -1,8 +1,8 @@
 VBox, HBox {
 	-fx-background-color: #B7D5D4;
-	-fx-padding: 15;
-    -fx-spacing: 10;
-    -fx-alignment: center; 
+	-fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-alignment: center;
 }
 
 .button, .combo-box {
@@ -16,6 +16,7 @@ VBox, HBox {
 }
 
 .combo-box:hover {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-background-color: linear-gradient(#77878B, #CDCDCD);
 }
 
@@ -25,6 +26,7 @@ VBox, HBox {
 }
 
 .combo-box .cell:hover {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 	-fx-text-fill: #373E40;
     -fx-background-color: white;
 }
@@ -52,4 +54,8 @@ VBox, HBox {
 
 #goButton:hover, #applyButton:hover {
 	-fx-background-color: linear-gradient(#011638, #364156);
+}
+
+#startingCurrency {
+	-fx-min-width: 300; 
 }

@@ -1,6 +1,6 @@
 package engine.managers;
 
-import engine.towers.projectiles.Projectile;
+import engine.towers.projectiles.ProjectileInterface;
 
 /**
  * Projectile manager uses composite design pattern to handle updating all 
@@ -9,7 +9,7 @@ import engine.towers.projectiles.Projectile;
  * @author Katherine Van Dyk
  *
  */
-public class ProjectileManager extends Manager<Projectile> {
+public class ProjectileManager extends Manager<ProjectileInterface> {
     
     /**
      * Constructor from super class

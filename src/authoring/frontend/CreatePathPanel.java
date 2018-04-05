@@ -1,5 +1,6 @@
 package authoring.frontend;
 
+import frontend.UIFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;

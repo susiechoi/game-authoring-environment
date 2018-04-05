@@ -1,18 +1,15 @@
-package data;
+package engine.data;
 
 import java.util.Collection;
-
-import engine.towers.TowerI;
 
 /**
  * 
  * @author Ben Hodgson 3/29/18
  *
- * Data necessary for defining a Tower object
+ * Data necessary for defining a Launcher object
  */
-public class TowerData implements Data {
+public class LauncherData implements Data {
 
-	
     @Override
     public void data(Collection<?> params) {
 	// TODO Auto-generated method stub
@@ -22,7 +19,9 @@ public class TowerData implements Data {
     @Override
     public void create(String name) {
 	// TODO Auto-generated method stub
-    	
+	
     }
+    
+    
 
 }

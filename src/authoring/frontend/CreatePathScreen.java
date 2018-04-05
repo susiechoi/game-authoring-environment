@@ -14,8 +14,9 @@ public class CreatePathScreen extends Screen {
 	private GridPane pathGrid;
 	private Node pathPanel;
 
-	protected CreatePathScreen() {
-		myStylesheet = DEFAULT_OWN_STYLESHEET; 
+	protected CreatePathScreen(AuthoringView view) {
+		super(view);
+		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 	}
 
 	protected Scene makeScreenWithoutStyling() {

@@ -1,4 +1,4 @@
-package authoring.frontend;
+package frontend;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,9 +19,9 @@ import javafx.scene.image.Image;
  * Use by creating a PropertiesReader object with the filepath as a String argument. From there, can get a map of 
  * keys->vals in the PropertiesFile, search for a given key/val in the file, etc. 
  */
-class PropertiesReader {
+public class PropertiesReader {
 	
-	protected String findVal(String filepath, String target) throws MissingPropertiesException {
+	public String findVal(String filepath, String target) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
 		if (readInProperties.containsKey(target)) {
@@ -30,7 +30,7 @@ class PropertiesReader {
 		return ""; 
 	}
 	
-	protected List<String> allKeys(String filepath) throws MissingPropertiesException {
+	public List<String> allKeys(String filepath) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
 		ArrayList<String> allKeys = new ArrayList<String>(); 
@@ -40,7 +40,7 @@ class PropertiesReader {
 		return allKeys; 
 	}
 	
-	protected Map<String, Image> keyToImageMap(String filepath, double imageLength, double imageHeight) throws MissingPropertiesException {
+	public Map<String, Image> keyToImageMap(String filepath, double imageLength, double imageHeight) throws MissingPropertiesException {
 		Map<String, Image> imageMap = new HashMap<String, Image>(); 
 		Properties properties = loadProperties(filepath);
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
@@ -55,7 +55,7 @@ class PropertiesReader {
 		return imageMap; 
 	}
 	
-	private Properties loadProperties(String filepath) throws MissingPropertiesException {
+	public Properties loadProperties(String filepath) throws MissingPropertiesException {
 		Properties properties = new Properties(); 
 		FileInputStream in = null;
 		try {
@@ -67,7 +67,7 @@ class PropertiesReader {
 		return properties; 
 	}
 
-	private Map<String, String> read(Properties properties) {
+	public Map<String, String> read(Properties properties) {
 		Map<String, String> readInProperties = new HashMap<String, String>(); 
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
 			String key = (String)e.nextElement();
