@@ -68,7 +68,7 @@ public class UpgradePanel extends SpecificPanel {
             }
         }
         catch (MissingPropertiesException e) {
-
+            System.out.println("PropertiesReadFailed: UpgradePanel");
         }
     }
 }
