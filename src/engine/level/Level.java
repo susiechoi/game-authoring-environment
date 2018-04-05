@@ -14,7 +14,6 @@ import engine.sprites.enemies.wave.Wave;
  */
 public class Level {
     
-    
     private final List<Wave> WAVES;
     private final int NUMBER;
     private final Path PATH;
