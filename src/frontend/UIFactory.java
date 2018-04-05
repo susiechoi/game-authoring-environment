@@ -222,7 +222,6 @@ public class UIFactory {
 		}
 		catch(Exception e2) {
 			e2.printStackTrace();
-			
 			//TODO: error!!
 		};
 		});
@@ -231,6 +230,7 @@ public class UIFactory {
 		hb.getChildren().add(imageDisplay);
 		return hb; 
 	}
+	
 	public HBox addPromptAndSetupHBox(String id, Node node, String prompt) {
 		HBox hbox = new HBox();
 		hbox.setId(id);

@@ -11,8 +11,7 @@ import javafx.scene.layout.VBox;
 class AdjustEnemyScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
-	public static final String TOWER_IMAGES = "images/TestImageNames.properties";
-	public static final String ENEMY_IMAGES = "images/EnemiesImageNames.properties";
+	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final int DEFAULT_ENEMY_MAX_HEALTH_IMPACT = 3; 
 	public static final int DEFAULT_ENEMY_MAX_$_IMPACT = 50; 
 	public static final int DEFAULT_ENEMY_MAX_SPEED = 100; 
@@ -30,9 +29,8 @@ class AdjustEnemyScreen extends AdjustScreen {
 		HBox enemyNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getErrorCheckedPrompt("EnemyName", getView().getLanguage()));
 		HBox enemyImageSelect = new HBox();
 		ComboBox<String> dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
-		
-		enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", TOWER_IMAGES, 75, getErrorCheckedPrompt("LoadImage", getView().getLanguage()), getErrorCheckedPrompt("NewImage", getView().getLanguage()),
-				getErrorCheckedPrompt("NewImage", getView().getLanguage()), dropdown);
+		enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage", getView().getLanguage()), getErrorCheckedPrompt("LoadImage", getView().getLanguage()),
+				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), dropdown);
 		System.out.println("here");
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
 		HBox enemySpeed = getUIFactory().addPromptAndSetupHBox("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed", getView().getLanguage()));
