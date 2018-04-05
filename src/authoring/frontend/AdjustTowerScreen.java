@@ -37,7 +37,7 @@ class AdjustTowerScreen extends AdjustScreen {
 				getErrorCheckedPrompt("NewImage", getView().getLanguage()), towerImageDropdown);
 		HBox projectileImageSelect = new HBox(); 
 		ComboBox<String> projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
-		towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
+		projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
 				getErrorCheckedPrompt("NewImage", getView().getLanguage()), projectileImageDropdown);
 		ArrayList<String> dummyTowerAbilities = new ArrayList<String>(); // TODO read in abilities
 		dummyTowerAbilities.add("Freeze");
@@ -47,7 +47,7 @@ class AdjustTowerScreen extends AdjustScreen {
 		Slider towerRangeSlider = getUIFactory().setupSlider("towerRangeSlider", DEFAULT_TOWER_MAX_RANGE);
 		HBox towerRange = getUIFactory().addPromptAndSetupHBox("towerRangeSlider", towerRangeSlider, getErrorCheckedPrompt("TowerRange", getView().getLanguage()));
 		Slider towerPriceSlider = getUIFactory().setupSlider("towerPriceSlider", DEFAULT_TOWER_MAX_PRICE);
-		HBox towerPrice = getUIFactory().addPromptAndSetupHBox("towerPriceSlider", towerRangeSlider, getErrorCheckedPrompt("TowerPrice", getView().getLanguage()));
+		HBox towerPrice = getUIFactory().addPromptAndSetupHBox("towerPriceSlider", towerPriceSlider, getErrorCheckedPrompt("TowerPrice", getView().getLanguage()));
 		HBox backAndApply = setupBackAndApplyButton(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Tower"));
