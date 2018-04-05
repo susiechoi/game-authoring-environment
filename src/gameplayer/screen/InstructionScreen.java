@@ -49,6 +49,7 @@ public class InstructionScreen extends Screen {
 	textInstructs.setWrapText(true);
 	textInstructs.setText("Instructions");
 	textInstructs.setAlignment(Pos.CENTER);
+	textInstructs.setMaxWidth(Double.MAX_VALUE);
 	
 	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 	newGameButt.setOnMouseClicked((arg0) ->SCREEN_MANEGER.loadGameScreenNew());
@@ -57,11 +58,20 @@ public class InstructionScreen extends Screen {
 	//this should only be clickable if there is a save file availible
 	Boolean saveAvailable = isSaveAvailable();
 	continueButt.setDisable(!saveAvailable);
-	
-	
 	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenContinuation());
-	HBox buttonBox = new HBox(newGameButt,continueButt);
+	
+	HBox leftCenter = new HBox(newGameButt);
+	leftCenter.setAlignment(Pos.CENTER);
+	leftCenter.setMaxWidth(Double.MAX_VALUE);
+	HBox rightCenter = new HBox(continueButt);
+	rightCenter.setAlignment(Pos.CENTER);
+	rightCenter.setMaxWidth(Double.MAX_VALUE);
+
+	HBox buttonBox = new HBox(leftCenter,rightCenter);
 	buttonBox.setAlignment(Pos.CENTER);
+	HBox.setHgrow(leftCenter, Priority.ALWAYS);
+	HBox.setHgrow(rightCenter, Priority.ALWAYS);
+
 	rootBox.getChildren().addAll(textInstructs, buttonBox);
 	
 	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);

@@ -26,8 +26,7 @@ public class GameScreen extends Screen {
     private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
     private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
  
-    
-    
+
     private Parent ROOT;
     private final UIFactory UIFACTORY;
     private final PromptReader PROMPTS;
