@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="images/ControlPanelImages"/>
 	<classpathentry kind="src" path="doc"/>
 	<classpathentry excluding="ControlPanelImages/" kind="src" path="images"/>
 	<classpathentry kind="src" path="languages"/>
@@ -16,5 +15,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/bigma/Downloads/xstream-1.4.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
