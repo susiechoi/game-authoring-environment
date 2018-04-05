@@ -29,41 +29,16 @@ public class GameAuthoringStartScreen extends Screen {
 	protected Scene makeScreenWithoutStyling() {
 		Text startHeading = new Text();
 		VBox vbox = new VBox();
-		try { //TODO: fix languages/error catching
-			startHeading = getUIFactory().makeScreenTitleText(getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "StartScreenHeader"));
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
+		startHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("StartScreenHeader", getView().getLanguage()));
 		ArrayList<String> dummyGameNames = new ArrayList<>();
 		String prompt = new String();
-		try { //TODO: fix languages/error catching
-			prompt = getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "GameEditSelector");
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
+		prompt = getErrorCheckedPrompt("GameEditSelector", getView().getLanguage());
 		dummyGameNames.add(prompt);
 		dummyGameNames.add("Vanilla");
 		dummyGameNames.add("Plants vs. Zombies");
-		Button newGameButton = new Button();
-		try {
-			newGameButton = getUIFactory().makeTextButton("editbutton", getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "NewGameButtonLabel"));
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
-		try {
-			myEditButton = getUIFactory().makeTextButton("editbutton", getPropertiesReader().findVal("prompts/EnglishPrompts.properties", "EditButtonLabel"));
-		}
-		catch(MissingPropertiesException e) {
-			System.out.println("not finding file");
-			e.printStackTrace(); //TODO: temporary until errors fixed
-		}
-		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyGameNames, e -> {
+		Button newGameButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("NewGameButtonLabel", getView().getLanguage()));
+		myEditButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel", getView().getLanguage()));
+		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
 			myEditButton.setDisable(false);}, e -> {myEditButton.setDisable(true);}, prompt);
 		myEditButton.setDisable(true);
 		vbox.getChildren().add(startHeading);

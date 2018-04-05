@@ -15,7 +15,7 @@ public class FrontendLauncherForTesting extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		AuthoringView view = new AuthoringView(stage);
+		AuthoringView view = new AuthoringView(stage, "English");
 		stage.show();
 	}
 

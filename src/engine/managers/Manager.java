@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
  */
 public class Manager {
     
+<<<<<<< HEAD
     private List<Sprite> active;
     private List<Sprite> available;
     
@@ -25,6 +26,9 @@ public class Manager {
     		active = new ArrayList<>();
     		available = new ArrayList<>();
     }
+=======
+    private List<E> objects; // this list seems like it's duplicated in subclasses -bma
+>>>>>>> 4ac2761c491e671aaf3cef6e3477aeb794eeffa5
     
     /**
      * Returns observable list of all active objects

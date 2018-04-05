@@ -77,7 +77,6 @@ public class Tower extends Sprite implements TowerI {
     @Override
     public double upgradeRateOfFire(double balance) {
 	return myLauncher.upgradeFireRate(balance);
-	
     }
 
     /**
@@ -93,8 +92,9 @@ public class Tower extends Sprite implements TowerI {
      */
     @Override
     public double upgrade(double balance) {
-	// TODO Auto-generated method stub
-	return 0;
+	balance -= upgradeHealth(balance);
+	balance -= upgradeRateOfFire(balance);
+	return upgradeDamage(balance);
     }
 
 }

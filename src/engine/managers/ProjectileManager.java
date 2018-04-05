@@ -14,6 +14,8 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class ProjectileManager extends Manager {
 
+	// this doesn't have its own lists like Tower Manager does -bma
+	
 	/**
 	 * Constructor from super class
 	 */
