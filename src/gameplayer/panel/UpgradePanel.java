@@ -10,8 +10,8 @@ import javafx.scene.image.Image;
 import java.util.Map;
 import javafx.scene.control.ScrollPane;
 
-import authoring.frontend.PropertiesReader;
-import authoring.frontend.UIFactory;
+import frontend.PropertiesReader;
+import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.layout.Priority;
 

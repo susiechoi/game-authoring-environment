@@ -5,7 +5,7 @@ import gameplayer.panel.UpgradePanel;
 import gameplayer.panel.GamePanel;
 import gameplayer.panel.ScorePanel;
 import gameplayer.panel.ControlsPanel;
-import authoring.frontend.UIFactory;
+import frontend.UIFactory;
 import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 

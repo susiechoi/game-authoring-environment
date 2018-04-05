@@ -1,6 +1,6 @@
 package gameplayer.screen;
 
-import authoring.frontend.UIFactory;
+import frontend.UIFactory;
 import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;

@@ -3,7 +3,7 @@ package gameplayer;
 import java.util.Map;
 import java.util.Properties;
 
-import authoring.frontend.PropertiesReader;
+import frontend.PropertiesReader;
 import authoring.frontend.exceptions.MissingPropertiesException;
 
 public class PromptReader {
