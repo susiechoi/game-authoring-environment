@@ -33,12 +33,12 @@ class AdjustTowerScreen extends AdjustScreen {
 		towerNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getPropertiesReader().findVal(ENGLISH_PROMPT_FILE, "TowerName"));
 		HBox towerImageSelect = new HBox();
 		ComboBox<String> towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
-		towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower", "English") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
-				getErrorCheckedPrompt("NewImage", getView().getLanguage()), towerImageDropdown);
+		towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower", "English") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage", "English"), getErrorCheckedPrompt("LoadImage", "English"),
+				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), towerImageDropdown);
 		HBox projectileImageSelect = new HBox(); 
 		ComboBox<String> projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
-		projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
-				getErrorCheckedPrompt("NewImage", getView().getLanguage()), projectileImageDropdown);
+		projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage", "English"), getErrorCheckedPrompt("LoadImage", "English"),
+				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), projectileImageDropdown);
 		ArrayList<String> dummyTowerAbilities = new ArrayList<String>(); // TODO read in abilities
 		dummyTowerAbilities.add("Freeze");
 		dummyTowerAbilities.add("Fire");
