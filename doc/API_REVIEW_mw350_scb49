@@ -23,7 +23,6 @@ Sarah Bland and Maddie Wilkinson
 #### Part 2
 
 1.  Discuss the use cases/issues that you are responsible for: are they descriptive, appropriate, reasonably sized?
-- Sarah:f
     - Sarah: I am mostly responsible for the general settings screens for a level (adding a theme song, loading in a background image, setting a value for player health, autpopulating levels, and demoing a game). In general, they are descriptive, but they could definitely be more narrow in focus - it will be difficult for me to "solve" demoing a game, for example, because demoing requires so much collaboration with the Game Engine subteam.
     - Maddie: I'm the only person working on the user interface for the authoring environment, and I'm helping with the back end as well, so I'm at least partially responsible for all of the use cases related to building a game in the authoring environment. The issues we're using are descriptive, and some are reasonably sized but others involve several other use cases working previously.
 2.  Estimate how long you think each will take and why. What, if anything, makes estimating these tasks uncertain?
@@ -33,7 +32,7 @@ Sarah Bland and Maddie Wilkinson
              Demoing a game - 3ish hours - will require talking a lot with the engine team
              
         - it can be difficult to estimate the amount of time for tasks because some tasks (like demoing) depend on how much work other groups do for me rather than having to do myself
-    - Maddie: The estimates of how long the issues will take are on in the due dates 
+    - Maddie: The estimates of how long the issues will take are in the due dates on GitLab. 
 3.  What feature/design problem are you most excited to work on? 
     - Sarah: Adding theme song functionality
     - Maddie: Enabling dragging and dropping object templates to create new in-game objects
