@@ -79,7 +79,7 @@ public abstract class Screen {
 	/**
 	 * Returns the Scene object to be loaded on the screen
 	 */
-	protected Scene getScreen() {
+	public Scene getScreen() {
 		if (myScreen == null) {
 			myScreen = makeScreen(); 
 		}

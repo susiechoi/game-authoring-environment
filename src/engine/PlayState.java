@@ -17,7 +17,7 @@ import engine.sprites.towers.TowerI;
  * @author benauriemma 4/5
  *
  */
-public class PlayState implements PlayStateI{
+public class PlayState implements PlayStateI, GameState {
     
     private final TowerManager TOWERS = new TowerManager(new ArrayList<Tower>());
     private final EnemyManager ENEMIES = new EnemyManager(new ArrayList<Enemy>());
