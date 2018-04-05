@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -104,15 +105,28 @@ public class TowerPanel extends Panel {
 	    for(String towerType : towerMap.keySet()) {
 		Button towerButton = UIFACTORY.makeImageButton("button",towerMap.get(towerType));
 		towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(towerType));
-		if(alternator%2 == 0) 
+		if(alternator%2 == 0) {
 		    towerHolder = towerHolderLeft;
-		else 
+		}
+		else {
 		    towerHolder = towerHolderRight;
+		}
 
 		towerHolder.getChildren().add(towerButton);
 		VBox.setVgrow(towerButton, Priority.ALWAYS);
+		towerButton.setMaxWidth(Double.MAX_VALUE);
+		towerButton.setMaxHeight(Double.MAX_VALUE);
 		alternator++;
 	    }
+	    //TODO pretty bad code that doesn't work, towers should be same height in columns
+//	    if(alternator%2 == 1) {
+//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
+//		towerHolderRight.getChildren().add(voidButton);
+//		VBox.setVgrow(voidButton, Priority.ALWAYS);
+//		voidButton.setMaxWidth(Double.MAX_VALUE);
+//		voidButton.setMaxHeight(Double.MAX_VALUE);
+//		voidButton.setDisable(true);
+//	    }
 	} catch (MissingPropertiesException e) {
 	    System.out.println("PropertiesReadFailed: TowerPanel");
 	    //something went wrong and we don't have the towers
