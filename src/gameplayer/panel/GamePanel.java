@@ -20,7 +20,12 @@ public class GamePanel extends Panel{
     @Override
     public void makePanel() {
 	
-	BorderPane panelRoot = new BorderPane();
+	ScrollPane panelRoot = new ScrollPane();
+	panelRoot.setId("gamePanel");
+	//panelRoot.setBottom(new Up);
+	panelRoot.setMaxWidth(Double.MAX_VALUE);
+	panelRoot.setMaxHeight(Double.MAX_VALUE);
+
 	PANEL = panelRoot;
     }
 }
