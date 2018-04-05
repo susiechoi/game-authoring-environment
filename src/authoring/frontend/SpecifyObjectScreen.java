@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -20,6 +21,9 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected SpecifyObjectScreen(AuthoringView view) {
 		super(view);
 		myObjectOptions = new ArrayList<String>(); // TODO read in objects
+		myObjectOptions.add("Dummy Object 1");
+		myObjectOptions.add("Dummy Object 2");
+		myObjectOptions.add("Dummy Object 3");
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
@@ -31,13 +35,14 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 		Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
 		
-		HBox objectsDropdown = getUIFactory().setupPromptAndDropdown("objectOptions", "Edit Existing "+myObjectDescription, myObjectOptions); 
+		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
+		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting", getView().getLanguage())+myObjectDescription);
 		HBox backAndApplyButton = setupBackAndApplyButton();
 		
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(myObjectDescription));
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
-		vb.getChildren().add(objectsDropdown);
+		vb.getChildren().add(objectsWithPrompt);
 		vb.getChildren().add(backAndApplyButton);
 
 		return new Scene(vb, 1500, 900); // TODO move to properties file

@@ -2,6 +2,7 @@ package authoring.frontend;
 import java.util.List;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import frontend.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -43,13 +44,18 @@ public abstract class Screen {
 	 * Creates & returns the styled Screen
 	 */
 	protected Scene makeScreen() {
+		try {
 		myScreen = makeScreenWithoutStyling();
+		}
+		catch (MissingPropertiesException e){
+			showError(getErrorCheckedPrompt("NoFile", myView.getLanguage()));
+		}
 		applyDefaultStyling();
 		applyStyle(myStylesheet);
 		return myScreen; 
 	}
 
-	protected abstract Scene makeScreenWithoutStyling();
+	protected abstract Scene makeScreenWithoutStyling() throws MissingPropertiesException;
 
 	protected void applyDefaultStyling() {
 		if (myScreen != null) {
@@ -73,7 +79,7 @@ public abstract class Screen {
 	/**
 	 * Returns the Scene object to be loaded on the screen
 	 */
-	protected Scene getScreen() {
+	public Scene getScreen() {
 		if (myScreen == null) {
 			myScreen = makeScreen(); 
 		}

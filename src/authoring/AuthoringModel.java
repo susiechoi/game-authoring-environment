@@ -10,9 +10,7 @@ package authoring;
 
 import engine.path.Path;
 
-import data.GameData;
-
-class AuthoringModel implements GameData {
+class AuthoringModel implements GameState {
 
     /**
      * Sets the path to be used in the level

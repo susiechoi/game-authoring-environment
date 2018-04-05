@@ -1,8 +1,8 @@
 package authoring;
 
 import java.io.File;
-import controller.Controller;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * 
@@ -13,18 +13,34 @@ import javafx.scene.Scene;
  * Represents Controller in MVC of the authoring environment. 
  */
 
-class AuthoringController implements Controller {
+<<<<<<< HEAD
+public class AuthoringController implements Controller {
+=======
+class AuthoringController {
+>>>>>>> 4ac2761c491e671aaf3cef6e3477aeb794eeffa5
 
+    private final Stage STAGE;
+    private final AuthoringView VIEW = new AuthoringView();
+    private final AuthoringModel MODEL = new AuthoringModel();
    
-
+    public AuthoringController(Stage programStage) {
+	STAGE = programStage;
+	Scene startScreen = VIEW.loadAuthoringView();
+	STAGE.setScene(startScreen);
+    }
+    
+    public void show() {
+	STAGE.show();
+    }
+    
     /**
      * Loads a new Scene object in the program's Stage to display the authoring environment 
      * screen.
      * 
-     * @return Scene: the authoring screen to be displayed to the user
+     * @param Scene: the authoring screen to be displayed to the user
      */
-    public Scene loadAuthoringStage() {
-	return null;	
+    public void loadAuthoringStage(Scene screen) {
+	// TODO load this onto the stage. How do we receive access to the stage?	
     }  
 
     /**

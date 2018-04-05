@@ -1,5 +1,7 @@
 package controller;
 
+import authoring.AuthoringView;
+
 /**
  * 
  * @author Ben Hodgson 3/27/18
