@@ -39,9 +39,9 @@ class AdjustEnemyScreen extends AdjustScreen {
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
 		HBox enemySpeed = getUIFactory().addPromptAndSetupHBox("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed", getView().getLanguage()));
 		Slider enemyHealthSlider = getUIFactory().setupSlider("enemyHealthImpactSlider",  DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
-		HBox enemyHealthImpact = getUIFactory().addPromptAndSetupHBox("enemyHealthImpactSlider", enemyHealthSlider, getErrorCheckedPrompt("EnemyHealth", getView().getLanguage())); 
+		HBox enemyHealthImpact = getUIFactory().addPromptAndSetupHBox("enemyHealthImpactSlider", enemyHealthSlider, getErrorCheckedPrompt("EnemyHealthImpact", getView().getLanguage())); 
 		Slider enemyImpactSlider = getUIFactory().setupSlider("enemyMoneyImpactSlider",  DEFAULT_ENEMY_MAX_$_IMPACT); 
-		HBox enemy$Impact = getUIFactory().addPromptAndSetupHBox("enemyMoneyImpactSlider", enemyImpactSlider, getErrorCheckedPrompt("EnemyImpact", getView().getLanguage())); 
+		HBox enemy$Impact = getUIFactory().addPromptAndSetupHBox("enemyMoneyImpactSlider", enemyImpactSlider, getErrorCheckedPrompt("EnemyCurrencyImpact", getView().getLanguage())); 
 
 		HBox backAndApply = setupBackAndApplyButton(); 
 		
