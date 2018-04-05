@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -51,30 +52,29 @@ public class TowerPanel extends Panel {
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	money = GAME_SCREEN.getMoney();
-	bottomPanel = new ControlsPanel(GAME_SCREEN);
     }
 
 
     @Override
     public void makePanel() {
-		List<Button> buttons = makeButtons();
+	List<Button> buttons = makeButtons();
 
-		VBox towerHolderLeft = new VBox();
-		VBox towerHolderRight = new VBox();
+	VBox towerHolderLeft = new VBox();
+	VBox towerHolderRight = new VBox();
 
-		fillScrollWithTowers(towerHolderLeft,towerHolderRight);
+	fillScrollWithTowers(towerHolderLeft,towerHolderRight);
 
-		towerHolderLeft.setFillWidth(true);
-		towerHolderRight.setFillWidth(true);
+	towerHolderLeft.setFillWidth(true);
+	towerHolderRight.setFillWidth(true);
 
 	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
 	//TODO need to check if this static stuff is okay
 	HBox.setHgrow(towerHolderRight, Priority.ALWAYS);
 	HBox.setHgrow(towerHolderLeft, Priority.ALWAYS);
 
-		fullTowerHold.setAlignment(Pos.CENTER);
-		ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
-		towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
+	fullTowerHold.setAlignment(Pos.CENTER);
+	ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
+	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
 	Button currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
@@ -85,18 +85,16 @@ public class TowerPanel extends Panel {
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
 
-		VBox panelRoot = new VBox(towersAndCurr,bottomPanel.getPanel());
 
 	//might want to remove this as control implementation changes but we'll see
-	VBox.setVgrow(towersAndCurr, Priority.ALWAYS); 
 
 
 
-		//  panelRoot.getChildren().addAll(buttons);
-		panelRoot.setId("towerPanel");
-		PANEL = panelRoot;
-		//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
-		//can't do that with interfaces. How would you want to approach that?
+	//  panelRoot.getChildren().addAll(buttons);
+	towersAndCurr.setId("towerPanel");
+	PANEL = towersAndCurr;
+	//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
+	//can't do that with interfaces. How would you want to approach that?
     }
 
     private void fillScrollWithTowers(VBox towerHolderLeft, VBox towerHolderRight) {
@@ -107,15 +105,28 @@ public class TowerPanel extends Panel {
 	    for(String towerType : towerMap.keySet()) {
 		Button towerButton = UIFACTORY.makeImageButton("button",towerMap.get(towerType));
 		towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(towerType));
-		if(alternator%2 == 0) 
+		if(alternator%2 == 0) {
 		    towerHolder = towerHolderLeft;
-		else 
+		}
+		else {
 		    towerHolder = towerHolderRight;
+		}
 
 		towerHolder.getChildren().add(towerButton);
 		VBox.setVgrow(towerButton, Priority.ALWAYS);
+		towerButton.setMaxWidth(Double.MAX_VALUE);
+		towerButton.setMaxHeight(Double.MAX_VALUE);
 		alternator++;
 	    }
+	    //TODO pretty bad code that doesn't work, towers should be same height in columns
+//	    if(alternator%2 == 1) {
+//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
+//		towerHolderRight.getChildren().add(voidButton);
+//		VBox.setVgrow(voidButton, Priority.ALWAYS);
+//		voidButton.setMaxWidth(Double.MAX_VALUE);
+//		voidButton.setMaxHeight(Double.MAX_VALUE);
+//		voidButton.setDisable(true);
+//	    }
 	} catch (MissingPropertiesException e) {
 	    System.out.println("PropertiesReadFailed: TowerPanel");
 	    //something went wrong and we don't have the towers
