@@ -8,6 +8,7 @@ package controller;
  * objects. 
  */
 
-public class ChiefController implements Controller {
+public class ChiefController {
 
+	
 }

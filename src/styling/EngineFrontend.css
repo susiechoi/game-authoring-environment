@@ -1,0 +1,52 @@
+Text {
+	-fx-font-family: "Helvetica";
+    -fx-font-size: 18;
+}
+.button {
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 18;
+}
+
+.button:disabled, .button:disabled > * {
+	-fx-opacity: 0.7;
+}
+
+.button:hover {
+}
+
+.combo-box {
+}
+
+.combo-box .cell {
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 18;
+}
+
+.text-field {
+}
+
+#screenTitle {
+  -fx-alignment: center;
+  -fx-font: bold 24pt "Helvetica";
+}
+
+#currencyButton {
+	-fx-font-family: "Helvetica";
+    -fx-font-size: 30;
+    -fx-background-color: transparent;
+    
+}
+
+#currencyButton{
+	
+}
+#currencyButton:disabled, #currencyButton:disabled > * {
+		-fx-opacity: 1.0;
+}
+
+#voidButton{
+
+}
+#voidButton:disabled, #voidButton:disabled > * {
+	-fx-opacity: 1.0;
+}

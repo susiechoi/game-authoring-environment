@@ -3,7 +3,7 @@ package engine.factories;
 import java.util.Collection;
 import java.util.Map;
 
-import engine.towers.launcher.Launcher;
+import engine.sprites.towers.launcher.Launcher;
 
 /**
  * Factory class for constructing a launcher.
