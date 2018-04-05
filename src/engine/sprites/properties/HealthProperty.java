@@ -1,4 +1,4 @@
-package engine.properties;
+package engine.sprites.properties;
 
 public class HealthProperty extends Property {
 
@@ -24,4 +24,8 @@ public class HealthProperty extends Property {
     public void change(double change) {
 	myHealth += change;
     }
+
+	public boolean isAlive() {
+		return myHealth > 0;
+	}
 }

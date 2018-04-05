@@ -9,12 +9,20 @@ import javafx.collections.ObservableList;
  * enemies and projectiles
  * 
  * @author Katherine Van Dyk
- *
+ * @author Ryan Pond
  * @param <E>: The object being managed
  */
 public abstract class Manager<E> {
     
-    List<E> objects;
+    private List<E> objects;
+    
+    /**
+     * Constructor, takes in the original list of E objects
+     * @param list: list of objects that are initially active to be managed
+     */
+    public Manager(List<E> list) {
+    		objects = list;
+    }
     
     /**
      * Returns observable list of all active objects
@@ -22,7 +30,7 @@ public abstract class Manager<E> {
      * @return
      */
     public ObservableList<E> getList(){
-	return null;
+    		return (ObservableList<E>) objects;
     }
 
 }

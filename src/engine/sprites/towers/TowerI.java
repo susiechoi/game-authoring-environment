@@ -1,10 +1,9 @@
-package engine.towers;
-
-import engine.enemies.EnemyI;
+package engine.sprites.towers;
 
 /**
  * 
  * @author Ben Hodgson 3/28/18
+ * @author Katherine Van Dyk
  *
  * Interface for Tower objects in the game. 
  */
@@ -23,15 +22,7 @@ public interface TowerI {
      * 
      * @param myEnemy: Enemy that hit the tower
      */
-    public void getHitBy(EnemyI myEnemy);
-
-    /**
-     * Moves the X and Y coordinates of the tower
-     * 
-     * @param newX: X coordinate
-     * @param newY: Y coordinate
-     */
-    public void move(double newX, double newY);
+    public void getHitBy(double enemyDamage);
 
     /**
      * Sells the Tower
@@ -46,7 +37,7 @@ public interface TowerI {
      * @param: User's current balance
      * @return: The user's new balance
      */
-    public double upgradeGeneral(double balance);
+    public double upgrade(double balance);
 
     /**
      * Upgrades the health of the tower

@@ -1,4 +1,4 @@
-package engine.properties;
+package engine.sprites.properties;
 
 public class ValueProperty extends Property {
     

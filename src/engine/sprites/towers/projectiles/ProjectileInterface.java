@@ -1,4 +1,4 @@
-package engine.towers.projectiles;
+package engine.sprites.towers.projectiles;
 
 import engine.physics.Physics;
 
@@ -12,11 +12,17 @@ public interface ProjectileInterface extends Physics {
     /**
      * Specifies the effect of the projectile
      */
-    public void launch();
+    public void move(double newX, double newY);
     
     /**
      * Checks to see if the Projectile hits an Enemy
      */
     public void hitsEnemy();
+    
+    /**
+     * returns the damage that is inflicted upon the enemy
+     * @return
+     */
+    public double inflictDamage();
 
 }
