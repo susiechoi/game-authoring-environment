@@ -11,6 +11,11 @@ public abstract class Property implements PropertyI {
     protected double upgradeCost;
     protected double upgradeValue;
     
+    public Property(double cost, double value) {
+	upgradeCost = cost;
+	upgradeValue = value;
+    }
+    
     /**
      * Abstract method to upgrade an object and @return user's remaining balance
      */
