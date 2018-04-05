@@ -64,3 +64,12 @@ Text {
 #voidButton:disabled, #voidButton:disabled > * {
 	-fx-opacity: 1.0;
 }
+
+#gamePanel{
+
+}
+
+#newGameButton{
+
+}
+
