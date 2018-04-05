@@ -1,5 +1,6 @@
 package engine.towers.launcher;
 
+import engine.towers.projectiles.Projectile;
 import engine.towers.trigger.Trigger;
 
 /**
@@ -10,6 +11,16 @@ import engine.towers.trigger.Trigger;
  * fire projectiles
  */
 public class Launcher implements Trigger {
+	
+	private double myFireRate;
+	private Projectile myProjectile;
+	private long timeLastFired;
+	
+	public Launcher(double fireRate, Projectile projectile) {
+		myFireRate = fireRate;
+		myProjectile = projectile;
+		timeLastFired = System.nanoTime();
+	}
     
     /**
      * Sets the current projectile type managed by the ProjectileManager
@@ -28,9 +39,16 @@ public class Launcher implements Trigger {
     }
 
     @Override
-    public void launch() {
-	// TODO Auto-generated method stub
-	
+    public Projectile launch() {
+    		long currTime = System.nanoTime();
+    		long timeSinceLastShot = currTime - timeLastFired;
+    		if(timeSinceLastShot>=myFireRate) {
+    			timeSinceLastShot = currTime;
+    			return myProjectile;
+    		}
+    		else {
+    			return null;
+    		}
     }
 
 }

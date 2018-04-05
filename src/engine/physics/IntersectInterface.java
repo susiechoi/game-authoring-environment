@@ -1,6 +1,6 @@
 package engine.physics;
 
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  *
  * Interface for determining image/object intersections 
  */
-public interface Intersect {
+public interface IntersectInterface {
     
     /**
      * Method for determining if two images overlap
@@ -16,6 +16,6 @@ public interface Intersect {
      * @param otherImage: 
      * @return boolean: true if the images are overlapping, false otherwise
      */
-    public boolean overlap(Image otherImage);
+    public boolean overlap(ImageView otherImage);
 
 }

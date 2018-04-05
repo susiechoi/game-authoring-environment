@@ -12,25 +12,11 @@ import engine.enemies.EnemyI;
 public interface TowerI {
     
     /**
-     * Sets the tower's health
-     * 
-     * @param health: the health to give the tower
-     */
-    public void setHealth(double health);
-    
-    /**
      * Changes the tower's health
      * 
      * @param amount: the amount to change the tower's health
      */
     public void changeHealth(double health);
-    
-    /**
-     * Sets the tower's cost
-     * 
-     * @param cost: the cost for the tower     
-     */
-    public void setCost(double cost);
 
     /**
      * Causes damage to tower
@@ -45,41 +31,45 @@ public interface TowerI {
      * @param newX: X coordinate
      * @param newY: Y coordinate
      */
-    public void move(int newX, int newY);
+    public void move(double newX, double newY);
 
     /**
      * Sells the Tower
      * 
      * @return: The amount of money that the user gains by selling the tower
      */
-    public Integer sell();
+    public double sell();
 
     /**
      * Upgrades all aspects of the Tower
      * 
-     * @return: The cost of the upgrade
+     * @param: User's current balance
+     * @return: The user's new balance
      */
-    public Integer upgradeGeneral();
+    public double upgradeGeneral(double balance);
 
     /**
      * Upgrades the health of the tower
      * 
-     * @return: The cost of upgrade
+     * @param: User's current balance
+     * @return: The user's new balance
      */
-    public Integer upgradeHealth();
+    public double upgradeHealth(double balance);
 
     /**
      * Upgrades rate of fire of the tower
      * 
-     * @return: The cost of upgrade
+     * @param: User's current balance
+     * @return: The user's new balance
      */
-    public Integer upgradeRateOfFire();
+    public double upgradeRateOfFire(double balance);
 
     /**
      * Upgrades the damage the tower does
      * 
-     * @return: The cost of the upgrade
+     * @param: User's current balance
+     * @return: The user's new balance
      */
-    public Integer upgradeDamage();
+    public double upgradeDamage(double balance);
 
 }

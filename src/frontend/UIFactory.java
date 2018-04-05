@@ -4,9 +4,7 @@
  * @author susiechoi 
  */
 
-package authoring.frontend;
-
-
+package frontend;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 
+
+import authoring.frontend.Screen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -44,6 +44,7 @@ public class UIFactory {
 
 	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
 	public static final char[] NOT_ALLOWED_FILEPATH = {'*', '.', '\\', '/','\"', '[', ']', ':', ';', '|', '=', ',', ' '};
+
 	
 	/**
 	 * Makes Text object for displaying titles of screens to the user
@@ -100,7 +101,7 @@ public class UIFactory {
 
 
 
-	protected Slider setupSlider(String id, int sliderMax) {
+	public Slider setupSlider(String id, int sliderMax) {
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
 		Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -109,7 +110,9 @@ public class UIFactory {
 				sliderValue.setText(String.format("%03d", (int)(double)new_val));
 			}
 		});
+		slider.setId(id);
 		return slider; 
+		
 	}
 
 	public ScrollPane makeTextScrollPane(String id, List<String> options) {
@@ -241,16 +244,6 @@ public class UIFactory {
 				textField.getParent().requestFocus();
 			}
 		});
-	}
-
-	
-	public Button setupBackButton(AuthoringView view, Screen currentScreen) {
-		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-		Button backButton = makeImageButton("backButton",backbuttonImage);
-		backButton.setOnMouseClicked((event) -> { 
-			view.goBackFrom(currentScreen);
-		}); 
-		return backButton; 
 	}
 
 }

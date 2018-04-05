@@ -1,5 +1,7 @@
 package engine.towers.trigger;
 
+import engine.towers.projectiles.Projectile;
+
 /**
  * 
  * @author Ben Hodgson 3/27/18
@@ -10,8 +12,8 @@ package engine.towers.trigger;
 public class EnemyTrigger implements Trigger {
 
     @Override
-    public void launch() {
-	// TODO Auto-generated method stub
+    public Projectile launch() {
+		return null;
 	
     }
 
