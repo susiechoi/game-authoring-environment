@@ -13,6 +13,7 @@ class AuthoringView {
 		//myStage.setScene(new SpecifyTowerScreen(this).getScreen());
 		//myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
 		myStage.setScene((new SettingsScreen(this, language)).getScreen());
+		//myStage.setScene((new AdjustEnemyScreen(this)).getScreen());
 	}
 	
 	protected String getLanguage() {

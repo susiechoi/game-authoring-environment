@@ -47,7 +47,7 @@ class AdjustTowerScreen extends AdjustScreen {
 		Slider towerRangeSlider = getUIFactory().setupSlider("towerRangeSlider", DEFAULT_TOWER_MAX_RANGE);
 		HBox towerRange = getUIFactory().addPromptAndSetupHBox("towerRangeSlider", towerRangeSlider, getErrorCheckedPrompt("TowerRange", getView().getLanguage()));
 		Slider towerPriceSlider = getUIFactory().setupSlider("towerPriceSlider", DEFAULT_TOWER_MAX_PRICE);
-		HBox towerPrice = getUIFactory().addPromptAndSetupHBox("towerPriceSlider", towerRangeSlider, getErrorCheckedPrompt("TowerPrice", getView().getLanguage()));
+		HBox towerPrice = getUIFactory().addPromptAndSetupHBox("towerPriceSlider", towerPriceSlider, getErrorCheckedPrompt("TowerPrice", getView().getLanguage()));
 		HBox backAndApply = setupBackAndApplyButton(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Tower"));

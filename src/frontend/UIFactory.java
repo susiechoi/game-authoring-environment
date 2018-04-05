@@ -2,6 +2,7 @@
  * Class for generating common front end UI elmenets, e.g. comboboxes, sliders
  * To ensure consistency of front end design
  * @author susiechoi 
+ * @author sarahbland
  */
 
 package frontend;
@@ -143,7 +144,7 @@ public class UIFactory {
 			EventHandler<ActionEvent> action, Map<String, String> keysAndVals) {
 			VBox vbox = new VBox();
 			TextField imageNameEntry = new TextField();
-			HBox imageNamer = addPromptAndSetupHBox("",imageNameEntry, newFileNamePrompt);
+			HBox imageNamer = addPromptAndSetupHBox("selector",imageNameEntry, newFileNamePrompt);
 			FileChooser fileChooser = new FileChooser();
 			FileChooser.ExtensionFilter extensionFilter = 
                     new FileChooser.ExtensionFilter("image files","*.png");
@@ -204,6 +205,7 @@ public class UIFactory {
 				}, options);
 			vb.getChildren().add(dropdown);
 			vb.getChildren().add(fc);
+			vb.setId("selector");
 			return vb;
 	}
 
@@ -219,7 +221,6 @@ public class UIFactory {
 		imageDisplay.setImage(new Image((new File(propertiesReader.findVal(propertiesFilepath, dropdown.getValue())).toURI().toString()), imageSize, imageSize, false, false));
 		}
 		catch(Exception e2) {
-			System.out.println("Here's the issue!");
 			e2.printStackTrace();
 			
 			//TODO: error!!

@@ -30,3 +30,15 @@ Text {
   -fx-alignment: center;
   -fx-font: bold 24pt "Helvetica";
 }
+
+#selector {
+		-fx-background-color: #488286;
+		-fx-font: bold 20pt "Helvetica";
+}
+#selector HBox, VBox {
+	-fx-background-color: #488286;
+}
+
+#selector Text {
+	  -fx-font: bold 20pt "Helvetica";
+}
