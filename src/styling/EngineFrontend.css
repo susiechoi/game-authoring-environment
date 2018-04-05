@@ -44,3 +44,9 @@ Text {
 		-fx-opacity: 1.0;
 }
 
+#voidButton{
+
+}
+#voidButton:disabled, #voidButton:disabled > * {
+	-fx-opacity: 1.0;
+}

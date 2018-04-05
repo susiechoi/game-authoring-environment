@@ -1,10 +1,11 @@
 package gameplayer.screen;
 
 import gameplayer.panel.TowerPanel;
+import gameplayer.panel.UpgradePanel;
 import gameplayer.panel.GamePanel;
 import gameplayer.panel.ScorePanel;
 import gameplayer.panel.ControlsPanel;
-import authoring.frontend.UIFactory;
+import frontend.UIFactory;
 import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 
@@ -14,6 +15,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 
 
@@ -32,7 +35,9 @@ public class GameScreen extends Screen {
     private GamePanel GAME_PANEL;
     private ScorePanel SCORE_PANEL;
     private ControlsPanel CONTROLS_PANEL;
+    private UpgradePanel UPGRADE_PANEL;
     private ScreenManager SCREEN_MANAGER;
+    
 
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader) {
         SCREEN_MANAGER = ScreenController;
@@ -44,9 +49,27 @@ public class GameScreen extends Screen {
     @Override
     public void makeScreen() {
         BorderPane rootPane = new BorderPane();
+        TOWER_PANEL = new TowerPanel(rootPane, this, PROMPTS);
+        CONTROLS_PANEL = new ControlsPanel(this);
+        SCORE_PANEL = new ScorePanel(this);
+        GAME_PANEL = new GamePanel(this);
+        UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
+        
+        
+        VBox rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+        VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
+        
+        BorderPane leftPane = new BorderPane();
+        leftPane.setMaxWidth(Double.MAX_VALUE);
+        leftPane.setMaxHeight(Double.MAX_VALUE);
+
+        leftPane.setTop(SCORE_PANEL.getPanel());
+        leftPane.setCenter(GAME_PANEL.getPanel());
+        leftPane.setBottom(UPGRADE_PANEL.getPanel());
+
         rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
-        rootPane.setRight(new TowerPanel(rootPane, this, PROMPTS).getPanel());
-        rootPane.setLeft(new GamePanel(this).getPanel());
+        rootPane.setCenter(leftPane);
+        rootPane.setRight(rightPane);
         
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
         rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
