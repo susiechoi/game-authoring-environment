@@ -13,6 +13,8 @@ import engine.sprites.enemies.Enemy;
  */
 public class EnemyManager extends Manager<Enemy> {
     
+	// this doesn't have its own lists like Tower manager does -bma
+	
     /**
      * Constructor for Enemy manager
      */
