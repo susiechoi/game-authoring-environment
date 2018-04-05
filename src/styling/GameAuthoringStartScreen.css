@@ -1,6 +1,6 @@
 VBox, HBox {
 	-fx-background-color: #77878B;
-	-fx-padding: 15;
+	-fx-padding: 10;
     -fx-spacing: 10;
     -fx-alignment: center;
 }
