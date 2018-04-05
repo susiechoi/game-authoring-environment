@@ -19,6 +19,12 @@ public class XMLFactory {
 	 * Instance of that implementation of XMLWriter
 	 */
 	public static XMLWriter generateWriter(String writerType) {
+		try {
+			Class writer = Class.forName(writerType);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
