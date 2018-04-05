@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
  *
  */
 public abstract class Sprite  {
-    private ImageView myImage;
+    private ImageView myImage; // this is repeated in a bunch of subclasses -bma
 
     /**
      * Constructor that takes in a sprite's image

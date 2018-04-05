@@ -4,10 +4,10 @@ import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import javafx.scene.image.ImageView;
 
-public class Projectile extends Sprite implements ProjectileInterface{
+public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
-	private ImageView myImage;
+	private ImageView myImage; // this is repeated in the superclass sprite -ben
 	
 	public Projectile(DamageProperty damage, ImageView image) {
 	    	super(image);
@@ -15,26 +15,9 @@ public class Projectile extends Sprite implements ProjectileInterface{
 		myDamage = damage;
 	}
 
-	@Override
-	public void getCurve(int speed, int xStart, int yStart) {
-		
-	}
 
-	@Override
-	public void hitsEnemy() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public double inflictDamage() {
-		return myDamage.getProperty();
-	}
-
-	@Override
 	public void move(double newX, double newY) {
-	    myImage.setX(newX);
-	    myImage.setY(newY);
+		// TODO fill this out with delegation to a mover
 	}
 	
 	public double upgradeDamage(double balance) {
