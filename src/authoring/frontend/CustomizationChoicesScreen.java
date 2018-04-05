@@ -1,6 +1,7 @@
 package authoring.frontend;
 import java.util.ArrayList;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -10,6 +11,7 @@ import javafx.scene.text.Text;
 
 public class CustomizationChoicesScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
+	public static final String TEST_PROPERTIES = "images/TestProperties.properties";
 	private String myLanguage;
 	private String myGameName;
 	
@@ -21,7 +23,7 @@ public class CustomizationChoicesScreen extends Screen {
 	}
 	
 	@Override
-	protected Scene makeScreenWithoutStyling() {
+	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException {
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
 		Text heading = getUIFactory().makeScreenTitleText(myGameName);
@@ -37,9 +39,13 @@ public class CustomizationChoicesScreen extends Screen {
 		dummyLevels.add("1");
 		dummyLevels.add("2");
 		Button editButton = getUIFactory().makeTextButton("editbutton", levelPrompt);
-		ComboBox<String> levelChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyLevels, e -> {
+		ComboBox<String> levelChooser = getUIFactory().makeTextDropdownSelectAction("", dummyLevels, e -> {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 		editButton.setDisable(true);
+		HBox songSelector = new HBox();
+		ComboBox<String> songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
+		songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Song", "English") + " " , TEST_PROPERTIES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
+				getErrorCheckedPrompt("NewSong", getView().getLanguage()), songDropdown);
 		vbox.getChildren().add(heading);
 		vbox.getChildren().add(settingsButton);
 		vbox.getChildren().add(demoButton);
@@ -50,6 +56,7 @@ public class CustomizationChoicesScreen extends Screen {
 		hbox.getChildren().add(newLevelVBox);
 		vbox.getChildren().add(hbox);
 		vbox.getChildren().add(mainButton);
+		vbox.getChildren().add(songSelector);
 		return new Scene(vbox, 1500, 900);
 		
 	}
