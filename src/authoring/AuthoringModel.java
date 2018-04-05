@@ -11,7 +11,7 @@ package authoring;
 import data.GameData;
 import engine.path.Path;
 
-class AuthoringModel implements GameData {
+public class AuthoringModel implements GameData {
 
     /**
      * Sets the path to be used in the level
