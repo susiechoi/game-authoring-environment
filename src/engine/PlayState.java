@@ -1,5 +1,6 @@
 package engine;
 
+import data.GameData;
 import engine.towers.Tower;
 import engine.towers.TowerI;
 
@@ -9,7 +10,7 @@ import engine.towers.TowerI;
  * @author ryanpond
  *
  */
-public class PlayState implements PlayStateI{
+public class PlayState implements PlayStateI, GameData{
 
 	public PlayState() {
 		// TODO Auto-generated constructor stub
