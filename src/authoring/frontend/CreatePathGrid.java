@@ -1,6 +1,5 @@
 package authoring.frontend;
 
-
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
