@@ -17,7 +17,7 @@ public class SettingsScreen extends AdjustScreen {
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	
-	protected SettingsScreen(AuthoringView view, String language) {
+	protected SettingsScreen(AuthoringView view) {
 		super(view);
 		setStyleSheet(DEFAULT_OWN_CSS);
 	}
