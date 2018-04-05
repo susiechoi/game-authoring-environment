@@ -3,6 +3,8 @@ package authoring.frontend;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import frontend.PropertiesReader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,22 +26,22 @@ class AdjustEnemyScreen extends AdjustScreen {
 	}
 
 	@Override
-	protected Scene makeScreenWithoutStyling() {
+	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException {
 		VBox vb = new VBox(); 
 
-		HBox enemyNameSelect = getUIFactory().setupPromptAndTextField("", "Enemy Name: "); 
-		TextField nameInputField = (TextField) enemyNameSelect.getChildren().get(1);
-
+		
+		TextField nameInputField = getUIFactory().makeTextField("");
+		HBox enemyNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getErrorCheckedPrompt("EnemyName", getView().getLanguage()));
 		HBox enemyImageSelect = new HBox();
-		try {
-			enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("Enemy", "English"));
-		} catch (MissingPropertiesException e) {
-			// TODO FIX
-		} 
-
-		HBox enemySpeed = getUIFactory().setupPromptAndSlider("enemySpeedSlider", "Enemy Speed: ", DEFAULT_ENEMY_MAX_SPEED); 
-		HBox enemyHealthImpact = getUIFactory().setupPromptAndSlider("enemyHealthImpactSlider", "Enemy Health Impact: ", DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
-		HBox enemy$Impact = getUIFactory().setupPromptAndSlider("enemyMoneyImpactSlider", "Enemy $ Impact: ", DEFAULT_ENEMY_MAX_$_IMPACT); 
+		ComboBox<String> dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
+		enemyImageSelect = getUIFactory().setupImageSelector(myPropertiesReader, "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("Enemy", "English"),
+				getErrorCheckedPrompt("NewImage", getView().getLanguage()), dropdown);
+		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
+		HBox enemySpeed = getUIFactory().addPromptAndSetupHBox("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed", getView().getLanguage()));
+		Slider enemyHealthSlider = getUIFactory().setupSlider("enemyHealthImpactSlider",  DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
+		HBox enemyHealthImpact = getUIFactory().addPromptAndSetupHBox("enemyHealthImpactSlider", enemyHealthSlider, getErrorCheckedPrompt("EnemyHealth", getView().getLanguage())); 
+		Slider enemyImpactSlider = getUIFactory().setupSlider("enemyMoneyImpactSlider",  DEFAULT_ENEMY_MAX_$_IMPACT); 
+		HBox enemy$Impact = getUIFactory().addPromptAndSetupHBox("enemyMoneyImpactSlider", enemyImpactSlider, getErrorCheckedPrompt("EnemyImpact", getView().getLanguage())); 
 
 		HBox backAndApply = setupBackAndApplyButton(); 
 		
