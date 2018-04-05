@@ -9,10 +9,10 @@ public class Projectile extends Sprite {
 	private DamageProperty myDamage;
 	private ImageView myImage; // this is repeated in the superclass sprite -ben
 	
-	public Projectile(int damage, ImageView image) {
+	public Projectile(DamageProperty damage, ImageView image) {
 	    	super(image);
 	    	myImage = super.getImage();
-		myDamage = new DamageProperty(damage);
+		myDamage = damage;
 	}
 
 

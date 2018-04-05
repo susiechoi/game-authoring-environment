@@ -30,11 +30,6 @@ public interface EnemyI {
      * @return Double: damage that Enemy incurs on the tower
      */
     public Double damage();
-    
-    /**
-     * Updates the properties of the enemy. For example, health, position, etc.
-     */
-    public void update();
 
     boolean overlap(ImageView otherImage);
 
