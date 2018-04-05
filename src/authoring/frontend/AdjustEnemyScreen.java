@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 
 class AdjustEnemyScreen extends AdjustScreen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css";
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final int DEFAULT_ENEMY_MAX_HEALTH_IMPACT = 3; 
 	public static final int DEFAULT_ENEMY_MAX_$_IMPACT = 50; 
@@ -33,11 +33,11 @@ class AdjustEnemyScreen extends AdjustScreen {
 				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), dropdown);
 		System.out.println("here");
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
-		HBox enemySpeed = getUIFactory().addPromptAndSetupHBox("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed", getView().getLanguage()));
+		HBox enemySpeed = getUIFactory().setupSliderWithValue("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed", getView().getLanguage()));
 		Slider enemyHealthSlider = getUIFactory().setupSlider("enemyHealthImpactSlider",  DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
-		HBox enemyHealthImpact = getUIFactory().addPromptAndSetupHBox("enemyHealthImpactSlider", enemyHealthSlider, getErrorCheckedPrompt("EnemyHealthImpact", getView().getLanguage())); 
+		HBox enemyHealthImpact = getUIFactory().setupSliderWithValue("enemyHealthImpactSlider", enemyHealthSlider, getErrorCheckedPrompt("EnemyHealthImpact", getView().getLanguage())); 
 		Slider enemyImpactSlider = getUIFactory().setupSlider("enemyMoneyImpactSlider",  DEFAULT_ENEMY_MAX_$_IMPACT); 
-		HBox enemy$Impact = getUIFactory().addPromptAndSetupHBox("enemyMoneyImpactSlider", enemyImpactSlider, getErrorCheckedPrompt("EnemyCurrencyImpact", getView().getLanguage())); 
+		HBox enemy$Impact = getUIFactory().setupSliderWithValue("enemyMoneyImpactSlider", enemyImpactSlider, getErrorCheckedPrompt("EnemyCurrencyImpact", getView().getLanguage())); 
 
 		HBox backAndApply = setupBackAndApplyButton(); 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Enemy"));

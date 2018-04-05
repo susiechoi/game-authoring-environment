@@ -14,7 +14,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css"; 
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
 
