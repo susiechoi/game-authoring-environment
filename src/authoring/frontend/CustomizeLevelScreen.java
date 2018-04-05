@@ -18,6 +18,8 @@ public class CustomizeLevelScreen extends Screen {
 	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException {	
 		VBox vb = new VBox(); 
 		
+		vb.getChildren().add(getUIFactory().makeScreenTitleText("Edit Your Level"));
+		
 		Button towersButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeTower", "English"));
 		vb.getChildren().add(towersButton);
 		
@@ -36,6 +38,8 @@ public class CustomizeLevelScreen extends Screen {
 		Button autogenerateButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("AutogenerateLevel", "English"));
 		vb.getChildren().add(autogenerateButton);
 
+		vb.getChildren().add(getUIFactory().setupBackButton());
+		
 		return new Scene(vb, 1500, 900);
 	}
 
