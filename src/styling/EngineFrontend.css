@@ -3,8 +3,22 @@ Text {
     -fx-font-size: 18;
 }
 .button {
-    -fx-font-family: "Helvetica";
-    -fx-font-size: 18;
+    -fx-alignment: center;
+	-fx-background-radius: 6;
+	-fx-background-color: #364156;	
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #011638;
+    -fx-text-alignment: center;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+.button:hover{
+	-fx-background-color: linear-gradient(#364156, #011638);
+	-fx-font: 12px Dekko;
+	-fx-font-weight: bold;
 }
 
 .button:disabled, .button:disabled > * {
@@ -34,9 +48,9 @@ Text {
 	-fx-font-family: "Helvetica";
     -fx-font-size: 30;
     -fx-background-color: transparent;
+    -fx-border-color: transparent;
     
 }
-
 #currencyButton{
 	
 }
