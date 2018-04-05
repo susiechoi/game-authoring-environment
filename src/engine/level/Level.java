@@ -1,12 +1,8 @@
 package engine.level;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
-import engine.enemies.wave.Wave;
-=======
->>>>>>> abeffd0471527006279e2a17d55d0f30d2387804
 import engine.path.Path;
 import engine.sprites.enemies.wave.Wave;
 
