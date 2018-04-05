@@ -10,7 +10,13 @@ package authoring;
 
 import engine.path.Path;
 
-class AuthoringModel {
+public class AuthoringModel {
+    
+    
+    
+    public AuthoringModel() {
+	
+    }
 
     /**
      * Sets the path to be used in the level
