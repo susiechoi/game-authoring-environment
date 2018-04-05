@@ -3,7 +3,7 @@ package engine.factories;
 import java.util.Collection;
 import java.util.Map;
 
-import engine.enemies.Enemy;
+import engine.sprites.enemies.Enemy;
 
 public class EnemyFactory extends Factory {
     

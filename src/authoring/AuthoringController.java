@@ -1,7 +1,6 @@
 package authoring;
 
 import java.io.File;
-import controller.Controller;
 import javafx.scene.Scene;
 
 /**
@@ -13,7 +12,7 @@ import javafx.scene.Scene;
  * Represents Controller in MVC of the authoring environment. 
  */
 
-class AuthoringController implements Controller {
+class AuthoringController {
 
    
 

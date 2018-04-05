@@ -3,7 +3,7 @@ package engine.factories;
 import java.util.Collection;
 import java.util.Map;
 
-import engine.towers.projectiles.ProjectileInterface;
+import engine.sprites.towers.projectiles.Projectile;
 
 /**
  * Projectile factory returns creates a projectile of a specific type (each tower can hold
@@ -31,7 +31,7 @@ public class ProjectileFactory extends Factory {
      * @param type: String denoting projectile type
      * @return Projectile object
      */
-    public ProjectileInterface construct(String type) {
+    public Projectile construct(String type) {
 	return null;
     }
 

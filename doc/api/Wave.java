@@ -1,6 +1,6 @@
 package api;
 
-import engine.enemies.EnemyI;
+import engine.sprites.enemies.EnemyI;
 
 /**
  * 
