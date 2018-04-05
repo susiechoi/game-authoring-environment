@@ -5,11 +5,24 @@ import javafx.stage.Stage;
 class AuthoringView {
 
 	private Stage myStage; 
+	private String myLanguage;
 	
-	protected AuthoringView(Stage stage) {
+	protected AuthoringView(Stage stage, String language) {
+		myLanguage = language;
 		myStage = stage; 
-		myStage.setScene(new SpecifyTowerScreen(this).getScreen());
+		//myStage.setScene(new SpecifyTowerScreen(this).getScreen());
+		//myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
+		myStage.setScene((new SettingsScreen(this, language)).getScreen());
 	}
+	
+	protected String getLanguage() {
+		return myLanguage;
+	}
+	
+
+//	protected void applyInfo() {
+//		
+//	}
 	
 	protected void goForwardFrom(Screen currentScreen) {
 		String currentScreenName = currentScreen.getClass().getSimpleName();

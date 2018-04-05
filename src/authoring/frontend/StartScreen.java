@@ -40,7 +40,7 @@ public class StartScreen extends Screen {
 		String newGameButtonPrompt = getErrorCheckedPrompt("NewGameButtonLabel", myLanguage);
 		newGameButton = getUIFactory().makeTextButton("editbutton", newGameButtonPrompt);
 		Button editButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel", myLanguage));
-		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownButtonEnable("", dummyGameNames, e -> {
+		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, prompt);
 		editButton.setDisable(true);
 		vbox.getChildren().add(startHeading);

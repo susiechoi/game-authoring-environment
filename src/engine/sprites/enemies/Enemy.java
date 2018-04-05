@@ -9,8 +9,8 @@ import engine.sprites.towers.projectiles.Projectile;
 import javafx.scene.image.ImageView;
 
 /**
- * This is used for the Enemy object in the game. It will use composition to implement moveable
- * and intersectable methods.
+ * This is used for the Enemy object in the game. It will use composition to implement
+ * intersectable methods.
  * 
  * @author ryanpond
  *
@@ -22,11 +22,11 @@ public class Enemy extends Sprite implements EnemyI{
 	private ValueProperty myValue;
 	private Intersector myIntersector;
 
-	public Enemy(ImageView myImage, int health, int damage, int value) {
+	public Enemy(ImageView myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
 		super(myImage);
-		myHealth = new HealthProperty(health);
-		myDamage = new DamageProperty(damage);
-		myValue = new ValueProperty(value);
+		myHealth = health;
+		myDamage = damage;
+		myValue = value;
 		myIntersector = new Intersector(myImage);
 	}
 
@@ -48,15 +48,10 @@ public class Enemy extends Sprite implements EnemyI{
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public Double damage() {
 		return myDamage.getProperty();
 	}
+
 
 
 }
