@@ -44,8 +44,9 @@ public class CustomizationChoicesScreen extends Screen {
 		editButton.setDisable(true);
 		HBox songSelector = new HBox();
 		ComboBox<String> songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
-		songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Song", "English") + " " , TEST_PROPERTIES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
-				getErrorCheckedPrompt("NewSong", getView().getLanguage()), songDropdown);
+		songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song", "English"), getErrorCheckedPrompt("NewSong", "English"),
+				getErrorCheckedPrompt("NewSongName", getView().getLanguage()), songDropdown);
+		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song", getView().getLanguage()));
 		vbox.getChildren().add(heading);
 		vbox.getChildren().add(settingsButton);
 		vbox.getChildren().add(demoButton);
@@ -56,7 +57,7 @@ public class CustomizationChoicesScreen extends Screen {
 		hbox.getChildren().add(newLevelVBox);
 		vbox.getChildren().add(hbox);
 		vbox.getChildren().add(mainButton);
-		vbox.getChildren().add(songSelector);
+		vbox.getChildren().add(songPrompted);
 		return new Scene(vbox, 1500, 900);
 		
 	}

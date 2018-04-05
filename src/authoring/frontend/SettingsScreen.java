@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 
 public class SettingsScreen extends AdjustScreen {
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
-	public static final String DEFAULT_OWN_CSS = "styling/AdjustEnemyTower.css";
+	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	
 	protected SettingsScreen(AuthoringView view, String language) {
 		super(view);
@@ -32,7 +32,7 @@ public class SettingsScreen extends AdjustScreen {
 		ComboBox<String> imageDropdown = getUIFactory().makeTextDropdown("", imageDropdownOptions);
 		backgroundImageSelector = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 100, getErrorCheckedPrompt("Background", getView().getLanguage()), getErrorCheckedPrompt("LoadImage", getView().getLanguage()),
 					getErrorCheckedPrompt("NewImageName", getView().getLanguage()), imageDropdown);
-		HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, "Choose background image: ");
+		HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, getErrorCheckedPrompt("Background", getView().getLanguage()));
 		HBox backAndApply = setupBackAndApplyButton();
 		vb.getChildren().add(settingsHeading);
 		vb.getChildren().add(promptGameName);
