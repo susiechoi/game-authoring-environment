@@ -37,7 +37,7 @@ class AdjustTowerScreen extends AdjustScreen {
 				getErrorCheckedPrompt("NewImage", getView().getLanguage()), towerImageDropdown);
 		HBox projectileImageSelect = new HBox(); 
 		ComboBox<String> projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
-		towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
+		projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
 				getErrorCheckedPrompt("NewImage", getView().getLanguage()), projectileImageDropdown);
 		ArrayList<String> dummyTowerAbilities = new ArrayList<String>(); // TODO read in abilities
 		dummyTowerAbilities.add("Freeze");
