@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 public class GameAuthoringStartScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	private Button myEditButton;
-	
+
 	protected GameAuthoringStartScreen(AuthoringView view) {
 		super(view);
 		setStyleSheet(DEFAULT_OWN_CSS);

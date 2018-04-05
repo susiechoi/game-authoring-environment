@@ -9,21 +9,16 @@ import engine.sprites.enemies.Enemy;
  * active Enemy objects in the game loop.
  * 
  * @author Katherine Van Dyk
- *
+ * @author Miles Todzo
  */
-public class EnemyManager extends Manager<Enemy> {
+public class EnemyManager extends Manager {
     
 	// this doesn't have its own lists like Tower manager does -bma
 	
     /**
      * Constructor for Enemy manager
      */
-    public EnemyManager(List<Enemy> enemies) {
-    		super(enemies);
+    public EnemyManager() {
+    		super();
     }
-    
-    
-    
-    
-
 }

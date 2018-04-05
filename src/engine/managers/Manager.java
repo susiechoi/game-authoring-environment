@@ -1,7 +1,10 @@
 package engine.managers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import engine.sprites.Sprite;
+import engine.sprites.towers.Tower;
 import javafx.collections.ObservableList;
 
 /**
@@ -10,27 +13,46 @@ import javafx.collections.ObservableList;
  * 
  * @author Katherine Van Dyk
  * @author Ryan Pond
+ * @author Miles Todzo
  * @param <E>: The object being managed
  */
-public abstract class Manager<E> {
+public class Manager {
     
-    private List<E> objects; // this list seems like it's duplicated in subclasses -bma
+    private List<Sprite> active;
+    private List<Sprite> available;
     
-    /**
-     * Constructor, takes in the original list of E objects
-     * @param list: list of objects that are initially active to be managed
-     */
-    public Manager(List<E> list) {
-    		objects = list;
+    public Manager() {
+    		active = new ArrayList<>();
+    		available = new ArrayList<>();
     }
-    
+
     /**
      * Returns observable list of all active objects
      * 
      * @return
      */
-    public ObservableList<E> getList(){
-    		return (ObservableList<E>) objects;
+    public ObservableList<Sprite> getObservableListOfAvailable(){
+    		return (ObservableList<Sprite>) available;
+    }
+    /**
+     * Returns observable list of all active objects
+     * 
+     * @return
+     */
+    public ObservableList<Sprite> getObservableListOfActive(){
+    		return (ObservableList<Sprite>) active;
     }
 
+    /**
+     * Checks for collisions between between the list of active actors held by the Manager the method
+     * was called on and the list of active actors passed as a parameter
+     * @param passedActors
+     */
+    public void checkForCollisions(List<Sprite> passedActors) {
+    		for (Sprite activeActor: active) {
+    			for (Sprite passedActor: passedActors) {
+    				activeActor.checkForCollision(passedActor);
+    			}
+    		}
+    }
 }
