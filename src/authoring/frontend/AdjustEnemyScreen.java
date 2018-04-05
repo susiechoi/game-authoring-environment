@@ -30,7 +30,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 		HBox enemyNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getErrorCheckedPrompt("EnemyName", getView().getLanguage()));
 		HBox enemyImageSelect = new HBox();
 		ComboBox<String> dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
-		enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("Enemy", "English"),
+		enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
 				getErrorCheckedPrompt("NewImage", getView().getLanguage()), dropdown);
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
 		HBox enemySpeed = getUIFactory().addPromptAndSetupHBox("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed", getView().getLanguage()));
