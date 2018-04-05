@@ -8,8 +8,10 @@
 
 package authoring;
 
+import data.GameData;
 import engine.path.Path;
 
+<<<<<<< HEAD
 public class AuthoringModel {
     
     
@@ -17,6 +19,9 @@ public class AuthoringModel {
     public AuthoringModel() {
 	
     }
+=======
+class AuthoringModel implements GameData {
+>>>>>>> 071cb02a091eaf0f593fabb1d310aacba3a8f2f2
 
     /**
      * Sets the path to be used in the level

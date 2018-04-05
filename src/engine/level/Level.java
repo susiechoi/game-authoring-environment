@@ -2,7 +2,6 @@ package engine.level;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import engine.sprites.enemies.wave.Wave;
 import engine.path.Path;
 
@@ -13,7 +12,6 @@ import engine.path.Path;
  * Interface for a game level
  */
 public class Level {
-    
     
     private final List<Wave> WAVES;
     private final int NUMBER;
