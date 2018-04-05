@@ -22,11 +22,11 @@ public class Enemy extends Sprite implements EnemyI{
 	private ValueProperty myValue;
 	private Intersector myIntersector;
 
-	public Enemy(ImageView myImage, int health, int damage, int value) {
+	public Enemy(ImageView myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
 		super(myImage);
-		myHealth = new HealthProperty(health);
-		myDamage = new DamageProperty(damage);
-		myValue = new ValueProperty(value);
+		myHealth = health;
+		myDamage = damage;
+		myValue = value;
 		myIntersector = new Intersector(myImage);
 	}
 
