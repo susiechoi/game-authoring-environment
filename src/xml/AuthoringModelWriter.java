@@ -32,7 +32,7 @@ public class AuthoringModelWriter implements XMLWriter {
 		try {
 			d = XMLDocumentBuilder.initializeDoc();
 		} catch (ParserConfigurationException p) {
-			System.out.println("Bad configuration");
+			System.out.println("Bad configuration"); // update exception
 		}
 		parser = new XStream();
 	}

@@ -11,14 +11,11 @@ package authoring;
 import data.GameData;
 import engine.path.Path;
 
-public class AuthoringModel {
-    
-    
+public class AuthoringModel implements GameData {
     
     public AuthoringModel() {
 	
     }
-
 
     /**
      * Sets the path to be used in the level
