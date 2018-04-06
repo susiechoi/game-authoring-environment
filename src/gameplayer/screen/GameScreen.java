@@ -10,10 +10,7 @@ import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 
 
-import javafx.scene.Node;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;

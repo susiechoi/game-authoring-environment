@@ -2,6 +2,7 @@
  * Class for generating common front end UI elmenets, e.g. comboboxes, sliders
  * To ensure consistency of front end design
  * @author susiechoi 
+ * @author sarahbland
  */
 
 package frontend;
@@ -17,7 +18,6 @@ import java.util.Map;
 
 
 
-import authoring.frontend.Screen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -103,8 +103,9 @@ public class UIFactory {
 
 	public Slider setupSlider(String id, int sliderMax) {
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
-		Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
+		Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
 			public void changed(ObservableValue<? extends Number> ov,
 					Number old_val, Number new_val) {
 				sliderValue.setText(String.format("%03d", (int)(double)new_val));
@@ -140,13 +141,13 @@ public class UIFactory {
 	}
 
 	public VBox setupFileChooser(String id, String newFilePrompt, String newFileNamePrompt, String propertiesFilepath,
-			EventHandler<ActionEvent> action, Map<String, String> keysAndVals) {
+			EventHandler<ActionEvent> action, Map<String, String> keysAndVals, String extension) {
 			VBox vbox = new VBox();
 			TextField imageNameEntry = new TextField();
-			HBox imageNamer = addPromptAndSetupHBox("",imageNameEntry, newFileNamePrompt);
+			HBox imageNamer = addPromptAndSetupHBox("selector",imageNameEntry, newFileNamePrompt);
 			FileChooser fileChooser = new FileChooser();
 			FileChooser.ExtensionFilter extensionFilter = 
-                    new FileChooser.ExtensionFilter("image files","*.png");
+                    new FileChooser.ExtensionFilter("file extension","*" + extension);
             fileChooser.getExtensionFilters().add(extensionFilter);
 			Button filePrompt = makeTextButton(id, newFilePrompt);
 			filePrompt.setDisable(true);
@@ -161,7 +162,7 @@ public class UIFactory {
 					File file = fileChooser.showOpenDialog(new Stage());
 					file.getAbsolutePath();
 					System.out.println("here");
-					File fileCopy = new File("images/" + imageName + ".png");
+					File fileCopy = new File("images/" + imageName + extension);
 					System.out.println("not here");
 					try{
 						
@@ -183,7 +184,7 @@ public class UIFactory {
 	}
 	
 	public VBox setupSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath,
-			String newFilePrompt, String newFileNamePrompt, ComboBox<String> dropdown) throws MissingPropertiesException{
+			String newFilePrompt, String newFileNamePrompt, String extension, ComboBox<String> dropdown) throws MissingPropertiesException{
 			VBox vb = new VBox();
 			Map<String, String> options = propertiesReader.read(propertiesReader.loadProperties(propertiesFilepath));
 			ArrayList<String> optionsList = new ArrayList<String>(options.keySet());
@@ -201,9 +202,10 @@ public class UIFactory {
 				optionsList.addAll(optionsList2);
 				dropdown.getItems().clear();
 				dropdown.getItems().addAll(optionsList);
-				}, options);
+				}, options, extension);
 			vb.getChildren().add(dropdown);
 			vb.getChildren().add(fc);
+			vb.setId("selector");
 			return vb;
 	}
 
@@ -213,15 +215,13 @@ public class UIFactory {
 		ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
 		ImageView imageDisplay = new ImageView(); 
 		imageDisplay.setImage(images.get(0));
-		VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt, dropdown);
+		VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 		dropdown.setOnAction(e ->
 		{try{
 		imageDisplay.setImage(new Image((new File(propertiesReader.findVal(propertiesFilepath, dropdown.getValue())).toURI().toString()), imageSize, imageSize, false, false));
 		}
 		catch(Exception e2) {
-			System.out.println("Here's the issue!");
 			e2.printStackTrace();
-			
 			//TODO: error!!
 		};
 		});
@@ -230,6 +230,7 @@ public class UIFactory {
 		hb.getChildren().add(imageDisplay);
 		return hb; 
 	}
+	
 	public HBox addPromptAndSetupHBox(String id, Node node, String prompt) {
 		HBox hbox = new HBox();
 		hbox.setId(id);

@@ -4,7 +4,6 @@ import java.io.File;
 
 import authoring.AuthoringModel;
 import authoring.AuthoringView;
-import controller.Controller;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,8 +16,7 @@ import javafx.stage.Stage;
  * Represents Controller in MVC of the authoring environment. 
  */
 
-public class AuthoringController implements Controller {
-
+public class AuthoringController {
 
     private final Stage STAGE;
     private final AuthoringView VIEW = new AuthoringView();

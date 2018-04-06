@@ -1,30 +1,23 @@
-package authoring;
-
-import java.util.Map;
-import java.util.TreeMap;
-
-import engine.sprites.enemies.Enemy;
-import engine.path.Path;
-import engine.sprites.towers.Tower;
 
 /**
  * 
  * @author Susie Choi 
- * @author Ben Hodgson 4/2/18
  * Represents the Model component of the Authoring environment's MVC. 
  * Receives input from Controller through applyChange method regarding what/how to change an object
  * 
  */
-public class AuthoringModel {
+
+package authoring;
+
+import data.GameData;
+import engine.path.Path;
+
+public class AuthoringModel implements GameData {
     
     public AuthoringModel() {
-	// map that maps tower String ID's to tower objects for easy accessing later
-	Map<String, Tower> towerMap = new TreeMap<String, Tower>();
-	// map that maps enemy String ID's to enemy objects for easy accessing later
-	Map<String, Enemy> enemyMap = new TreeMap<String, Enemy>();
+	
     }
-    
-    
+
     /**
      * Sets the path to be used in the level
      * 

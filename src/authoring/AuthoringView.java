@@ -3,9 +3,6 @@ package authoring;
 import java.io.File;
 import java.util.List;
 
-import authoring.frontend.GameAuthoringStartScreen;
-import javafx.beans.property.BooleanProperty;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 
 /**
@@ -19,9 +16,10 @@ import javafx.scene.Scene;
 
 public class AuthoringView {
     
+    
     	public Scene loadAuthoringView() {
-    	    Scene StartScreen = new GameAuthoringStartScreen().getScreen();
-    	    return StartScreen;
+    	    
+    	    return null;
     	}
 
 	/**
@@ -67,15 +65,6 @@ public class AuthoringView {
 	 */
 	protected String getUserSelection() {
 		return null; 
-	}
-
-	@Override
-	public Node getScreen() {
-	    return null;
-	}
-
-	@Override
-	public void makeScreen() {	    
 	}
 
 }

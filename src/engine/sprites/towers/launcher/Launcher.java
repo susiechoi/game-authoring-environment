@@ -4,11 +4,12 @@ import engine.sprites.properties.FireRateProperty;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
- * 
- * @author Ben Hodgson 3/28/18
- * @author Ryan Pond
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
  * fire projectiles
+ * 
+ * @author Ben Hodgson 
+ * @author Ryan Pond
+ * @date 3/28/18
  */
 public class Launcher {
 

@@ -25,6 +25,7 @@ public abstract class Property implements PropertyI {
     /**
      * Abstract method to get an immutable copy of the specific property
      */
+    @Override
     public abstract double getProperty();
     
     /**

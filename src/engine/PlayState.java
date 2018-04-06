@@ -1,5 +1,6 @@
 package engine;
 
+<<<<<<< HEAD
 import java.util.List;
 import java.awt.Point;
 
@@ -8,14 +9,14 @@ import engine.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
+=======
+import engine.level.Level;
+>>>>>>> cac78c67eaaa162fedc7dabc4e0a1f1216aa1b9b
 import engine.managers.EnemyManager;
-import engine.managers.ProjectileManager;
 import engine.managers.TowerManager;
-import engine.sprites.enemies.Enemy;
-import engine.sprites.towers.Tower;
-import engine.sprites.towers.TowerI;
 
 /**
+<<<<<<< HEAD
  * 
  * @author Miles Todzo
  *
@@ -28,13 +29,13 @@ public class PlayState implements PlayStateI{
 	private int money;
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
-    private EventHandler myEventHandler;
+    private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
     private boolean isPaused;
     
-	public PlayState(EventHandler eventHandler, List<Level> levels) {
-		myEventHandler = eventHandler;
+	public PlayState(Mediator mediator, List<Level> levels) {
+		myMediator = mediator;
 		myLevels = levels;
 		currentLevel = myLevels.get(0);
 		myTowerManager = new TowerManager();
@@ -44,7 +45,6 @@ public class PlayState implements PlayStateI{
 		money = 0;
 	}
 
-	@Override
 	public void update() {
 		UNIVERSAL_TIME++;
 		myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive());
@@ -75,5 +75,4 @@ public class PlayState implements PlayStateI{
 	public FrontEndTower placeTower(Point location, String towerType) {
 		return (FrontEndTower) myTowerManager.addTower(location, towerType);
 	}
-
 }

@@ -1,16 +1,10 @@
 package gameplayer;
 
-import file.FileIO;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.Map;
 
 
 public class ScreenManager {

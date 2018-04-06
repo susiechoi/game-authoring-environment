@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.sprites.Sprite;
-import engine.sprites.towers.Tower;
 import javafx.collections.ObservableList;
 
 /**
