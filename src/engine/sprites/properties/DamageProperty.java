@@ -4,7 +4,8 @@ public class DamageProperty extends Property {
 
 	private double myDamage;
 
-	public DamageProperty(double damage) {
+	public DamageProperty(double cost, double value, double damage) {
+	    	super(cost, value);
 		myDamage = damage;
 	}
 

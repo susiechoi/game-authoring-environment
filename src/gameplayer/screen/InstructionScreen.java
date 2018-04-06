@@ -1,18 +1,16 @@
 package gameplayer.screen;
 
-import authoring.frontend.UIFactory;
-import gameplayer.PromptReader;
+import frontend.PromptReader;
+import frontend.Screen;
+import frontend.UIFactory;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 public class InstructionScreen extends Screen {
     //TODO re-factor style sheets to abstract
@@ -31,19 +29,9 @@ public class InstructionScreen extends Screen {
 	//setStyleSheet(DEFAULT_OWN_CSS);
     }
 
-
-    @Override
-    public Parent getScreenRoot(){
-	if(ROOT == null) {
-	    makeScreen();
-	}
-	return ROOT;
-        
-    }
-
     @Override
     //TODO all text should be read from language properties files
-    public void makeScreen() {
+    public Parent makeScreenWithoutStyling() {
 	VBox rootBox = new VBox();
 	Label textInstructs = new Label();
 	textInstructs.setWrapText(true);
@@ -76,7 +64,7 @@ public class InstructionScreen extends Screen {
 	
 	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
-	ROOT = rootBox;
+	return rootBox;
     }
     
     //TODO needs to check if valid saveFile is available

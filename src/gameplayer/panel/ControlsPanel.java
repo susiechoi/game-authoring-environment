@@ -2,8 +2,8 @@ package gameplayer.panel;
 
 import java.util.Map;
 
-import authoring.frontend.PropertiesReader;
-import authoring.frontend.UIFactory;
+import frontend.PropertiesReader;
+import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;

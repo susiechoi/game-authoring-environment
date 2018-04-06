@@ -1,7 +1,7 @@
 VBox, HBox {
 	-fx-background-color: #B7D5D4;
-	-fx-padding: 15;
-    -fx-spacing: 10;
+	-fx-padding: 5;
+    -fx-spacing: 5;
     -fx-alignment: center;
 }
 
@@ -62,12 +62,5 @@ VBox, HBox {
 
 .slider {
 	-fx-min-width: 200;
-    -fx-alignment: center;
 	-fx-control-inner-background: white;
-	-fx-padding: 15;
-    -fx-spacing: 0;
-}
-
-#screenTitle {
-	-fx-font-size: 50; 
 }

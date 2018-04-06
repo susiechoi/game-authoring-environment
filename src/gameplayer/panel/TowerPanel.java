@@ -16,10 +16,10 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.Map;
 
-import authoring.frontend.PropertiesReader;
-import authoring.frontend.UIFactory;
+import frontend.PromptReader;
+import frontend.PropertiesReader;
+import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
-import gameplayer.PromptReader;
 import gameplayer.screen.GameScreen;
 import file.FileIO;
 
