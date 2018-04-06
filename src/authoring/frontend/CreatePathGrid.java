@@ -2,21 +2,28 @@ package authoring.frontend;
 
 
 import javafx.event.EventHandler;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
 
-//add start/end
-//separate panel containing blocks
-//move drag and drop functionality to separate class (or set up grid in one class, and one for path drag-and-drop)
-//delete button to get rid of path blocks (trash, select all and delete)
+/* delete button to get rid of path blocks (trash, select all and delete)
+ * Right click to be able to get specialty paths
+ * filechoosers for loading in new images, get background image from elsewhere
+ * Back to main button, if apply has not been clicked then prompt (changes will not be saved)
+ * 
+ * Need a way to get style info for defaults
+ * check for completed path before demo (percolation), cannot click apply until this is done (The apply button will 
+ * reassign the path in the AuthoringModel.java class to be used in the game)
+ * 
+ * Auto-generate new levels, reading in for default parameters
+ * auto-populate cells by mouse drag (right click?) or copy and paste
+ * 
+ */
 
 public class CreatePathGrid {
 
@@ -25,15 +32,13 @@ public class CreatePathGrid {
 	private int colIndex;
 	private int rowIndex;
 	private GridPane grid;
-	private PathImageComposite pathComposite;
 
 	protected GridPane makePathGrid() {
-		pathComposite = new PathImageComposite();
 		grid = new GridPane();
 		grid.setMaxSize(1000, 750); //only goes to 750
 		setGridConstraints(INITIAL_PATH_SIZE);
 		grid.setGridLinesVisible(true);
-
+		
 		grid.setStyle("-fx-background-image: url('file:images/plaingreen.png')"); 
 		populateGrid();
 		return grid;
@@ -43,7 +48,6 @@ public class CreatePathGrid {
 		for (int x = 0 ; x < grid.getColumnCount(); x++) {
 			for (int y = 0 ; y < grid.getRowCount(); y++) {
 				Pane cell = new Pane();
-//				GridPane.setConstraints(cell, x, y);
 				
 				final int col = x;
 				final int row = y;
@@ -65,11 +69,11 @@ public class CreatePathGrid {
 						Dragboard db = event.getDragboard();
 						boolean success = false;
 						if (db.hasImage()) {
-							ImageView path = new ImageView(db.getImage());
-							path.fitWidthProperty().bind(cell.widthProperty()); 
-							path.fitHeightProperty().bind(cell.heightProperty()); 
-							grid.add(path, colIndex, rowIndex);
-							pathComposite.addPathImage(path);
+							DraggableImage path = new DraggableImage(db.getImage());
+							path.setDraggable();
+							path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
+							path.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
+							grid.add(path.getPathImage(), colIndex, rowIndex);
 							success = true;
 						}
 						event.setDropCompleted(success);
@@ -81,9 +85,6 @@ public class CreatePathGrid {
 		}
 	}
 
-	public PathImageComposite getPathComposite() {
-		return pathComposite;
-	}
 	
 	public double getPathSize() {
 		return pathSize;

@@ -1,6 +1,7 @@
 package authoring.frontend;
 
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -9,33 +10,64 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
 public class DraggableImage {
-	private ImageView myImage;
-	
-	DraggableImage(ImageView image) {
-		myImage = image;
-		setDraggable();
+	private ImageView pathImage;
+
+	DraggableImage(Image image) {
+		setPathImage(image);
 	}
 
-	private ImageView setDraggable() {
-		myImage.setOnDragDetected(new EventHandler <MouseEvent>() {
+	private void setPathImage(Image image) {
+		pathImage = new ImageView();
+		pathImage.setImage(image);
+		pathImage.setFitHeight(CreatePathPanel.PANEL_PATH_SIZE);
+		pathImage.setFitWidth(CreatePathPanel.PANEL_PATH_SIZE);
+	}
+
+	public ImageView setCopyDraggable() {
+		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
-				Dragboard db = myImage.startDragAndDrop(TransferMode.COPY);
+				Dragboard db = pathImage.startDragAndDrop(TransferMode.COPY);
 				ClipboardContent content = new ClipboardContent();
-				content.putImage(myImage.getImage());
+				content.putImage(pathImage.getImage());
 				db.setContent(content);
 				event.consume();    
 			}
 		});
 
-		myImage.setOnDragDone(new EventHandler <DragEvent>() {
+		pathImage.setOnDragDone(new EventHandler <DragEvent>() {
 			public void handle(DragEvent event){
 				if (event.getTransferMode() == TransferMode.MOVE){
-					myImage.setImage(null);
+					pathImage.setImage(null);
 				}
 				event.consume();
 			}
 		});
-		
-		return myImage;
+
+		return pathImage;
+	}
+
+	public ImageView setDraggable() {
+		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
+			public void handle(MouseEvent event){
+				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
+				ClipboardContent content = new ClipboardContent();
+				content.putImage(pathImage.getImage());
+				db.setContent(content);
+				event.consume();    
+			}
+		});
+
+		pathImage.setOnDragDone(e -> {
+			if (e.getTransferMode() == TransferMode.MOVE){
+				((ImageView) e.getSource()).setImage(null);
+			}
+			e.consume();
+		});
+		return pathImage;
+	}
+
+	
+	public ImageView getPathImage() {
+		return pathImage;
 	}
 }

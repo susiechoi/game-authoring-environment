@@ -1,12 +1,14 @@
 package authoring.frontend;
 
 import frontend.UIFactory;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -14,38 +16,60 @@ public class CreatePathPanel implements Panel {
 	
 	public static final int PANEL_PATH_SIZE = 90;
 	private VBox pathPanel;
-	private PathImage pathImage;
-	private PathImage startImage;
-	private PathImage endImage;
-	private Button trashButton;
+	private DraggableImage pathImage;
+	private DraggableImage startImage;
+	private DraggableImage endImage;
 	private Button pathSizePlusButton;
 	private Button pathSizeMinusButton;
 	private HBox pathSizeButtons;
+	private Button startImageChooser;
+	private Button endImageChooser;
+	private Button pathImageChooser;
 
 	@Override
-	public void makePanel() {
+	public void makePanel() { //separate into smaller methods
 		pathPanel = new VBox();
-		pathPanel.setMaxSize(300, 900);
+		pathPanel.setMaxSize(280, 900);
+		pathPanel.getStylesheets();
 
-		pathImage = new PathImage("file:images/cobblestone.png");
-		new DraggableImage(pathImage.getPathImage());
+		Image pathImg = new Image("file:images/cobblestone.png");
+		pathImage = new DraggableImage(pathImg); //get defaults
+		pathImage.setCopyDraggable();
+		pathImage.getPathImage().getStyleClass().add("img-view");
 		
-		startImage = new PathImage("file:images/start.png");
-		new DraggableImage(startImage.getPathImage());
+		Image startImg = new Image("file:images/start.png");
+		startImage = new DraggableImage(startImg);
+		startImage.setCopyDraggable();
+		startImage.getPathImage().getStyleClass().add("img-view");
 		
-		endImage = new PathImage("file:images/end.png");
-		new DraggableImage(endImage.getPathImage());
+		Image endImg = new Image("file:images/end.png");
+		endImage = new DraggableImage(endImg);
+		endImage.setCopyDraggable();
+		endImage.getPathImage().getStyleClass().add("img-view");
 		
-		Image trashImg = new Image("file:images/trash.png", 80, 80, true, false);	
 		UIFactory factory = new UIFactory();
-		trashButton = factory.makeImageButton("", trashImg);
-		trashButton.setMaxSize(PANEL_PATH_SIZE, PANEL_PATH_SIZE);
+
+		ImageView trashImage = new ImageView(new Image("file:images/trash.png", 120, 120, true, false));
+		trashImage.getStyleClass().add("img-view");
+		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				if (event.getDragboard().hasImage()) {
+					event.acceptTransferModes(TransferMode.ANY);
+				}
+			}
+		});
 		
-		trashButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-		        pathPanel.setCursor(Cursor.HAND); //Change cursor to hand
-		    }
+		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				event.acceptTransferModes(TransferMode.ANY);
+				Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasImage()) {
+					success = true;
+				}
+				event.setDropCompleted(success);
+				event.consume();
+			}
 		});
 		
 		Image plusImg = new Image("file:images/plus.png", 60, 40, true, false);
@@ -57,7 +81,12 @@ public class CreatePathPanel implements Panel {
 		pathSizeButtons = new HBox();
 		pathSizeButtons.getChildren().addAll(pathSizePlusButton, pathSizeMinusButton);
 		
-		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), pathSizeButtons, trashButton);
+		startImageChooser = factory.makeTextButton("", "Choose Start Image");
+		endImageChooser = factory.makeTextButton("", "Choose End Image");
+		pathImageChooser = factory.makeTextButton("", "Choose Path Image");
+		
+		
+		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage, pathSizeButtons, startImageChooser, pathImageChooser, endImageChooser);
 	}
 	
 	public HBox getSizeButtons() {

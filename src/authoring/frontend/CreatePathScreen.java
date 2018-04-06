@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 
 public class CreatePathScreen extends Screen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/AdjustEnemyTower.css";
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
 	private StackPane pathRoot;
 	private GridPane pathGrid;

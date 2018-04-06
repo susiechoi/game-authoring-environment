@@ -64,3 +64,7 @@ VBox, HBox {
 	-fx-min-width: 200;
 	-fx-control-inner-background: white;
 }
+
+.img-view:hover {
+    -fx-effect: dropshadow(three-pass-box, white, 30, 0.0 , 0 , 1);
+}
