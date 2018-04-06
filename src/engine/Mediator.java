@@ -1,7 +1,6 @@
 package engine;
 
 import gameplayer.ScreenManager;
-import javafx.animation.Animation;
 import xml.XMLFactory;
 
 /**
@@ -16,16 +15,17 @@ public class Mediator {
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     
-    public Mediator() {
-	myXMLFactory = null;
-	myScreenManager = null;
-	myGameEngine = null;
+    public Mediator(ScreenManager screenManager, GameEngine gameEngine) {
+	myXMLFactory = new XMLFactory();
+	myScreenManager = screenManager;
+	myGameEngine = gameEngine;
     }
 
     void savePlay() {
 	//TODO ask Engine for a PlayState and then ask XMLFactory for
 	//	a writer and then write it to a file
     }
+    
     
     // a whole slew of other methods
     // but fr there should be a method for every event that can occur

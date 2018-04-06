@@ -1,9 +1,6 @@
 package engine.sprites;
 
-import java.util.List;
-
 import engine.managers.ProjectileManager;
-import engine.sprites.towers.projectiles.Projectile;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 
@@ -18,9 +15,9 @@ public class ShootingSprites extends Sprite{
 	 * @param projectileManager
 	 */
 
-	public ShootingSprites(ImageView image, ProjectileManager projectileManager) {
+	public ShootingSprites(ImageView image) {
 		super(image);
-		myProjectileManager = projectileManager;
+		myProjectileManager = new ProjectileManager();
 	}
 	
 	public ObservableList<Sprite> getProjectiles(){

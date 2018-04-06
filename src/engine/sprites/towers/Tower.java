@@ -1,8 +1,6 @@
 package engine.sprites.towers;
 
-import engine.managers.ProjectileManager;
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.ImageView;
@@ -12,9 +10,7 @@ import javafx.scene.image.ImageView;
  * 
  * @author Katherine Van Dyk
  */
-
 public class Tower extends ShootingSprites {
-	private ProjectileManager myProjectileManager;
     private Launcher myLauncher;
     private HealthProperty myHealth;
     private ValueProperty myValue;
@@ -28,7 +24,7 @@ public class Tower extends ShootingSprites {
      * @param value: Value of the tower for selling
      */
     public Tower(ImageView image, Launcher launcher, HealthProperty health, ValueProperty value) {
-	super(image, myProjectileManager);
+	super(image);
 	myLauncher = launcher;
 	myHealth = health;
 	myValue = value;
