@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * Class that handles mediating program functionality specific to authoring. 
  * Represents Controller in MVC of the authoring environment. 
  */
-class AuthoringController {
+public class AuthoringController {
 
     private final Stage STAGE;
     private final AuthoringView VIEW = new AuthoringView();

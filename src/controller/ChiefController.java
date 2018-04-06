@@ -1,5 +1,9 @@
 package controller;
 
+import authoring.AuthoringController;
+import engine.EngineController;
+import javafx.stage.Stage;
+
 /**
  * 
  * @author Ben Hodgson 3/27/18
@@ -10,5 +14,26 @@ package controller;
 
 public class ChiefController {
 
-	
+    private Stage STAGE;
+    private EngineController ENGINE;
+    private AuthoringController AUTHORING;
+
+    public ChiefController(Stage stage) {
+	// TODO instantiate instance variables in the constructor
+	STAGE = stage;
+    }
+
+    /**
+     * Instantiate a new EngineController object to handle the Game engine
+     */
+    public void play() {
+	//ENGINE = new EngineController();
+    }
+    
+    /**
+     * Instantiate a new AuthoringController object to handle the authoring environment
+     */
+    public void author() {
+	AUTHORING = new AuthoringController(STAGE);
+    }
 }
