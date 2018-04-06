@@ -1,6 +1,7 @@
 package gameplayer;
 
 import file.FileIO;
+import frontend.PromptReader;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.stage.Stage;
@@ -35,6 +36,7 @@ public class ScreenManager {
 	findSettings();
 	//setup rest of values once file reader is finished
     }
+    
 
 
     //TODO set Style sheets
@@ -60,7 +62,7 @@ public class ScreenManager {
     }
 
     public void loadErrorScreen() {
-	
+	System.out.println("missing");
     }
 
     //TODO read these in from properties file

@@ -4,8 +4,9 @@ public class ValueProperty extends Property {
     
     private double myValue;
     
-    public ValueProperty(double value) {
-	myValue = value;
+    public ValueProperty(double cost, double upgradeValue, double propertyValue) {
+	super(cost, upgradeValue);
+	myValue = propertyValue;
     }
 
     @Override

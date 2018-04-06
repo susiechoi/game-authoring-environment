@@ -4,7 +4,8 @@ public class HealthProperty extends Property {
 
     private double myHealth;
     
-    public HealthProperty(double health) {
+    public HealthProperty(double cost, double value, double health) {
+	super(cost, value);
 	myHealth = health;
     }
 

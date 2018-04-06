@@ -1,4 +1,4 @@
-package authoring.frontend;
+package frontend;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +21,7 @@ import javafx.scene.image.Image;
  */
 public class PropertiesReader {
 	
-	protected String findVal(String filepath, String target) throws MissingPropertiesException {
+	public String findVal(String filepath, String target) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
 		if (readInProperties.containsKey(target)) {
@@ -30,7 +30,7 @@ public class PropertiesReader {
 		return ""; 
 	}
 	
-	protected List<String> allKeys(String filepath) throws MissingPropertiesException {
+	public List<String> allKeys(String filepath) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
 		ArrayList<String> allKeys = new ArrayList<String>(); 
@@ -48,6 +48,7 @@ public class PropertiesReader {
 			String val = properties.getProperty(key);
 			try {
 				imageMap.put(key, new Image(new FileInputStream(val), imageLength, imageHeight, false, false));
+			
 			} catch (FileNotFoundException e1) {
 				throw new MissingPropertiesException(val);
 			}

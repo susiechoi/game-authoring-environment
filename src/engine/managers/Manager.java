@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
  */
 public abstract class Manager<E> {
     
-    private List<E> objects;
+    private List<E> objects; // this list seems like it's duplicated in subclasses -bma
     
     /**
      * Constructor, takes in the original list of E objects

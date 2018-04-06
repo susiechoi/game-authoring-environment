@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,44 +26,28 @@ class AdjustTowerScreen extends AdjustScreen {
 	}
 
 	@Override
-	protected Scene makeScreenWithoutStyling() {
+	public Scene makeScreenWithoutStyling() throws MissingPropertiesException{
 		VBox vb = new VBox(); 
 		HBox towerNameSelect = new HBox();
-		try {
-			towerNameSelect = getUIFactory().setupPromptAndTextField("", getPropertiesReader().findVal(ENGLISH_PROMPT_FILE, "TowerName")); 
-		}
-		catch(MissingPropertiesException e){
-			try {
-			showError(getPropertiesReader().findVal(ENGLISH_ERROR_FILE, "NoFile"));
-			}
-			catch (MissingPropertiesException e2) {
-				showError("Missing a properties file! Defaulting to English");
-			}
-		}
-		TextField nameInputField = (TextField) towerNameSelect.getChildren().get(1);
-		
+		TextField nameInputField = getUIFactory().makeTextField(""); 
+		towerNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getPropertiesReader().findVal(ENGLISH_PROMPT_FILE, "TowerName"));
 		HBox towerImageSelect = new HBox();
-		try {
-			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower", "English") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"));
-		} catch (MissingPropertiesException e) {
-			// TODO FIX
-			e.printStackTrace();
-		} 
+		ComboBox<String> towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
+		towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower", "English") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage", "English"), getErrorCheckedPrompt("LoadImage", "English"),
+				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), towerImageDropdown);
 		HBox projectileImageSelect = new HBox(); 
-		try {
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"));
-		} catch (MissingPropertiesException e) {
-			// TODO FIX
-			e.printStackTrace();
-		}
-
+		ComboBox<String> projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
+		projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage", "English"), getErrorCheckedPrompt("LoadImage", "English"),
+				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), projectileImageDropdown);
 		ArrayList<String> dummyTowerAbilities = new ArrayList<String>(); // TODO read in abilities
 		dummyTowerAbilities.add("Freeze");
 		dummyTowerAbilities.add("Fire");
-		HBox towerAbility = getUIFactory().setupPromptAndDropdown("", "Tower Ability: ", dummyTowerAbilities);
-		
-		HBox towerRange = getUIFactory().setupPromptAndSlider("towerRangeSlider", "Tower Range: ", DEFAULT_TOWER_MAX_RANGE); 
-		HBox towerPrice = getUIFactory().setupPromptAndSlider("towerPriceSlider", "Tower Price: ", DEFAULT_TOWER_MAX_PRICE); 
+		ComboBox<String> towerAbilityDropdown = getUIFactory().makeTextDropdown("", dummyTowerAbilities);
+		HBox towerAbility = getUIFactory().addPromptAndSetupHBox("", towerAbilityDropdown, getErrorCheckedPrompt("TowerAbility", getView().getLanguage()));	
+		Slider towerRangeSlider = getUIFactory().setupSlider("towerRangeSlider", DEFAULT_TOWER_MAX_RANGE);
+		HBox towerRange = getUIFactory().addPromptAndSetupHBox("towerRangeSlider", towerRangeSlider, getErrorCheckedPrompt("TowerRange", getView().getLanguage()));
+		Slider towerPriceSlider = getUIFactory().setupSlider("towerPriceSlider", DEFAULT_TOWER_MAX_PRICE);
+		HBox towerPrice = getUIFactory().addPromptAndSetupHBox("towerPriceSlider", towerPriceSlider, getErrorCheckedPrompt("TowerPrice", getView().getLanguage()));
 		HBox backAndApply = setupBackAndApplyButton(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Tower"));
