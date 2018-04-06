@@ -48,6 +48,7 @@ public class PropertiesReader {
 			String val = properties.getProperty(key);
 			try {
 				imageMap.put(key, new Image(new FileInputStream(val), imageLength, imageHeight, false, false));
+			
 			} catch (FileNotFoundException e1) {
 				throw new MissingPropertiesException(val);
 			}

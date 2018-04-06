@@ -15,9 +15,9 @@ import javafx.scene.text.Text;
 
 public class SettingsScreen extends AdjustScreen {
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
-	public static final String DEFAULT_OWN_CSS = "styling/AdjustEnemyTower.css";
+	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	
-	protected SettingsScreen(AuthoringView view, String language) {
+	protected SettingsScreen(AuthoringView view) {
 		super(view);
 		setStyleSheet(DEFAULT_OWN_CSS);
 	}
@@ -30,17 +30,13 @@ public class SettingsScreen extends AdjustScreen {
 		HBox backgroundImageSelector = new HBox();
 		List<String> imageDropdownOptions = getPropertiesReader().allKeys(BACKGROUND_IMAGES);
 		ComboBox<String> imageDropdown = getUIFactory().makeTextDropdown("", imageDropdownOptions);
-		try {
-			backgroundImageSelector = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 50, getErrorCheckedPrompt("LoadImage", getView().getLanguage()), getErrorCheckedPrompt("Background", getView().getLanguage()),
-					getErrorCheckedPrompt("NewImage", getView().getLanguage()), imageDropdown);
-		}
-		catch(MissingPropertiesException e){
-			showDefaultNoFilesError();
-		}
+		backgroundImageSelector = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 100, getErrorCheckedPrompt("Background", getView().getLanguage()), getErrorCheckedPrompt("LoadImage", getView().getLanguage()),
+					getErrorCheckedPrompt("NewImageName", getView().getLanguage()), imageDropdown);
+		HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, getErrorCheckedPrompt("Background", getView().getLanguage()));
 		HBox backAndApply = setupBackAndApplyButton();
 		vb.getChildren().add(settingsHeading);
 		vb.getChildren().add(promptGameName);
-		vb.getChildren().add(backgroundImageSelector);
+		vb.getChildren().add(backgroundImagePrompted);
 		vb.getChildren().add(backAndApply);
 		return new Scene(vb, 1500, 900);
 	}
