@@ -21,8 +21,8 @@ public class PlayController {
 	myMediator.setEngine(myGameEngine)
     }
     
-    public void newPlay(XMLFile file) {
-	AuthoringModel playModel = myXMLReader.read(file);
+    public void newPlay(XMLFile pathToXML) {
+	AuthoringModel playModel = myXMLReader.read(pathToXML);
 	PlayState play = new PlayState(playModel.getLevels());
 	myGameEngine.setPlayState(play);
 	// TODO: myScreenManager.setLandscape(landscape);
