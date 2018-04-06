@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
  * @author ryanpond
  *
  */
-public class Enemy extends Sprite implements EnemyI{
+public class Enemy extends Sprite{
 
 	private HealthProperty myHealth;
 	private DamageProperty myDamage;
@@ -30,26 +30,37 @@ public class Enemy extends Sprite implements EnemyI{
 		myValue = value;
 	}
 
-	@Override
+	
 	public boolean overlap(ImageView otherImage) {
 		//return myIntersector.overlap(otherImage); //there is no implementation for intersecter yet -bma
 		
 		return false; // TODO return the right thing
 	}
 
-	@Override
+	/**
+     * Handles when the Enemy is hit by a tower
+     * 
+     * @param projectile: the projectile that hit the enemy
+     * @return : returns true if the enemy is still alive, false if it is dead
+     */
 	public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
+	/**
+     * Handles updating the enemy position to follow the path
+     */
 	public void followPath() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	/**
+     * Handles returning an enemy's damage after hitting a tower
+     * 
+     * @return Double: damage that Enemy incurs on the tower
+     */
 	public Double damage() {
 		// TODO Auto-generated method stub
 		return null;
