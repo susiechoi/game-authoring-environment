@@ -1,6 +1,7 @@
 package frontend;
 import java.util.List;
 
+
 import javafx.scene.Parent;
 
 /**
@@ -73,23 +74,11 @@ public abstract class Screen {
 	if (myRoot == null) {
 	    myRoot = makeScreen(); 
 	}
-	return myRoot; 
-    }
-    public PropertiesReader getPropertiesReader() {
-	return myPropertiesReader; 
-    }
-
-
-    public String makeErrorsFilepath(String language) {
-	return "languages/"+language+"/Errors.properties";
-    }
-    public String makePromptsFilepath(String language) {
-	return "languages/"+language+"/Prompts.properties";
+	return myRoot;
     }
     protected Parent getRoot() {
 	return myRoot;
     }
-
 }
 
 
