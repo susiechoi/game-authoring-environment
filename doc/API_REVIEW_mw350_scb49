@@ -1,0 +1,44 @@
+# Vooga API Review
+
+Sarah Bland and Maddie Wilkinson
+
+#### Part 1
+
+1. What about your API/design is intended to be flexible? 
+    - Sarah: flexibility to change prompts/style, encapsulated so that authoring can change while still correctly writing files so that gameplay can read them, can shuffle around screens/UI elements
+    - Maddie: the user will be able to change the style and language of the UI, the different components and panels of the UI are enclosed in different classes so that they can easily be shuffled around and so that new ones can be added easily
+2.  How is your API/design encapsulating your implementation decisions? 
+    - Sarah: FileIO completely encapsulates authoring from game engine/play - as long as Level objects are compatible with same objects in gameplay, gameplay is not dependent at all on how authoring allows for customization
+    - Maddie: Our design and hierarchy of GameObjects and Behaviors mimics the structure of the implementation in the Game Engine, so that they can be more easily stored in and read from the game data
+3.  How is your part linked to other parts of the project? 
+     - Sarah: authoring frontend is dependent on factory methods created by other subteams (the backend teams) to make user choices into concrete objects that can be saved in XML files
+    - Maddie: The authoring environment is linked directly to the game data only, in order to store created games. It is indirectly linked to the engine and player subteams through the game data.
+4.  What exceptions (error cases) might occur in your part and how will you handle them (or not, by throwing)?
+    - Sarah: The main exception that occurs is a missing properties file/image/other resource (which could occur if someone messing with the code tried to delete an image from the image folder without also removing it from the properties file)- in this case an alert pops up but the screen is still populated with as much information as it has resource files
+    - Maddie: 
+5.  Why do you think your API/design is _good_ (also define what your measure of good is)? 
+    - Sarah: I'm honestly not sure if our design is _good_, but we are making strides to getting there! Using composition to complete behaviors through AuthoringView and using a UIFactory to encapsulate the construction of UIElements maximizes flexbility and ease of adding new features, which is what we are going for at this point.
+    - Maddie: I think that our design is fairly good; it allows for the creation of a variety of objects using composition, which gives the design flexibility, and we're using the Mediator pattern for the management of objects in the backend of the authoring environment. We're also using composition for the construction of the UI, and we're making sure to make the dependencies between classes clearly visible.
+
+#### Part 2
+
+1.  Discuss the use cases/issues that you are responsible for: are they descriptive, appropriate, reasonably sized?
+    - Sarah: I am mostly responsible for the general settings screens for a level (adding a theme song, loading in a background image, setting a value for player health, autpopulating levels, and demoing a game). In general, they are descriptive, but they could definitely be more narrow in focus - it will be difficult for me to "solve" demoing a game, for example, because demoing requires so much collaboration with the Game Engine subteam.
+    - Maddie: I'm the only person working on the user interface for the authoring environment, and I'm helping with the back end as well, so I'm at least partially responsible for all of the use cases related to building a game in the authoring environment. The issues we're using are descriptive, and some are reasonably sized but others involve several other use cases working previously.
+2.  Estimate how long you think each will take and why. What, if anything, makes estimating these tasks uncertain?
+    - Sarah: Theme song - 2-3 hours to make a play button, probably 4 or 5 more to add Spotify (if that is even possible)
+             Loading in a background image - took 4ish hours (finished)
+             Setting a value for player health - 10 minutes (just a matter of adding a new UI element from the UI factory)
+             Demoing a game - 3ish hours - will require talking a lot with the engine team
+             
+        - it can be difficult to estimate the amount of time for tasks because some tasks (like demoing) depend on how much work other groups do for me rather than having to do myself
+    - Maddie: The estimates of how long the issues will take are in the due dates on GitLab. 
+3.  What feature/design problem are you most excited to work on? 
+    - Sarah: Adding theme song functionality
+    - Maddie: Enabling dragging and dropping object templates to create new in-game objects
+4.  What feature/design problem are you most worried about working on? 
+    - Sarah: Stringing all screens together in a cohesive and not hard-coded way
+    - Maddie: Saving the game to XML files
+5.  What major feature do you plan to implement this weekend?
+    - Sarah: Collecting information from user input fields when a user clicks "apply" and sending that info to FileIO
+    - Maddie: Choosing object images and customizing them by scaling them.
