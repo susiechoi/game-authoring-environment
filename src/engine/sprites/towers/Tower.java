@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
  * 
  * @author Katherine Van Dyk
  */
-public class Tower extends Sprite implements TowerI {
+public class Tower extends Sprite {
 
     private Launcher myLauncher;
     private HealthProperty myHealth;
@@ -34,7 +34,6 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Changes health of tower by an increment of h
      */
-    @Override
     public void changeHealth(double h) {
 	myHealth.change(h);
     }
@@ -42,7 +41,6 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Handles decrementing tower's damage when it gets hit by an enemy
      */
-    @Override
     public void getHitBy(double enemyDamage) {
 	myHealth.change(-enemyDamage);
 	checkLive();
@@ -58,7 +56,6 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Handles selling a tower
      */
-    @Override
     public double sell() {
 	return myValue.getProperty();
     }
@@ -66,7 +63,6 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Handles upgrading the health of a tower
      */
-    @Override
     public double upgradeHealth(double balance) {
 	return myHealth.upgrade(balance);
     }
@@ -74,7 +70,6 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Upgrades the rate of fire
      */
-    @Override
     public double upgradeRateOfFire(double balance) {
 	return myLauncher.upgradeFireRate(balance);
     }
@@ -82,7 +77,6 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Upgrades the amount of damage a tower's projectiles exhibit
      */
-    @Override
     public double upgradeDamage(double balance) {
 	return myLauncher.upgradeDamage(balance);
     }
@@ -90,7 +84,6 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Upgrades all aspects of a tower
      */
-    @Override
     public double upgrade(double balance) {
 	balance -= upgradeHealth(balance);
 	balance -= upgradeRateOfFire(balance);
