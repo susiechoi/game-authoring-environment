@@ -8,7 +8,7 @@ import java.util.Timer;
  * @author ryanpond
  *
  */
-public class GameEngine implements GameEngineInterface {
+public class GameEngine {
 
 	
 	private PlayState myPlayState;
@@ -30,47 +30,63 @@ public class GameEngine implements GameEngineInterface {
 		myPlayState.update();
 	}
 
-	@Override
+	/**
+     * Pauses Game Loop animation so Game State stays constant
+     */
 	public void pause() {
 		myTimer.cancel();
 		
 	}
 
-	@Override
+	 /**
+     * Starts Game Loop animation, so Game State continuously loops
+     */
 	public void start() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+    /**
+     * Sets Game Loop speed, to determine how fast level steps through.
+     * 
+     * @param speed: speed at which animation should iterate
+     */
 	public void setSpeed(Integer speed) {
 		myTimer.schedule(myLoop, speed);
 		
 	}
 
-	@Override
-	public void savePlay() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void jumpLevel(int l) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setLevel(PlayState newLevel) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void restartLevel() {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * Saves current Game State to File
+     */
+    public void savePlay() {
+    	
+    }
+    
+    /**
+     * Updates Game State to new Level as specified in XML File
+     * 
+     * @param l: integer denoting level to jump to
+     */
+    public void jumpLevel(int l) {
+    	
+    }
+    
+    /**
+     * Jumps to a certain level played in the Play
+     * 
+     * @param newLevel : The PlayState object with information about that level
+     */
+    public void setLevel(PlayState newLevel) {
+    	
+    }
+    
+    /**
+     * Restarts the current level
+     */
+    public void restartLevel() {
+    	
+    }
 
 
 
