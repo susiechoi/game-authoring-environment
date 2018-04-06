@@ -19,9 +19,10 @@ import javafx.scene.Scene;
 
 public class AuthoringView {
     
+    
     	public Scene loadAuthoringView() {
-    	    Scene StartScreen = new GameAuthoringStartScreen().getScreen();
-    	    return StartScreen;
+    	    
+    	    return null;
     	}
 
 	/**
@@ -67,15 +68,6 @@ public class AuthoringView {
 	 */
 	protected String getUserSelection() {
 		return null; 
-	}
-
-	@Override
-	public Node getScreen() {
-	    return null;
-	}
-
-	@Override
-	public void makeScreen() {	    
 	}
 
 }

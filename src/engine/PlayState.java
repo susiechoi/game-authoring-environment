@@ -3,6 +3,7 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
 import engine.sprites.enemies.Enemy;
@@ -17,36 +18,24 @@ import engine.sprites.towers.TowerI;
  * @author benauriemma 4/5
  *
  */
-public class PlayState implements PlayStateI, GameState {
-    
-    private final TowerManager TOWERS = new TowerManager(new ArrayList<Tower>());
-    private final EnemyManager ENEMIES = new EnemyManager(new ArrayList<Enemy>());
-    
-	public PlayState() {
-		
-	}
+public class PlayState implements PlayStateI {
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
+    private final TowerManager TOWERS = new TowerManager();
+    private final EnemyManager ENEMIES = new EnemyManager();
 
-	@Override
-	public TowerI placeTower(String type, int x, int y) {
-		return null;
-	}
+    public PlayState() {
 
-	@Override
-	public void sellTower(Tower towerToBeSold) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void upgradeTower(Tower towerToBeUpgraded) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void update() {
+	// TODO Auto-generated method stub
+    }
+
+    @Override
+    public void setLevel(Level newLevel) {
+	// TODO Auto-generated method stub
+
+    }
 
 }
