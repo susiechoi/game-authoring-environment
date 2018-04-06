@@ -15,7 +15,7 @@ import engine.sprites.towers.Tower;
  *
 */
 
-public class TowerManager extends Manager {
+public class TowerManager extends ShootingSpriteManager {
 	
     private final List<Tower> AVAILABLE = new ArrayList<Tower>();
     private final List<Tower> ACTIVE = new ArrayList<Tower>();

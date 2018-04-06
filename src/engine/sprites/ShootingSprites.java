@@ -32,20 +32,20 @@ public class ShootingSprites extends Sprite{
 	public void increaseHitCount(int increaseAmount) {
 		hitCount+=increaseAmount;
 	}
-	
-	@Override
-	public void checkForCollision(ShootingSprites shooter, List<Sprite> sprites) {
-		this.checkTowerEnemyCollision(shooter);
-		for (Sprite sprite: sprites) {
-			ImageView spriteImageView = sprite.getImage();
-			if(this.getImage().intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
-				this.handleCollision();
-				sprite.handleCollision();
-			}
-		}
-	}
+//	
+//	@Override
+//	public void checkForCollision(ShootingSprites shooter, List<Sprite> sprites) {
+//		this.checkTowerEnemyCollision(shooter);
+//		for (Sprite sprite: sprites) {
+//			ImageView spriteImageView = sprite.getImage();
+//			if(this.getImage().intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
+//				this.handleCollision();
+//				sprite.handleCollision();
+//			}
+//		}
+//	}
 
-	private void checkTowerEnemyCollision(ShootingSprites shooter) {
+	public void checkTowerEnemyCollision(ShootingSprites shooter) {
 		if (this.getImage().intersects(shooter.getImage().getX(), shooter.getImage().getY(), shooter.getImage().getFitWidth(), shooter.getImage().getFitHeight())) {
 			this.handleCollision();
 		}

@@ -46,10 +46,10 @@ public class Sprite  {
     }
     
     public void checkForCollision(ShootingSprites shooter, List<Sprite> projectiles) {
-    		this.checkTowerEnemyCollision(shooter);
-    		for (Sprite sprite: sprites) {
-    			ImageView spriteImageView = sprite.getImage();
-    			if(this.myImageView.intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight()){
+    		shooter.checkTowerEnemyCollision((ShootingSprites) this); 
+    		for (Sprite projectile: projectiles) {
+    			ImageView spriteImageView = projectile.getImage();
+    			if(this.myImageView.intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
     				this.handleCollision();
     			}
     		}

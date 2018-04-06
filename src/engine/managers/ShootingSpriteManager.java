@@ -5,6 +5,7 @@ import java.util.List;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import javafx.collections.ObservableList;
 
 /**
  * 
@@ -25,4 +26,9 @@ public class ShootingSpriteManager extends Manager{
     			}
     		}
     }
+   
+    @Override
+    public ObservableList<Sprite> getObservableListOfActive(){
+		return (ObservableList<Sprite>) active;
+}
 }
