@@ -4,7 +4,8 @@ public class FireRateProperty extends Property {
     
     private double myFireRate;
     
-    public FireRateProperty(double fireRate) {
+    public FireRateProperty(double cost, double value, double fireRate) {
+	super(cost, value);
 	myFireRate = fireRate;
     }
 

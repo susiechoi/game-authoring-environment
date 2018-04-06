@@ -5,14 +5,16 @@ import gameplayer.panel.UpgradePanel;
 import gameplayer.panel.GamePanel;
 import gameplayer.panel.ScorePanel;
 import gameplayer.panel.ControlsPanel;
-import authoring.frontend.UIFactory;
-import gameplayer.PromptReader;
+import frontend.PromptReader;
+import frontend.Screen;
+import frontend.UIFactory;
 import gameplayer.ScreenManager;
 
 
 import javafx.scene.Node;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -26,9 +28,7 @@ public class GameScreen extends Screen {
     private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
     private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
  
-    
-    
-    private Parent ROOT;
+
     private final UIFactory UIFACTORY;
     private final PromptReader PROMPTS;
     private TowerPanel TOWER_PANEL;
@@ -47,7 +47,7 @@ public class GameScreen extends Screen {
     }
 
     @Override
-    public void makeScreen() {
+    public Parent makeScreenWithoutStyling() {
         BorderPane rootPane = new BorderPane();
         TOWER_PANEL = new TowerPanel(rootPane, this, PROMPTS);
         CONTROLS_PANEL = new ControlsPanel(this);
@@ -73,15 +73,7 @@ public class GameScreen extends Screen {
         
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
         rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
-        ROOT = rootPane;
-    }
-
-    @Override
-    public Parent getScreenRoot(){
-        if (ROOT == null) {
-            makeScreen();
-        }
-        return ROOT;
+        return rootPane;
     }
     
     public void towerSelectedForPlacement(String towerPropName) {
@@ -113,6 +105,7 @@ public class GameScreen extends Screen {
 	else
 	    System.out.println(control);
     }
+
 
 
 }
