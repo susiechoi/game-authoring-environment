@@ -3,9 +3,6 @@ package authoring;
 import java.io.File;
 import java.util.List;
 
-import authoring.frontend.GameAuthoringStartScreen;
-import javafx.beans.property.BooleanProperty;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 
 /**
