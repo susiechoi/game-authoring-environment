@@ -3,9 +3,9 @@ package authoring;
 import java.util.Map;
 import java.util.TreeMap;
 
-import engine.enemies.Enemy;
+import engine.sprites.enemies.Enemy;
 import engine.path.Path;
-import engine.towers.Tower;
+import engine.sprites.towers.Tower;
 
 /**
  * 

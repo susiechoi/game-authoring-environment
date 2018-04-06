@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
  * @author Katherine Van Dyk
  * @author Ryan Pond
  * @author Miles Todzo
- * @param <E>: The object being managed
  */
 public class Manager {
     
@@ -46,12 +45,12 @@ public class Manager {
     /**
      * Checks for collisions between between the list of active actors held by the Manager the method
      * was called on and the list of active actors passed as a parameter
-     * @param passedActors
+     * @param passedSprites
      */
-    public void checkForCollisions(List<Sprite> passedActors) {
-    		for (Sprite activeActor: active) {
-    			for (Sprite passedActor: passedActors) {
-    				activeActor.checkForCollision(passedActor);
+    public void checkForCollisions(List<Sprite> passedSprites) {
+    		for (Sprite activeSprite: active) {
+    			for (Sprite passedActor: passedSprites) {
+    				activeSprite.checkForCollision(passedActor);
     			}
     		}
     }
