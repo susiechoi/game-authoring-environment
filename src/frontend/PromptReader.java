@@ -16,13 +16,13 @@ public class PromptReader {
     private final String DEFAULT_LANGUAGE = "English";
     private String language = "English";
     private final PropertiesReader PROP_READER;
-    private final ScreenManager SCREEN_MANAGER;
+    private final View SCREEN_MANAGER;
     private Properties languageProperty;
     private Properties errorProperty;
     private Map<String, String> languageMap;
     private Map<String, String> errorMap;
 
-    public PromptReader(String languageIn, ScreenManager screenManager) {
+    public PromptReader(String languageIn, View screenManager) {
 	PROP_READER = new PropertiesReader();
 	SCREEN_MANAGER = screenManager;
 	languageMap = new TreeMap<String,String>();
