@@ -46,7 +46,8 @@ public class DraggableImage {
 		return pathImage;
 	}
 
-	public ImageView setDraggable() {
+	public void setDraggable(SelectionModel model) {
+		//		for (Node image: model.getSelectedNodes()) {
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
@@ -63,10 +64,9 @@ public class DraggableImage {
 			}
 			e.consume();
 		});
-		return pathImage;
 	}
 
-	
+
 	public ImageView getPathImage() {
 		return pathImage;
 	}

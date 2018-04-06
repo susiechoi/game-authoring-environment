@@ -28,10 +28,11 @@ public class CreatePathPanel implements Panel {
 
 	@Override
 	public void makePanel() { //separate into smaller methods
+		
 		pathPanel = new VBox();
 		pathPanel.setMaxSize(280, 900);
 		pathPanel.getStylesheets();
-
+		
 		Image pathImg = new Image("file:images/cobblestone.png");
 		pathImage = new DraggableImage(pathImg); //get defaults
 		pathImage.setCopyDraggable();

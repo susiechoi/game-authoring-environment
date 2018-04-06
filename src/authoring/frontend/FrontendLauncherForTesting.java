@@ -15,7 +15,7 @@ public class FrontendLauncherForTesting extends Application {
 //		enemyOptions.add("Tower 1");
 //		enemyOptions.add("Tower 2");
 //		SpecifyEnemyScreen a = new SpecifyEnemyScreen(enemyOptions);
-//		AdjustTowerScreen a = new AdjustTowerScreen(); 
+//		AdjustEnemyScreen a = new AdjustTowerScreen(); 
 
 		AuthoringView view = new AuthoringView(stage, "English");
 		CreatePathScreen a = new CreatePathScreen(view);

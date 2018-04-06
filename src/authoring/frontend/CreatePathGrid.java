@@ -32,6 +32,7 @@ public class CreatePathGrid {
 	private int colIndex;
 	private int rowIndex;
 	private GridPane grid;
+	SelectionModel model;
 
 	protected GridPane makePathGrid() {
 		grid = new GridPane();
@@ -39,7 +40,10 @@ public class CreatePathGrid {
 		setGridConstraints(INITIAL_PATH_SIZE);
 		grid.setGridLinesVisible(true);
 		
-		grid.setStyle("-fx-background-image: url('file:images/plaingreen.png')"); 
+		model = new SelectionModel();
+		new ShiftSelection(grid, model);
+		
+		grid.setStyle("-fx-background-image: url('file:images/grass.png')"); 
 		populateGrid();
 		return grid;
 	}
@@ -70,7 +74,7 @@ public class CreatePathGrid {
 						boolean success = false;
 						if (db.hasImage()) {
 							DraggableImage path = new DraggableImage(db.getImage());
-							path.setDraggable();
+							path.setDraggable(model);
 							path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
 							grid.add(path.getPathImage(), colIndex, rowIndex);
