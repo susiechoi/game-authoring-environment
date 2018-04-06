@@ -31,6 +31,7 @@ public class ValueProperty extends Property {
     /**
      * Returns an object's value
      */
+    @Override
     public double getProperty() {
 	return myValue;
     }
