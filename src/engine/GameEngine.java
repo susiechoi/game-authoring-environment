@@ -2,24 +2,38 @@ package engine;
 
 import java.util.Timer;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 /**
  * This class will handle all of the gameLoop interactions, and will also hold the 
  * current instance of the PlayState
  * @author ryanpond
  *
  */
-public class GameEngine {
+public class GameEngine extends Application {
 
 	
 	private PlayState myPlayState;
 	private Timer myTimer;
 	private GameLoop myLoop;
+	private Mediator myMediator;
 	
-	public GameEngine() {
+	public GameEngine(Mediator med) {
+	    	myPlayState = null;
+	    	myMediator = med;
 		int delayMS = 50;
 		myTimer = new Timer();
 		myLoop = new GameLoop(this);
 		setSpeed(delayMS);
+	}
+	
+	public void setPlayState(PlayState p) {
+	    myPlayState = p;
+	}
+	
+	public PlayState getPlayState() {
+	    return myPlayState;
 	}
 	
 	/**
@@ -56,37 +70,51 @@ public class GameEngine {
 		
 	}
 
-    /**
-     * Saves current Game State to File
-     */
-    public void savePlay() {
+	/**
+     	* Saves current Game State to File
+     	*/
+	public void savePlay() {
     	
-    }
-    
-    /**
-     * Updates Game State to new Level as specified in XML File
-     * 
-     * @param l: integer denoting level to jump to
-     */
-    public void jumpLevel(int l) {
-    	
-    }
-    
-    /**
-     * Jumps to a certain level played in the Play
-     * 
-     * @param newLevel : The PlayState object with information about that level
-     */
-    public void setLevel(PlayState newLevel) {
-    	
-    }
-    
-    /**
-     * Restarts the current level
-     */
-    public void restartLevel() {
-    	
-    }
+    	}
+
+	/**
+	 * Updates Game State to new Level as specified in XML File
+	 * 
+	 * @param l: integer denoting level to jump to
+	 */
+	public void jumpLevel(int l) {
+
+	}
+
+	/**
+	 * Jumps to a certain level played in the Play
+	 * 
+	 * @param newLevel : The PlayState object with information about that level
+	 */
+	public void setLevel(PlayState newLevel) {
+
+	}
+
+	/**
+	 * Restarts the current level
+	 */
+	public void restartLevel() {
+
+	}
+
+	private void step() {
+	    
+	}
+	
+	@Override
+	public void start(Stage arg0) throws Exception {
+	    // TODO Auto-generated method stub
+	    
+	}
+	
+	public static void main(String[] args) {
+	    launch(args);
+	}
 
 
 
