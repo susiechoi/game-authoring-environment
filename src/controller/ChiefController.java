@@ -22,6 +22,13 @@ public class ChiefController {
 	// TODO instantiate instance variables in the constructor
 	STAGE = stage;
     }
+    
+    /**
+     * Starts the application. Launches the user interfaces and waits for user input
+     */
+    public void start() {
+	
+    }
 
     /**
      * Instantiate a new EngineController object to handle the Game engine
