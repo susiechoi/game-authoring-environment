@@ -1,9 +1,9 @@
 package frontend;
 import java.util.List;
 
-import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import frontend.*;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -23,7 +23,7 @@ public abstract class Screen {
 	public static final String DEFAULT_PROMPT = "";
 	//private AuthoringView myView; 
 	private String myStylesheet; 
-	private Scene myScreen;
+	private Parent myRoot;
 	private UIFactory myUIFactory;
 	private PropertiesReader myPropertiesReader;
 
@@ -43,52 +43,47 @@ public abstract class Screen {
 	/**
 	 * Creates & returns the styled Screen
 	 */
-	protected Scene makeScreen() {
-		try {
-		myScreen = makeScreenWithoutStyling();
-		}
-		catch (MissingPropertiesException e){
-			getView().showErrorScreen("NoFile");
-		}
+	protected Parent makeScreen() {
+		myRoot = makeScreenWithoutStyling();		
 		applyDefaultStyling();
 		applyStyle(myStylesheet);
-		return myScreen; 
+		return myRoot; 
 	}
 
-	public abstract Scene makeScreenWithoutStyling() throws MissingPropertiesException;
+	public abstract Parent makeScreenWithoutStyling();
 
 	public void applyDefaultStyling() {
-		if (myScreen != null) {
-			myScreen.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+		if (myRoot != null) {
+			myRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		}
 	}
 
 	public void applyStyle(String stylesheet) {
-		if (myScreen != null && stylesheet != null) {
-			myScreen.getStylesheets().add(stylesheet);
+		if (myRoot != null && stylesheet != null) {
+			myRoot.getStylesheets().add(stylesheet);
 		}
 	}
 
 	public void applyStyles(List<String> stylesheets) {
-		if (myScreen != null) {
+		if (myRoot != null) {
 			for (String s : stylesheets) {
-				myScreen.getStylesheets().add(s);
+				myRoot.getStylesheets().add(s);
 			}		}
 	}
 
 	/**
 	 * Returns the Scene object to be loaded on the screen
 	 */
-	public Scene getScreen() {
-		if (myScreen == null) {
-			myScreen = makeScreen(); 
+	public Parent getScreen() {
+		if (myRoot == null) {
+			myRoot = makeScreen(); 
 		}
-		return myScreen; 
+		return myRoot; 
 	}
-
-	public void setScreen(Scene newScreen) {
-		myScreen = newScreen;
-	}
+//
+//	public void setRoot(Parent newScreen) {
+//		myRoot = newScreen;
+//	}
 	
 	public void showError(String errorMessage) {
 		Alert errorAlert = new Alert(AlertType.ERROR, errorMessage);
@@ -128,6 +123,9 @@ public abstract class Screen {
 		return "languages/"+language+"/Prompts.properties";
 	}
 	
+	protected Parent getRoot() {
+	    return myRoot;
+	}
 }
 
 
