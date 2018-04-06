@@ -1,5 +1,7 @@
 package controller;
 
+import engine.GameEngine;
+
 /**
  * 
  * @author Ben Hodgson 4/5/18
@@ -16,7 +18,7 @@ public class PlayController {
     public PlayController() {
 	myMediator = new Mediator();
 	myScreenmanager = new ScreenManager();
-	myGameEngine = new GameEngine();
+	myGameEngine = new GameEngine(myMediator);
 	myMediator.setScreenManager(myScreenManager)
 	myMediator.setEngine(myGameEngine)
     }
