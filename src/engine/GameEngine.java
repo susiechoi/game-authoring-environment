@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * @author ryanpond
  *
  */
-public class GameEngine extends Application {
+public class GameEngine {
 
 	
 	private PlayState myPlayState;
@@ -102,20 +102,8 @@ public class GameEngine extends Application {
 
 	}
 
-	private void step() {
+	public void loop() {
 	    
 	}
-	
-	@Override
-	public void start(Stage arg0) throws Exception {
-	    // TODO Auto-generated method stub
-	    
-	}
-	
-	public static void main(String[] args) {
-	    launch(args);
-	}
-
-
 
 }
