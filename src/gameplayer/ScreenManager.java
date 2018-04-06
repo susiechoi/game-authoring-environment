@@ -1,6 +1,7 @@
 package gameplayer;
 
 import file.FileIO;
+import frontend.PromptReader;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.stage.Stage;

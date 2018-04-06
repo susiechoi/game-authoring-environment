@@ -22,7 +22,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 	}
 
 	@Override
-	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException {
+	public Scene makeScreenWithoutStyling() throws MissingPropertiesException {
 		VBox vb = new VBox(); 	
 		
 		TextField nameInputField = getUIFactory().makeTextField("");

@@ -1,13 +1,13 @@
-package gameplayer;
+package frontend;
 
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import frontend.PropertiesReader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import gameplayer.ScreenManager;
 
 public class PromptReader {
     private final String DEFAULT_LANGUAGE_FILEPATH = "languages/";

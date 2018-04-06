@@ -16,7 +16,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 	}
 
 	@Override
-	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException {
+	public Scene makeScreenWithoutStyling() throws MissingPropertiesException {
 		VBox vb = new VBox(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Specify Starting Resources"));
