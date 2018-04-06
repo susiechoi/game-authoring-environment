@@ -1,21 +1,14 @@
 package gameplayer;
 
-import file.FileIO;
 import frontend.PromptReader;
 import frontend.StageManager;
+import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.Map;
 
 
-public class ScreenManager {
+public class ScreenManager implements View{
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
     public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
@@ -33,7 +26,7 @@ public class ScreenManager {
 
     public ScreenManager(StageManager stageManager, String language) {
 	STAGE_MANAGER = stageManager;
-	PROMPTS = new PromptReader();
+	PROMPTS = new PromptReader(language, this);
 	findSettings();
 	//setup rest of values once file reader is finished
     }
@@ -57,8 +50,11 @@ public class ScreenManager {
 
     }
 
-    public void loadErrorScreen() {
+    @Override
+    public void loadErrorScreen(String errorMessage) {
+	// TODO Auto-generated method stub
 	System.out.println("missing");
+
     }
 
     //TODO read these in from properties file
@@ -67,6 +63,9 @@ public class ScreenManager {
 	DEFAULT_WIDTH = 900;
 
     }
+
+
+
 
 
 }
