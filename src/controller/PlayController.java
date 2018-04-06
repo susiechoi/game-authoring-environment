@@ -1,6 +1,8 @@
 package controller;
 
 import engine.GameEngine;
+import engine.Mediator;
+import xml.XMLReader;
 
 /**
  * 
@@ -11,7 +13,7 @@ import engine.GameEngine;
 public class PlayController {
     
     private Mediator myMediator;
-    private XMLReadery myXMLReader;
+    private XMLReader myXMLReader;
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     
