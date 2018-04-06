@@ -35,6 +35,7 @@ public class ScreenManager {
 	findSettings();
 	//setup rest of values once file reader is finished
     }
+    
 
 
     //TODO set Style sheets
