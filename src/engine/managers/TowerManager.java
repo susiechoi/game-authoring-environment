@@ -4,26 +4,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import engine.towers.Tower;
+import engine.sprites.towers.Tower;
+
 
 /**
  * Tower manager uses composite design pattern to handle updating all 
  * active Tower objects in the game loop.
  * 
  * @author Katherine Van Dyk
+ * @author Ryan Pond
  * @author Ben Hodgson 4/3/18
- *
+ * @author benauriemma 4/5
  */
 public class TowerManager extends Manager<Tower> {
 
-	private final List<Tower> AVAILABLE = new ArrayList<Tower>();
+
+	private final List<Tower> AVAILABLE = new ArrayList<Tower>();  // If this is the type available, why do we need to hold actual tower objects? -bma
 	private final List<Tower> ACTIVE = new ArrayList<Tower>();
+	// I think we decided that a Tower should maintain a list (or manager) of its own projectiles -bma
 
 	/**
 	 * Constructor for super class
 	 */
-	public TowerManager() {
-		super();
+
+	public TowerManager(List<Tower> towers) { // not sure what the param towers is, but this constructor adds to the super class's list, not to the lists here -bma
+		super(towers);
+
 	}
 
 	/**
@@ -51,8 +57,10 @@ public class TowerManager extends Manager<Tower> {
 	public void setTowers(List<Tower> towers) {
 		for (Tower gameTower : towers) {
 			// TODO perform the deep copy
-			Tower copyTower = new Tower(null, null, 0, 0);
-			AVAILABLE.add(copyTower);
+
+			//Tower copyTower = new Tower(null, null, 0, 0);  //The constructor has been changed since whenever this was written -bma
+			//AVAILABLE.add(copyTower);
+			AVAILABLE.add(null);
 		}
 	}
 

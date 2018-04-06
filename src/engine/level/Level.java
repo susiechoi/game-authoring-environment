@@ -1,7 +1,10 @@
 package engine.level;
 
-import engine.enemies.wave.Wave;
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.path.Path;
+import engine.sprites.enemies.wave.Wave;
 
 /**
  * 
@@ -9,32 +12,49 @@ import engine.path.Path;
  *
  * Interface for a game level
  */
-public interface Level {
+public class Level {
+    
+    
+    private final List<Wave> WAVES;
+    private final int NUMBER;
+    private final Path PATH;
+    
+    public Level(int number, Path path) {
+	WAVES = new ArrayList<Wave>();
+	NUMBER = number;
+	PATH = path;
+    }
+    
     
     /**
-     * Adds a path to the level
      * 
-     * @param path: a new path to be added
+     * @return int: The number of the level Object
      */
-    public void addPath(Path path);
+    public int number() {
+	return NUMBER;
+    }
     
     /**
      * Adds a wave to the level
      * 
      * @param wave: a new wave to be added
      */
-    public void addWave(Wave wave);
-    
-    /**
-     * Starts the level
-     */
-    public void start();
+    public void addWave(Wave wave) {
+	WAVES.add(wave);
+    }
     
     /**
      * Checks to see if the level is finished.
      * 
      * @return boolean: true if the level is finished, false otherwise
      */
-    public boolean isFinished();
+    public boolean isFinished() {
+	for (Wave levelWave : WAVES) {
+	    if (!levelWave.isFinished()) {
+		return false;
+	    }
+	}
+	return true; 
+    }
 
 }

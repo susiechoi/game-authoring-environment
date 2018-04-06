@@ -12,13 +12,11 @@ import javafx.scene.text.Text;
 public class CustomizationChoicesScreen extends Screen {
 	public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 	public static final String TEST_PROPERTIES = "images/TestProperties.properties";
-	private String myLanguage;
 	private String myGameName;
 	
-	protected CustomizationChoicesScreen(AuthoringView view, String language, String gameName) {
+	protected CustomizationChoicesScreen(AuthoringView view, String gameName) {
 		super(view);
 		setStyleSheet(DEFAULT_OWN_CSS);
-		myLanguage = language;
 		myGameName = gameName;
 	}
 	
@@ -27,12 +25,12 @@ public class CustomizationChoicesScreen extends Screen {
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
 		Text heading = getUIFactory().makeScreenTitleText(myGameName);
-		Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SettingsButtonLabel", myLanguage));
-		Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel", myLanguage));
-		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel", myLanguage));
-		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel", myLanguage));
-		Button mainButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("MainLabel", myLanguage));
-		String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel", myLanguage);
+		Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SettingsButtonLabel", getView().getLanguage()));
+		Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel", getView().getLanguage()));
+		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel", getView().getLanguage()));
+		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel", getView().getLanguage()));
+		Button mainButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("MainLabel", getView().getLanguage()));
+		String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel", getView().getLanguage());
 		ArrayList<String> dummyLevels = new ArrayList<>();
 		VBox newLevelVBox = new VBox();
 		dummyLevels.add(levelPrompt);
@@ -44,8 +42,9 @@ public class CustomizationChoicesScreen extends Screen {
 		editButton.setDisable(true);
 		HBox songSelector = new HBox();
 		ComboBox<String> songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
-		songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Song", "English") + " " , TEST_PROPERTIES, 50, getErrorCheckedPrompt("LoadImage", "English"), getErrorCheckedPrompt("NewImage", "English"),
-				getErrorCheckedPrompt("NewSong", getView().getLanguage()), songDropdown);
+		songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song", getView().getLanguage()), getErrorCheckedPrompt("NewSong", getView().getLanguage()),
+				getErrorCheckedPrompt("NewSongName", getView().getLanguage()), songDropdown);
+		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song", getView().getLanguage()));
 		vbox.getChildren().add(heading);
 		vbox.getChildren().add(settingsButton);
 		vbox.getChildren().add(demoButton);
@@ -56,7 +55,7 @@ public class CustomizationChoicesScreen extends Screen {
 		hbox.getChildren().add(newLevelVBox);
 		vbox.getChildren().add(hbox);
 		vbox.getChildren().add(mainButton);
-		vbox.getChildren().add(songSelector);
+		vbox.getChildren().add(songPrompted);
 		return new Scene(vbox, 1500, 900);
 		
 	}
