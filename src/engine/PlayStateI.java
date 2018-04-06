@@ -1,8 +1,6 @@
 package engine;
 
 import engine.level.Level;
-import engine.sprites.towers.Tower;
-import engine.sprites.towers.TowerI;
 
 /**
  * Interface for interacting with current state of the Game, including collection/placement of Towers, as well

@@ -27,6 +27,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
+	@Override
 	protected Scene makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 

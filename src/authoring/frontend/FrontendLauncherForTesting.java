@@ -1,7 +1,5 @@
 package authoring.frontend;
 
-import java.util.ArrayList;
-import authoring.AuthoringView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

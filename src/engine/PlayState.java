@@ -1,14 +1,8 @@
 package engine;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
-import engine.sprites.enemies.Enemy;
-import engine.sprites.towers.Tower;
-import engine.sprites.towers.TowerI;
 
 /**
  * This class will hold all of the current Play information, such as the list of objects on the screen (enemies,
