@@ -1,6 +1,7 @@
 package engine;
 
 import gameplayer.ScreenManager;
+import javafx.animation.Animation;
 import xml.XMLFactory;
 
 /**
