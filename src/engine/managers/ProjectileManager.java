@@ -2,7 +2,6 @@ package engine.managers;
 
 import java.util.List;
 
-import engine.sprites.Sprite;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**

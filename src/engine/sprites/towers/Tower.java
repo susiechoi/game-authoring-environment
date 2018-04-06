@@ -1,7 +1,6 @@
 package engine.sprites.towers;
 
 import engine.sprites.Sprite;
-import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.ImageView;
@@ -67,6 +66,7 @@ public class Tower extends Sprite implements TowerI {
     /**
      * Handles upgrading the health of a tower
      */
+    @Override
     public double upgradeHealth(double balance) {
 	return myHealth.upgrade(balance);
     }

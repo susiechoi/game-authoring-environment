@@ -4,15 +4,11 @@ import frontend.UIFactory;
 import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 public class InstructionScreen extends Screen {
     //TODO re-factor style sheets to abstract

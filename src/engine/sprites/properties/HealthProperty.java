@@ -31,6 +31,7 @@ public class HealthProperty extends Property {
     /**
      * Returns a user's current health
      */
+    @Override
     public double getProperty() {
 	return myHealth;
     }

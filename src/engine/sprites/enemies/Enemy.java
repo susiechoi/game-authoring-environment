@@ -49,6 +49,7 @@ public class Enemy extends Sprite implements EnemyI{
 
 	}
 
+	@Override
 	public Double damage() {
 		// TODO Auto-generated method stub
 		return null;
