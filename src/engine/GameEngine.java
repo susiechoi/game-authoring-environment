@@ -2,8 +2,11 @@ package engine;
 
 import java.util.Timer;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * This class will handle all of the gameLoop interactions, and will also hold the 
@@ -13,97 +16,107 @@ import javafx.stage.Stage;
  */
 public class GameEngine {
 
-	
-	private PlayState myPlayState;
-	private Timer myTimer;
-	private GameLoop myLoop;
-	private Mediator myMediator;
-	
-	public GameEngine(Mediator med) {
-	    	myPlayState = null;
-	    	myMediator = med;
-		int delayMS = 50;
-		myTimer = new Timer();
-		myLoop = new GameLoop(this);
-		setSpeed(delayMS);
-	}
-	
-	public void setPlayState(PlayState p) {
-	    myPlayState = p;
-	}
-	
-	public PlayState getPlayState() {
-	    return myPlayState;
-	}
-	
-	/**
-	 * This is called every ____ number of seconds, according to the Timer
-	 * Called from the GameLoop class
-	 */
-	public void update() {
-		myPlayState.update();
-	}
+    private final int FRAMES_PER_SECOND = 60;
+    private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private PlayState myPlayState;
+    private Timer myTimer;
+    private GameLoop myLoop;
+    private Mediator myMediator;
+    private Timeline ANIMATION;
 
-	/**
+    public GameEngine(Mediator med) {
+	myPlayState = null;
+	myMediator = med;
+	int delayMS = 50;
+	myTimer = new Timer();
+	myLoop = new GameLoop(this);
+	setSpeed(delayMS);
+	// attach "game loop" to time line to play it
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+                                      e -> loop(SECOND_DELAY));
+        ANIMATION = new Timeline();
+        ANIMATION.setCycleCount(Timeline.INDEFINITE);
+        ANIMATION.getKeyFrames().add(frame);
+    }
+
+    public void setPlayState(PlayState p) {
+	myPlayState = p;
+    }
+
+    public PlayState getPlayState() {
+	return myPlayState;
+    }
+
+    /**
+     * This is called every ____ number of seconds, according to the Timer
+     * Called from the GameLoop class
+     */
+    public void update() {
+	myPlayState.update();
+    }
+
+    /**
      * Pauses Game Loop animation so Game State stays constant
      */
-	public void pause() {
-		myTimer.cancel();
-		
-	}
+    public void pause() {
+	myTimer.cancel();
+	ANIMATION.pause();
 
-	 /**
+    }
+
+    /**
      * Starts Game Loop animation, so Game State continuously loops
      */
-	public void start() {
-		// TODO Auto-generated method stub
-		
-	}
+    public void start() {
+	ANIMATION.play();
+
+    }
 
     /**
      * Sets Game Loop speed, to determine how fast level steps through.
      * 
      * @param speed: speed at which animation should iterate
      */
-	public void setSpeed(Integer speed) {
-		myTimer.schedule(myLoop, speed);
-		
-	}
+    public void setSpeed(Integer speed) {
+	myTimer.schedule(myLoop, speed);
 
-	/**
-     	* Saves current Game State to File
-     	*/
-	public void savePlay() {
-    	
-    	}
+    }
 
-	/**
-	 * Updates Game State to new Level as specified in XML File
-	 * 
-	 * @param l: integer denoting level to jump to
-	 */
-	public void jumpLevel(int l) {
+    /**
+     * Saves current Game State to File
+     */
+    public void savePlay() {
 
-	}
+    }
 
-	/**
-	 * Jumps to a certain level played in the Play
-	 * 
-	 * @param newLevel : The PlayState object with information about that level
-	 */
-	public void setLevel(PlayState newLevel) {
+    /**
+     * Updates Game State to new Level as specified in XML File
+     * 
+     * @param l: integer denoting level to jump to
+     */
+    public void jumpLevel(int l) {
 
-	}
+    }
 
-	/**
-	 * Restarts the current level
-	 */
-	public void restartLevel() {
+    /**
+     * Jumps to a certain level played in the Play
+     * 
+     * @param newLevel : The PlayState object with information about that level
+     */
+    public void setLevel(PlayState newLevel) {
 
-	}
+    }
 
-	public void loop() {
-	    
-	}
+    /**
+     * Restarts the current level
+     */
+    public void restartLevel() {
+
+    }
+
+    public void loop(double elapsedTime) {
+	update();
+    }
 
 }
