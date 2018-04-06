@@ -61,7 +61,7 @@ public class ScreenManager {
     }
 
     public void loadErrorScreen() {
-	
+	System.out.println("missing");
     }
 
     //TODO read these in from properties file

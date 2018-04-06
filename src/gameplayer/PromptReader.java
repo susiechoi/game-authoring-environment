@@ -2,6 +2,8 @@ package gameplayer;
 
 import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
+
 import frontend.PropertiesReader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -23,6 +25,9 @@ public class PromptReader {
     public PromptReader(String languageIn, ScreenManager screenManager) {
 	PROP_READER = new PropertiesReader();
 	SCREEN_MANAGER = screenManager;
+	languageMap = new TreeMap<String,String>();
+	errorMap = new TreeMap<String,String>();
+	languageProperty = new Properties();
 	updateLanguage(languageIn);
     }
 
@@ -37,24 +42,31 @@ public class PromptReader {
     }
 
     public void updateLanguage(String languageIn) {
-	updateProperty(languageIn,languageProperty, languageMap);
-	updateProperty(languageIn,errorProperty, errorMap );
-    }
-
-
-    public void updateProperty(String languageIn, Properties property, Map<String,String> theMap) {
 	language = languageIn;
 	try {
-	    property = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + language +DEFAULT_PROMPT_FILENAME );
+	    languageProperty = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + language +DEFAULT_PROMPT_FILENAME );
 	} catch (MissingPropertiesException e) {
 	    try {
-		property = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + DEFAULT_LANGUAGE +DEFAULT_PROMPT_FILENAME );
+		languageProperty = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + DEFAULT_LANGUAGE +DEFAULT_PROMPT_FILENAME );
 	    } catch (MissingPropertiesException e1) {
 		SCREEN_MANAGER.loadErrorScreen();
 	    }
-
 	}
-	theMap = PROP_READER.read(languageProperty);
+	languageMap = PROP_READER.read(languageProperty);
+    }
+    
+    public void updateProperty(String languageIn) {
+	language = languageIn;
+	try {
+	    errorProperty = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + language +DEFAULT_PROMPT_FILENAME );
+	} catch (MissingPropertiesException e) {
+	    try {
+		errorProperty = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + DEFAULT_LANGUAGE +DEFAULT_PROMPT_FILENAME );
+	    } catch (MissingPropertiesException e1) {
+		SCREEN_MANAGER.loadErrorScreen();
+	    }
+	}
+	errorMap = PROP_READER.read(errorProperty);
     }
 
     private void showError(String errorMessage) {
