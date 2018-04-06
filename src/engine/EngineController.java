@@ -6,55 +6,62 @@ import authoring.AuthoringModel;
  * @author milestodzo
  *
  */
-public class EngineController implements EngineControllerI {
-	private AuthoringModel myGameModel;
-	private PlayState myPlayState;
+public class EngineController {
+    private AuthoringModel myGameModel;
+    private PlayState myPlayState;
+
+    public EngineController(AuthoringModel gameModel, PlayState playState) {
+	myGameModel = gameModel;
+	myPlayState = playState;
+    }
+
+    /**
+     * Pauses Game Loop animation so Game State stays constant
+     */
+    public void pause() {
 	
-	public EngineController(AuthoringModel gameModel, PlayState playState) {
-		myGameModel = gameModel;
-		myPlayState = playState;
-	}
+    }
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * Starts Game Loop animation, so Game State continuously loops
+     */
+    public void start() {
+	
+    }
 
-	@Override
-	public void start() {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * Sets Game Loop speed, to determine how fast level steps through.
+     * 
+     * @param speed: speed at which animation should iterate
+     */
+    public void setSpeed(Integer speed) {
+	
+    }
 
-	@Override
-	public void setSpeed(Integer speed) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * Saves current Game State to File
+     */
+    public void savePlay() {
+	
+    }
 
-	@Override
-	public void savePlay() {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * Updates Game State to new Level as specified in XML File
+     * 
+     * @param l: integer denoting level to jump to
+     */
+    public void jumpLevel(int l) {
+	
+    }
 
-	@Override
-	public void jumpLevel(int l) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setLevel(PlayState newLevel) {
+	// TODO Auto-generated method stub
 
-	@Override
-	public void setLevel(PlayState newLevel) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void restartLevel() {
-		// TODO Auto-generated method stub
-		
-	}
+    public void restartLevel() {
+	// TODO Auto-generated method stub
+
+    }
 
 }

@@ -12,8 +12,8 @@ import javafx.scene.image.ImageView;
  * @author Miles Todzo 4/4/18
  */
 
-public abstract class Sprite  {
-    private ImageView myImage; // this is repeated in a bunch of subclasses -bma
+public class Sprite  {
+    private ImageView myImage;
 
     /**
      * Constructor that takes in a sprite's image
