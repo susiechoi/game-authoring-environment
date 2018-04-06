@@ -1,5 +1,7 @@
 package engine.sprites;
 
+import java.util.List;
+
 import javafx.scene.image.ImageView;
 
 /**
@@ -9,11 +11,11 @@ import javafx.scene.image.ImageView;
  * 
  * @author Katherine Van Dyk
  * @date 4/3/18
- * @author Miles Todzo 4/4/18
+ * @author Miles Todzo
  */
 
 public class Sprite  {
-    private ImageView myImage;
+    private ImageView myImageView;
 
 
     /**
@@ -22,7 +24,7 @@ public class Sprite  {
      * @param image
      */
     public Sprite(ImageView image) {
-	myImage = image;
+	myImageView = image;
     }
     
     /**
@@ -31,20 +33,30 @@ public class Sprite  {
      * @return ImageView representing game object's image
      */
     public ImageView getImage() { 
-	return myImage;
+	return myImageView;
     }
     
     public void setImage(ImageView image) {
-	myImage  = image;
+	myImageView  = image;
     }
     
     public void place(double newX, double newY) {
-	myImage.setX(newX);
-	myImage.setY(newY);
+	myImageView.setX(newX);
+	myImageView.setY(newY);
     }
     
-    public void checkForCollision(Sprite sprite) {
-    	
+    public void checkForCollision(ShootingSprites shooter, List<Sprite> projectiles) {
+    		this.checkTowerEnemyCollision(shooter);
+    		for (Sprite sprite: sprites) {
+    			ImageView spriteImageView = sprite.getImage();
+    			if(this.myImageView.intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight()){
+    				this.handleCollision();
+    			}
+    		}
     }
 
+	public void handleCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 }

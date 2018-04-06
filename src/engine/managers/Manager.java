@@ -3,7 +3,9 @@ package engine.managers;
 import java.util.ArrayList;
 import java.util.List;
 
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.towers.Tower;
 import javafx.collections.ObservableList;
 
 /**
@@ -39,18 +41,5 @@ public class Manager {
      */
     public ObservableList<Sprite> getObservableListOfActive(){
     		return (ObservableList<Sprite>) active;
-    }
-
-    /**
-     * Checks for collisions between between the list of active actors held by the Manager the method
-     * was called on and the list of active actors passed as a parameter
-     * @param passedSprites
-     */
-    public void checkForCollisions(List<Sprite> passedSprites) {
-    		for (Sprite activeSprite: active) {
-    			for (Sprite passedActor: passedSprites) {
-    				activeSprite.checkForCollision(passedActor);
-    			}
-    		}
     }
 }

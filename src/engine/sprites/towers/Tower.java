@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
  */
 
 public class Tower extends ShootingSprites {
-	private ProjectileManager myProjectileManager;
+	//private ProjectileManager myProjectileManager = new ProjectileManager();;
     private Launcher myLauncher;
     private HealthProperty myHealth;
     private ValueProperty myValue;
@@ -28,7 +28,7 @@ public class Tower extends ShootingSprites {
      * @param value: Value of the tower for selling
      */
     public Tower(ImageView image, Launcher launcher, HealthProperty health, ValueProperty value) {
-	super(image, myProjectileManager);
+	super(image, new ProjectileManager());
 	myLauncher = launcher;
 	myHealth = health;
 	myValue = value;
@@ -44,7 +44,7 @@ public class Tower extends ShootingSprites {
     /**
      * Handles decrementing tower's damage when it gets hit by an enemy
      */
-    public void getHitBy(double enemyDamage) {
+    public void handleCollision(double enemyDamage) {
 	myHealth.change(-enemyDamage);
 	checkLive();
     }

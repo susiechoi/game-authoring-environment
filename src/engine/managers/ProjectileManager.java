@@ -10,15 +10,16 @@ import engine.sprites.towers.projectiles.Projectile;
  * 
  * @author Katherine Van Dyk
  * @author Ryan Pond
+ * @author Miles Todzo
  */
 public class ProjectileManager extends Manager {
 
-	// this doesn't have its own lists like Tower Manager does -bma
+	
 	
 	/**
 	 * Constructor from super class
 	 */
-	public ProjectileManager(List<Projectile> projectiles) {
+	public ProjectileManager() {
 		super();
 	}
 	

@@ -1,6 +1,5 @@
 package engine;
 
-<<<<<<< HEAD
 import java.util.List;
 import java.awt.Point;
 
@@ -9,19 +8,16 @@ import engine.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-=======
 import engine.level.Level;
->>>>>>> cac78c67eaaa162fedc7dabc4e0a1f1216aa1b9b
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
 
 /**
-<<<<<<< HEAD
  * 
  * @author Miles Todzo
  *
  */
-public class PlayState implements PlayStateI{
+public class PlayState {
     
 
 	private int UNIVERSAL_TIME;
@@ -43,6 +39,7 @@ public class PlayState implements PlayStateI{
 		isPaused = false;
 		score = 0;
 		money = 0;
+		UNIVERSAL_TIME = 0;
 	}
 
 	public void update() {
