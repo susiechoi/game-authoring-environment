@@ -12,7 +12,7 @@ import engine.managers.TowerManager;
  * @author benauriemma 4/5
  *
  */
-public class PlayState implements PlayStateI {
+public class PlayState {
 
     private final TowerManager TOWERS = new TowerManager();
     private final EnemyManager ENEMIES = new EnemyManager();
@@ -21,12 +21,17 @@ public class PlayState implements PlayStateI {
 
     }
 
-    @Override
+    /**
+     * Checks for intersections within all moving Towers, Enemies, and Projectiles, and spawns
+     * new enemies/projectiles. Progression is controlled by Game Loop.
+     */
     public void update() {
 	// TODO Auto-generated method stub
     }
 
-    @Override
+    /**
+     * Sets the current level for the game. From the level, data regarding available towers, enemy waves, etc.
+     */
     public void setLevel(Level newLevel) {
 	// TODO Auto-generated method stub
 
