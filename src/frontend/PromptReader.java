@@ -14,15 +14,17 @@ public class PromptReader {
     private final String DEFAULT_PROMPT_FILENAME = "/Prompts.properties";
     private final String DEFAULT_PROMPT_KEY = "PromptDNE";
     private final String DEFAULT_LANGUAGE = "English";
+    public static final String DEFAULT_NO_FILE_MESSAGE = "No language files detected!";
     private String language = "English";
     private final PropertiesReader PROP_READER;
-    private final ScreenManager SCREEN_MANAGER;
+    private final View SCREEN_MANAGER;
     private Properties languageProperty;
     private Properties errorProperty;
     private Map<String, String> languageMap;
     private Map<String, String> errorMap;
 
-    public PromptReader(String languageIn, ScreenManager screenManager) {
+
+    public PromptReader(String languageIn, View screenManager) {
 	PROP_READER = new PropertiesReader();
 	SCREEN_MANAGER = screenManager;
 	languageMap = new TreeMap<String,String>();
@@ -49,7 +51,7 @@ public class PromptReader {
 	    try {
 		languageProperty = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + DEFAULT_LANGUAGE +DEFAULT_PROMPT_FILENAME );
 	    } catch (MissingPropertiesException e1) {
-		SCREEN_MANAGER.loadErrorScreen();
+		SCREEN_MANAGER.loadErrorScreen(DEFAULT_NO_FILE_MESSAGE);
 	    }
 	}
 	languageMap = PROP_READER.read(languageProperty);
@@ -63,15 +65,10 @@ public class PromptReader {
 	    try {
 		errorProperty = PROP_READER.loadProperties(DEFAULT_LANGUAGE_FILEPATH + DEFAULT_LANGUAGE +DEFAULT_PROMPT_FILENAME );
 	    } catch (MissingPropertiesException e1) {
-		SCREEN_MANAGER.loadErrorScreen();
+		SCREEN_MANAGER.loadErrorScreen(DEFAULT_NO_FILE_MESSAGE);
 	    }
 	}
 	errorMap = PROP_READER.read(errorProperty);
-    }
-
-    private void showError(String errorMessage) {
-	Alert noPrompt = new Alert(AlertType.ERROR, errorMessage);
-	noPrompt.show();
     }
 
 }
