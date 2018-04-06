@@ -7,48 +7,38 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class CreatePathPanel implements Panel {
 	
-	public static final int PANEL_PATH_SIZE = 80;
+	public static final int PANEL_PATH_SIZE = 90;
 	private VBox pathPanel;
-	private ImageView pathImage;
-	private ImageView startImage;
-	private ImageView endImage;
+	private PathImage pathImage;
+	private PathImage startImage;
+	private PathImage endImage;
 	private Button trashButton;
+	private Button pathSizePlusButton;
+	private Button pathSizeMinusButton;
+	private HBox pathSizeButtons;
 
 	@Override
 	public void makePanel() {
 		pathPanel = new VBox();
 		pathPanel.setMaxSize(300, 900);
 
-		Image pathImg = new Image("file:images/stone.png");
-		pathImage = new ImageView();
-		pathImage.setImage(pathImg);
-		pathImage.setFitWidth(PANEL_PATH_SIZE);
-		pathImage.setFitHeight(PANEL_PATH_SIZE);
-		new DraggableImage(pathImage);
+		pathImage = new PathImage("file:images/cobblestone.png");
+		new DraggableImage(pathImage.getPathImage());
 		
-		Image startImg = new Image("file:images/start.png");
-		startImage = new ImageView();
-		startImage.setImage(startImg);
-		startImage.setFitWidth(PANEL_PATH_SIZE);
-		startImage.setFitHeight(PANEL_PATH_SIZE);
-		new DraggableImage(startImage);
+		startImage = new PathImage("file:images/start.png");
+		new DraggableImage(startImage.getPathImage());
 		
-		Image endImg = new Image("file:images/square.png");
-		endImage = new ImageView();
-		endImage.setImage(endImg);
-		endImage.setFitWidth(PANEL_PATH_SIZE);
-		endImage.setFitHeight(PANEL_PATH_SIZE);
-		new DraggableImage(endImage);
+		endImage = new PathImage("file:images/end.png");
+		new DraggableImage(endImage.getPathImage());
 		
-		
-//		Image trashImg = new Image("file:images/trash.png");	
+		Image trashImg = new Image("file:images/trash.png", 80, 80, true, false);	
 		UIFactory factory = new UIFactory();
-		trashButton = factory.makeTextButton("", "trash");
+		trashButton = factory.makeImageButton("", trashImg);
 		trashButton.setMaxSize(PANEL_PATH_SIZE, PANEL_PATH_SIZE);
 		
 		trashButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -57,8 +47,21 @@ public class CreatePathPanel implements Panel {
 		        pathPanel.setCursor(Cursor.HAND); //Change cursor to hand
 		    }
 		});
+		
+		Image plusImg = new Image("file:images/plus.png", 60, 40, true, false);
+		pathSizePlusButton = factory.makeImageButton("", plusImg);
+		
+		Image minusImg = new Image("file:images/minus.png", 60, 40, true, false);
+		pathSizeMinusButton = factory.makeImageButton("", minusImg);
+		
+		pathSizeButtons = new HBox();
+		pathSizeButtons.getChildren().addAll(pathSizePlusButton, pathSizeMinusButton);
+		
+		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), pathSizeButtons, trashButton);
+	}
 	
-		pathPanel.getChildren().addAll(startImage, endImage, pathImage, trashButton);
+	public HBox getSizeButtons() {
+		return pathSizeButtons;
 	}
 	
 	@Override

@@ -17,7 +17,6 @@ import java.util.Map;
 
 
 
-import authoring.frontend.Screen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
