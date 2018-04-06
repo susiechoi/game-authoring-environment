@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 public class Sprite  {
     private ImageView myImage;
 
+
     /**
      * Constructor that takes in a sprite's image
      * 

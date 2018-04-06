@@ -1,40 +1,78 @@
 package engine;
 
+<<<<<<< HEAD
+import java.util.List;
+import java.awt.Point;
+
 import engine.level.Level;
+
+import java.util.ArrayList;
+import java.util.List;
+
+=======
+import engine.level.Level;
+>>>>>>> cac78c67eaaa162fedc7dabc4e0a1f1216aa1b9b
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
 
 /**
- * This class will hold all of the current Play information, such as the list of objects on the screen (enemies,
- * towers, projectiles, etc). Update method will be called every game loop to update the position of every object. 
- * @author ryanpond
- * @author Ben Hodgson 4/3/18
- * @author benauriemma 4/5
+<<<<<<< HEAD
+ * 
+ * @author Miles Todzo
  *
  */
-public class PlayState {
+public class PlayState implements PlayStateI{
+    
 
-    private final TowerManager TOWERS = new TowerManager();
-    private final EnemyManager ENEMIES = new EnemyManager();
+	private int UNIVERSAL_TIME;
+	private int score;
+	private int money;
+    private TowerManager myTowerManager;
+    private EnemyManager myEnemyManager;
+    private Mediator myMediator;
+    private List<Level> myLevels;
+    private Level currentLevel;
+    private boolean isPaused;
+    
+	public PlayState(Mediator mediator, List<Level> levels) {
+		myMediator = mediator;
+		myLevels = levels;
+		currentLevel = myLevels.get(0);
+		myTowerManager = new TowerManager();
+		myEnemyManager = new EnemyManager();
+		isPaused = false;
+		score = 0;
+		money = 0;
+	}
 
-    public PlayState() {
+	public void update() {
+		UNIVERSAL_TIME++;
+		myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive());
+		myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive());
+		myTowerManager.moveProjectiles();
+		myTowerManager.moveTowers();
+		myEnemyManager.moveProjectiles();
+		myEnemyManager.moveEnemies();
+		currentLevel.getNewEnemy(UNIVERSAL_TIME, myEnemyManager);
+	}
 
-    }
+	
+	public void setLevel(int levelNumber) {
+		currentLevel = myLevels.get(levelNumber);
+		myTowerManager.setTowers(currentLevel.getTowers()); //maybe change so that it adds on to the List and doesn't overwrite old towers
+		myEnemyManager.setEnemies(currentLevel.getEnemies());
+	}
 
-    /**
-     * Checks for intersections within all moving Towers, Enemies, and Projectiles, and spawns
-     * new enemies/projectiles. Progression is controlled by Game Loop.
-     */
-    public void update() {
-	// TODO Auto-generated method stub
-    }
-
-    /**
-     * Sets the current level for the game. From the level, data regarding available towers, enemy waves, etc.
-     */
-    public void setLevel(Level newLevel) {
-	// TODO Auto-generated method stub
-
-    }
-
+	
+	public void pause() {
+		isPaused = true;
+	}
+	
+	public void play() {
+		isPaused = false;
+	}
+	
+	public FrontEndTower placeTower(Point location, String towerType) {
+		return (FrontEndTower) myTowerManager.addTower(location, towerType);
+	}
 }

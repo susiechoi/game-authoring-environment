@@ -1,6 +1,9 @@
 package authoring;
 
 import java.io.File;
+
+import authoring.AuthoringModel;
+import authoring.AuthoringView;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -12,6 +15,7 @@ import javafx.stage.Stage;
  * Class that handles mediating program functionality specific to authoring. 
  * Represents Controller in MVC of the authoring environment. 
  */
+
 public class AuthoringController {
 
     private final Stage STAGE;
