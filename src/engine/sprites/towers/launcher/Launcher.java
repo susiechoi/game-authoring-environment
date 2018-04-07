@@ -41,6 +41,10 @@ public class Launcher {
     }
 
 
+    /**
+     * Launch method will make sure that enough time has passed since last shot and then fire a new projectile
+     * @return : the projectile that was fired
+     */
     public Projectile launch() {
 	long currTime = System.nanoTime();
 	long timeSinceLastShot = currTime - timeLastFired;

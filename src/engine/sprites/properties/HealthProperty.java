@@ -1,5 +1,10 @@
 package engine.sprites.properties;
 
+/**
+ * Class that is used in every Sprite that has health. Can be upgraded with money
+ * @author ryanpond
+ * @author Katie Van Dyk
+ */
 public class HealthProperty extends Property {
 
     private double myHealth;
