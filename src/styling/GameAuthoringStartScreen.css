@@ -20,7 +20,6 @@ ComboBox {
 	-fx-background-color: #488286;
 	-fx-min-width: 200;
 	-fx-min-height: 50;
-
 }
 
 .combo-box:hover {

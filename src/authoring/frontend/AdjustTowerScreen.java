@@ -6,6 +6,7 @@ package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
@@ -16,8 +17,6 @@ import javafx.scene.layout.VBox;
 abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final String ENGLISH_PROMPT_FILE = "languages/English/Prompts.properties"; //TODO: shouldn't be hardcoded! need to get language to frontend
-	public static final String ENGLISH_ERROR_FILE = "languages/English/Errors.properties";
 	public static final int DEFAULT_MAX_RANGE = 500; 
 	public static final int DEFAULT_MAX_PRICE = 500;  
 
@@ -32,6 +31,9 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 		makeTowerComponents(vb);
 		makeHealthComponents(vb);
+		
+		Button goToProjectileLauncherButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeProjectileLauncher"));
+		vb.getChildren().add(goToProjectileLauncherButton);
 		
 		HBox backAndApply = setupBackAndApplyButton(); 
 		vb.getChildren().add(backAndApply);
@@ -48,12 +50,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private void makeTowerComponents(VBox vb) {
 		TextField nameInputField = getUIFactory().makeTextField(""); 
 		HBox towerNameSelect = new HBox(); 
-		try {
-		    towerNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getPropertiesReader().findVal(ENGLISH_PROMPT_FILE, "TowerName"));
-		}
-		catch(MissingPropertiesException e) {
-		    getView().loadErrorScreen("NoFile");		
-		}
+		towerNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getErrorCheckedPrompt("TowerName"));
 		vb.getChildren().add(towerNameSelect);
 
 		HBox towerImageSelect = new HBox();

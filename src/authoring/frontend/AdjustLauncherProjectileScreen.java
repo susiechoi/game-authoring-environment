@@ -23,7 +23,7 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	@Override
 	protected Parent populateScreenWithFields() {
 		VBox vb = new VBox(); 
-		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeProjectileAndLauncher")));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeProjectileLauncher")));
 
 		makeProjectileComponents(vb);
 		makeLauncherComponents(vb);

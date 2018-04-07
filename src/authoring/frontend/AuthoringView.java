@@ -20,7 +20,7 @@ public class AuthoringView extends View {
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = null; // TODO what to do with this constructor? 
-		myStageManager.switchScreen((new CustomizeLevelScreen(this)).getScreen());
+		myStageManager.switchScreen((new AdjustNewLauncherProjectileScreen(this)).getScreen());
 	}
 	
 	protected AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
