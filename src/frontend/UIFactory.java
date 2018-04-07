@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -101,8 +100,9 @@ public class UIFactory {
 
 	public Slider setupSlider(String id, int sliderMax) {
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
-		Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
+		Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
 			public void changed(ObservableValue<? extends Number> ov,
 					Number old_val, Number new_val) {
 				sliderValue.setText(String.format("%03d", (int)(double)new_val));

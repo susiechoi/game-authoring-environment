@@ -1,7 +1,6 @@
 package xml;
 
-
-import org.w3c.dom.Document;
+import data.GameData;
 
 /**
  * @author Brendan Cheng 3/29/2018
@@ -14,12 +13,12 @@ import org.w3c.dom.Document;
 public interface XMLReader {
 
 	/**
-	 * Initializes a Document to be read at the specified filepath.
+	 * Main functional unit of an XMLReader object. Uses XStream to parse a file and return a GameData object.
 	 * 
 	 * @param filename name of file to be read
-	 * @return Document containing the file that was read
+	 * @return AuthoringModel based on specified file
 	 */
-	public Document readInFile(String filename);
+	public GameData createModel(String filename);
 	
 	/**
 	 * Reads a node in the XML file and accesses its data. Could be implemented in many ways.

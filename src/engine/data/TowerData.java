@@ -2,8 +2,6 @@ package engine.data;
 
 import java.util.Collection;
 
-import engine.sprites.towers.TowerI;
-
 /**
  * 
  * @author Ben Hodgson 3/29/18
