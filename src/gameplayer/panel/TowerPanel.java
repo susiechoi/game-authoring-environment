@@ -45,8 +45,7 @@ public class TowerPanel extends Panel {
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
 
 
-    public TowerPanel(BorderPane pane, GameScreen gameScreen, PromptReader promptReader) {
-	PANE = pane;
+    public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
 	GAME_SCREEN = gameScreen;
 	PROMPTS = promptReader;
 	PROP_READ = new PropertiesReader();
@@ -57,10 +56,12 @@ public class TowerPanel extends Panel {
 
     @Override
     public void makePanel() {
-	List<Button> buttons = makeButtons();
 
 	VBox towerHolderLeft = new VBox();
 	VBox towerHolderRight = new VBox();
+	towerHolderLeft.setId("towerHolders");
+	towerHolderRight.setId("towerHolders");
+
 
 	fillScrollWithTowers(towerHolderLeft,towerHolderRight);
 
@@ -145,6 +146,7 @@ public class TowerPanel extends Panel {
 	//do some stuff
 	return null;
     }
+    
 
 
 }

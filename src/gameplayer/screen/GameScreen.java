@@ -4,6 +4,7 @@ import gameplayer.panel.TowerPanel;
 import gameplayer.panel.UpgradePanel;
 import gameplayer.panel.GamePanel;
 import gameplayer.panel.ScorePanel;
+import gameplayer.panel.BuyPanel;
 import gameplayer.panel.ControlsPanel;
 import frontend.PromptReader;
 import frontend.Screen;
@@ -37,6 +38,7 @@ public class GameScreen extends Screen {
     private ControlsPanel CONTROLS_PANEL;
     private UpgradePanel UPGRADE_PANEL;
     private ScreenManager SCREEN_MANAGER;
+    private BuyPanel BUY_PANEL;
     
 
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader) {
@@ -49,15 +51,18 @@ public class GameScreen extends Screen {
     @Override
     public Parent makeScreenWithoutStyling() {
         BorderPane rootPane = new BorderPane();
-        TOWER_PANEL = new TowerPanel(rootPane, this, PROMPTS);
+        TOWER_PANEL = new TowerPanel(this, PROMPTS);
         CONTROLS_PANEL = new ControlsPanel(this);
         SCORE_PANEL = new ScorePanel(this);
         GAME_PANEL = new GamePanel(this);
         UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
+        BUY_PANEL = new BuyPanel(this, PROMPTS);
         
         
-        VBox rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+        
+        VBox rightPane = new VBox(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
         VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
+        rightPane.setFillWidth(false);
         
         BorderPane leftPane = new BorderPane();
         leftPane.setMaxWidth(Double.MAX_VALUE);
