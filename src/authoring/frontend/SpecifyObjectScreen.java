@@ -3,6 +3,7 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,7 +28,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	setStyleSheet(DEFAULT_OWN_STYLESHEET);
     }
 
-    public Scene makeScreenWithoutStyling() {
+    public Parent makeScreenWithoutStyling() {
 	VBox vb = new VBox(); 
 
 	Text orText = new Text("or"); 
@@ -36,7 +37,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
 
 	ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
-	HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting", getView().getLanguage())+myObjectDescription);
+	HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
 	HBox backAndApplyButton = setupBackAndApplyButton();
 
 	vb.getChildren().add(getUIFactory().makeScreenTitleText(myObjectDescription));
@@ -45,7 +46,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	vb.getChildren().add(objectsWithPrompt);
 	vb.getChildren().add(backAndApplyButton);
 
-	return new Scene(vb, 1500, 900); // TODO move to properties file
+	return vb; // TODO move to properties file
     }
 
     protected Button makeCreateNewObjectButton(String object) {

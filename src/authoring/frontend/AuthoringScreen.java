@@ -13,4 +13,8 @@ public abstract class AuthoringScreen extends Screen {
     public AuthoringView getView() {
 	return myView;
     }
+    
+    protected String getErrorCheckedPrompt(String prompt) {
+	return myView.getErrorCheckedPrompt(prompt);
+    }
 }

@@ -81,7 +81,10 @@ public abstract class Screen {
     protected Parent getRoot() {
 	return myRoot;
     }
-    public abstract View getView();
+    protected abstract View getView();
+    protected PropertiesReader getPropertiesReader() {
+	return myPropertiesReader;
+    }
 }
 
 

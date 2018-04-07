@@ -12,9 +12,9 @@ class AuthoringView extends View {
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private PropertiesReader myPropertiesReader;
-	protected AuthoringView(StageManager stageManager, PromptReader reader) {
+	protected AuthoringView(StageManager stageManager, String languageIn) {
 		super(stageManager);
-	    	myPromptReader = reader;
+	    	myPromptReader = new PromptReader(languageIn, this);
 	    	myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		//myStage.setScene(new SpecifyTowerScreen(this).getScreen());
