@@ -8,6 +8,8 @@
 
 package authoring;
 
+import java.lang.reflect.Field;
+
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 
 class AuthoringModel {
@@ -36,15 +38,27 @@ class AuthoringModel {
 			// edit its values to conform to the parameterized ones 
 		}
 	}
-	
+
 	// TODO 
 	public void makePath() {
-		
+
 	}
-	
+
 	// TODO once maps have been made 
 	public String getObjectAttribute(String objectType, String name, String attribute) {
-		return null; 
+		Field field; 
+		Object fieldValue = null; 
+		if (objectType.equals("Enemy")) {
+			// get the enemy object with the appropriate name
+			// field = enemy.getField(attribute) 
+			// fieldValue = field.get(enemyObject)
+		}
+		else if (objectType.equals("Tower")) {
+			// get the tower object with the appropriate name
+			// field = tower.getField(attribute) 
+			// fieldValue = field.get(towerObject)
+		}
+		return (String) fieldValue; 
 	}
 
 }
