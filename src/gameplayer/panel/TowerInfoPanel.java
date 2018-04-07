@@ -19,7 +19,7 @@ public class TowerInfoPanel extends Panel {
 
     public TowerInfoPanel(GameScreen gameScreen, PromptReader promptReader) {
         GAME_SCREEN = gameScreen;
-        PROMPTS = promptReader;
+        PROMPTS = promptReader;	
         UI_FACTORY = new UIFactory();
         PROP_READ = new PropertiesReader();
     }

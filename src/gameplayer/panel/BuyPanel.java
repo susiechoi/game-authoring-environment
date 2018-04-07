@@ -28,11 +28,12 @@ public class BuyPanel extends Panel {
     public void makePanel() {
 
         Label TowerInfo = new Label("return value from getUpgradeInfoFromClick method");
+        TowerInfo.setWrapText(true);
         Button buyUpgrade = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("BuyTowerUpgrade"));
         //buyUpgrade.setOnMouseClicked((arg0) -> /**BACKENDUPGRADETOWERMETHOD**/);
 
         VBox panelRoot = new VBox(TowerInfo, buyUpgrade);
-        VBox.setVgrow(buyUpgrade, Priority.ALWAYS);
+        VBox.setVgrow(TowerInfo, Priority.ALWAYS);
         panelRoot.setAlignment(Pos.CENTER);
         panelRoot.setId("buyUpgradePanel");
         PANEL = panelRoot;
