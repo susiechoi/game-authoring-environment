@@ -3,7 +3,7 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
@@ -27,38 +27,37 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
-	protected Scene makeScreenWithoutStyling() {
+	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
-
 		Text orText = new Text("or"); 
-	
+
 		Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
-		
+
 		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
-		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting", getView().getLanguage())+myObjectDescription);
+		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
 		HBox backAndApplyButton = setupBackAndApplyButton();
-		
-		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription, "English")));
+
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);
 		vb.getChildren().add(backAndApplyButton);
 
-		return new Scene(vb, 1500, 900); // TODO move to properties file
+		return vb; // TODO move to properties file
 	}
 
 	protected Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction((event) -> {
-			getView().goForwardFrom(this);
+			// go forward 
 		});
 		return newObjectButton;
 	}
-	
+
 	protected void setDescription(String description) {
 		myObjectDescription = description;
 	}
-	
+
 	protected String getDescription() {
 		return myObjectDescription; 
 	}

@@ -11,8 +11,10 @@ import javafx.scene.layout.HBox;
  *
  */
 
-abstract class AdjustScreen extends Screen {
-			
+abstract class AdjustScreen extends AuthoringScreen {
+		
+	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
+	
 	protected AdjustScreen(AuthoringView view) {
 		super(view);
 	}
