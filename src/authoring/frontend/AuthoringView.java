@@ -1,5 +1,6 @@
 package authoring.frontend;
 
+import authoring.AuthoringController;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -11,6 +12,7 @@ class AuthoringView extends View {
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private PropertiesReader myPropertiesReader;
+	private AuthoringController myController; 
 	
 	protected AuthoringView(StageManager stageManager, String languageIn) {
 		super(stageManager);
@@ -21,10 +23,19 @@ class AuthoringView extends View {
 		//myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
 		//myStage.setScene((new CustomizationChoicesScreen(this, "Test Game")).getScreen());
 		//		myStage.setScene((new SettingsScreen(this).getScreen()));
+		myController = new AuthoringController(); 
 		myStageManager.switchScreen((new CustomizeLevelScreen(this)).getScreen());
 	}
 	
-	//	
+	protected AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
+		super(stageManager);
+		myPromptReader = new PromptReader(languageIn, this);
+		myPropertiesReader = new PropertiesReader();
+		myStageManager = stageManager; 
+		myController = controller; 
+		myStageManager.switchScreen((new CustomizeLevelScreen(this)).getScreen());
+	}
+	
 	//	protected String getLanguage() {
 	//		return myLanguage;
 	//	}

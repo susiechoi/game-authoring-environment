@@ -12,7 +12,7 @@ import javafx.scene.Scene;
  * Represents Controller in MVC of the authoring environment. 
  */
 
-class AuthoringController {
+public class AuthoringController {
 
    
 
