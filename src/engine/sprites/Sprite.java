@@ -2,7 +2,9 @@ package engine.sprites;
 
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Shape;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -45,12 +47,13 @@ public class Sprite  {
 	myImageView.setY(newY);
     }
     
-    public void checkForCollision(ShootingSprites shooter, List<Sprite> projectiles) {
+    public void checkForCollision(ShootingSprites shooter, ObservableList<Sprite> projectiles) {
     		shooter.checkTowerEnemyCollision((ShootingSprites) this); 
     		for (Sprite projectile: projectiles) {
     			ImageView spriteImageView = projectile.getImage();
     			if(this.myImageView.intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
-    				this.handleCollision();
+    				this.handleCollision(projectile.getDamage());
+    				projectile.handleCollision();
     			}
     		}
     }

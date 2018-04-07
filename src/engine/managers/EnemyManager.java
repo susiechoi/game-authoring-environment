@@ -6,7 +6,7 @@ package engine.managers;
  * 
  * @author Miles Todzo
  */
-public class EnemyManager extends ShootingSpriteManager {
+public class EnemyManager extends Manager {
     
 	// this doesn't have its own lists like Tower manager does -bma
 	

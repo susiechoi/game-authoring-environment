@@ -26,9 +26,14 @@ public class ShootingSpriteManager extends Manager{
     			}
     		}
     }
+    
+//    public void checkForCollisions(List<Sprite> passedSprites) {
+//		for (Sprite activeSprite: this.getObservableListOfActive()) {
+//			for (Sprite passedActor: passedSprites) {
+//				ShootingSprites shootingSprite = (ShootingSprites) passedActor;
+//				activeSprite.checkForCollision(passedActor, shootingSprite.getProjectiles());
+//			}
+//		}
+//    }
    
-    @Override
-    public ObservableList<Sprite> getObservableListOfActive(){
-		return (ObservableList<Sprite>) active;
-}
 }
