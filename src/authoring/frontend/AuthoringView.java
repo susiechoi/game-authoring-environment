@@ -9,11 +9,11 @@ class AuthoringView {
 	protected AuthoringView(Stage stage, String language) {
 		myLanguage = language;
 		myStage = stage; 
-//		myStage.setScene(new AdjustEnemyScreen(this).getScreen());
+		myStage.setScene(new AdjustEnemyScreen(this).getScreen());
 //		myStage.setScene(new CustomizationChoicesScreen(this, "Test Game").getScreen());
 //		myStage.setScene((new CustomizationChoicesScreen(this, "Test Game")).getScreen());
 //		myStage.setScene((new SettingsScreen(this).getScreen()));
-		myStage.setScene((new CustomizeLevelScreen(this)).getScreen());
+//		myStage.setScene((new CustomizeLevelScreen(this)).getScreen());
 	}
 	
 	protected String getLanguage() {

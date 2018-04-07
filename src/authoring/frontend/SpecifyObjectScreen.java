@@ -31,15 +31,14 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		VBox vb = new VBox(); 
 
 		Text orText = new Text("or"); 
-		orText.setId("or");
-
+	
 		Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
 		
 		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
 		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting", getView().getLanguage())+myObjectDescription);
 		HBox backAndApplyButton = setupBackAndApplyButton();
 		
-		vb.getChildren().add(getUIFactory().makeScreenTitleText(myObjectDescription));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription, "English")));
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);

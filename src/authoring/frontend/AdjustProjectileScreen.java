@@ -5,73 +5,34 @@ import java.util.ArrayList;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-class AdjustTowerScreen extends AdjustScreen {
+public class AdjustProjectileScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css";
-	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
-	public static final String ENGLISH_PROMPT_FILE = "languages/English/Prompts.properties"; //TODO: shouldn't be hardcoded! need to get language to frontend
-	public static final String ENGLISH_ERROR_FILE = "languages/English/Errors.properties";
+	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
 	public static final int DEFAULT_MAX_RANGE = 500; 
-	public static final int DEFAULT_MAX_PRICE = 500;  
+	public static final int DEFAULT_MAX_PRICE = 500; 
 
-	protected AdjustTowerScreen(AuthoringView view) {
+	protected AdjustProjectileScreen(AuthoringView view) {
 		super(view);
-		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
+		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
 	@Override
-	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException{		
+	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException {
 		VBox vb = new VBox(); 
-		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeTower", "English")));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeShooting", "English")));
 
-		TextField nameInputField = getUIFactory().makeTextField(""); 
-		HBox towerNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getPropertiesReader().findVal(ENGLISH_PROMPT_FILE, "TowerName"));
-		vb.getChildren().add(towerNameSelect);
-
-		HBox towerImageSelect = new HBox();
-		ComboBox<String> towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
-		towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower", "English") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage", "English"), getErrorCheckedPrompt("LoadImage", "English"),
-				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), towerImageDropdown);
-		vb.getChildren().add(towerImageSelect);
-
-		makeHealthComponents(vb);
-//		makePriceComponents(vb);
 		makeProjectileComponents(vb);
 		makeLauncherComponents(vb);
-		
-		HBox backAndApply = setupBackAndApplyButton(); 
-		vb.getChildren().add(backAndApply);
 
-		ScrollPane sp = new ScrollPane(vb);
-		sp.setFitToWidth(true);
-		sp.setFitToHeight(true);
-		Scene screen = new Scene(sp, 1500, 900); 
-		
-		getUIFactory().applyTextFieldFocusAction(screen, nameInputField);
+		Scene screen = new Scene(vb, 1500, 900); 
 		return screen;
 	}
 
-	private void makeHealthComponents(VBox vb) {
-		Slider towerHealthValueSlider = getUIFactory().setupSlider("TowerHealthValueSlider", DEFAULT_MAX_PRICE);
-		HBox towerHealthValue = getUIFactory().setupSliderWithValue("TowerHealthValueSlider", towerHealthValueSlider, getErrorCheckedPrompt("TowerHealthValue", getView().getLanguage()));
-		vb.getChildren().add(towerHealthValue);
-
-		Slider towerHealthUpgradeCostSlider = getUIFactory().setupSlider("TowerHealthUpgradeCostSlider", DEFAULT_MAX_PRICE);
-		HBox towerHealthUpgradeCost = getUIFactory().setupSliderWithValue("TowerHealthUpgradeCostSlider", towerHealthUpgradeCostSlider, getErrorCheckedPrompt("TowerHealthUpgradeCost", getView().getLanguage()));
-		vb.getChildren().add(towerHealthUpgradeCost);
-
-		Slider towerHealthUpgradeValueSlider = getUIFactory().setupSlider("TowerHealthUpgradeValueSlider", DEFAULT_MAX_PRICE);
-		HBox towerHealthUpgradeValue = getUIFactory().setupSliderWithValue("TowerHealthUpgradeValueSlider", towerHealthUpgradeValueSlider, getErrorCheckedPrompt("TowerHealthUpgradeValue", getView().getLanguage()));
-		vb.getChildren().add(towerHealthUpgradeValue);
-	}
-	
 	private void makeProjectileComponents(VBox vb) throws MissingPropertiesException {
 		ComboBox<String> projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
 		HBox projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile", "English") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage", "English"), getErrorCheckedPrompt("LoadImage", "English"),getErrorCheckedPrompt("NewImageName", getView().getLanguage()), projectileImageDropdown);
@@ -122,19 +83,5 @@ class AdjustTowerScreen extends AdjustScreen {
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange", getView().getLanguage()));
 		vb.getChildren().add(launcherRange);
 	}
-	
-//	private void makePriceComponents(VBox vb) {
-//		Slider towerValueSlider = getUIFactory().setupSlider("TowerValueSlider", DEFAULT_MAX_PRICE);
-//		HBox towerValue = getUIFactory().setupSliderWithValue("TowerValueSlider", towerValueSlider, getErrorCheckedPrompt("TowerValue", getView().getLanguage()));
-//		vb.getChildren().add(towerValue);
-//
-//		Slider towerUpgradeCostSlider = getUIFactory().setupSlider("TowerUpgradeCostSlider", DEFAULT_MAX_PRICE);
-//		HBox towerUpgradeCost = getUIFactory().setupSliderWithValue("TowerUpgradeCostSlider", towerUpgradeCostSlider, getErrorCheckedPrompt("TowerUpgradeCost", getView().getLanguage()));
-//		vb.getChildren().add(towerUpgradeCost);
-//
-//		Slider towerUpgradeValueSlider = getUIFactory().setupSlider("TowerUpgradeValueSlider", DEFAULT_MAX_PRICE);
-//		HBox towerUpgradeValue = getUIFactory().setupSliderWithValue("TowerUpgradeValueSlider", towerUpgradeValueSlider, getErrorCheckedPrompt("TowerUpgradeValue", getView().getLanguage()));
-//		vb.getChildren().add(towerUpgradeValue);
-//	}
 
 }
