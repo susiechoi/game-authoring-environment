@@ -1,14 +1,21 @@
 package authoring.frontend;
 
 import authoring.AuthoringController;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.MissingResourceException;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
+import gameplayer.ScreenManager;
 import javafx.scene.image.ImageView;
 
 public class AuthoringView extends View {
+	public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
 
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
@@ -24,6 +31,34 @@ public class AuthoringView extends View {
 		myStageManager.switchScreen((new AdjustNewEnemyScreen(this)).getScreen());
 	}
 
+	protected void goForwardFrom(String id) {
+		try {
+			System.out.println("early screen class: " + id);
+			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
+			System.out.println("next screen class: " + nextScreenClass);
+			Class<?> clazz = Class.forName(nextScreenClass);
+
+			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
+			if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
+			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, myPromptReader));
+				myStageManager.switchScreen(nextScreen.getScreen());
+			} //TODO: handle case where switching to gameplay
+			else {
+				throw new MissingPropertiesException("");
+			}
+
+		}
+		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
+				| IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+			loadErrorScreen("NoScreenFlow");
+		}
+	}
+
 	protected String getErrorCheckedPrompt(String prompt) {
 		return myPromptReader.resourceDisplayText(prompt);
 	}
@@ -31,7 +66,7 @@ public class AuthoringView extends View {
 	public void getObjectAttribute(String objectType, String objectName, String attribute) {
 		myController.getObjectAttribute(objectType, objectName, attribute);
 	}
-	
+
 	public void makeTower(boolean newObject, String name, ImageView image, int health, int healthUpgradeCost, int healthUpgradeValue,
 			ImageView projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
 			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
@@ -39,16 +74,16 @@ public class AuthoringView extends View {
 				projectileImage, ability, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
-	
+
 	public void makeEnemy(boolean newObject, String name, ImageView image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
 		myController.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
-	
+
 	//TODO 
 	public void addNewPath() {
 		myController.addNewPath();
 	}
-	
+
 	//	protected String getLanguage() {
 	//		return myLanguage;
 	//	}
