@@ -47,9 +47,9 @@ abstract class AdjustScreen extends AuthoringScreen {
 	protected Button setupBackButton(Screen currentScreen) {
 		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
 		Button backButton = getUIFactory().makeImageButton("backButton",backbuttonImage);
-		backButton.setOnMouseClicked((event) -> { 
-			getView().goBackFrom(currentScreen);
-		}); 
+//		backButton.setOnMouseClicked((event) -> { 
+//			getView().goBackFrom(currentScreen);
+//		}); 
 		return backButton; 
 	}
 	
