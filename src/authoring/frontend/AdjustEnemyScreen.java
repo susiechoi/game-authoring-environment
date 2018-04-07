@@ -92,7 +92,7 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), (int)mySpeedSlider.getValue(), (int)myHealthImpactSlider.getValue(), (int)my$ImpactSlider.getValue(), (int)myValueSlider.getValue(), (int)myUpgradeCostSlider.getValue(), (int)myUpgradeValueSlider.getValue());
+			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myHealthImpactSlider.getValue(), my$ImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);

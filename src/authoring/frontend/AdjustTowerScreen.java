@@ -29,16 +29,15 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private Slider myTowerHealthUpgradeValueSlider;
 	
 	private String myProjectileImage;
-	private String myProjectileAbility;
-	private int myProjectileValue;
-	private int myProjectileDamage;
-	private int myProjectileUpgradeCost;
-	private int myProjectileUpgradeValue;
-	private int myLauncherUpgradeCost;
-	private int myLauncherValue;
-	private int myLauncherUpgradeValue;
-	private int myLauncherSpeed;
-	private int myLauncherRange; 
+	private double myProjectileValue;
+	private double myProjectileDamage;
+	private double myProjectileUpgradeCost;
+	private double myProjectileUpgradeValue;
+	private double myLauncherUpgradeCost;
+	private double myLauncherValue;
+	private double myLauncherUpgradeValue;
+	private double myLauncherSpeed;
+	private double myLauncherRange; 
 	
 	protected AdjustTowerScreen(AuthoringView view) {
 		super(view);
@@ -58,7 +57,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Button backButton = getUIFactory().setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeTower(myIsNewObject, myNameField.getText(), myImageDropdown.getValue(), (int)myTowerHealthValueSlider.getValue(),  (int)myTowerHealthUpgradeCostSlider.getValue(),  (int)myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileAbility, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
+			getView().makeTower(myIsNewObject, myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
@@ -115,10 +114,9 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myIsNewObject = isNewObject; 
 	}
 	
-	protected void setLauncherProjectileValues(String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
-			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
+	protected void setLauncherProjectileValues(String projectileImage, String ability, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
+			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		myProjectileImage = projectileImage;
-		myProjectileAbility = ability;
 		myProjectileDamage = projectileDamage; 
 		myProjectileValue = projectileValue;
 		myProjectileUpgradeCost = projectileUpgradeCost;

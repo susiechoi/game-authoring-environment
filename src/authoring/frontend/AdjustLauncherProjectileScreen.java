@@ -46,7 +46,7 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		Button backButton = getUIFactory().setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileAbility.getValue(), (int)myProjectileDamageSlider.getValue(), (int)myProjectileValueSlider.getValue(), (int)myProjectileUpgradeCostSlider.getValue(), (int)myProjectileUpgradeValueSlider.getValue(), (int)myLauncherValueSlider.getValue(), (int)myLauncherUpgradeCostSlider.getValue(), (int)myLauncherUpgradeValueSlider.getValue(), (int)myLauncherRateSlider.getValue(), (int)myLauncherRangeSlider.getValue());
+			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileAbility.getValue(), myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
@@ -69,14 +69,6 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 			getView().loadErrorScreen("NoImageFile");
 		}
 		vb.getChildren().add(projectileImageSelect);
-
-		ArrayList<String> dummyProjectileAbilities = new ArrayList<String>(); // TODO read in abilities
-		dummyProjectileAbilities.add("Freeze");
-		dummyProjectileAbilities.add("Fire");
-		ComboBox<String> projectileAbilityDropdown = getUIFactory().makeTextDropdown("", dummyProjectileAbilities);
-		myProjectileAbility = projectileAbilityDropdown; 
-		HBox projectileAbility = getUIFactory().addPromptAndSetupHBox("", projectileAbilityDropdown, getErrorCheckedPrompt("ProjectileAbility"));	
-		vb.getChildren().add(projectileAbility);
 
 		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", DEFAULT_MAX_RANGE);
 		myProjectileDamageSlider = projectileDamageSlider; 
