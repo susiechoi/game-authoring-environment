@@ -64,7 +64,8 @@ public abstract class Screen {
 	if (myRoot != null) {
 	    for (String s : stylesheets) {
 		myRoot.getStylesheets().add(s);
-	    }		}
+	    }		
+	}
     }
 
     /**

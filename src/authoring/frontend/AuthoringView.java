@@ -1,15 +1,18 @@
 package authoring.frontend;
 
+import frontend.PromptReader;
 import frontend.Screen;
 import frontend.StageManager;
 import javafx.stage.Stage;
+import frontend.View;
 
-class AuthoringView extends View{
+class AuthoringView extends View {
 
 	private StageManager myStageManager; 
-	private String myLanguage;
+	private PromptReader myReader;
 	protected AuthoringView(StageManager stageManager, PromptReader reader) {
-		myLanguage = language;
+		super(stageManager);
+	    	myReader = reader;
 		myStageManager = stageManager; 
 		//myStage.setScene(new SpecifyTowerScreen(this).getScreen());
 		//myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
@@ -17,10 +20,10 @@ class AuthoringView extends View{
 //		myStage.setScene((new SettingsScreen(this).getScreen()));
 		myStageManager.switchScreen((new AdjustEnemyScreen(this)).getScreen());
 	}
-	
-	protected String getLanguage() {
-		return myLanguage;
-	}
+//	
+//	protected String getLanguage() {
+//		return myLanguage;
+//	}
 	
 
 //	protected void applyInfo() {
@@ -46,5 +49,6 @@ class AuthoringView extends View{
 			myStage.setScene((new SpecifyTowerScreen(this).getScreen())); 	
 		}
 	}
-	
+	public 
+
 }
