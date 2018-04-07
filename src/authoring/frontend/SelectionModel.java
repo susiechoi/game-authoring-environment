@@ -1,14 +1,12 @@
 package authoring.frontend;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
 import javafx.scene.Node;
 
 public class SelectionModel {
 
-	Set<Node> selectedNodes = new HashSet<>();
+	HashSet<Node> selectedNodes = new HashSet<>();
 
 	public void addNode(Node node) {
 		node.setStyle("-fx-effect: dropshadow(three-pass-box, lightblue, 2, 2, 0, 0);");
@@ -17,7 +15,7 @@ public class SelectionModel {
 
 	public void removeNode(Node node) {
 		node.setStyle("-fx-effect: null");
-		selectedNodes.remove( node);
+		selectedNodes.remove(node);
 	}
 
 	public void clear() {
@@ -30,12 +28,9 @@ public class SelectionModel {
 		return selectedNodes.contains(node);
 	}
 
-	public Set<Node> getSelectedNodes() {
+	public HashSet<Node> getSelectedNodes() {
 		return selectedNodes;
 	}
-	
-	public void log() {
-		System.out.println( "Items in model: " + Arrays.asList(selectedNodes.toArray()));
-	}
+
 }
 

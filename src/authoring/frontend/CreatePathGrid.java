@@ -1,7 +1,12 @@
 package authoring.frontend;
 
 
+import com.sun.tools.javac.util.List;
+
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -32,7 +37,13 @@ public class CreatePathGrid {
 	private int colIndex;
 	private int rowIndex;
 	private GridPane grid;
-	SelectionModel model;
+	private SelectionModel model;
+	private ImageView startImage = new ImageView(new Image("file:images/start.png"));
+	private ImageView endImage = new ImageView(new Image("file:images/end.png"));
+	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
+	private List<Integer> startRows;
+	private List<Integer> startCols;
+	
 
 	protected GridPane makePathGrid() {
 		grid = new GridPane();
@@ -43,8 +54,11 @@ public class CreatePathGrid {
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
 		
-		grid.setStyle("-fx-background-image: url('file:images/grass.png')"); 
+		grid.setStyle("-fx-background-image: url('file:images/plaingreen.png')"); 
 		populateGrid();
+		
+		System.out.println(grid.getChildren());
+		
 		return grid;
 	}
 
@@ -78,6 +92,10 @@ public class CreatePathGrid {
 							path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
 							grid.add(path.getPathImage(), colIndex, rowIndex);
+							if (path.getPathImage().equals(startImage)) {
+								startCols.add(colIndex);
+								startRows.add(rowIndex);
+							}
 							success = true;
 						}
 						event.setDropCompleted(success);
@@ -111,5 +129,43 @@ public class CreatePathGrid {
 			grid.getRowConstraints().add(rowConst);         
 		}
 		populateGrid();
+	}
+	
+	public boolean checkPathConnected(int row, int col) {
+		
+		boolean done = false;
+		
+		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount()) {
+			done = false;
+		}
+		if (getNode(grid, col, row).equals(endImage)) {
+			done = true;
+		}
+		
+		if (getNode(grid, row - 1, col).equals(pathImage))
+			checkPathConnected(row - 1, col);
+		if (getNode(grid, row, col - 1).equals(pathImage))
+			checkPathConnected(row, col - 1);
+		if (getNode(grid, row, col + 1).equals(pathImage))
+			checkPathConnected(row, col + 1);
+		if (getNode(grid, row + 1, col).equals(pathImage))
+			checkPathConnected(row + 1, col);
+		
+		System.out.println(done);
+		return done;
+	}
+	
+	private Node getNode(GridPane gridPane, int col, int row) {
+	    for (Node node : gridPane.getChildren()) {
+	    		System.out.println(node);
+	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+	            return node;
+	        }
+	    }
+	    return null;
+	}
+	
+	public GridPane getGrid() {
+	    return grid;
 	}
 }

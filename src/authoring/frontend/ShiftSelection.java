@@ -1,5 +1,4 @@
 package authoring.frontend;
-
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -20,12 +19,8 @@ public class ShiftSelection {
 				Node node = (Node) event.getTarget();
 				if (node instanceof ImageView && event.isShiftDown()) {
 					selectionModel.addNode(node);
-				} else if (node instanceof ImageView && !event.isShiftDown()) {
-					selectionModel.removeNode(node);
-				}
+				} 
 			}
 		});
-
-		selectionModel.log();
 	}
 }

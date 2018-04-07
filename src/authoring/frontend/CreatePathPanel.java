@@ -25,6 +25,7 @@ public class CreatePathPanel implements Panel {
 	private Button startImageChooser;
 	private Button endImageChooser;
 	private Button pathImageChooser;
+	private Button applyButton;
 
 	@Override
 	public void makePanel() { //separate into smaller methods
@@ -34,7 +35,7 @@ public class CreatePathPanel implements Panel {
 		pathPanel.getStylesheets();
 		
 		Image pathImg = new Image("file:images/cobblestone.png");
-		pathImage = new DraggableImage(pathImg); //get defaults
+		pathImage = new DraggableImage(pathImg);
 		pathImage.setCopyDraggable();
 		pathImage.getPathImage().getStyleClass().add("img-view");
 		
@@ -79,6 +80,8 @@ public class CreatePathPanel implements Panel {
 		Image minusImg = new Image("file:images/minus.png", 60, 40, true, false);
 		pathSizeMinusButton = factory.makeImageButton("", minusImg);
 		
+		applyButton = factory.makeTextButton("", "Apply");
+		
 		pathSizeButtons = new HBox();
 		pathSizeButtons.getChildren().addAll(pathSizePlusButton, pathSizeMinusButton);
 		
@@ -87,11 +90,15 @@ public class CreatePathPanel implements Panel {
 		pathImageChooser = factory.makeTextButton("", "Choose Path Image");
 		
 		
-		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage, pathSizeButtons, startImageChooser, pathImageChooser, endImageChooser);
+		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage, pathSizeButtons, startImageChooser, pathImageChooser, endImageChooser, applyButton);
 	}
 	
 	public HBox getSizeButtons() {
 		return pathSizeButtons;
+	}
+	
+	public Button getApplyButton() {
+		return applyButton;
 	}
 	
 	@Override

@@ -41,6 +41,7 @@ public class CreatePathScreen extends Screen {
 		StackPane.setAlignment(pathPanel, Pos.CENTER_RIGHT);
 
 		setGridSizing();
+		setGridApplied();
 
 		return myScene; 	
 	}
@@ -65,6 +66,16 @@ public class CreatePathScreen extends Screen {
 				}
 			}
 		});
+	}
 
+
+	private void setGridApplied() {
+		Button applyButton = panel.getApplyButton();
+		applyButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				grid.checkPathConnected(0, 0);
+			}
+		});
 	}
 }

@@ -1,5 +1,6 @@
 package authoring.frontend;
 
+
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,7 +48,7 @@ public class DraggableImage {
 	}
 
 	public void setDraggable(SelectionModel model) {
-		//		for (Node image: model.getSelectedNodes()) {
+
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
@@ -65,7 +66,6 @@ public class DraggableImage {
 			e.consume();
 		});
 	}
-
 
 	public ImageView getPathImage() {
 		return pathImage;
