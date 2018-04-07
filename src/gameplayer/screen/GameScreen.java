@@ -81,7 +81,7 @@ public class GameScreen extends Screen {
     }
     
     public void towerSelectedForPlacement(String towerPropName) {
-	
+	GAME_PANEL.towerSelected(towerPropName);
     }
     
     public Integer getMoney() {
