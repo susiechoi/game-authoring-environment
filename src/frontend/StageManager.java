@@ -36,4 +36,5 @@ public class StageManager {
 	myStage.setScene(programScene);
 	myStage.show();
     } 
+
 }

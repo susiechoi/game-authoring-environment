@@ -1,6 +1,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -22,22 +23,26 @@ class AdjustEnemyScreen extends AdjustScreen {
 	}
 
 	@Override
-	public Scene makeScreenWithoutStyling() throws MissingPropertiesException {
+	public Parent makeScreenWithoutStyling(){
 		VBox vb = new VBox(); 	
 		
 		TextField nameInputField = getUIFactory().makeTextField("");
-		HBox enemyNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getErrorCheckedPrompt("EnemyName", getView().getLanguage()));
+		HBox enemyNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getErrorCheckedPrompt("EnemyName"));
 		HBox enemyImageSelect = new HBox();
+		try {
 		ComboBox<String> dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
-		enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage", getView().getLanguage()), getErrorCheckedPrompt("LoadImage", getView().getLanguage()),
-				getErrorCheckedPrompt("NewImageName", getView().getLanguage()), dropdown);
-		System.out.println("here");
+		enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+				getErrorCheckedPrompt("NewImageName"), dropdown);
+		}
+		catch(MissingPropertiesException e) {
+		    getView().loadErrorScreen("NoImageFile");
+		}
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
-		HBox enemySpeed = getUIFactory().addPromptAndSetupHBox("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed", getView().getLanguage()));
+		HBox enemySpeed = getUIFactory().addPromptAndSetupHBox("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed"));
 		Slider enemyHealthSlider = getUIFactory().setupSlider("enemyHealthImpactSlider",  DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
-		HBox enemyHealthImpact = getUIFactory().addPromptAndSetupHBox("enemyHealthImpactSlider", enemyHealthSlider, getErrorCheckedPrompt("EnemyHealthImpact", getView().getLanguage())); 
+		HBox enemyHealthImpact = getUIFactory().addPromptAndSetupHBox("enemyHealthImpactSlider", enemyHealthSlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 		Slider enemyImpactSlider = getUIFactory().setupSlider("enemyMoneyImpactSlider",  DEFAULT_ENEMY_MAX_$_IMPACT); 
-		HBox enemy$Impact = getUIFactory().addPromptAndSetupHBox("enemyMoneyImpactSlider", enemyImpactSlider, getErrorCheckedPrompt("EnemyCurrencyImpact", getView().getLanguage())); 
+		HBox enemy$Impact = getUIFactory().addPromptAndSetupHBox("enemyMoneyImpactSlider", enemyImpactSlider, getErrorCheckedPrompt("EnemyCurrencyImpact")); 
 
 		HBox backAndApply = setupBackAndApplyButton(); 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Build Your Enemy"));
@@ -48,9 +53,7 @@ class AdjustEnemyScreen extends AdjustScreen {
 		vb.getChildren().add(enemy$Impact);
 		vb.getChildren().add(backAndApply);
 
-		Scene screen = new Scene(vb, 1500, 900); 
-		getUIFactory().applyTextFieldFocusAction(screen, nameInputField);
-		return screen;
+		return vb;
 	}
 
 }

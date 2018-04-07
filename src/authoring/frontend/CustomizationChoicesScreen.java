@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import frontend.Screen;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,16 +23,16 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
     }
 
     @Override
-    public Scene makeScreenWithoutStyling() throws MissingPropertiesException {
+    public Parent makeScreenWithoutStyling(){
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
 	Text heading = getUIFactory().makeScreenTitleText(myGameName);
-	Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SettingsButtonLabel", getView().getLanguage()));
-	Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel", getView().getLanguage()));
-	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel", getView().getLanguage()));
-	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel", getView().getLanguage()));
-	Button mainButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("MainLabel", getView().getLanguage()));
-	String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel", getView().getLanguage());
+	Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SettingsButtonLabel"));
+	Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel"));
+	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
+	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
+	Button mainButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("MainLabel"));
+	String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
 	ArrayList<String> dummyLevels = new ArrayList<>();
 	VBox newLevelVBox = new VBox();
 	dummyLevels.add(levelPrompt);
@@ -42,10 +43,21 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 	editButton.setDisable(true);
 	HBox songSelector = new HBox();
-	ComboBox<String> songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
-	songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song", getView().getLanguage()), getErrorCheckedPrompt("NewSong", getView().getLanguage()),
-		getErrorCheckedPrompt("NewSongName", getView().getLanguage()), songDropdown);
-	HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song", getView().getLanguage()));
+	ComboBox<String> songDropdown = new ComboBox<>();
+	try {
+	songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
+	}
+	catch(MissingPropertiesException e){
+	    getView().loadErrorScreen("NoFile");
+	}
+	try {
+	songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song"), getErrorCheckedPrompt("NewSong"),
+		getErrorCheckedPrompt("NewSongName"), songDropdown);
+	}
+	catch(MissingPropertiesException e) {
+	    getView().loadErrorScreen("NoFile");
+	}
+	HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 	vbox.getChildren().add(heading);
 	vbox.getChildren().add(settingsButton);
 	vbox.getChildren().add(demoButton);
@@ -57,7 +69,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	vbox.getChildren().add(hbox);
 	vbox.getChildren().add(mainButton);
 	vbox.getChildren().add(songPrompted);
-	return new Scene(vbox, 1500, 900);
+	return vbox;
 
     }
 
