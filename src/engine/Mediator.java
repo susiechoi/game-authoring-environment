@@ -1,5 +1,6 @@
 package engine;
 
+import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
 import xml.XMLFactory;
 
@@ -21,7 +22,7 @@ public class Mediator {
 	myGameEngine = gameEngine;
     }
 
-    void savePlay() {
+    public void savePlay() {
 	//TODO ask Engine for a PlayState and then ask XMLFactory for
 	//	a writer and then write it to a file
     }
@@ -29,5 +30,7 @@ public class Mediator {
     
     // a whole slew of other methods
     // but fr there should be a method for every event that can occur
+    
+
     
 }
