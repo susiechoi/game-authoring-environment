@@ -11,14 +11,19 @@ import javafx.scene.Node;
  */
 public class Intersecter implements IIntersecter {
 
+    private Node currentNode;
+    
+    public Intersecter(Node input) {
+	currentNode = input;
+    }
     /**
      * Determines if two nodes on the screen overlap
      * 
      * @return True if two nodes intersect, false otherwise
      */
     @Override
-    public boolean overlaps(Node thisNode, Node thatNode) {
-	return thisNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal());
+    public boolean overlaps(Node thatNode) {
+	return currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal());
     }
 
 }

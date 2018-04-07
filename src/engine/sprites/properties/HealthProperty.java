@@ -51,6 +51,14 @@ public class HealthProperty extends Property {
     }
     
     /**
+     * Called when health is lost
+     * @param healthLost : how much health is lost
+     */
+    public void loseHealth(double healthLost) {
+	myHealth-=healthLost;
+    }
+    
+    /**
      * Return whether or not character is alive
      * 
      * @return boolean: True if character is alive, false otherwise
