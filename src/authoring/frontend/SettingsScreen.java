@@ -38,7 +38,7 @@ public class SettingsScreen extends AdjustScreen {
 	}
 	HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, getErrorCheckedPrompt("Background"));
 	
-	Button backButton = getUIFactory().setupBackButton();
+	Button backButton = setupBackButton();
 	Button applyButton = getUIFactory().setupApplyButton();
 	HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 	
