@@ -8,6 +8,8 @@
 
 package authoring;
 
+import authoring.frontend.exceptions.NoDuplicateNamesException;
+
 class AuthoringModel {
 
 	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
