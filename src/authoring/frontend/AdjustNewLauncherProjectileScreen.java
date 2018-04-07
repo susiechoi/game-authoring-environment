@@ -2,8 +2,8 @@ package authoring.frontend;
 
 public class AdjustNewLauncherProjectileScreen extends AdjustLauncherProjectileScreen {
 
-	protected AdjustNewLauncherProjectileScreen(AuthoringView view) {
-		super(view);
+	protected AdjustNewLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen) {
+		super(view, towerScreen);
 	}
 
 	/**
