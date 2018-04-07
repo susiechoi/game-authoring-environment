@@ -40,7 +40,7 @@ public class Tower extends ShootingSprites {
     /**
      * Handles decrementing tower's damage when it gets hit by an enemy
      */
-    public void getHitBy(double enemyDamage) {
+    public void handleCollision(double enemyDamage) {
 	myHealth.change(-enemyDamage);
 	checkLive();
     }
