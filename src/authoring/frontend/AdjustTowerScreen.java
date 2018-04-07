@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustTowerScreen extends AdjustScreen {
+abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
@@ -28,39 +28,18 @@ abstract class AdjustTowerScreen extends AdjustScreen {
 		super(view);
 	}
 
-	@Override
-	public Parent makeScreenWithoutStyling() {		
+	public Parent populateScreenWithFields() {		
 		VBox vb = new VBox(); 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeTower")));
 
-		TextField nameInputField = getUIFactory().makeTextField(""); 
-		HBox towerNameSelect = new HBox(); 
-		try {
-		    towerNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getPropertiesReader().findVal(ENGLISH_PROMPT_FILE, "TowerName"));
-		}
-		catch(MissingPropertiesException e) {
-		    getView().loadErrorScreen("NoFile");		
-		}
-		vb.getChildren().add(towerNameSelect);
-
-		HBox towerImageSelect = new HBox();
-		ComboBox<String> towerImageDropdown;
-		try {
-			towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
-			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), towerImageDropdown);
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
-		vb.getChildren().add(towerImageSelect);
-
+		makeTowerComponents(vb);
 		makeHealthComponents(vb);
 		makeProjectileComponents(vb);
 		makeLauncherComponents(vb);
 		
 		HBox backAndApply = setupBackAndApplyButton(); 
 		vb.getChildren().add(backAndApply);
-		
+				
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setFitToWidth(true);
 		sp.setFitToHeight(true);
@@ -68,6 +47,8 @@ abstract class AdjustTowerScreen extends AdjustScreen {
 		return sp;
 	}
 
+	protected abstract void populateFieldsWithData(); 
+	
 	private void makeHealthComponents(VBox vb) {
 		Slider towerHealthValueSlider = getUIFactory().setupSlider("TowerHealthValueSlider", DEFAULT_MAX_PRICE);
 		HBox towerHealthValue = getUIFactory().setupSliderWithValue("TowerHealthValueSlider", towerHealthValueSlider, getErrorCheckedPrompt("TowerHealthValue"));
@@ -137,6 +118,29 @@ abstract class AdjustTowerScreen extends AdjustScreen {
 		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", DEFAULT_MAX_RANGE);
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange"));
 		vb.getChildren().add(launcherRange);
+	}
+	
+	private void makeTowerComponents(VBox vb) {
+		TextField nameInputField = getUIFactory().makeTextField(""); 
+		HBox towerNameSelect = new HBox(); 
+		try {
+		    towerNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getPropertiesReader().findVal(ENGLISH_PROMPT_FILE, "TowerName"));
+		}
+		catch(MissingPropertiesException e) {
+		    getView().loadErrorScreen("NoFile");		
+		}
+		vb.getChildren().add(towerNameSelect);
+
+		HBox towerImageSelect = new HBox();
+		ComboBox<String> towerImageDropdown;
+		try {
+			towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
+			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+					getErrorCheckedPrompt("NewImageName"), towerImageDropdown);
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		}
+		vb.getChildren().add(towerImageSelect);
 	}
 
 }

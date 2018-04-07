@@ -89,8 +89,6 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		HBox backAndApply = setupBackAndApplyButton(); 
 		vb.getChildren().add(backAndApply);
 		
-		populateFieldsWithData(); 
-
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setFitToWidth(true);
 		sp.setFitToHeight(true);
