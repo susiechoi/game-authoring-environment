@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustEnemyScreen extends AdjustScreen {
+abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final int DEFAULT_ENEMY_MAX_HEALTH_IMPACT = 3; 
@@ -35,8 +35,7 @@ abstract class AdjustEnemyScreen extends AdjustScreen {
 		super(view);
 	}
 
-	@Override
-	public Parent makeScreenWithoutStyling(){
+	protected Parent populateScreenWithFields() {
 		VBox vb = new VBox(); 	
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeEnemy")));
 
@@ -90,7 +89,7 @@ abstract class AdjustEnemyScreen extends AdjustScreen {
 		HBox backAndApply = setupBackAndApplyButton(); 
 		vb.getChildren().add(backAndApply);
 		
-		populateScreenWithData(); 
+		populateFieldsWithData(); 
 
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setFitToWidth(true);
@@ -98,7 +97,7 @@ abstract class AdjustEnemyScreen extends AdjustScreen {
 		return sp;
 	}
 	
-	abstract void populateScreenWithData();
+	protected abstract void populateFieldsWithData();
 	
 	protected TextField getMyNameField() {
 		return myNameField;

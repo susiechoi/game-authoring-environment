@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-class AdjustTowerScreen extends AdjustScreen {
+abstract class AdjustTowerScreen extends AdjustScreen {
 
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
@@ -60,7 +60,7 @@ class AdjustTowerScreen extends AdjustScreen {
 		
 		HBox backAndApply = setupBackAndApplyButton(); 
 		vb.getChildren().add(backAndApply);
-
+		
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setFitToWidth(true);
 		sp.setFitToHeight(true);
