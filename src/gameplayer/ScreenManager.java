@@ -31,9 +31,9 @@ public class ScreenManager {
     private double DEFAULT_WIDTH;
     //private final FileIO FILE_READER;
 
-    public ScreenManager(StageManager stageManager) {
+    public ScreenManager(StageManager stageManager, PromptReader prompts) {
 	STAGE_MANAGER = stageManager;
-	PROMPTS = new PromptReader(STARTING_LANGUAGE, this);
+	PROMPTS = prompts;
 	findSettings();
 	//setup rest of values once file reader is finished
     }
