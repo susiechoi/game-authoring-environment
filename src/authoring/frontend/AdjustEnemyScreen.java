@@ -64,7 +64,7 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 		Slider enemySlider = getUIFactory().setupSlider("enemyImpactSlider",  DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
 		myHealthImpactSlider = enemySlider; 
-		HBox enemyImpact = getUIFactory().setupSliderWithValue("enemyImpactSlider", enemySlider, getErrorCheckedPrompt("EnemyImpact")); 
+		HBox enemyImpact = getUIFactory().setupSliderWithValue("enemyImpactSlider", enemySlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 		vb.getChildren().add(enemyImpact);
 
 		Slider enemyImpactSlider = getUIFactory().setupSlider("enemyMoneyImpactSlider",  DEFAULT_ENEMY_MAX_$_IMPACT); 

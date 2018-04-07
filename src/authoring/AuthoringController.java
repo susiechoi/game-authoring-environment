@@ -2,6 +2,7 @@ package authoring;
 
 import authoring.frontend.AuthoringView;
 import frontend.StageManager;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -14,9 +15,11 @@ import frontend.StageManager;
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
+	private AuthoringModel myAuthoringModel; 
 	
 	public AuthoringController(StageManager stageManager, String languageIn) {
-		myAuthoringView = new AuthoringView(stageManager, languageIn);
+		myAuthoringModel = new AuthoringModel();
+		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
 	}
 	
 	// TODO is int level needed as a parameter? 
@@ -24,18 +27,19 @@ public class AuthoringController {
 		// TODO wrap a call to get the info from AuthoringModel maps
 	}
 	
-	public void changeExistingObject(String objectType, String objectName, String attribute) {
-		
+	public void makeEnemy(boolean newObject, String name, ImageView image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
+		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
-	public void addNewTower() {
-		
+	public void makeTower(boolean newObject, String name, ImageView image, int health, int healthUpgradeCost, int healthUpgradeValue,
+							ImageView projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
+							int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
+		myAuthoringModel.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+				projectileImage, ability, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 	
-	public void addNewEnemy() {
-		
-	}
-	
+	// TODO 
 	public void addNewPath() {
 		
 	}

@@ -8,27 +8,18 @@
 
 package authoring;
 
-import engine.path.Path;
+import javafx.scene.image.ImageView;
 
 class AuthoringModel {
 
-    /**
-     * Sets the path to be used in the level
-     * 
-     * @param path: The user generated path object to be used in the game
-     */
-    public void setPath(Path path) {
-	
-    }
-    
-    /**
-     * Causes change to appropriate field of appropriate component of Model 
-     * @param affectedObject - the name of the affected object
-     * @param fieldToChange - field of the object that is to be changed
-     * @param changeToValue - value to which the fieldToChange should be changed
-     */
-    private void applyChange(String affectOject, String fieldToChange, String changeToValue) {
+	public void makeEnemy(boolean newObject, String name, ImageView image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
+		// TODO invoke constructor
+	}
 
-    }
+	public void makeTower(boolean newObject, String name, ImageView image, int health, int healthUpgradeCost, int healthUpgradeValue,
+			ImageView projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
+			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
+		// TODO constructor
+	}
 
 }
