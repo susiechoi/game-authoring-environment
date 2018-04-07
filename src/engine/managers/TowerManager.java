@@ -49,7 +49,7 @@ public class TowerManager extends Manager {
      * 
      * @param towers: towers taken from the AuthoringModel that are available in the game
      */
-    public void setTowers(List<Tower> towers) {
+    public void setAvailableTowers(List<Tower> towers) {
 	for (Tower gameTower : towers) {
 	    /* TODO perform the deep copy
 	    Tower copyTower = new Tower(null, null, 0, 0);
@@ -62,8 +62,24 @@ public class TowerManager extends Manager {
      * 
      * @param tower: A tower that is Activated in the game
      */
-    public void setActive(Tower tower) {
+    public void setActiveTower(Tower tower) {
 	ACTIVE.add(tower);
+    }
+
+    /**
+     * Will move projectiles according to the closest enemy, called every step of the GameLoop
+     */
+    public void moveProjectiles() {
+	// TODO Auto-generated method stub
+	
+    }
+    
+    /**
+     * Moves towers on every step of the GameLoop
+     */
+    public void moveTowers() {
+	// TODO Auto-generated method stub
+	
     }
 
 

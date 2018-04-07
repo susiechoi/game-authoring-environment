@@ -19,21 +19,13 @@ public class ShootingSpriteManager extends Manager{
      * was called on and the list of active actors passed as a parameter
      * @param passedSprites
      */
-    public void checkForCollisions(List<ShootingSprites> passedSprites) {
-    		for (Sprite activeSprite: this.getObservableListOfActive()) {
-    			for (ShootingSprites passedActor: passedSprites) {
-    				activeSprite.checkForCollision(passedActor, passedActor.getProjectiles());
-    			}
-    		}
-    }
-    
-//    public void checkForCollisions(List<Sprite> passedSprites) {
-//		for (Sprite activeSprite: this.getObservableListOfActive()) {
-//			for (Sprite passedActor: passedSprites) {
-//				ShootingSprites shootingSprite = (ShootingSprites) passedActor;
-//				activeSprite.checkForCollision(passedActor, shootingSprite.getProjectiles());
-//			}
-//		}
+//    public void checkForCollisions(List<ShootingSprites> passedSprites) {
+//    		for (Sprite activeSprite: this.getObservableListOfActive()) {
+//    			for (ShootingSprites passedActor: passedSprites) {
+//    				activeSprite.checkForCollision(passedActor, passedActor.getProjectiles());
+//    			}
+//    		}
 //    }
+    
    
 }

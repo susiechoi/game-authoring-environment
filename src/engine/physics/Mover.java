@@ -10,17 +10,28 @@ import javafx.scene.Node;
  *
  */
 public class Mover implements IMover {
+    
+    private double speed;
+    
+    public Mover(double s) {
+	speed = s;
+    }
 
     @Override
     public void move(Node thisNode, Integer targetX, Integer targetY) {
-	// TODO Auto-generated method stub
-	
+	thisNode.setLayoutX(thisNode.getLayoutX() + speed * targetX);
+	thisNode.setLayoutY(thisNode.getLayoutY() + speed * targetY);
     }
+    
 
     @Override
     public void rotate(Node thisNode, Integer targetAngle) {
-	// TODO Auto-generated method stub
-	
+	thisNode.setRotate(targetAngle);
     }
+    
+    public void setSpeed(double s) {
+	speed = s;
+    }
+
 
 }

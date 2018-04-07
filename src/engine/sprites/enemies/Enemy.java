@@ -1,11 +1,13 @@
 package engine.sprites.enemies;
 
 import engine.physics.IIntersecter;
+import engine.physics.Intersecter;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.projectiles.Projectile;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 /**
@@ -24,17 +26,19 @@ public class Enemy extends Sprite{
 
 	public Enemy(ImageView myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
 		super(myImage);
-		//myIntersector = new Intersector(myImage); //there is no implementation for intersecter yet -bma
+		myIntersecter = new Intersecter(myImage); 
 		myHealth = health;
 		myDamage = damage;
 		myValue = value;
 	}
 
-	
-	public boolean overlap(ImageView otherImage) {
-		//return myIntersector.overlap(otherImage); //there is no implementation for intersecter yet -bma
-		
-		return false; // TODO return the right thing
+	/**
+	 * Tests to see if another ImageView overlaps with the Enemy
+	 * @param otherImage : other image (projectile, tower, etc)
+	 * @return boolean, yes or no
+	 */
+	public boolean overlap(Node otherImage) {
+		return myIntersecter.overlaps(otherImage); 
 	}
 
 	/**
@@ -44,8 +48,8 @@ public class Enemy extends Sprite{
      * @return : returns true if the enemy is still alive, false if it is dead
      */
 	public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
-		// TODO Auto-generated method stub
-		return false;
+		myHealth.loseHealth(projectile.getDamage());
+		return myHealth.isAlive();
 	}
 
 	/**
@@ -62,8 +66,7 @@ public class Enemy extends Sprite{
      * @return Double: damage that Enemy incurs on the tower
      */
 	public Double damage() {
-		// TODO Auto-generated method stub
-		return null;
+		return myDamage.getProperty();
 	}
 
 
