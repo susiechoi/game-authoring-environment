@@ -10,13 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
-    public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
     private String myGameName;
 
     protected CustomizationChoicesScreen(AuthoringView view, String gameName) {
 	super(view);
-	setStyleSheet(DEFAULT_OWN_CSS);
 	myGameName = gameName;
     }
 

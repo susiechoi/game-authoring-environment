@@ -1,7 +1,6 @@
 package authoring;
 
 import authoring.frontend.AuthoringView;
-import authoring.frontend.CustomizeLevelScreen;
 import frontend.StageManager;
 
 /**

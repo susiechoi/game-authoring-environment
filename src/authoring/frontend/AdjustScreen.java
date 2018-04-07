@@ -17,10 +17,12 @@ import javafx.scene.layout.HBox;
 
 abstract class AdjustScreen extends AuthoringScreen {
 		
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css";
 	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
 	
 	protected AdjustScreen(AuthoringView view) {
 		super(view);
+		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 	
 	/**
@@ -30,7 +32,7 @@ abstract class AdjustScreen extends AuthoringScreen {
 		HBox hb = new HBox();
 		Button backButton = getUIFactory().setupBackButton();
 		backButton.setOnMouseClicked((event) -> { 
-			getView().goBackFrom(this);
+//			getView().goBackFrom(this);
 		}); 
 		hb.getChildren().add(backButton);
 		Button applyButton = setupApplyButton();

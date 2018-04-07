@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 
 class AdjustTowerScreen extends AdjustScreen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css";
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
 	public static final String ENGLISH_PROMPT_FILE = "languages/English/Prompts.properties"; //TODO: shouldn't be hardcoded! need to get language to frontend
@@ -27,7 +26,6 @@ class AdjustTowerScreen extends AdjustScreen {
 
 	protected AdjustTowerScreen(AuthoringView view) {
 		super(view);
-		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 	}
 
 	@Override

@@ -36,25 +36,25 @@ public class AuthoringView extends View {
 	//		return myLanguage;
 	//	}
 
-	protected void goForwardFrom(Screen currentScreen) {
-		String currentScreenName = currentScreen.getClass().getSimpleName();
-		if (currentScreenName.equals("SpecifyEnemyScreen")) {
-			myStageManager.switchScreen((new AdjustEnemyScreen(this)).getScreen()); 	// TODO replace with reflection?
-		}
-		else if (currentScreenName.equals("SpecifyTowerScreen")) {
-			myStageManager.switchScreen((new AdjustTowerScreen(this)).getScreen());
-		}
-	}
-
-	protected void goBackFrom(Screen currentScreen) {
-		String currentScreenName = currentScreen.getClass().getSimpleName();
-		if (currentScreenName.equals("AdjustEnemyScreen")) {
-			myStageManager.switchScreen((new SpecifyEnemyScreen(this).getScreen())); 	// TODO replace with reflection?
-		}
-		else if (currentScreenName.equals("AdjustTowerScreen")) {
-			myStageManager.switchScreen((new SpecifyTowerScreen(this).getScreen())); 	
-		}
-	}
+//	protected void goForwardFrom(Screen currentScreen) {
+//		String currentScreenName = currentScreen.getClass().getSimpleName();
+//		if (currentScreenName.equals("SpecifyEnemyScreen")) {
+//			myStageManager.switchScreen((new AdjustEnemyScreen(this)).getScreen()); 	// TODO replace with reflection?
+//		}
+//		else if (currentScreenName.equals("SpecifyTowerScreen")) {
+//			myStageManager.switchScreen((new AdjustTowerScreen(this)).getScreen());
+//		}
+//	}
+//
+//	protected void goBackFrom(Screen currentScreen) {
+//		String currentScreenName = currentScreen.getClass().getSimpleName();
+//		if (currentScreenName.equals("AdjustEnemyScreen")) {
+//			myStageManager.switchScreen((new SpecifyEnemyScreen(this).getScreen())); 	// TODO replace with reflection?
+//		}
+//		else if (currentScreenName.equals("AdjustTowerScreen")) {
+//			myStageManager.switchScreen((new SpecifyTowerScreen(this).getScreen())); 	
+//		}
+//	}
 	
 	protected String getErrorCheckedPrompt(String prompt) {
 		return myPromptReader.resourceDisplayText(prompt);
