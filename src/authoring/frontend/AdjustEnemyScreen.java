@@ -35,6 +35,7 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		super(view);
 	}
 
+	@Override
 	protected Parent populateScreenWithFields() {
 		VBox vb = new VBox(); 	
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeEnemy")));
