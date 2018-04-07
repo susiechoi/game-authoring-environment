@@ -62,7 +62,6 @@ public class GameScreen extends Screen {
         
         VBox rightPane = new VBox(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
         VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
-        rightPane.setFillWidth(false);
         
         BorderPane leftPane = new BorderPane();
         leftPane.setMaxWidth(Double.MAX_VALUE);
