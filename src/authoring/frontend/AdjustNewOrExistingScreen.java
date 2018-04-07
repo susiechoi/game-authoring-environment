@@ -5,6 +5,8 @@
 package authoring.frontend;
 
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
@@ -30,6 +32,16 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	protected boolean getIsNewObject() {
 		return myIsNewObject; 
+	}
+	
+	protected void setComboBoxToValue(ComboBox<String> combobox, String selectionValue) {
+		int dropdownIdx = combobox.getItems().indexOf(selectionValue); 
+		combobox.getSelectionModel().select(dropdownIdx);
+	}
+	
+	protected void setSliderToValue(Slider slider, String valueAsString) {
+		Double value = Double.parseDouble(valueAsString);
+		slider.setValue(value);
 	}
 	
 }

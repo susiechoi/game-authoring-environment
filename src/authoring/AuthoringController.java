@@ -22,9 +22,8 @@ public class AuthoringController {
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
 	}
 	
-	// TODO is int level needed as a parameter? 
-	public void getObjectAttribute(String objectType, String objectName, String attribute) {
-		// TODO wrap a call to get the info from AuthoringModel maps
+	public String getObjectAttribute(String objectType, String name, String attribute) {
+		return myAuthoringModel.getObjectAttribute(objectType, name, attribute); 
 	}
 	
 	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
@@ -40,8 +39,8 @@ public class AuthoringController {
 	}
 	
 	// TODO 
-	public void addNewPath() {
-		
+	public void makePath() {
+		myAuthoringModel.makePath(); 
 	}
 	
     /**

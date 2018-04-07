@@ -62,10 +62,6 @@ public class AuthoringView extends View {
 		return myPromptReader.resourceDisplayText(prompt);
 	}
 
-	public void getObjectAttribute(String objectType, String objectName, String attribute) {
-		myController.getObjectAttribute(objectType, objectName, attribute);
-	}
-
 	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
 			String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
 			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
@@ -79,8 +75,12 @@ public class AuthoringView extends View {
 	}
 
 	//TODO 
-	public void addNewPath() {
-		myController.addNewPath();
+	public void makePath() {
+		myController.makePath();
+	}
+
+	public String getObjectAttribute(String objectType, String objectName, String attribute) {
+		return myController.getObjectAttribute(objectType, objectName, attribute);
 	}
 
 	//	protected String getLanguage() {
