@@ -35,5 +35,9 @@ class AuthoringModel {
 			// edit its values to conform to the parameterized ones 
 		}
 	}
+	
+	public String getObjectAttribute(String objectType, String name, String attribute) {
+		
+	}
 
 }
