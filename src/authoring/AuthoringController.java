@@ -1,11 +1,11 @@
 package authoring;
 
-import java.io.File;
-import javafx.scene.Scene;
+import authoring.frontend.AuthoringView;
+import authoring.frontend.CustomizeLevelScreen;
+import frontend.StageManager;
 
 /**
  * 
- * @author Ben Hodgson 3/29/18
  * @author susiechoi 
  *
  * Class that handles mediating program functionality specific to authoring. 
@@ -13,46 +13,38 @@ import javafx.scene.Scene;
  */
 
 public class AuthoringController {
-
-   
-
-    /**
-     * Loads a new Scene object in the program's Stage to display the authoring environment 
-     * screen.
-     * 
-     * @return Scene: the authoring screen to be displayed to the user
-     */
-    public Scene loadAuthoringStage() {
-	return null;	
-    }  
-
-    /**
-     * Locates the file in the program file system that contains data required to load 
-     * a game. Uses the FileIO objects methods to loadState().
-     * 
-     * @return File: the file containing information required to load the start of a game
-     */
-    public File loadStartState() {
-	return null;	
-    }
-
-    /**
-     * Saves user data from the authoring environment in a temporary file to avoid 
-     * overwriting data before the user is ready to save completely. 
-     * Uses the FileIO objects methods to saveState().
-     */
-    public void saveTemporaryState() {
-
-    }
-
+	
+	private AuthoringView myAuthoringView; 
+	
+	public AuthoringController(StageManager stageManager, String languageIn) {
+		myAuthoringView = new AuthoringView(stageManager, languageIn);
+	}
+	
+	// TODO is int level needed as a parameter? 
+	public void getObjectAttribute(String objectType, String objectName, String attribute) {
+		// TODO wrap a call to get the info from AuthoringModel maps
+	}
+	
+	public void changeExistingObject(String objectType, String objectName, String attribute) {
+		
+	}
+	
+	public void addNewTower() {
+		
+	}
+	
+	public void addNewEnemy() {
+		
+	}
+	
+	public void addNewPath() {
+		
+	}
+	
     /**
      * Instatiates the game engine to demo the authored game in its current state
      */
     public void demo() {
-
-    }
-    
-    private void setUpListeners() {
 
     }
 

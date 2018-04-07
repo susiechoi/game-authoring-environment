@@ -7,23 +7,19 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 
-class AuthoringView extends View {
+public class AuthoringView extends View {
 
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
 	
-	protected AuthoringView(StageManager stageManager, String languageIn) {
+	public AuthoringView(StageManager stageManager, String languageIn) {
 		super(stageManager);
 		myPromptReader = new PromptReader(languageIn, this);
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
-		//myStage.setScene(new SpecifyTowerScreen(this).getScreen());
-		//myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
-		//myStage.setScene((new CustomizationChoicesScreen(this, "Test Game")).getScreen());
-		//		myStage.setScene((new SettingsScreen(this).getScreen()));
-		myController = new AuthoringController(); 
+		myController = null; // TODO what to do with this constructor? 
 		myStageManager.switchScreen((new CustomizeLevelScreen(this)).getScreen());
 	}
 	
