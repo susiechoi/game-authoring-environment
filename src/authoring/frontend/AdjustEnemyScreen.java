@@ -88,7 +88,7 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
 		vb.getChildren().add(enemyUpgradeValue);
 
-		Button backButton = getUIFactory().setupBackButton();
+		Button backButton = setupBackButton();
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
