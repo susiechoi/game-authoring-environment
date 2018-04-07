@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
@@ -28,8 +29,10 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		makeProjectileComponents(vb);
 		makeLauncherComponents(vb);
 		
-		HBox backAndApply = setupBackAndApplyButton(); 
-		vb.getChildren().add(backAndApply);
+		Button backButton = getUIFactory().setupBackButton();
+		Button applyButton = getUIFactory().setupApplyButton();
+		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		vb.getChildren().add(backAndApplyButton);
 				
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setFitToWidth(true);

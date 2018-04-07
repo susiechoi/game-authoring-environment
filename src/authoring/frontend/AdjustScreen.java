@@ -25,28 +25,11 @@ abstract class AdjustScreen extends AuthoringScreen {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 	
-	/**
-	 * @return  HBox with back and apply buttons
-	 */
-	protected HBox setupBackAndApplyButton() {
-		HBox hb = new HBox();
-		Button backButton = getUIFactory().setupBackButton();
-		backButton.setOnMouseClicked((event) -> { 
-			// go back!!getView().goBackFrom(this);
-		}); 
-		hb.getChildren().add(backButton);
-		Button applyButton = setupApplyButton();
-		applyButton.setOnMouseClicked((event) -> { 
-			// TODO 
-		});
-		hb.getChildren().add(applyButton);
-		return hb; 
-	}
-
-	//TODO: set up listener here?
-	protected Button setupApplyButton() {
-		Button applyButton = getUIFactory().makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
-		return applyButton;
+	protected HBox setupBackAndApplyButton(Button back, Button apply) {
+		HBox backAndApplyButton = new HBox(); 
+		backAndApplyButton.getChildren().add(back);
+		backAndApplyButton.getChildren().add(apply);
+		return backAndApplyButton; 
 	}
 	
 }

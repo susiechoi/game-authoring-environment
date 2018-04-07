@@ -12,11 +12,11 @@ import javafx.scene.image.ImageView;
 
 class AuthoringModel {
 
-	public void makeEnemy(boolean newObject, String name, ImageView image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
+	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
 		// TODO invoke constructor
 	}
 
-	public void makeTower(boolean newObject, String name, ImageView image, int health, int healthUpgradeCost, int healthUpgradeValue,
+	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
 			ImageView projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
 			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
 		// TODO constructor

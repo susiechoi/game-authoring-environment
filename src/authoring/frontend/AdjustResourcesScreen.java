@@ -5,6 +5,7 @@
 package authoring.frontend;
 
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,9 +27,13 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		Slider startingCurrencySlider = getUIFactory().setupSlider("startingCurrency", 999);
 		HBox startingCurrency = getUIFactory().addPromptAndSetupHBox("startingCurrency", startingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
 
+		Button backButton = getUIFactory().setupBackButton();
+		Button applyButton = getUIFactory().setupApplyButton();
+		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		
 		vb.getChildren().add(startingHealth);
 		vb.getChildren().add(startingCurrency);
-		vb.getChildren().add(setupBackAndApplyButton());
+		vb.getChildren().add(backAndApplyButton);
 		
 		return vb;
 	}

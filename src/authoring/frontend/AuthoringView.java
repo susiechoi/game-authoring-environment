@@ -67,7 +67,7 @@ public class AuthoringView extends View {
 		myController.getObjectAttribute(objectType, objectName, attribute);
 	}
 
-	public void makeTower(boolean newObject, String name, ImageView image, int health, int healthUpgradeCost, int healthUpgradeValue,
+	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
 			ImageView projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
 			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
 		myController.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
@@ -75,7 +75,7 @@ public class AuthoringView extends View {
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 
-	public void makeEnemy(boolean newObject, String name, ImageView image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
+	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
 		myController.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 

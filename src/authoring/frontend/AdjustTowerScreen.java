@@ -35,8 +35,10 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Button goToProjectileLauncherButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 		vb.getChildren().add(goToProjectileLauncherButton);
 		
-		HBox backAndApply = setupBackAndApplyButton(); 
-		vb.getChildren().add(backAndApply);
+		Button backButton = getUIFactory().setupBackButton();
+		Button applyButton = getUIFactory().setupApplyButton();
+		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		vb.getChildren().add(backAndApplyButton);
 				
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setFitToWidth(true);

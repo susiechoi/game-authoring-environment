@@ -3,6 +3,7 @@ package authoring.frontend;
 import java.util.List;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -36,11 +37,15 @@ public class SettingsScreen extends AdjustScreen {
 	    getView().loadErrorScreen("NoImageFile");
 	}
 	HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, getErrorCheckedPrompt("Background"));
-	HBox backAndApply = setupBackAndApplyButton();
+	
+	Button backButton = getUIFactory().setupBackButton();
+	Button applyButton = getUIFactory().setupApplyButton();
+	HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+	
 	vb.getChildren().add(settingsHeading);
 	vb.getChildren().add(promptGameName);
 	vb.getChildren().add(backgroundImagePrompted);
-	vb.getChildren().add(backAndApply);
+	vb.getChildren().add(backAndApplyButton);
 	return vb;
     }
 
