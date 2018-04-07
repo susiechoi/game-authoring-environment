@@ -1,3 +1,7 @@
+/**
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 
 import javafx.scene.Parent;
@@ -6,11 +10,8 @@ import javafx.scene.layout.VBox;
 
 public class CustomizeLevelScreen extends AdjustScreen {
 	
-	public static final String DEFAULT_STYLESHEET = "styling/GameAuthoringStartScreen.css";
-
 	protected CustomizeLevelScreen(AuthoringView view) {
 		super(view);
-		setStyleSheet(DEFAULT_STYLESHEET);
 	}
 
 	@Override

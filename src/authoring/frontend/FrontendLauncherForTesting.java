@@ -1,6 +1,6 @@
 package authoring.frontend;
 
-import frontend.PromptReader;
+import authoring.AuthoringController;
 import frontend.StageManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -13,7 +13,7 @@ public class FrontendLauncherForTesting extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		AuthoringView view = new AuthoringView(new StageManager(stage), "English");
+		AuthoringController controlla = new AuthoringController(new StageManager(stage), "English");
 		stage.show();
 	}
 

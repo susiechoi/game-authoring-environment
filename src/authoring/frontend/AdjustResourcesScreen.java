@@ -1,3 +1,7 @@
+/**
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 
 import javafx.scene.Parent;
@@ -7,11 +11,8 @@ import javafx.scene.layout.VBox;
 
 public class AdjustResourcesScreen extends AdjustScreen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css"; 
-
 	protected AdjustResourcesScreen(AuthoringView view) {
 		super(view);
-		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
 	@Override

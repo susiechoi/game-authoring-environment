@@ -1,13 +1,8 @@
 package authoring.frontend;
 
-
-
-
 import java.util.List;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -20,11 +15,9 @@ import javafx.scene.text.Text;
  */
 public class SettingsScreen extends AdjustScreen {
     public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
-    public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 
     protected SettingsScreen(AuthoringView view) {
 	super(view);
-	setStyleSheet(DEFAULT_OWN_CSS);
     }
     @Override
     public Parent makeScreenWithoutStyling(){

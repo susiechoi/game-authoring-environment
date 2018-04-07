@@ -1,3 +1,7 @@
+/**
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 
 import javafx.scene.control.Button;
@@ -13,10 +17,12 @@ import javafx.scene.layout.HBox;
 
 abstract class AdjustScreen extends AuthoringScreen {
 		
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css";
 	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
 	
 	protected AdjustScreen(AuthoringView view) {
 		super(view);
+		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 	
 	/**

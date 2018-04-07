@@ -2,9 +2,7 @@ package authoring.frontend;
 
 import java.util.ArrayList;
 
-import frontend.Screen;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
@@ -19,11 +17,9 @@ import javafx.scene.text.Text;
  *
  */
 public class StartScreen extends AuthoringScreen {
-    public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
 
     protected StartScreen(AuthoringView view, String language) {
 	super(view);
-	setStyleSheet(DEFAULT_OWN_CSS);
     }
     @Override
     public Parent makeScreenWithoutStyling() {

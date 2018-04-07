@@ -1,3 +1,7 @@
+/**
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 
 import java.util.ArrayList;
@@ -14,7 +18,6 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css"; 
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
 
@@ -24,7 +27,6 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		myObjectOptions.add("Dummy Object 1");
 		myObjectOptions.add("Dummy Object 2");
 		myObjectOptions.add("Dummy Object 3");
-		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 	}
 
 	public Parent makeScreenWithoutStyling() {

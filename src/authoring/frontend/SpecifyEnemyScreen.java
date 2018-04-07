@@ -1,3 +1,7 @@
+/**
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 
 class SpecifyEnemyScreen extends SpecifyObjectScreen {
