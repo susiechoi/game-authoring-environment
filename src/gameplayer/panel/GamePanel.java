@@ -1,10 +1,7 @@
 package gameplayer.panel;
 
 import gameplayer.screen.GameScreen;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
 
 public class GamePanel extends Panel{
     

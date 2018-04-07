@@ -27,9 +27,9 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	setStyleSheet(DEFAULT_OWN_STYLESHEET);
     }
 
-    public Scene makeScreenWithoutStyling() {
-	VBox vb = new VBox(); 
-
+	@Override
+	protected Scene makeScreenWithoutStyling() {
+		VBox vb = new VBox(); 
 	Text orText = new Text("or"); 
 	orText.setId("or");
 

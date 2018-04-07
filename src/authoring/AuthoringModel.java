@@ -1,3 +1,13 @@
+
+
+package authoring;
+
+import java.util.List;
+
+import data.GameData;
+import engine.level.Level;
+import engine.path.Path;
+
 /**
  * 
  * @author Susie Choi 
@@ -5,12 +15,22 @@
  * Receives input from Controller through applyChange method regarding what/how to change an object
  * 
  */
-
-package authoring;
-
-import engine.path.Path;
-
-class AuthoringModel {
+public class AuthoringModel implements GameData {
+    
+    public AuthoringModel() {
+	
+    }
+    
+    /**
+     * Returns a list of levels to be used by the Game Engine in a play
+     * 
+     * @return List(Level): list of levels for the current play
+     */
+    public List<Level> getLevels() {
+	//TODO should return list of level objects to game engine
+	return null;
+    }
+    
 
     /**
      * Sets the path to be used in the level
