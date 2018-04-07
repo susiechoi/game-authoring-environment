@@ -1,3 +1,7 @@
+/**
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
