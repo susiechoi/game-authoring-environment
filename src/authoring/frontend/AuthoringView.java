@@ -13,6 +13,7 @@ import frontend.View;
 import gameplayer.ScreenManager;
 
 public class AuthoringView extends View {
+	
 	public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
 
 	private StageManager myStageManager; 
