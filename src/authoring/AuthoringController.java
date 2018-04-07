@@ -26,8 +26,8 @@ public class AuthoringController {
 		return myAuthoringModel.getObjectAttribute(objectType, name, attribute); 
 	}
 	
-	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double moneyImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
+	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
 	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,

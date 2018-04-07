@@ -14,7 +14,7 @@ import authoring.frontend.exceptions.NoDuplicateNamesException;
 
 class AuthoringModel {
 
-	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double moneyImpact, 
+	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact,
 			double killReward, double killUpgradeCost, double killUpgradeValue) {
 		if (newObject) {
 			// if the enemies map already contains key with the name parameter, throw NoDuplicateNamesException

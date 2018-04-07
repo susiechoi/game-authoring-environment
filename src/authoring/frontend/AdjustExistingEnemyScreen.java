@@ -24,9 +24,7 @@ class AdjustExistingEnemyScreen extends AdjustEnemyScreen {
 		setSliderToValue(getMySpeedSlider(), getView().getObjectAttribute("Enemy", mySelectedObjectName, "mySpeed"));
 		
 		setSliderToValue(getMyHealthImpactSlider(), getView().getObjectAttribute("Enemy", mySelectedObjectName, "myHealthImpact"));
-		
-		setSliderToValue(getMy$ImpactSlider(), getView().getObjectAttribute("Enemy", mySelectedObjectName, "myMoneyImpact"));
-		
+			
 		setSliderToValue(getMyValueSlider(), getView().getObjectAttribute("Enemy", mySelectedObjectName, "myKillReward"));
 		
 		setSliderToValue(getMyUpgradeCostSlider(), getView().getObjectAttribute("Enemy", mySelectedObjectName, "myKillUgradeCost"));

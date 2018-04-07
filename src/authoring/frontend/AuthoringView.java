@@ -70,8 +70,8 @@ public class AuthoringView extends View {
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 
-	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double moneyImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-		myController.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
+	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		myController.makeEnemy(newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 
 	//TODO 

@@ -18,8 +18,6 @@ import javafx.scene.layout.VBox;
 abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final int DEFAULT_MAX_RANGE = 500; 
-	public static final int DEFAULT_MAX_PRICE = 500;
 	
 	private boolean myIsNewObject; 
 	private TextField myNameField;
@@ -94,17 +92,17 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	private void makeHealthComponents(VBox vb) {
-		Slider towerHealthValueSlider = getUIFactory().setupSlider("TowerHealthValueSlider", DEFAULT_MAX_PRICE);
+		Slider towerHealthValueSlider = getUIFactory().setupSlider("TowerHealthValueSlider", myMaxPrice);
 		myTowerHealthValueSlider = towerHealthValueSlider; 
 		HBox towerHealthValue = getUIFactory().setupSliderWithValue("TowerHealthValueSlider", towerHealthValueSlider, getErrorCheckedPrompt("TowerHealthValue"));
 		vb.getChildren().add(towerHealthValue);
 
-		Slider towerHealthUpgradeCostSlider = getUIFactory().setupSlider("TowerHealthUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider towerHealthUpgradeCostSlider = getUIFactory().setupSlider("TowerHealthUpgradeCostSlider", myMaxPrice);
 		myTowerHealthUpgradeCostSlider = towerHealthUpgradeCostSlider;
 		HBox towerHealthUpgradeCost = getUIFactory().setupSliderWithValue("TowerHealthUpgradeCostSlider", towerHealthUpgradeCostSlider, getErrorCheckedPrompt("TowerHealthUpgradeCost"));
 		vb.getChildren().add(towerHealthUpgradeCost);
 
-		Slider towerHealthUpgradeValueSlider = getUIFactory().setupSlider("TowerHealthUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider towerHealthUpgradeValueSlider = getUIFactory().setupSlider("TowerHealthUpgradeValueSlider", myMaxPrice);
 		myTowerHealthUpgradeValueSlider = towerHealthUpgradeValueSlider; 
 		HBox towerHealthUpgradeValue = getUIFactory().setupSliderWithValue("TowerHealthUpgradeValueSlider", towerHealthUpgradeValueSlider, getErrorCheckedPrompt("TowerHealthUpgradeValue"));
 		vb.getChildren().add(towerHealthUpgradeValue);
