@@ -1,13 +1,8 @@
 package authoring.frontend;
 
-
-
-
 import java.util.List;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;

@@ -4,7 +4,6 @@ import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
-import javafx.stage.Stage;
 import frontend.View;
 
 class AuthoringView extends View {
@@ -12,6 +11,7 @@ class AuthoringView extends View {
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private PropertiesReader myPropertiesReader;
+	
 	protected AuthoringView(StageManager stageManager, String languageIn) {
 		super(stageManager);
 		myPromptReader = new PromptReader(languageIn, this);
