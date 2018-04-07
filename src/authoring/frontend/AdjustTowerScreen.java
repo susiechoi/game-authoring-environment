@@ -42,7 +42,6 @@ class AdjustTowerScreen extends AdjustScreen {
 		vb.getChildren().add(towerImageSelect);
 
 		makeHealthComponents(vb);
-//		makePriceComponents(vb);
 		makeProjectileComponents(vb);
 		makeLauncherComponents(vb);
 		
@@ -122,19 +121,5 @@ class AdjustTowerScreen extends AdjustScreen {
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange", getView().getLanguage()));
 		vb.getChildren().add(launcherRange);
 	}
-	
-//	private void makePriceComponents(VBox vb) {
-//		Slider towerValueSlider = getUIFactory().setupSlider("TowerValueSlider", DEFAULT_MAX_PRICE);
-//		HBox towerValue = getUIFactory().setupSliderWithValue("TowerValueSlider", towerValueSlider, getErrorCheckedPrompt("TowerValue", getView().getLanguage()));
-//		vb.getChildren().add(towerValue);
-//
-//		Slider towerUpgradeCostSlider = getUIFactory().setupSlider("TowerUpgradeCostSlider", DEFAULT_MAX_PRICE);
-//		HBox towerUpgradeCost = getUIFactory().setupSliderWithValue("TowerUpgradeCostSlider", towerUpgradeCostSlider, getErrorCheckedPrompt("TowerUpgradeCost", getView().getLanguage()));
-//		vb.getChildren().add(towerUpgradeCost);
-//
-//		Slider towerUpgradeValueSlider = getUIFactory().setupSlider("TowerUpgradeValueSlider", DEFAULT_MAX_PRICE);
-//		HBox towerUpgradeValue = getUIFactory().setupSliderWithValue("TowerUpgradeValueSlider", towerUpgradeValueSlider, getErrorCheckedPrompt("TowerUpgradeValue", getView().getLanguage()));
-//		vb.getChildren().add(towerUpgradeValue);
-//	}
 
 }
