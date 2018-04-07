@@ -26,7 +26,7 @@ abstract class AdjustScreen extends AuthoringScreen {
 		HBox hb = new HBox();
 		Button backButton = getUIFactory().setupBackButton();
 		backButton.setOnMouseClicked((event) -> { 
-			getView().goBackFrom(this);
+			// go back!!getView().goBackFrom(this);
 		}); 
 		hb.getChildren().add(backButton);
 		Button applyButton = setupApplyButton();

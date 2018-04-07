@@ -49,7 +49,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction((event) -> {
-			// go forward 
+		    getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton");
 		});
 		return newObjectButton;
 	}
