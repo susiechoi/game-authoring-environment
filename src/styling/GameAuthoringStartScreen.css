@@ -1,7 +1,7 @@
 VBox, HBox {
 	-fx-background-color: #77878B;
-	-fx-padding: 10;
-    -fx-spacing: 10;
+	-fx-padding: 5;
+    -fx-spacing: 5;
     -fx-alignment: center;
 }
 
@@ -21,4 +21,8 @@ ComboBox {
 	-fx-min-width: 200;
 	-fx-min-height: 50;
 
+}
+
+.combo-box:hover {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }

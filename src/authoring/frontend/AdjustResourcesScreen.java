@@ -1,15 +1,13 @@
 package authoring.frontend;
 
-import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class AdjustResourcesScreen extends AdjustScreen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/SpecifyObjectScreen.css"; 
+	public static final String DEFAULT_OWN_STYLESHEET = "styling/GameAuthoringStartScreen.css"; 
 
 	protected AdjustResourcesScreen(AuthoringView view) {
 		super(view);

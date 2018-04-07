@@ -1,10 +1,6 @@
 package authoring.frontend;
 
-import java.io.File;
-
-import frontend.Screen;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 /**
@@ -28,7 +24,10 @@ abstract class AdjustScreen extends AuthoringScreen {
 	 */
 	protected HBox setupBackAndApplyButton() {
 		HBox hb = new HBox();
-		Button backButton = setupBackButton(this);
+		Button backButton = getUIFactory().setupBackButton();
+		backButton.setOnMouseClicked((event) -> { 
+			getView().goBackFrom(this);
+		}); 
 		hb.getChildren().add(backButton);
 		Button applyButton = setupApplyButton();
 		applyButton.setOnMouseClicked((event) -> { 
@@ -42,15 +41,6 @@ abstract class AdjustScreen extends AuthoringScreen {
 	protected Button setupApplyButton() {
 		Button applyButton = getUIFactory().makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 		return applyButton;
-	}
-	
-	protected Button setupBackButton(Screen currentScreen) {
-		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-		Button backButton = getUIFactory().makeImageButton("backButton",backbuttonImage);
-		backButton.setOnMouseClicked((event) -> { 
-			getView().goBackFrom(currentScreen);
-		}); 
-		return backButton; 
 	}
 	
 }
