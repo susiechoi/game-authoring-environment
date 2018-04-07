@@ -27,12 +27,12 @@ public class AuthoringController {
 		// TODO wrap a call to get the info from AuthoringModel maps
 	}
 	
-	public void makeEnemy(boolean newObject, String name, ImageView image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
+	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
 		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
-	public void makeTower(boolean newObject, String name, ImageView image, int health, int healthUpgradeCost, int healthUpgradeValue,
-							ImageView projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
+	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
+							String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
 							int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
 		myAuthoringModel.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 				projectileImage, ability, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 

@@ -8,6 +8,7 @@ class AdjustNewEnemyScreen extends AdjustEnemyScreen {
 
 	protected AdjustNewEnemyScreen(AuthoringView view) {
 		super(view);
+		setIsNewObject(true);
 	}
 
 	/**

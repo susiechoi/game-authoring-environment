@@ -37,7 +37,10 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
 		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
-		HBox backAndApplyButton = setupBackAndApplyButton();
+		
+		Button backButton = getUIFactory().setupBackButton();
+		Button applyButton = getUIFactory().setupApplyButton();
+		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
 		vb.getChildren().add(newObjectButton);

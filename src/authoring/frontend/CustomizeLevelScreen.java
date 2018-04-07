@@ -38,7 +38,8 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		Button autogenerateButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("AutogenerateLevel"));
 		vb.getChildren().add(autogenerateButton);
 
-		vb.getChildren().add(getUIFactory().setupBackButton());
+		Button backButton = getUIFactory().setupBackButton();
+		vb.getChildren().add(backButton);
 		
 		return vb;
 	}

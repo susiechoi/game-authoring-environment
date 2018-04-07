@@ -8,6 +8,7 @@ public class AdjustNewTowerScreen extends AdjustTowerScreen {
 
 	protected AdjustNewTowerScreen(AuthoringView view) {
 		super(view);
+		setIsNewObject(true);
 	}
 
 	/**

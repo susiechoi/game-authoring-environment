@@ -257,5 +257,10 @@ public class UIFactory {
 		Button backButton = makeImageButton("backButton",backbuttonImage);
 		return backButton; 
 	}
+	
+	public Button setupApplyButton() {
+		Button applyButton = makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
+		return applyButton;
+	}
 
 }
