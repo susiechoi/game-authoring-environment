@@ -1,10 +1,6 @@
-/**
- * @author susiechoi
- * Abstract class for developing the fields for customizing 
- * (new or existing, depending on whether corresponding tower is new or existing) launcher/projectile object
- */
-
 package authoring.frontend;
+
+import java.util.ArrayList;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
@@ -123,10 +119,6 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	
 	protected abstract void populateFieldsWithData(); 
 	
-	/**
-	 * The following methods are getters for features/fields on the Screen
-	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
-	 */
 	protected ComboBox<String> getMyProjectileImage() {
 		return myProjectileImage; 
 	}

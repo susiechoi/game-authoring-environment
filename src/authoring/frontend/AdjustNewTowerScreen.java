@@ -1,6 +1,5 @@
 /**
  * @author susiechoi
- * Creates Screen in which user can customize a new tower
  */
 
 package authoring.frontend;

@@ -1,6 +1,5 @@
 /**
  * @author susiechoi
- * Abstract class for developing the fields for customizing (new or existing) enemy object
  */
 
 package authoring.frontend;
@@ -95,11 +94,6 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	protected abstract void populateFieldsWithData();
-	
-	/**
-	 * The following methods are getters for features/fields on the Screen
-	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
-	 */
 	
 	protected TextField getMyNameField() {
 		return myNameField;

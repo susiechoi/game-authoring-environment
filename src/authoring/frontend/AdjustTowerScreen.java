@@ -1,6 +1,5 @@
 /**
  * @author susiechoi
- * Abstract class for developing the fields for customizing (new or existing) tower object
  */
 
 package authoring.frontend;
@@ -20,6 +19,7 @@ import javafx.scene.layout.VBox;
 abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	
+	private boolean myIsNewObject; 
 	private TextField myNameField;
 	private ComboBox<String> myImageDropdown;
 	private Slider myTowerHealthValueSlider;
@@ -53,7 +53,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(goToProjectileLauncherButton);
 		goToProjectileLauncherButton.setOnAction(e -> {
 		    getView().getScene().setRoot(new HBox());
-		    if(getIsNewObject()) {
+		    if(getMyIsNewObject()) {
 			getView().loadScreen(new AdjustNewLauncherProjectileScreen(getView(), this));
 		    }
 		    else {
@@ -64,7 +64,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Button backButton = setupBackButtonSuperclass();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
+			getView().makeTower(myIsNewObject, myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		
@@ -118,6 +118,10 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(towerHealthUpgradeValue);
 	}
 	
+	protected void setIsNewObject(boolean isNewObject) {
+		myIsNewObject = isNewObject; 
+	}
+	
 	protected void setLauncherProjectileValues(String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		myProjectileImage = projectileImage;
@@ -132,10 +136,9 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myLauncherRange = launcherRange; 
 	}
 	
-	/**
-	 * The following methods are getters for features/fields on the Screen
-	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
-	 */
+	protected boolean getMyIsNewObject() {
+		return myIsNewObject; 
+	} 
 	
 	protected TextField getMyNameField() {
 		return myNameField; 
