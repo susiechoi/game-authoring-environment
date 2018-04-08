@@ -2,11 +2,12 @@ package engine.sprites;
 
 import engine.managers.ProjectileManager;
 import javafx.collections.ObservableList;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 /**
  * This class is a more specific Sprite that applies to just shooting objects (Enemy and Tower).
  * @author Miles Todzo
+ * @author Katherine Van Dyk
  * @param image
  * @param projectileManager
  */
@@ -16,8 +17,10 @@ public class ShootingSprites extends Sprite{
 	private ProjectileManager myProjectileManager;
 	private int hitCount;
 
-	public ShootingSprites(ImageView image) {
+	public ShootingSprites(Image image, double size) {
 		super(image);
+		this.getImage().setFitHeight(size);
+		this.getImage().setFitWidth(size);
 		myProjectileManager = new ProjectileManager();
 	}
 	
