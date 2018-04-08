@@ -8,6 +8,7 @@ import gameplayer.ScreenManager;
 import javafx.stage.Stage;
 import xml.AuthoringModelReader;
 
+
 /**
  * 
  * @author Ben Hodgson 4/5/18
@@ -22,6 +23,7 @@ public class PlayController {
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     
+
     /**
      * Constructs main parts of play: Engine for backend controls, ScreenManager (top
      * level of game player) and Mediator, which connects the two
