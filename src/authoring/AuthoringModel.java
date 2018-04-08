@@ -14,7 +14,7 @@ import authoring.frontend.exceptions.NoDuplicateNamesException;
 
 class AuthoringModel {
 
-	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact,
+	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double healthImpact,
 			double killReward, double killUpgradeCost, double killUpgradeValue) {
 		if (newObject) {
 			// if the enemies map already contains key with the name parameter, throw NoDuplicateNamesException
@@ -26,7 +26,7 @@ class AuthoringModel {
 		}
 	}
 
-	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
 			String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		if (newObject) {
@@ -40,7 +40,7 @@ class AuthoringModel {
 	}
 
 	// TODO 
-	public void makePath() {
+	public void makePath(int level) {
 
 	}
 

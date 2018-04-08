@@ -26,21 +26,21 @@ public class AuthoringController {
 		return myAuthoringModel.getObjectAttribute(objectType, name, attribute); 
 	}
 	
-	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
-	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
 							String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
 							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
-		myAuthoringModel.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 				projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 	
 	// TODO 
-	public void makePath() {
-		myAuthoringModel.makePath(); 
+	public void makePath(int level) {
+		myAuthoringModel.makePath(level); 
 	}
 	
     /**
