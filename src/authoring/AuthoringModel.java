@@ -4,7 +4,6 @@ package authoring;
 
 import java.util.List;
 
-import data.GameData;
 import engine.level.Level;
 import engine.path.Path;
 
@@ -15,7 +14,7 @@ import engine.path.Path;
  * Receives input from Controller through applyChange method regarding what/how to change an object
  * 
  */
-public class AuthoringModel implements GameData {
+public class AuthoringModel {
     
     public AuthoringModel() {
 	
