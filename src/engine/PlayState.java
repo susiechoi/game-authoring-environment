@@ -1,6 +1,9 @@
 package engine;
 
 import java.util.List;
+
+import data.GameData;
+
 import java.awt.Point;
 import engine.level.Level;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import engine.managers.TowerManager;
  * @author Katherine Van Dyk
  * @date 4/6/18
  */
-public class PlayState {
+public class PlayState implements GameData {
 
 
     private int UNIVERSAL_TIME;

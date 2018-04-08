@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 
 import com.thoughtworks.xstream.XStream;
 
+import authoring.AuthoringModel;
 import data.GameData;
 
 /**
@@ -39,11 +40,11 @@ public class PlaySaverWriter implements XMLWriter {
 		game = d.createElement("game");
 		d.appendChild(game);
 	}
-	
+
 	@Override
 	public void write(GameData g, String filepath) {
 		// check type
-		if (!g.getClass().getSimpleName().equals("GameState")) {
+		if (!g.getClass().getSimpleName().equals("PlayState")) {
 			throw new BadGameDataException("Incorrect GameData: Must use GameState object to store correct data");
 		}
 		//
@@ -57,12 +58,6 @@ public class PlaySaverWriter implements XMLWriter {
 			// TODO replace with error pop up?
 			System.out.println("Error configuring XML file");
 		}
-	}
-
-	@Override
-	public void change(GameData g) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

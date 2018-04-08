@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
-import authoring.AuthoringModel;
+import data.GameData;
 
 public class AuthoringModelWriter implements XMLWriter {
 
@@ -44,7 +44,7 @@ public class AuthoringModelWriter implements XMLWriter {
      * Implementation of write method that saves data for authoring to SavedModels folder
      */
     @Override
-    public void write(AuthoringModel g, String filepath) throws BadGameDataException {
+    public void write(GameData g, String filepath) throws BadGameDataException {
 	// check type
 	if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
