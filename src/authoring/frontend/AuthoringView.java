@@ -16,8 +16,7 @@ import javafx.scene.Scene;
 public class AuthoringView extends View {
 
     public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
-    public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen";
-
+    public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
     private StageManager myStageManager; 
     private PromptReader myPromptReader;
     private PropertiesReader myPropertiesReader;
@@ -31,8 +30,8 @@ public class AuthoringView extends View {
 	myPropertiesReader = new PropertiesReader();
 	myStageManager = stageManager; 
 	myController = controller; 
+	myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
 	myStageManager.switchScreen((new CustomizationChoicesScreen(this)).getScreen());
-	myCurrentCSS = DEFAULT_AUTHORING_CSS;
     }
     protected void loadScreen(Screen screen) {
 	myStageManager.switchScreen(screen.getScreen());
@@ -50,7 +49,6 @@ public class AuthoringView extends View {
 
     protected void goForwardFrom(String id) {
 	try {
-	    System.out.println("id getting sent: " + id);
 	    String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 	    Class<?> clazz = Class.forName(nextScreenClass);
 	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
