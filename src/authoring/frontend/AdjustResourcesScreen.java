@@ -24,7 +24,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 	public Parent populateScreenWithFields(){
 		VBox vb = new VBox(); 
 
-		vb.getChildren().add(getUIFactory().makeScreenTitleText("Specify Starting Resources"));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyStartingResources")));
 
 		Slider startingHealthSlider = getUIFactory().setupSlider("startingHealth", 100);
 		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", startingHealthSlider, getErrorCheckedPrompt("StartingHealth"));

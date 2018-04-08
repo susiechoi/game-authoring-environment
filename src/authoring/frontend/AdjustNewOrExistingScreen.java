@@ -17,21 +17,27 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	public static final String DEFAULT_CONSTANTS = "frontend/Constants.properties";
 	
+	private String mySelectedObjectName; 
+	
+	private String myDefaultObjectName; 
 	private int myMaxHealthImpact;
 	private int myMaxSpeed;
 	private int myMaxRange;
 	private int myMaxPrice; 
 	private int myMaxUpgradeIncrement; 
-	
+
 	private boolean myIsNewObject; 	
 	
-	protected AdjustNewOrExistingScreen(AuthoringView view) {
+	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName) {
 		super(view);
+		mySelectedObjectName = selectedObjectName; 
+		myIsNewObject = mySelectedObjectName.equals(myDefaultObjectName);
 		setConstants();
 	}
 
 	private void setConstants() {
 		try {
+			myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
 			myMaxHealthImpact = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxHealthImpact"));
 			myMaxSpeed = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxSpeed"));
 			myMaxRange = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxRange"));
@@ -55,14 +61,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		Parent constructedScreen = populateScreenWithFields();
 		populateFieldsWithData(); 
 		return constructedScreen;
-	}
-	
-	/**
-	 * To discern whether a Screen corresponds to the creation of a new object or the editing of an existing one
-	 * @param isNewObject - true if new object, false if existing object being edited
-	 */
-	protected void setIsNewObject(boolean isNewObject) {
-		myIsNewObject = isNewObject; 
 	}
 	
 	protected abstract Parent populateScreenWithFields();
@@ -118,6 +116,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	
 	protected int getMyMaxUpgradeIncrement() {
 		return myMaxUpgradeIncrement; 
+	}
+	
+	protected String getMySelectedObjectName() {
+		return mySelectedObjectName; 
 	}
 	
 }

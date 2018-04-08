@@ -7,14 +7,12 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -39,8 +37,8 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private double myLauncherSpeed;
 	private double myLauncherRange; 
 	
-	protected AdjustTowerScreen(AuthoringView view) {
-		super(view);
+	protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
+		super(view, selectedObjectName);
 	}
 
 	@Override
@@ -56,10 +54,10 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		goToProjectileLauncherButton.setOnAction(e -> {
 		    getView().getScene().setRoot(new HBox());
 		    if(getMyIsNewObject()) {
-			getView().loadScreen(new AdjustNewLauncherProjectileScreen(getView(), this));
+			getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText()));
 		    }
 		    else {
-			getView().loadScreen(new AdjustExistingLauncherProjectileScreen(getView(), this, this.getMyNameField().getText())); //TODO: figure out not hard coded!
+			getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText())); 
 		    }
 		});
 		
@@ -80,7 +78,17 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		return sp;
 	}
 
-	protected abstract void populateFieldsWithData(); 
+	protected void populateFieldsWithData() {
+		getMyNameField().setText(getMySelectedObjectName());
+
+		setComboBoxToValue(getMyImageDropdown(),getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+
+		setSliderToValue(getMyTowerHealthValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
+
+		setSliderToValue(getMyTowerHealthUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
+
+		setSliderToValue(getMyTowerHealthUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
+	}
 	
 	private void makeTowerComponents(VBox vb) {
 		TextField nameInputField = getUIFactory().makeTextField(""); 
