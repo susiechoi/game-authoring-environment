@@ -8,7 +8,7 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -24,9 +24,9 @@ public class Enemy extends Sprite{
 	private ValueProperty myValue;
 	private IIntersecter myIntersecter;
 
-	public Enemy(ImageView myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
+	public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
 		super(myImage);
-		myIntersecter = new Intersecter(myImage); 
+		myIntersecter = new Intersecter(this.getImage()); 
 		myHealth = health;
 		myDamage = damage;
 		myValue = value;

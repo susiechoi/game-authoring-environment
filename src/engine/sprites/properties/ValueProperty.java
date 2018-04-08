@@ -2,8 +2,6 @@ package engine.sprites.properties;
 
 public class ValueProperty extends Property {
 
-    private double myValue;
-
     /**
      * Returns a value of the sprite (how much it sells for)
      * 
@@ -12,7 +10,7 @@ public class ValueProperty extends Property {
      * @param propertyValue
      */
     public ValueProperty(double propertyValue) {
-	myValue = propertyValue;
+	super(propertyValue);
     }
 
     /**
@@ -21,15 +19,9 @@ public class ValueProperty extends Property {
      * 
      * @param features
      */
-    public void updateValue(UpgradeProperty property) {
-	myValue += property.getCost();
+    public void updateValue(UpgradeProperty feature) {
+	double newValue = this.getProperty() + feature.getCost();
+	this.setProperty(newValue);
     }
 
-    /**
-     * Returns an object's value
-     */
-    @Override
-    public double getProperty() {
-	return myValue;
-    }
 }

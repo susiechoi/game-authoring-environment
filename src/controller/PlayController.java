@@ -31,12 +31,12 @@ public class PlayController {
     public PlayController(Stage stage) {
 	myScreenManager = new ScreenManager(stage);
 	myGameEngine = new GameEngine(myMediator);
+	myReader = new AuthoringModelReader();
 	myMediator = new Mediator(myScreenManager, myGameEngine);
     }
     
     public void newPlay(String pathToXML) {
-	myReader = new AuthoringModelReader(pathToXML);
-	AuthoringModel playModel = myReader.createModel();
+	AuthoringModel playModel = myReader.createModel(pathToXML);
 	PlayState play = new PlayState(myMediator, playModel.getLevels());
 	myGameEngine.setPlayState(play);
 	// TODO: myScreenManager.setLandscape(landscape);
