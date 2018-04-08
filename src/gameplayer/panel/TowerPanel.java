@@ -1,27 +1,21 @@
 package gameplayer.panel;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.Map;
 
+import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
-import gameplayer.PromptReader;
 import gameplayer.screen.GameScreen;
-import file.FileIO;
 
 
 public class TowerPanel extends Panel {
@@ -45,8 +39,7 @@ public class TowerPanel extends Panel {
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
 
 
-    public TowerPanel(BorderPane pane, GameScreen gameScreen, PromptReader promptReader) {
-	PANE = pane;
+    public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
 	GAME_SCREEN = gameScreen;
 	PROMPTS = promptReader;
 	PROP_READ = new PropertiesReader();
@@ -57,10 +50,12 @@ public class TowerPanel extends Panel {
 
     @Override
     public void makePanel() {
-	List<Button> buttons = makeButtons();
 
 	VBox towerHolderLeft = new VBox();
 	VBox towerHolderRight = new VBox();
+	towerHolderLeft.setId("towerHolders");
+	towerHolderRight.setId("towerHolders");
+
 
 	fillScrollWithTowers(towerHolderLeft,towerHolderRight);
 
@@ -145,6 +140,7 @@ public class TowerPanel extends Panel {
 	//do some stuff
 	return null;
     }
+    
 
 
 }

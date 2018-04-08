@@ -15,10 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
-import authoring.frontend.Screen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -104,8 +100,9 @@ public class UIFactory {
 
 	public Slider setupSlider(String id, int sliderMax) {
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
-		Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
+		Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
 			public void changed(ObservableValue<? extends Number> ov,
 					Number old_val, Number new_val) {
 				sliderValue.setText(String.format("%03d", (int)(double)new_val));
@@ -230,6 +227,20 @@ public class UIFactory {
 		hb.getChildren().add(imageDisplay);
 		return hb; 
 	}
+
+	public HBox setupSliderWithValue(String id, Slider slider, String prompt) {
+		Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> ov,
+					Number old_val, Number new_val) {
+				sliderValue.setText(String.format("%03d", (int)(double)new_val));
+			}
+		});
+		HBox hb = new HBox();
+		hb.getChildren().add(slider);
+		hb.getChildren().add(sliderValue);
+		return addPromptAndSetupHBox(id, hb, prompt);
+	}
 	
 	public HBox addPromptAndSetupHBox(String id, Node node, String prompt) {
 		HBox hbox = new HBox();
@@ -239,12 +250,25 @@ public class UIFactory {
 		hbox.getChildren().add(node);
 		return hbox;	
 	}
+	
 	public void applyTextFieldFocusAction(Scene screen, TextField textField) {
 		screen.setOnMousePressed(event -> {
 			if (!textField.equals(event.getSource())) {
 				textField.getParent().requestFocus();
 			}
 		});
+	}
+	
+	public Button setupBackButton(EventHandler<ActionEvent> action) {
+		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
+		Button backButton = makeImageButton("backButton",backbuttonImage);
+		backButton.setOnAction(e -> {action.handle(e);});
+		return backButton; 
+	}
+	
+	public Button setupApplyButton() {
+		Button applyButton = makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
+		return applyButton;
 	}
 
 }

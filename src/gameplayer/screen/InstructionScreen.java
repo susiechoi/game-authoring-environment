@@ -1,18 +1,15 @@
 package gameplayer.screen;
 
+import frontend.PromptReader;
+import frontend.Screen;
 import frontend.UIFactory;
-import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 public class InstructionScreen extends Screen {
     //TODO re-factor style sheets to abstract
@@ -31,24 +28,15 @@ public class InstructionScreen extends Screen {
 	//setStyleSheet(DEFAULT_OWN_CSS);
     }
 
-
-    @Override
-    public Parent getScreenRoot(){
-	if(ROOT == null) {
-	    makeScreen();
-	}
-	return ROOT;
-        
-    }
-
     @Override
     //TODO all text should be read from language properties files
-    public void makeScreen() {
+    public Parent makeScreenWithoutStyling() {
 	VBox rootBox = new VBox();
 	Label textInstructs = new Label();
 	textInstructs.setWrapText(true);
 	textInstructs.setText("Instructions");
 	textInstructs.setAlignment(Pos.CENTER);
+	textInstructs.setMaxWidth(Double.MAX_VALUE);
 	
 	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 	newGameButt.setOnMouseClicked((arg0) ->SCREEN_MANEGER.loadGameScreenNew());
@@ -57,16 +45,25 @@ public class InstructionScreen extends Screen {
 	//this should only be clickable if there is a save file availible
 	Boolean saveAvailable = isSaveAvailable();
 	continueButt.setDisable(!saveAvailable);
-	
-	
 	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenContinuation());
-	HBox buttonBox = new HBox(newGameButt,continueButt);
+	
+	HBox leftCenter = new HBox(newGameButt);
+	leftCenter.setAlignment(Pos.CENTER);
+	leftCenter.setMaxWidth(Double.MAX_VALUE);
+	HBox rightCenter = new HBox(continueButt);
+	rightCenter.setAlignment(Pos.CENTER);
+	rightCenter.setMaxWidth(Double.MAX_VALUE);
+
+	HBox buttonBox = new HBox(leftCenter,rightCenter);
 	buttonBox.setAlignment(Pos.CENTER);
+	HBox.setHgrow(leftCenter, Priority.ALWAYS);
+	HBox.setHgrow(rightCenter, Priority.ALWAYS);
+
 	rootBox.getChildren().addAll(textInstructs, buttonBox);
 	
 	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
-	ROOT = rootBox;
+	return rootBox;
     }
     
     //TODO needs to check if valid saveFile is available

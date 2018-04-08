@@ -4,16 +4,15 @@ import gameplayer.panel.TowerPanel;
 import gameplayer.panel.UpgradePanel;
 import gameplayer.panel.GamePanel;
 import gameplayer.panel.ScorePanel;
+import gameplayer.panel.BuyPanel;
 import gameplayer.panel.ControlsPanel;
+import frontend.PromptReader;
+import frontend.Screen;
 import frontend.UIFactory;
-import gameplayer.PromptReader;
 import gameplayer.ScreenManager;
 
 
-import javafx.scene.Node;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -26,9 +25,7 @@ public class GameScreen extends Screen {
     private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
     private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
  
-    
-    
-    private Parent ROOT;
+
     private final UIFactory UIFACTORY;
     private final PromptReader PROMPTS;
     private TowerPanel TOWER_PANEL;
@@ -37,6 +34,7 @@ public class GameScreen extends Screen {
     private ControlsPanel CONTROLS_PANEL;
     private UpgradePanel UPGRADE_PANEL;
     private ScreenManager SCREEN_MANAGER;
+    private BuyPanel BUY_PANEL;
     
 
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader) {
@@ -47,16 +45,18 @@ public class GameScreen extends Screen {
     }
 
     @Override
-    public void makeScreen() {
+    public Parent makeScreenWithoutStyling() {
         BorderPane rootPane = new BorderPane();
-        TOWER_PANEL = new TowerPanel(rootPane, this, PROMPTS);
+        TOWER_PANEL = new TowerPanel(this, PROMPTS);
         CONTROLS_PANEL = new ControlsPanel(this);
         SCORE_PANEL = new ScorePanel(this);
         GAME_PANEL = new GamePanel(this);
         UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
+        BUY_PANEL = new BuyPanel(this, PROMPTS);
         
         
-        VBox rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+        
+        VBox rightPane = new VBox(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
         VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
         
         BorderPane leftPane = new BorderPane();
@@ -73,19 +73,11 @@ public class GameScreen extends Screen {
         
         rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
         rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
-        ROOT = rootPane;
-    }
-
-    @Override
-    public Parent getScreenRoot(){
-        if (ROOT == null) {
-            makeScreen();
-        }
-        return ROOT;
+        return rootPane;
     }
     
     public void towerSelectedForPlacement(String towerPropName) {
-	
+	GAME_PANEL.towerSelected(towerPropName);
     }
     
     public Integer getMoney() {
@@ -113,6 +105,7 @@ public class GameScreen extends Screen {
 	else
 	    System.out.println(control);
     }
+
 
 
 }

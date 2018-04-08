@@ -11,7 +11,7 @@ Text {
 }
 
 .combo-box .cell {
-	  -fx-font: 14pt "Helvetica";
+	  -fx-font: 12pt "Helvetica";
 }
 
 .text-field {
@@ -19,7 +19,7 @@ Text {
 
 #screenTitle {
   -fx-alignment: center;
-  -fx-font: 36pt "Helvetica";
+  -fx-font: bold 36pt "Helvetica";
 }
 
 #selector {
@@ -41,5 +41,10 @@ Text {
 	-fx-padding: 10;
 	-fx-spacing: 10;
 	-fx-background-color: #B7D5D4;
+}
+
+#towerHolders {
+	-fx-padding: 0;
+	-fx-spacing: 0;
 }
 
