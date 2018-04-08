@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import authoring.AuthoringModel;
 
@@ -36,7 +37,7 @@ public class AuthoringModelWriter implements XMLWriter {
 	} catch (ParserConfigurationException p) {
 	    System.out.println("Bad configuration"); // update exception
 	}
-	parser = new XStream();
+	parser = new XStream(new StaxDriver());
     }
 
     /**
@@ -50,7 +51,7 @@ public class AuthoringModelWriter implements XMLWriter {
 	}
 	file = new File("SavedModels/" + filepath + ".xml");
 	// Write data using XStream
-	Element root = d.createElement("Game Rules");
+	Element root = d.createElement("GameRules");
 	root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
 	// Save data
 	try {
