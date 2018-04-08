@@ -68,12 +68,12 @@ class AuthoringModel {
 		myResources = new AuthoringResources(startingHealth, starting$);
 	}
 	
-	public void makeSettings(String backgroundImage, String gameName, String themeSong,
-		String CSSstyling) {
-	    	if(newObject) {
-	    	    // if this is a new game
-	    	}
-	}
+//	public void makeSettings(String backgroundImage, String gameName, String themeSong,
+//		String CSSstyling) {
+//	    	if(newObject) {
+//	    	    // if this is a new game
+//	    	}
+//	}
 	// TODO POPULATE RETURN LIST WITH EXISTING OBJECTS AT THAT LEVEL 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing
