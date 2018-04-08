@@ -1,29 +1,43 @@
 package engine.path;
 
+import java.awt.geom.Point2D;
+
 /**
+ * Class for constructing path and determining next coordinates
  * 
- * @author Ben Hodgson 3/29/18
- *
- * Interface for building a path.
+ * @author Katherine Van Dyk 4/8/18
  */
-public interface Path {
+public class Path {
+    
+    //TODO do trig to figure out how to calculate next position off based off of list of coordinates
+    //The idea is that you move incrementally in one direction until you get past the next coord in the
+    // myCoordinates array, and then you set your position to the next coordinate in that array and reset
+    //your angle and continue moving
+    private Point2D[] myCoordinates;
+    private Point2D currentPosition;
+    private Point2D angle;
+    
     
     /**
      * Adds a start to the path. A path start point represents where enemies spawn.
      */
-    public void addStart();
-
-    /**
-     * Adds an end to the path. A path end point represents where enemies progress towards.
-     * Enemies that pass the end point negatively impact a player. 
-     */
-    public void setEnd();
+    public void addCoords(Point2D[] coordinates){
+	myCoordinates = coordinates;
+    }
     
     /**
-     * Checks to make sure the path is valid by checking that the start points all connect
-     * to the end of the path.
+     * Returns the next position of the object according to its speed
      * 
-     * @return boolean: true if the path's start and end points connect, false otherwise
+     * @param mySpeed
      */
-    public boolean pathConnects();
+    public Point2D nextPosition(double speed, double elapsedTime) {
+	checkBounds(speed);
+	double newX = currentPosition.getX() + speed * elapsedTime;
+	double newY = currentPosition.getY() + speed*elapsedTime;
+	return new Point2D.Double(newX, newY);
+    }
+    
+    private void checkBounds(double speed) {
+	
+    }
 }

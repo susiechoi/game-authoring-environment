@@ -1,29 +1,19 @@
 package engine.sprites.properties;
 
-public class DamageProperty extends Property {
-
-	private double myDamage;
-
+/**
+ * Damage Property represents how much damage an object can exert on another
+ * 
+ * @author Katherine Van Dyk
+ *
+ */
+public class DamageProperty extends UpgradeProperty {
+    
 	public DamageProperty(double cost, double value, double damage) {
-	    	super(cost, value);
-		myDamage = damage;
-	}
-
-	@Override
-	public double upgrade(double balance) {
-		if(balance - upgradeCost < 0) {
-			return balance;
-		}
-		else {
-			myDamage += upgradeValue;
-			return balance - upgradeCost;
-		}
+	    	super(cost, value, damage);
 	}
 
 	@Override
 	public double getProperty() {
 		return myDamage;
-	}	
-
-
+	}
 }
