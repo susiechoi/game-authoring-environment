@@ -6,6 +6,7 @@ import engine.managers.ProjectileManager;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * This class is a more specific Sprite that applies to just shooting objects (Enemy and Tower).
