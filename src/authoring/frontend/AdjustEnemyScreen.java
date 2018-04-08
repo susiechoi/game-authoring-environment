@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
+class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
 		
@@ -27,8 +27,8 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	private Slider myUpgradeCostSlider; 
 	private Slider myUpgradeValueSlider; 
 	
-	protected AdjustEnemyScreen(AuthoringView view) {
-		super(view);
+	protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
+		super(view, selectedObjectName);
 	}
 
 	@Override
@@ -99,7 +99,21 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
 	 */
 	
-	protected abstract void populateFieldsWithData();
+	protected void populateFieldsWithData() {
+		getMyNameField().setText(getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myName"));
+		
+		setComboBoxToValue(getMyImageDropdown(),getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
+		
+		setSliderToValue(getMySpeedSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
+		
+		setSliderToValue(getMyHealthImpactSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
+			
+		setSliderToValue(getMyValueSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
+		
+		setSliderToValue(getMyUpgradeCostSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
+		
+		setSliderToValue(getMyUpgradeValueSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
+	}
 	
 	protected TextField getMyNameField() {
 		return myNameField;
