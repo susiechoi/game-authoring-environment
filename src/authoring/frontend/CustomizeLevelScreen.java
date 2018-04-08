@@ -18,7 +18,7 @@ public class CustomizeLevelScreen extends AdjustScreen {
 	public Parent makeScreenWithoutStyling() {	
 		VBox vb = new VBox(); 
 		
-		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeLevel")+" "+getView().getLevel()));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeLevel")));
 		
 		Button towersButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeTower"));
 		towersButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeTower");});
