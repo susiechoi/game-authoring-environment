@@ -17,19 +17,16 @@ public class XMLFactory {
 	 *
 	 * @param writerType
 	 * String representation of class name of desired writer type
-	 * 
-	 * @param filename
-	 * path to file that is being written to
 	 *
 	 * @return
 	 * Instance of that implementation of XMLWriter
 	 */
-	public static XMLWriter generateWriter(String writerType, String filename) {
+	public static XMLWriter generateWriter(String writerType) {
 		try {
-			Class writer = Class.forName(writerType);
-			Constructor c = writer.getConstructor();
+			Class<?> writer = Class.forName(writerType);
+			Constructor<?> c = writer.getConstructor();
 			try {
-			    return (XMLWriter) c.newInstance(filename);
+			    return (XMLWriter) c.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();
@@ -55,19 +52,16 @@ public class XMLFactory {
 	 *
 	 * @param readerType
 	 * String representation of class name of desired reader type
-	 * 
-	 * @param filename
-	 * Path to file tat is being read
 	 *
 	 * @return
 	 * Instance of that implementation of XMLReader
 	 */
-	public static XMLReader generateReader(String readerType, String filename) {
+	public static XMLReader generateReader(String readerType) {
 		try {
-			Class writer = Class.forName(readerType);
-			Constructor c = writer.getConstructor();
+			Class<?> writer = Class.forName(readerType);
+			Constructor<?> c = writer.getConstructor();
 			try {
-			    return (XMLReader) c.newInstance(filename);
+			    return (XMLReader) c.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();

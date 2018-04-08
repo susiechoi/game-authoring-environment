@@ -8,6 +8,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import data.GameData;
 
@@ -23,7 +25,9 @@ public class AuthoringModelWriter implements XMLWriter {
      */
 
     private Document d;
+    private File file;
     private XStream parser;
+    private String filepath;
 
     /**
      * Initializes file that will be written
@@ -38,7 +42,7 @@ public class AuthoringModelWriter implements XMLWriter {
     }
 
     /**
-     * Implementation of write method that saves data for authoring
+     * Implementation of write method that saves data for authoring to SavedModels folder
      */
     @Override
     public void write(GameData g, String filepath) throws BadGameDataException {
@@ -46,12 +50,13 @@ public class AuthoringModelWriter implements XMLWriter {
 	if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
 	}
-	//
-
+	file = new File("SavedModels/" + filepath + ".xml");
+	// Write data using XStream
+	Element root = d.createElement("Game Rules");
+	root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
 	// Save data
-	File path = new File(filepath + ".xml");
 	try {
-	    XMLDocumentBuilder.saveXMLFile(d, path);
+	    XMLDocumentBuilder.saveXMLFile(d, file);
 	} catch (TransformerFactoryConfigurationError | TransformerException e) {
 	    // TODO replace with error pop up?
 	    System.out.println("Error configuring XML file");

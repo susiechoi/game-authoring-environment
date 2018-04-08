@@ -64,9 +64,9 @@ public class XMLDocumentBuilder {
 	 * @param data: The data to be added
 	 * @return A node to be added to the xml file
 	 */
-	public static Node addData(Document doc, String elemName, Object data) {
+	public static Node addData(Document doc, String elemName, String data) {
 		Element e = doc.createElement(elemName);
-		//e.appendChild(doc.createTextNode(data));
+		e.appendChild(doc.createTextNode(data));
 		return e;
 	}
 	
@@ -78,7 +78,9 @@ public class XMLDocumentBuilder {
 	 * @return		 Node that has been appended to parent
 	 */
 	public static Element appendElement(Element parent, String name, Document file) {
-		return null;
+		Element e = file.createElement(name);
+		parent.appendChild(e);
+		return e;
 	}
 	
 	
