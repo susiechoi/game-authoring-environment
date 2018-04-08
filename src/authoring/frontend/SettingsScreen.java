@@ -17,11 +17,14 @@ import javafx.scene.text.Text;
 public class SettingsScreen extends AdjustScreen {
     public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 
+    private String myBackgroundImage;
+    private String myGameName;
     protected SettingsScreen(AuthoringView view) {
 	super(view);
     }
+    
     @Override
-    public Parent makeScreenWithoutStyling(){
+    public Parent populateScreenWithFields(){
 	VBox vb = new VBox();
 	Text settingsHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SettingsHeading"));
 	TextField gameNameEntry = getUIFactory().makeTextField("");
@@ -47,6 +50,12 @@ public class SettingsScreen extends AdjustScreen {
 	vb.getChildren().add(backgroundImagePrompted);
 	vb.getChildren().add(backAndApplyButton);
 	return vb;
+    }
+
+    @Override
+    protected void populateFieldsWithData() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

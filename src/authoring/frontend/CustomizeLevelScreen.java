@@ -44,4 +44,16 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		return vb;
 	}
 
+	@Override
+	protected Parent populateScreenWithFields() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+	    
+	}
+
 }
