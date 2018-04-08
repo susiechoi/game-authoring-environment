@@ -1,7 +1,7 @@
 /**
  * @author susiechoi
+ * Creates screen in which user can customize what aspect of the level to customize (tower, path, etc)
  */
-
 package authoring.frontend;
 
 import javafx.scene.Parent;
@@ -14,6 +14,9 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		super(view);
 	}
 
+	/**
+	 * Makes screen with buttons corresponding to different customization options (tower, path, enemy, etc) 
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {	
 		VBox vb = new VBox(); 

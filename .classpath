@@ -6,9 +6,5 @@
 	<classpathentry kind="src" path="doc"/>
 	<classpathentry kind="src" path="images"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/bmc41/CS308/voogasalad_iftruereturntrue/lib/xstream-1.4.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bmc41/CS308/voogasalad_iftruereturntrue/lib/xstream-benchmark-1.4.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bmc41/CS308/voogasalad_iftruereturntrue/lib/xstream-hibernate-1.4.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bmc41/CS308/voogasalad_iftruereturntrue/lib/xstream-jmh-1.4.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
