@@ -9,7 +9,6 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -27,7 +26,6 @@ public class AuthoringModelWriter implements XMLWriter {
     private Document d;
     private File file;
     private XStream parser;
-    private String filepath;
 
     /**
      * Initializes file that will be written
