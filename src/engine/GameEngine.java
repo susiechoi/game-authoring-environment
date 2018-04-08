@@ -4,8 +4,6 @@ import java.util.Timer;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -25,13 +23,12 @@ public class GameEngine {
     private Mediator myMediator;
     private Timeline ANIMATION;
 
-    public GameEngine(Mediator med) {
+    public GameEngine(Mediator mediator) {
 	myPlayState = null;
-	myMediator = med;
-	int delayMS = 50;
+	myMediator = mediator;
 	myTimer = new Timer();
 	myLoop = new GameLoop(this);
-	setSpeed(delayMS);
+	setSpeed(MILLISECOND_DELAY);
 	// attach "game loop" to time line to play it
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> loop(SECOND_DELAY));

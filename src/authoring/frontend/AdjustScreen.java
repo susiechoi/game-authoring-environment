@@ -2,6 +2,7 @@ package authoring.frontend;
 
 import java.io.File;
 
+import frontend.Screen;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -14,7 +15,7 @@ import javafx.scene.layout.HBox;
  *
  */
 
-abstract class AdjustScreen extends Screen {
+abstract class AdjustScreen extends AuthoringScreen {
 		
 	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
 	

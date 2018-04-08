@@ -1,17 +1,16 @@
 package engine.sprites.towers;
 
-import engine.sprites.Sprite;
+import engine.sprites.ShootingSprites;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
  * 
  * @author Katherine Van Dyk
  */
-public class Tower extends Sprite {
-
+public class Tower extends ShootingSprites {
     private Launcher myLauncher;
     private HealthProperty myHealth;
     private ValueProperty myValue;
@@ -24,35 +23,23 @@ public class Tower extends Sprite {
      * @param health: Initial health of the tower
      * @param value: Value of the tower for selling
      */
-    public Tower(ImageView image, Launcher launcher, HealthProperty health, ValueProperty value) {
-	super(image);
+    public Tower(Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
+	super(image, size);
 	myLauncher = launcher;
 	myHealth = health;
 	myValue = value;
     }
-
-    /**
-     * Changes health of tower by an increment of h
-     */
-    public void changeHealth(double h) {
-	myHealth.change(h);
-    }
     
     /**
      * Handles decrementing tower's damage when it gets hit by an enemy
+     * 
+     * @return boolean: True if tower is alive, false otherwise
      */
-    public void getHitBy(double enemyDamage) {
-	myHealth.change(-enemyDamage);
-	checkLive();
-    }
-    
-    /**
-     * @return if Tower object is alive
-     */
-    private boolean checkLive() {
+    public boolean handleCollision(double enemyDamage) {
+	myHealth.loseHealth(enemyDamage);
 	return (myHealth.getProperty() <= 0);
     }
-
+    
     /**
      * Handles selling a tower
      */

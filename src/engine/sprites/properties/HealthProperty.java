@@ -1,8 +1,12 @@
 package engine.sprites.properties;
 
-public class HealthProperty extends Property {
+/**
+ * Class that is used in every Sprite that has health. Can be upgraded with money
+ * @author ryanpond
+ * @author Katie Van Dyk
+ */
+public class HealthProperty extends UpgradeProperty {
 
-    private double myHealth;
 
     /**
      * Health property determines how much health a sprite has left
@@ -12,37 +16,16 @@ public class HealthProperty extends Property {
      * @param health: baseline health value
      */
     public HealthProperty(double cost, double value, double health) {
-	super(cost, value);
-	myHealth = health;
+	super(cost, value, health);
     }
-
+    
     /**
-     * Upgrade's a user's health
+     * Called when health is lost
+     * @param healthLost : how much health is lost
      */
-    @Override
-    public double upgrade(double balance) {
-	if(canUpgrade(balance)) {
-	    myHealth += upgradeValue;
-	    return balance - upgradeCost;
-	}
-	return balance;
-    }
-
-    /**
-     * Returns a user's current health
-     */
-    @Override
-    public double getProperty() {
-	return myHealth;
-    }
-
-    /**
-     * Change's a user's health by the double change
-     * 
-     * @param change: how much the health is being changed by
-     */
-    public void change(double change) {
-	myHealth += change;
+    public void loseHealth(double healthLost) {
+	double newValue = this.getProperty() - healthLost;
+	this.setProperty(newValue);
     }
     
     /**
@@ -51,6 +34,6 @@ public class HealthProperty extends Property {
      * @return boolean: True if character is alive, false otherwise
      */
     public boolean isAlive() {
-	return myHealth > 0;
+	return this.getProperty() > 0;
     }
 }

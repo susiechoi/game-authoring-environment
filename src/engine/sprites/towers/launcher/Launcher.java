@@ -1,6 +1,7 @@
 package engine.sprites.towers.launcher;
 
 import engine.sprites.properties.FireRateProperty;
+import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -9,25 +10,28 @@ import engine.sprites.towers.projectiles.Projectile;
  * 
  * @author Ben Hodgson 
  * @author Ryan Pond
+ * @author Katherine Van Dyk
  * @date 3/28/18
  */
 public class Launcher {
 
+    private RangeProperty myRange;
     private FireRateProperty myFireRate;
     private Projectile myProjectile;
     private long timeLastFired;
 
-    public Launcher(FireRateProperty fireRate, Projectile projectile) {
+    public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
 	myFireRate = fireRate;
 	myProjectile = projectile;
+	myRange = range;
 	timeLastFired = System.nanoTime();
     }
 
     /**
      * Sets the current projectile type managed by the ProjectileManager
      */
-    public void setProjectile() {
-
+    public void setProjectile(Projectile projectile) {
+	myProjectile = projectile;
     }
 
     /**
@@ -41,6 +45,10 @@ public class Launcher {
     }
 
 
+    /**
+     * Launch method will make sure that enough time has passed since last shot and then fire a new projectile
+     * @return : the projectile that was fired
+     */
     public Projectile launch() {
 	long currTime = System.nanoTime();
 	long timeSinceLastShot = currTime - timeLastFired;

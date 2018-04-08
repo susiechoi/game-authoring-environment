@@ -15,9 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

@@ -2,48 +2,35 @@ package engine.managers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.sun.javafx.scene.paint.GradientUtils.Point;
+
+import engine.sprites.ShootingSprites;
 import engine.sprites.towers.Tower;
 
 
 /**
  * Tower manager uses composite design pattern to handle updating all 
  * active Tower objects in the game loop.
- * 
- * @author Katherine Van Dyk
- * @author Ryan Pond
- * @author Ben Hodgson 4/3/18
- * @author Miles Todzo 4/4/18
- * @author benauriemma 4/5
- */
-public class TowerManager extends Manager {
+ *
+ * @author Miles Todzo
+ * @author Katie Van Dyk
+*/
 
+public class TowerManager extends ShootingSpriteManager {
 
-    private final List<Tower> AVAILABLE = new ArrayList<Tower>();
-    private final List<Tower> ACTIVE = new ArrayList<Tower>();
-
+	//not sure exactly where this should be implemented/how the info for it will be passed in
+	Map<String, Tower> towerTypeToInstance;
+	
     /**
      * Constructor for super class
      */
     public TowerManager() {
 	super();
-    }
-
-    /**
-     * 
-     * @return List<Tower>: an unmodifiableList of AVAILABLE towers
-     */
-    public List<Tower> unmodifiableAvailableList() {
-	return Collections.unmodifiableList(AVAILABLE);
-    }
-
-    /**
-     * 
-     * @return List<Tower>: an unmodifiableList of ACTIVE towers
-     */
-    public List<Tower> unmodifiableActiveList() {
-	return Collections.unmodifiableList(ACTIVE);
+	towerTypeToInstance = new HashMap<>();
     }
 
     /**
@@ -52,7 +39,7 @@ public class TowerManager extends Manager {
      * 
      * @param towers: towers taken from the AuthoringModel that are available in the game
      */
-    public void setTowers(List<Tower> towers) {
+    public void setAvailableTowers(List<Tower> towers) {
 	for (Tower gameTower : towers) {
 	    /* TODO perform the deep copy
 	    Tower copyTower = new Tower(null, null, 0, 0);
@@ -60,13 +47,19 @@ public class TowerManager extends Manager {
 	}
     }
 
+    
     /**
-     * Adds a tower to the list of ACTIVE Tower objects.
-     * 
-     * @param tower: A tower that is Activated in the game
+     * Moves towers on every step of the GameLoop
      */
-    public void setActive(Tower tower) {
-	ACTIVE.add(tower);
+    public void moveTowers() {
+	// TODO Auto-generated method stub
+	
+    }
+    
+    public FrontEndTower place(Point location, String type) {
+    		Tower newTower = towerTypeToInstance.get(type);
+    		this.addToActiveList(newTower);
+    		return (FrontEndTower) newTower;
     }
 
 

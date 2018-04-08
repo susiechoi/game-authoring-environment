@@ -6,6 +6,8 @@ import javafx.scene.control.ScrollPane;
 public class GamePanel extends Panel{
     
     private final GameScreen GAME_SCREEN;
+    private String towerSelected;
+    private boolean towerPlaceMode = false;
     
     
     public GamePanel(GameScreen gameScreen) {
@@ -22,7 +24,26 @@ public class GamePanel extends Panel{
 	//panelRoot.setBottom(new Up);
 	panelRoot.setMaxWidth(Double.MAX_VALUE);
 	panelRoot.setMaxHeight(Double.MAX_VALUE);
+	
+	panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+
 
 	PANEL = panelRoot;
     }
+    
+    public void towerSelected(String towerPropName) {
+	towerSelected = towerPropName;
+	towerPlaceMode = true;
+    }
+    
+    public void exitTowerPlace() {
+	towerPlaceMode = false;
+    }
+    
+    public void handleMouseInput(double x, double y) {
+	if(towerPlaceMode) {
+	    System.out.println(towerSelected + " placed at x: " + x + "y: " + y);
+	}
+    }
+    
 }

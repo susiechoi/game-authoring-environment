@@ -26,7 +26,7 @@ class AdjustTowerScreen extends AdjustScreen {
 	}
 
 	@Override
-	protected Scene makeScreenWithoutStyling() throws MissingPropertiesException{
+	public Scene makeScreenWithoutStyling() throws MissingPropertiesException{
 		VBox vb = new VBox(); 
 		HBox towerNameSelect = new HBox();
 		TextField nameInputField = getUIFactory().makeTextField(""); 

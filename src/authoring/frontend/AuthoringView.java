@@ -1,19 +1,21 @@
 package authoring.frontend;
 
+import frontend.Screen;
+import frontend.StageManager;
 import javafx.stage.Stage;
 
-class AuthoringView {
+class AuthoringView extends View{
 
-	private Stage myStage; 
+	private StageManager myStageManager; 
 	private String myLanguage;
-	protected AuthoringView(Stage stage, String language) {
+	protected AuthoringView(StageManager stageManager, PromptReader reader) {
 		myLanguage = language;
-		myStage = stage; 
+		myStageManager = stageManager; 
 		//myStage.setScene(new SpecifyTowerScreen(this).getScreen());
 		//myStage.setScene(new CustomizationChoicesScreen(this, "English", "Test Game").getScreen());
 		//myStage.setScene((new CustomizationChoicesScreen(this, "Test Game")).getScreen());
 //		myStage.setScene((new SettingsScreen(this).getScreen()));
-		myStage.setScene((new AdjustEnemyScreen(this)).getScreen());
+		myStageManager.switchScreen((new AdjustEnemyScreen(this)).getScreen());
 	}
 	
 	protected String getLanguage() {
@@ -28,20 +30,20 @@ class AuthoringView {
 	protected void goForwardFrom(Screen currentScreen) {
 		String currentScreenName = currentScreen.getClass().getSimpleName();
 		if (currentScreenName.equals("SpecifyEnemyScreen")) {
-			myStage.setScene(new AdjustEnemyScreen(this).getScreen()); 	// TODO replace with reflection?
+			myStageManager.switchScreen((new AdjustEnemyScreen(this)).getScreen()); 	// TODO replace with reflection?
 		}
 		else if (currentScreenName.equals("SpecifyTowerScreen")) {
-			myStage.setScene(new AdjustTowerScreen(this).getScreen());
+			myStageManager.switchScren((new AdjustTowerScreen(this)).getScreen());
 		}
 	}
 	
 	protected void goBackFrom(Screen currentScreen) {
 		String currentScreenName = currentScreen.getClass().getSimpleName();
 		if (currentScreenName.equals("AdjustEnemyScreen")) {
-			myStage.setScene(new SpecifyEnemyScreen(this).getScreen()); 	// TODO replace with reflection?
+			myStageManager.setScene((new SpecifyEnemyScreen(this).getScreen())); 	// TODO replace with reflection?
 		}
 		else if (currentScreenName.equals("AdjustTowerScreen")) {
-			myStage.setScene(new SpecifyTowerScreen(this).getScreen()); 	
+			myStage.setScene((new SpecifyTowerScreen(this).getScreen())); 	
 		}
 	}
 	

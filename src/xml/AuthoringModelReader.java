@@ -1,6 +1,6 @@
 package xml;
 
-import org.w3c.dom.Document;
+import java.io.File;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -16,25 +16,17 @@ import authoring.AuthoringModel;
 
 public class AuthoringModelReader implements XMLReader {
 
-	private Document dom;
 	private XStream parser;
 	
-	public AuthoringModelReader(String filename) {
+	public AuthoringModelReader() {
 		parser = new XStream();
-		dom = readInFile(filename);
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public AuthoringModel createModel() {
-		return null;
 	}
 	
 	@Override
-	public Document readInFile(String filename) {
-		return null;
+	public AuthoringModel createModel(String filename) {
+	    File f = new File("SavedModels/" + filename);
+	    AuthoringModel g = (AuthoringModel) parser.fromXML(f);
+	    return g;
 	}
 
 	@Override
