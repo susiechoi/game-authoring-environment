@@ -16,10 +16,10 @@ import javafx.collections.ObservableList;
  * @author Ryan Pond
  * @author Miles Todzo
  */
-public class Manager {
+public class Manager<E> {
     
-    private List<Sprite> active;
-    private List<Sprite> available;
+    private List<E> active;
+    private List<E> available;
     
     public Manager() {
     		active = new ArrayList<>();
@@ -31,16 +31,16 @@ public class Manager {
      * 
      * @return
      */
-    public ObservableList<Sprite> getObservableListOfAvailable(){
-    		return (ObservableList<Sprite>) available;
+    public ObservableList<E> getObservableListOfAvailable(){
+    		return (ObservableList<E>) available;
     }
     /**
      * Returns observable list of all active objects
      * 
      * @return
      */
-    public ObservableList<Sprite> getObservableListOfActive(){
-    		return (ObservableList<Sprite>) active;
+    public ObservableList<E> getObservableListOfActive(){
+    		return (ObservableList<E>) active;
     }
 
     /**
@@ -48,12 +48,12 @@ public class Manager {
      * was called on and the list of active actors passed as a parameter
      * @param passedSprites
      */
-    public void checkForCollisions(List<Sprite> passedSprites) {
-		for (Sprite activeSprite: this.getObservableListOfActive()) {
-			for (Sprite passedActor: passedSprites) {
-				ShootingSprites shootingSprite = (ShootingSprites) passedActor;
-				activeSprite.checkForCollision(shootingSprite, shootingSprite.getProjectiles());
-			}
-		}
-}
+//    public void checkForCollisions(List<Sprite> passedSprites) {
+//    	for (Sprite activeSprite: this.getObservableListOfActive()) {
+//    		for (Sprite passedActor: passedSprites) {
+//    			ShootingSprites shootingSprite = (ShootingSprites) passedActor;
+//    			activeSprite.checkForCollision(shootingSprite, shootingSprite.getProjectiles());
+//    		}
+//    	}
+//    }
 }

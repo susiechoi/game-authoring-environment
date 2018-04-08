@@ -1,6 +1,9 @@
 package engine.sprites;
 
+import java.util.List;
+
 import engine.managers.ProjectileManager;
+import engine.sprites.towers.projectiles.Projectile;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
@@ -24,29 +27,29 @@ public class ShootingSprites extends Sprite{
 		myProjectileManager = new ProjectileManager();
 	}
 	
-	public ObservableList<Sprite> getProjectiles(){
+	public ObservableList<Projectile> getProjectiles(){
 		return myProjectileManager.getObservableListOfActive();
 	}
 	
 	public void increaseHitCount(int increaseAmount) {
 		hitCount+=increaseAmount;
 	}
-//	
-//	@Override
-//	public void checkForCollision(ShootingSprites shooter, List<Sprite> sprites) {
-//		this.checkTowerEnemyCollision(shooter);
-//		for (Sprite sprite: sprites) {
-//			ImageView spriteImageView = sprite.getImage();
-//			if(this.getImage().intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
-//				this.handleCollision();
-//				sprite.handleCollision();
-//			}
-//		}
-//	}
+	
+	public void checkForCollision(ShootingSprites shooter, List<Projectile> projectiles) {
+		this.checkTowerEnemyCollision(shooter);
+		for (Projectile projectile: projectiles) {
+			ImageView projectileImageView = projectile.getImage();
+			if(this.getImage().intersects(projectileImageView.getX(), projectileImageView.getY(), projectileImageView.getFitWidth(), projectileImageView.getFitHeight())){
+				this.handleCollision();
+				projectile.handleCollision();
+			}
+		}
+	}
 
 	public void checkTowerEnemyCollision(ShootingSprites shooter) {
 		if (this.getImage().intersects(shooter.getImage().getX(), shooter.getImage().getY(), shooter.getImage().getFitWidth(), shooter.getImage().getFitHeight())) {
 			this.handleCollision();
+			shooter.handleCollision();
 		}
 	}
 

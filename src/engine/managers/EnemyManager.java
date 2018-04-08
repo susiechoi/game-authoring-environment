@@ -10,7 +10,7 @@ import engine.sprites.enemies.Enemy;
  * 
  * @author Miles Todzo
  */
-public class EnemyManager extends Manager {
+public class EnemyManager extends ShootingSpriteManager {
     
 	// this doesn't have its own lists like Tower manager does -bma
 	
