@@ -14,6 +14,7 @@ import xml.XMLFactory;
  * This class serves as a bridge between the front end, back end, and file I/O of our game player
  * Each of these areas holds an instance of this 
  * @author benauriemma 4/5
+ * @author andrewarnold
  *
  */
 public class Mediator {
