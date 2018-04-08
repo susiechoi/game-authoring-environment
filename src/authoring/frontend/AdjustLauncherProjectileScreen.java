@@ -14,12 +14,9 @@ import javafx.scene.layout.VBox;
 abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
-	public static final int DEFAULT_MAX_RANGE = 500; 
-	public static final int DEFAULT_MAX_PRICE = 500;  
 	
 	private AdjustTowerScreen myTowerScreen;
 	private ComboBox<String> myProjectileImage;
-	private ComboBox<String> myProjectileAbility;
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileValueSlider;
 	private Slider myProjectileUpgradeCostSlider;
@@ -46,7 +43,7 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileAbility.getValue(), (int)myProjectileDamageSlider.getValue(), (int)myProjectileValueSlider.getValue(), (int)myProjectileUpgradeCostSlider.getValue(), (int)myProjectileUpgradeValueSlider.getValue(), (int)myLauncherValueSlider.getValue(), (int)myLauncherUpgradeCostSlider.getValue(), (int)myLauncherUpgradeValueSlider.getValue(), (int)myLauncherRateSlider.getValue(), (int)myLauncherRangeSlider.getValue());
+			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
@@ -70,61 +67,100 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		}
 		vb.getChildren().add(projectileImageSelect);
 
-		ArrayList<String> dummyProjectileAbilities = new ArrayList<String>(); // TODO read in abilities
-		dummyProjectileAbilities.add("Freeze");
-		dummyProjectileAbilities.add("Fire");
-		ComboBox<String> projectileAbilityDropdown = getUIFactory().makeTextDropdown("", dummyProjectileAbilities);
-		myProjectileAbility = projectileAbilityDropdown; 
-		HBox projectileAbility = getUIFactory().addPromptAndSetupHBox("", projectileAbilityDropdown, getErrorCheckedPrompt("ProjectileAbility"));	
-		vb.getChildren().add(projectileAbility);
-
-		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", DEFAULT_MAX_RANGE);
+		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", myMaxRange);
 		myProjectileDamageSlider = projectileDamageSlider; 
 		HBox projectileDamage = getUIFactory().setupSliderWithValue("ProjectileDamageSlider", projectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 		vb.getChildren().add(projectileDamage);
 
-		Slider projectileValueSlider = getUIFactory().setupSlider("ProjectileValueSlider", DEFAULT_MAX_PRICE);
+		Slider projectileValueSlider = getUIFactory().setupSlider("ProjectileValueSlider", myMaxPrice);
 		myProjectileValueSlider = projectileValueSlider; 
 		HBox projectileValue = getUIFactory().setupSliderWithValue("ProjectileValueSlider", projectileValueSlider, getErrorCheckedPrompt("ProjectileValue"));
 		vb.getChildren().add(projectileValue);
 
-		Slider projectileUpgradeCostSlider = getUIFactory().setupSlider("ProjectileUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider projectileUpgradeCostSlider = getUIFactory().setupSlider("ProjectileUpgradeCostSlider", myMaxPrice);
 		myProjectileUpgradeCostSlider = projectileUpgradeCostSlider; 
 		HBox projectileUpgradeCost = getUIFactory().setupSliderWithValue("ProjectileUpgradeCostSlider", projectileUpgradeCostSlider, getErrorCheckedPrompt("ProjectileUpgradeCost"));
 		vb.getChildren().add(projectileUpgradeCost);
 
-		Slider projectileUpgradeValueSlider = getUIFactory().setupSlider("ProjectileUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider projectileUpgradeValueSlider = getUIFactory().setupSlider("ProjectileUpgradeValueSlider", myMaxUpgradeIncrement);
 		myProjectileUpgradeValueSlider = projectileUpgradeValueSlider; 
 		HBox projectileUpgradeValue = getUIFactory().setupSliderWithValue("ProjectileUpgradeValueSlider", projectileUpgradeValueSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 		vb.getChildren().add(projectileUpgradeValue);
 	}
 	
 	private void makeLauncherComponents(VBox vb) {
-		Slider launcherValueSlider = getUIFactory().setupSlider("LauncherValueSlider", DEFAULT_MAX_PRICE);
+		Slider launcherValueSlider = getUIFactory().setupSlider("LauncherValueSlider", myMaxPrice);
 		myLauncherValueSlider = launcherValueSlider; 
 		HBox launcherValue = getUIFactory().setupSliderWithValue("LauncherValueSlider", launcherValueSlider, getErrorCheckedPrompt("LauncherValue"));
 		vb.getChildren().add(launcherValue);
 
-		Slider launcherUpgradeCostSlider = getUIFactory().setupSlider("LauncherUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider launcherUpgradeCostSlider = getUIFactory().setupSlider("LauncherUpgradeCostSlider", myMaxPrice);
 		myLauncherUpgradeCostSlider = launcherUpgradeCostSlider; 
 		HBox launcherUpgradeCost = getUIFactory().setupSliderWithValue("LauncherUpgradeCostSlider", launcherUpgradeCostSlider, getErrorCheckedPrompt("LauncherUpgradeCost"));
 		vb.getChildren().add(launcherUpgradeCost);
 
-		Slider launcherUpgradeValueSlider = getUIFactory().setupSlider("LauncherUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider launcherUpgradeValueSlider = getUIFactory().setupSlider("LauncherUpgradeValueSlider", myMaxUpgradeIncrement);
 		myLauncherUpgradeValueSlider = launcherUpgradeValueSlider; 
 		HBox launcherUpgradeValue = getUIFactory().setupSliderWithValue("LauncherUpgradeValueSlider", launcherUpgradeValueSlider, getErrorCheckedPrompt("LauncherUpgradeValue"));
 		vb.getChildren().add(launcherUpgradeValue);
 
-		Slider launcherRateSlider = getUIFactory().setupSlider("LauncherRateSlider", DEFAULT_MAX_RANGE);
+		Slider launcherRateSlider = getUIFactory().setupSlider("LauncherRateSlider", myMaxSpeed);
 		myLauncherRateSlider = launcherRateSlider; 
 		HBox launcherRate = getUIFactory().setupSliderWithValue("LauncherRateSlider", launcherRateSlider, getErrorCheckedPrompt("LauncherRate"));
 		vb.getChildren().add(launcherRate);
 
-		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", DEFAULT_MAX_RANGE);
+		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", myMaxRange);
 		myLauncherRangeSlider = launcherRangeSlider; 
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange"));
 		vb.getChildren().add(launcherRange);
 	}
 	
 	protected abstract void populateFieldsWithData(); 
+	
+	protected ComboBox<String> getMyProjectileImage() {
+		return myProjectileImage; 
+	}
+	
+	protected Slider getMyProjectileDamageSlider() {
+		return myProjectileDamageSlider; 
+	}
+	
+	protected Slider getMyProjectileValueSlider() {
+		return myProjectileValueSlider; 
+	}
+	
+	protected Slider getMyProjectileUpgradeCostSlider() {
+		return myProjectileUpgradeCostSlider; 
+	}
+	
+	protected Slider getMyProjectileUpgradeValueSlider() {
+		return myProjectileUpgradeValueSlider; 
+
+	}
+	
+	protected Slider getMyLauncherValueSlider() {
+		return myLauncherValueSlider; 
+
+	}
+	
+	protected Slider getMyLauncherUpgradeCostSlider() {
+		return myLauncherUpgradeCostSlider; 
+
+	}
+	
+	protected Slider getMyLauncherUpgradeValueSlider() {
+		return myLauncherUpgradeValueSlider; 
+
+	}
+	
+	protected Slider getMyLauncherRateSlider() {
+		return myLauncherRateSlider; 
+
+	}
+	
+	protected Slider getMyLauncherRangeSlider() {
+		return myLauncherRangeSlider; 
+
+	}
+	
 }

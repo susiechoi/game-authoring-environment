@@ -27,7 +27,7 @@ public class AuthoringView extends View {
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
-		myStageManager.switchScreen((new AdjustResourcesScreen(this)).getScreen());
+		myStageManager.switchScreen((new SpecifyTowerScreen(this)).getScreen());
 	}
 
 	protected void goBackFrom(String id) {
@@ -63,25 +63,25 @@ public class AuthoringView extends View {
 		return myPromptReader.resourceDisplayText(prompt);
 	}
 
-	public void getObjectAttribute(String objectType, String objectName, String attribute) {
-		myController.getObjectAttribute(objectType, objectName, attribute);
-	}
-
-	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
-			String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
-			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
+	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+			String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
+			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		myController.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, ability, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+				projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 
-	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
-		myController.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
+	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		myController.makeEnemy(newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 
 	//TODO 
-	public void addNewPath() {
-		myController.addNewPath();
+	public void makePath() {
+		myController.makePath();
+	}
+
+	public String getObjectAttribute(String objectType, String objectName, String attribute) {
+		return myController.getObjectAttribute(objectType, objectName, attribute);
 	}
 
 	//	protected String getLanguage() {

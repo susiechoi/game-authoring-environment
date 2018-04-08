@@ -17,17 +17,11 @@ import javafx.scene.layout.VBox;
 abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
-	public static final int DEFAULT_ENEMY_MAX_HEALTH_IMPACT = 3; 
-	public static final int DEFAULT_ENEMY_MAX_$_IMPACT = 50; 
-	public static final int DEFAULT_ENEMY_MAX_SPEED = 100; 
-	public static final int DEFAULT_MAX_RANGE = 500; 
-	public static final int DEFAULT_MAX_PRICE = 500;
 		
 	private TextField myNameField; 
 	private ComboBox<String> myImageDropdown;
 	private Slider mySpeedSlider;
 	private Slider myHealthImpactSlider; 
-	private Slider my$ImpactSlider; 
 	private Slider myValueSlider; 
 	private Slider myUpgradeCostSlider; 
 	private Slider myUpgradeValueSlider; 
@@ -58,32 +52,27 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		}
 		vb.getChildren().add(enemyImageSelect);
 
-		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
+		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  myMaxSpeed); 
 		mySpeedSlider = enemySpeedSlider; 
 		HBox enemySpeed = getUIFactory().setupSliderWithValue("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed"));
 		vb.getChildren().add(enemySpeed);
 
-		Slider enemyHealthImpactSlider = getUIFactory().setupSlider("enemyImpactSlider",  DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
+		Slider enemyHealthImpactSlider = getUIFactory().setupSlider("enemyImpactSlider",  myMaxHealthImpact); 
 		myHealthImpactSlider = enemyHealthImpactSlider; 
 		HBox enemyImpact = getUIFactory().setupSliderWithValue("enemyImpactSlider", enemyHealthImpactSlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 		vb.getChildren().add(enemyImpact);
-
-		Slider enemy$ImpactSlider = getUIFactory().setupSlider("enemyMoneyImpactSlider",  DEFAULT_ENEMY_MAX_$_IMPACT); 
-		my$ImpactSlider = enemy$ImpactSlider; 
-		HBox enemy$Impact = getUIFactory().setupSliderWithValue("enemyMoneyImpactSlider", enemy$ImpactSlider, getErrorCheckedPrompt("EnemyCurrencyImpact")); 
-		vb.getChildren().add(enemy$Impact);
 		
-		Slider enemyValueSlider = getUIFactory().setupSlider("EnemyValueSlider", DEFAULT_MAX_PRICE);
+		Slider enemyValueSlider = getUIFactory().setupSlider("EnemyValueSlider", myMaxPrice);
 		myValueSlider = enemyValueSlider;
 		HBox enemyValue = getUIFactory().setupSliderWithValue("EnemyValueSlider", enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 		vb.getChildren().add(enemyValue);
 
-		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", myMaxPrice);
 		myUpgradeCostSlider = enemyUpgradeCostSlider; 
 		HBox enemyUpgradeCost = getUIFactory().setupSliderWithValue("EnemyUpgradeCostSlider", enemyUpgradeCostSlider, getErrorCheckedPrompt("EnemyUpgradeCost"));
 		vb.getChildren().add(enemyUpgradeCost);
 
-		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", myMaxUpgradeIncrement);
 		myUpgradeValueSlider = enemyUpgradeValueSlider; 
 		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
 		vb.getChildren().add(enemyUpgradeValue);
@@ -92,7 +81,7 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), (int)mySpeedSlider.getValue(), (int)myHealthImpactSlider.getValue(), (int)my$ImpactSlider.getValue(), (int)myValueSlider.getValue(), (int)myUpgradeCostSlider.getValue(), (int)myUpgradeValueSlider.getValue());
+			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
@@ -120,10 +109,6 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	
 	protected Slider getMyHealthImpactSlider() {
 		return myHealthImpactSlider;
-	}
-		
-	protected Slider getMy$ImpactSlider() {
-		return my$ImpactSlider;
 	}
 	
 	protected Slider getMyValueSlider() {

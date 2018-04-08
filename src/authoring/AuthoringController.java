@@ -22,26 +22,25 @@ public class AuthoringController {
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
 	}
 	
-	// TODO is int level needed as a parameter? 
-	public void getObjectAttribute(String objectType, String objectName, String attribute) {
-		// TODO wrap a call to get the info from AuthoringModel maps
+	public String getObjectAttribute(String objectType, String name, String attribute) {
+		return myAuthoringModel.getObjectAttribute(objectType, name, attribute); 
 	}
 	
-	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
-		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
+	public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
-	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
-							String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
-							int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
+	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+							String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
+							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		myAuthoringModel.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, ability, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+				projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 	
 	// TODO 
-	public void addNewPath() {
-		
+	public void makePath() {
+		myAuthoringModel.makePath(); 
 	}
 	
     /**
