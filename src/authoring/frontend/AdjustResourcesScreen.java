@@ -21,10 +21,10 @@ public class AdjustResourcesScreen extends AdjustScreen {
 	 * Creates features (specifically, sliders) that users can manipulate to change starting reosurces of player
 	 */
 	@Override
-	public Parent makeScreenWithoutStyling(){
+	public Parent populateScreenWithFields(){
 		VBox vb = new VBox(); 
 
-		vb.getChildren().add(getUIFactory().makeScreenTitleText("Specify Starting Resources"));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyStartingResources")));
 
 		Slider startingHealthSlider = getUIFactory().setupSlider("startingHealth", 100);
 		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", startingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
@@ -44,5 +44,12 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		
 		return vb;
 	}
+
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+	    
+	}
+	
 
 }

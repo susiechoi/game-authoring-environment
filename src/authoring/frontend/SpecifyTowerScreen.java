@@ -6,6 +6,8 @@
 
 package authoring.frontend;
 
+import javafx.scene.Parent;
+
 public class SpecifyTowerScreen extends SpecifyObjectScreen {
 	
 	public static final String DEFAULT_DESCRIPTION = "Tower";
@@ -13,6 +15,18 @@ public class SpecifyTowerScreen extends SpecifyObjectScreen {
 	protected SpecifyTowerScreen(AuthoringView view) {
 		super(view);
 		setDescription(DEFAULT_DESCRIPTION); 
+	}
+
+	@Override
+	protected Parent populateScreenWithFields() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+	    
 	}
 
 }
