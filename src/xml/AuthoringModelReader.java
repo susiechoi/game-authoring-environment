@@ -25,7 +25,7 @@ public class AuthoringModelReader implements XMLReader {
 	
 	@Override
 	public AuthoringModel createModel(String filename) {
-	    File f = new File("SavedModels/" + filename);
+	    File f = new File("SavedModels/" + filename + ".xml");
 	    AuthoringModel g = (AuthoringModel) parser.fromXML(f);
 	    return g;
 	}
