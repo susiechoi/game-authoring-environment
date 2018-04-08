@@ -15,7 +15,7 @@ import javafx.scene.control.Slider;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
-	public static final String DEFAULT_CONSTANTS = "frontend/Constants.properties";
+	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 	
 	private String mySelectedObjectName; 
 	

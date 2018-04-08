@@ -12,7 +12,9 @@ package authoring;
 import java.util.List;
 
 import authoring.frontend.AuthoringView;
+import authoring.frontend.exceptions.NoDuplicateNamesException;
 import frontend.StageManager;
+import javafx.scene.image.Image;
 
 public class AuthoringController {
 	
@@ -35,18 +37,19 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
 	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
 		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
 	/**
 	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
+	 * @throws NoDuplicateNamesException 
 	 */
-	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-							String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
-							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
+	public void makeTower(int level, boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
+							Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
 		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 	

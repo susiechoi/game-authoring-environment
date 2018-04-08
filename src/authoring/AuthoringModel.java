@@ -14,7 +14,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import engine.builders.LauncherBuilder;
 import engine.builders.ProjectileBuilder;

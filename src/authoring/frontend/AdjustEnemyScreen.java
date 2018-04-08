@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -43,11 +44,12 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 		HBox enemyImageSelect = new HBox();
 		ComboBox<String> dropdown = new ComboBox<String>();
+		ImageView imageDisplay = new ImageView(); 
 		try {
 			dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
 			myImageDropdown = dropdown; 
 			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), dropdown);
+					getErrorCheckedPrompt("NewImageName"), dropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
@@ -82,7 +84,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
+			getView().makeEnemy(getIsNewObject(), myNameField.getText(), imageDisplay.getImage(), mySpeedSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);

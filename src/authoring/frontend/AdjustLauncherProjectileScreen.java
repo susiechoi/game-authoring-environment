@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -21,6 +22,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	private AdjustTowerScreen myTowerScreen;
 	private ComboBox<String> myProjectileImage;
+	private ImageView myImageDisplay; 
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileValueSlider;
 	private Slider myProjectileUpgradeCostSlider;
@@ -49,7 +51,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		});
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
+			myTowerScreen.setLauncherProjectileValues(myImageDisplay, myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
@@ -64,10 +66,11 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	private void makeProjectileComponents(VBox vb) {
 		ComboBox<String> projectileImageDropdown;
 		HBox projectileImageSelect = new HBox(); 
+		myImageDisplay = new ImageView(); 
 		try {
 			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
 			myProjectileImage = projectileImageDropdown; 
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown);
+			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, myImageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
