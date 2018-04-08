@@ -1,6 +1,7 @@
 package controller;
 
 import authoring.AuthoringController;
+import frontend.StageManager;
 import javafx.stage.Stage;
 
 /**
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 public class ChiefController {
 
     private Stage STAGE;
+    private final String DEFAULT_LANGUAGE = "English";
    // private PlayController PLAY; 
    // private AuthoringController AUTHORING;
 
@@ -34,7 +36,7 @@ public class ChiefController {
      * Instantiate a new EngineController object to handle the Game engine
      */
     public void play() {
-	new PlayController(STAGE);
+	new PlayController(DEFAULT_LANGUAGE, new StageManager(STAGE));
     }
     
     /**
