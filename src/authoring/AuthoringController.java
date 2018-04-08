@@ -3,6 +3,13 @@ package authoring;
 import authoring.frontend.AuthoringView;
 import frontend.StageManager;
 import javafx.scene.image.ImageView;
+import java.io.File;
+
+import authoring.AuthoringModel;
+import authoring.AuthoringView;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 
 /**
  * 
@@ -13,6 +20,7 @@ import javafx.scene.image.ImageView;
  */
 
 public class AuthoringController {
+
 	
 	private AuthoringView myAuthoringView; 
 	private AuthoringModel myAuthoringModel; 
@@ -47,6 +55,52 @@ public class AuthoringController {
 		myAuthoringModel.makePath(level); 
 	}
 	
+=======
+
+    private final Stage STAGE;
+    private final AuthoringView VIEW = new AuthoringView();
+    private final AuthoringModel MODEL = new AuthoringModel();
+   
+    public AuthoringController(Stage programStage) {
+	STAGE = programStage;
+	Scene startScreen = VIEW.loadAuthoringView();
+	STAGE.setScene(startScreen);
+    }
+    
+    public void show() {
+	STAGE.show();
+    }
+    
+    /**
+     * Loads a new Scene object in the program's Stage to display the authoring environment 
+     * screen.
+     * 
+     * @param Scene: the authoring screen to be displayed to the user
+     */
+    public void loadAuthoringStage(Scene screen) {
+	// TODO load this onto the stage. How do we receive access to the stage?	
+    }  
+
+    /**
+     * Locates the file in the program file system that contains data required to load 
+     * a game. Uses the FileIO objects methods to loadState().
+     * 
+     * @return File: the file containing information required to load the start of a game
+     */
+    public File loadStartState() {
+	return null;	
+    }
+
+    /**
+     * Saves user data from the authoring environment in a temporary file to avoid 
+     * overwriting data before the user is ready to save completely. 
+     * Uses the FileIO objects methods to saveState().
+     */
+    public void saveTemporaryState() {
+
+    }
+
+>>>>>>> 5e7fe5968ce3b60c06cee8f832af88e887074ac5
     /**
      * Instatiates the game engine to demo the authored game in its current state
      */

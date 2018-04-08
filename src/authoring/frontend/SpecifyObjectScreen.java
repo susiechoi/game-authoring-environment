@@ -16,55 +16,58 @@ import javafx.scene.text.Text;
 
 abstract class SpecifyObjectScreen extends AdjustScreen {
 
-	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
-	public static final String DEFAULT_GO_TEXT = "Go"; 
-	protected List<String> myObjectOptions; 
-	private String myObjectDescription; 
+    public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
+    public static final String DEFAULT_GO_TEXT = "Go"; 
+    protected List<String> myObjectOptions; 
+    private String myObjectDescription; 
 
-	protected SpecifyObjectScreen(AuthoringView view) {
-		super(view);
-		myObjectOptions = new ArrayList<String>(); // TODO read in objects
-		myObjectOptions.add("Dummy Object 1");
-		myObjectOptions.add("Dummy Object 2");
-		myObjectOptions.add("Dummy Object 3");
-	}
 
-	public Parent makeScreenWithoutStyling() {
-		VBox vb = new VBox(); 
-		Text orText = new Text("or"); 
+    protected SpecifyObjectScreen(AuthoringView view) {
+	super(view);
+	myObjectOptions = new ArrayList<String>(); // TODO read in objects
+	myObjectOptions.add("Dummy Object 1");
+	myObjectOptions.add("Dummy Object 2");
+	myObjectOptions.add("Dummy Object 3");
+    }
 
-		Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
+    public Parent makeScreenWithoutStyling() {
+	VBox vb = new VBox(); 
+	Text orText = new Text("or"); 
 
-		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
-		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
-		
-		Button backButton = setupBackButton();
-		Button applyButton = getUIFactory().setupApplyButton();
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+	orText.setId("or");
 
-		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
-		vb.getChildren().add(newObjectButton);
-		vb.getChildren().add(orText);
-		vb.getChildren().add(objectsWithPrompt);
-		vb.getChildren().add(backAndApplyButton);
+	Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
 
-		return vb;
-	}
+	ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
+	HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
 
-	protected Button makeCreateNewObjectButton(String object) {
-		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
-		newObjectButton.setOnAction((event) -> {
-		    getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton");
-		});
-		return newObjectButton;
-	}
+	Button backButton = setupBackButton();
+	Button applyButton = getUIFactory().setupApplyButton();
+	HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 
-	protected void setDescription(String description) {
-		myObjectDescription = description;
-	}
+	vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
+	vb.getChildren().add(newObjectButton);
+	vb.getChildren().add(orText);
+	vb.getChildren().add(objectsWithPrompt);
+	vb.getChildren().add(backAndApplyButton);
 
-	protected String getDescription() {
-		return myObjectDescription; 
-	}
+	return vb;
+    }
+
+    protected Button makeCreateNewObjectButton(String object) {
+	Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
+	newObjectButton.setOnAction((event) -> {
+	    getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton");
+	});
+	return newObjectButton;
+    }
+
+    protected void setDescription(String description) {
+	myObjectDescription = description;
+    }
+
+    protected String getDescription() {
+	return myObjectDescription; 
+    }
 
 }
