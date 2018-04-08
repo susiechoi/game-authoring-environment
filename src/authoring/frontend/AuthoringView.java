@@ -11,15 +11,18 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.scene.Scene;
 
 public class AuthoringView extends View {
 	
 	public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
-
+	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen";
+	
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
+	private String myCurrentCSS;
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
@@ -27,7 +30,17 @@ public class AuthoringView extends View {
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
-		myStageManager.switchScreen((new AdjustResourcesScreen(this)).getScreen());
+		myStageManager.switchScreen((new CustomizationChoicesScreen(this)).getScreen());
+		myCurrentCSS = DEFAULT_AUTHORING_CSS;
+	}
+	protected void loadScreen(Screen screen) {
+	    myStageManager.switchScreen(screen.getScreen());
+	}
+	protected void loadScene(Scene scene) { //TODO: refactor so no duplication?
+	    myStageManager.switchScene(scene);
+	}
+	protected String getCurrentCSS() {
+	    return myCurrentCSS;
 	}
 
 	protected void goBackFrom(String id) {
@@ -83,29 +96,11 @@ public class AuthoringView extends View {
 	public void addNewPath() {
 		myController.addNewPath();
 	}
+	
+	protected Scene getScene() {
+	    return myStageManager.getScene();
+	}
 
-	//	protected String getLanguage() {
-	//		return myLanguage;
-	//	}
 
-	//	protected void goForwardFrom(Screen currentScreen) {
-	//		String currentScreenName = currentScreen.getClass().getSimpleName();
-	//		if (currentScreenName.equals("SpecifyEnemyScreen")) {
-	//			myStageManager.switchScreen((new AdjustEnemyScreen(this)).getScreen()); 	// TODO replace with reflection?
-	//		}
-	//		else if (currentScreenName.equals("SpecifyTowerScreen")) {
-	//			myStageManager.switchScreen((new AdjustTowerScreen(this)).getScreen());
-	//		}
-	//	}
-	//
-	//	protected void goBackFrom(Screen currentScreen) {
-	//		String currentScreenName = currentScreen.getClass().getSimpleName();
-	//		if (currentScreenName.equals("AdjustEnemyScreen")) {
-	//			myStageManager.switchScreen((new SpecifyEnemyScreen(this).getScreen())); 	// TODO replace with reflection?
-	//		}
-	//		else if (currentScreenName.equals("AdjustTowerScreen")) {
-	//			myStageManager.switchScreen((new SpecifyTowerScreen(this).getScreen())); 	
-	//		}
-	//	}
 
 }

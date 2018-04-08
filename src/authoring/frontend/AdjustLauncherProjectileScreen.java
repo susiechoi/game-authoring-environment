@@ -43,7 +43,9 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		makeProjectileComponents(vb);
 		makeLauncherComponents(vb);
 		
-		Button backButton = setupBackButton();
+		Button backButton = setupBackButtonCustom(e -> {
+		    getView().loadScreen(myTowerScreen);
+		});
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileAbility.getValue(), (int)myProjectileDamageSlider.getValue(), (int)myProjectileValueSlider.getValue(), (int)myProjectileUpgradeCostSlider.getValue(), (int)myProjectileUpgradeValueSlider.getValue(), (int)myLauncherValueSlider.getValue(), (int)myLauncherUpgradeCostSlider.getValue(), (int)myLauncherUpgradeValueSlider.getValue(), (int)myLauncherRateSlider.getValue(), (int)myLauncherRangeSlider.getValue());
