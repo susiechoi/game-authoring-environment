@@ -3,6 +3,8 @@ package xml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import authoring.AuthoringModel;
+
 /**
  * Static class that creates XMLWriters/XMLReaders to handle data parsing. Holds a main method for testing purposes.
  *
@@ -12,24 +14,25 @@ import java.lang.reflect.InvocationTargetException;
 
 public class XMLFactory {
 
+    public XMLFactory() {
+	
+    }
+    
 	/**
 	 * Uses reflection to create an XMLWriter of the specified type
 	 *
 	 * @param writerType
 	 * String representation of class name of desired writer type
-	 * 
-	 * @param filename
-	 * path to file that is being written to
 	 *
 	 * @return
 	 * Instance of that implementation of XMLWriter
 	 */
-	public static XMLWriter generateWriter(String writerType, String filename) {
+	public XMLWriter generateWriter(String writerType) {
 		try {
-			Class writer = Class.forName(writerType);
-			Constructor c = writer.getConstructor();
+			Class<?> writer = Class.forName("xml." + writerType);
+			System.out.println(writer.toGenericString());
 			try {
-			    return (XMLWriter) c.newInstance(filename);
+			    return (XMLWriter) writer.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();
@@ -39,11 +42,8 @@ public class XMLFactory {
 			} catch (IllegalArgumentException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();
-			} catch (InvocationTargetException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
 			}
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+		} catch (ClassNotFoundException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -55,19 +55,16 @@ public class XMLFactory {
 	 *
 	 * @param readerType
 	 * String representation of class name of desired reader type
-	 * 
-	 * @param filename
-	 * Path to file tat is being read
 	 *
 	 * @return
 	 * Instance of that implementation of XMLReader
 	 */
-	public static XMLReader generateReader(String readerType, String filename) {
+	public XMLReader generateReader(String readerType) {
 		try {
-			Class writer = Class.forName(readerType);
-			Constructor c = writer.getConstructor();
+			Class<?> writer = Class.forName("xml." + readerType);
+			Constructor<?> c = writer.getConstructor();
 			try {
-			    return (XMLReader) c.newInstance(filename);
+			    return (XMLReader) c.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();
@@ -89,7 +86,10 @@ public class XMLFactory {
 	}
 	
 	public static void main(String[] args) {
-	    
+	    XMLFactory f = new XMLFactory();
+	    AuthoringModelWriter p = (AuthoringModelWriter) f.generateWriter("AuthoringModelWriter");
+	    AuthoringModel a = new AuthoringModel();
+	    p.write(a, "test1");
 	}
 
 }

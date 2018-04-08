@@ -3,6 +3,7 @@ package xml;
 import java.io.File;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import authoring.AuthoringModel;
 
@@ -19,20 +20,14 @@ public class AuthoringModelReader implements XMLReader {
 	private XStream parser;
 	
 	public AuthoringModelReader() {
-		parser = new XStream();
+		parser = new XStream(new StaxDriver());
 	}
 	
 	@Override
 	public AuthoringModel createModel(String filename) {
-	    File f = new File("SavedModels/" + filename);
+	    File f = new File("SavedModels/" + filename + ".xml");
 	    AuthoringModel g = (AuthoringModel) parser.fromXML(f);
 	    return g;
-	}
-
-	@Override
-	public Object getObjectData(String elemName) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

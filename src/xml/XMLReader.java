@@ -1,6 +1,6 @@
 package xml;
 
-import data.GameData;
+import authoring.AuthoringModel;
 
 /**
  * @author Brendan Cheng 3/29/2018
@@ -13,19 +13,11 @@ import data.GameData;
 public interface XMLReader {
 
 	/**
-	 * Main functional unit of an XMLReader object. Uses XStream to parse a file and return a GameData object.
+	 * Main functional unit of an XMLReader object. Uses XStream to parse a file and return an AuthoringModel object.
 	 * 
 	 * @param filename name of file to be read
 	 * @return AuthoringModel based on specified file
 	 */
-	public GameData createModel(String filename);
-	
-	/**
-	 * Reads a node in the XML file and accesses its data. Could be implemented in many ways.
-	 * 
-	 * @param elemName Tagname of node to be read
-	 * @return Object that is created based on data in Node
-	 */
-	public Object getObjectData(String elemName);
+	public AuthoringModel createModel(String filename);
 	
 }

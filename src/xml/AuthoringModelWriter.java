@@ -8,10 +8,12 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.w3c.dom.Document;
-
-import data.GameData;
+import org.w3c.dom.Element;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
+
+import authoring.AuthoringModel;
 
 public class AuthoringModelWriter implements XMLWriter {
 
@@ -23,6 +25,7 @@ public class AuthoringModelWriter implements XMLWriter {
      */
 
     private Document d;
+    private File file;
     private XStream parser;
 
     /**
@@ -34,34 +37,29 @@ public class AuthoringModelWriter implements XMLWriter {
 	} catch (ParserConfigurationException p) {
 	    System.out.println("Bad configuration"); // update exception
 	}
-	parser = new XStream();
+	parser = new XStream(new StaxDriver());
     }
 
     /**
-     * Implementation of write method that saves data for authoring
+     * Implementation of write method that saves data for authoring to SavedModels folder
      */
     @Override
-    public void write(GameData g, String filepath) throws BadGameDataException {
+    public void write(AuthoringModel g, String filepath) throws BadGameDataException {
 	// check type
 	if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
 	}
-	//
-
+	file = new File("SavedModels/" + filepath + ".xml");
+	// Write data using XStream
+	Element root = d.createElement("GameRules");
+	root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
 	// Save data
-	File path = new File(filepath + ".xml");
 	try {
-	    XMLDocumentBuilder.saveXMLFile(d, path);
+	    XMLDocumentBuilder.saveXMLFile(d, file);
 	} catch (TransformerFactoryConfigurationError | TransformerException e) {
 	    // TODO replace with error pop up?
 	    System.out.println("Error configuring XML file");
 	}
-    }
-
-    @Override
-    public void change(GameData g) {
-	// TODO Auto-generated method stub
-
     }
 
 

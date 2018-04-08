@@ -27,6 +27,7 @@ public class PlaySaverWriter implements XMLWriter {
 	private Document d;
 	private XStream parser;
 	private Element game;
+	private File file;
 	
 	public PlaySaverWriter() {
 		try {
@@ -46,11 +47,12 @@ public class PlaySaverWriter implements XMLWriter {
 			throw new BadGameDataException("Incorrect GameData: Must use GameState object to store correct data");
 		}
 		//
-		
-		// Save data
-		File path = new File(filepath + ".xml");
+		file = new File("SavedModels/" + filepath + ".xml");
+		// Write data using XStream
+		Element root = d.createElement("Game Rules");
+		root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
 		try {
-			XMLDocumentBuilder.saveXMLFile(d, path);
+			XMLDocumentBuilder.saveXMLFile(d, file);
 		} catch (TransformerFactoryConfigurationError | TransformerException e) {
 			// TODO replace with error pop up?
 			System.out.println("Error configuring XML file");
