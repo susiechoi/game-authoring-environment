@@ -8,10 +8,29 @@ package engine.sprites.properties;
  */
 public abstract class Property {
 
+    private double myProperty;
+    
     /**
-     * Abstract method to get an immutable copy of the specific property
+     * Constructor for property object
+     * 
+     * @param property: initial value of property
      */
-    public abstract double getProperty();
+    public Property(double property) {
+	myProperty = property;
+    }
    
+    /**
+     * Returns current value of property
+     */
+    public double getProperty() {
+	return myProperty;
+    }
+    
+    /**
+     * Returns current value of property
+     */
+    protected void setProperty(double newValue) {
+	myProperty = newValue;
+    }
 
 }
