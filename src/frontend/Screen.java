@@ -64,7 +64,8 @@ public abstract class Screen {
 	if (myRoot != null) {
 	    for (String s : stylesheets) {
 		myRoot.getStylesheets().add(s);
-	    }		}
+	    }		
+	}
     }
 
     /**
@@ -78,6 +79,10 @@ public abstract class Screen {
     }
     protected Parent getRoot() {
 	return myRoot;
+    }
+    protected abstract View getView();
+    protected PropertiesReader getPropertiesReader() {
+	return myPropertiesReader;
     }
 }
 
