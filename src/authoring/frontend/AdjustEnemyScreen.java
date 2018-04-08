@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -43,11 +44,12 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 		HBox enemyImageSelect = new HBox();
 		ComboBox<String> dropdown = new ComboBox<String>();
+		ImageView imageDisplay = new ImageView(); 
 		try {
 			dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
 			myImageDropdown = dropdown; 
 			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), dropdown);
+					getErrorCheckedPrompt("NewImageName"), dropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
@@ -82,7 +84,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
+			getView().makeEnemy(getIsNewObject(), myNameField.getText(), imageDisplay.getImage(), mySpeedSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
@@ -100,47 +102,19 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	 */
 	
 	protected void populateFieldsWithData() {
-		getMyNameField().setText(getMySelectedObjectName());
+		myNameField.setText(getMySelectedObjectName());
 		
-		setComboBoxToValue(getMyImageDropdown(),getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
+		setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
 		
-		setSliderToValue(getMySpeedSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
+		setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
 		
-		setSliderToValue(getMyHealthImpactSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
+		setSliderToValue(myHealthImpactSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
 			
-		setSliderToValue(getMyValueSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
+		setSliderToValue(myValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
 		
-		setSliderToValue(getMyUpgradeCostSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
+		setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
 		
-		setSliderToValue(getMyUpgradeValueSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
-	}
-	
-	protected TextField getMyNameField() {
-		return myNameField;
-	} 
-	
-	protected ComboBox<String> getMyImageDropdown() {
-		return myImageDropdown;
-	}
-	
-	protected Slider getMySpeedSlider() {
-		return mySpeedSlider;
-	}
-	
-	protected Slider getMyHealthImpactSlider() {
-		return myHealthImpactSlider;
-	}
-	
-	protected Slider getMyValueSlider() {
-		return myValueSlider;
-	} 
-	
-	protected Slider getMyUpgradeCostSlider() {
-		return myUpgradeCostSlider;
-	} 
-	
-	protected Slider getMyUpgradeValueSlider() {
-		return myUpgradeValueSlider;
+		setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
 	}
 
 }
