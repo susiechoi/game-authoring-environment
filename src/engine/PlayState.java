@@ -6,6 +6,7 @@ import engine.level.Level;
 import java.util.ArrayList;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.sprites.towers.Tower;
 
 /**
  * Handles the current state of the game, including current score, money, and lists
@@ -66,6 +67,14 @@ public class PlayState {
 
     public void play() {
 	isPaused = false;
+    }
+    
+    /**
+     * This method is called within PlaceTowerListener.
+     * @param placedTower: Tower passed from front end that is attempting to be placed
+     */
+    public void placeTower(Tower placedTower) {
+	
     }
 
     public FrontEndTower placeTower(Point location, String towerType) {
