@@ -27,7 +27,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		Slider startingCurrencySlider = getUIFactory().setupSlider("startingCurrency", 999);
 		HBox startingCurrency = getUIFactory().addPromptAndSetupHBox("startingCurrency", startingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
 
-		Button backButton = getUIFactory().setupBackButton();
+		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		

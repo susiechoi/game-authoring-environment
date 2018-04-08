@@ -52,10 +52,11 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Button goToProjectileLauncherButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 		vb.getChildren().add(goToProjectileLauncherButton);
 		
-		Button backButton = getUIFactory().setupBackButton();
+		Button backButton = getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());});
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			getView().makeTower(myIsNewObject, myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
+			getView().goBackFrom(this.getClass().getSimpleName());
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);

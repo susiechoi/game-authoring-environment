@@ -11,11 +11,14 @@ import javafx.scene.text.Text;
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
+    public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
     private String myGameName;
 
-    protected CustomizationChoicesScreen(AuthoringView view, String gameName) {
+    protected CustomizationChoicesScreen(AuthoringView view) {
+	//TODO: figure out how to not get gamename!!!
 	super(view);
-	myGameName = gameName;
+	//setStyle(DEFAULT_OWN_CSS);
+	myGameName = "TEST";
     }
 
     @Override
