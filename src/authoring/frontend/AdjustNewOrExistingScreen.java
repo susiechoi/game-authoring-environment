@@ -65,6 +65,14 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	
 	protected abstract Parent populateScreenWithFields();
 	protected abstract void populateFieldsWithData(); 
+
+	/**
+	 * Used when the changes on the Screen are applied and the Screen must convey whether the object that has been created is new or existing 
+	 * @return
+	 */
+	protected boolean getIsNewObject() {
+		return myIsNewObject; 
+	}
 	
 	/**
 	 * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
