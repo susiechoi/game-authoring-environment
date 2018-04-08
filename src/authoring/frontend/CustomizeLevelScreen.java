@@ -35,10 +35,6 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		enemiesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeEnemy");});
 		vb.getChildren().add(enemiesButton);
 		
-		Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeSettings"));
-		settingsButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeSettings");});
-		vb.getChildren().add(settingsButton);
-		
 		Button autogenerateButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("AutogenerateLevel"));
 		vb.getChildren().add(autogenerateButton);
 
@@ -46,6 +42,18 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		vb.getChildren().add(backButton);
 		
 		return vb;
+	}
+
+	@Override
+	protected Parent populateScreenWithFields() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+	    
 	}
 
 }

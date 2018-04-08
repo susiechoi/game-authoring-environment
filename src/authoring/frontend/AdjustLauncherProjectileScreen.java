@@ -6,8 +6,6 @@
 
 package authoring.frontend;
 
-import java.util.ArrayList;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -17,7 +15,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
+class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
 	
@@ -33,8 +31,8 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	private Slider myLauncherRateSlider;
 	private Slider myLauncherRangeSlider; 
 
-	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen) {
-		super(view);
+	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen, String selectedObjectName) {
+		super(view, selectedObjectName);
 		myTowerScreen = towerScreen; 
 	}
 
@@ -123,7 +121,27 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		vb.getChildren().add(launcherRange);
 	}
 	
-	protected abstract void populateFieldsWithData(); 
+	protected void populateFieldsWithData() {
+		setComboBoxToValue(getMyProjectileImage(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+
+		setSliderToValue(getMyProjectileDamageSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
+
+		setSliderToValue(getMyProjectileValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
+
+		setSliderToValue(getMyProjectileUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
+
+		setSliderToValue(getMyProjectileUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
+
+		setSliderToValue(getMyLauncherValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
+
+		setSliderToValue(getMyLauncherUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
+
+		setSliderToValue(getMyLauncherUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
+
+		setSliderToValue(getMyLauncherRateSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
+
+		setSliderToValue(getMyLauncherRangeSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRange"));
+	}
 	
 	/**
 	 * The following methods are getters for features/fields on the Screen
