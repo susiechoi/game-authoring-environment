@@ -26,7 +26,7 @@ public class Enemy extends Sprite{
 
 	public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
 		super(myImage);
-		myIntersecter = new Intersecter(this.getImage()); 
+		myIntersecter = new Intersecter(this.getImageView()); 
 		myHealth = health;
 		myDamage = damage;
 		myValue = value;

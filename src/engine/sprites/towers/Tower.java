@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
  * Class for tower object in game. Implements Sprite methods.
  * 
  * @author Katherine Van Dyk
+ * @author Miles Todzo
  */
 public class Tower extends ShootingSprites {
     private Launcher myLauncher;
