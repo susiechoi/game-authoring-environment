@@ -2,7 +2,6 @@ package authoring.frontend;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -24,6 +23,7 @@ import javafx.scene.Scene;
 
 public class AuthoringView extends View {
 
+<<<<<<< HEAD
 	public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
 	private StageManager myStageManager; 
@@ -56,6 +56,39 @@ public class AuthoringView extends View {
 		goForwardFrom(id+"Back");
 	}
 
+=======
+    public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
+    public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
+    private StageManager myStageManager; 
+    private PromptReader myPromptReader;
+    private PropertiesReader myPropertiesReader;
+    private AuthoringController myController; 
+    private String myCurrentCSS;
+    private int myLevel; 
+
+    public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
+	super(stageManager);
+	myPromptReader = new PromptReader(languageIn, this);
+	myPropertiesReader = new PropertiesReader();
+	myStageManager = stageManager; 
+	myController = controller; 
+	myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
+	myStageManager.switchScreen((new CustomizationChoicesScreen(this)).getScreen());
+    }
+    protected void loadScreen(Screen screen) {
+	myStageManager.switchScreen(screen.getScreen());
+    }
+    protected void loadScene(Scene scene) { //TODO: refactor so no duplication?
+	myStageManager.switchScene(scene);
+    }
+    protected String getCurrentCSS() {
+	return myCurrentCSS;
+    }
+
+    protected void goBackFrom(String id) {
+	goForwardFrom(id+"Back");
+    }
+>>>>>>> parent of 69cbd79... commenting
 
     protected void goForwardFrom(String id) {
 	try {
@@ -73,6 +106,7 @@ public class AuthoringView extends View {
 	    else {
 		throw new MissingPropertiesException("");
 	    }
+<<<<<<< HEAD
 
 	}
 	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
@@ -107,44 +141,57 @@ public class AuthoringView extends View {
 	public void makePath() {
 		myController.makePath(myLevel);
 	}
+=======
+>>>>>>> parent of 69cbd79... commenting
 
-	/**
-	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
-	 */
-	public void makeResources(double startingHealth, double starting$) {
-		myController.makeResources(startingHealth, starting$);
 	}
-	
-	/**
-	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
-	 */
-	public List<String> getCurrentObjectOptions(String objectType) {
-		return myController.getCurrentObjectOptions(myLevel, objectType);
+	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
+		| IllegalAccessException | InstantiationException e) {
+	    e.printStackTrace();
+	    loadErrorScreen("NoScreenFlow");
 	}
+    }
 
-	/**
-	 * Method through which information about object fields can be requested
-	 * Invoked when populating authoring frontend screens used to edit existing objects
-	 */
-	public String getObjectAttribute(String objectType, String objectName, String attribute) {
-		return myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
-	}
+    protected String getErrorCheckedPrompt(String prompt) {
+	return myPromptReader.resourceDisplayText(prompt);
+    }
 
-	/**
-	 * Enumerates the current level that the user is editing 
-	 * Useful when creating new objects so that Model may organize objects by the level in which they become accessible to the user 
-	 * @param level - the level that the user has selected to edit
-	 */
-	protected void setLevel(int level) {
-		myLevel = level; 
-	}
+    public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+	    String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
+	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
+	myController.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+		projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+		launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+    }
 
-	protected Scene getScene() {
-		return myStageManager.getScene();
-	}
+    public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	myController.makeEnemy(level, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+    }
 
-	protected String getErrorCheckedPrompt(String prompt) {
-		return myPromptReader.resourceDisplayText(prompt);
-	}
+    //TODO 
+    public void makePath(int level) {
+	myController.makePath(level);
+    }
+    
+    public void makeResources(double startingHealth, double starting$) {
+    		myController.makeResources(startingHealth, starting$);
+    }
+
+    public String getObjectAttribute(String objectType, String objectName, String attribute) {
+	return myController.getObjectAttribute(objectType, objectName, attribute);
+    }
+
+    protected Scene getScene() {
+	return myStageManager.getScene();
+    }
+
+    protected void setLevel(int level) {
+	myLevel = level; 
+    }
+
+    protected int getLevel() {
+	return myLevel; 
+    }
+
 
 }

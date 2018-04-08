@@ -1,10 +1,10 @@
 package authoring.frontend;
 
+
 import frontend.Screen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-
 public abstract class AuthoringScreen extends Screen {
     private AuthoringView myView;
     

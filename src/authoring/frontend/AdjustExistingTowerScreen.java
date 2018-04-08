@@ -16,15 +16,15 @@ public class AdjustExistingTowerScreen extends AdjustTowerScreen {
 	@Override
 	protected void populateFieldsWithData() {
 
-		getMyNameField().setText(getView().getObjectAttribute( "Tower", mySelectedObjectName, "myName"));
+		getMyNameField().setText(getView().getObjectAttribute("Tower", mySelectedObjectName, "myName"));
 
 		setComboBoxToValue(getMyImageDropdown(),getView().getObjectAttribute("Tower", mySelectedObjectName, "myImage")); 
 
-		setSliderToValue(getMyTowerHealthValueSlider(), getView().getObjectAttribute( "Tower", mySelectedObjectName, "myHealthValue"));
+		setSliderToValue(getMyTowerHealthValueSlider(), getView().getObjectAttribute("Tower", mySelectedObjectName, "myHealthValue"));
 
-		setSliderToValue(getMyTowerHealthUpgradeCostSlider(), getView().getObjectAttribute( "Tower", mySelectedObjectName, "myHealthUpgradeCost"));
+		setSliderToValue(getMyTowerHealthUpgradeCostSlider(), getView().getObjectAttribute("Tower", mySelectedObjectName, "myHealthUpgradeCost"));
 
-		setSliderToValue(getMyTowerHealthUpgradeValueSlider(), getView().getObjectAttribute( "Tower", mySelectedObjectName, "myHealthUpgradeValue"));
+		setSliderToValue(getMyTowerHealthUpgradeValueSlider(), getView().getObjectAttribute("Tower", mySelectedObjectName, "myHealthUpgradeValue"));
 	
 	}
 

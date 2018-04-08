@@ -1,6 +1,5 @@
 /**
  * @author susiechoi
- * Abstract class used to present the designer the option of creating a new object or editing an existing one 
  */
 
 package authoring.frontend;
@@ -22,13 +21,12 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 	protected SpecifyObjectScreen(AuthoringView view) {
 		super(view);
-		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
+		myObjectOptions = new ArrayList<String>(); // TODO read in objects
+		myObjectOptions.add("Dummy Object 1");
+		myObjectOptions.add("Dummy Object 2");
+		myObjectOptions.add("Dummy Object 3");
 	}
 
-	/**
-	 * Makes the screen with the option of creating a new object OR editing an existing one 
-	 * @return Parent/root to attach to Scene that will be set on the stage
-	 */
 	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 		Text orText = new Text("or"); 
@@ -51,11 +49,6 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		return vb;
 	}
 
-	/**
-	 * For creating a button option to make a new object
-	 * @param object - type of object being made
-	 * @return Button to add to Parent
-	 */
 	protected Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction((event) -> {
@@ -64,19 +57,10 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		return newObjectButton;
 	}
 
-	/** 
-	 * For setting the type of object that the subclasses control editing of (Tower, Screen, etc) 
-	 * Useful when populating buttons and prompts (e.g. Create New Tower) 
-	 * @param object type
-	 */
 	protected void setDescription(String description) {
 		myObjectDescription = description;
 	}
-	
-	/**
-	 * For returning the type of object that the subclasses control editing of  
-	 * @return object type
-	 */
+
 	protected String getDescription() {
 		return myObjectDescription; 
 	}
