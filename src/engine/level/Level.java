@@ -2,8 +2,10 @@ package engine.level;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
+import engine.managers.EnemyManager;
 import engine.path.Path;
 
 /**
@@ -67,5 +69,8 @@ public class Level {
 	return availableTowers;
     }
 
+    public Enemy getNewEnemy(int time, EnemyManager em) {
+	
+    }
 
 }

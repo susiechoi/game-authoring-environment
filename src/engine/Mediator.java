@@ -2,6 +2,7 @@ package engine;
 
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
+import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
 /**
@@ -25,6 +26,8 @@ public class Mediator {
     public void savePlay() {
 	//TODO ask Engine for a PlayState and then ask XMLFactory for
 	//	a writer and then write it to a file
+	PlaySaverWriter writer = (PlaySaverWriter) myXMLFactory.generateWriter("PlaySaverWriter");
+	writer.write(myGameEngine.getPlayState(), ""); // add correct path
     }
     
     
