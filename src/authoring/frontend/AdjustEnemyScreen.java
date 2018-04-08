@@ -100,7 +100,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	 */
 	
 	protected void populateFieldsWithData() {
-		getMyNameField().setText(getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myName"));
+		getMyNameField().setText(getMySelectedObjectName());
 		
 		setComboBoxToValue(getMyImageDropdown(),getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
 		
