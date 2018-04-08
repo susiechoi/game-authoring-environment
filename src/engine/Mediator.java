@@ -40,6 +40,20 @@ public class Mediator {
 	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
 	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
     }
+    
+    public void setLevel(Integer levelIn) {
+	level = new ReadOnlyObjectWrapper<>(levelIn);
+    }
+    
+    public void setGameSpeed(Integer speed) {
+	gameSpeed = new ReadOnlyObjectWrapper<>(speed);
+    }
+    
+    public void setDifficulty(Integer difficultyIn) {
+	difficulty = new ReadOnlyObjectWrapper<>(difficultyIn);
+    }
+    
+    
 
     public void savePlay() {
 	//TODO ask Engine for a PlayState and then ask XMLFactory for
