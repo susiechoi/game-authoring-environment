@@ -1,6 +1,6 @@
 package engine.sprites.properties;
 
-public class DamageProperty extends Property {
+public class DamageProperty extends UpgradeProperty {
 
 	private double myDamage;
 
