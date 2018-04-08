@@ -22,8 +22,8 @@ public class Projectile extends Sprite {
 	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
 	 * @param image: image of projectile
 	 */
-	public Projectile(DamageProperty damage, Image image) {
-	    	super(image);
+	public Projectile(String name, DamageProperty damage, Image image) {
+	    	super(name, image);
 		myDamage = damage;
 	}
 	

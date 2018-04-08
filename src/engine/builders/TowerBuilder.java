@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 
 /**
  * @author Katherine Van Dyk 4/7/18
- * @author Ben Hodgson 3/29/18
+ * @author Ben Hodgson 4/8/18
  * 
  * Uses builder design pattern to construct a Tower object
  */
@@ -19,15 +19,13 @@ public class TowerBuilder {
      * 
      * @param image: Image Tower will use
      * @param size: size of Image
-     * @param value: Cost to buy Tower
      * @param health: Health of Tower
      * @param healthValue: Upgrade increment of Health
      * @param healthCost: Cost to upgrade Health
      * @return Tower object
      */
-    public Tower construct(Image image, double size, double value, double health, double healthValue, double healthCost, Launcher launcher) {
-	ValueProperty valueProperty = new ValueProperty(value);
+    public Tower construct(String name, Image image, double size, double health, double healthValue, double healthCost, Launcher launcher) {
 	HealthProperty healthProperty = new HealthProperty(healthCost, healthValue, health);
-	return new Tower(image, size, launcher, healthProperty, valueProperty);
+	return new Tower(name, image, size, launcher, healthProperty);
     }
 }
