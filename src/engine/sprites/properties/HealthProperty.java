@@ -5,7 +5,7 @@ package engine.sprites.properties;
  * @author ryanpond
  * @author Katie Van Dyk
  */
-public class HealthProperty extends Property {
+public class HealthProperty extends UpgradeProperty {
 
     private double myHealth;
 

@@ -8,7 +8,7 @@ package engine.sprites.properties;
  * @date 4/5/18
  *
  */
-public class FireRateProperty extends Property {
+public class FireRateProperty extends UpgradeProperty {
     
     private double myFireRate;
     
