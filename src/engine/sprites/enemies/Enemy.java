@@ -42,11 +42,11 @@ public class Enemy extends Sprite{
 	}
 
 	/**
-     * Handles when the Enemy is hit by a tower
-     * 
-     * @param projectile: the projectile that hit the enemy
-     * @return : returns true if the enemy is still alive, false if it is dead
-     */
+         * Handles when the Enemy is hit by a tower
+         * 
+         * @param projectile: the projectile that hit the enemy
+         * @return : returns true if the enemy is still alive, false if it is dead
+         */
 	public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
 		myHealth.loseHealth(projectile.getDamage());
 		return myHealth.isAlive();
