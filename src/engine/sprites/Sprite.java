@@ -9,10 +9,12 @@ import javafx.scene.image.ImageView;
  * 
  * @author Katherine Van Dyk
  * @date 4/3/18
- *
+ * @author Miles Todzo 4/4/18
  */
-public abstract class Sprite  {
-    private ImageView myImage; // this is repeated in a bunch of subclasses -bma
+
+public class Sprite  {
+    private ImageView myImage;
+
 
     /**
      * Constructor that takes in a sprite's image
@@ -40,6 +42,9 @@ public abstract class Sprite  {
 	myImage.setX(newX);
 	myImage.setY(newY);
     }
-
+    
+    public void checkForCollision(Sprite sprite) {
+    	
+    }
 
 }
