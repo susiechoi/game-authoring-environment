@@ -61,13 +61,19 @@ class AuthoringModel {
 	}
 	
 	/**
-	 * Method through which information can be sent to instantiate or edit a path object
+	 * Method through which information can be sent to instantiate or edit a Resources object
 	 * Wraps constructor in case of new object creation
 	 */
 	public void makeResources(double startingHealth, double starting$) {
 		myResources = new AuthoringResources(startingHealth, starting$);
 	}
 	
+	public void makeSettings(String backgroundImage, String gameName, String themeSong,
+		String CSSstyling) {
+	    	if(newObject) {
+	    	    // if this is a new game
+	    	}
+	}
 	// TODO POPULATE RETURN LIST WITH EXISTING OBJECTS AT THAT LEVEL 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing
