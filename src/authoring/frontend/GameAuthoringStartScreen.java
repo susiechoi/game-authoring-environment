@@ -28,15 +28,15 @@ public class GameAuthoringStartScreen extends Screen {
 	protected Scene makeScreenWithoutStyling() {
 		Text startHeading = new Text();
 		VBox vbox = new VBox();
-		startHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("StartScreenHeader", getView().getLanguage()));
+		startHeading = getUIFactory().makeScreenTitleText(getView().getErrorCheckedPrompt("StartScreenHeader"));
 		ArrayList<String> dummyGameNames = new ArrayList<>();
 		String prompt = new String();
-		prompt = getErrorCheckedPrompt("GameEditSelector", getView().getLanguage());
+		prompt = getView().getErrorCheckedPrompt("GameEditSelector");
 		dummyGameNames.add(prompt);
 		dummyGameNames.add("Vanilla");
 		dummyGameNames.add("Plants vs. Zombies");
-		Button newGameButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("NewGameButtonLabel", getView().getLanguage()));
-		myEditButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel", getView().getLanguage()));
+		Button newGameButton = getUIFactory().makeTextButton("editbutton", getView().getErrorCheckedPrompt("NewGameButtonLabel"));
+		myEditButton = getUIFactory().makeTextButton("editbutton", getView().getErrorCheckedPrompt("EditButtonLabel"));
 		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
 			myEditButton.setDisable(false);}, e -> {myEditButton.setDisable(true);}, prompt);
 		myEditButton.setDisable(true);
