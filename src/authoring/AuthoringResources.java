@@ -1,5 +1,5 @@
 package authoring;
 
-public class AuthoringResources {
+class AuthoringResources {
 
 }
