@@ -59,7 +59,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 			getView().loadScreen(new AdjustNewLauncherProjectileScreen(getView(), this));
 		    }
 		    else {
-			getView().loadScreen(new AdjustExistingLauncherProjectileScreen(getView(), this, "Test")); //TODO: figure out not hard coded!
+			getView().loadScreen(new AdjustExistingLauncherProjectileScreen(getView(), this, this.getMyNameField().getText())); //TODO: figure out not hard coded!
 		    }
 		});
 		
