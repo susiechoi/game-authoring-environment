@@ -23,7 +23,5 @@ public class DamageProperty extends Property {
 	@Override
 	public double getProperty() {
 		return myDamage;
-	}	
-
-
+	}
 }
