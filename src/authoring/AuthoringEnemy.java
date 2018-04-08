@@ -2,8 +2,8 @@ package authoring;
 
 class AuthoringEnemy {
 
-	protected AuthoringEnemy(boolean newObject, String name, String image, int speed, 
-			int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
+	protected AuthoringEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double moneyImpact, 
+			double killReward, double killUpgradeCost, double killUpgradeValue) {
 		
 	}
 	

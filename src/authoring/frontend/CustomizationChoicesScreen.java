@@ -27,6 +27,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	HBox hbox = new HBox();
 	Text heading = getUIFactory().makeScreenTitleText(myGameName);
 	Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SettingsButtonLabel"));
+	Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
 	Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel"));
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
@@ -59,6 +60,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 	vbox.getChildren().add(heading);
 	vbox.getChildren().add(settingsButton);
+	vbox.getChildren().add(resourcesButton);
 	vbox.getChildren().add(demoButton);
 	vbox.getChildren().add(saveButton);
 	hbox.getChildren().add(newLevelButton);

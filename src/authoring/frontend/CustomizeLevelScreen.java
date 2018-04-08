@@ -29,9 +29,6 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		Button enemiesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeEnemy"));
 		vb.getChildren().add(enemiesButton);
 		
-		Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
-		vb.getChildren().add(resourcesButton);
-		
 		Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeSettings"));
 		vb.getChildren().add(settingsButton);
 		
