@@ -7,7 +7,7 @@ import java.util.TimerTask;
  * @author ryanpond
  *
  */
-public class GameLoop extends TimerTask{
+public class GameLoop extends TimerTask {
 
 	private GameEngine myController;
 	
