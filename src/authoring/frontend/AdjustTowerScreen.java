@@ -18,8 +18,6 @@ import javafx.scene.layout.VBox;
 abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final int DEFAULT_MAX_RANGE = 500; 
-	public static final int DEFAULT_MAX_PRICE = 500;
 	
 	private boolean myIsNewObject; 
 	private TextField myNameField;
@@ -29,16 +27,15 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private Slider myTowerHealthUpgradeValueSlider;
 	
 	private String myProjectileImage;
-	private String myProjectileAbility;
-	private int myProjectileValue;
-	private int myProjectileDamage;
-	private int myProjectileUpgradeCost;
-	private int myProjectileUpgradeValue;
-	private int myLauncherUpgradeCost;
-	private int myLauncherValue;
-	private int myLauncherUpgradeValue;
-	private int myLauncherSpeed;
-	private int myLauncherRange; 
+	private double myProjectileValue;
+	private double myProjectileDamage;
+	private double myProjectileUpgradeCost;
+	private double myProjectileUpgradeValue;
+	private double myLauncherUpgradeCost;
+	private double myLauncherValue;
+	private double myLauncherUpgradeValue;
+	private double myLauncherSpeed;
+	private double myLauncherRange; 
 	
 	protected AdjustTowerScreen(AuthoringView view) {
 		super(view);
@@ -58,7 +55,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Button backButton = getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());});
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeTower(myIsNewObject, myNameField.getText(), myImageDropdown.getValue(), (int)myTowerHealthValueSlider.getValue(),  (int)myTowerHealthUpgradeCostSlider.getValue(),  (int)myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileAbility, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
+			getView().makeTower(getView().getLevel(), myIsNewObject, myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
 			getView().goBackFrom(this.getClass().getSimpleName());
 		});
 		
@@ -96,17 +93,17 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	private void makeHealthComponents(VBox vb) {
-		Slider towerHealthValueSlider = getUIFactory().setupSlider("TowerHealthValueSlider", DEFAULT_MAX_PRICE);
+		Slider towerHealthValueSlider = getUIFactory().setupSlider("TowerHealthValueSlider", myMaxPrice);
 		myTowerHealthValueSlider = towerHealthValueSlider; 
 		HBox towerHealthValue = getUIFactory().setupSliderWithValue("TowerHealthValueSlider", towerHealthValueSlider, getErrorCheckedPrompt("TowerHealthValue"));
 		vb.getChildren().add(towerHealthValue);
 
-		Slider towerHealthUpgradeCostSlider = getUIFactory().setupSlider("TowerHealthUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider towerHealthUpgradeCostSlider = getUIFactory().setupSlider("TowerHealthUpgradeCostSlider", myMaxPrice);
 		myTowerHealthUpgradeCostSlider = towerHealthUpgradeCostSlider;
 		HBox towerHealthUpgradeCost = getUIFactory().setupSliderWithValue("TowerHealthUpgradeCostSlider", towerHealthUpgradeCostSlider, getErrorCheckedPrompt("TowerHealthUpgradeCost"));
 		vb.getChildren().add(towerHealthUpgradeCost);
 
-		Slider towerHealthUpgradeValueSlider = getUIFactory().setupSlider("TowerHealthUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider towerHealthUpgradeValueSlider = getUIFactory().setupSlider("TowerHealthUpgradeValueSlider", myMaxPrice);
 		myTowerHealthUpgradeValueSlider = towerHealthUpgradeValueSlider; 
 		HBox towerHealthUpgradeValue = getUIFactory().setupSliderWithValue("TowerHealthUpgradeValueSlider", towerHealthUpgradeValueSlider, getErrorCheckedPrompt("TowerHealthUpgradeValue"));
 		vb.getChildren().add(towerHealthUpgradeValue);
@@ -116,10 +113,9 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myIsNewObject = isNewObject; 
 	}
 	
-	protected void setLauncherProjectileValues(String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
-			int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
+	protected void setLauncherProjectileValues(String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
+			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		myProjectileImage = projectileImage;
-		myProjectileAbility = ability;
 		myProjectileDamage = projectileDamage; 
 		myProjectileValue = projectileValue;
 		myProjectileUpgradeCost = projectileUpgradeCost;
