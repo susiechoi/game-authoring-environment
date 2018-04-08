@@ -1,11 +1,3 @@
-/**
- * @author Sarah Bland
- * @author susiechoi
- * 
- * Represents View of authoring environment's MVC. 
- * Allows for screen transitions and the communication of object altering/creation to Controller. 
- */
-
 package authoring.frontend;
 
 import java.lang.reflect.Constructor;
@@ -21,6 +13,14 @@ import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.scene.Scene;
+
+/**
+ * @author Sarah Bland
+ * @author susiechoi
+ * 
+ * Represents View of authoring environment's MVC. 
+ * Allows for screen transitions and the communication of object altering/creation to Controller. 
+ */
 
 public class AuthoringView extends View {
 
@@ -40,7 +40,7 @@ public class AuthoringView extends View {
 		myStageManager = stageManager; 
 		myController = controller; 
 		myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
-		myStageManager.switchScreen((new CustomizationChoicesScreen(this)).getScreen());
+		myStageManager.switchScreen((new AdjustNewTowerScreen(this)).getScreen());
 	}
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
@@ -56,30 +56,31 @@ public class AuthoringView extends View {
 		goForwardFrom(id+"Back");
 	}
 
-	protected void goForwardFrom(String id) {
-		try {
-			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
-			Class<?> clazz = Class.forName(nextScreenClass);
-			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
-			if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
-				myStageManager.switchScreen(nextScreen.getScreen());
-			}
-			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, myPromptReader));
-				myStageManager.switchScreen(nextScreen.getScreen());
-			} //TODO: handle case where switching to gameplay
-			else {
-				throw new MissingPropertiesException("");
-			}
 
-		}
-		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
-				| IllegalAccessException | InstantiationException e) {
-			e.printStackTrace();
-			loadErrorScreen("NoScreenFlow");
-		}
+    protected void goForwardFrom(String id) {
+	try {
+	    String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
+	    Class<?> clazz = Class.forName(nextScreenClass);
+	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
+	    if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+		myStageManager.switchScreen(nextScreen.getScreen());
+	    }
+	    else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+		Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, myPromptReader));
+		myStageManager.switchScreen(nextScreen.getScreen());
+	    } //TODO: handle case where switching to gameplay
+	    else {
+		throw new MissingPropertiesException("");
+	    }
+
 	}
+	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
+		| IllegalAccessException | InstantiationException e) {
+	    e.printStackTrace();
+	    loadErrorScreen("NoScreenFlow");
+	}
+    }
 
 	/**
 	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;

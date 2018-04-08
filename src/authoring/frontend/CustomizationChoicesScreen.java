@@ -32,7 +32,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	settingsButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"SettingsButton");});
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
-	Button mainButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("MainLabel"));
+	Button mainButton = setupBackButton();
 	String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
 	ArrayList<String> dummyLevels = new ArrayList<>();
 	VBox newLevelVBox = new VBox();

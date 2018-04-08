@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
  */
 public class StartScreen extends AuthoringScreen {
 
-    protected StartScreen(AuthoringView view, String language) {
+    protected StartScreen(AuthoringView view) {
 	super(view);
     }
     @Override
@@ -39,6 +39,7 @@ public class StartScreen extends AuthoringScreen {
 	ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, prompt);
 	editButton.setDisable(true);
+	editButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"Edit");});
 	vbox.getChildren().add(startHeading);
 	vbox.getChildren().add(gameChooser);
 	vbox.getChildren().add(editButton);

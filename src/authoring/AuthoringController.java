@@ -1,3 +1,8 @@
+package authoring;
+
+import java.util.List;
+import frontend.StageManager;
+
 /**
  * 
  * @author susiechoi 
@@ -7,21 +12,13 @@
  * 
  */
 
-package authoring;
-
-import java.util.List;
-
-import authoring.frontend.AuthoringView;
-import frontend.StageManager;
 
 public class AuthoringController {
 	
-	private AuthoringView myAuthoringView; 
 	private AuthoringModel myAuthoringModel; 
 	
 	public AuthoringController(StageManager stageManager, String languageIn) {
 		myAuthoringModel = new AuthoringModel();
-		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
 	}
 	
 	/**

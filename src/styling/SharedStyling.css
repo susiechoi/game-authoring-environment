@@ -43,3 +43,8 @@ Text {
 	-fx-background-color: #B7D5D4;
 }
 
+#towerHolders {
+	-fx-padding: 0;
+	-fx-spacing: 0;
+}
+

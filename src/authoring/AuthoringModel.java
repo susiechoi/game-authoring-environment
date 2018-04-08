@@ -1,3 +1,5 @@
+package authoring;
+
 /**
  * 
  * @author susiechoi 
@@ -6,14 +8,10 @@
  * 
  */
 
-package authoring;
-
 import java.lang.reflect.Field;
 import java.util.List;
 
-import authoring.frontend.exceptions.NoDuplicateNamesException;
-
-class AuthoringModel {
+public class AuthoringModel {
 	
 	protected AuthoringResources myResources;
 
