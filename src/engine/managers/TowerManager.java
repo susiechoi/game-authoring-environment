@@ -1,9 +1,16 @@
 package engine.managers;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+
+
+import engine.sprites.ShootingSprites;
+import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
 
@@ -12,35 +19,20 @@ import engine.sprites.towers.Tower;
  * active Tower objects in the game loop.
  *
  * @author Miles Todzo
- *
+ * @author Katie Van Dyk
 */
 
-public class TowerManager extends Manager {
-	
-    private final List<Tower> AVAILABLE = new ArrayList<Tower>();
-    private final List<Tower> ACTIVE = new ArrayList<Tower>();
+public class TowerManager extends ShootingSpriteManager {
 
+	//not sure exactly where this should be implemented/how the info for it will be passed in
+	Map<String, Tower> towerTypeToInstance;
+	
     /**
      * Constructor for super class
      */
     public TowerManager() {
 	super();
-    }
-
-    /**
-     * 
-     * @return List<Tower>: an unmodifiableList of AVAILABLE towers
-     */
-    public List<Tower> unmodifiableAvailableList() {
-	return Collections.unmodifiableList(AVAILABLE);
-    }
-
-    /**
-     * 
-     * @return List<Tower>: an unmodifiableList of ACTIVE towers
-     */
-    public List<Tower> unmodifiableActiveList() {
-	return Collections.unmodifiableList(ACTIVE);
+	towerTypeToInstance = new HashMap<>();
     }
 
     /**
@@ -57,22 +49,6 @@ public class TowerManager extends Manager {
 	}
     }
 
-    /**
-     * Adds a tower to the list of ACTIVE Tower objects.
-     * 
-     * @param tower: A tower that is Activated in the game
-     */
-    public void setActiveTower(Tower tower) {
-	ACTIVE.add(tower);
-    }
-
-    /**
-     * Will move projectiles according to the closest enemy, called every step of the GameLoop
-     */
-    public void moveProjectiles() {
-	// TODO Auto-generated method stub
-	
-    }
     
     /**
      * Moves towers on every step of the GameLoop
@@ -80,6 +56,12 @@ public class TowerManager extends Manager {
     public void moveTowers() {
 	// TODO Auto-generated method stub
 	
+    }
+    
+    public FrontEndTower place(Point location, String type) {
+    		Tower newTower = towerTypeToInstance.get(type);
+    		this.addToActiveList(newTower);
+    		return (FrontEndTower) newTower;
     }
 
 

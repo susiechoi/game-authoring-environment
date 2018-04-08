@@ -68,6 +68,15 @@ public class Level {
     public List<Tower> getTowers() {
 	return availableTowers;
     }
+    /**
+     * Returns any new Enemy that is supposed to spawn at the given time.
+     * @param universalTime
+     * @return
+     */
+    public Enemy getNewEnemy(int universalTime) {
+    		//TODO
+    		return null;
+    }
 
     public Enemy getNewEnemy(int time, EnemyManager em) {
 	

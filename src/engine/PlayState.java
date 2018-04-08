@@ -9,13 +9,16 @@ import engine.level.Level;
 import java.util.ArrayList;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
+
 
 /**
  * Handles the current state of the game, including current score, money, and lists
  * of active towers and enemies
- * 
  * @author Miles Todzo
  * @author Katherine Van Dyk
+ * @author benauriemma 4/8
  * @date 4/6/18
  */
 public class PlayState implements GameData {
@@ -50,7 +53,7 @@ public class PlayState implements GameData {
 	myTowerManager.moveTowers();
 	myEnemyManager.moveProjectiles();
 	myEnemyManager.moveEnemies();
-	currentLevel.getNewEnemy(UNIVERSAL_TIME, myEnemyManager);
+	currentLevel.getNewEnemy(UNIVERSAL_TIME);
     }
 
 
@@ -59,7 +62,6 @@ public class PlayState implements GameData {
 	myTowerManager.setAvailableTowers(currentLevel.getTowers()); //maybe change so that it adds on to the List and doesn't overwrite old towers
 	myEnemyManager.setEnemies(currentLevel.getEnemies());
     }
-    
 
     public void restartLevel() {
 	// TODO Auto-generated method stub
@@ -74,8 +76,16 @@ public class PlayState implements GameData {
     public void play() {
 	isPaused = false;
     }
+    
+    /**
+     * This method is called within PlaceTowerListener.
+     * @param placedTower: Tower passed from front end that is attempting to be placed
+     */
+    public void placeTower(Tower placedTower) {
+	
+    }
 
     public FrontEndTower placeTower(Point location, String towerType) {
-	return (FrontEndTower) myTowerManager.add(location, towerType);
+	return (FrontEndTower) myTowerManager.place(location, towerType);
     }
 }

@@ -112,8 +112,13 @@ public class GameEngine {
 
     }
 
+    /**
+     * Calls the update function every loop
+     * @param elapsedTime
+     */
     public void loop(double elapsedTime) {
 	update();
     }
+    
 
 }
