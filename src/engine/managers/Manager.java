@@ -42,6 +42,10 @@ public class Manager<E> {
     public ObservableList<E> getObservableListOfActive(){
     		return (ObservableList<E>) active;
     }
+    
+    public void addToActiveList(E sprite) {
+    		active.add(sprite);
+    }
 
     /**
      * Checks for collisions between between the list of active actors held by the Manager the method
