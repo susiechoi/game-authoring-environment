@@ -27,7 +27,7 @@ public class AuthoringView extends View {
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
-		myStageManager.switchScreen((new AdjustNewEnemyScreen(this)).getScreen());
+		myStageManager.switchScreen((new SpecifyTowerScreen(this)).getScreen());
 	}
 
 	protected void goForwardFrom(String id) {
