@@ -4,12 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-public class CreatePathScreen extends Screen {
+public class CreatePathScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
@@ -24,9 +25,10 @@ public class CreatePathScreen extends Screen {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 	}
 
-	protected Scene makeScreenWithoutStyling() {
+	@Override
+	public Parent makeScreenWithoutStyling() {
 		pathRoot = new StackPane();
-		Scene myScene = new Scene(pathRoot, 1500, 900);
+//		Scene myScene = new Scene(pathRoot, 1500, 900);
 
 		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
@@ -43,7 +45,7 @@ public class CreatePathScreen extends Screen {
 		setGridSizing();
 		setGridApplied();
 
-		return myScene; 	
+		return pathRoot; 	
 	}
 
 	private void setGridSizing() {
@@ -52,7 +54,7 @@ public class CreatePathScreen extends Screen {
 			@Override
 			public void handle(ActionEvent event) {
 				if (grid.getPathSize() < 100) {
-					grid.setGridConstraints(grid.getPathSize() + 10);
+					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() + 10);
 				}
 			}
 		});
@@ -62,7 +64,8 @@ public class CreatePathScreen extends Screen {
 			@Override
 			public void handle(ActionEvent event) {
 				if (grid.getPathSize() > 30) {
-					grid.setGridConstraints(grid.getPathSize() - 10);
+					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - 10);
+					System.out.println(grid.getGrid().getChildren());
 				}
 			}
 		});
@@ -75,6 +78,7 @@ public class CreatePathScreen extends Screen {
 			@Override
 			public void handle(ActionEvent event) {
 				grid.checkPathConnected(0, 0);
+				
 			}
 		});
 	}

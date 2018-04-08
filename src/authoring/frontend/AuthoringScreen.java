@@ -18,6 +18,7 @@ public abstract class AuthoringScreen extends Screen {
     protected String getErrorCheckedPrompt(String prompt) {
 	return myView.getErrorCheckedPrompt(prompt);
     }
+    
     protected Button setupBackButton() {
 	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());});
     }
