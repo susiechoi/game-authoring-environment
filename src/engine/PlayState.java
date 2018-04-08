@@ -44,7 +44,7 @@ public class PlayState {
 	myTowerManager.moveTowers();
 	myEnemyManager.moveProjectiles();
 	myEnemyManager.moveEnemies();
-	currentLevel.getNewEnemy(UNIVERSAL_TIME, myEnemyManager);
+	currentLevel.getNewEnemy(UNIVERSAL_TIME);
     }
 
 
@@ -69,6 +69,6 @@ public class PlayState {
     }
 
     public FrontEndTower placeTower(Point location, String towerType) {
-	return (FrontEndTower) myTowerManager.add(location, towerType);
+	return (FrontEndTower) myTowerManager.place(location, towerType);
     }
 }
