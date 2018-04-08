@@ -30,6 +30,13 @@ public class StageManager {
 	stageHeight = height;
     }
     
+    public void switchScene(Scene scene) {
+	myStage.setScene(scene);
+    }
+    public Scene getScene() {
+	return myStage.getScene();
+    }
+    
     
     public void switchScreen(Parent topNode) {
 	Scene programScene = new Scene(topNode , stageWidth,stageHeight);
