@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import authoring.AuthoringController;
+import frontend.StageManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,19 +13,24 @@ public class FrontendLauncherForTesting extends Application {
 
 	@Override
 	public void start(Stage stage) {
+
 //		ArrayList<String> enemyOptions = new ArrayList<String>();
 //		enemyOptions.add("Tower 1");
 //		enemyOptions.add("Tower 2");
 //		SpecifyEnemyScreen a = new SpecifyEnemyScreen(enemyOptions);
 //		AdjustEnemyScreen a = new AdjustTowerScreen(); 
 
-		AuthoringView view = new AuthoringView(stage, "English");
-		CreatePathScreen a = new CreatePathScreen(view);
-
-		Stage s = new Stage(); 
-		s.setScene(a.getScreen());
-		s.show();
+//		AuthoringView view = new AuthoringView(stage, "English");
+//		CreatePathScreen a = new CreatePathScreen(view);
+//
+//		Stage s = new Stage(); 
+//		s.setScene(a.getScreen());
+//		s.show();
 //		stage.show();
+
+
+		AuthoringController controlla = new AuthoringController(new StageManager(stage), "English");
+		stage.show();
 
 	}
 

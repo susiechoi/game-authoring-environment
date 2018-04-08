@@ -26,6 +26,7 @@ public class CreatePathPanel implements Panel {
 	private Button endImageChooser;
 	private Button pathImageChooser;
 	private Button applyButton;
+	private Button backButton;
 
 	@Override
 	public void makePanel() { //separate into smaller methods
@@ -82,6 +83,8 @@ public class CreatePathPanel implements Panel {
 		
 		applyButton = factory.makeTextButton("", "Apply");
 		
+		backButton = factory.makeTextButton("", "Back");
+		
 		pathSizeButtons = new HBox();
 		pathSizeButtons.getChildren().addAll(pathSizePlusButton, pathSizeMinusButton);
 		
@@ -90,7 +93,7 @@ public class CreatePathPanel implements Panel {
 		pathImageChooser = factory.makeTextButton("", "Choose Path Image");
 		
 		
-		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage, pathSizeButtons, startImageChooser, pathImageChooser, endImageChooser, applyButton);
+		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage, pathSizeButtons, startImageChooser, pathImageChooser, endImageChooser, applyButton, backButton);
 	}
 	
 	public HBox getSizeButtons() {

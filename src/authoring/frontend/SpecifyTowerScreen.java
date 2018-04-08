@@ -1,3 +1,7 @@
+/**
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 
 public class SpecifyTowerScreen extends SpecifyObjectScreen {

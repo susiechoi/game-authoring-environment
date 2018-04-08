@@ -49,7 +49,7 @@ public abstract class Screen {
 		myScreen = makeScreenWithoutStyling();
 		}
 		catch (MissingPropertiesException e){
-			showError(getErrorCheckedPrompt("NoFile", myView.getLanguage()));
+//			showError(getErrorCheckedPrompt("NoFile", myView.getLanguage()));
 		}
 		applyDefaultStyling();
 		applyStyle(myStylesheet);

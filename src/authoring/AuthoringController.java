@@ -1,58 +1,53 @@
 package authoring;
 
-import java.io.File;
-import javafx.scene.Scene;
+import authoring.frontend.AuthoringView;
+import frontend.StageManager;
+import javafx.scene.image.ImageView;
 
 /**
  * 
- * @author Ben Hodgson 3/29/18
  * @author susiechoi 
  *
  * Class that handles mediating program functionality specific to authoring. 
  * Represents Controller in MVC of the authoring environment. 
  */
 
-class AuthoringController {
-
-   
-
-    /**
-     * Loads a new Scene object in the program's Stage to display the authoring environment 
-     * screen.
-     * 
-     * @return Scene: the authoring screen to be displayed to the user
-     */
-    public Scene loadAuthoringStage() {
-	return null;	
-    }  
-
-    /**
-     * Locates the file in the program file system that contains data required to load 
-     * a game. Uses the FileIO objects methods to loadState().
-     * 
-     * @return File: the file containing information required to load the start of a game
-     */
-    public File loadStartState() {
-	return null;	
-    }
-
-    /**
-     * Saves user data from the authoring environment in a temporary file to avoid 
-     * overwriting data before the user is ready to save completely. 
-     * Uses the FileIO objects methods to saveState().
-     */
-    public void saveTemporaryState() {
-
-    }
-
+public class AuthoringController {
+	
+	private AuthoringView myAuthoringView; 
+	private AuthoringModel myAuthoringModel; 
+	
+	public AuthoringController(StageManager stageManager, String languageIn) {
+		myAuthoringModel = new AuthoringModel();
+		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
+	}
+	
+	// TODO is int level needed as a parameter? 
+	public void getObjectAttribute(String objectType, String objectName, String attribute) {
+		// TODO wrap a call to get the info from AuthoringModel maps
+	}
+	
+	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
+		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
+	}
+	
+	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
+							String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
+							int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
+		myAuthoringModel.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+				projectileImage, ability, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+	}
+	
+	// TODO 
+	public void addNewPath() {
+		
+	}
+	
     /**
      * Instatiates the game engine to demo the authored game in its current state
      */
     public void demo() {
-
-    }
-    
-    private void setUpListeners() {
 
     }
 
