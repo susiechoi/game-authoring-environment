@@ -29,10 +29,4 @@ public class AuthoringModelReader implements XMLReader {
 	    return g;
 	}
 
-	@Override
-	public Object getObjectData(String elemName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

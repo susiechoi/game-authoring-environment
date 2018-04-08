@@ -11,9 +11,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import data.GameData;
-
 import com.thoughtworks.xstream.XStream;
+
+import authoring.AuthoringModel;
 
 public class AuthoringModelWriter implements XMLWriter {
 
@@ -45,7 +45,7 @@ public class AuthoringModelWriter implements XMLWriter {
      * Implementation of write method that saves data for authoring to SavedModels folder
      */
     @Override
-    public void write(GameData g, String filepath) throws BadGameDataException {
+    public void write(AuthoringModel g, String filepath) throws BadGameDataException {
 	// check type
 	if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
@@ -61,12 +61,6 @@ public class AuthoringModelWriter implements XMLWriter {
 	    // TODO replace with error pop up?
 	    System.out.println("Error configuring XML file");
 	}
-    }
-
-    @Override
-    public void change(GameData g) {
-	// TODO Auto-generated method stub
-
     }
 
 
