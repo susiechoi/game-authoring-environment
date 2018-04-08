@@ -1,6 +1,9 @@
 package engine;
 
 import java.util.List;
+
+import data.GameData;
+
 import java.awt.Point;
 import engine.level.Level;
 import java.util.ArrayList;
@@ -18,7 +21,9 @@ import engine.sprites.towers.Tower;
  * @author benauriemma 4/8
  * @date 4/6/18
  */
-public class PlayState {
+public class PlayState implements GameData {
+
+
     private int UNIVERSAL_TIME;
     private int score;
     private int money;

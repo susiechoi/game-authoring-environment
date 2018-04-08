@@ -3,11 +3,7 @@ package engine;
 
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
 /**
@@ -44,6 +40,8 @@ public class Mediator {
     public void savePlay() {
 	//TODO ask Engine for a PlayState and then ask XMLFactory for
 	//	a writer and then write it to a file
+	PlaySaverWriter writer = (PlaySaverWriter) myXMLFactory.generateWriter("PlaySaverWriter");
+	writer.write(myGameEngine.getPlayState(), ""); // add correct path
     }
     
     private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
