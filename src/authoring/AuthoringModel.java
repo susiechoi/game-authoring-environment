@@ -11,6 +11,7 @@ package authoring;
 
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import authoring.frontend.exceptions.NoDuplicateNamesException;
 import engine.builders.LauncherBuilder;
 import engine.builders.ProjectileBuilder;
 import engine.builders.TowerBuilder;
+import engine.level.Level;
+import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
@@ -28,28 +31,28 @@ import javafx.scene.image.Image;
 class AuthoringModel {
 
     protected AuthoringResources myResources;
-    private Map<String, Tower> myTowers;
-    private Map<String, Enemy> myEnemies;
+    private Map<Integer, Level> myLevels;
 
     public AuthoringModel() {
-	myTowers = new HashMap<String, Tower>();
-	myEnemies = new HashMap<String, Enemy>();
+	myLevels = new HashMap<Integer, Level>();
     }
 
 
     /**
      * Method through which information can be sent to instantiate or edit an enemy object
      * Wraps constructor in case of new object creation
+     * @throws NoDuplicateNamesException 
      */
     public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double healthImpact,
-	    double killReward, double killUpgradeCost, double killUpgradeValue) {
-	if (newObject) {
-	   
-	}
-	else {
+	    double killReward, double killUpgradeCost, double killUpgradeValue) throws NoDuplicateNamesException {
+	//if (myEnemies.containsKey(name)) {
+	    // build projectile, launcher, then tower using builder objects
+	    //throw new NoDuplicateNamesException(name);
+	//}
+	//else {
 	    // find the enemy in the enemies map with the name parameter
 	    // edit its values to conform to the parameterized ones 
-	}
+	//}
     }
 
     /**
@@ -61,7 +64,15 @@ class AuthoringModel {
     public void makeTower(int level, boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
 	    Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
 	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
-	if (myTowers.containsKey(name)) {
+	Level thisLevel;
+	if (myLevels.containsKey(level)) {
+	    thisLevel = myLevels.get(level);
+	}
+	else {
+	    Path levelPath = makePath(level);
+	    thisLevel = new Level(level, levelPath);
+	}
+	if (thisLevel.containsTower(name)) {
 	    // build projectile, launcher, then tower using builder objects
 	    throw new NoDuplicateNamesException(name);
 	}
@@ -76,7 +87,7 @@ class AuthoringModel {
 	    double size = 20; 
 	    Tower newTower = new TowerBuilder().construct(name, image, size, health, 
 		    healthUpgradeValue, healthUpgradeCost, towerLauncher);
-	    myTowers.put(name, newTower);
+	    thisLevel.addTower(name, newTower);
 	}
     }
 
@@ -85,8 +96,8 @@ class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makePath(int level) {
-
+    public Path makePath(int level) {
+	return null;
     }
 
     /**
@@ -121,17 +132,17 @@ class AuthoringModel {
 	Field field; 
 	Object fieldValue = null; 
 	if (objectType.equals("Enemy")) {
-	    if (myEnemies.containsKey(name)) {
-		Enemy enemy = myEnemies.get(name);
+	    //if (myEnemies.containsKey(name)) {
+		//Enemy enemy = myEnemies.get(name);
 		// field = enemy.getField(attribute);
 		// fieldValue = field.get(enemyObject)
-	    }
+	    //}
 	}
 	else if (objectType.equals("Tower")) {
-	    if (myTowers.containsKey(name)) {
+	    //if (myTowers.containsKey(name)) {
 		// field = tower.getField(attribute) 
 		// fieldValue = field.get(towerObject)
-	    }
+	    //}
 	}
 	return (String) fieldValue; 
     }
