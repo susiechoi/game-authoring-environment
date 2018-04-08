@@ -2,6 +2,7 @@ package controller;
 
 import engine.GameEngine;
 import engine.Mediator;
+import gameplayer.ScreenManager;
 import xml.XMLReader;
 
 /**
@@ -19,7 +20,7 @@ public class PlayController {
     
     public PlayController() {
 	myMediator = new Mediator();
-	myScreenmanager = new ScreenManager();
+	myScreenmManager = new ScreenManager();
 	myGameEngine = new GameEngine(myMediator);
 	myMediator.setScreenManager(myScreenManager)
 	myMediator.setEngine(myGameEngine)
