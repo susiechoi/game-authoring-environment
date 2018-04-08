@@ -5,6 +5,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -16,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
-
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	
 	private boolean myIsNewObject; 
@@ -51,12 +51,21 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		
 		Button goToProjectileLauncherButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 		vb.getChildren().add(goToProjectileLauncherButton);
+		goToProjectileLauncherButton.setOnAction(e -> {
+		    getView().getScene().setRoot(new HBox());
+		    if(getMyIsNewObject()) {
+			getView().loadScreen(new AdjustNewLauncherProjectileScreen(getView(), this));
+		    }
+		    else {
+			getView().loadScreen(new AdjustExistingLauncherProjectileScreen(getView(), this, "Test")); //TODO: figure out not hard coded!
+		    }
+		});
 		
-		Button backButton = getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());});
+		Button backButton = setupBackButtonSuperclass();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			getView().makeTower(getView().getLevel(), myIsNewObject, myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage, myProjectileDamage, myProjectileValue, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
-			getView().goBackFrom(this.getClass().getSimpleName());
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
