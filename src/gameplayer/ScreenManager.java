@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 
 
-public class ScreenManager implements View{
+public class ScreenManager extends View{
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
     public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
@@ -26,9 +26,11 @@ public class ScreenManager implements View{
     private double DEFAULT_WIDTH;
     //private final FileIO FILE_READER;
 
-    public ScreenManager(StageManager stageManager, String language) {
+
+    public ScreenManager(StageManager stageManager, PromptReader prompts) {
+	super(stageManager);
 	STAGE_MANAGER = stageManager;
-	PROMPTS = new PromptReader(language, this);
+	PROMPTS = prompts;
 	findSettings();
 	//setup rest of values once file reader is finished
     }
