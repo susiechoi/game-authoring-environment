@@ -53,7 +53,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(goToProjectileLauncherButton);
 		goToProjectileLauncherButton.setOnAction(e -> {
 		    getView().getScene().setRoot(new HBox());
-		    if(getMyIsNewObject()) {
+		    if(myIsNewObject) {
 			getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText()));
 		    }
 		    else {
@@ -79,15 +79,15 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	}
 
 	protected void populateFieldsWithData() {
-		getMyNameField().setText(getMySelectedObjectName());
+		myNameField.setText(getMySelectedObjectName());
 
-		setComboBoxToValue(getMyImageDropdown(),getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+		setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
 
-		setSliderToValue(getMyTowerHealthValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
+		setSliderToValue(myTowerHealthValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
 
-		setSliderToValue(getMyTowerHealthUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
+		setSliderToValue(myTowerHealthUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
 
-		setSliderToValue(getMyTowerHealthUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
+		setSliderToValue(myTowerHealthUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
 	}
 	
 	private void makeTowerComponents(VBox vb) {
@@ -144,30 +144,6 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myLauncherUpgradeValue = launcherUpgradeValue;
 		myLauncherSpeed = launcherSpeed;
 		myLauncherRange = launcherRange; 
-	}
-	
-	protected boolean getMyIsNewObject() {
-		return myIsNewObject; 
-	} 
-	
-	protected TextField getMyNameField() {
-		return myNameField; 
-	}
-	
-	protected ComboBox<String> getMyImageDropdown() {
-		return myImageDropdown; 
-	}
-
-	protected Slider getMyTowerHealthValueSlider() {
-		return myTowerHealthValueSlider;
-	}
-	
-	protected Slider getMyTowerHealthUpgradeCostSlider() {
-		return myTowerHealthUpgradeCostSlider;
-	}
-	
-	protected Slider getMyTowerHealthUpgradeValueSlider() {
-		return myTowerHealthUpgradeValueSlider; 
 	}
 
 }

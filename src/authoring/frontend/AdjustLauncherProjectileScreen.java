@@ -122,75 +122,25 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	protected void populateFieldsWithData() {
-		setComboBoxToValue(getMyProjectileImage(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+		setComboBoxToValue(myProjectileImage, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
 
-		setSliderToValue(getMyProjectileDamageSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
+		setSliderToValue(myProjectileDamageSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
 
-		setSliderToValue(getMyProjectileValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
+		setSliderToValue(myProjectileValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
 
-		setSliderToValue(getMyProjectileUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
+		setSliderToValue(myProjectileUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
 
-		setSliderToValue(getMyProjectileUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
+		setSliderToValue(myProjectileUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
 
-		setSliderToValue(getMyLauncherValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
+		setSliderToValue(myLauncherValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
 
-		setSliderToValue(getMyLauncherUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
+		setSliderToValue(myLauncherUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
 
-		setSliderToValue(getMyLauncherUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
+		setSliderToValue(myLauncherUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
 
-		setSliderToValue(getMyLauncherRateSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
+		setSliderToValue(myLauncherRateSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
 
-		setSliderToValue(getMyLauncherRangeSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRange"));
-	}
-	
-	/**
-	 * The following methods are getters for features/fields on the Screen
-	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
-	 */
-	protected ComboBox<String> getMyProjectileImage() {
-		return myProjectileImage; 
-	}
-	
-	protected Slider getMyProjectileDamageSlider() {
-		return myProjectileDamageSlider; 
-	}
-	
-	protected Slider getMyProjectileValueSlider() {
-		return myProjectileValueSlider; 
-	}
-	
-	protected Slider getMyProjectileUpgradeCostSlider() {
-		return myProjectileUpgradeCostSlider; 
-	}
-	
-	protected Slider getMyProjectileUpgradeValueSlider() {
-		return myProjectileUpgradeValueSlider; 
-
-	}
-	
-	protected Slider getMyLauncherValueSlider() {
-		return myLauncherValueSlider; 
-
-	}
-	
-	protected Slider getMyLauncherUpgradeCostSlider() {
-		return myLauncherUpgradeCostSlider; 
-
-	}
-	
-	protected Slider getMyLauncherUpgradeValueSlider() {
-		return myLauncherUpgradeValueSlider; 
-
-	}
-	
-	protected Slider getMyLauncherRateSlider() {
-		return myLauncherRateSlider; 
-
-	}
-	
-	protected Slider getMyLauncherRangeSlider() {
-		return myLauncherRangeSlider; 
-
+		setSliderToValue(myLauncherRangeSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRange"));
 	}
 	
 }

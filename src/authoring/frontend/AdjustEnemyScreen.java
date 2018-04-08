@@ -100,47 +100,19 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	 */
 	
 	protected void populateFieldsWithData() {
-		getMyNameField().setText(getMySelectedObjectName());
+		myNameField.setText(getMySelectedObjectName());
 		
-		setComboBoxToValue(getMyImageDropdown(),getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
+		setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
 		
-		setSliderToValue(getMySpeedSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
+		setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
 		
-		setSliderToValue(getMyHealthImpactSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
+		setSliderToValue(myHealthImpactSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
 			
-		setSliderToValue(getMyValueSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
+		setSliderToValue(myValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
 		
-		setSliderToValue(getMyUpgradeCostSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
+		setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
 		
-		setSliderToValue(getMyUpgradeValueSlider(), getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
-	}
-	
-	protected TextField getMyNameField() {
-		return myNameField;
-	} 
-	
-	protected ComboBox<String> getMyImageDropdown() {
-		return myImageDropdown;
-	}
-	
-	protected Slider getMySpeedSlider() {
-		return mySpeedSlider;
-	}
-	
-	protected Slider getMyHealthImpactSlider() {
-		return myHealthImpactSlider;
-	}
-	
-	protected Slider getMyValueSlider() {
-		return myValueSlider;
-	} 
-	
-	protected Slider getMyUpgradeCostSlider() {
-		return myUpgradeCostSlider;
-	} 
-	
-	protected Slider getMyUpgradeValueSlider() {
-		return myUpgradeValueSlider;
+		setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
 	}
 
 }
