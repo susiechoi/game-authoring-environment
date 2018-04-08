@@ -92,6 +92,10 @@ public class AuthoringView extends View {
     public void makePath(int level) {
 	myController.makePath(level);
     }
+    
+    public void makeResources(double startingHealth, double starting$) {
+    		myController.makeResources(startingHealth, starting$);
+    }
 
     public String getObjectAttribute(String objectType, String objectName, String attribute) {
 	return myController.getObjectAttribute(objectType, objectName, attribute);

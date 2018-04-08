@@ -13,6 +13,8 @@ import java.lang.reflect.Field;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 
 class AuthoringModel {
+	
+	protected AuthoringResources myResources;
 
 	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double healthImpact,
 			double killReward, double killUpgradeCost, double killUpgradeValue) {
@@ -42,6 +44,10 @@ class AuthoringModel {
 	// TODO 
 	public void makePath(int level) {
 
+	}
+	
+	public void makeResources(double startingHealth, double starting$) {
+		myResources = new AuthoringResources(startingHealth, starting$);
 	}
 
 	// TODO once maps have been made 
