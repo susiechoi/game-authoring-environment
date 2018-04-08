@@ -3,15 +3,11 @@ package controller;
 import authoring.AuthoringModel;
 import engine.GameEngine;
 import engine.Mediator;
-<<<<<<< HEAD
-import gameplayer.ScreenManager;
-import xml.XMLReader;
-=======
 import engine.PlayState;
 import gameplayer.ScreenManager;
 import javafx.stage.Stage;
 import xml.AuthoringModelReader;
->>>>>>> 8d5436beeef2f2ace5af3d79f84760c5a483b784
+
 
 /**
  * 
@@ -27,11 +23,7 @@ public class PlayController {
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     
-<<<<<<< HEAD
-    public PlayController() {
-	myMediator = new Mediator();
-	myScreenmManager = new ScreenManager();
-=======
+
     /**
      * Constructs main parts of play: Engine for backend controls, ScreenManager (top
      * level of game player) and Mediator, which connects the two
@@ -40,7 +32,6 @@ public class PlayController {
      */
     public PlayController(Stage stage) {
 	myScreenManager = new ScreenManager(stage);
->>>>>>> 8d5436beeef2f2ace5af3d79f84760c5a483b784
 	myGameEngine = new GameEngine(myMediator);
 	myReader = new AuthoringModelReader();
 	myMediator = new Mediator(myScreenManager, myGameEngine);
