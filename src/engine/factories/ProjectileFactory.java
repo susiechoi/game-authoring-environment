@@ -1,8 +1,8 @@
 package engine.factories;
 
 import java.util.Collection;
-import java.util.Map;
 
+import engine.sprites.Sprite;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -20,7 +20,7 @@ public class ProjectileFactory extends Factory {
      * 
      * @param data
      */
-    public ProjectileFactory(Map<String, Collection<Object>> data) {
+    public ProjectileFactory(Collection<Sprite> data) {
 	super(data);
     }
     
