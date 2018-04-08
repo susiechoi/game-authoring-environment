@@ -23,12 +23,15 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		vb.getChildren().add(getUIFactory().makeScreenTitleText("Specify Starting Resources"));
 
 		Slider startingHealthSlider = getUIFactory().setupSlider("startingHealth", 100);
-		HBox startingHealth = getUIFactory().addPromptAndSetupHBox("startingHealth", startingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
+		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", startingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
 		Slider startingCurrencySlider = getUIFactory().setupSlider("startingCurrency", 999);
-		HBox startingCurrency = getUIFactory().addPromptAndSetupHBox("startingCurrency", startingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
+		HBox startingCurrency = getUIFactory().setupSliderWithValue("startingCurrency", startingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
 
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
+		applyButton.setOnAction(e -> {
+			getView().makeResources(startingHealthSlider.getValue(), startingCurrencySlider.getValue());
+		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		
 		vb.getChildren().add(startingHealth);

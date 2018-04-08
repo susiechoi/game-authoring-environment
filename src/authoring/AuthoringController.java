@@ -38,6 +38,10 @@ public class AuthoringController {
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 	
+	public void makeResources(double startingHealth, double starting$) {
+		myAuthoringModel.makeResources(startingHealth, starting$);
+	}
+	
 	// TODO 
 	public void makePath(int level) {
 		myAuthoringModel.makePath(level); 
