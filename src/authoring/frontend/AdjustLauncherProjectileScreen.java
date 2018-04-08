@@ -1,3 +1,9 @@
+/**
+ * @author susiechoi
+ * Abstract class for developing the fields for customizing 
+ * (new or existing, depending on whether corresponding tower is new or existing) launcher/projectile object
+ */
+
 package authoring.frontend;
 
 import java.util.ArrayList;
@@ -69,49 +75,49 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		}
 		vb.getChildren().add(projectileImageSelect);
 
-		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", myMaxRange);
+		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());
 		myProjectileDamageSlider = projectileDamageSlider; 
 		HBox projectileDamage = getUIFactory().setupSliderWithValue("ProjectileDamageSlider", projectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 		vb.getChildren().add(projectileDamage);
 
-		Slider projectileValueSlider = getUIFactory().setupSlider("ProjectileValueSlider", myMaxPrice);
+		Slider projectileValueSlider = getUIFactory().setupSlider("ProjectileValueSlider", getMyMaxPrice());
 		myProjectileValueSlider = projectileValueSlider; 
 		HBox projectileValue = getUIFactory().setupSliderWithValue("ProjectileValueSlider", projectileValueSlider, getErrorCheckedPrompt("ProjectileValue"));
 		vb.getChildren().add(projectileValue);
 
-		Slider projectileUpgradeCostSlider = getUIFactory().setupSlider("ProjectileUpgradeCostSlider", myMaxPrice);
+		Slider projectileUpgradeCostSlider = getUIFactory().setupSlider("ProjectileUpgradeCostSlider", getMyMaxPrice());
 		myProjectileUpgradeCostSlider = projectileUpgradeCostSlider; 
 		HBox projectileUpgradeCost = getUIFactory().setupSliderWithValue("ProjectileUpgradeCostSlider", projectileUpgradeCostSlider, getErrorCheckedPrompt("ProjectileUpgradeCost"));
 		vb.getChildren().add(projectileUpgradeCost);
 
-		Slider projectileUpgradeValueSlider = getUIFactory().setupSlider("ProjectileUpgradeValueSlider", myMaxUpgradeIncrement);
+		Slider projectileUpgradeValueSlider = getUIFactory().setupSlider("ProjectileUpgradeValueSlider", getMyMaxUpgradeIncrement());
 		myProjectileUpgradeValueSlider = projectileUpgradeValueSlider; 
 		HBox projectileUpgradeValue = getUIFactory().setupSliderWithValue("ProjectileUpgradeValueSlider", projectileUpgradeValueSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 		vb.getChildren().add(projectileUpgradeValue);
 	}
 	
 	private void makeLauncherComponents(VBox vb) {
-		Slider launcherValueSlider = getUIFactory().setupSlider("LauncherValueSlider", myMaxPrice);
+		Slider launcherValueSlider = getUIFactory().setupSlider("LauncherValueSlider", getMyMaxPrice());
 		myLauncherValueSlider = launcherValueSlider; 
 		HBox launcherValue = getUIFactory().setupSliderWithValue("LauncherValueSlider", launcherValueSlider, getErrorCheckedPrompt("LauncherValue"));
 		vb.getChildren().add(launcherValue);
 
-		Slider launcherUpgradeCostSlider = getUIFactory().setupSlider("LauncherUpgradeCostSlider", myMaxPrice);
+		Slider launcherUpgradeCostSlider = getUIFactory().setupSlider("LauncherUpgradeCostSlider", getMyMaxPrice());
 		myLauncherUpgradeCostSlider = launcherUpgradeCostSlider; 
 		HBox launcherUpgradeCost = getUIFactory().setupSliderWithValue("LauncherUpgradeCostSlider", launcherUpgradeCostSlider, getErrorCheckedPrompt("LauncherUpgradeCost"));
 		vb.getChildren().add(launcherUpgradeCost);
 
-		Slider launcherUpgradeValueSlider = getUIFactory().setupSlider("LauncherUpgradeValueSlider", myMaxUpgradeIncrement);
+		Slider launcherUpgradeValueSlider = getUIFactory().setupSlider("LauncherUpgradeValueSlider", getMyMaxUpgradeIncrement());
 		myLauncherUpgradeValueSlider = launcherUpgradeValueSlider; 
 		HBox launcherUpgradeValue = getUIFactory().setupSliderWithValue("LauncherUpgradeValueSlider", launcherUpgradeValueSlider, getErrorCheckedPrompt("LauncherUpgradeValue"));
 		vb.getChildren().add(launcherUpgradeValue);
 
-		Slider launcherRateSlider = getUIFactory().setupSlider("LauncherRateSlider", myMaxSpeed);
+		Slider launcherRateSlider = getUIFactory().setupSlider("LauncherRateSlider", getMyMaxSpeed());
 		myLauncherRateSlider = launcherRateSlider; 
 		HBox launcherRate = getUIFactory().setupSliderWithValue("LauncherRateSlider", launcherRateSlider, getErrorCheckedPrompt("LauncherRate"));
 		vb.getChildren().add(launcherRate);
 
-		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", myMaxRange);
+		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", getMyMaxRange());
 		myLauncherRangeSlider = launcherRangeSlider; 
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange"));
 		vb.getChildren().add(launcherRange);
@@ -119,6 +125,10 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	
 	protected abstract void populateFieldsWithData(); 
 	
+	/**
+	 * The following methods are getters for features/fields on the Screen
+	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
+	 */
 	protected ComboBox<String> getMyProjectileImage() {
 		return myProjectileImage; 
 	}

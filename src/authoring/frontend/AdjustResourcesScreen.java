@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * Creates screen in which user can customize the starting resources of the player
  */
 
 package authoring.frontend;
@@ -16,6 +17,9 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		super(view);
 	}
 
+	/**
+	 * Creates features (specifically, sliders) that users can manipulate to change starting reosurces of player
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling(){
 		VBox vb = new VBox(); 

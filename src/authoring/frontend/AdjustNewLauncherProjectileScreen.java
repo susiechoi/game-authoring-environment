@@ -1,3 +1,8 @@
+/**
+ * @author susiechoi
+ * For creation of new launcher/projectile objects corresponding to new towers
+ */
+
 package authoring.frontend;
 
 public class AdjustNewLauncherProjectileScreen extends AdjustLauncherProjectileScreen {

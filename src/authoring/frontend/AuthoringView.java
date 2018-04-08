@@ -1,7 +1,16 @@
+/**
+ * @author Sarah Bland
+ * @author susiechoi
+ * 
+ * Represents View of authoring environment's MVC. 
+ * Allows for screen transitions and the communication of object altering/creation to Controller. 
+ */
+
 package authoring.frontend;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -14,6 +23,7 @@ import gameplayer.ScreenManager;
 import javafx.scene.Scene;
 
 public class AuthoringView extends View {
+
 
     public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
     public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
@@ -31,7 +41,6 @@ public class AuthoringView extends View {
 	myStageManager = stageManager; 
 	myController = controller; 
 	myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
-	System.out.println("making the view!!");
 	myStageManager.switchScreen((new StartScreen(this)).getScreen());
     }
     protected void loadScreen(Screen screen) {
@@ -73,46 +82,73 @@ public class AuthoringView extends View {
 	}
     }
 
-    protected String getErrorCheckedPrompt(String prompt) {
-	return myPromptReader.resourceDisplayText(prompt);
-    }
 
-    public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+
+
+    /**
+     * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
+     */
+    public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
 	    String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
 	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
-	myController.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+	myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 		projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
 		launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
     }
 
-    public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-	myController.makeEnemy(level, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+    /**
+     * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
+     */
+    public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	myController.makeEnemy(myLevel, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
     }
 
     //TODO 
-    public void makePath(int level) {
-	myController.makePath(level);
-    }
-    
-    public void makeResources(double startingHealth, double starting$) {
-    		myController.makeResources(startingHealth, starting$);
+    /**
+     * Method through which information can be sent to instantiate or edit a Path in Authoring Model;
+     */
+    public void makePath() {
+	myController.makePath(myLevel);
     }
 
+
+    /**
+     * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
+     */
+    public void makeResources(double startingHealth, double starting$) {
+	myController.makeResources(startingHealth, starting$);
+    }
+
+    /**
+     * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
+     */
+    public List<String> getCurrentObjectOptions(String objectType) {
+	return myController.getCurrentObjectOptions(myLevel, objectType);
+    }
+
+    /**
+     * Method through which information about object fields can be requested
+     * Invoked when populating authoring frontend screens used to edit existing objects
+     */
     public String getObjectAttribute(String objectType, String objectName, String attribute) {
-	return myController.getObjectAttribute(objectType, objectName, attribute);
+	return myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
+    }
+
+    /**
+     * Enumerates the current level that the user is editing 
+     * Useful when creating new objects so that Model may organize objects by the level in which they become accessible to the user 
+     * @param level - the level that the user has selected to edit
+     */
+    protected void setLevel(int level) {
+	myLevel = level; 
     }
 
     protected Scene getScene() {
 	return myStageManager.getScene();
     }
 
-    protected void setLevel(int level) {
-	myLevel = level; 
+    protected String getErrorCheckedPrompt(String prompt) {
+	return myPromptReader.resourceDisplayText(prompt);
     }
-
-    protected int getLevel() {
-	return myLevel; 
-    }
-
 
 }
