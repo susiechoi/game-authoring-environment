@@ -11,13 +11,11 @@ import javafx.scene.text.Text;
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
-    public static final String DEFAULT_OWN_CSS = "styling/GameAuthoringStartScreen.css";
     private String myGameName;
 
     protected CustomizationChoicesScreen(AuthoringView view) {
 	//TODO: figure out how to not get gamename!!!
 	super(view);
-	//setStyle(DEFAULT_OWN_CSS);
 	myGameName = "TEST";
     }
 
@@ -27,8 +25,11 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	HBox hbox = new HBox();
 	Text heading = getUIFactory().makeScreenTitleText(myGameName);
 	Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SettingsButtonLabel"));
+	settingsButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"SettingsButton");});
 	Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
+	resourcesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"ResourcesButton");});
 	Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel"));
+	settingsButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"SettingsButton");});
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 	Button mainButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("MainLabel"));
@@ -42,6 +43,10 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	ComboBox<String> levelChooser = getUIFactory().makeTextDropdownSelectAction("", dummyLevels, e -> {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 	editButton.setDisable(true);
+	editButton.setOnAction(e -> {
+	    getView().setLevel(Integer.parseInt(levelChooser.getValue()));
+	    getView().goForwardFrom(this.getClass().getSimpleName()+"EditExistingLevel");
+	    });
 	HBox songSelector = new HBox();
 	ComboBox<String> songDropdown = new ComboBox<>();
 	try {
@@ -64,12 +69,12 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	vbox.getChildren().add(demoButton);
 	vbox.getChildren().add(saveButton);
 	hbox.getChildren().add(newLevelButton);
+	hbox.getChildren().add(newLevelVBox);
 	newLevelVBox.getChildren().add(levelChooser);
 	newLevelVBox.getChildren().add(editButton);
-	hbox.getChildren().add(newLevelVBox);
 	vbox.getChildren().add(hbox);
-	vbox.getChildren().add(mainButton);
 	vbox.getChildren().add(songPrompted);
+	vbox.getChildren().add(mainButton);
 	return vbox;
 
     }

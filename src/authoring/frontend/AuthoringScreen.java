@@ -10,7 +10,7 @@ public abstract class AuthoringScreen extends Screen {
     
     public AuthoringScreen(AuthoringView view) {
 	super();
-	applyStyle(view.getCurrentCSS());
+	setStyleSheet(view.getCurrentCSS());
 	myView = view;
     }
     
