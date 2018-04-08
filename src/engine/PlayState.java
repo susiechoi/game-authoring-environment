@@ -25,7 +25,7 @@ public class PlayState {
 	private Level currentLevel;
 	private boolean isPaused;
 
-	public PlayState(Mediator mediator, List<Level> levels, int score, int resources) {
+	public PlayState(Mediator mediator, List<Level> levels, int score, int resources, int universalTime) {
 		myMediator = mediator;
 		myLevels = levels;
 		currentLevel = myLevels.get(0);
@@ -34,6 +34,7 @@ public class PlayState {
 		isPaused = false;
 		myScore = score;
 		myResources = resources;
+		UNIVERSAL_TIME = universalTime;
 	}
 
 	public void update() {
