@@ -31,6 +31,7 @@ public class AuthoringView extends View {
 	myStageManager = stageManager; 
 	myController = controller; 
 	myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
+	System.out.println("making the view!!");
 	myStageManager.switchScreen((new StartScreen(this)).getScreen());
     }
     protected void loadScreen(Screen screen) {

@@ -17,8 +17,6 @@ import engine.path.Path;
  */
 
 
-package authoring;
-
 import java.lang.reflect.Field;
 
 import authoring.frontend.exceptions.NoDuplicateNamesException;
