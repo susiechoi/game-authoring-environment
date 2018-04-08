@@ -8,7 +8,7 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -24,9 +24,9 @@ public class Enemy extends Sprite{
 	private ValueProperty myValue;
 	private IIntersecter myIntersecter;
 
-	public Enemy(ImageView myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
+	public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
 		super(myImage);
-		myIntersecter = new Intersecter(myImage); 
+		myIntersecter = new Intersecter(this.getImage()); 
 		myHealth = health;
 		myDamage = damage;
 		myValue = value;
@@ -42,11 +42,11 @@ public class Enemy extends Sprite{
 	}
 
 	/**
-     * Handles when the Enemy is hit by a tower
-     * 
-     * @param projectile: the projectile that hit the enemy
-     * @return : returns true if the enemy is still alive, false if it is dead
-     */
+         * Handles when the Enemy is hit by a tower
+         * 
+         * @param projectile: the projectile that hit the enemy
+         * @return : returns true if the enemy is still alive, false if it is dead
+         */
 	public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
 		myHealth.loseHealth(projectile.getDamage());
 		return myHealth.isAlive();

@@ -10,14 +10,11 @@ import engine.managers.TowerManager;
 /**
  * Handles the current state of the game, including current score, money, and lists
  * of active towers and enemies
- * 
  * @author Miles Todzo
  * @author Katherine Van Dyk
  * @date 4/6/18
  */
 public class PlayState {
-
-
     private int UNIVERSAL_TIME;
     private int score;
     private int money;
@@ -47,7 +44,7 @@ public class PlayState {
 	myTowerManager.moveTowers();
 	myEnemyManager.moveProjectiles();
 	myEnemyManager.moveEnemies();
-	currentLevel.getNewEnemy(UNIVERSAL_TIME, myEnemyManager);
+	currentLevel.getNewEnemy(UNIVERSAL_TIME);
     }
 
 
@@ -56,7 +53,6 @@ public class PlayState {
 	myTowerManager.setAvailableTowers(currentLevel.getTowers()); //maybe change so that it adds on to the List and doesn't overwrite old towers
 	myEnemyManager.setEnemies(currentLevel.getEnemies());
     }
-    
 
     public void restartLevel() {
 	// TODO Auto-generated method stub
@@ -73,6 +69,6 @@ public class PlayState {
     }
 
     public FrontEndTower placeTower(Point location, String towerType) {
-	return (FrontEndTower) myTowerManager.add(location, towerType);
+	return (FrontEndTower) myTowerManager.place(location, towerType);
     }
 }
