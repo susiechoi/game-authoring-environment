@@ -2,7 +2,7 @@ package engine.sprites.towers.projectiles;
 
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 /**
  * Projectile class is a sprite that is launched from the tower
@@ -16,13 +16,13 @@ public class Projectile extends Sprite {
 	private DamageProperty myDamage;
 	
 	/**
-	 * Constructor that takes in a damange value and image, and creates a projectile
+	 * Constructor that takes in a damage value and image, and creates a projectile
 	 * class.
 	 * 
 	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
 	 * @param image: image of projectile
 	 */
-	public Projectile(DamageProperty damage, ImageView image) {
+	public Projectile(DamageProperty damage, Image image) {
 	    	super(image);
 		myDamage = damage;
 	}
