@@ -13,8 +13,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import data.GameData;
 
-class AuthoringModel {
+public class AuthoringModel implements GameData {
 	
 	protected AuthoringResources myResources;
 
