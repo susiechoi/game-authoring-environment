@@ -122,25 +122,25 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	protected void populateFieldsWithData() {
-		setComboBoxToValue(getMyProjectileImage(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+		getUIFactory().setComboBoxToValue(getMyProjectileImage(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
 
-		setSliderToValue(getMyProjectileDamageSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
+		getUIFactory().setSliderToValue(getMyProjectileDamageSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
 
-		setSliderToValue(getMyProjectileValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
+		getUIFactory().setSliderToValue(getMyProjectileValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
 
-		setSliderToValue(getMyProjectileUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
+		getUIFactory().setSliderToValue(getMyProjectileUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
 
-		setSliderToValue(getMyProjectileUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
+		getUIFactory().setSliderToValue(getMyProjectileUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
 
-		setSliderToValue(getMyLauncherValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
+		getUIFactory().setSliderToValue(getMyLauncherValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
 
-		setSliderToValue(getMyLauncherUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
+		getUIFactory().setSliderToValue(getMyLauncherUpgradeCostSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
 
-		setSliderToValue(getMyLauncherUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
+		getUIFactory().setSliderToValue(getMyLauncherUpgradeValueSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
 
-		setSliderToValue(getMyLauncherRateSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
+		getUIFactory().setSliderToValue(getMyLauncherRateSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
 
-		setSliderToValue(getMyLauncherRangeSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRange"));
+		getUIFactory().setSliderToValue(getMyLauncherRangeSlider(), getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRange"));
 	}
 	
 	/**

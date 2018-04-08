@@ -15,7 +15,7 @@ import javafx.scene.control.Slider;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
-	public static final String DEFAULT_CONSTANTS = "frontend/Constants.properties";
+	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 	
 	private String mySelectedObjectName; 
 	
@@ -74,26 +74,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return myIsNewObject; 
 	}
 	
-	/**
-	 * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
-	 * @param combobox - combobox to be set to a value
-	 * @param selectionValue - the value that the combobox should be set to 
-	 */
-	protected void setComboBoxToValue(ComboBox<String> combobox, String selectionValue) {
-		int dropdownIdx = combobox.getItems().indexOf(selectionValue); 
-		combobox.getSelectionModel().select(dropdownIdx);
-	}
-	
-	/**
-	 * Method used in appropriately-setting the slider when populating data fields with the existing object values
-	 * @param slider - slider to be set to a value
-	 * @param valueAsString - the value that the slider should be set to 
-	 */
-	protected void setSliderToValue(Slider slider, String valueAsString) {
-		Double value = Double.parseDouble(valueAsString);
-		slider.setValue(value);
-	}
-	
+
 	/** 
 	 * The following methods are getters for range-specifying constants so that subclasses may know what range to depict on their sliders
 	 * @return int max of the sliders 

@@ -17,9 +17,11 @@ import javafx.scene.text.Text;
 public class SettingsScreen extends AdjustScreen {
     public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 
-    private String myBackgroundImage;
-    private String myGameName;
+    private ComboBox<String> myImageDropdown;
+    private TextField myGameNameEntry;
+    
     protected SettingsScreen(AuthoringView view) {
+	
 	super(view);
     }
     
@@ -27,8 +29,8 @@ public class SettingsScreen extends AdjustScreen {
     public Parent populateScreenWithFields(){
 	VBox vb = new VBox();
 	Text settingsHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SettingsHeading"));
-	TextField gameNameEntry = getUIFactory().makeTextField("");
-	HBox promptGameName = getUIFactory().addPromptAndSetupHBox("", gameNameEntry, getErrorCheckedPrompt("GameName"));
+	myGameNameEntry = getUIFactory().makeTextField("");
+	HBox promptGameName = getUIFactory().addPromptAndSetupHBox("", myGameNameEntry, getErrorCheckedPrompt("GameName"));
 	HBox backgroundImageSelector = new HBox();
 	try {
 	List<String> imageDropdownOptions = getPropertiesReader().allKeys(BACKGROUND_IMAGES);
@@ -54,8 +56,8 @@ public class SettingsScreen extends AdjustScreen {
 
     @Override
     protected void populateFieldsWithData() {
-	// TODO Auto-generated method stub
-	
+	getUIFactory().setComboBoxToValue(myImageDropdown, getView().getObjectAttribute("Settings", "", "BackgroundImage"));
+	myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "GameName"));
     }
 
 }
