@@ -112,7 +112,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myIsNewObject = isNewObject; 
 	}
 	
-	protected void setLauncherProjectileValues(String projectileImage, String ability, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
+	protected void setLauncherProjectileValues(String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		myProjectileImage = projectileImage;
 		myProjectileDamage = projectileDamage; 

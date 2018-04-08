@@ -17,7 +17,6 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	
 	private AdjustTowerScreen myTowerScreen;
 	private ComboBox<String> myProjectileImage;
-	private ComboBox<String> myProjectileAbility;
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileValueSlider;
 	private Slider myProjectileUpgradeCostSlider;
@@ -44,7 +43,7 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		Button backButton = getUIFactory().setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileAbility.getValue(), myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
+			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
@@ -117,4 +116,51 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	}
 	
 	protected abstract void populateFieldsWithData(); 
+	
+	protected ComboBox<String> getMyProjectileImage() {
+		return myProjectileImage; 
+	}
+	
+	protected Slider getMyProjectileDamageSlider() {
+		return myProjectileDamageSlider; 
+	}
+	
+	protected Slider getMyProjectileValueSlider() {
+		return myProjectileValueSlider; 
+	}
+	
+	protected Slider getMyProjectileUpgradeCostSlider() {
+		return myProjectileUpgradeCostSlider; 
+	}
+	
+	protected Slider getMyProjectileUpgradeValueSlider() {
+		return myProjectileUpgradeValueSlider; 
+
+	}
+	
+	protected Slider getMyLauncherValueSlider() {
+		return myLauncherValueSlider; 
+
+	}
+	
+	protected Slider getMyLauncherUpgradeCostSlider() {
+		return myLauncherUpgradeCostSlider; 
+
+	}
+	
+	protected Slider getMyLauncherUpgradeValueSlider() {
+		return myLauncherUpgradeValueSlider; 
+
+	}
+	
+	protected Slider getMyLauncherRateSlider() {
+		return myLauncherRateSlider; 
+
+	}
+	
+	protected Slider getMyLauncherRangeSlider() {
+		return myLauncherRangeSlider; 
+
+	}
+	
 }
