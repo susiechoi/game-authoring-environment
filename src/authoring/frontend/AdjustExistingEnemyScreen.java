@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * Creates Screen in which user can edit an existing enemy 
  */
 
 package authoring.frontend;
@@ -14,6 +15,10 @@ class AdjustExistingEnemyScreen extends AdjustEnemyScreen {
 		mySelectedObjectName = selectedObjectName; 
 	}
 
+	/**
+	 * Because the user is editing an existing enemy, 
+	 * this method populates fields on the Screen with the enemy's current attributes
+	 */
 	@Override
 	protected void populateFieldsWithData() {
 			

@@ -1,6 +1,8 @@
 /**
  * @author susiechoi
+ * Creates screen in which user can edit an existing tower's attributes
  */
+
 package authoring.frontend;
 
 public class AdjustExistingTowerScreen extends AdjustTowerScreen {
@@ -13,6 +15,10 @@ public class AdjustExistingTowerScreen extends AdjustTowerScreen {
 		mySelectedObjectName = selectedObjectName;
 	}
 
+	/**
+	 * Because the user is editing an existing tower, 
+	 * this method populates fields on the Screen with the tower's current attributes
+	 */
 	@Override
 	protected void populateFieldsWithData() {
 

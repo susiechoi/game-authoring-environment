@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * For creation of new enemy objects
  */
 
 package authoring.frontend;

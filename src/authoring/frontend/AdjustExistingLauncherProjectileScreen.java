@@ -1,3 +1,9 @@
+/**
+ * @author susiechoi
+ * Creates & populates Screen in which user can edit an existing tower with existing launcher & projectile attributes 
+ */
+
+
 package authoring.frontend;
 
 public class AdjustExistingLauncherProjectileScreen extends AdjustLauncherProjectileScreen {
@@ -10,6 +16,10 @@ public class AdjustExistingLauncherProjectileScreen extends AdjustLauncherProjec
 		mySelectedObjectName = selectedObjectName; 
 	}
 
+	/**
+	 * Because the user is editing an existing tower (and thus, an existing projectile & launcher), 
+	 * this method populates fields on the Screen with the tower's current projectile & launcher attributes
+	 */
 	@Override
 	protected void populateFieldsWithData() {
 
