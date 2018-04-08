@@ -5,6 +5,7 @@ import java.util.List;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.towers.projectiles.Projectile;
 import javafx.collections.ObservableList;
 
 /**
@@ -13,19 +14,26 @@ import javafx.collections.ObservableList;
  *
  */
 
-public class ShootingSpriteManager extends Manager{
+public class ShootingSpriteManager extends Manager<ShootingSprites>{
     /**
      * Checks for collisions between between the list of active actors held by the Manager the method
      * was called on and the list of active actors passed as a parameter
      * @param passedSprites
      */
-//    public void checkForCollisions(List<ShootingSprites> passedSprites) {
-//    		for (Sprite activeSprite: this.getObservableListOfActive()) {
-//    			for (ShootingSprites passedActor: passedSprites) {
-//    				activeSprite.checkForCollision(passedActor, passedActor.getProjectiles());
-//    			}
-//    		}
-//    }
+    public void checkForCollisions(List<ShootingSprites> passedSprites) {
+    		for (ShootingSprites activeSprite: this.getObservableListOfActive()) {
+    			for (ShootingSprites passedActor: passedSprites) {
+    				activeSprite.checkForCollision(passedActor, passedActor.getProjectiles());
+    			}
+    		}
+    }
     
+	public void moveProjectiles() {
+		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
+			for (Projectile projectile: shootingSprite.getProjectiles()) {
+				projectile.move();
+			}
+		}
+	}
    
 }
