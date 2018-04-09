@@ -150,8 +150,9 @@ public class AuthoringModel implements GameData {
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
+	 * @throws ObjectNotFoundException 
 	 */
-	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		Field field; 
 		Object fieldValue = null; 
 		if (objectType.equals("Enemy")) {
@@ -162,7 +163,7 @@ public class AuthoringModel implements GameData {
 				fieldValue = field.get(enemy);
 			}
 			else {
-
+				throw new ObjectNotFoundException(name);
 			}
 		}
 		else if (objectType.equals("Tower")) {

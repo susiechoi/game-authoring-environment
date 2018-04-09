@@ -34,8 +34,9 @@ public class AuthoringController {
 	 * @throws SecurityException 
 	 * @throws IllegalAccessException 
 	 * @throws NoSuchFieldException 
+	 * @throws ObjectNotFoundException 
 	 */
-	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		return myAuthoringModel.getObjectAttribute(level, objectType, name, attribute);
 	}
 	

@@ -155,9 +155,9 @@ public class AuthoringView extends View {
     	String returnedObjectAttribute = ""; 
 	try {
 		returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
-	} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+	} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 		loadErrorScreen("NoObject");
-	}
+	} 
 	return returnedObjectAttribute; 
     }
 
