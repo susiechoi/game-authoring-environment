@@ -8,9 +8,7 @@
  */
 
 package authoring;
-
 import java.util.List;
-
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
@@ -23,8 +21,13 @@ public class AuthoringController {
 	private AuthoringModel myAuthoringModel; 
 	
 	public AuthoringController(StageManager stageManager, String languageIn) {
-		myAuthoringModel = new AuthoringModel();
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
+		try {
+			myAuthoringModel = new AuthoringModel();
+		} catch (MissingPropertiesException e) {
+			myAuthoringView.loadErrorScreen("NoDefaultObject");
+		}
+		myAuthoringView.loadInitialScreen();
 	}
 	
 	/**
@@ -81,8 +84,9 @@ public class AuthoringController {
 	
 	/**
 	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
+	 * @throws ObjectNotFoundException 
 	 */
-	public List<String> getCurrentObjectOptions(int level, String objectType) {
+	public List<String> getCurrentObjectOptions(int level, String objectType) throws ObjectNotFoundException {
 		return myAuthoringModel.getCurrentObjectOptions(level, objectType);
 	}
 	

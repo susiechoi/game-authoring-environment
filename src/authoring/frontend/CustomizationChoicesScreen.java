@@ -25,12 +25,9 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
 	Text heading = getUIFactory().makeScreenTitleText(myGameName);
-	Button settingsButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SettingsButtonLabel"));
-	settingsButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"SettingsButton");});
 	Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
 	resourcesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"ResourcesButton");});
 	Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel"));
-	settingsButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"SettingsButton");});
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 	Button mainButton = setupBackButton();
@@ -66,7 +63,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	}
 	HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 	vbox.getChildren().add(heading);
-	vbox.getChildren().add(settingsButton);
 	vbox.getChildren().add(resourcesButton);
 	vbox.getChildren().add(demoButton);
 	vbox.getChildren().add(saveButton);

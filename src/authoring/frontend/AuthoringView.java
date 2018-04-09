@@ -10,12 +10,14 @@ package authoring.frontend;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import frontend.ErrorReader;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -27,9 +29,12 @@ import javafx.scene.Scene;
 public class AuthoringView extends View {
 
     public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
+    public static final String DEFAULT_ERROR_FILEPATH_BEGINNING = "languages/";
+    public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
     public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
     private StageManager myStageManager; 
     private PromptReader myPromptReader;
+    private ErrorReader myErrorReader;
     private PropertiesReader myPropertiesReader;
     private AuthoringController myController; 
     private String myCurrentCSS;
@@ -38,11 +43,20 @@ public class AuthoringView extends View {
     public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 	super(stageManager);
 	myPromptReader = new PromptReader(languageIn, this);
+	myErrorReader = new ErrorReader(languageIn, this);
 	myPropertiesReader = new PropertiesReader();
 	myStageManager = stageManager; 
 	myController = controller; 
 	myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
-	myStageManager.switchScreen((new StartScreen(this)).getScreen());
+    }
+    
+    public void loadInitialScreen() {
+    	myStageManager.switchScreen((new StartScreen(this)).getScreen());
+    }
+    
+    @Override
+    public void loadErrorScreen(String error) {
+	loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
     }
     protected void loadScreen(Screen screen) {
 	myStageManager.switchScreen(screen.getScreen());
@@ -144,7 +158,13 @@ public class AuthoringView extends View {
      * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
      */
     public List<String> getCurrentObjectOptions(String objectType) {
-	return myController.getCurrentObjectOptions(myLevel, objectType);
+    	List<String> availableObjectOptions = new ArrayList<String>(); 
+	try {
+		availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
+	} catch (ObjectNotFoundException e) {
+		loadErrorScreen("NoObject");
+	}
+	return availableObjectOptions; 
     }
 
     /**
@@ -174,7 +194,7 @@ public class AuthoringView extends View {
 	return myStageManager.getScene();
     }
 
-    protected String getErrorCheckedPrompt(String prompt) {
+    public String getErrorCheckedPrompt(String prompt) {
 	return myPromptReader.resourceDisplayText(prompt);
     }
 
