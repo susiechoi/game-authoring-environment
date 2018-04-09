@@ -60,6 +60,16 @@ public class Level {
     }
     
     /**
+     * Returns a tower available in the level given a unique tower name.
+     * 
+     * @param name: The unique string name for the tower object
+     * @return Tower: the tower object with the specified name
+     */
+    public Tower getTower(String name) {
+	return myTowers.get(name);
+    }
+    
+    /**
      * Adds a wave to the level
      * 
      * @param wave: a new wave to be added

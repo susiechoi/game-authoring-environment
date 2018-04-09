@@ -141,7 +141,6 @@ class AuthoringModel {
 	return null; 
     }
 
-    // TODO once maps have been made 
     /**
      * Used in the case that the user wants to edit an existing object:
      * Populates fields with current attributes of object 
@@ -168,13 +167,15 @@ class AuthoringModel {
 
 	    }
 	}
-	// TODO: fix!
 	else if (objectType.equals("Tower")) {
-	    if (myTowers.containsKey(name)) {
-		Tower tower = myTowers.get(name);
-		Class towerClass = tower.getClass(); 
-		field = towerClass.getField(attribute);
-		fieldValue = field.get(tower);
+	    if (myLevels.containsKey(level)) {
+		Level thisLevel = myLevels.get(level);
+		if (thisLevel.containsTower(name)) {
+		    Tower tower = thisLevel.getTower(name);
+		    Class towerClass = tower.getClass(); 
+		    field = towerClass.getField(attribute);
+		    fieldValue = field.get(tower);
+		}
 	    }
 	}
 	return (String) fieldValue; 
