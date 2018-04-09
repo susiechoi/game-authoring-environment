@@ -12,12 +12,13 @@ package authoring;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import data.GameData;
 import engine.builders.LauncherBuilder;
 import engine.builders.EnemyBuilder;
@@ -35,7 +36,7 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
-	
+
 	protected AuthoringResources myResources;
 	private Map<String, Tower> myTowers;
 	private Map<String, Enemy> myEnemies;
@@ -52,18 +53,22 @@ public class AuthoringModel implements GameData {
 	 * Method through which information can be sent to instantiate or edit an enemy object
 	 * Wraps constructor in case of new object creation
 	 * @throws MissingPropertiesException 
+	 * @throws NoDuplicateNamesException 
+	 * @throws ObjectNotFoundException 
 	 */
 	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact,
-			double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException {
-		if (newObject) {
-			Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
-			Enemy newEnemy = new EnemyBuilder().construct(name, enemyImage, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-			myEnemies.put(name, newEnemy);
+			double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
+		if (myEnemies.containsKey(name) && newObject) {
+			throw new NoDuplicateNamesException(name);
 		}
 		else {
-			// find the enemy in the enemies map with the name parameter
-			// edit its values to conform to the parameterized ones 
+			if (!newObject) {
+				throw new ObjectNotFoundException(name);
+			}
 		}
+		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
+		Enemy newEnemy = new EnemyBuilder().construct(name, enemyImage, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+		myEnemies.put(name, newEnemy);
 	}
 
 	/**
@@ -72,29 +77,31 @@ public class AuthoringModel implements GameData {
 	 * @throws NoDuplicateNamesException: if the user tries to make an already existing
 	 * tower, throw exception.
 	 * @throws MissingPropertiesException 
+	 * @throws ObjectNotFoundException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
 			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed, 
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException {
-		if (myTowers.containsKey(name)) {
-			// build projectile, launcher, then tower using builder objects
+			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
+		if (myTowers.containsKey(name) && newObject) {
 			throw new NoDuplicateNamesException(name);
 		}
 		else {
-			Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
-			Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-					projectileImage, projectileDamage, projectileUpgradeCost, 
-					projectileUpgradeValue);
-			Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
-					launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
-					launcherValue, towerProjectile); 
-			// TODO set default image size for towers SOMEWHERE ELSE
-			double size = 20; 
-			Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
-			Tower newTower = new TowerBuilder().construct(name, image, size, health, 
-					healthUpgradeValue, healthUpgradeCost, towerLauncher);
-			myTowers.put(name, newTower);
+			if (!newObject) {
+				throw new ObjectNotFoundException(name);
+			}
 		}
+		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
+		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
+				projectileImage, projectileDamage, projectileUpgradeCost, 
+				projectileUpgradeValue);
+		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
+				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
+				launcherValue, towerProjectile); 
+		Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
+		Tower newTower = new TowerBuilder().construct(name, image, 50, health,  // TODO put size SOMEWHERE
+				healthUpgradeValue, healthUpgradeCost, towerLauncher);
+		myTowers.put(name, newTower);
+
 	}
 
 	// TODO 
@@ -114,7 +121,6 @@ public class AuthoringModel implements GameData {
 		myResources = new AuthoringResources(startingHealth, starting$);
 	}
 
-	// TODO POPULATE RETURN LIST WITH EXISTING OBJECTS AT THAT LEVEL 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing
 	 * @param level - level that the user wants to edit
@@ -122,7 +128,13 @@ public class AuthoringModel implements GameData {
 	 * @return List of String names of objects 
 	 */
 	public List<String> getCurrentObjectOptions(int level, String objectType) {
-		return null; 
+		List<String> listToReturn = new ArrayList<String>(); 
+		if (objectType.equals("Enemy")) {
+			listToReturn.addAll(myEnemies.keySet()); 
+		} else if (objectType.equals("Tower")) {
+			listToReturn.addAll(myTowers.keySet());
+		}
+		return listToReturn; 
 	}
 
 	// TODO once maps have been made 

@@ -14,8 +14,8 @@ import java.util.List;
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import frontend.StageManager;
-import javafx.scene.image.Image;
 
 public class AuthoringController {
 	
@@ -42,8 +42,10 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
 	 * @throws MissingPropertiesException 
+	 * @throws ObjectNotFoundException 
+	 * @throws NoDuplicateNamesException 
 	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException {
+	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
 		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
@@ -51,10 +53,11 @@ public class AuthoringController {
 	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
 	 * @throws NoDuplicateNamesException 
 	 * @throws MissingPropertiesException 
+	 * @throws ObjectNotFoundException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
 							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
-							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException {
+							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);

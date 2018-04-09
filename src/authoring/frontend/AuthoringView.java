@@ -15,6 +15,7 @@ import java.util.List;
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -22,7 +23,6 @@ import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 
 public class AuthoringView extends View {
 
@@ -104,6 +104,8 @@ public class AuthoringView extends View {
 			launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	} catch (MissingPropertiesException e) {
 		loadErrorScreen("NoImageFile");
+	} catch (ObjectNotFoundException e) {
+		loadErrorScreen("NoObject");
 	}
     }
 
@@ -115,6 +117,10 @@ public class AuthoringView extends View {
 		myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	} catch (MissingPropertiesException e) {
 		loadErrorScreen("NoImageFile");
+	} catch (NoDuplicateNamesException e) {
+		loadErrorScreen("NoDuplicateNames");
+	} catch (ObjectNotFoundException e) {
+		loadErrorScreen("NoObject");
 	}
     }
 

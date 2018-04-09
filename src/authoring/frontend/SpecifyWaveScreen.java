@@ -1,7 +1,5 @@
 package authoring.frontend;
 
-import javafx.scene.Parent;
-
 public class SpecifyWaveScreen extends SpecifyObjectScreen{
     public static final String DEFAULT_DESCRIPTION = "Wave";
 
