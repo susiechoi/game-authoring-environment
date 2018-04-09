@@ -97,8 +97,8 @@ public class AuthoringController {
 
     }
 
-	public void addNewLevel() {
-		myAuthoringModel.addNewLevel(); 
+	public int addNewLevel() {
+		return myAuthoringModel.addNewLevel(); 
 	}
 	
 	public List<String> getLevels() {
