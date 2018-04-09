@@ -10,11 +10,14 @@ package authoring.frontend;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
+import frontend.ErrorReader;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -23,15 +26,17 @@ import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
 
 	public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
+	public static final String DEFAULT_ERROR_FILEPATH_BEGINNING = "languages/";
+	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
+	private ErrorReader myErrorReader;
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
 	private String myCurrentCSS;
@@ -40,11 +45,20 @@ public class AuthoringView extends View {
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
 		myPromptReader = new PromptReader(languageIn, this);
+		myErrorReader = new ErrorReader(languageIn, this);
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
 		myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
-		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
+	}
+
+	public void loadInitialScreen() {
+		myStageManager.switchScreen((new AdjustWaveScreen(this)).getScreen());
+	}
+
+	@Override
+	public void loadErrorScreen(String error) {
+		loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
 	}
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
@@ -80,8 +94,8 @@ public class AuthoringView extends View {
 			} //TODO: handle case where switching to gameplay
 			else {
 				throw new MissingPropertiesException("");
-			}
 
+			}
 		}
 		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 				| IllegalAccessException | InstantiationException e) {
@@ -91,27 +105,6 @@ public class AuthoringView extends View {
 	}
 
 
-
-
-	/**
-	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
-	 * @throws NoDuplicateNamesException 
-	 */
-	public void makeTower(boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
-			Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
-		myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
-				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
-	}
-
-	/**
-	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
-	 */
-	public void makeEnemy(boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-		myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-	}
-
 	//TODO 
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model;
@@ -119,6 +112,40 @@ public class AuthoringView extends View {
 	public void makePath(List<Point2D> coordinates, GridPane grid) {
 		myController.makePath(myLevel, coordinates, grid);
 	}
+
+	/**
+	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
+	 * @throws NoDuplicateNamesException 
+	 */
+	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+			String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
+			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
+		try {
+			myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+					projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
+					launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+		} catch (MissingPropertiesException e) {
+			loadErrorScreen("NoImageFile");
+		} catch (ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+	}
+
+	/**
+	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
+	 */
+	public void makeEnemy(boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		try {
+			myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+		} catch (MissingPropertiesException e) {
+			loadErrorScreen("NoImageFile");
+		} catch (NoDuplicateNamesException e) {
+			loadErrorScreen("NoDuplicateNames");
+		} catch (ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+	}
+
 
 
 	/**
@@ -132,7 +159,13 @@ public class AuthoringView extends View {
 	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
 	 */
 	public List<String> getCurrentObjectOptions(String objectType) {
-		return myController.getCurrentObjectOptions(myLevel, objectType);
+		List<String> availableObjectOptions = new ArrayList<String>(); 
+		try {
+			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
+		} catch (ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+		return availableObjectOptions; 
 	}
 
 	/**
@@ -140,7 +173,13 @@ public class AuthoringView extends View {
 	 * Invoked when populating authoring frontend screens used to edit existing objects
 	 */
 	public String getObjectAttribute(String objectType, String objectName, String attribute) {
-		return myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
+		String returnedObjectAttribute = ""; 
+		try {
+			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		} 
+		return returnedObjectAttribute; 
 	}
 
 	/**
@@ -156,9 +195,26 @@ public class AuthoringView extends View {
 		return myStageManager.getScene();
 	}
 
-
-	protected String getErrorCheckedPrompt(String prompt) {
+	public String getErrorCheckedPrompt(String prompt) {
 		return myPromptReader.resourceDisplayText(prompt);
+	}
+	
+	public void addNewLevel() {
+		int newLevel = myController.addNewLevel(); 
+		setLevel(newLevel);
+	}
+
+	public List<String> getLevels() {
+		return myController.getLevels(); 
+	}
+
+	public void autogenerateLevel() {
+		int newLevel = myController.autogenerateLevel(); 
+		setLevel(newLevel); 
+	}
+
+	public int getLevel() {
+		return myLevel; 
 	}
 
 }

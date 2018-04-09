@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -52,6 +53,7 @@ public class CreatePathGrid {
 	private Label endLabel;
 	private Label pathLabel;
 	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
+	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
 	private boolean startCheck = false;
 
 
@@ -75,14 +77,27 @@ public class CreatePathGrid {
 
 		return grid;
 	}
-	
+
+	public void setUpForWaves(EventHandler<MouseEvent> action) {
+		makeUnDraggable();
+		for(DraggableImage image : draggableImagesOnScreen) {
+			image.getPathImage().setOnMouseClicked(e -> action.handle(e));
+		}
+	}
+	private void makeUnDraggable() {
+		for(DraggableImage image : draggableImagesOnScreen) {
+			image.disableDraggable();
+		}
+	}
+
+
 	public void setBackgroundmage(File file) {
 		grid.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
 	}
-	
+
 	//REFACTOR
 	private void populateGrid() {
-		
+
 		for (int x = 0 ; x < grid.getColumnCount(); x++) {
 			for (int y = 0 ; y < grid.getRowCount(); y++) {
 				StackPane cell = new StackPane();
@@ -113,7 +128,7 @@ public class CreatePathGrid {
 							path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
 							grid.add(path.getPathImage(), colIndex, rowIndex);
-							
+							draggableImagesOnScreen.add(path);
 							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
 								startCheck = true;
 								startLabel = new Label("start");
@@ -165,7 +180,7 @@ public class CreatePathGrid {
 	}
 
 	public boolean checkPathConnected(int row, int col) {
-		
+
 		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount())
 			return false;
 		if ((getNode(checkGrid, col, row) == null))
@@ -240,18 +255,18 @@ public class CreatePathGrid {
 		}
 		return coordMap;
 	}
-	
+
 	public void addCoordinates(int row, int col) {
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 		Point2D point = new Point2D(x, y);
 		pathCoords.add(point);
 	}
-	
+
 	public List<Point2D> getCoordinates() {
 		return pathCoords;
 	}
-	
+
 
 	public GridPane getGrid() {
 		return grid;
@@ -260,9 +275,8 @@ public class CreatePathGrid {
 	public GridPane getCheckGrid() {
 		return checkGrid;
 	}
-	
+
 	public boolean isStartInGrid() {
-			return startCheck;
+		return startCheck;
 	}
 }
-

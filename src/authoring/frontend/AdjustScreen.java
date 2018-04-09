@@ -34,11 +34,4 @@ abstract class AdjustScreen extends AuthoringScreen {
 	protected abstract Parent populateScreenWithFields();
 	protected abstract void populateFieldsWithData(); 
 	
-	protected HBox setupBackAndApplyButton(Button back, Button apply) {
-		HBox backAndApplyButton = new HBox(); 
-		backAndApplyButton.getChildren().add(back);
-		backAndApplyButton.getChildren().add(apply);
-		return backAndApplyButton; 
-	}
-	
 }

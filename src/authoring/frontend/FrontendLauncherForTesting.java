@@ -14,7 +14,7 @@ public class FrontendLauncherForTesting extends Application {
 
 	@Override
 	public void start(Stage stage) {
-
+		
 	    	System.out.println("launching");
 		AuthoringController controlla = new AuthoringController(new StageManager(stage), "English");
 		stage.show();

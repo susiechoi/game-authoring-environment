@@ -38,6 +38,18 @@ public class Enemy extends Sprite{
 	myValue = value;
 	myPath = path;
     }
+    
+    /**
+     * Copy constructor
+     */
+    public Enemy(Enemy copiedEnemy) {
+    	super("", copiedEnemy.getImage().getImage());
+    	myIntersecter = copiedEnemy.getIntersecter(); 
+    	myHealth = copiedEnemy.getHealth(); 
+    	myDamage = copiedEnemy.getDamage();
+    	myValue = copiedEnemy.getValue();
+    	myPath = copiedEnemy.getPath(); 
+    }
 
     /**
      * Tests to see if another ImageView overlaps with the Enemy
@@ -62,11 +74,16 @@ public class Enemy extends Sprite{
     /**
      * Handles updating the enemy position to follow the path
      */
+    public void followPath() {
+	// TODO Auto-generated method stub
+    }
+
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);
 	this.getImage().setX(newPosition.getX());
 	this.getImage().setY(newPosition.getY());
+
     }
 
     /**
@@ -77,4 +94,25 @@ public class Enemy extends Sprite{
     public Double damage() {
 	return myDamage.getProperty();
     }
+    
+    private IIntersecter getIntersecter() {
+    	return myIntersecter; 
+    }
+    
+    private HealthProperty getHealth() {
+    	return myHealth; 
+    }
+    
+    private DamageProperty getDamage() {
+    	return myDamage; 
+    }
+    
+    private ValueProperty getValue() {
+    	return myValue; 
+    }
+    
+    private Path getPath() {
+    	return myPath; 
+    } 
+    
 }

@@ -1,6 +1,5 @@
 package authoring.frontend;
 
-
 import java.io.File;
 
 import javafx.event.ActionEvent;
@@ -20,11 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class CreatePathPanel extends AuthoringScreen implements Panel  {
-
-	public CreatePathPanel(AuthoringView view) {
-		super(view);
-	}
+public class CreatePathPanel extends AuthoringScreen {
 
 	public static final int PANEL_PATH_SIZE = 90;
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
@@ -45,8 +40,12 @@ public class CreatePathPanel extends AuthoringScreen implements Panel  {
 	private Button backButton;
 	private Button backgroundButton;
 
-
-	@Override
+	
+	public CreatePathPanel(AuthoringView view) {
+		super(view);
+	}
+	
+	
 	public void makePanel() { //separate into smaller methods
 
 		pathPanel = new VBox();
@@ -180,7 +179,6 @@ public class CreatePathPanel extends AuthoringScreen implements Panel  {
 		return applyButton;
 	}
 
-	@Override
 	public Node getPanel() {
 		return pathPanel;
 	}
