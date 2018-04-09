@@ -76,7 +76,7 @@ public class AuthoringController {
 	}
 	
     /**
-     * Instatiates the game engine to demo the authored game in its current state
+     * Instantiates the game engine to demo the authored game in its current state
      */
     public void demo() {
 
