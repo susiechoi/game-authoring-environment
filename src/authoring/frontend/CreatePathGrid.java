@@ -78,7 +78,9 @@ public class CreatePathGrid {
     public void setUpForWaves(EventHandler<MouseEvent> action) {
 	makeUnDraggable();
 	for(DraggableImage image : draggableImagesOnScreen) {
-	    image.getPathImage().setOnMouseClicked(e -> action.handle(e));
+	    if(imageCompare(image.getPathImage().getImage(), startImage.getImage())) { //TODO: better way to do this? not pixel by pixel?
+		image.getPathImage().setOnMouseClicked(e -> action.handle(e));
+	    }   
 	}
     }
     private void makeUnDraggable() {

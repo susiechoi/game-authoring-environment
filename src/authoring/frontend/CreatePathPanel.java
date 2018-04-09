@@ -4,6 +4,7 @@ import frontend.PropertiesReader;
 import frontend.UIFactory;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +14,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class CreatePathPanel implements Panel {
+public class CreatePathPanel extends AdjustScreen{
 	
 	public static final int PANEL_PATH_SIZE = 90;
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
@@ -33,11 +34,11 @@ public class CreatePathPanel implements Panel {
 	
 	private PropertiesReader myPropertiesReader;
 	
-	public CreatePathPanel() {
+	public CreatePathPanel(AuthoringView view) {
+	    	super(view);
 		myPropertiesReader = new PropertiesReader(); 
 	}
 	
-	@Override
 	public void makePanel() { //separate into smaller methods
 		
 		pathPanel = new VBox();
@@ -125,8 +126,26 @@ public class CreatePathPanel implements Panel {
 		return applyButton;
 	}
 	
-	@Override
+	
 	public Node getPanel() {
 		return pathPanel;
+	}
+
+	@Override
+	public Parent makeScreenWithoutStyling() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	protected Parent populateScreenWithFields() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+	    
 	}
 }

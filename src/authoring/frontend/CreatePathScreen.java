@@ -35,7 +35,7 @@ public class CreatePathScreen extends AdjustScreen {
 		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
 
-		panel = new CreatePathPanel();
+		panel = new CreatePathPanel(getView());
 		panel.makePanel();
 		pathPanel = panel.getPanel();
 

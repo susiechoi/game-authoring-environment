@@ -22,12 +22,14 @@ public class AdjustWaveScreen extends AdjustScreen{
     private StackPane pathRoot;
     private GridPane pathGrid;
     private Node pathPanel;
-    private CreatePathPanel panel;
+    private Panel panel;
     private CreatePathGrid grid;
+    private String myWaveNumber;
 
-    protected AdjustWaveScreen(AuthoringView view) {
+    protected AdjustWaveScreen(AuthoringView view, String waveNumber) {
 	super(view);
 	setStyleSheet(DEFAULT_OWN_STYLESHEET); 
+	myWaveNumber = waveNumber;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class AdjustWaveScreen extends AdjustScreen{
 	}
 	);
 
-	panel = new CreatePathPanel();
+	panel = new WavePanel();
 	panel.makePanel();
 	pathPanel = panel.getPanel();
 
