@@ -1,75 +1,86 @@
-package authoring;
-
-import java.io.File;
-
-import authoring.AuthoringModel;
-import authoring.AuthoringView;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 /**
  * 
- * @author Ben Hodgson 3/29/18
  * @author susiechoi 
  *
- * Class that handles mediating program functionality specific to authoring. 
+ * Class that handles mediating creation of authoring environment objects (towers, enemies, path). 
  * Represents Controller in MVC of the authoring environment. 
+ * 
  */
 
+package authoring;
+
+import java.util.List;
+
+import authoring.frontend.AuthoringView;
+import authoring.frontend.exceptions.NoDuplicateNamesException;
+import frontend.StageManager;
+import javafx.scene.image.Image;
+
 public class AuthoringController {
-
-    private final Stage STAGE;
-    private final AuthoringView VIEW = new AuthoringView();
-    private final AuthoringModel MODEL = new AuthoringModel();
-   
-    public AuthoringController(Stage programStage) {
-	STAGE = programStage;
-	Scene startScreen = VIEW.loadAuthoringView();
-	STAGE.setScene(startScreen);
-    }
-    
-    public void show() {
-	STAGE.show();
-    }
-    
-    /**
-     * Loads a new Scene object in the program's Stage to display the authoring environment 
-     * screen.
-     * 
-     * @param Scene: the authoring screen to be displayed to the user
-     */
-    public void loadAuthoringStage(Scene screen) {
-	// TODO load this onto the stage. How do we receive access to the stage?	
-    }  
-
-    /**
-     * Locates the file in the program file system that contains data required to load 
-     * a game. Uses the FileIO objects methods to loadState().
-     * 
-     * @return File: the file containing information required to load the start of a game
-     */
-    public File loadStartState() {
-	return null;	
-    }
-
-    /**
-     * Saves user data from the authoring environment in a temporary file to avoid 
-     * overwriting data before the user is ready to save completely. 
-     * Uses the FileIO objects methods to saveState().
-     */
-    public void saveTemporaryState() {
-
-    }
-
+	
+	private AuthoringView myAuthoringView; 
+	private AuthoringModel myAuthoringModel; 
+	
+	public AuthoringController(StageManager stageManager, String languageIn) {
+		myAuthoringModel = new AuthoringModel();
+		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
+	}
+	
+	/**
+	 * Method through which information about object fields can be requested
+	 * Invoked when populating authoring frontend screens used to edit existing objects
+	 */
+	public String getObjectAttribute(int level, String objectType, String name, String attribute) {
+		return myAuthoringModel.getObjectAttribute(level, objectType, name, attribute); 
+	}
+	
+	/**
+	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
+	 */
+	public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+	}
+	
+	/**
+	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
+	 * @throws NoDuplicateNamesException 
+	 */
+	public void makeTower(int level, boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
+							Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
+		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
+				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+	}
+	
+	/**
+	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
+	 */
+	public void makeResources(double startingHealth, double starting$) {
+		myAuthoringModel.makeResources(startingHealth, starting$);
+	}
+	
+	// TODO
+	/**
+	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
+	 */
+	public void makePath(int level) {
+		myAuthoringModel.makePath(level); 
+	}
+	
+	/**
+	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
+	 */
+	public List<String> getCurrentObjectOptions(int level, String objectType) {
+		return myAuthoringModel.getCurrentObjectOptions(level, objectType);
+	}
+	
     /**
      * Instatiates the game engine to demo the authored game in its current state
      */
     public void demo() {
 
     }
-    
-    private void setUpListeners() {
-
-    }
 
 }
+

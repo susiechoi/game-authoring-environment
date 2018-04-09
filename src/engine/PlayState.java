@@ -1,19 +1,27 @@
 package engine;
 
 import java.util.List;
+
+import data.GameData;
+
 import java.awt.Point;
 import engine.level.Level;
 import java.util.ArrayList;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
+
 
 /**
  * Handles the current state of the game, including current score, money, and lists
  * of active towers and enemies
  * @author Miles Todzo
  * @author Katherine Van Dyk
+ * @author benauriemma 4/8
  * @date 4/6/18
  */
+<<<<<<< HEAD
 public class PlayState {
 	private int UNIVERSAL_TIME;
 	private int myScore;
@@ -24,6 +32,20 @@ public class PlayState {
 	private List<Level> myLevels;
 	private Level currentLevel;
 	private boolean isPaused;
+=======
+public class PlayState implements GameData {
+
+
+    private int UNIVERSAL_TIME;
+    private int score;
+    private int money;
+    private TowerManager myTowerManager;
+    private EnemyManager myEnemyManager;
+    private Mediator myMediator;
+    private List<Level> myLevels;
+    private Level currentLevel;
+    private boolean isPaused;
+>>>>>>> d835ca910fa7448a9ca0a2acb5bcfe890a7c41e2
 
 	public PlayState(Mediator mediator, List<Level> levels, int score, int resources, int universalTime) {
 		myMediator = mediator;
@@ -65,6 +87,7 @@ public class PlayState {
 		isPaused = true;
 	}
 
+<<<<<<< HEAD
 	public void play() {
 		isPaused = false;
 	}
@@ -72,4 +95,21 @@ public class PlayState {
 	public FrontEndTower placeTower(Point location, String towerType) {
 		return (FrontEndTower) myTowerManager.place(location, towerType);
 	}
+=======
+    public void play() {
+	isPaused = false;
+    }
+    
+    /**
+     * This method is called within PlaceTowerListener.
+     * @param placedTower: Tower passed from front end that is attempting to be placed
+     */
+    public void placeTower(Tower placedTower) {
+	
+    }
+
+    public FrontEndTower placeTower(Point location, String towerType) {
+	return (FrontEndTower) myTowerManager.place(location, towerType);
+    }
+>>>>>>> d835ca910fa7448a9ca0a2acb5bcfe890a7c41e2
 }

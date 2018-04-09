@@ -48,12 +48,46 @@ public class Tower extends ShootingSprites {
 		return (myHealth.getProperty() <= 0);
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Handles selling a tower
 	 */
 	public double sell() {
 		return myValue.getProperty();
 	}
+=======
+    /**
+     * Constructor for a Tower object that accepts parameter properties.
+     * 
+     * @param image: Tower's image
+     * @param launcher: Type of launcher that the Tower inherits 
+     * @param health: Initial health of the tower
+     * @param value: Value of the tower for selling
+     */
+    public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health) {
+	super(name, image, size);
+	myLauncher = launcher;
+	myHealth = health;
+	//myValue = new ValueProperty();
+    }
+    
+    /**
+     * Handles decrementing tower's damage when it gets hit by an enemy
+     * 
+     * @return boolean: True if tower is alive, false otherwise
+     */
+    public boolean handleCollision(double enemyDamage) {
+	myHealth.loseHealth(enemyDamage);
+	return (myHealth.getProperty() <= 0);
+    }
+    
+    /**
+     * Handles selling a tower
+     */
+    public double sell() {
+	return myValue.getProperty();
+    }
+>>>>>>> d835ca910fa7448a9ca0a2acb5bcfe890a7c41e2
 
 	/**
 	 * Handles upgrading the health of a tower
