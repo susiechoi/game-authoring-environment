@@ -12,8 +12,4 @@ public class DamageProperty extends UpgradeProperty {
 	    	super(cost, value, damage);
 	}
 
-	@Override
-	public double getProperty() {
-		return myDamage;
-	}
 }
