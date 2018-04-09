@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.List;
+import java.util.Map;
 
 import data.GameData;
 
@@ -35,11 +36,11 @@ public class PlayState implements GameData {
 	private Level currentLevel;
 	private boolean isPaused;
 
-	public PlayState(Mediator mediator, List<Level> levels, int score, int resources, int universalTime) {
+	public PlayState(Mediator mediator, List<Level> levels, int score, int resources, int universalTime, Map<String, Tower> towerMap) {
 		myMediator = mediator;
 		myLevels = levels;
 		currentLevel = myLevels.get(0);
-		myTowerManager = new TowerManager();
+		myTowerManager = new TowerManager(towerMap);
 		myEnemyManager = new EnemyManager();
 		isPaused = false;
 		myScore = score;

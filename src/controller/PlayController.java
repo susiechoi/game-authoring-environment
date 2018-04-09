@@ -41,7 +41,7 @@ public class PlayController {
     public void newPlay(String pathToXML) {
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
-	PlayState play = new PlayState(myMediator, playModel.getLevels());
+	PlayState play = new PlayState(myMediator, playModel.getLevels(), 0, 0, 0, playModel.getTowerMap());
 	myGameEngine.setPlayState(play);
 	// TODO: myScreenManager.setLandscape(landscape);
     }

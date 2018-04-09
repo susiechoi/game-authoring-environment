@@ -20,7 +20,7 @@ public class ShootingSprites extends Sprite{
 	
 	private ProjectileManager myProjectileManager;
 	private int hitCount;
-	
+
 	public ShootingSprites(String name, Image image, double size) {
 		super(name, image);
 		this.getImageView().setFitHeight(size);
