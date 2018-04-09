@@ -53,10 +53,10 @@ public class AuthoringController {
 	 * @throws MissingPropertiesException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
 							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException {
 		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
+				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 	

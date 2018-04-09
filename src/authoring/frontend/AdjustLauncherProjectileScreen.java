@@ -27,6 +27,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	private Slider myProjectileValueSlider;
 	private Slider myProjectileUpgradeCostSlider;
 	private Slider myProjectileUpgradeValueSlider;
+	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherValueSlider;
 	private Slider myLauncherUpgradeCostSlider;
 	private Slider myLauncherUpgradeValueSlider;
@@ -51,7 +52,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		});
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			myTowerScreen.setLauncherProjectileValues(myProjectileImage, myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
+			myTowerScreen.setLauncherProjectileValues(myProjectileImage, myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myProjectileSpeedSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
@@ -95,6 +96,11 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		myProjectileUpgradeValueSlider = projectileUpgradeValueSlider; 
 		HBox projectileUpgradeValue = getUIFactory().setupSliderWithValue("ProjectileUpgradeValueSlider", projectileUpgradeValueSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 		vb.getChildren().add(projectileUpgradeValue);
+		
+		Slider projectileSpeedSlider = getUIFactory().setupSlider("ProjectileSpeed", getMyMaxUpgradeIncrement());
+		myProjectileSpeedSlider = projectileSpeedSlider; 
+		HBox projectileSpeed = getUIFactory().setupSliderWithValue("ProjectileSpeed", myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
+		vb.getChildren().add(projectileSpeed);
 	}
 	
 	private void makeLauncherComponents(VBox vb) {

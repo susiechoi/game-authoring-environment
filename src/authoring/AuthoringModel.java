@@ -74,7 +74,7 @@ public class AuthoringModel implements GameData {
 	 * @throws MissingPropertiesException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed, 
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException {
 		if (myTowers.containsKey(name)) {
 			// build projectile, launcher, then tower using builder objects
