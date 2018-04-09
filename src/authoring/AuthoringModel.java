@@ -10,12 +10,13 @@
 package authoring;
 
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import data.GameData;
 import engine.builders.LauncherBuilder;
@@ -26,28 +27,37 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
+import frontend.PropertiesReader;
 import javafx.scene.image.Image;
 
-class AuthoringModel {
+public class AuthoringModel implements GameData {
 
+	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
+	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
+	
 	protected AuthoringResources myResources;
 	private Map<String, Tower> myTowers;
 	private Map<String, Enemy> myEnemies;
+	private PropertiesReader myPropertiesReader; 
 
 	public AuthoringModel() {
 		myTowers = new HashMap<String, Tower>();
 		myEnemies = new HashMap<String, Enemy>();
+		myPropertiesReader = new PropertiesReader(); 
 	}
 
 
 	/**
 	 * Method through which information can be sent to instantiate or edit an enemy object
 	 * Wraps constructor in case of new object creation
+	 * @throws MissingPropertiesException 
 	 */
-	public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact,
-			double killReward, double killUpgradeCost, double killUpgradeValue) {
+	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact,
+			double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException {
 		if (newObject) {
-			Enemy newEnemy = new EnemyBuilder().construct(name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+			Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
+			Enemy newEnemy = new EnemyBuilder().construct(name, enemyImage, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 			myEnemies.put(name, newEnemy);
 		}
 		else {
@@ -61,15 +71,17 @@ class AuthoringModel {
 	 * Wraps constructor in case of new object creation
 	 * @throws NoDuplicateNamesException: if the user tries to make an already existing
 	 * tower, throw exception.
+	 * @throws MissingPropertiesException 
 	 */
-	public void makeTower(int level, boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
-			Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
+	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
+			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException {
 		if (myTowers.containsKey(name)) {
 			// build projectile, launcher, then tower using builder objects
 			throw new NoDuplicateNamesException(name);
 		}
 		else {
+			Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 			Projectile towerProjectile = new ProjectileBuilder().construct(name, 
 					projectileImage, projectileDamage, projectileUpgradeCost, 
 					projectileUpgradeValue);
@@ -78,6 +90,7 @@ class AuthoringModel {
 					launcherValue, towerProjectile); 
 			// TODO set default image size for towers SOMEWHERE ELSE
 			double size = 20; 
+			Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
 			Tower newTower = new TowerBuilder().construct(name, image, size, health, 
 					healthUpgradeValue, healthUpgradeCost, towerLauncher);
 			myTowers.put(name, newTower);

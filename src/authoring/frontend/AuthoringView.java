@@ -95,19 +95,27 @@ public class AuthoringView extends View {
      * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
      * @throws NoDuplicateNamesException 
      */
-    public void makeTower(boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
-	    Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+    public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+	    String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
 	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
-	myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-		projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
-		launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+	try {
+		myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+			projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
+			launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+	} catch (MissingPropertiesException e) {
+		loadErrorScreen("NoImageFile");
+	}
     }
 
     /**
      * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
      */
-    public void makeEnemy(boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-	myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+    public void makeEnemy(boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	try {
+		myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+	} catch (MissingPropertiesException e) {
+		loadErrorScreen("NoImageFile");
+	}
     }
 
     //TODO 
@@ -138,7 +146,13 @@ public class AuthoringView extends View {
      * Invoked when populating authoring frontend screens used to edit existing objects
      */
     public String getObjectAttribute(String objectType, String objectName, String attribute) {
-	return myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
+    	String returnedObjectAttribute = ""; 
+	try {
+		returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
+	} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+		loadErrorScreen("NoObject");
+	}
+	return returnedObjectAttribute; 
     }
 
     /**

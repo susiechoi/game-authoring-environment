@@ -12,6 +12,7 @@ package authoring;
 import java.util.List;
 
 import authoring.frontend.AuthoringView;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import frontend.StageManager;
 import javafx.scene.image.Image;
@@ -29,33 +30,31 @@ public class AuthoringController {
 	/**
 	 * Method through which information about object fields can be requested
 	 * Invoked when populating authoring frontend screens used to edit existing objects
+	 * @throws IllegalArgumentException 
+	 * @throws SecurityException 
 	 * @throws IllegalAccessException 
 	 * @throws NoSuchFieldException 
 	 */
-	public String getObjectAttribute(int level, String objectType, String name, String attribute) {
-		String returnedAttribute = myAuthoringView.getErrorCheckedPrompt("ObjectDNE"); 
-		try {
-			returnedAttribute = myAuthoringModel.getObjectAttribute(level, objectType, name, attribute);
-		} catch (SecurityException | NoSuchFieldException | IllegalAccessException | IllegalArgumentException e) {
-			myAuthoringView.loadErrorScreen("NoObject");
-		} 
-		return returnedAttribute; 
+	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		return myAuthoringModel.getObjectAttribute(level, objectType, name, attribute);
 	}
 	
 	/**
 	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
+	 * @throws MissingPropertiesException 
 	 */
-	public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException {
 		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
 	/**
 	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
 	 * @throws NoDuplicateNamesException 
+	 * @throws MissingPropertiesException 
 	 */
-	public void makeTower(int level, boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
-							Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
-							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
+	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
+							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException {
 		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
