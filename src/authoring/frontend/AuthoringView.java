@@ -154,7 +154,6 @@ public class AuthoringView extends View {
 	return myStageManager.getScene();
     }
 
-
     protected String getErrorCheckedPrompt(String prompt) {
 	return myPromptReader.resourceDisplayText(prompt);
     }
