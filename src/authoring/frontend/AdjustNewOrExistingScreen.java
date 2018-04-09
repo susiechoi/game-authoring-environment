@@ -3,7 +3,7 @@
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
- *
+ * 
  */
 
 package authoring.frontend;
