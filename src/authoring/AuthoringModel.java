@@ -53,7 +53,6 @@ public class AuthoringModel implements GameData {
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
-		myLevels.put(1, new Level(1));
 		myPropertiesReader = new PropertiesReader();
 		try {
 			myDefaultTower = generateGenericTower();
@@ -61,6 +60,14 @@ public class AuthoringModel implements GameData {
 		} catch (NumberFormatException | FileNotFoundException e) {
 			throw new MissingPropertiesException(DEFAULT_NAME);
 		}
+		setupDefaultLevel(); 
+	}
+
+	private void setupDefaultLevel() {
+		Level firstLevel = new Level(1);
+		myLevels.put(1, firstLevel);
+		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
+		firstLevel.addEnemy(DEFAULT_NAME, new Enemy(myDefaultEnemy));
 	}
 
 	/**
@@ -146,9 +153,15 @@ public class AuthoringModel implements GameData {
 		List<String> listToReturn = new ArrayList<String>(); 
 		Level currentLevel = levelCheck(level);
 		if (objectType.equals("Enemy")) {
-			listToReturn = currentLevel.getAllEnemies();  // TODO replace with implementation of enemies within levels
+			listToReturn = currentLevel.getAllEnemies();  
+			if (listToReturn.size() == 0) {
+				listToReturn.add(myDefaultEnemy.getName());
+			}
 		} else if (objectType.equals("Tower")) {
 			listToReturn = currentLevel.getAllTowers();
+			if (listToReturn.size() == 0) {
+				listToReturn.add(myDefaultTower.getName());
+			}
 		}
 		return listToReturn; 
 	}
@@ -285,9 +298,10 @@ public class AuthoringModel implements GameData {
 		return null;
 	}
 
-	public void addNewLevel() {
+	public int addNewLevel() {
 		int newLevelNumber = myLevels.size()+1; 
 		myLevels.put(newLevelNumber, new Level(newLevelNumber));
+		return newLevelNumber; 
 	}
 	
 	public List<String> getLevels() {

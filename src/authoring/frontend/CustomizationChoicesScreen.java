@@ -1,4 +1,5 @@
 package authoring.frontend;
+import java.util.ArrayList;
 import java.util.List;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -33,7 +34,8 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	
 	Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel"));
 	newLevelButton.setOnAction(e -> {
-		getView().addNewLevel(); 
+		getView().addNewLevel();
+	    getView().goForwardFrom(this.getClass().getSimpleName()+"EditNewLevel");
 	});
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
@@ -43,7 +45,9 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	vbox.getChildren().add(saveButton);
 	hbox.getChildren().add(newLevelButton);
 	
-	List<String> currentLevels = getView().getLevels(); 
+	List<String> currentLevels = new ArrayList<String>();
+	currentLevels.add(levelPrompt);
+	currentLevels.addAll(getView().getLevels()); 
 	if (currentLevels.size() > 0) {
 		VBox newLevelVBox = new VBox(); 
 		Button editButton = getUIFactory().makeTextButton("editbutton", levelPrompt);

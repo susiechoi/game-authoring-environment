@@ -199,7 +199,8 @@ public class AuthoringView extends View {
     }
 
 	public void addNewLevel() {
-		myController.addNewLevel(); 
+		int newLevel = myController.addNewLevel(); 
+		setLevel(newLevel);
 	}
 
 	public List<String> getLevels() {
