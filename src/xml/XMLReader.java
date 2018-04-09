@@ -1,6 +1,6 @@
 package xml;
 
-import authoring.AuthoringModel;
+import data.GameData;
 
 /**
  * @author Brendan Cheng 3/29/2018
@@ -18,6 +18,6 @@ public interface XMLReader {
 	 * @param filename name of file to be read
 	 * @return AuthoringModel based on specified file
 	 */
-	public AuthoringModel createModel(String filename);
+	public GameData createModel(String filename);
 	
 }

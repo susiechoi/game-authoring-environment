@@ -4,6 +4,7 @@ package authoring;
 
 import java.util.List;
 
+import data.GameData;
 import engine.level.Level;
 import engine.path.Path;
 
@@ -14,21 +15,12 @@ import engine.path.Path;
  * Receives input from Controller through applyChange method regarding what/how to change an object
  * 
  */
-<<<<<<< HEAD
 
-
-package authoring;
-
-import java.lang.reflect.Field;
-
-import authoring.frontend.exceptions.NoDuplicateNamesException;
-
-class AuthoringModel {
-=======
-public class AuthoringModel {
+public class AuthoringModel implements GameData {
     
     public AuthoringModel() {
->>>>>>> 2a8a4bf02a4135fd2cf2ab3ce517d07f39df9e65
+
+    }
 	
 	protected AuthoringResources myResources;
 
