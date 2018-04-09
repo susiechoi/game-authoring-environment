@@ -20,40 +20,7 @@ import javafx.scene.shape.Shape;
  */
 
 public class Sprite  {
-<<<<<<< HEAD
-	private ImageView myImageView;
 
-
-	/**
-	 * Constructor that takes in a sprite's image
-	 * Source for resizing image: https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
-	 * 
-	 * @param image: tower's initial image
-	 * @param size: size of tower's image
-	 */
-	public Sprite(Image image) {
-		myImageView = new ImageView(image);
-		myImageView.setPreserveRatio(true);
-	}
-
-	/**
-	 * Returns each Sprite's image
-	 * 
-	 * @return ImageView representing game object's image
-	 */
-	public ImageView getImageView() { 
-		return myImageView;
-	}
-
-	public void setImageView(ImageView image) {
-		myImageView  = image;
-	}
-
-	public void place(double newX, double newY) {
-		myImageView.setX(newX);
-		myImageView.setY(newY);
-	}
-=======
     private String myName;
     private ImageView myImageView;
 
@@ -85,11 +52,11 @@ public class Sprite  {
      * 
      * @return ImageView representing game object's image
      */
-    public ImageView getImage() { 
+    public ImageView getImageView() { 
 	return myImageView;
     }
     
-    public void setImage(ImageView image) {
+    public void setImageView(ImageView image) {
 	myImageView  = image;
     }
     
@@ -102,14 +69,31 @@ public class Sprite  {
     public void checkForCollision(ShootingSprites shooter, ObservableList<Sprite> projectiles) {
     		shooter.checkTowerEnemyCollision((ShootingSprites) this); 
     		for (Sprite projectile: projectiles) {
-    			ImageView spriteImageView = projectile.getImage();
+    			ImageView spriteImageView = projectile.getImageView();
     			if(this.myImageView.intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
     			//	this.handleCollision(projectile.getDamage());
     				projectile.handleCollision();
     			}
     		}
     }
->>>>>>> d835ca910fa7448a9ca0a2acb5bcfe890a7c41e2
+    
+    public double getRotate() {
+    		return this.myImageView.getRotate();
+    }
+    
+    public double getX() {
+    		return this.myImageView.getX();
+    }
+    
+    public double getY() {
+    		return this.myImageView.getY();
+    }
+    public void setX(double newX) {
+    		this.myImageView.setX(newX);
+    }
+    public void setY(double newY) {
+    		this.myImageView.setY(newY);
+    }
 
 	public void handleCollision() {
 		// TODO Auto-generated method stub

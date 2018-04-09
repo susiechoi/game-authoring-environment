@@ -33,7 +33,10 @@ public class Projectile extends Sprite {
 	 * Moves image along a curve on the screen
 	 */
 	public void move() {
-		//TODO get orientation of projectile and move it in that direction
+		double xMove = Math.sin(this.getRotate())*this.mySpeed;
+		double yMove = Math.cos(this.getRotate())*this.mySpeed;
+		this.setX(this.getX()+xMove);
+		this.setY(this.getX()+yMove);
 	}
 	
 	/**
