@@ -3,6 +3,7 @@ package engine.sprites;
 import java.util.List;
 
 import engine.managers.ProjectileManager;
+import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -18,18 +19,18 @@ import javafx.scene.image.ImageView;
 
 public class ShootingSprites extends Sprite{
 	
-	private ProjectileManager myProjectileManager;
+	private Launcher myLauncher;
 	private int hitCount;
 
-	public ShootingSprites(String name, Image image, double size) {
+	public ShootingSprites(String name, Image image, double size, Launcher launcher) {
 		super(name, image);
 		this.getImageView().setFitHeight(size);
 		this.getImageView().setFitWidth(size);
-		myProjectileManager = new ProjectileManager();
+		myLauncher = launcher;
 	}
 	
 	public ObservableList<Projectile> getProjectiles(){
-		return myProjectileManager.getObservableListOfActive();
+		return myLauncher.getObservableListOfActive();
 	}
 	
 	public void increaseHitCount(int increaseAmount) {
@@ -52,6 +53,20 @@ public class ShootingSprites extends Sprite{
 			this.handleCollision();
 			shooter.handleCollision();
 		}
+	}
+	
+	//TODO should this be moved into launcher class? -- don't have access to x and y loc in launcher class
+	public boolean hasInRange(ShootingSprites passedSprite) {
+		double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
+		return (distanceBetween <= myLauncher.getRange());
+	}
+
+	public boolean hasReloaded() {
+		return myLauncher.hasReloaded();
+	}
+	
+	public void launch() {
+		myLauncher.launch();
 	}
 
 }

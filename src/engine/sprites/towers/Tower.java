@@ -27,7 +27,6 @@ public class Tower extends ShootingSprites {
 		super(name, image, size);
 		myLauncher = launcher;
 		myHealth = health;
-//		myValue = new ValueProperty();
 	}
 
 	/**
