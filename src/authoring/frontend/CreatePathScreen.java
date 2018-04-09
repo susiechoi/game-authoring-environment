@@ -80,18 +80,18 @@ public class CreatePathScreen extends AdjustScreen {
 			}
 		});
 
-		Button backgroundButton = (Button) panel.getBackgroundButton();
-		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("View Pictures");
-				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-				File file = fileChooser.showOpenDialog(new Stage());
-				grid.setBackgroundmage(file);
-			}
-		});
+//		Button backgroundButton = (Button) panel.getBackgroundButton();
+//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent e) {
+//				FileChooser fileChooser = new FileChooser();
+//				fileChooser.setTitle("View Pictures");
+//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+//				File file = fileChooser.showOpenDialog(new Stage());
+//				grid.setBackgroundmage(file);
+//			}
+//		});
 	}
 
 	private void setGridApplied() {
@@ -100,8 +100,16 @@ public class CreatePathScreen extends AdjustScreen {
 			@Override
 			public void handle(ActionEvent event) {
 				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
+				System.out.println(grid.getStartingPosition().size());
+				if (grid.getStartingPosition().size() == 0) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Path Cutomization Error");
+					alert.setContentText("Your path has no starting blocks");
+					alert.show();
+				}
 				for (int key: coordMap.keySet()) {
-					if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1)) == true) {
+					System.out.println(coordMap.get(key).get(0));
+					 if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
 						System.out.println("TRUE");
 						getView().makePath(grid.getCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
 					} else {

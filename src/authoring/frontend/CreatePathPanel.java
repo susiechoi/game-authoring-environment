@@ -2,6 +2,7 @@ package authoring.frontend;
 
 
 import java.io.File;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -96,11 +97,27 @@ public class CreatePathPanel extends AuthoringScreen implements Panel  {
 			}
 		});
 		
+//		HBox backgroundImageSelector = new HBox();
+//		ImageView imageDisplay = new ImageView(); 
+//		try {
+//			List<String> imageDropdownOptions = getPropertiesReader().allKeys(BACKGROUND_IMAGES);
+//			ComboBox<String> imageDropdown = getUIFactory().makeTextDropdown("", imageDropdownOptions);
+//			backgroundImageSelector = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 100, getErrorCheckedPrompt("Background"), getErrorCheckedPrompt("LoadImage"),
+//					getErrorCheckedPrompt("NewImageName"), imageDropdown, imageDisplay);
+//		}
+//		catch(MissingPropertiesException e) {
+//			getView().loadErrorScreen("NoImageFile");
+//		}
+//		HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, getErrorCheckedPrompt("Background"));
+
+
+		backgroundButton = getUIFactory().makeTextButton("", "Choose Background Image");
+
 		Button changeImageButton = getUIFactory().makeTextButton("", "Change Images");
 		changeImageButton.setOnAction(new EventHandler <ActionEvent>() {
 			public void handle(ActionEvent event) {
 				VBox imageButtons = new VBox();
-				 Scene imageButtonScene = new Scene(imageButtons, 300, 300);
+				 Scene imageButtonScene = new Scene(imageButtons, 600, 600);
 				 imageButtonScene.getStylesheets().add(CreatePathScreen.DEFAULT_OWN_STYLESHEET);
 				imageButtons.getChildren().addAll(backgroundButton, pathImageChooser, endImageChooser, startImageChooser);
 				Stage stage = new Stage();
@@ -108,8 +125,6 @@ public class CreatePathPanel extends AuthoringScreen implements Panel  {
 				stage.show();
 			}
 		});
-		
-		backgroundButton = getUIFactory().makeTextButton("", "Choose Background Image");
 		
 		pathImageChooser = getUIFactory().makeTextButton("", "Choose Path Image");
 		setImageOnButtonPressed(pathImageChooser, pathImage);

@@ -52,6 +52,7 @@ public class CreatePathGrid {
 	private Label endLabel;
 	private Label pathLabel;
 	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
+	private boolean startCheck = false;
 
 
 	protected GridPane makePathGrid() {
@@ -114,6 +115,7 @@ public class CreatePathGrid {
 							grid.add(path.getPathImage(), colIndex, rowIndex);
 							
 							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
+								startCheck = true;
 								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
 								startCols.add(colIndex);
@@ -257,6 +259,10 @@ public class CreatePathGrid {
 
 	public GridPane getCheckGrid() {
 		return checkGrid;
+	}
+	
+	public boolean isStartInGrid() {
+			return startCheck;
 	}
 }
 
