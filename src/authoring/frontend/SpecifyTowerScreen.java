@@ -11,8 +11,8 @@ public class SpecifyTowerScreen extends SpecifyObjectScreen {
 	public static final String DEFAULT_DESCRIPTION = "Tower";
 
 	protected SpecifyTowerScreen(AuthoringView view) {
-		super(view);
-		setDescription(DEFAULT_DESCRIPTION); 
+		super(view, DEFAULT_DESCRIPTION);
+		System.out.println("I want to be here now");
 	}
 
 

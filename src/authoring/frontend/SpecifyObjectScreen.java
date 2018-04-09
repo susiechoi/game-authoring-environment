@@ -5,8 +5,8 @@
 
 package authoring.frontend;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,9 +21,9 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
 
-	protected SpecifyObjectScreen(AuthoringView view) {
+	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
-		System.out.println("my obj description is "+myObjectDescription);
+		myObjectDescription = objectDescription;
 		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
 	}
 

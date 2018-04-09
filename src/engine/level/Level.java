@@ -170,23 +170,23 @@ public class Level {
 		return null;
 	}
 	
-	protected int getNumber() {
+	private int getNumber() {
 		return myNumber; 
 	}
 	
-	protected List<Wave> getWaves() {
+	private List<Wave> getWaves() {
 		return myWaves; 
 	}
 	
-	protected Path getPath() {
+	private Path getPath() {
 		return myPath; 
 	}
 	
-	protected Map<String, Tower> getTowers() {
+	private Map<String, Tower> getTowers() {
 		return myTowers;
 	}
 	
-	protected Map<String, Enemy> getEnemies() {
+	private Map<String, Enemy> getEnemies() {
 		return myEnemies; 
 	}
 
