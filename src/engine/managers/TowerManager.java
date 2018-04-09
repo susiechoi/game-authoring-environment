@@ -1,10 +1,16 @@
 package engine.managers;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
 
@@ -13,16 +19,20 @@ import engine.sprites.towers.Tower;
  * active Tower objects in the game loop.
  *
  * @author Miles Todzo
- *
+ * @author Katie Van Dyk
 */
 
 public class TowerManager extends ShootingSpriteManager {
 
+	//not sure exactly where this should be implemented/how the info for it will be passed in
+	Map<String, Tower> towerTypeToInstance;
+	
     /**
      * Constructor for super class
      */
     public TowerManager() {
 	super();
+	towerTypeToInstance = new HashMap<>();
     }
 
     /**
@@ -46,6 +56,12 @@ public class TowerManager extends ShootingSpriteManager {
     public void moveTowers() {
 	// TODO Auto-generated method stub
 	
+    }
+    
+    public FrontEndTower place(Point location, String type) {
+    		Tower newTower = towerTypeToInstance.get(type);
+    		this.addToActiveList(newTower);
+    		return (FrontEndTower) newTower;
     }
 
 
