@@ -1,5 +1,7 @@
 package authoring;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
+
 /**
  * 
  * @author Ben Hodgson 4/8/18
@@ -9,11 +11,15 @@ package authoring;
  */
 public class GenericModel {
     // TODO put in properties files
-    private final String DEFAULT = "default";
-    private final AuthoringModel myModel;
+    public static final String DEFAULT = "default";
+    private AuthoringModel myModel;
     
     public GenericModel() {
-	myModel = new AuthoringModel();
+	try {
+		myModel = new AuthoringModel();
+	} catch (MissingPropertiesException e) {
+		// TODO 
+	}
 	generateGenericModel();
     }
     

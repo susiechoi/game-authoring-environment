@@ -6,8 +6,6 @@
 
 package authoring.frontend;
 
-import javafx.scene.Parent;
-
 public class SpecifyTowerScreen extends SpecifyObjectScreen {
 	
 	public static final String DEFAULT_DESCRIPTION = "Tower";
