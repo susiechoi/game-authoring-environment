@@ -14,6 +14,9 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import frontend.StageManager;
+import javafx.geometry.Point2D;
+import javafx.scene.layout.GridPane;
+
 
 public class AuthoringController {
 	
@@ -78,8 +81,8 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 */
-	public void makePath(int level) {
-		myAuthoringModel.makePath(level); 
+	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {  //pass entire populated gridpane?
+		myAuthoringModel.makePath(level, coordinates, grid); 
 	}
 	
 	/**

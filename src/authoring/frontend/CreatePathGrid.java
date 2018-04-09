@@ -1,10 +1,11 @@
 package authoring.frontend;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -21,9 +22,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
 
-/* delete button to get rid of path blocks (trash, select all and delete)
+/* 
  * Right click to be able to get specialty paths
- * filechoosers for loading in new images, get background image from elsewhere
  * Back to main button, if apply has not been clicked then prompt (changes will not be saved)
  * 
  * Need a way to get style info for defaults
@@ -42,6 +42,7 @@ public class CreatePathGrid {
     private int rowIndex;
     private GridPane grid;
     private SelectionModel model;
+    //have these update with change images
     private ImageView startImage = new ImageView(new Image("file:images/start.png"));
     private ImageView endImage = new ImageView(new Image("file:images/end.png"));
     private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
@@ -53,6 +54,7 @@ public class CreatePathGrid {
     private Label pathLabel;
     private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
     private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
+    private boolean startCheck = false;
 
 
     protected GridPane makePathGrid() {
@@ -70,11 +72,12 @@ public class CreatePathGrid {
 	model = new SelectionModel();
 	new ShiftSelection(grid, model);
 
-	grid.setStyle("-fx-background-image: url('file:images/plaingreen.png')"); 
+	grid.setStyle("-fx-background-image: url('file:images/white.png')"); 
 	populateGrid();
 
 	return grid;
     }
+
     public void setUpForWaves(EventHandler<MouseEvent> action) {
 	makeUnDraggable();
 	for(DraggableImage image : draggableImagesOnScreen) {
@@ -82,11 +85,16 @@ public class CreatePathGrid {
 		image.getPathImage().setOnMouseClicked(e -> action.handle(e));
 	    }   
 	}
-    }
+    }   
     private void makeUnDraggable() {
 	for(DraggableImage image : draggableImagesOnScreen) {
 	    image.disableDraggable();
 	}
+    }
+
+
+    public void setBackgroundmage(File file) {
+	grid.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
     }
 
     //REFACTOR
@@ -123,8 +131,8 @@ public class CreatePathGrid {
 			    path.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
 			    grid.add(path.getPathImage(), colIndex, rowIndex);
 			    draggableImagesOnScreen.add(path);
-			    //path.disableDraggable(); //ADDED THIS GET RID OF IT ONLY FOR TESTING
 			    if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
+				startCheck = true;
 				startLabel = new Label("start");
 				checkGrid.add(startLabel, colIndex, rowIndex);
 				startCols.add(colIndex);
@@ -201,7 +209,6 @@ public class CreatePathGrid {
 	    return true;
 	}
 
-	System.out.println(pathCoords);
 	return false;
     }
 
@@ -226,14 +233,6 @@ public class CreatePathGrid {
 	} 
     }
 
-
-    public GridPane getGrid() {
-	return grid;
-    }
-
-    public GridPane getCheckGrid() {
-	return checkGrid;
-    }
 
     private boolean imageCompare(Image image1, Image image2) {
 	for (int i = 0; i < image1.getWidth(); i++){
@@ -264,7 +263,22 @@ public class CreatePathGrid {
 	double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 	Point2D point = new Point2D(x, y);
 	pathCoords.add(point);
-	System.out.println(pathCoords);
+    }
+
+    public List<Point2D> getCoordinates() {
+	return pathCoords;
+    }
+
+
+    public GridPane getGrid() {
+	return grid;
+    }
+
+    public GridPane getCheckGrid() {
+	return checkGrid;
+    }
+
+    public boolean isStartInGrid() {
+	return startCheck;
     }
 }
-

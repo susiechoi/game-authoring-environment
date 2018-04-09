@@ -9,14 +9,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-public class AdjustWaveScreen extends AdjustScreen{
+public class AdjustWaveScreen extends AdjustScreen {
     public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
     private StackPane pathRoot;
@@ -44,7 +41,7 @@ public class AdjustWaveScreen extends AdjustScreen{
 		getView().loadErrorScreen("NoFile");
 	    }
 	}
-	);
+		);
 
 	panel = new WavePanel();
 	panel.makePanel();
@@ -82,9 +79,20 @@ public class AdjustWaveScreen extends AdjustScreen{
 		}
 	    }
 	});
+
+	//	Button backgroundButton = (Button) panel.getBackgroundButton();
+	//	backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+	//		@Override
+	//		public void handle(ActionEvent e) {
+	//			FileChooser fileChooser = new FileChooser();
+	//			fileChooser.setTitle("View Pictures");
+	//			fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+	//			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+	//			File file = fileChooser.showOpenDialog(new Stage());
+	//			grid.setBackgroundmage(file);
+	//		}
+	//	});
     }
-
-
     private void setGridApplied() {
 	Button applyButton = panel.getApplyButton();
 	applyButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -102,6 +110,7 @@ public class AdjustWaveScreen extends AdjustScreen{
 	});
     }
 
+
     @Override
     protected Parent populateScreenWithFields() {
 	// TODO Auto-generated method stub
@@ -114,4 +123,3 @@ public class AdjustWaveScreen extends AdjustScreen{
 
     }
 }
-
