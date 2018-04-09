@@ -4,7 +4,7 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -74,7 +75,13 @@ public class CreatePathGrid {
 
 	return grid;
     }
-    public void makeUnDraggable() {
+    public void setUpForWaves(EventHandler<MouseEvent> action) {
+	makeUnDraggable();
+	for(DraggableImage image : draggableImagesOnScreen) {
+	    image.getPathImage().setOnMouseClicked(e -> action.handle(e));
+	}
+    }
+    private void makeUnDraggable() {
 	for(DraggableImage image : draggableImagesOnScreen) {
 	    image.disableDraggable();
 	}
