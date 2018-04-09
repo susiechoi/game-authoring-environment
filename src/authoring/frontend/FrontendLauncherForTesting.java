@@ -8,27 +8,14 @@ import javafx.stage.Stage;
 public class FrontendLauncherForTesting extends Application {
 
 	public static void main(String[] args) {
-		Application.launch(args);
+	    	System.out.println("launching");
+		launch(args);
 	}
 
 	@Override
 	public void start(Stage stage) {
 
-//		ArrayList<String> enemyOptions = new ArrayList<String>();
-//		enemyOptions.add("Tower 1");
-//		enemyOptions.add("Tower 2");
-//		SpecifyEnemyScreen a = new SpecifyEnemyScreen(enemyOptions);
-//		AdjustEnemyScreen a = new AdjustTowerScreen(); 
-
-//		AuthoringView view = new AuthoringView(stage, "English");
-//		CreatePathScreen a = new CreatePathScreen(view);
-//
-//		Stage s = new Stage(); 
-//		s.setScene(a.getScreen());
-//		s.show();
-//		stage.show();
-
-
+	    	System.out.println("launching");
 		AuthoringController controlla = new AuthoringController(new StageManager(stage), "English");
 		stage.show();
 

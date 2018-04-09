@@ -1,6 +1,10 @@
-package authoring.frontend;
+/**
+ * @author susiechoi
+ * Abstract class for developing the fields for customizing 
+ * (new or existing, depending on whether corresponding tower is new or existing) launcher/projectile object
+ */
 
-import java.util.ArrayList;
+package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
@@ -8,18 +12,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
+class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
-	public static final int DEFAULT_MAX_RANGE = 500; 
-	public static final int DEFAULT_MAX_PRICE = 500;  
 	
 	private AdjustTowerScreen myTowerScreen;
 	private ComboBox<String> myProjectileImage;
-	private ComboBox<String> myProjectileAbility;
+	private ImageView myImageDisplay; 
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileValueSlider;
 	private Slider myProjectileUpgradeCostSlider;
@@ -30,8 +33,8 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	private Slider myLauncherRateSlider;
 	private Slider myLauncherRangeSlider; 
 
-	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen) {
-		super(view);
+	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen, String selectedObjectName) {
+		super(view, selectedObjectName);
 		myTowerScreen = towerScreen; 
 	}
 
@@ -43,10 +46,12 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		makeProjectileComponents(vb);
 		makeLauncherComponents(vb);
 		
-		Button backButton = setupBackButton();
+		Button backButton = setupBackButtonCustom(e -> {
+		    getView().loadScreen(myTowerScreen);
+		});
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileAbility.getValue(), (int)myProjectileDamageSlider.getValue(), (int)myProjectileValueSlider.getValue(), (int)myProjectileUpgradeCostSlider.getValue(), (int)myProjectileUpgradeValueSlider.getValue(), (int)myLauncherValueSlider.getValue(), (int)myLauncherUpgradeCostSlider.getValue(), (int)myLauncherUpgradeValueSlider.getValue(), (int)myLauncherRateSlider.getValue(), (int)myLauncherRangeSlider.getValue());
+			myTowerScreen.setLauncherProjectileValues(myImageDisplay, myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
@@ -61,70 +66,86 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	private void makeProjectileComponents(VBox vb) {
 		ComboBox<String> projectileImageDropdown;
 		HBox projectileImageSelect = new HBox(); 
+		myImageDisplay = new ImageView(); 
 		try {
 			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
 			myProjectileImage = projectileImageDropdown; 
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown);
+			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, myImageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
 		vb.getChildren().add(projectileImageSelect);
 
-		ArrayList<String> dummyProjectileAbilities = new ArrayList<String>(); // TODO read in abilities
-		dummyProjectileAbilities.add("Freeze");
-		dummyProjectileAbilities.add("Fire");
-		ComboBox<String> projectileAbilityDropdown = getUIFactory().makeTextDropdown("", dummyProjectileAbilities);
-		myProjectileAbility = projectileAbilityDropdown; 
-		HBox projectileAbility = getUIFactory().addPromptAndSetupHBox("", projectileAbilityDropdown, getErrorCheckedPrompt("ProjectileAbility"));	
-		vb.getChildren().add(projectileAbility);
-
-		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", DEFAULT_MAX_RANGE);
+		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());
 		myProjectileDamageSlider = projectileDamageSlider; 
 		HBox projectileDamage = getUIFactory().setupSliderWithValue("ProjectileDamageSlider", projectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 		vb.getChildren().add(projectileDamage);
 
-		Slider projectileValueSlider = getUIFactory().setupSlider("ProjectileValueSlider", DEFAULT_MAX_PRICE);
+		Slider projectileValueSlider = getUIFactory().setupSlider("ProjectileValueSlider", getMyMaxPrice());
 		myProjectileValueSlider = projectileValueSlider; 
 		HBox projectileValue = getUIFactory().setupSliderWithValue("ProjectileValueSlider", projectileValueSlider, getErrorCheckedPrompt("ProjectileValue"));
 		vb.getChildren().add(projectileValue);
 
-		Slider projectileUpgradeCostSlider = getUIFactory().setupSlider("ProjectileUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider projectileUpgradeCostSlider = getUIFactory().setupSlider("ProjectileUpgradeCostSlider", getMyMaxPrice());
 		myProjectileUpgradeCostSlider = projectileUpgradeCostSlider; 
 		HBox projectileUpgradeCost = getUIFactory().setupSliderWithValue("ProjectileUpgradeCostSlider", projectileUpgradeCostSlider, getErrorCheckedPrompt("ProjectileUpgradeCost"));
 		vb.getChildren().add(projectileUpgradeCost);
 
-		Slider projectileUpgradeValueSlider = getUIFactory().setupSlider("ProjectileUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider projectileUpgradeValueSlider = getUIFactory().setupSlider("ProjectileUpgradeValueSlider", getMyMaxUpgradeIncrement());
 		myProjectileUpgradeValueSlider = projectileUpgradeValueSlider; 
 		HBox projectileUpgradeValue = getUIFactory().setupSliderWithValue("ProjectileUpgradeValueSlider", projectileUpgradeValueSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 		vb.getChildren().add(projectileUpgradeValue);
 	}
 	
 	private void makeLauncherComponents(VBox vb) {
-		Slider launcherValueSlider = getUIFactory().setupSlider("LauncherValueSlider", DEFAULT_MAX_PRICE);
+		Slider launcherValueSlider = getUIFactory().setupSlider("LauncherValueSlider", getMyMaxPrice());
 		myLauncherValueSlider = launcherValueSlider; 
 		HBox launcherValue = getUIFactory().setupSliderWithValue("LauncherValueSlider", launcherValueSlider, getErrorCheckedPrompt("LauncherValue"));
 		vb.getChildren().add(launcherValue);
 
-		Slider launcherUpgradeCostSlider = getUIFactory().setupSlider("LauncherUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider launcherUpgradeCostSlider = getUIFactory().setupSlider("LauncherUpgradeCostSlider", getMyMaxPrice());
 		myLauncherUpgradeCostSlider = launcherUpgradeCostSlider; 
 		HBox launcherUpgradeCost = getUIFactory().setupSliderWithValue("LauncherUpgradeCostSlider", launcherUpgradeCostSlider, getErrorCheckedPrompt("LauncherUpgradeCost"));
 		vb.getChildren().add(launcherUpgradeCost);
 
-		Slider launcherUpgradeValueSlider = getUIFactory().setupSlider("LauncherUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider launcherUpgradeValueSlider = getUIFactory().setupSlider("LauncherUpgradeValueSlider", getMyMaxUpgradeIncrement());
 		myLauncherUpgradeValueSlider = launcherUpgradeValueSlider; 
 		HBox launcherUpgradeValue = getUIFactory().setupSliderWithValue("LauncherUpgradeValueSlider", launcherUpgradeValueSlider, getErrorCheckedPrompt("LauncherUpgradeValue"));
 		vb.getChildren().add(launcherUpgradeValue);
 
-		Slider launcherRateSlider = getUIFactory().setupSlider("LauncherRateSlider", DEFAULT_MAX_RANGE);
+		Slider launcherRateSlider = getUIFactory().setupSlider("LauncherRateSlider", getMyMaxSpeed());
 		myLauncherRateSlider = launcherRateSlider; 
 		HBox launcherRate = getUIFactory().setupSliderWithValue("LauncherRateSlider", launcherRateSlider, getErrorCheckedPrompt("LauncherRate"));
 		vb.getChildren().add(launcherRate);
 
-		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", DEFAULT_MAX_RANGE);
+		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", getMyMaxRange());
 		myLauncherRangeSlider = launcherRangeSlider; 
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange"));
 		vb.getChildren().add(launcherRange);
 	}
 	
-	protected abstract void populateFieldsWithData(); 
+	protected void populateFieldsWithData() {
+		getUIFactory().setComboBoxToValue(myProjectileImage, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+
+		getUIFactory().setSliderToValue(myProjectileDamageSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
+
+		getUIFactory().setSliderToValue(myProjectileValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
+
+		getUIFactory().setSliderToValue(myProjectileUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
+
+		getUIFactory().setSliderToValue(myProjectileUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
+
+		getUIFactory().setSliderToValue(myLauncherValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
+
+		getUIFactory().setSliderToValue(myLauncherUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
+
+		getUIFactory().setSliderToValue(myLauncherUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
+
+		getUIFactory().setSliderToValue(myLauncherRateSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
+
+		getUIFactory().setSliderToValue(myLauncherRangeSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRange"));
+	}
+	
+	
+	
 }

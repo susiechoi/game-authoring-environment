@@ -84,17 +84,17 @@ public class CreatePathPanel implements Panel {
 			}
 		});
 		
-		HBox backgroundImageSelector = new HBox();
-		try {
-			List<String> imageDropdownOptions = myPropertiesReader.allKeys(BACKGROUND_IMAGES);
-			ComboBox<String> imageDropdown = factory.makeTextDropdown("", imageDropdownOptions);
-			backgroundImageSelector = factory.setupImageSelector(myPropertiesReader,"", BACKGROUND_IMAGES, 100, "Background", "LoadImage",
-			"NewImageName", imageDropdown);
-		}
-		catch(MissingPropertiesException e) {
-//		    getView().loadErrorScreen("NoImageFile");
-		}
-		HBox backgroundImagePrompted = factory.addPromptAndSetupHBox("", backgroundImageSelector, "Background");
+//		HBox backgroundImageSelector = new HBox();
+//		try {
+//			List<String> imageDropdownOptions = myPropertiesReader.allKeys(BACKGROUND_IMAGES);
+//			ComboBox<String> imageDropdown = factory.makeTextDropdown("", imageDropdownOptions);
+//			backgroundImageSelector = factory.setupImageSelector(myPropertiesReader,"", BACKGROUND_IMAGES, 100, "Background", "LoadImage",
+//			"NewImageName", imageDropdown);
+//		}
+//		catch(MissingPropertiesException e) {
+////		    getView().loadErrorScreen("NoImageFile");
+//		}
+//		HBox backgroundImagePrompted = factory.addPromptAndSetupHBox("", backgroundImageSelector, "Background");
 		
 		Image plusImg = new Image("file:images/plus.png", 60, 40, true, false);
 		pathSizePlusButton = factory.makeImageButton("", plusImg);
@@ -114,7 +114,7 @@ public class CreatePathPanel implements Panel {
 		pathImageChooser = factory.makeTextButton("", "Choose Path Image");
 		
 		
-		pathPanel.getChildren().addAll(backgroundImageSelector, startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage, pathSizeButtons, startImageChooser, pathImageChooser, endImageChooser, applyButton, backButton);
+		pathPanel.getChildren().addAll(startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage, pathSizeButtons, startImageChooser, pathImageChooser, endImageChooser, applyButton, backButton);
 	}
 	
 	public HBox getSizeButtons() {

@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * Creates screen in which user can customize the starting resources of the player
  */
 
 package authoring.frontend;
@@ -16,19 +17,25 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		super(view);
 	}
 
+	/**
+	 * Creates features (specifically, sliders) that users can manipulate to change starting reosurces of player
+	 */
 	@Override
-	public Parent makeScreenWithoutStyling(){
+	public Parent populateScreenWithFields(){
 		VBox vb = new VBox(); 
 
-		vb.getChildren().add(getUIFactory().makeScreenTitleText("Specify Starting Resources"));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyStartingResources")));
 
 		Slider startingHealthSlider = getUIFactory().setupSlider("startingHealth", 100);
-		HBox startingHealth = getUIFactory().addPromptAndSetupHBox("startingHealth", startingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
+		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", startingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
 		Slider startingCurrencySlider = getUIFactory().setupSlider("startingCurrency", 999);
-		HBox startingCurrency = getUIFactory().addPromptAndSetupHBox("startingCurrency", startingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
+		HBox startingCurrency = getUIFactory().setupSliderWithValue("startingCurrency", startingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
 
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
+		applyButton.setOnAction(e -> {
+			getView().makeResources(startingHealthSlider.getValue(), startingCurrencySlider.getValue());
+		});
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
 		
 		vb.getChildren().add(startingHealth);
@@ -37,5 +44,12 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		
 		return vb;
 	}
+
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+	    
+	}
+	
 
 }

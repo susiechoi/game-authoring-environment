@@ -1,3 +1,4 @@
+//
 //package gameplayer;
 //
 //import frontend.StageManager;
@@ -5,6 +6,8 @@
 //import javafx.stage.Stage;
 //
 //public class EngineFrontEndLauncherForTesting extends Application {
+//
+//    private static final String STARTING_LANGUAGE = "English";
 //
 //    /**
 //     * Initialize the program and begin the animation loop 
@@ -14,7 +17,7 @@
 //    @Override
 //    public void start(Stage primaryStage){
 //	StageManager stageManager = new StageManager(primaryStage);
-//	ScreenManager manager = new ScreenManager(stageManager);
+//	ScreenManager manager = new ScreenManager(stageManager, STARTING_LANGUAGE);
 //	manager.loadInstructionScreen();		
 //    }
 //

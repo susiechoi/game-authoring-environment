@@ -19,10 +19,9 @@ public interface IIntersecter {
 	
 	/**
 	 * This method is to be used by a game object to check if it is intersecting with another game object
-	 * @param thisNode is the Node of the class who is calling the method
 	 * @param thatNode is the Node that it wants to check intersection with
 	 * @return true if the objects are overlapping, and false if they are not
 	 */
-	boolean overlaps(Node thisNode, Node thatNode);
+	boolean overlaps(Node thatNode);
 	
 }

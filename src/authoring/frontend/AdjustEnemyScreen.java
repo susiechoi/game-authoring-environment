@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * Abstract class for developing the fields for customizing (new or existing) enemy object
  */
 
 package authoring.frontend;
@@ -11,29 +12,25 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
+class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
-	public static final int DEFAULT_ENEMY_MAX_HEALTH_IMPACT = 3; 
-	public static final int DEFAULT_ENEMY_MAX_$_IMPACT = 50; 
-	public static final int DEFAULT_ENEMY_MAX_SPEED = 100; 
-	public static final int DEFAULT_MAX_RANGE = 500; 
-	public static final int DEFAULT_MAX_PRICE = 500;
 		
 	private TextField myNameField; 
 	private ComboBox<String> myImageDropdown;
 	private Slider mySpeedSlider;
+	private Slider myInitialHealthSlider; 
 	private Slider myHealthImpactSlider; 
-	private Slider my$ImpactSlider; 
 	private Slider myValueSlider; 
 	private Slider myUpgradeCostSlider; 
 	private Slider myUpgradeValueSlider; 
 	
-	protected AdjustEnemyScreen(AuthoringView view) {
-		super(view);
+	protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
+		super(view, selectedObjectName);
 	}
 
 	@Override
@@ -48,51 +45,52 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 		HBox enemyImageSelect = new HBox();
 		ComboBox<String> dropdown = new ComboBox<String>();
+		ImageView imageDisplay = new ImageView(); 
 		try {
 			dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
 			myImageDropdown = dropdown; 
 			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), dropdown);
+					getErrorCheckedPrompt("NewImageName"), dropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
 		vb.getChildren().add(enemyImageSelect);
 
-		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  DEFAULT_ENEMY_MAX_SPEED); 
+		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  getMyMaxSpeed()); 
 		mySpeedSlider = enemySpeedSlider; 
 		HBox enemySpeed = getUIFactory().setupSliderWithValue("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed"));
 		vb.getChildren().add(enemySpeed);
 
-		Slider enemyHealthImpactSlider = getUIFactory().setupSlider("enemyImpactSlider",  DEFAULT_ENEMY_MAX_HEALTH_IMPACT); 
+		Slider enemyInitialHealthSlider = getUIFactory().setupSlider("enemyInitialHealthSlider",  getMyMaxHealthImpact()); 
+		myInitialHealthSlider = enemyInitialHealthSlider; 
+		HBox initialHealth = getUIFactory().setupSliderWithValue("enemyInitialHealthSlider", enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 
+		vb.getChildren().add(initialHealth);
+		
+		Slider enemyHealthImpactSlider = getUIFactory().setupSlider("enemyImpactSlider",  getMyMaxHealthImpact()); 
 		myHealthImpactSlider = enemyHealthImpactSlider; 
 		HBox enemyImpact = getUIFactory().setupSliderWithValue("enemyImpactSlider", enemyHealthImpactSlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 		vb.getChildren().add(enemyImpact);
-
-		Slider enemy$ImpactSlider = getUIFactory().setupSlider("enemyMoneyImpactSlider",  DEFAULT_ENEMY_MAX_$_IMPACT); 
-		my$ImpactSlider = enemy$ImpactSlider; 
-		HBox enemy$Impact = getUIFactory().setupSliderWithValue("enemyMoneyImpactSlider", enemy$ImpactSlider, getErrorCheckedPrompt("EnemyCurrencyImpact")); 
-		vb.getChildren().add(enemy$Impact);
 		
-		Slider enemyValueSlider = getUIFactory().setupSlider("EnemyValueSlider", DEFAULT_MAX_PRICE);
+		Slider enemyValueSlider = getUIFactory().setupSlider("EnemyValueSlider", getMyMaxPrice());
 		myValueSlider = enemyValueSlider;
 		HBox enemyValue = getUIFactory().setupSliderWithValue("EnemyValueSlider", enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 		vb.getChildren().add(enemyValue);
 
-		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", DEFAULT_MAX_PRICE);
+		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", getMyMaxPrice());
 		myUpgradeCostSlider = enemyUpgradeCostSlider; 
 		HBox enemyUpgradeCost = getUIFactory().setupSliderWithValue("EnemyUpgradeCostSlider", enemyUpgradeCostSlider, getErrorCheckedPrompt("EnemyUpgradeCost"));
 		vb.getChildren().add(enemyUpgradeCost);
 
-		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", DEFAULT_MAX_PRICE);
+		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", getMyMaxUpgradeIncrement());
 		myUpgradeValueSlider = enemyUpgradeValueSlider; 
 		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
 		vb.getChildren().add(enemyUpgradeValue);
 
-		Button backButton = setupBackButton();
+		Button backButton = setupBackButtonSuperclass();
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), (int)mySpeedSlider.getValue(), (int)myHealthImpactSlider.getValue(), (int)my$ImpactSlider.getValue(), (int)myValueSlider.getValue(), (int)myUpgradeCostSlider.getValue(), (int)myUpgradeValueSlider.getValue());
+			getView().makeEnemy(getIsNewObject(), myNameField.getText(), imageDisplay.getImage(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
 		});
 		
 		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
@@ -104,38 +102,28 @@ abstract class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		return sp;
 	}
 	
-	protected abstract void populateFieldsWithData();
+	/**
+	 * The following methods are getters for features/fields on the Screen
+	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
+	 */
 	
-	protected TextField getMyNameField() {
-		return myNameField;
-	} 
-	
-	protected ComboBox<String> getMyImageDropdown() {
-		return myImageDropdown;
-	}
-	
-	protected Slider getMySpeedSlider() {
-		return mySpeedSlider;
-	}
-	
-	protected Slider getMyHealthImpactSlider() {
-		return myHealthImpactSlider;
-	}
+	protected void populateFieldsWithData() {
+		myNameField.setText(getMySelectedObjectName());
 		
-	protected Slider getMy$ImpactSlider() {
-		return my$ImpactSlider;
+		setEditableOrNot(myNameField, getIsNewObject());
+		
+		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
+		
+		getUIFactory().setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
+		
+		getUIFactory().setSliderToValue(myHealthImpactSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
+			
+		getUIFactory().setSliderToValue(myValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
+		
+		getUIFactory().setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
+		
+		getUIFactory().setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
 	}
 	
-	protected Slider getMyValueSlider() {
-		return myValueSlider;
-	} 
-	
-	protected Slider getMyUpgradeCostSlider() {
-		return myUpgradeCostSlider;
-	} 
-	
-	protected Slider getMyUpgradeValueSlider() {
-		return myUpgradeValueSlider;
-	}
 
 }

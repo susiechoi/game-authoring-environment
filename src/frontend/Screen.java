@@ -22,7 +22,6 @@ public abstract class Screen {
     private Parent myRoot;
     private UIFactory myUIFactory;
     private PropertiesReader myPropertiesReader;
-    private View myView;
 
     protected Screen() {
 	myUIFactory = new UIFactory();

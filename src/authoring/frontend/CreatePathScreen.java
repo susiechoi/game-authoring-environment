@@ -90,4 +90,16 @@ public class CreatePathScreen extends AdjustScreen {
 			}
 		});
 	}
+
+	@Override
+	protected Parent populateScreenWithFields() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void populateFieldsWithData() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,16 +1,20 @@
-package authoring;
-
-import authoring.frontend.AuthoringView;
-import frontend.StageManager;
-import javafx.scene.image.ImageView;
-
 /**
  * 
  * @author susiechoi 
  *
- * Class that handles mediating program functionality specific to authoring. 
+ * Class that handles mediating creation of authoring environment objects (towers, enemies, path). 
  * Represents Controller in MVC of the authoring environment. 
+ * 
  */
+
+package authoring;
+
+import java.util.List;
+
+import authoring.frontend.AuthoringView;
+import authoring.frontend.exceptions.NoDuplicateNamesException;
+import frontend.StageManager;
+import javafx.scene.image.Image;
 
 public class AuthoringController {
 	
@@ -22,26 +26,53 @@ public class AuthoringController {
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
 	}
 	
-	// TODO is int level needed as a parameter? 
-	public void getObjectAttribute(String objectType, String objectName, String attribute) {
-		// TODO wrap a call to get the info from AuthoringModel maps
+	/**
+	 * Method through which information about object fields can be requested
+	 * Invoked when populating authoring frontend screens used to edit existing objects
+	 */
+	public String getObjectAttribute(int level, String objectType, String name, String attribute) {
+		return myAuthoringModel.getObjectAttribute(level, objectType, name, attribute); 
 	}
 	
-	public void makeEnemy(boolean newObject, String name, String image, int speed, int healthImpact, int moneyImpact, int killReward, int killUpgradeCost, int killUpgradeValue) {
-		myAuthoringModel.makeEnemy(newObject, name, image, speed, healthImpact, moneyImpact, killReward, killUpgradeCost, killUpgradeValue);
+	/**
+	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
+	 */
+	public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
-	public void makeTower(boolean newObject, String name, String image, int health, int healthUpgradeCost, int healthUpgradeValue,
-							String projectileImage, String ability, int projectileDamage, int projectileValue, int projectileUpgradeCost, int projectileUpgradeValue,
-							int launcherValue, int launcherUpgradeCost, int launcherUpgradeValue, int launcherSpeed, int launcherRange) {
-		myAuthoringModel.makeTower(newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, ability, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+	/**
+	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
+	 * @throws NoDuplicateNamesException 
+	 */
+	public void makeTower(int level, boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
+							Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
+		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
 	}
 	
-	// TODO 
-	public void addNewPath() {
-		
+	/**
+	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
+	 */
+	public void makeResources(double startingHealth, double starting$) {
+		myAuthoringModel.makeResources(startingHealth, starting$);
+	}
+	
+	// TODO
+	/**
+	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
+	 */
+	public void makePath(int level) {
+		myAuthoringModel.makePath(level); 
+	}
+	
+	/**
+	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
+	 */
+	public List<String> getCurrentObjectOptions(int level, String objectType) {
+		return myAuthoringModel.getCurrentObjectOptions(level, objectType);
 	}
 	
     /**
@@ -52,3 +83,4 @@ public class AuthoringController {
     }
 
 }
+

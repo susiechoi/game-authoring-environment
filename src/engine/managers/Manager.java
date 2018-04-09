@@ -1,7 +1,11 @@
 package engine.managers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
+import engine.sprites.towers.Tower;
 import javafx.collections.ObservableList;
 
 /**
@@ -10,18 +14,16 @@ import javafx.collections.ObservableList;
  * 
  * @author Katherine Van Dyk
  * @author Ryan Pond
- * @param <E>: The object being managed
+ * @author Miles Todzo
  */
-public abstract class Manager<E> {
+public class Manager<E> {
     
-    private List<E> objects; // this list seems like it's duplicated in subclasses -bma
+    private List<E> active;
+    private List<E> available;
     
-    /**
-     * Constructor, takes in the original list of E objects
-     * @param list: list of objects that are initially active to be managed
-     */
-    public Manager(List<E> list) {
-    		objects = list;
+    public Manager() {
+    		active = new ArrayList<>();
+    		available = new ArrayList<>();
     }
     
     /**
@@ -29,8 +31,33 @@ public abstract class Manager<E> {
      * 
      * @return
      */
-    public ObservableList<E> getList(){
-    		return (ObservableList<E>) objects;
+    public ObservableList<E> getObservableListOfAvailable(){
+    		return (ObservableList<E>) available;
+    }
+    /**
+     * Returns observable list of all active objects
+     * 
+     * @return
+     */
+    public ObservableList<E> getObservableListOfActive(){
+    		return (ObservableList<E>) active;
+    }
+    
+    public void addToActiveList(E sprite) {
+    		active.add(sprite);
     }
 
+    /**
+     * Checks for collisions between between the list of active actors held by the Manager the method
+     * was called on and the list of active actors passed as a parameter
+     * @param passedSprites
+     */
+//    public void checkForCollisions(List<Sprite> passedSprites) {
+//    	for (Sprite activeSprite: this.getObservableListOfActive()) {
+//    		for (Sprite passedActor: passedSprites) {
+//    			ShootingSprites shootingSprite = (ShootingSprites) passedActor;
+//    			activeSprite.checkForCollision(shootingSprite, shootingSprite.getProjectiles());
+//    		}
+//    	}
+//    }
 }
