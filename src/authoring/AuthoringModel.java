@@ -64,7 +64,10 @@ public class AuthoringModel implements GameData {
 	}
 
 	private void setupDefaultLevel() {
-		myLevels.put(1, new Level(1));
+		Level firstLevel = new Level(1);
+		myLevels.put(1, firstLevel);
+		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
+		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
 	}
 
 	/**

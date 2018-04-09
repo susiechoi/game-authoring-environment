@@ -12,6 +12,7 @@ public class SpecifyTowerScreen extends SpecifyObjectScreen {
 
 	protected SpecifyTowerScreen(AuthoringView view) {
 		super(view);
+		System.out.println("my default description is "+DEFAULT_DESCRIPTION);
 		setDescription(DEFAULT_DESCRIPTION); 
 	}
 
