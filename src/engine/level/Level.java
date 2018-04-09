@@ -39,6 +39,12 @@ public class Level {
 	return NUMBER;
     }
     
+    /**
+     * Adds an available tower to the level
+     * 
+     * @param name: The unique string name for the tower object
+     * @param tower: The tower object to be added
+     */
     public void addTower(String name, Tower tower) {
 	myTowers.put(name, tower);
     }

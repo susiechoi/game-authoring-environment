@@ -19,56 +19,53 @@ import javafx.scene.image.Image;
  */
 public class Enemy extends Sprite{
 
-	private HealthProperty myHealth;
-	private DamageProperty myDamage;
-	private ValueProperty myValue;
-	private IIntersecter myIntersecter;
+    private HealthProperty myHealth;
+    private DamageProperty myDamage;
+    private ValueProperty myValue;
+    private IIntersecter myIntersecter;
 
-	public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
-		super(myImage);
-		myIntersecter = new Intersecter(this.getImage()); 
-		myHealth = health;
-		myDamage = damage;
-		myValue = value;
-	}
+    public Enemy(String name, Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
+	super(name, myImage);
+	myIntersecter = new Intersecter(this.getImage()); 
+	myHealth = health;
+	myDamage = damage;
+	myValue = value;
+    }
 
-	/**
-	 * Tests to see if another ImageView overlaps with the Enemy
-	 * @param otherImage : other image (projectile, tower, etc)
-	 * @return boolean, yes or no
-	 */
-	public boolean overlap(Node otherImage) {
-		return myIntersecter.overlaps(otherImage); 
-	}
+    /**
+     * Tests to see if another ImageView overlaps with the Enemy
+     * @param otherImage : other image (projectile, tower, etc)
+     * @return boolean, yes or no
+     */
+    public boolean overlap(Node otherImage) {
+	return myIntersecter.overlaps(otherImage); 
+    }
 
-	/**
-         * Handles when the Enemy is hit by a tower
-         * 
-         * @param projectile: the projectile that hit the enemy
-         * @return : returns true if the enemy is still alive, false if it is dead
-         */
-	public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
-		myHealth.loseHealth(projectile.getDamage());
-		return myHealth.isAlive();
-	}
+    /**
+     * Handles when the Enemy is hit by a tower
+     * 
+     * @param projectile: the projectile that hit the enemy
+     * @return : returns true if the enemy is still alive, false if it is dead
+     */
+    public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
+	myHealth.loseHealth(projectile.getDamage());
+	return myHealth.isAlive();
+    }
 
-	/**
+    /**
      * Handles updating the enemy position to follow the path
      */
-	public void followPath() {
-		// TODO Auto-generated method stub
+    public void followPath() {
+	// TODO Auto-generated method stub
 
-	}
+    }
 
-	/**
+    /**
      * Handles returning an enemy's damage after hitting a tower
      * 
      * @return Double: damage that Enemy incurs on the tower
      */
-	public Double damage() {
-		return myDamage.getProperty();
-	}
-
-
-
+    public Double damage() {
+	return myDamage.getProperty();
+    }
 }

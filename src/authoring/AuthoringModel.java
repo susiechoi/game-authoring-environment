@@ -23,6 +23,7 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.properties.HealthProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -30,11 +31,16 @@ import javafx.scene.image.Image;
 
 class AuthoringModel {
 
+    private final String DEFAULT = "default";
     protected AuthoringResources myResources;
     private Map<Integer, Level> myLevels;
+    private Map<String, Enemy> myEnemies;
+    private final Tower myDefaultTower;
+    private final Enemy myDefaultEnemy;
 
     public AuthoringModel() {
 	myLevels = new HashMap<Integer, Level>();
+	myEnemies = new HashMap<String, Enemy>();
     }
 
 
@@ -45,14 +51,13 @@ class AuthoringModel {
      */
     public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double healthImpact,
 	    double killReward, double killUpgradeCost, double killUpgradeValue) throws NoDuplicateNamesException {
-	//if (myEnemies.containsKey(name)) {
-	    // build projectile, launcher, then tower using builder objects
-	    //throw new NoDuplicateNamesException(name);
-	//}
-	//else {
-	    // find the enemy in the enemies map with the name parameter
-	    // edit its values to conform to the parameterized ones 
-	//}
+	if (myEnemies.containsKey(name)) {
+	    throw new NoDuplicateNamesException(name);
+	}
+	else {
+	    // make and add enemy
+	    
+	}
     }
 
     /**
@@ -89,6 +94,13 @@ class AuthoringModel {
 		    healthUpgradeValue, healthUpgradeCost, towerLauncher);
 	    thisLevel.addTower(name, newTower);
 	}
+    }
+    
+    /**
+     * Class to make a wave to be used in a specified level
+     */
+    public void makeWave() {
+	
     }
 
     // TODO 
