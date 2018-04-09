@@ -42,11 +42,11 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
+	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
+	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
 	public static final String DEFAULT_NAME = "Default";
 
 	private final PropertiesReader myPropertiesReader;
-	private final String defaultTowerPath = "GenericTower.properties";
-	private final String defaultEnemyPath = "GenericEnemy.properties";
 	protected AuthoringResources myResources;
 	private Map<Integer, Level> myLevels;
 	private Map<String, Enemy> myEnemies;
@@ -221,36 +221,33 @@ public class AuthoringModel implements GameData {
 	 */
 	private Tower generateGenericTower() throws NumberFormatException, FileNotFoundException {
 		try {
-			Properties towerProperties = myPropertiesReader.loadProperties(defaultTowerPath);
-			Map<String, String> propertiesMap = myPropertiesReader.read(towerProperties);
-			double projectileSize = Double.parseDouble(propertiesMap.get("projectileSize"));
+			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
 			Projectile towerProjectile = new ProjectileBuilder().construct(
 					DEFAULT_NAME,  
-					new Image(new FileInputStream(propertiesMap.get("projectileImage")), 
+					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage")), 
 							projectileSize, projectileSize, false, false),
 					// TODO add projectile speed !!!!
-					Double.parseDouble(propertiesMap.get("projectileDamage")), 
-					Double.parseDouble(propertiesMap.get("projectileUpgradeCost")), 
-					Double.parseDouble(propertiesMap.get("projectileUpgradeValue")));
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")));
 			Launcher towerLauncher = new LauncherBuilder().construct(
-					Double.parseDouble(propertiesMap.get("launcherSpeed")),  
-					Double.parseDouble(propertiesMap.get("launcherUpgradeCost")), 
-					Double.parseDouble(propertiesMap.get("launcherValue")), 
-					Double.parseDouble(propertiesMap.get("launcherRange")), 
-					Double.parseDouble(propertiesMap.get("launcherUpgradeCost")), 
-					Double.parseDouble(propertiesMap.get("launcherValue")), towerProjectile);  
-			double towerSize = Double.parseDouble(propertiesMap.get("towerSize"));
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherRange")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), towerProjectile);  
+			double towerSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerSize"));
 			Tower newTower = new TowerBuilder().construct(
 					DEFAULT_NAME, 
-					new Image(new FileInputStream(propertiesMap.get("towerImage")), 
+					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage")), 
 							towerSize, towerSize, false, false), 
 					towerSize, 
-					Double.parseDouble(propertiesMap.get("towerHealth")), 
-					Double.parseDouble(propertiesMap.get("towerHealthUpgradeValue")), 
-					Double.parseDouble(propertiesMap.get("towerHealthUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealth")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeValue")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeCost")), 
 					towerLauncher);
 			return newTower;
-
 		} 
 		catch (MissingPropertiesException e) {
 			// TODO Auto-generated catch block
@@ -269,7 +266,7 @@ public class AuthoringModel implements GameData {
 	 */
 	private Enemy generateGenericEnemy() throws NumberFormatException, FileNotFoundException {
 		try {
-			Properties towerProperties = myPropertiesReader.loadProperties(defaultEnemyPath);
+			Properties towerProperties = myPropertiesReader.loadProperties(DEFAULT_ENEMY_FILEPATH);
 			Map<String, String> propertiesMap = myPropertiesReader.read(towerProperties);
 			double enemySize = Double.parseDouble(propertiesMap.get("enemySize"));
 			Enemy newEnemy = new EnemyBuilder().construct(
