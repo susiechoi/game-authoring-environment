@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	
-	private boolean myIsNewObject; 
 	private TextField myNameField;
 	private ComboBox<String> myImageDropdown;
 	private ImageView myImageDisplay; 
@@ -55,7 +54,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(goToProjectileLauncherButton);
 		goToProjectileLauncherButton.setOnAction(e -> {
 		    getView().getScene().setRoot(new HBox());
-		    if(myIsNewObject) {
+		    if(getIsNewObject()) {
 			getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText()));
 		    }
 		    else {
@@ -67,7 +66,7 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			try {
-				getView().makeTower(myIsNewObject, myNameField.getText(), myImageDisplay.getImage(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage.getImage(), myProjectileDamage, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
+				getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDisplay.getImage(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage.getImage(), myProjectileDamage, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
 			} catch (NoDuplicateNamesException e1) {
 				getView().loadErrorScreen("NoDuplicateNames");
 			}
@@ -86,6 +85,8 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	protected void populateFieldsWithData() {
 		myNameField.setText(getMySelectedObjectName());
+		
+		setEditableOrNot(myNameField, getIsNewObject());
 
 		setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
 
@@ -133,10 +134,6 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myTowerHealthUpgradeValueSlider = towerHealthUpgradeValueSlider; 
 		HBox towerHealthUpgradeValue = getUIFactory().setupSliderWithValue("TowerHealthUpgradeValueSlider", towerHealthUpgradeValueSlider, getErrorCheckedPrompt("TowerHealthUpgradeValue"));
 		vb.getChildren().add(towerHealthUpgradeValue);
-	}
-	
-	protected void setIsNewObject(boolean isNewObject) {
-		myIsNewObject = isNewObject; 
 	}
 	
 	protected void setLauncherProjectileValues(ImageView projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
