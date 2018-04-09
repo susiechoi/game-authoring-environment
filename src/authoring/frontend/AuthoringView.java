@@ -51,7 +51,7 @@ public class AuthoringView extends View {
     }
     
     public void loadInitialScreen() {
-    	myStageManager.switchScreen((new StartScreen(this)).getScreen());
+    	myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
     }
     
     @Override
