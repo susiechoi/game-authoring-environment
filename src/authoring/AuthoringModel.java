@@ -56,13 +56,13 @@ public class AuthoringModel implements GameData {
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
 		myEnemies = new HashMap<String, Enemy>();
+		myPropertiesReader = new PropertiesReader();
 		try {
 			myDefaultTower = generateGenericTower();
 			myDefaultEnemy = generateGenericEnemy();
 		} catch (NumberFormatException | FileNotFoundException e) {
 			throw new MissingPropertiesException(DEFAULT_NAME);
 		}
-		myPropertiesReader = new PropertiesReader();
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class AuthoringModel implements GameData {
 		}
 		return currentLevel;
 	}
-	
+
 	/**
 	 * Method through which information can be sent to instantiate or edit a path object
 	 * Wraps constructor in case of new object creation
@@ -266,19 +266,17 @@ public class AuthoringModel implements GameData {
 	 */
 	private Enemy generateGenericEnemy() throws NumberFormatException, FileNotFoundException {
 		try {
-			Properties towerProperties = myPropertiesReader.loadProperties(DEFAULT_ENEMY_FILEPATH);
-			Map<String, String> propertiesMap = myPropertiesReader.read(towerProperties);
-			double enemySize = Double.parseDouble(propertiesMap.get("enemySize"));
+			double enemySize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemySize"));
 			Enemy newEnemy = new EnemyBuilder().construct(
 					DEFAULT_NAME, 
-					new Image(new FileInputStream(propertiesMap.get("enemyImage")), 
+					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage")), 
 							enemySize, enemySize, false, false), 
-					Double.parseDouble(propertiesMap.get("enemySpeed")), 
-					Double.parseDouble(propertiesMap.get("enemyHealth")), 
-					Double.parseDouble(propertiesMap.get("enemyHealthImpact")), 
-					Double.parseDouble(propertiesMap.get("enemyKillReward")), 
-					Double.parseDouble(propertiesMap.get("enemyKillUpgradeCost")), 
-					Double.parseDouble(propertiesMap.get("enemyKillUpgradeValue")));
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemySpeed")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealth")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealthImpact")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillReward")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillUpgradeValue")));
 			return newEnemy;
 
 		} catch (MissingPropertiesException e) {
