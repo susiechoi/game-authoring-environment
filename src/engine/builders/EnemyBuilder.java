@@ -17,7 +17,7 @@ public class EnemyBuilder {
     public Enemy construct(String name, Image image, double speed, double initialHealth, double healthImpact,
 	    double killReward, double killUpgradeCost, double killUpgradeValue) {
 	//TODO pass path object
-	Enemy newEnemy = new Enemy(image, new HealthProperty(0, initialHealth, 0), new DamageProperty(0 , 0 , healthImpact), new ValueProperty(killReward), null);
+	Enemy newEnemy = new Enemy(name, image, new HealthProperty(0, initialHealth, 0), new DamageProperty(0 , 0 , healthImpact), new ValueProperty(killReward), null);
 	return newEnemy;
     }
 }

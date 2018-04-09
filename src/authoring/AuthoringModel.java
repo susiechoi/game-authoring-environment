@@ -1,13 +1,3 @@
-
-
-package authoring;
-
-import java.util.List;
-
-import data.GameData;
-import engine.level.Level;
-import engine.path.Path;
-
 /**
  * 
  * @author susiechoi 
