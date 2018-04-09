@@ -31,14 +31,32 @@ public class Enemy extends Sprite{
     private Path myPath;
     private double mySpeed;
 
+<<<<<<< HEAD
 
     public Enemy(String name, Image image, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
 	super(name, image);
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
+=======
+    public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
+	super("", myImage);
+	myIntersecter = new Intersecter(this.getImage()); 
+>>>>>>> c8b0be69e63079994db32222c08f775f6194e433
 	myHealth = health;
 	myDamage = damage;
 	myValue = value;
 	myPath = path;
+    }
+    
+    /**
+     * Copy constructor
+     */
+    public Enemy(Enemy copiedEnemy) {
+    	super("", copiedEnemy.getImage().getImage());
+    	myIntersecter = copiedEnemy.getIntersecter(); 
+    	myHealth = copiedEnemy.getHealth(); 
+    	myDamage = copiedEnemy.getDamage();
+    	myValue = copiedEnemy.getValue();
+    	myPath = copiedEnemy.getPath(); 
     }
 
     /**
@@ -64,11 +82,21 @@ public class Enemy extends Sprite{
     /**
      * Handles updating the enemy position to follow the path
      */
+    public void followPath() {
+	// TODO Auto-generated method stub
+    }
+
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);
+<<<<<<< HEAD
 	this.getImageView().setX(newPosition.getX());
 	this.getImageView().setY(newPosition.getY());
+=======
+	this.getImage().setX(newPosition.getX());
+	this.getImage().setY(newPosition.getY());
+
+>>>>>>> c8b0be69e63079994db32222c08f775f6194e433
     }
 
     /**
@@ -79,4 +107,25 @@ public class Enemy extends Sprite{
     public Double damage() {
 	return myDamage.getProperty();
     }
+    
+    private IIntersecter getIntersecter() {
+    	return myIntersecter; 
+    }
+    
+    private HealthProperty getHealth() {
+    	return myHealth; 
+    }
+    
+    private DamageProperty getDamage() {
+    	return myDamage; 
+    }
+    
+    private ValueProperty getValue() {
+    	return myValue; 
+    }
+    
+    private Path getPath() {
+    	return myPath; 
+    } 
+    
 }

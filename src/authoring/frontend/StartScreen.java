@@ -30,11 +30,13 @@ public class StartScreen extends AuthoringScreen {
 	String gameNamePrompt = getErrorCheckedPrompt("GameEditSelector");
 	String prompt = new String();
 	dummyGameNames.add(gameNamePrompt);
-	dummyGameNames.add("Vanilla");
-	dummyGameNames.add("Plants vs. Zombies");
+	dummyGameNames.add("Dummy Game");
 	Button newGameButton = new Button();
 	String newGameButtonPrompt = getErrorCheckedPrompt("NewGameButtonLabel");
 	newGameButton = getUIFactory().makeTextButton("editbutton", newGameButtonPrompt);
+	newGameButton.setOnAction(e -> {
+		getView().goForwardFrom(this.getClass().getSimpleName()+"New");
+	});
 	Button editButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel"));
 	ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, prompt);

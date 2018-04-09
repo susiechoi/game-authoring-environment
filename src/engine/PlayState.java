@@ -62,7 +62,7 @@ public class PlayState implements GameData {
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers()); //maybe change so that it adds on to the List and doesn't overwrite old towers
-	myEnemyManager.setEnemies(currentLevel.getEnemies());
+//	myEnemyManager.setEnemies(currentLevel.getEnemies());
     }
 
     public void restartLevel() {

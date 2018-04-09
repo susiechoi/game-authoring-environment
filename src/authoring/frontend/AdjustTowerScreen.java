@@ -28,10 +28,11 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private Slider myTowerHealthUpgradeCostSlider;
 	private Slider myTowerHealthUpgradeValueSlider;
 	
-	private ImageView myProjectileImage;
+	private ComboBox<String> myProjectileImage;
 	private double myProjectileDamage;
 	private double myProjectileUpgradeCost;
 	private double myProjectileUpgradeValue;
+	private double myProjectileSpeed; 
 	private double myLauncherUpgradeCost;
 	private double myLauncherValue;
 	private double myLauncherUpgradeValue;
@@ -66,14 +67,14 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			try {
-				getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDisplay.getImage(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage.getImage(), myProjectileDamage, myProjectileUpgradeCost, myProjectileUpgradeValue, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
+				getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage.getValue(), myProjectileDamage, myProjectileUpgradeCost, myProjectileUpgradeValue, myProjectileSpeed, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
 			} catch (NoDuplicateNamesException e1) {
 				getView().loadErrorScreen("NoDuplicateNames");
 			}
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
 				
 		ScrollPane sp = new ScrollPane(vb);
@@ -137,12 +138,13 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(towerHealthUpgradeValue);
 	}
 	
-	protected void setLauncherProjectileValues(ImageView projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
+	protected void setLauncherProjectileValues(ComboBox<String> projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed, 
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
 		myProjectileImage = projectileImage;
 		myProjectileDamage = projectileDamage; 
 		myProjectileUpgradeCost = projectileUpgradeCost;
 		myProjectileUpgradeValue = projectileUpgradeValue;
+		myProjectileSpeed = projectileSpeed; 
 		myLauncherValue = launcherValue;
 		myLauncherUpgradeCost = launcherUpgradeCost; 
 		myLauncherUpgradeValue = launcherUpgradeValue;

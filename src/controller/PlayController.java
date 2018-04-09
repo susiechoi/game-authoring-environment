@@ -32,7 +32,7 @@ public class PlayController {
      * @param stage: Stage to mount Game Player on
      */
     public PlayController(String language, StageManager stageManager) {
-	myScreenManager = new ScreenManager(stageManager, language);
+//	myScreenManager = new ScreenManager(stageManager, language);
 	myGameEngine = new GameEngine(myMediator); //this is passing an object that's currently null -bma
 	myReader = new AuthoringModelReader();
 	myMediator = new Mediator(myScreenManager, myGameEngine);

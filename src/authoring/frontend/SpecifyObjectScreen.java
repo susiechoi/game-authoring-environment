@@ -5,8 +5,8 @@
 
 package authoring.frontend;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,12 +21,10 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
 
-	protected SpecifyObjectScreen(AuthoringView view) {
+	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
-		myObjectOptions = new ArrayList<String>(); // TODO read in objects
-		myObjectOptions.add("Dummy Object 1");
-		myObjectOptions.add("Dummy Object 2");
-		myObjectOptions.add("Dummy Object 3");
+		myObjectDescription = objectDescription;
+		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
 	}
 
 	/**
@@ -45,7 +43,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
 		vb.getChildren().add(newObjectButton);

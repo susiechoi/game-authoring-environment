@@ -44,7 +44,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 				shootingSprite.shoot();
 			}
 			for (Projectile projectile: shootingSprite.getProjectiles()) {
-				projectile.move();
+//				projectile.move();
 			}
 		}
 	}

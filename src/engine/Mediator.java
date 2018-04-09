@@ -9,7 +9,6 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
-
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,7 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import xml.AuthoringModelReader;
 import xml.PlayLoader;
-
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 

@@ -3,15 +3,13 @@
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
- *
+ * 
  */
 
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
