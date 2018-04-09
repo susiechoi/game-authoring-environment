@@ -1,6 +1,7 @@
 package authoring.frontend;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,6 @@ import javafx.scene.layout.StackPane;
 
 /* 
  * Right click to be able to get specialty paths
- * filechoosers for loading in new images, get background image from elsewhere
  * Back to main button, if apply has not been clicked then prompt (changes will not be saved)
  * 
  * Need a way to get style info for defaults
@@ -41,6 +41,7 @@ public class CreatePathGrid {
 	private int rowIndex;
 	private GridPane grid;
 	private SelectionModel model;
+	//have these update with change images
 	private ImageView startImage = new ImageView(new Image("file:images/start.png"));
 	private ImageView endImage = new ImageView(new Image("file:images/end.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
@@ -68,10 +69,14 @@ public class CreatePathGrid {
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
 
-		grid.setStyle("-fx-background-image: url('file:images/plaingreen.png')"); 
+		grid.setStyle("-fx-background-image: url('file:images/white.png')"); 
 		populateGrid();
 
 		return grid;
+	}
+	
+	public void setBackgroundmage(File file) {
+		grid.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
 	}
 	
 	//REFACTOR

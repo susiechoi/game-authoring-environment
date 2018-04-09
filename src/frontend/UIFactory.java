@@ -25,7 +25,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -289,5 +288,4 @@ public class UIFactory {
 		Double value = Double.parseDouble(valueAsString);
 		slider.setValue(value);
 	}
-
 }

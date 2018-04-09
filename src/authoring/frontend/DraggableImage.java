@@ -69,4 +69,8 @@ public class DraggableImage {
 	public ImageView getPathImage() {
 		return pathImage;
 	}
+	
+	public void setNewImage(Image image) {
+		pathImage.setImage(image);
+	}
 }
