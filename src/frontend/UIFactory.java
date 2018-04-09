@@ -287,6 +287,14 @@ public class UIFactory {
 	Button applyButton = makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 	return applyButton;
     }
+    
+    public HBox setupBackAndApplyButton(Button back, Button apply) {
+		HBox backAndApplyButton = new HBox(); 
+		backAndApplyButton.getChildren().add(back);
+		backAndApplyButton.getChildren().add(apply);
+		return backAndApplyButton; 
+	}
+    
     /**
      * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
      * @param combobox - combobox to be set to a value

@@ -93,7 +93,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
 		});
 		
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
 
 		ScrollPane sp = new ScrollPane(vb);

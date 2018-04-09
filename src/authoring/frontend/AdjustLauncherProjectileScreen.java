@@ -54,7 +54,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		applyButton.setOnAction(e -> {
 			myTowerScreen.setLauncherProjectileValues(myProjectileImage, myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myProjectileSpeedSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		});
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
 				
 		ScrollPane sp = new ScrollPane(vb);

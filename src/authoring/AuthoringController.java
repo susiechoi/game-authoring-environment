@@ -97,5 +97,17 @@ public class AuthoringController {
 
     }
 
+	public void addNewLevel() {
+		myAuthoringModel.addNewLevel(); 
+	}
+	
+	public List<String> getLevels() {
+		return myAuthoringModel.getLevels(); 
+	}
+
+	public int autogenerateLevel() {
+		return myAuthoringModel.autogenerateLevel(); 
+	}
+
 }
 

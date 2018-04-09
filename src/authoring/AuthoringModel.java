@@ -53,6 +53,7 @@ public class AuthoringModel implements GameData {
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
+		myLevels.put(1, new Level(1));
 		myPropertiesReader = new PropertiesReader();
 		try {
 			myDefaultTower = generateGenericTower();
@@ -283,4 +284,25 @@ public class AuthoringModel implements GameData {
 		}
 		return null;
 	}
+
+	public void addNewLevel() {
+		int newLevelNumber = myLevels.size()+1; 
+		myLevels.put(newLevelNumber, new Level(newLevelNumber));
+	}
+	
+	public List<String> getLevels() {
+		List<String> listToReturn = new ArrayList<String>(); 
+		for (Integer level : myLevels.keySet()) {
+			listToReturn.add(Integer.toString(level));
+		}
+		return listToReturn; 
+	}
+
+	public int autogenerateLevel() {
+		int newLevelNumber = myLevels.size()+1;
+		Level copiedLevel = myLevels.get(myLevels.size());
+		myLevels.put(newLevelNumber, new Level(copiedLevel));
+		return newLevelNumber; 
+	}
+	
 }
