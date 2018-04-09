@@ -25,6 +25,7 @@ public class Projectile extends Sprite {
 	public Projectile(String name, DamageProperty damage, Image image, double speed) {
 	    	super(name, image);
 		myDamage = damage;
+		mySpeed = speed;
 	}
 	
 	/**
