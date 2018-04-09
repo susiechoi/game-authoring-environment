@@ -1,5 +1,6 @@
 package engine.sprites.enemies;
 
+import engine.path.Path;
 import engine.physics.IIntersecter;
 import engine.physics.Intersecter;
 import engine.sprites.Sprite;
@@ -7,6 +8,7 @@ import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.projectiles.Projectile;
+import java.awt.geom.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
@@ -15,6 +17,8 @@ import javafx.scene.image.Image;
  * intersectable methods.
  * 
  * @author ryanpond
+ * @author Katherine Van Dyk
+ * @date 4/8/18
  *
  */
 public class Enemy extends Sprite{
@@ -23,13 +27,16 @@ public class Enemy extends Sprite{
     private DamageProperty myDamage;
     private ValueProperty myValue;
     private IIntersecter myIntersecter;
+    private Path myPath;
+    private double mySpeed;
 
-    public Enemy(String name, Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value) {
-	super(name, myImage);
+    public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
+	super("", myImage);
 	myIntersecter = new Intersecter(this.getImage()); 
 	myHealth = health;
 	myDamage = damage;
 	myValue = value;
+	myPath = path;
     }
 
     /**
@@ -57,6 +64,13 @@ public class Enemy extends Sprite{
      */
     public void followPath() {
 	// TODO Auto-generated method stub
+    }
+
+    public void move(double elapsedTime) {
+	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
+	myPath.nextPosition(elapsedTime, mySpeed);
+	this.getImage().setX(newPosition.getX());
+	this.getImage().setY(newPosition.getY());
 
     }
 

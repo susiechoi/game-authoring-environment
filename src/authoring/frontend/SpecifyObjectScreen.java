@@ -33,7 +33,8 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	 * Makes the screen with the option of creating a new object OR editing an existing one 
 	 * @return Parent/root to attach to Scene that will be set on the stage
 	 */
-	public Parent makeScreenWithoutStyling() {
+	@Override
+	protected Parent populateScreenWithFields() {
 		VBox vb = new VBox(); 
 		Text orText = new Text("or"); 
 
@@ -53,6 +54,10 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(backAndApplyButton);
 
 		return vb;
+	}
+	@Override
+	protected void populateFieldsWithData() {
+	    //null method, since this type of screen only has buttons TODO: make this not an abstract method??
 	}
 
 	/**

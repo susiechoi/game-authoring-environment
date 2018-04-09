@@ -3,7 +3,7 @@
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
- *
+ * 
  */
 
 package authoring.frontend;
@@ -12,10 +12,11 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
-	public static final String DEFAULT_CONSTANTS = "frontend/Constants.properties";
+	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 	
 	private String mySelectedObjectName; 
 	
@@ -74,24 +75,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return myIsNewObject; 
 	}
 	
-	/**
-	 * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
-	 * @param combobox - combobox to be set to a value
-	 * @param selectionValue - the value that the combobox should be set to 
-	 */
-	protected void setComboBoxToValue(ComboBox<String> combobox, String selectionValue) {
-		int dropdownIdx = combobox.getItems().indexOf(selectionValue); 
-		combobox.getSelectionModel().select(dropdownIdx);
-	}
+
 	
-	/**
-	 * Method used in appropriately-setting the slider when populating data fields with the existing object values
-	 * @param slider - slider to be set to a value
-	 * @param valueAsString - the value that the slider should be set to 
-	 */
-	protected void setSliderToValue(Slider slider, String valueAsString) {
-		Double value = Double.parseDouble(valueAsString);
-		slider.setValue(value);
+	protected void setEditableOrNot(TextField name, boolean isNewObject) {
+		if (isNewObject) name.setEditable(false);
 	}
 	
 	/** 

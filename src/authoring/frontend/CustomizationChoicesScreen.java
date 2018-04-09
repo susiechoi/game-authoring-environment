@@ -5,6 +5,7 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -12,7 +13,7 @@ import javafx.scene.text.Text;
 public class CustomizationChoicesScreen extends AuthoringScreen {
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
     private String myGameName;
-
+    
     protected CustomizationChoicesScreen(AuthoringView view) {
 	//TODO: figure out how to not get gamename!!!
 	super(view);
@@ -55,9 +56,10 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	catch(MissingPropertiesException e){
 	    getView().loadErrorScreen("NoFile");
 	}
+	ImageView imageDisplay = new ImageView(); 
 	try {
 	songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song"), getErrorCheckedPrompt("NewSong"),
-		getErrorCheckedPrompt("NewSongName"), songDropdown);
+		getErrorCheckedPrompt("NewSongName"), songDropdown, imageDisplay);
 	}
 	catch(MissingPropertiesException e) {
 	    getView().loadErrorScreen("NoFile");

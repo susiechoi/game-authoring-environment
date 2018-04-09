@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -36,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class UIFactory {
 
@@ -94,9 +97,6 @@ public class UIFactory {
 		newDropdown.setId(id);
 		return newDropdown; 
 	}
-
-
-
 
 	public Slider setupSlider(String id, int sliderMax) {
 		Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
@@ -207,10 +207,9 @@ public class UIFactory {
 	}
 
 	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
-			String loadImagePrompt, String newImagePrompt, String newImageNamePrompt, ComboBox<String> dropdown) throws MissingPropertiesException {
+			String loadImagePrompt, String newImagePrompt, String newImageNamePrompt, ComboBox<String> dropdown, ImageView imageDisplay) throws MissingPropertiesException {
 		Map<String, Image> enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
 		ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
-		ImageView imageDisplay = new ImageView(); 
 		imageDisplay.setImage(images.get(0));
 		VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 		dropdown.setOnAction(e ->
@@ -259,6 +258,7 @@ public class UIFactory {
 		});
 	}
 	
+
 	public Button setupBackButton(EventHandler<ActionEvent> action) {
 		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
 		Button backButton = makeImageButton("backButton",backbuttonImage);
@@ -270,5 +270,25 @@ public class UIFactory {
 		Button applyButton = makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 		return applyButton;
 	}
+	/**
+	 * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
+	 * @param combobox - combobox to be set to a value
+	 * @param selectionValue - the value that the combobox should be set to 
+	 */
+	public void setComboBoxToValue(ComboBox<String> combobox, String selectionValue) {
+		int dropdownIdx = combobox.getItems().indexOf(selectionValue); 
+		combobox.getSelectionModel().select(dropdownIdx);
+	}
+	
+	/**
+	 * Method used in appropriately-setting the slider when populating data fields with the existing object values
+	 * @param slider - slider to be set to a value
+	 * @param valueAsString - the value that the slider should be set to 
+	 */
+	public void setSliderToValue(Slider slider, String valueAsString) {
+		Double value = Double.parseDouble(valueAsString);
+		slider.setValue(value);
+	}
+	
 
 }

@@ -14,6 +14,8 @@ import java.util.List;
 
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import authoring.frontend.exceptions.NoDuplicateNamesException;
+import frontend.ErrorReader;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -21,14 +23,17 @@ import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class AuthoringView extends View {
 
-
     public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
+    public static final String DEFAULT_ERROR_FILEPATH_BEGINNING = "languages/";
+    public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
     public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
     private StageManager myStageManager; 
     private PromptReader myPromptReader;
+    private ErrorReader myErrorReader;
     private PropertiesReader myPropertiesReader;
     private AuthoringController myController; 
     private String myCurrentCSS;
@@ -37,17 +42,20 @@ public class AuthoringView extends View {
     public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 	super(stageManager);
 	myPromptReader = new PromptReader(languageIn, this);
+	myErrorReader = new ErrorReader(languageIn, this);
 	myPropertiesReader = new PropertiesReader();
 	myStageManager = stageManager; 
 	myController = controller; 
 	myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
 	myStageManager.switchScreen((new StartScreen(this)).getScreen());
+	
+    }
+    @Override
+    public void loadErrorScreen(String error) {
+	loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
     }
     protected void loadScreen(Screen screen) {
 	myStageManager.switchScreen(screen.getScreen());
-    }
-    protected void loadScene(Scene scene) { //TODO: refactor so no duplication?
-	myStageManager.switchScene(scene);
     }
     protected String getCurrentCSS() {
 	return myCurrentCSS;
@@ -63,8 +71,10 @@ public class AuthoringView extends View {
 	try {
 	    String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 	    Class<?> clazz = Class.forName(nextScreenClass);
+	    System.out.println("next class: " + nextScreenClass);
 	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 	    if(constructor.getParameterTypes().length == 2) {
+		System.out.println("makin it to the 2 parameter");
 		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 		myStageManager.switchScreen(nextScreen.getScreen());
 	    }
@@ -93,20 +103,21 @@ public class AuthoringView extends View {
 
     /**
      * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
+     * @throws NoDuplicateNamesException 
      */
-    public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-	    String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
-	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
+    public void makeTower(boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
+	    Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
 	myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-		projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+		projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
 		launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
     }
 
     /**
      * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
      */
-    public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-	myController.makeEnemy(myLevel, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+    public void makeEnemy(boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
     }
 
     //TODO 
@@ -153,7 +164,7 @@ public class AuthoringView extends View {
 	return myStageManager.getScene();
     }
 
-    protected String getErrorCheckedPrompt(String prompt) {
+    public String getErrorCheckedPrompt(String prompt) {
 	return myPromptReader.resourceDisplayText(prompt);
     }
 

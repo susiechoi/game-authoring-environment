@@ -18,10 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import data.GameData;
 import engine.builders.LauncherBuilder;
+import engine.builders.EnemyBuilder;
 import engine.builders.ProjectileBuilder;
 import engine.builders.TowerBuilder;
 import engine.level.Level;
@@ -53,20 +54,19 @@ class AuthoringModel {
 	myDefaultEnemy = generateGenericEnemy();
     }
 
-
     /**
      * Method through which information can be sent to instantiate or edit an enemy object
      * Wraps constructor in case of new object creation
-     * @throws NoDuplicateNamesException 
      */
-    public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double healthImpact,
-	    double killReward, double killUpgradeCost, double killUpgradeValue) throws NoDuplicateNamesException {
-	if (myEnemies.containsKey(name)) {
-	    throw new NoDuplicateNamesException(name);
+    public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact,
+	    double killReward, double killUpgradeCost, double killUpgradeValue) {
+	if (newObject) {
+	    Enemy newEnemy = new EnemyBuilder().construct(name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+	    myEnemies.put(name, newEnemy);
 	}
 	else {
-	    // make and add enemy
-
+	    // find the enemy in the enemies map with the name parameter
+	    // edit its values to conform to the parameterized ones 
 	}
     }
 
@@ -149,22 +149,33 @@ class AuthoringModel {
      * @param name - name of object being manipulated
      * @param attribute - attribute/field of object being manipulated
      * @return requested attribute in String form: used in populating textfield, finding correct dropdown option, etc.
+     * @throws SecurityException 
+     * @throws NoSuchFieldException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
      */
-    public String getObjectAttribute(int level, String objectType, String name, String attribute) {
+    public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 	Field field; 
 	Object fieldValue = null; 
 	if (objectType.equals("Enemy")) {
-	    //if (myEnemies.containsKey(name)) {
-	    //Enemy enemy = myEnemies.get(name);
-	    // field = enemy.getField(attribute);
-	    // fieldValue = field.get(enemyObject)
-	    //}
+	    if (myEnemies.containsKey(name)) {
+		Enemy enemy = myEnemies.get(name);
+		Class enemyClass = enemy.getClass(); 
+		field = enemyClass.getField(attribute);
+		fieldValue = field.get(enemy);
+	    }
+	    else {
+
+	    }
 	}
+	// TODO: fix!
 	else if (objectType.equals("Tower")) {
-	    //if (myTowers.containsKey(name)) {
-	    // field = tower.getField(attribute) 
-	    // fieldValue = field.get(towerObject)
-	    //}
+	    if (myTowers.containsKey(name)) {
+		Tower tower = myTowers.get(name);
+		Class towerClass = tower.getClass(); 
+		field = towerClass.getField(attribute);
+		fieldValue = field.get(tower);
+	    }
 	}
 	return (String) fieldValue; 
     }
@@ -177,13 +188,14 @@ class AuthoringModel {
      */
     private Tower generateGenericTower() throws NumberFormatException, FileNotFoundException {
 	try {
-	    Properties towerProperties = READER.loadProperties(defaultEnemyPath);
+	    Properties towerProperties = READER.loadProperties(defaultTowerPath);
 	    Map<String, String> propertiesMap = READER.read(towerProperties);
 	    double projectileSize = Double.parseDouble(propertiesMap.get("projectileSize"));
 	    Projectile towerProjectile = new ProjectileBuilder().construct(
 		    DEFAULT,  
 		    new Image(new FileInputStream(propertiesMap.get("projectileImage")), 
 			    projectileSize, projectileSize, false, false),
+		    // TODO add projectile speed !!!!
 		    Double.parseDouble(propertiesMap.get("projectileDamage")), 
 		    Double.parseDouble(propertiesMap.get("projectileUpgradeCost")), 
 		    Double.parseDouble(propertiesMap.get("projectileUpgradeValue")));
@@ -224,12 +236,25 @@ class AuthoringModel {
      */
     private Enemy generateGenericEnemy() throws NumberFormatException, FileNotFoundException {
 	try {
-	    
+	    Properties towerProperties = READER.loadProperties(defaultEnemyPath);
+	    Map<String, String> propertiesMap = READER.read(towerProperties);
+	    double enemySize = Double.parseDouble(propertiesMap.get("enemySize"));
+	    Enemy newEnemy = new EnemyBuilder().construct(
+		    DEFAULT, 
+		    new Image(new FileInputStream(propertiesMap.get("enemyImage")), 
+			    enemySize, enemySize, false, false), 
+		    Double.parseDouble(propertiesMap.get("enemySpeed")), 
+		    Double.parseDouble(propertiesMap.get("enemyHealth")), 
+		    Double.parseDouble(propertiesMap.get("enemyHealthImpact")), 
+		    Double.parseDouble(propertiesMap.get("enemyKillReward")), 
+		    Double.parseDouble(propertiesMap.get("enemyKillUpgradeCost")), 
+		    Double.parseDouble(propertiesMap.get("enemyKillUpgradeValue")));
+	    return newEnemy;
 
 	} catch (MissingPropertiesException e) {
 	    // TODO Auto-generated catch block
 	    System.out.println("Could not load GenericTower object!");
 	}
+	return null;
     }
-
 }
