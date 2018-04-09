@@ -112,19 +112,18 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		
 		setEditableOrNot(myNameField, getIsNewObject());
 		
-		setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
+		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
 		
-		setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
+		getUIFactory().setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
 		
-		setSliderToValue(myInitialHealthSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myInitialHealth"));
-		
-		setSliderToValue(myHealthImpactSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
+		getUIFactory().setSliderToValue(myHealthImpactSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
 			
-		setSliderToValue(myValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
+		getUIFactory().setSliderToValue(myValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
 		
-		setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
+		getUIFactory().setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
 		
-		setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
+		getUIFactory().setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
 	}
+	
 
 }

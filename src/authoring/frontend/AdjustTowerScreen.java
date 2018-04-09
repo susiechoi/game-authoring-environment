@@ -18,7 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
+class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	
 	private TextField myNameField;
@@ -88,13 +88,14 @@ abstract class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		
 		setEditableOrNot(myNameField, getIsNewObject());
 
-		setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
 
-		setSliderToValue(myTowerHealthValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
+		getUIFactory().setSliderToValue(myTowerHealthValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
 
-		setSliderToValue(myTowerHealthUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
+		getUIFactory().setSliderToValue(myTowerHealthUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
 
-		setSliderToValue(myTowerHealthUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
+		getUIFactory().setSliderToValue(myTowerHealthUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
+
 	}
 	
 	private void makeTowerComponents(VBox vb) {
