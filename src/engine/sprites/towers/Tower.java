@@ -32,6 +32,7 @@ public class Tower extends ShootingSprites {
 		myLauncher = launcher;
 		myHealth = health;
 		myValue = value;
+		//TODO --> maybe health.getClass().getSimpleName() could be a field in each property class
 		propertyStats.put(health.getClass().getSimpleName(), health.getProperty());
 		propertyStats.put(value.getClass().getSimpleName(), value.getProperty());
 		propertyStats.put(this.getDamageProperty().getClass().getSimpleName(), this.getDamageProperty().getProperty());
@@ -58,6 +59,7 @@ public class Tower extends ShootingSprites {
 	 * Handles upgrading the health of a tower
 	 */
 	public double upgradeHealth(double balance) {
+		updateStatsMap(myHealth);
 		return myHealth.upgrade(balance);
 	}
 
@@ -65,6 +67,7 @@ public class Tower extends ShootingSprites {
 	 * Upgrades the rate of fire
 	 */
 	public double upgradeRateOfFire(double balance) {
+		updateStatsMap(myLauncher.getFireRateProperty());
 		return myLauncher.upgradeFireRate(balance);
 	}
 
@@ -81,14 +84,21 @@ public class Tower extends ShootingSprites {
 	public double upgrade(double balance) {
 		balance -= upgradeHealth(balance);
 		balance -= upgradeRateOfFire(balance);
-		return upgradeDamage(balance);
+		balance = upgradeDamage(balance);
+		updateStatsMap(this.getDamageProperty());
+		updateStatsMap(myValue);
+		return balance;
+	}
+	
+	public DamageProperty getDamageProperty() {
+		return myLauncher.getDamageProperty();
 	}
 
 	public Map<String, Double> getTowerStats(){
 		return propertyStats;
 	}
 	
-	public DamageProperty getDamageProperty() {
-		return myLauncher.getDamageProperty();
+	private void updateStatsMap(Property property) {
+		propertyStats.put(property.getClass().getSimpleName(), property.getProperty());
 	}
 }

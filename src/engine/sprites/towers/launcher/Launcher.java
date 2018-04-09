@@ -69,5 +69,11 @@ public class Launcher {
     public DamageProperty getDamageProperty() {
     	return myProjectile.getDamageProperty();
     }
+    public FireRateProperty getFireRateProperty() {
+    	return myFireRate;
+    }
+    public RangeProperty getRangeProperty() {
+    	return myRange;
+    }
 
 }
