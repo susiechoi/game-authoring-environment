@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import engine.builders.LauncherBuilder;
+import engine.builders.EnemyBuilder;
 import engine.builders.ProjectileBuilder;
 import engine.builders.TowerBuilder;
 import engine.sprites.enemies.Enemy;
@@ -43,7 +44,8 @@ class AuthoringModel {
 	public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact,
 			double killReward, double killUpgradeCost, double killUpgradeValue) {
 		if (newObject) {
-
+			Enemy newEnemy = new EnemyBuilder().construct(name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+			myEnemies.put(name, newEnemy);
 		}
 		else {
 			// find the enemy in the enemies map with the name parameter
