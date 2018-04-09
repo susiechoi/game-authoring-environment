@@ -1,9 +1,12 @@
 package authoring.frontend;
 
 
-import com.sun.tools.javac.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -41,25 +44,26 @@ public class CreatePathGrid {
 	private ImageView startImage = new ImageView(new Image("file:images/start.png"));
 	private ImageView endImage = new ImageView(new Image("file:images/end.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
-	private List<Integer> startRows;
-	private List<Integer> startCols;
+	private ArrayList<Integer> startRows;
+	private ArrayList<Integer> startCols;
 	private GridPane checkGrid;
 	private Label startLabel;
 	private Label endLabel;
 	private Label pathLabel;
-	private Label dummy;
+	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
 
 
 	protected GridPane makePathGrid() {
 		grid = new GridPane();
+		startCols = new ArrayList<Integer>();
+		startRows = new ArrayList<Integer>();
 
 		checkGrid = new GridPane();
 		checkGrid.setMaxSize(1000, 750);
 		setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
-		grid.setMaxSize(1000, 750); //only goes to 750
+		grid.setMaxSize(1000, 750); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
-		//		grid.setGridLinesVisible(true);
 
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
@@ -69,8 +73,10 @@ public class CreatePathGrid {
 
 		return grid;
 	}
-
+	
+	//REFACTOR
 	private void populateGrid() {
+		
 		for (int x = 0 ; x < grid.getColumnCount(); x++) {
 			for (int y = 0 ; y < grid.getRowCount(); y++) {
 				StackPane cell = new StackPane();
@@ -78,6 +84,7 @@ public class CreatePathGrid {
 				final int col = x;
 				final int row = y;
 
+				//This can be separate class (for drag over objects)
 				cell.setOnDragOver(new EventHandler <DragEvent>() {
 					public void handle(DragEvent event) {
 						if (event.getDragboard().hasImage()) {
@@ -96,18 +103,16 @@ public class CreatePathGrid {
 						boolean success = false;
 						if (db.hasImage()) {
 							DraggableImage path = new DraggableImage(db.getImage());
-							path.setDraggable(model);
+							path.setDraggable();
 							path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
-							//							cell.getChildren().add(path.getPathImage());
 							grid.add(path.getPathImage(), colIndex, rowIndex);
-
+							
 							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
-								System.out.println("here");
 								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
-								//								startCols.add(colIndex);
-								//								startRows.add(rowIndex);
+								startCols.add(colIndex);
+								startRows.add(rowIndex);
 							} else if (imageCompare(path.getPathImage().getImage(), endImage.getImage()) == true) {
 								endLabel = new Label("end");
 								checkGrid.add(endLabel, colIndex, rowIndex);
@@ -153,57 +158,35 @@ public class CreatePathGrid {
 	}
 
 	public boolean checkPathConnected(int row, int col) {
-	
-//		boolean done = false;
 		
-		System.out.println("row: " +row);
-		System.out.println("col: " +col);
-		System.out.println();
+		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount())
+			return false;
+		if ((getNode(checkGrid, col, row) == null))
+			return false;
+		if (getNode(checkGrid, col, row) == endLabel) 
+			return true;
 
-		if (getNode(checkGrid, col, row) == endLabel) {
-			System.out.println("TRUE");
+		removeNode(checkGrid, row, col);
+
+		if ((checkPathConnected(row, col + 1)) == true) {
+			addCoordinates(row, col+1);
 			return true;
 		}
-		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount()) {
-			return false;
+		if ((checkPathConnected(row + 1 , col)) == true) {
+			addCoordinates(row + 1, col);
+			return true;
 		}
-		if ((getNode(checkGrid, col, row) == null) || (getNode(checkGrid, col, row) == dummy)) {
-			return false;
-		}
-		
-		dummy = new Label("dummy");
-		removeNode(checkGrid, col, row);
-		checkGrid.add(dummy, col, row);
-		
-		if ((checkPathConnected(row, col + 1)) == true) {
-	    		System.out.println("HERE");
-	        return true;
-	    }
 		if ((checkPathConnected(row, col - 1)) == true) {
-	        return true;
-	    }
-	    if ((checkPathConnected(row + 1 , col)) == true) {
-	        return true;
-	    }
-	    if ((checkPathConnected(row - 1, col)) == true) {
-	        return true;
-	    }
-	    
-	    removeNode(checkGrid, col, row);
-		checkGrid.add(pathLabel, col, row);
-	      
-	    return false;
-
-//		if (!done && row < checkGrid.getRowCount() && getNode(checkGrid, col, row + 1) instanceof Label) {
-//			done = checkPathConnected(row + 1, col);
-//		} else if (!done && col < checkGrid.getColumnCount() && getNode(checkGrid, col + 1, row) instanceof Label) {
-//			done = checkPathConnected(row, col + 1);
-//		} else if (!done && row > 0 && getNode(checkGrid, col, row - 1) instanceof Label) {
-//			done = checkPathConnected(row - 1, col);
-//		} else if (!done && col > 0 && getNode(checkGrid, col - 1, row) instanceof Label) {
-//			done = checkPathConnected(row, col - 1);
-//		}
-
+			addCoordinates(row, col - 1);
+			return true;
+		}
+		if ((checkPathConnected(row - 1, col)) == true) {
+			addCoordinates(row - 1, col);
+			return true;
+		}
+		
+		System.out.println(pathCoords);
+		return false;
 	}
 
 	public Node getNode(GridPane gridPane, int col, int row) {
@@ -216,7 +199,7 @@ public class CreatePathGrid {
 		}
 		return result;
 	}
-	
+
 
 	public void removeNode(GridPane grid, int row, int col) {
 		for(Node node : grid.getChildren()) {
@@ -247,33 +230,25 @@ public class CreatePathGrid {
 		return true;
 	}
 
-	public boolean getCoords(int row, int col) {
-		//if there is a turn then return that coordinate
-		//traverse, if block does not have neighbor in same direction of traversal then return that coordinate
 
-
-		boolean done = false;
-
-		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount()) {
-			done = false;
+	public HashMap<Integer, ArrayList<Integer>> getStartingPosition() {
+		HashMap<Integer, ArrayList<Integer>> coordMap = new HashMap<Integer, ArrayList<Integer>>();
+		ArrayList<Integer> coords = new ArrayList<Integer>();
+		for (int i=0; i<startCols.size(); i++) {
+			coords.clear();
+			coords.add(startRows.get(i));
+			coords.add(startCols.get(i));
+			coordMap.put(i, coords);
 		}
-
-		if (getNode(checkGrid, col, row) == endLabel) {
-			done = true;
-		}
-
-		if (!done && row < checkGrid.getRowCount() && getNode(checkGrid, col, row + 1) instanceof Label) {
-			done = checkPathConnected(row + 1, col);
-		} else if (!done && col < checkGrid.getColumnCount() && getNode(checkGrid, col + 1, row) instanceof Label) {
-			done = checkPathConnected(row, col + 1);
-		} else if (!done && row > 0 && getNode(checkGrid, col, row - 1) instanceof Label) {
-			done = checkPathConnected(row - 1, col);
-		} else if (!done && col > 0 && getNode(checkGrid, col - 1, row) instanceof Label) {
-			done = checkPathConnected(row, col - 1);
-		}
-
-		System.out.println(done);
-		return done;
+		return coordMap;
 	}
-
+	
+	public void addCoordinates(int row, int col) {
+		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
+		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
+		Point2D point = new Point2D(x, y);
+		pathCoords.add(point);
+		System.out.println(pathCoords);
+	}
 }
+

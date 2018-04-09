@@ -47,8 +47,7 @@ public class DraggableImage {
 		return pathImage;
 	}
 
-	public void setDraggable(SelectionModel model) {
-
+	public void setDraggable() {
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);

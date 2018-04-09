@@ -1,11 +1,13 @@
 package authoring.frontend;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -65,7 +67,7 @@ public class CreatePathScreen extends AdjustScreen {
 			public void handle(ActionEvent event) {
 				if (grid.getPathSize() > 30) {
 					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - 10);
-					System.out.println(grid.getGrid().getChildren());
+				
 				}
 			}
 		});
@@ -77,8 +79,14 @@ public class CreatePathScreen extends AdjustScreen {
 		applyButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				grid.checkPathConnected(0, 0);
-				
+				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
+				for (int key: coordMap.keySet()) {
+					if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1)) == true) {
+						System.out.println("TRUE");
+					} else {
+						System.out.println("FALSE");
+					}
+				}
 			}
 		});
 	}
