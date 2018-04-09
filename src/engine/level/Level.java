@@ -29,11 +29,25 @@ public class Level {
 	private Map<String, Enemy> myEnemies;
 
 	public Level(int number) {
+		myNumber = number;
 		myTowers = new HashMap<String, Tower>();
 		myEnemies = new HashMap<String, Enemy>();
 		myWaves = new ArrayList<Wave>();
-		myNumber = number;
-	}    
+	} 
+	
+	/**
+	 * Copy constructor
+	 * Useful when autogenerating a new level from a prior one
+	 * @param copiedLevel - the level's parameters to be copied 
+	 * - only difference from copiedLevel is that the level number is incremented
+	 */
+	public Level(Level copiedLevel) {
+		myNumber = copiedLevel.getNumber() + 1; 
+		myWaves = copiedLevel.getWaves(); 
+		myPath = copiedLevel.getPath(); 
+		myTowers = copiedLevel.getTowers();
+		myEnemies = copiedLevel.getEnemies();
+	}
 
 	/**
 	 * 
@@ -154,7 +168,26 @@ public class Level {
 
 	public Enemy getNewEnemy(int time, EnemyManager em) {
 		return null;
-
+	}
+	
+	protected int getNumber() {
+		return myNumber; 
+	}
+	
+	protected List<Wave> getWaves() {
+		return myWaves; 
+	}
+	
+	protected Path getPath() {
+		return myPath; 
+	}
+	
+	protected Map<String, Tower> getTowers() {
+		return myTowers;
+	}
+	
+	protected Map<String, Enemy> getEnemies() {
+		return myEnemies; 
 	}
 
 }

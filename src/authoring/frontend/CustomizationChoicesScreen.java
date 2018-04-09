@@ -39,14 +39,13 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 	Button mainButton = setupBackButton();
 	String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
-	VBox newLevelVBox = new VBox(); 
 	vbox.getChildren().add(demoButton);
 	vbox.getChildren().add(saveButton);
 	hbox.getChildren().add(newLevelButton);
-	hbox.getChildren().add(newLevelVBox);
 	
 	List<String> currentLevels = getView().getLevels(); 
 	if (currentLevels.size() > 0) {
+		VBox newLevelVBox = new VBox(); 
 		Button editButton = getUIFactory().makeTextButton("editbutton", levelPrompt);
 		ComboBox<String> levelChooser = getUIFactory().makeTextDropdownSelectAction("", currentLevels, e -> {
 		    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
@@ -55,8 +54,15 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		    getView().setLevel(Integer.parseInt(levelChooser.getValue()));
 		    getView().goForwardFrom(this.getClass().getSimpleName()+"EditExistingLevel");
 		    });
+		Button autogenerateButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("AutogenerateLevel"));
+		autogenerateButton.setOnAction(e -> {
+			getView().autogenerateLevel(); 
+		    getView().goForwardFrom(this.getClass().getSimpleName()+"EditExistingLevel");
+		});
 		newLevelVBox.getChildren().add(levelChooser);
 		newLevelVBox.getChildren().add(editButton);
+		hbox.getChildren().add(newLevelVBox);
+		hbox.getChildren().add(autogenerateButton);
 	}
 	HBox songSelector = new HBox();
 	ComboBox<String> songDropdown = new ComboBox<>();

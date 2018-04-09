@@ -21,7 +21,7 @@ public class CustomizeLevelScreen extends AdjustScreen {
 	public Parent makeScreenWithoutStyling() {	
 		VBox vb = new VBox(); 
 		
-		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeLevel")));
+		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeLevel")+" "+getView().getLevel()));
 		
 		Button towersButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeTower"));
 		towersButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeTower");});
@@ -34,9 +34,6 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		Button enemiesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeEnemy"));
 		enemiesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeEnemy");});
 		vb.getChildren().add(enemiesButton);
-		
-		Button autogenerateButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("AutogenerateLevel"));
-		vb.getChildren().add(autogenerateButton);
 
 		Button backButton = setupBackButton();
 		vb.getChildren().add(backButton);

@@ -105,5 +105,9 @@ public class AuthoringController {
 		return myAuthoringModel.getLevels(); 
 	}
 
+	public int autogenerateLevel() {
+		return myAuthoringModel.autogenerateLevel(); 
+	}
+
 }
 

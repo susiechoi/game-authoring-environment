@@ -206,4 +206,13 @@ public class AuthoringView extends View {
 		return myController.getLevels(); 
 	}
 
+	public void autogenerateLevel() {
+		int newLevel = myController.autogenerateLevel(); 
+		setLevel(newLevel); 
+	}
+
+	public int getLevel() {
+		return myLevel; 
+	}
+
 }
