@@ -108,8 +108,8 @@ public class AuthoringView extends View {
     /**
      * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
      */
-    public void makeEnemy(boolean newObject, String name, Image image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-	myController.makeEnemy(myLevel, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+    public void makeEnemy(boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
     }
 
     //TODO 
