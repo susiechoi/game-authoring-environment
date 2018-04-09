@@ -22,18 +22,15 @@ public class Projectile extends Sprite {
 	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
 	 * @param image: image of projectile
 	 */
-	public Projectile(String name, DamageProperty damage, Image image) {
+	public Projectile(String name, DamageProperty damage, Image image, double speed) {
 	    	super(name, image);
 		myDamage = damage;
 	}
 	
 	/**
 	 * Moves image along a curve on the screen
-	 * 
-	 * @param newX: new X-coordinate of projectile
-	 * @param newY: new Y-coordinate of projectile
 	 */
-	public void move(double newX, double newY) {
+	public void move() {
 		// TODO fill this out with delegation to a mover
 	}
 	
