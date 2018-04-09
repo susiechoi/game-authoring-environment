@@ -1,14 +1,16 @@
 package engine.managers;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.javafx.scene.paint.GradientUtils.Point;
+
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
 
@@ -19,6 +21,7 @@ import engine.sprites.towers.Tower;
  * @author Miles Todzo
  * @author Katie Van Dyk
 */
+
 
 public class TowerManager extends ShootingSpriteManager {
 
@@ -61,6 +64,4 @@ public class TowerManager extends ShootingSpriteManager {
     		this.addToActiveList(newTower);
     		return (FrontEndTower) newTower;
     }
-
-
 }
