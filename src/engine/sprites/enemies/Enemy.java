@@ -62,11 +62,16 @@ public class Enemy extends Sprite{
     /**
      * Handles updating the enemy position to follow the path
      */
+    public void followPath() {
+	// TODO Auto-generated method stub
+    }
+
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);
 	this.getImage().setX(newPosition.getX());
 	this.getImage().setY(newPosition.getY());
+
     }
 
     /**

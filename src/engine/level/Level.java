@@ -1,7 +1,9 @@
 package engine.level;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
@@ -21,15 +23,14 @@ public class Level {
     private final List<Wave> WAVES;
     private final int NUMBER;
     private final Path PATH;
-    private List<Tower> availableTowers;
+    private Map<String, Tower> myTowers;
     
-    public Level(int number, Path path, List<Tower> towersAvail) {
+    public Level(int number, Path path) {
+	myTowers = new HashMap<String, Tower>();
 	WAVES = new ArrayList<Wave>();
 	NUMBER = number;
 	PATH = path;
-	availableTowers = towersAvail;
-    }
-    
+    }    
     
     /**
      * 
@@ -37,6 +38,35 @@ public class Level {
      */
     public int number() {
 	return NUMBER;
+    }
+    
+    /**
+     * Adds an available tower to the level
+     * 
+     * @param name: The unique string name for the tower object
+     * @param tower: The tower object to be added
+     */
+    public void addTower(String name, Tower tower) {
+	myTowers.put(name, tower);
+    }
+    
+    /**
+     * 
+     * @param name: The unique string name for the tower object
+     * @return boolean: true if the level contains the tower, false otherwise
+     */
+    public boolean containsTower(String name) {
+	return myTowers.containsKey(name);
+    }
+    
+    /**
+     * Returns a tower available in the level given a unique tower name.
+     * 
+     * @param name: The unique string name for the tower object
+     * @return Tower: the tower object with the specified name
+     */
+    public Tower getTower(String name) {
+	return myTowers.get(name);
     }
     
     /**
@@ -62,13 +92,6 @@ public class Level {
 	return true; 
     }
 
-    /**
-     * Returns the list of towers that are available to be placed on this level
-     * @return
-     */
-    public List<Tower> getTowers() {
-	return availableTowers;
-    }
     /**
      * Returns any new Enemy that is supposed to spawn at the given time.
      * @param universalTime
