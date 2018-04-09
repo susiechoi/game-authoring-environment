@@ -1,8 +1,12 @@
 package engine;
 
 
+import java.util.List;
+
 import authoring.AuthoringModel;
 import controller.PlayController;
+import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -112,7 +116,25 @@ public class Mediator {
     
     /************************************************ GAMEPLAY ********************************************/
     
+    /**
+     * To be called by the backend any time a projectile or enemy should be added to the screen
+     * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
+     */
+    public void addSpriteToScreen(FrontEndSprite sprite) {
+	// TODO: some along the lines of myScreenManager.display(sprite);
+    }
     
+    /**
+     * to be called by the backend any time a projectile or enemy should be removed to the screen
+     * @param sprite is the projectile or enemy to be removed, cast as a FrontEndSprite
+     */
+    public void removeSpriteFromScreen(FrontEndSprite sprite) {
+	// TODO: some along the lines of myScreenManager.remove(sprite);
+    }
+    
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	//TODO: something along the lines of myScreenManager.setAvailableTowers(availableTowers);
+    }
     
 //    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
 //	    value.addListener(listenerToAdd);
