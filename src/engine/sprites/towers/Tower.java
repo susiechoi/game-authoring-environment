@@ -24,7 +24,7 @@ public class Tower extends ShootingSprites {
 	 * @param value: Value of the tower for selling
 	 */
 	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health) {
-		super(name, image, size);
+		super(name, image, size, launcher);
 		myLauncher = launcher;
 		myHealth = health;
 	}
@@ -33,7 +33,7 @@ public class Tower extends ShootingSprites {
 	 * Copy constructor
 	 */
 	public Tower(Tower copiedTower) {
-		super(copiedTower.getName(), copiedTower.getImageView().getImage(), copiedTower.getImageView().getImage().getWidth()); 
+		super(copiedTower.getName(), copiedTower.getImageView().getImage(), copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
 		myLauncher = copiedTower.getLauncher(); 
 		myHealth = copiedTower.getHealth(); 
 		myValue = copiedTower.getValue(); 

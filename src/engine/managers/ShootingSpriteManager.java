@@ -1,12 +1,8 @@
 package engine.managers;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.collections.ObservableList;
 
 /**
  * 

@@ -2,7 +2,6 @@ package engine.sprites;
 
 import java.util.List;
 
-import engine.managers.ProjectileManager;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.collections.ObservableList;
