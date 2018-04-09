@@ -198,4 +198,12 @@ public class AuthoringView extends View {
 	return myPromptReader.resourceDisplayText(prompt);
     }
 
+	public void addNewLevel() {
+		myController.addNewLevel(); 
+	}
+
+	public List<String> getLevels() {
+		return myController.getLevels(); 
+	}
+
 }

@@ -44,7 +44,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		applyButton.setOnAction(e -> {
 			getView().makeResources(myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue());
 		});
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		
 		vb.getChildren().add(settingsHeading);
 		vb.getChildren().add(promptGameName);

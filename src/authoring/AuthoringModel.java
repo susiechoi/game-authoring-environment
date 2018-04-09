@@ -283,4 +283,18 @@ public class AuthoringModel implements GameData {
 		}
 		return null;
 	}
+
+	public void addNewLevel() {
+		int newLevelNumber = myLevels.size()+1; 
+		myLevels.put(newLevelNumber, new Level(newLevelNumber));
+	}
+	
+	public List<String> getLevels() {
+		List<String> listToReturn = new ArrayList<String>(); 
+		for (Integer level : myLevels.keySet()) {
+			listToReturn.add(Integer.toString(level));
+		}
+		return listToReturn; 
+	}
+	
 }

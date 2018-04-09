@@ -22,18 +22,17 @@ import engine.path.Path;
 
 public class Level {
 
-	private final List<Wave> myWaves;
 	private final int myNumber;
-	private final Path myPath;
+	private List<Wave> myWaves;
+	private Path myPath;
 	private Map<String, Tower> myTowers;
 	private Map<String, Enemy> myEnemies;
 
-	public Level(int number, Path path) {
+	public Level(int number) {
 		myTowers = new HashMap<String, Tower>();
 		myEnemies = new HashMap<String, Enemy>();
 		myWaves = new ArrayList<Wave>();
 		myNumber = number;
-		myPath = path;
 	}    
 
 	/**
@@ -43,7 +42,12 @@ public class Level {
 	public int myNumber() {
 		return myNumber;
 	}
-
+	
+	// TODO 
+	public void addPath() {
+		myPath = new Path(); 
+	}
+			
 	/**
 	 * Adds an available tower to the level
 	 * 

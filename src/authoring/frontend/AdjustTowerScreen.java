@@ -74,7 +74,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
 				
 		ScrollPane sp = new ScrollPane(vb);

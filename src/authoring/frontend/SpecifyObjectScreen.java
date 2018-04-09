@@ -45,7 +45,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
 		vb.getChildren().add(newObjectButton);
