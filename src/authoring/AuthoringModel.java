@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
@@ -49,13 +48,11 @@ public class AuthoringModel implements GameData {
 	private final PropertiesReader myPropertiesReader;
 	protected AuthoringResources myResources;
 	private Map<Integer, Level> myLevels;
-	private Map<String, Enemy> myEnemies;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
-		myEnemies = new HashMap<String, Enemy>();
 		myPropertiesReader = new PropertiesReader();
 		try {
 			myDefaultTower = generateGenericTower();
@@ -74,7 +71,8 @@ public class AuthoringModel implements GameData {
 	 */
 	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact,
 			double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
-		if (myEnemies.containsKey(name) && newObject) {
+		Level currentLevel = levelCheck(level);
+		if (currentLevel.containsEnemy(name) && newObject) {
 			throw new NoDuplicateNamesException(name);
 		}
 		else {
@@ -84,7 +82,7 @@ public class AuthoringModel implements GameData {
 		}
 		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
 		Enemy newEnemy = new EnemyBuilder().construct(name, enemyImage, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-		myEnemies.put(name, newEnemy);
+		currentLevel.addEnemy(name, newEnemy);
 	}
 
 	/**
@@ -147,7 +145,7 @@ public class AuthoringModel implements GameData {
 		List<String> listToReturn = new ArrayList<String>(); 
 		Level currentLevel = levelCheck(level);
 		if (objectType.equals("Enemy")) {
-			listToReturn.addAll(myEnemies.keySet());  // TODO replace with implementation of enemies within levels
+			listToReturn = currentLevel.getAllEnemies();  // TODO replace with implementation of enemies within levels
 		} else if (objectType.equals("Tower")) {
 			listToReturn = currentLevel.getAllTowers();
 		}
@@ -173,8 +171,8 @@ public class AuthoringModel implements GameData {
 		Field field; 
 		Object fieldValue = null; 
 		if (objectType.equals("Enemy")) {
-			if (myEnemies.containsKey(name)) {
-				Enemy enemy = myEnemies.get(name);
+			if (currentLevel.containsEnemy(name)) {
+				Enemy enemy = currentLevel.getEnemy(name);
 				Class enemyClass = enemy.getClass(); 
 				field = enemyClass.getField(attribute);
 				fieldValue = field.get(enemy);
