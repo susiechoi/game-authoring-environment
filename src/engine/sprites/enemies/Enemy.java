@@ -31,7 +31,7 @@ public class Enemy extends Sprite{
     private double mySpeed;
 
     public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
-	super(myImage);
+	super("", myImage);
 	myIntersecter = new Intersecter(this.getImage()); 
 	myHealth = health;
 	myDamage = damage;

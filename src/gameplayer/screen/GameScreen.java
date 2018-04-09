@@ -9,6 +9,7 @@ import gameplayer.panel.ControlsPanel;
 import frontend.PromptReader;
 import frontend.Screen;
 import frontend.UIFactory;
+import frontend.View;
 import gameplayer.ScreenManager;
 
 
@@ -105,6 +106,12 @@ public class GameScreen extends Screen {
 	else
 	    System.out.println(control);
     }
+
+	@Override
+	protected View getView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

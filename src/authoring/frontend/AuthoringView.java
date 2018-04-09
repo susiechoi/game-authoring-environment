@@ -26,7 +26,6 @@ import javafx.scene.image.Image;
 
 public class AuthoringView extends View {
 
-
     public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
     public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
     private StageManager myStageManager; 
@@ -154,6 +153,7 @@ public class AuthoringView extends View {
     protected Scene getScene() {
 	return myStageManager.getScene();
     }
+
 
     protected String getErrorCheckedPrompt(String prompt) {
 	return myPromptReader.resourceDisplayText(prompt);

@@ -22,6 +22,7 @@ import engine.sprites.towers.Tower;
  * @author Katie Van Dyk
 */
 
+
 public class TowerManager extends ShootingSpriteManager {
 
 	//not sure exactly where this should be implemented/how the info for it will be passed in
@@ -63,6 +64,4 @@ public class TowerManager extends ShootingSpriteManager {
     		this.addToActiveList(newTower);
     		return (FrontEndTower) newTower;
     }
-
-
 }

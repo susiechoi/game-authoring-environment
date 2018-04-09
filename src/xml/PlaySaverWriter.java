@@ -58,5 +58,5 @@ public class PlaySaverWriter implements XMLWriter {
 			System.out.println("Error configuring XML file");
 		}
 	}
-
 }
+
