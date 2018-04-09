@@ -12,22 +12,22 @@ import javafx.stage.Stage;
 public class StageManager {
     
     private  Stage myStage;
-    public static final int DEFAULT_WIDTH = 1500;
+    public static final int DEFAULT_WIDTH = 900;
     public static final int DEFAULT_HEIGHT = 900;
     private final int stageWidth;
     private final int stageHeight;
 
     
     public StageManager(Stage stage) {
-	myStage = stage;
-	stageWidth = DEFAULT_WIDTH;
-	stageHeight = DEFAULT_HEIGHT;
+	this(stage, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
     
     public StageManager(Stage stage, int width, int height) {
 	myStage = stage;
 	stageWidth = width;
 	stageHeight = height;
+	myStage.setWidth(stageWidth);
+	myStage.setHeight(stageHeight);
     }
     
     public void switchScene(Scene scene) {
@@ -39,8 +39,10 @@ public class StageManager {
     
     
     public void switchScreen(Parent topNode) {
-	Scene programScene = new Scene(topNode , stageWidth,stageHeight);
+	Scene programScene = new Scene(topNode);
 	myStage.setScene(programScene);
+	myStage.setWidth(stageWidth);
+	myStage.setHeight(stageHeight);
 	myStage.show();
     } 
 

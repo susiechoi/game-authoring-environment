@@ -15,9 +15,11 @@ import javafx.scene.shape.Shape;
  * @author Katherine Van Dyk
  * @date 4/3/18
  * @author Miles Todzo
+ * @author Ben Hodgson 4/8/18
  */
 
 public class Sprite  {
+    private String myName;
     private ImageView myImageView;
 
 
@@ -28,9 +30,19 @@ public class Sprite  {
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(Image image) {
+    public Sprite(String name, Image image) {
+	myName = name;
 	myImageView = new ImageView(image);
 	myImageView.setPreserveRatio(true);
+    }
+    
+    /**
+     * Return the String name of the sprite.
+     * 
+     * @return String: the name of the Sprite
+     */
+    public String getName() {
+	return myName;
     }
     
     /**

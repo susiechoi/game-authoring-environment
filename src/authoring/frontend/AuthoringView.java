@@ -14,6 +14,7 @@ import java.util.List;
 
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import authoring.frontend.exceptions.NoDuplicateNamesException;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -21,6 +22,7 @@ import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class AuthoringView extends View {
 
@@ -46,9 +48,6 @@ public class AuthoringView extends View {
     protected void loadScreen(Screen screen) {
 	myStageManager.switchScreen(screen.getScreen());
     }
-    protected void loadScene(Scene scene) { //TODO: refactor so no duplication?
-	myStageManager.switchScene(scene);
-    }
     protected String getCurrentCSS() {
 	return myCurrentCSS;
     }
@@ -56,13 +55,21 @@ public class AuthoringView extends View {
     protected void goBackFrom(String id) {
 	goForwardFrom(id+"Back");
     }
-
     protected void goForwardFrom(String id) {
+	goForwardFrom(id, "");
+    }
+    protected void goForwardFrom(String id, String name) {
 	try {
 	    String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 	    Class<?> clazz = Class.forName(nextScreenClass);
+	    System.out.println("next class: " + nextScreenClass);
 	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
-	    if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+	    if(constructor.getParameterTypes().length == 2) {
+		System.out.println("makin it to the 2 parameter");
+		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
+		myStageManager.switchScreen(nextScreen.getScreen());
+	    }
+	    else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
 		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 		myStageManager.switchScreen(nextScreen.getScreen());
 	    }
@@ -87,20 +94,21 @@ public class AuthoringView extends View {
 
     /**
      * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
+     * @throws NoDuplicateNamesException 
      */
-    public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-	    String projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue,
-	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
+    public void makeTower(boolean newObject, String name, Image image, double health, double healthUpgradeCost, double healthUpgradeValue,
+	    Image projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue,
+	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
 	myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-		projectileImage, projectileDamage, projectileValue, projectileUpgradeCost, projectileUpgradeValue, 
+		projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, 
 		launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
     }
 
     /**
      * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
      */
-    public void makeEnemy(boolean newObject, String name, String image, double speed, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
-	myController.makeEnemy(myLevel, newObject, name, image, speed, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+    public void makeEnemy(boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+	myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
     }
 
     //TODO 

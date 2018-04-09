@@ -21,8 +21,8 @@ public class ShootingSprites extends Sprite{
 	private ProjectileManager myProjectileManager;
 	private int hitCount;
 
-	public ShootingSprites(Image image, double size) {
-		super(image);
+	public ShootingSprites(String name, Image image, double size) {
+		super(name, image);
 		this.getImage().setFitHeight(size);
 		this.getImage().setFitWidth(size);
 		myProjectileManager = new ProjectileManager();
