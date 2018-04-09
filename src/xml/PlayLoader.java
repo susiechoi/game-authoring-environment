@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.thoughtworks.xstream.XStream;
 
-import authoring.AuthoringModel;
+import engine.PlayState;
 
 public class PlayLoader implements XMLReader {
 
@@ -15,9 +15,9 @@ public class PlayLoader implements XMLReader {
     }
     
     @Override
-    public AuthoringModel createModel(String filename) {
-	    File f = new File("SavedModels/" + filename);
-	    AuthoringModel g = (AuthoringModel) parser.fromXML(f);
+    public PlayState createModel(String filename) {
+	    File f = new File("SavedPlays/" + filename + ".xml");
+	    PlayState g = (PlayState) parser.fromXML(f);
 	    return g;
     }
     
