@@ -21,17 +21,10 @@ public class ShootingSprites extends Sprite{
 	private ProjectileManager myProjectileManager;
 	private int hitCount;
 
-<<<<<<< HEAD
-	public ShootingSprites(Image image, double size) {
-		super(image);
-		this.getImageView().setFitHeight(size);
-		this.getImageView().setFitWidth(size);
-=======
 	public ShootingSprites(String name, Image image, double size) {
 		super(name, image);
-		this.getImage().setFitHeight(size);
-		this.getImage().setFitWidth(size);
->>>>>>> d835ca910fa7448a9ca0a2acb5bcfe890a7c41e2
+		this.getImageView().setFitHeight(size);
+		this.getImageView().setFitWidth(size);
 		myProjectileManager = new ProjectileManager();
 	}
 	
