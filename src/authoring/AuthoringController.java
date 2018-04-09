@@ -31,7 +31,13 @@ public class AuthoringController {
 	 * Invoked when populating authoring frontend screens used to edit existing objects
 	 */
 	public String getObjectAttribute(int level, String objectType, String name, String attribute) {
-		return myAuthoringModel.getObjectAttribute(level, objectType, name, attribute); 
+		String returnedAttribute = myAuthoringView.getErrorCheckedPrompt("ObjectDNE"); 
+		try {
+			returnedAttribute = myAuthoringModel.getObjectAttribute(level, objectType, name, attribute);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			myAuthoringView.loadErrorScreen("NoObject");
+		} 
+		return returnedAttribute; 
 	}
 	
 	/**
