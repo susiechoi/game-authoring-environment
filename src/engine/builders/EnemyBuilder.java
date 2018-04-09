@@ -14,9 +14,10 @@ import javafx.scene.image.ImageView;
  * @author Miles Todzo
  */
 public class EnemyBuilder {
-	public Enemy construct(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact,
-			double killReward, double killUpgradeCost, double killUpgradeValue) {
-		Enemy newEnemy = new Enemy(name, image, new HealthProperty(0, initialHealth, 0), new DamageProperty(0 , 0 , healthImpact), new ValueProperty(killReward));
-		return newEnemy;
-	}
+    public Enemy construct(String name, Image image, double speed, double initialHealth, double healthImpact,
+	    double killReward, double killUpgradeCost, double killUpgradeValue) {
+	//TODO pass path object
+	Enemy newEnemy = new Enemy(name, image, new HealthProperty(0, initialHealth, 0), new DamageProperty(0 , 0 , healthImpact), new ValueProperty(killReward), null);
+	return newEnemy;
+    }
 }

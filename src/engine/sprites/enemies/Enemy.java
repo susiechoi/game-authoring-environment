@@ -1,9 +1,7 @@
 package engine.sprites.enemies;
 
 import engine.path.Path;
-import engine.physics.Intersecter;
 import engine.physics.ImageIntersecter;
-import engine.physics.SnapMover;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
@@ -31,7 +29,6 @@ public class Enemy extends Sprite{
     private Path myPath;
     private double mySpeed;
 
-
     public Enemy(String name, Image image, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
 	super(name, image);
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
@@ -39,6 +36,18 @@ public class Enemy extends Sprite{
 	myDamage = damage;
 	myValue = value;
 	myPath = path;
+    }
+    
+    /**
+     * Copy constructor
+     */
+    public Enemy(Enemy copiedEnemy) {
+    	super("", copiedEnemy.getImageView().getImage());
+    	myIntersecter = copiedEnemy.getIntersecter(); 
+    	myHealth = copiedEnemy.getHealth(); 
+    	myDamage = copiedEnemy.getDamage();
+    	myValue = copiedEnemy.getValue();
+    	myPath = copiedEnemy.getPath(); 
     }
 
     /**
@@ -64,6 +73,10 @@ public class Enemy extends Sprite{
     /**
      * Handles updating the enemy position to follow the path
      */
+    public void followPath() {
+	// TODO Auto-generated method stub
+    }
+
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);
@@ -79,4 +92,25 @@ public class Enemy extends Sprite{
     public Double damage() {
 	return myDamage.getProperty();
     }
+    
+    private ImageIntersecter getIntersecter() {
+    	return myIntersecter; 
+    }
+    
+    private HealthProperty getHealth() {
+    	return myHealth; 
+    }
+    
+    private DamageProperty getDamage() {
+    	return myDamage; 
+    }
+    
+    private ValueProperty getValue() {
+    	return myValue; 
+    }
+    
+    private Path getPath() {
+    	return myPath; 
+    } 
+    
 }

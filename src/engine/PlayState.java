@@ -78,6 +78,7 @@ public class PlayState implements GameData {
 	public void play() {
 		isPaused = false;
 	}
+	
 	//TODO potentially move into Mediator? somehow the FrontEndTower has to be returned to the frontend
 	public FrontEndTower placeTower(Point location, String towerType) {
 		return (FrontEndTower) myTowerManager.place(location, towerType);

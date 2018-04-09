@@ -43,6 +43,6 @@ public class ChiefController {
      * Instantiate a new AuthoringController object to handle the authoring environment
      */
     public void author() {
-	new AuthoringController(STAGE);
+//	new AuthoringController(STAGE);
     }
 }
