@@ -53,7 +53,6 @@ public class AuthoringModel implements GameData {
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
-		setupDefaultLevel(); 
 		myPropertiesReader = new PropertiesReader();
 		try {
 			myDefaultTower = generateGenericTower();
@@ -61,13 +60,14 @@ public class AuthoringModel implements GameData {
 		} catch (NumberFormatException | FileNotFoundException e) {
 			throw new MissingPropertiesException(DEFAULT_NAME);
 		}
+		setupDefaultLevel(); 
 	}
 
 	private void setupDefaultLevel() {
 		Level firstLevel = new Level(1);
 		myLevels.put(1, firstLevel);
 		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
-		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
+		firstLevel.addEnemy(DEFAULT_NAME, new Enemy(myDefaultEnemy));
 	}
 
 	/**

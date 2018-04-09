@@ -21,9 +21,9 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
 
-	protected SpecifyObjectScreen(AuthoringView view) {
+	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
-		System.out.println(myObjectDescription);
+		myObjectDescription = objectDescription;
 		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
 	}
 
