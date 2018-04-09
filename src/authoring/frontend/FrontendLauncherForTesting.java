@@ -17,11 +17,7 @@ public class FrontendLauncherForTesting extends Application {
 	public void start(Stage stage) {
 
 	    	System.out.println("launching");
-		try {
-			AuthoringController controlla = new AuthoringController(new StageManager(stage), "English");
-		} catch (MissingPropertiesException e) {
-			// TODO 
-		}
+		AuthoringController controlla = new AuthoringController(new StageManager(stage), "English");
 		stage.show();
 
 	}

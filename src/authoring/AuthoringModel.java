@@ -31,7 +31,6 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
-import engine.sprites.properties.HealthProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;

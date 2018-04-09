@@ -31,7 +31,11 @@ public class CreatePathPanel implements Panel {
 	private Button applyButton;
 	private Button backButton;
 	
-	private PropertiesReader myPropertiesReader = new PropertiesReader();
+	private PropertiesReader myPropertiesReader;
+	
+	public CreatePathPanel() {
+		myPropertiesReader = new PropertiesReader(); 
+	}
 	
 	@Override
 	public void makePanel() { //separate into smaller methods
