@@ -1,8 +1,9 @@
 package engine.sprites.enemies;
 
 import engine.path.Path;
-import engine.physics.IIntersecter;
 import engine.physics.Intersecter;
+import engine.physics.ImageIntersecter;
+import engine.physics.SnapMover;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
@@ -26,14 +27,14 @@ public class Enemy extends Sprite{
     private HealthProperty myHealth;
     private DamageProperty myDamage;
     private ValueProperty myValue;
-    private IIntersecter myIntersecter;
+    private ImageIntersecter myIntersecter;
     private Path myPath;
     private double mySpeed;
 
 
     public Enemy(String name, Image image, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
 	super(name, image);
-	myIntersecter = new Intersecter(this.getImageView()); 
+	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	myHealth = health;
 	myDamage = damage;
 	myValue = value;

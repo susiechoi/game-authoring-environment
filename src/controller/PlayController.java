@@ -4,11 +4,9 @@ import authoring.AuthoringModel;
 import engine.GameEngine;
 import engine.Mediator;
 import engine.PlayState;
-import frontend.StageManager;
 import gameplayer.ScreenManager;
 import javafx.stage.Stage;
 import xml.AuthoringModelReader;
-
 
 /**
  * 
@@ -24,17 +22,15 @@ public class PlayController {
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     
-
     /**
      * Constructs main parts of play: Engine for backend controls, ScreenManager (top
      * level of game player) and Mediator, which connects the two
      * 
      * @param stage: Stage to mount Game Player on
      */
-    public PlayController(String language, StageManager stageManager) {
-	myScreenManager = new ScreenManager(stageManager, language);
-	myGameEngine = new GameEngine(myMediator); //this is passing an object that's currently null -bma
-	myReader = new AuthoringModelReader();
+    public PlayController(Stage stage) {
+	myScreenManager = new ScreenManager(stage);
+	myGameEngine = new GameEngine(myMediator);
 	myMediator = new Mediator(myScreenManager, myGameEngine);
     }
     
