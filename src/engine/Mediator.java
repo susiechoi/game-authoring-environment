@@ -121,7 +121,7 @@ public class Mediator {
      * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
      */
     public void addSpriteToScreen(FrontEndSprite sprite) {
-	// TODO: some along the lines of myScreenManager.display(sprite);
+	myScreenManager.display(sprite);
     }
     
     /**
@@ -129,17 +129,13 @@ public class Mediator {
      * @param sprite is the projectile or enemy to be removed, cast as a FrontEndSprite
      */
     public void removeSpriteFromScreen(FrontEndSprite sprite) {
-	// TODO: some along the lines of myScreenManager.remove(sprite);
+	myScreenManager.remove(sprite);
     }
     
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	//TODO: something along the lines of myScreenManager.setAvailableTowers(availableTowers);
+	myScreenManager.setAvailableTowers(availableTowers);
     }
     
-//    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
-//	    value.addListener(listenerToAdd);
-//    }
-
 
     // a whole slew of other methods
     // but fr there should be a method for every event that can occur
