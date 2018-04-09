@@ -2,6 +2,8 @@ package engine.path;
 
 import java.awt.geom.Point2D;
 
+import engine.physics.SnapMover;
+
 /**
  * Class for constructing path and determining next coordinates
  * 

@@ -25,7 +25,6 @@ import engine.sprites.towers.Tower;
 
 public class PlayState implements GameData {
 
-
 	private double UNIVERSAL_TIME;
 	private int myScore;
 	private int myResources;

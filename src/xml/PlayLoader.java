@@ -16,7 +16,7 @@ public class PlayLoader implements XMLReader {
     
     @Override
     public PlayState createModel(String filename) {
-	    File f = new File("SavedGames/" + filename);
+	    File f = new File("SavedPlays/" + filename + ".xml");
 	    PlayState g = (PlayState) parser.fromXML(f);
 	    return g;
     }
