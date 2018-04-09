@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
+	private double mySpeed;
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -32,7 +33,7 @@ public class Projectile extends Sprite {
 	 * Moves image along a curve on the screen
 	 */
 	public void move() {
-		// TODO fill this out with delegation to a mover
+		//TODO get orientation of projectile and move it in that direction
 	}
 	
 	/**
