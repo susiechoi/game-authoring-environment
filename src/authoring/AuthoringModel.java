@@ -14,7 +14,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import engine.builders.LauncherBuilder;
 import engine.builders.ProjectileBuilder;
@@ -41,7 +40,7 @@ class AuthoringModel {
      * Method through which information can be sent to instantiate or edit an enemy object
      * Wraps constructor in case of new object creation
      */
-    public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double healthImpact,
+    public void makeEnemy(int level, boolean newObject, String name, Image image, double speed, double initialHealth, double healthImpact,
 	    double killReward, double killUpgradeCost, double killUpgradeValue) {
 	if (newObject) {
 	   

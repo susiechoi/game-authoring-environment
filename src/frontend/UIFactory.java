@@ -207,10 +207,9 @@ public class UIFactory {
 	}
 
 	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
-			String loadImagePrompt, String newImagePrompt, String newImageNamePrompt, ComboBox<String> dropdown) throws MissingPropertiesException {
+			String loadImagePrompt, String newImagePrompt, String newImageNamePrompt, ComboBox<String> dropdown, ImageView imageDisplay) throws MissingPropertiesException {
 		Map<String, Image> enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
 		ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
-		ImageView imageDisplay = new ImageView(); 
 		imageDisplay.setImage(images.get(0));
 		VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 		dropdown.setOnAction(e ->
