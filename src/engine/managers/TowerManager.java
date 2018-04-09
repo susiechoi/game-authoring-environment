@@ -25,14 +25,14 @@ import engine.sprites.towers.Tower;
 public class TowerManager extends ShootingSpriteManager {
 
 	//not sure exactly where this should be implemented/how the info for it will be passed in
-	Map<String, Tower> towerTypeToInstance;
+	Map<String, Tower> myTowerTypeToInstance;
 	
     /**
      * Constructor for super class
      */
-    public TowerManager() {
+    public TowerManager(Map<String, Tower> towerTypeToInstance) {
 	super();
-	towerTypeToInstance = new HashMap<>();
+	myTowerTypeToInstance = new HashMap<>();
     }
 
     /**
@@ -59,7 +59,7 @@ public class TowerManager extends ShootingSpriteManager {
     }
     
     public FrontEndTower place(Point location, String type) {
-    		Tower newTower = towerTypeToInstance.get(type);
+    		Tower newTower = myTowerTypeToInstance.get(type);
     		this.addToActiveList(newTower);
     		return (FrontEndTower) newTower;
     }

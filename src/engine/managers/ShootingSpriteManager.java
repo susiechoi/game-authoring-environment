@@ -28,8 +28,21 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     		}
     }
     
+    public void shoot(List<ShootingSprites> passedSprites) {
+    		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
+    			for (ShootingSprites passedSprite: passedSprites) {
+    				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
+    					shootingSprite.addProjectile(shootingSprite.launch());
+    				}
+    			}
+    		}
+    }
+    
 	public void moveProjectiles() {
 		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
+			if (shootingSprite.enemyWithinRange() && shootingSprite.hasReloaded()) {
+				shootingSprite.shoot();
+			}
 			for (Projectile projectile: shootingSprite.getProjectiles()) {
 				projectile.move();
 			}
