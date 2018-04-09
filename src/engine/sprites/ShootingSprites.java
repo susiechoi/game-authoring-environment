@@ -21,10 +21,17 @@ public class ShootingSprites extends Sprite{
 	private ProjectileManager myProjectileManager;
 	private int hitCount;
 
+<<<<<<< HEAD
+	public ShootingSprites(Image image, double size) {
+		super(image);
+		this.getImageView().setFitHeight(size);
+		this.getImageView().setFitWidth(size);
+=======
 	public ShootingSprites(String name, Image image, double size) {
 		super(name, image);
 		this.getImage().setFitHeight(size);
 		this.getImage().setFitWidth(size);
+>>>>>>> d835ca910fa7448a9ca0a2acb5bcfe890a7c41e2
 		myProjectileManager = new ProjectileManager();
 	}
 	
@@ -39,8 +46,8 @@ public class ShootingSprites extends Sprite{
 	public void checkForCollision(ShootingSprites shooter, List<Projectile> projectiles) {
 		this.checkTowerEnemyCollision(shooter);
 		for (Projectile projectile: projectiles) {
-			ImageView projectileImageView = projectile.getImage();
-			if(this.getImage().intersects(projectileImageView.getX(), projectileImageView.getY(), projectileImageView.getFitWidth(), projectileImageView.getFitHeight())){
+			ImageView projectileImageView = projectile.getImageView();
+			if(this.getImageView().intersects(projectileImageView.getX(), projectileImageView.getY(), projectileImageView.getFitWidth(), projectileImageView.getFitHeight())){
 				this.handleCollision();
 				projectile.handleCollision();
 			}
@@ -48,7 +55,7 @@ public class ShootingSprites extends Sprite{
 	}
 
 	public void checkTowerEnemyCollision(ShootingSprites shooter) {
-		if (this.getImage().intersects(shooter.getImage().getX(), shooter.getImage().getY(), shooter.getImage().getFitWidth(), shooter.getImage().getFitHeight())) {
+		if (this.getImageView().intersects(shooter.getImageView().getX(), shooter.getImageView().getY(), shooter.getImageView().getFitWidth(), shooter.getImageView().getFitHeight())) {
 			this.handleCollision();
 			shooter.handleCollision();
 		}

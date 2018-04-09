@@ -30,9 +30,10 @@ public class Enemy extends Sprite{
     private Path myPath;
     private double mySpeed;
 
+
     public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
 	super(myImage);
-	myIntersecter = new Intersecter(this.getImage()); 
+	myIntersecter = new Intersecter(this.getImageView()); 
 	myHealth = health;
 	myDamage = damage;
 	myValue = value;
@@ -65,8 +66,8 @@ public class Enemy extends Sprite{
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);
-	this.getImage().setX(newPosition.getX());
-	this.getImage().setY(newPosition.getY());
+	this.getImageView().setX(newPosition.getX());
+	this.getImageView().setY(newPosition.getY());
     }
 
     /**

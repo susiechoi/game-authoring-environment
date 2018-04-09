@@ -1,5 +1,6 @@
 package engine.sprites.towers.launcher;
 
+import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
@@ -65,5 +66,14 @@ public class Launcher {
 	return myProjectile.upgradeDamage(balance);
     }
 
+    public DamageProperty getDamageProperty() {
+    	return myProjectile.getDamageProperty();
+    }
+    public FireRateProperty getFireRateProperty() {
+    	return myFireRate;
+    }
+    public RangeProperty getRangeProperty() {
+    	return myRange;
+    }
 
 }
