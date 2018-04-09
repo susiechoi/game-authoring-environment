@@ -46,9 +46,6 @@ public class AuthoringView extends View {
     protected void loadScreen(Screen screen) {
 	myStageManager.switchScreen(screen.getScreen());
     }
-    protected void loadScene(Scene scene) { //TODO: refactor so no duplication?
-	myStageManager.switchScene(scene);
-    }
     protected String getCurrentCSS() {
 	return myCurrentCSS;
     }
