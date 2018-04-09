@@ -12,6 +12,7 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
@@ -92,6 +93,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected void setSliderToValue(Slider slider, String valueAsString) {
 		Double value = Double.parseDouble(valueAsString);
 		slider.setValue(value);
+	}
+	
+	protected void setEditableOrNot(TextField name, boolean isNewObject) {
+		if (isNewObject) name.setEditable(false);
 	}
 	
 	/** 

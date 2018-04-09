@@ -110,6 +110,8 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	protected void populateFieldsWithData() {
 		myNameField.setText(getMySelectedObjectName());
 		
+		setEditableOrNot(myNameField, getIsNewObject());
+		
 		setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
 		
 		setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
