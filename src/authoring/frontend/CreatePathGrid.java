@@ -3,7 +3,7 @@ package authoring.frontend;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -20,7 +20,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
 
-/* delete button to get rid of path blocks (trash, select all and delete)
+/* 
  * Right click to be able to get specialty paths
  * filechoosers for loading in new images, get background image from elsewhere
  * Back to main button, if apply has not been clicked then prompt (changes will not be saved)
@@ -184,8 +184,7 @@ public class CreatePathGrid {
 			addCoordinates(row - 1, col);
 			return true;
 		}
-		
-		System.out.println(pathCoords);
+
 		return false;
 	}
 
@@ -210,14 +209,6 @@ public class CreatePathGrid {
 		} 
 	}
 
-
-	public GridPane getGrid() {
-		return grid;
-	}
-
-	public GridPane getCheckGrid() {
-		return checkGrid;
-	}
 
 	private boolean imageCompare(Image image1, Image image2) {
 		for (int i = 0; i < image1.getWidth(); i++){
@@ -248,7 +239,19 @@ public class CreatePathGrid {
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 		Point2D point = new Point2D(x, y);
 		pathCoords.add(point);
-		System.out.println(pathCoords);
+	}
+	
+	public List<Point2D> getCoordinates() {
+		return pathCoords;
+	}
+	
+
+	public GridPane getGrid() {
+		return grid;
+	}
+
+	public GridPane getCheckGrid() {
+		return checkGrid;
 	}
 }
 

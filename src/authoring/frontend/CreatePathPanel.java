@@ -1,14 +1,10 @@
 package authoring.frontend;
 
-import java.util.List;
 
-import authoring.frontend.exceptions.MissingPropertiesException;
-import frontend.PropertiesReader;
 import frontend.UIFactory;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -35,7 +31,6 @@ public class CreatePathPanel implements Panel {
 	private Button applyButton;
 	private Button backButton;
 	
-	private PropertiesReader myPropertiesReader = new PropertiesReader();
 	
 	@Override
 	public void makePanel() { //separate into smaller methods

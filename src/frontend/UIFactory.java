@@ -289,6 +289,5 @@ public class UIFactory {
 		Double value = Double.parseDouble(valueAsString);
 		slider.setValue(value);
 	}
-	
 
 }

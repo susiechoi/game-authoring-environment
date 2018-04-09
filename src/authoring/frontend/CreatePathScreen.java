@@ -73,7 +73,6 @@ public class CreatePathScreen extends AdjustScreen {
 		});
 	}
 
-
 	private void setGridApplied() {
 		Button applyButton = panel.getApplyButton();
 		applyButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -83,6 +82,7 @@ public class CreatePathScreen extends AdjustScreen {
 				for (int key: coordMap.keySet()) {
 					if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1)) == true) {
 						System.out.println("TRUE");
+						getView().makePath(grid.getCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
 					} else {
 						System.out.println("FALSE");
 					}
