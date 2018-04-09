@@ -47,7 +47,7 @@ public class Mediator {
     }
     
     private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
-	value.addListener(listenerToAdd);
+	    value.addListener(listenerToAdd);
     }
 
 
