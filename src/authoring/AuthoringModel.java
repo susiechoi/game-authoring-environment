@@ -15,16 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
-import engine.builders.LauncherBuilder;
-import engine.builders.ProjectileBuilder;
-import engine.builders.TowerBuilder;
-import engine.sprites.enemies.Enemy;
-import engine.sprites.towers.Tower;
-import engine.sprites.towers.launcher.Launcher;
-import engine.sprites.towers.projectiles.Projectile;
-import javafx.scene.image.Image;
+import data.GameData;
 
-class AuthoringModel {
+public class AuthoringModel implements GameData {
+	
+	protected AuthoringResources myResources;
 
     protected AuthoringResources myResources;
     private Map<String, Tower> myTowers;
