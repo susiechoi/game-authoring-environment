@@ -11,6 +11,7 @@ package authoring;
 
 
 import java.io.File;
+import java.lang.Double; 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,7 +173,10 @@ public class AuthoringModel implements GameData {
 				fieldValue = field.get(tower);
 			}
 		}
-		return (String) fieldValue; 
+		if (fieldValue.getClass() == Double.class) {
+			return Double.toString((double) fieldValue); 
+		}
+		else return (String) fieldValue; 
 	}
 
 }
