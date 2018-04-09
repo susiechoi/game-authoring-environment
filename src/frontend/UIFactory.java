@@ -207,10 +207,9 @@ public class UIFactory {
 	}
 
 	public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
-			String loadImagePrompt, String newImagePrompt, String newImageNamePrompt, ComboBox<String> dropdown) throws MissingPropertiesException {
+			String loadImagePrompt, String newImagePrompt, String newImageNamePrompt, ComboBox<String> dropdown, ImageView imageDisplay) throws MissingPropertiesException {
 		Map<String, Image> enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
 		ArrayList<Image> images = new ArrayList<Image>(enemyImageOptions.values()); 
-		ImageView imageDisplay = new ImageView(); 
 		imageDisplay.setImage(images.get(0));
 		VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 		dropdown.setOnAction(e ->
@@ -270,5 +269,25 @@ public class UIFactory {
 		Button applyButton = makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 		return applyButton;
 	}
+	/**
+	 * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
+	 * @param combobox - combobox to be set to a value
+	 * @param selectionValue - the value that the combobox should be set to 
+	 */
+	public void setComboBoxToValue(ComboBox<String> combobox, String selectionValue) {
+		int dropdownIdx = combobox.getItems().indexOf(selectionValue); 
+		combobox.getSelectionModel().select(dropdownIdx);
+	}
+	
+	/**
+	 * Method used in appropriately-setting the slider when populating data fields with the existing object values
+	 * @param slider - slider to be set to a value
+	 * @param valueAsString - the value that the slider should be set to 
+	 */
+	public void setSliderToValue(Slider slider, String valueAsString) {
+		Double value = Double.parseDouble(valueAsString);
+		slider.setValue(value);
+	}
+	
 
 }
