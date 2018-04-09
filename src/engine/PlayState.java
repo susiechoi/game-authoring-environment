@@ -26,7 +26,7 @@ import engine.sprites.towers.Tower;
 public class PlayState implements GameData {
 
 
-	private int UNIVERSAL_TIME;
+	private double UNIVERSAL_TIME;
 	private int myScore;
 	private int myResources;
 	private TowerManager myTowerManager;
@@ -36,7 +36,7 @@ public class PlayState implements GameData {
 	private Level currentLevel;
 	private boolean isPaused;
 
-	public PlayState(Mediator mediator, List<Level> levels, int score, int resources, int universalTime, Map<String, Tower> towerMap) {
+	public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime, Map<String, Tower> towerMap) {
 		myMediator = mediator;
 		myLevels = levels;
 		currentLevel = myLevels.get(0);
@@ -48,8 +48,8 @@ public class PlayState implements GameData {
 		UNIVERSAL_TIME = universalTime;
 	}
 
-	public void update() {
-		UNIVERSAL_TIME++;
+	public void update(double elapsedTime) {
+		UNIVERSAL_TIME+=elapsedTime;
 		myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive());
 		myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive());
 		myTowerManager.moveProjectiles();
