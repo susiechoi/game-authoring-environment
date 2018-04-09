@@ -29,12 +29,14 @@ public class AuthoringController {
 	/**
 	 * Method through which information about object fields can be requested
 	 * Invoked when populating authoring frontend screens used to edit existing objects
+	 * @throws IllegalAccessException 
+	 * @throws NoSuchFieldException 
 	 */
 	public String getObjectAttribute(int level, String objectType, String name, String attribute) {
 		String returnedAttribute = myAuthoringView.getErrorCheckedPrompt("ObjectDNE"); 
 		try {
 			returnedAttribute = myAuthoringModel.getObjectAttribute(level, objectType, name, attribute);
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+		} catch (SecurityException | NoSuchFieldException | IllegalAccessException | IllegalArgumentException e) {
 			myAuthoringView.loadErrorScreen("NoObject");
 		} 
 		return returnedAttribute; 
