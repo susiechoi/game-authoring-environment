@@ -24,13 +24,13 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		towersButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeTower");});
 		vb.getChildren().add(towersButton);
 
-		Button pathButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizePath"));
-		pathButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizePath");});
-		vb.getChildren().add(pathButton);
-
 		Button enemiesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeEnemy"));
 		enemiesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeEnemy");});
 		vb.getChildren().add(enemiesButton);
+		
+		Button pathButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizePath"));
+		pathButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizePath");});
+		vb.getChildren().add(pathButton);
 
 		Button backButton = setupBackButton();
 		vb.getChildren().add(backButton);
