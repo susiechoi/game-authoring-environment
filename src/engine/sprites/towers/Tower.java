@@ -2,6 +2,7 @@ package engine.sprites.towers;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
@@ -47,7 +48,7 @@ public class Tower extends ShootingSprites {
 	 */
 	@Override
 	public boolean handleCollision(Sprite collider) {
-		myHealth.loseHealth(enemyDamage);
+		myHealth.loseHealth(collider.getDamage());
 		return (myHealth.getProperty() <= 0);
 	}
 

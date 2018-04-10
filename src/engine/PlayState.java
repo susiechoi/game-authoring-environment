@@ -10,6 +10,7 @@ import engine.level.Level;
 import java.util.ArrayList;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
@@ -49,8 +50,9 @@ public class PlayState implements GameData {
 
 	public void update(double elapsedTime) {
 		UNIVERSAL_TIME+=elapsedTime;
-		myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive());
-		myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive());
+		List<Sprite> toBeRemoved = new ArrayList<>();
+		toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive()));
+		toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive()));
 		myTowerManager.moveProjectiles();
 		myTowerManager.moveTowers();
 		myEnemyManager.moveProjectiles();
