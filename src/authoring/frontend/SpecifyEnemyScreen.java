@@ -12,7 +12,6 @@ class SpecifyEnemyScreen extends SpecifyObjectScreen {
 
 	protected SpecifyEnemyScreen(AuthoringView view) {
 		super(view, DEFAULT_DESCRIPTION);
-		System.out.println("I want to be here now");
 	}
 	
 }

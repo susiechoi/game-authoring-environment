@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class StageManager {
     
     private  Stage myStage;
-    public static final int DEFAULT_WIDTH = 900;
+    public static final int DEFAULT_WIDTH = 1280;
     public static final int DEFAULT_HEIGHT = 900;
     private final int stageWidth;
     private final int stageHeight;

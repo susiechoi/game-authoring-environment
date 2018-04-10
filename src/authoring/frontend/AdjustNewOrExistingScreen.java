@@ -30,6 +30,8 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName) {
 		super(view);
 		mySelectedObjectName = selectedObjectName; 
+		mySelectedObjectName = "Default";
+//		System.out.println("my selected obj name is "+selectedObjectName);
 		myIsNewObject = mySelectedObjectName.equals(myDefaultObjectName);
 		setConstants();
 	}
