@@ -6,7 +6,11 @@ import java.util.List;
 import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
+<<<<<<< HEAD
 import engine.sprites.towers.CannotAffordException;
+=======
+import engine.sprites.Sprite;
+>>>>>>> 7c3570b74928c79a500c08f56c4ac184a72b0714
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
@@ -185,15 +189,16 @@ public class Mediator {
         myGameEngine.setSpeed(sliderValue);
     }
 
-    /**
-     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
-     * @param tower
-     * @param upgradeName
-     * @throws CannotAffordException 
-     */
-    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
-    }
+
+    //WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED
+//    /**
+//     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
+//     * @param tower
+//     * @param upgradeName
+//     */
+//    public void upgradeTower(FrontEndTower tower, String upgradeName) {
+//        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
+//    }
 
     /**
      * to be called by the backend to tell the frontend the new score that has already be calculated
@@ -227,11 +232,17 @@ public class Mediator {
         myScreenManager.updateLevelCount(newLevel);
     }
 
+    /**
+     * Takes a list of sprites that are to be removed from PlayState, removes them
+     * @param list
+     */
+    public void removeListOfSpritesFromScreen(List<Sprite> list) {
+	for(Sprite sprite : list) {
+	    this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
+	}
+	
+    }
 
-
-
-
-    
 
     // a whole slew of other methods
     // but fr there should be a method for every event that can occur

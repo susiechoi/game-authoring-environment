@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
-		
+
 	private TextField myNameField; 
 	private ComboBox<String> myImageDropdown;
 	private Slider mySpeedSlider;
@@ -28,7 +28,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	private Slider myValueSlider; 
 	private Slider myUpgradeCostSlider; 
 	private Slider myUpgradeValueSlider; 
-	
+
 	protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName);
 	}
@@ -65,12 +65,12 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		myInitialHealthSlider = enemyInitialHealthSlider; 
 		HBox initialHealth = getUIFactory().setupSliderWithValue("enemyInitialHealthSlider", enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 
 		vb.getChildren().add(initialHealth);
-		
+
 		Slider enemyHealthImpactSlider = getUIFactory().setupSlider("enemyImpactSlider",  getMyMaxHealthImpact()); 
 		myHealthImpactSlider = enemyHealthImpactSlider; 
 		HBox enemyImpact = getUIFactory().setupSliderWithValue("enemyImpactSlider", enemyHealthImpactSlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 		vb.getChildren().add(enemyImpact);
-		
+
 		Slider enemyValueSlider = getUIFactory().setupSlider("EnemyValueSlider", getMyMaxPrice());
 		myValueSlider = enemyValueSlider;
 		HBox enemyValue = getUIFactory().setupSliderWithValue("EnemyValueSlider", enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
@@ -86,13 +86,19 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
 		vb.getChildren().add(enemyUpgradeValue);
 
-		Button backButton = setupBackButtonSuperclass();
-		
+		Button backButton = setupBackButton();
+
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
+			if (myNameField.getText().equals(getMyDefaultName())) {
+				myNameField.setText(getView().getErrorCheckedPrompt("ReplaceDefaultName"));
+			}
+			else {
+				getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
+				getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
+			}
 		});
-		
+
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
 
@@ -101,29 +107,31 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		sp.setFitToHeight(true);
 		return sp;
 	}
-	
+
 	/**
 	 * The following methods are getters for features/fields on the Screen
 	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
 	 */
-	
+
 	protected void populateFieldsWithData() {
 		myNameField.setText(getMySelectedObjectName());
-		
+
 		setEditableOrNot(myNameField, getIsNewObject());
-		
-		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
-		
+
+		//		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
+
 		getUIFactory().setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
-		
+
 		getUIFactory().setSliderToValue(myHealthImpactSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
-			
+
+		getUIFactory().setSliderToValue(myInitialHealthSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myInitialHealth"));
+
 		getUIFactory().setSliderToValue(myValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
-		
-		getUIFactory().setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
-		
-		getUIFactory().setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
+
+		//		getUIFactory().setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
+		//		
+		//		getUIFactory().setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
 	}
-	
+
 
 }

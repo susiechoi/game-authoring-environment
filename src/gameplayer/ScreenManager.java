@@ -1,6 +1,11 @@
 package gameplayer;
 
+import java.awt.Point;
+import java.util.List;
+
 import engine.Mediator;
+import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -27,10 +32,10 @@ public class ScreenManager extends View{
     private Integer level;
     private Integer health;
     private Integer currency;
-    
+
     private final Mediator MEDIATOR;
     private final StageManager STAGE_MANAGER;
-    private GameScreen CURRENT_SCREEN;
+    private GameScreen GAME_SCREEN;
     private String GAME_TITLE;
     private final PromptReader PROMPTS;
     private double DEFAULT_HEIGHT;
@@ -46,7 +51,7 @@ public class ScreenManager extends View{
 	findSettings();
 	//setup rest of values once file reader is finished
     }
-    
+
 
 
     //TODO set Style sheets
@@ -57,11 +62,11 @@ public class ScreenManager extends View{
     }
 
     public void loadGameScreenNew() {
-	GameScreen gameScreen = new GameScreen(this, PROMPTS);
-	Parent gameScreenRoot = gameScreen.getScreen();
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
     }
-    
+
     public void loadGameScreenContinuation() {
 
     }
@@ -80,25 +85,40 @@ public class ScreenManager extends View{
 
     }
 
-    public void updateCurrency(Integer newCurrency) {
-        currency = newCurrency;
-    }
 
     public void updateHealth(Integer newHealth) {
-        health = newHealth;
+	GAME_SCREEN.updateHealth(newHealth);
     }
 
     public void updateScore(Integer newScore) {
-        score = newScore;
+	GAME_SCREEN.updateScore(newScore);
     }
 
     public void updateLevelCount(Integer newLevelCount) {
-        level = newLevelCount;
+	GAME_SCREEN.updateLevel(newLevelCount);
+    }
+
+    public void display(FrontEndSprite sprite) {
+	GAME_SCREEN.displaySprite(sprite);
     }
 
 
-
-
+    public void remove(FrontEndSprite sprite) {
+	GAME_SCREEN.remove(sprite);
+    }
+    
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	GAME_SCREEN.setAvailbleTowers(availableTowers);
+    }
+    
+    public void updateCurrency(Integer newBalence) {
+	GAME_SCREEN.updateCurrency(newBalence);
+    }
+    
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) {
+	return MEDIATOR.placeTower(position, tower.getName());
+    }
+    
 
 
 }

@@ -23,16 +23,17 @@ import engine.path.Path;
 public class Level {
 
 	private final int myNumber;
-	private List<Wave> myWaves;
-	private Path myPath;
+	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
+	private Map<Path, List<Wave>> myWaves;
 	private Map<String, Enemy> myEnemies;
 
 	public Level(int number) {
 		myNumber = number;
 		myTowers = new HashMap<String, Tower>();
 		myEnemies = new HashMap<String, Enemy>();
-		myWaves = new ArrayList<Wave>();
+		myWaves = new HashMap<Path, List<Wave>>();
+		myPaths = new ArrayList<Path>();
 	} 
 	
 	/**
@@ -44,7 +45,7 @@ public class Level {
 	public Level(Level copiedLevel) {
 		myNumber = copiedLevel.getNumber() + 1; 
 		myWaves = copiedLevel.getWaves(); 
-		myPath = copiedLevel.getPath(); 
+		myPaths = copiedLevel.getPaths(); 
 		myTowers = copiedLevel.getTowers();
 		myEnemies = copiedLevel.getEnemies();
 	}
@@ -58,8 +59,8 @@ public class Level {
 	}
 	
 	// TODO 
-	public void addPath() {
-		myPath = new Path(); 
+	public void addPath(Path path) {
+		myPaths.add(path); 
 	}
 			
 	/**
@@ -132,14 +133,25 @@ public class Level {
 		return listToReturn; 
 	}
 
-
 	/**
 	 * Adds a wave to the level
 	 * 
 	 * @param wave: a new wave to be added
 	 */
-	public void addWave(Wave wave) {
-		myWaves.add(wave);
+	public void addWave(Path path, Wave wave) {
+		List<Wave> waves = myWaves.get(path);
+		waves.add(wave);
+		myWaves.put(path, waves);
+	}
+	
+	/**
+	 * Returns a list of waves for a specified path in the level 
+	 * 
+	 * @param path: the path object that the wave is specific to
+	 * @return List<Wave>: A list of wave objects in the level on the path
+	 */
+	public List<Wave> getWaves(Path path) {
+	    return myWaves.get(path);
 	}
 
 	/**
@@ -148,20 +160,22 @@ public class Level {
 	 * @return boolean: true if the level is finished, false otherwise
 	 */
 	public boolean isFinished() {
-		for (Wave levelWave : myWaves) {
+	    for (Path path : myWaves.keySet()) {
+		for (Wave levelWave : myWaves.get(path)) {
 			if (!levelWave.isFinished()) {
 				return false;
 			}
 		}
+	    }
 		return true; 
 	}
 
 	/**
 	 * Returns any new Enemy that is supposed to spawn at the given time.
-	 * @param universalTime
+	 * @param time
 	 * @return
 	 */
-	public Enemy getNewEnemy(int universalTime) {
+	public Enemy getNewEnemy(double time) {
 		//TODO
 		return null;
 	}
@@ -170,23 +184,23 @@ public class Level {
 		return null;
 	}
 	
-	private int getNumber() {
+	protected int getNumber() {
 		return myNumber; 
 	}
 	
-	private List<Wave> getWaves() {
+	protected Map<Path, List<Wave>> getWaves() {
 		return myWaves; 
 	}
 	
-	private Path getPath() {
-		return myPath; 
+	protected List<Path> getPaths() {
+		return myPaths; 
 	}
 	
-	private Map<String, Tower> getTowers() {
+	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
 	
-	private Map<String, Enemy> getEnemies() {
+	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
 	}
 

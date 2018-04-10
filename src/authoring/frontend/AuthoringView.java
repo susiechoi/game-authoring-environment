@@ -24,7 +24,9 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
 
@@ -51,7 +53,7 @@ public class AuthoringView extends View {
     }
     
     public void loadInitialScreen() {
-    	myStageManager.switchScreen((new AdjustWaveScreen(this)).getScreen());
+    	myStageManager.switchScreen((new StartScreen(this)).getScreen());
     }
     
     @Override
@@ -78,7 +80,6 @@ public class AuthoringView extends View {
 	    System.out.println("next class: " + nextScreenClass);
 	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 	    if(constructor.getParameterTypes().length == 2) {
-		System.out.println("makin it to the 2 parameter");
 		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 		myStageManager.switchScreen(nextScreen.getScreen());
 	    }
@@ -111,11 +112,13 @@ public class AuthoringView extends View {
      */
     public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
 	    String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
-	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
+	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
+	    double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException {
 	try {
 		myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 			projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
-			launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+			launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange,
+			towerValue, towerUpgradeCost, towerUpgradeValue);
 	} catch (MissingPropertiesException e) {
 		loadErrorScreen("NoImageFile");
 	} catch (ObjectNotFoundException e) {
@@ -136,14 +139,6 @@ public class AuthoringView extends View {
 	} catch (ObjectNotFoundException e) {
 		loadErrorScreen("NoObject");
 	}
-    }
-
-    //TODO 
-    /**
-     * Method through which information can be sent to instantiate or edit a Path in Authoring Model;
-     */
-    public void makePath() {
-	myController.makePath(myLevel);
     }
 
 
@@ -215,5 +210,10 @@ public class AuthoringView extends View {
 	public int getLevel() {
 		return myLevel; 
 	}
+
+	public void makePath(List<Point2D> coordinates, GridPane grid) {
+		myController.makePath(myLevel, coordinates, grid);
+	}
+	
 
 }

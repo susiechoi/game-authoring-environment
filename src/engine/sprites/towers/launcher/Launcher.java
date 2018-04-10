@@ -1,11 +1,11 @@
 package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
-import engine.sprites.ShootingSprites;
-import engine.sprites.properties.DamageProperty;
+import engine.sprites.Sprite;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
+import javafx.scene.image.Image;
 
 /**
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
@@ -53,16 +53,19 @@ public class Launcher extends Manager<Projectile>{
      * Launch method will make sure that enough time has passed since last shot and then fire a new projectile
      * 
      */
-    //TODO need to let frontend know that this projectile was added?
-    public void launch() {
+    //TODO implement to shoot at where enemy is going
+    public Projectile launch(Sprite target, double shooterX, double shooterY) {
     		this.addToActiveList(myProjectile);
+    		double radianOffset = Math.atan((target.getX()-shooterX)/(target.getY()-shooterY));
+    		myProjectile.setRotate(radianOffset);
+    		return myProjectile;
     }
     
     public boolean hasReloaded() {
-    		long currTime = System.nanoTime();
+    	long currTime = System.nanoTime();
      	long timeSinceLastShot = currTime - timeLastFired;
      	if(timeSinceLastShot >= myFireRate.getProperty()) {
-     		timeSinceLastShot = currTime;
+     		timeLastFired = currTime;
      		return true;
      	}
 		return false;
@@ -71,9 +74,25 @@ public class Launcher extends Manager<Projectile>{
     public double upgradeDamage(double balance) {
 	return myProjectile.upgradeDamage(balance);
     }
+    
+    public double getRange() {
+    	return myRange.getProperty(); 
+    }
 
-    public DamageProperty getDamageProperty() {
-    	return myProjectile.getDamageProperty();
+    public Image getProjectileImage() {
+    	return myProjectile.getImageView().getImage(); 
+    }
+    
+    public double getProjectileDamage() {
+    	return myProjectile.getDamage(); 
+    }
+    
+    public double getProjectileSpeed() {
+    	return myProjectile.getSpeed(); 
+    }
+
+    public String getDamageName() {
+    	return myProjectile.getDamageName();
     }
     public FireRateProperty getFireRateProperty() {
     	return myFireRate;
@@ -88,8 +107,8 @@ public class Launcher extends Manager<Projectile>{
     public double getFireRate() {
     	return myFireRate.getProperty();
     }
-    public double getRange() {
-    	return myRange.getProperty();
-    }
 
+    public String getFireRateName() {
+    	return myFireRate.getName();
+    }
 }

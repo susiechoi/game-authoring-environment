@@ -26,7 +26,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -65,6 +64,14 @@ public class UIFactory {
 	newButton.setId(id);
 	return newButton; 
     }
+    
+    public Button makeImageViewButton(String id, ImageView buttonImage) {
+	Button newButton = new Button();
+	newButton.setGraphic(buttonImage);
+	newButton.setId(id);
+	return newButton; 
+    }
+    
     public TextField makeTextField(String description) {
 	TextField tf = new TextField();
 	tf.setId(description);
@@ -294,7 +301,7 @@ public class UIFactory {
 		backAndApplyButton.getChildren().add(apply);
 		return backAndApplyButton; 
 	}
-    
+
     /**
      * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
      * @param combobox - combobox to be set to a value
@@ -314,6 +321,4 @@ public class UIFactory {
 	Double value = Double.parseDouble(valueAsString);
 	slider.setValue(value);
     }
-
-
 }
