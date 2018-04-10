@@ -58,6 +58,7 @@ public class GamePanel extends Panel{
 	    Point position = new Point((int)x,(int)y);
 	    try {
 		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
+		System.out.println(newTower.getImageView().getX() + " #andrewProblem " + newTower.getImageView().getY());
 		if(newTower!= null) {
 		    addTowerImageViewAction(newTower);
 		    towersPlaced.add(newTower);

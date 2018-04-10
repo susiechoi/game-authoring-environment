@@ -60,10 +60,8 @@ public class Mediator {
      * Constructs Mediator object and sets all fields to null.
      * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
      */
-    public Mediator() {
-	myScreenManager = null;
-	myGameEngine = null;
-	myPlayController = null;
+    public Mediator(PlayController p) {
+	myPlayController = p;
 //	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
 //	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
     }
@@ -103,7 +101,13 @@ public class Mediator {
      * @param filename	name of file
      */
     public void startPlay(String filename) {
-	myPlayController.newPlay(filename);
+	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+	StackTraceElement element = stackTrace[2];
+	System.out.println("I was called by a method named:" + element.getMethodName());
+	System.out.println("That method is in class:" + element.getClassName());
+	//myPlayController.newPlay(filename);
+	System.out.println("set authoring call in mediator");
+	myPlayController.setAuthoring();
     }
     
     /**
@@ -144,6 +148,7 @@ public class Mediator {
     }
     
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	System.out.println("AVAIL");
 	    myScreenManager.setAvailableTowers(availableTowers);
     }
 
