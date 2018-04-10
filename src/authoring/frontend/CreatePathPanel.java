@@ -21,6 +21,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class CreatePathPanel extends PathPanel implements Panel{
+
 	public static final int PANEL_PATH_SIZE = 90;
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 
@@ -48,9 +49,9 @@ public class CreatePathPanel extends PathPanel implements Panel{
 
 	@Override
 	public Button getApplyButton() {
-		System.out.println(applyButton.getOnAction());
 		return applyButton;
 	}
+
 
 	public void makePanel() { //separate into smaller methods
 
@@ -148,7 +149,6 @@ public class CreatePathPanel extends PathPanel implements Panel{
 
 		applyButton = getUIFactory().makeTextButton("", "Apply");
 		applyButton.setId("Heeeelllpppp");
-
 
 		backButton = setupBackButton();
 

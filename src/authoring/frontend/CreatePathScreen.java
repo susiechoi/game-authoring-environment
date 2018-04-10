@@ -53,8 +53,6 @@ public class CreatePathScreen extends PathScreen {
 	}
 
 
-
-
 	//fix error checking!!!!!
 	//fix checkPathConnected 
 	private void setGridApplied() {

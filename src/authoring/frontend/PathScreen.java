@@ -25,6 +25,9 @@ public abstract class PathScreen extends AdjustScreen {
 	}
 	protected void setPathPanel(PathPanel panelnew) {
 	    panel = panelnew;
+	    pathRoot.getChildren().clear();
+	    pathRoot.getChildren().add(panel.getPanel());
+	    pathRoot.getChildren().add(pathGrid);
 	}
 	protected PathPanel getPathPanel() {
 	    return panel;

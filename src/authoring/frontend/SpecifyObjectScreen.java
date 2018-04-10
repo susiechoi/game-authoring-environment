@@ -7,6 +7,7 @@ package authoring.frontend;
 
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -18,15 +19,22 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
+	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
+
+	private String myDefaultName; 
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
-
 	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
 		myObjectDescription = objectDescription;
 		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
+		try {
+			myDefaultName = getView().getPropertiesReader().findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoConstants");
+		}
 	}
-
+	
 	/**
 	 * Makes the screen with the option of creating a new object OR editing an existing one 
 	 * @return Parent/root to attach to Scene that will be set on the stage
@@ -43,6 +51,9 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
+		applyButton.setOnAction(e -> {
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
+		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
@@ -66,7 +77,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction((event) -> {
-		    getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton");
+		    getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton", myDefaultName);
 		});
 		return newObjectButton;
 	}
@@ -87,5 +98,4 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected String getDescription() {
 		return myObjectDescription; 
 	}
-
 }

@@ -57,6 +57,8 @@ public class CreatePathGrid {
 	private ArrayList<Point2D> startPoints = new ArrayList<Point2D>();
 	private ArrayList<Point2D> endPoints = new ArrayList<Point2D>();
 	private ArrayList<Point2D> pathPoints = new ArrayList<Point2D>();
+	private DraggableImage myCurrentClicked;
+
 
 	protected GridPane makePathGrid() {
 		grid = new GridPane();
@@ -246,13 +248,22 @@ public class CreatePathGrid {
 	public void setUpForWaves(EventHandler<MouseEvent> action) {
 		makeUnDraggable();
 		for(DraggableImage image : draggableImagesOnScreen) {
-			image.getPathImage().setOnMouseClicked(e -> action.handle(e));
+			image.getPathImage().setOnMouseClicked(e -> 
+			{
+			myCurrentClicked = image;
+			action.handle(e);
+			});
 		}
 	}
 	private void makeUnDraggable() {
 		for(DraggableImage image : draggableImagesOnScreen) {
 			image.disableDraggable();
 		}
+	}
+
+	
+	protected DraggableImage getMostRecentlyClicked() {
+	    return myCurrentClicked;
 	}
 
 	public void setBackgroundImage(String backGroundFileName) {

@@ -31,7 +31,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		super(view);
 		setConstants(); 
 		mySelectedObjectName = selectedObjectName; 
-		mySelectedObjectName = "Default";
 		myIsNewObject = mySelectedObjectName.equals(myDefaultObjectName);
 	}
 
