@@ -32,7 +32,7 @@ public class Manager<E> {
      * @return
      */
     public List<E> getListOfAvailable(){
-	return available;
+	return  available;
     }
     /**
      * Returns observable list of all active objects

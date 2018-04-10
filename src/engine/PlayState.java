@@ -115,8 +115,8 @@ public class PlayState implements GameData {
 
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	//myResources = placedTower.purchase(myResources);
-	//myMediator.updateCurrency(myResources);
+//	myResources = placedTower.purchase(myResources);
+//	myMediator.updateCurrency(myResources);
 	return placedTower;
     }
 
