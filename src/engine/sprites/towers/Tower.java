@@ -48,6 +48,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		propertyStats.put(health.getName(), health.getProperty());
 		propertyStats.put(value.getName(), value.getProperty());
 		propertyStats.put(this.getDamageName(), this.getDamage());
+
 	}
 
 	/**
@@ -120,12 +121,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
 	public Map<String, Double> getTowerStats(){
 		return propertyStats;
-	}
-
-	@Override
-	public Map<String, String> getTowerStats() {
-	    // TODO Auto-generated method stub
-	    return null;
 	}
 
 	@Override

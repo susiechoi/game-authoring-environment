@@ -29,11 +29,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName) {
 		super(view);
+		setConstants(); 
 		mySelectedObjectName = selectedObjectName; 
 		mySelectedObjectName = "Default";
-//		System.out.println("my selected obj name is "+selectedObjectName);
 		myIsNewObject = mySelectedObjectName.equals(myDefaultObjectName);
-		setConstants();
 	}
 
 	private void setConstants() {
@@ -78,7 +77,11 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	
 	protected void setEditableOrNot(TextField name, boolean isNewObject) {
-		if (isNewObject) name.setEditable(false);
+		if (!isNewObject) name.setEditable(false);
+	}
+	
+	protected String getMyDefaultName() {
+		return myDefaultObjectName; 
 	}
 	
 	/** 

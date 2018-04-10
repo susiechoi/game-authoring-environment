@@ -144,6 +144,12 @@ public class Level {
 		myWaves.put(path, waves);
 	}
 	
+	/**
+	 * Returns a list of waves for a specified path in the level 
+	 * 
+	 * @param path: the path object that the wave is specific to
+	 * @return List<Wave>: A list of wave objects in the level on the path
+	 */
 	public List<Wave> getWaves(Path path) {
 	    return myWaves.get(path);
 	}
@@ -178,7 +184,7 @@ public class Level {
 		return null;
 	}
 	
-	private int getNumber() {
+	protected int getNumber() {
 		return myNumber; 
 	}
 	
@@ -190,11 +196,11 @@ public class Level {
 		return myPaths; 
 	}
 	
-	public Map<String, Tower> getTowers() {
+	protected Map<String, Tower> getTowers() {
 		return myTowers;
 	}
 	
-	public Map<String, Enemy> getEnemies() {
+	protected Map<String, Enemy> getEnemies() {
 		return myEnemies; 
 	}
 

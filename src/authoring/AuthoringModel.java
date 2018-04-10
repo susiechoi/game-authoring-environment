@@ -88,10 +88,8 @@ public class AuthoringModel implements GameData {
 		if (currentLevel.containsEnemy(name) && newObject) {
 			throw new NoDuplicateNamesException(name);
 		}
-		else {
-			if (!newObject) {
-				throw new ObjectNotFoundException(name);
-			}
+		else if (!currentLevel.containsEnemy(name) && !newObject) {
+			throw new ObjectNotFoundException(name);
 		}
 		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
 		Enemy newEnemy = new EnemyBuilder().construct(name, enemyImage, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
@@ -113,10 +111,8 @@ public class AuthoringModel implements GameData {
 		if (currentLevel.containsTower(name) && newObject) {
 			throw new NoDuplicateNamesException(name);
 		}
-		else {
-			if (!newObject) {
-				throw new ObjectNotFoundException(name);
-			}
+		else if (!currentLevel.containsTower(name) && !newObject) {
+			throw new ObjectNotFoundException(name);
 		}
 		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
@@ -145,7 +141,7 @@ public class AuthoringModel implements GameData {
 	 */
 
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
-	
+
 	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {
 		myGrid = grid;
 		myPath = new PathBuilder().construct(level, coordinates);
@@ -331,11 +327,11 @@ public class AuthoringModel implements GameData {
 	 * Adds a new level to the authored game
 	 */
 	public int addNewLevel() {
-		int newLevelNumber = myLevels.size()+1; 
+		int newLevelNumber = autogenerateLevel(); 
 		myLevels.put(newLevelNumber, new Level(newLevelNumber));
 		return newLevelNumber; 
 	}
-	
+
 	/**
 	 * Returns a list of level numbers as strings currently in the authored game
 	 * 

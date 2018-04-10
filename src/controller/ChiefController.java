@@ -35,6 +35,7 @@ public class ChiefController {
      */
     public void play() {
 	new PlayController(DEFAULT_LANGUAGE, new StageManager(STAGE));
+	PlayController.()
     }
     
     /**
