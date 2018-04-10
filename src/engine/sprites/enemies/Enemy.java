@@ -44,7 +44,7 @@ public class Enemy extends Sprite{
 	myHealth = health;
 	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
-	myHealthImpact = myDamage.getDamage();
+//	myHealthImpact = myDamage.getDamage();
 	myValue = value;
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	myPath = path;
@@ -63,7 +63,7 @@ public class Enemy extends Sprite{
     	myIntersecter = copiedEnemy.getIntersecter(); 
     	myHealth = copiedEnemy.getHealth(); 
     	myDamage = copiedEnemy.getDamageProperty();
-    	myHealthImpact = myDamage.getDamage(); 
+   // 	myHealthImpact = myDamage.getDamage(); 
     	myValue = copiedEnemy.getValue();
     	myPath = copiedEnemy.getPath(); 
     	mySpeed = copiedEnemy.getSpeed();

@@ -1,5 +1,6 @@
 package engine.sprites.towers;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import engine.sprites.ShootingSprites;
@@ -48,6 +49,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myHealth = health;
+		propertyStats = new HashMap<String, Double>();
 		propertyStats.put(health.getName(), health.getProperty());
 		propertyStats.put(value.getName(), value.getProperty());
 		propertyStats.put(this.getDamageName(), this.getDamage());
@@ -62,7 +64,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		myLauncherRange = launcher.getRange(); 
 		myValue = value;
 		myTowerValue = value.getProperty();
-		System.out.println("TOWER WAS MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthValue+", "+myProjectileDamage+", "+myLauncherRange);
 	}
 
 	/**
