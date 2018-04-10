@@ -10,9 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class WavePanel extends PathPanel{
     private String myPathString;
+    private VBox myRoot;
     private ComboBox<String> myEnemyDropdown;
     private TextField myNumberTextField;
     private Integer myEnemyNumber;
@@ -24,9 +27,12 @@ public class WavePanel extends PathPanel{
 	setUpPanel();
     }
     public void setUpPanel() {
+	myRoot = new VBox();
 	List<String> enemyOptions = new ArrayList<>(); //TODO!
 	myEnemyDropdown = getUIFactory().makeTextDropdown("", getView().getCurrentObjectOptions("Enemy"));
+	HBox enemyDropdownPrompted = getUIFactory().addPromptAndSetupHBox("", myEnemyDropdown, getView().getErrorCheckedPrompt("ChooseEnemy"));
 	myNumberTextField = new TextField();
+	HBox textFieldPrompted = getUIFactory().addPromptAndSetupHBox("", myNumberTextField, "ChooseEnemyNumber");
 	Button backButton = setupBackButton();
 	Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 	applyButton.setOnAction(e -> {
@@ -34,6 +40,7 @@ public class WavePanel extends PathPanel{
 	    getView().addWaveEnemy(getView().getLevel(), myPathString, Integer.parseInt(myWaveNumber), 
 		    myEnemyDropdown.getValue(), myEnemyNumber);
 	});
+	myRoot.getChildren().addAll(enemyDropdownPrompted, textFieldPrompted, backButton, applyButton);
     }
     private void errorcheckResponses() {
 	if(myEnemyDropdown.getValue() == null ) {
@@ -59,8 +66,7 @@ public class WavePanel extends PathPanel{
     }
     @Override
     protected Node getPanel() {
-	// TODO Auto-generated method stub
-	return null;
+	return myRoot;
     }
     @Override
     protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
