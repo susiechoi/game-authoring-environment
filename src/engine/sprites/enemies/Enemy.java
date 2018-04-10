@@ -2,10 +2,12 @@ package engine.sprites.enemies;
 
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
+import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.geometry.Point2D;
 
@@ -21,7 +23,7 @@ import javafx.scene.image.Image;
  * @date 4/8/18
  *
  */
-public class Enemy extends Sprite{
+public class Enemy extends ShootingSprites{
 
 	private String myName; 
 	private Image myImage; 
@@ -37,8 +39,8 @@ public class Enemy extends Sprite{
 //    private double myKillUpgradeCost;
 //    private double myKillUpgradeValue; 
 
-    public Enemy(String name, Image image, double speed, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
-	super(name, image);
+    public Enemy(String name, Image image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
+	super(name, image, size, launcher);
 	myName = name; 
 	myImage = image; 
 	myHealth = health;
