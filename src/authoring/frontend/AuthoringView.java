@@ -53,7 +53,7 @@ public class AuthoringView extends View {
 	}
 
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new AdjustWaveScreen(this, "1")).getScreen());
+		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
 	}
 
 	@Override

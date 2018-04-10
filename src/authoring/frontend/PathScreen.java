@@ -20,39 +20,40 @@ public abstract class PathScreen extends AdjustScreen {
 
 	private StackPane pathRoot;
 	private GridPane pathGrid;
-	private Node pathPanel;
+	//private Node pathPanel;
 	private PathPanel panel;
 	private CreatePathGrid grid;
 
-	protected PathScreen(AuthoringView view) {
-		super(view);
-		setStyleSheet(DEFAULT_OWN_STYLESHEET);
-		grid = new CreatePathGrid();
-		pathGrid = grid.makePathGrid();
+	protected PathScreen(AuthoringView view) {	
+	    super(view);
 	}
 	protected void setPanel(PathPanel panelnew) {
 	    panel = panelnew;
 	}
-
+	protected PathPanel getPanel() {
+	    return panel;
+	}
 	@Override
 	public Parent makeScreenWithoutStyling() {
+		setStyleSheet(DEFAULT_OWN_STYLESHEET);
+		grid = new CreatePathGrid();
+		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
 		//		Scene myScene = new Scene(pathRoot, 1500, 900);
 
 		grid = new CreatePathGrid();
+		initializeGridSettings(grid);
 		pathGrid = grid.makePathGrid();
-
-		panel = new CreatePathPanel(getView());
 		panel.makePanel();
 
 		pathRoot.getChildren().add(pathGrid);
-		pathRoot.getChildren().add(pathPanel);
+		pathRoot.getChildren().add(panel.getPanel());
 		
 		StackPane.setAlignment(pathGrid, Pos.CENTER_LEFT);
-		StackPane.setAlignment(pathPanel, Pos.CENTER_RIGHT);
+		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
 
 		setGridSizing();
-		initializeGridSettings(grid);
+		
 
 		return pathRoot; 	
 	}

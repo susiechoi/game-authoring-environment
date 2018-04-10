@@ -43,8 +43,14 @@ public class CreatePathPanel extends PathPanel {
 
     public CreatePathPanel(AuthoringView view) {
 	super(view);
+	makePanel();
     }
 
+    @Override
+    public Button getApplyButton() {
+	System.out.println(applyButton.getOnAction());
+	return applyButton;
+    }
 
     public void makePanel() { //separate into smaller methods
 
@@ -141,11 +147,11 @@ public class CreatePathPanel extends PathPanel {
 //	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
 
 	applyButton = getUIFactory().makeTextButton("", "Apply");
+	//applyButton.setOnAction(e -> System.out.println("this workssss"));
 
 	backButton = setupBackButton();
 
 	pathSizeButtons = makeSizingButtons();
-	pathSizeButtons.getChildren().add(pathSizeButtons);
 
 	dragAndDropPanel.getChildren().addAll(panelTitle, startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage);
 	buttonPanel.getChildren().addAll(pathSizeButtons, changeImageButton, applyButton, backButton);
@@ -175,9 +181,6 @@ public class CreatePathPanel extends PathPanel {
 	return pathSizeButtons;
     }
 
-    public Button getApplyButton() {
-	return applyButton;
-    }
     public Node getPanel() {
 	return pathPanel;
     }

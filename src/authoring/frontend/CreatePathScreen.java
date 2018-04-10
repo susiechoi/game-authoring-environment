@@ -16,66 +16,85 @@ import javafx.scene.layout.StackPane;
 
 public class CreatePathScreen extends PathScreen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
+    public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
-	private StackPane pathRoot;
-	private GridPane pathGrid;
-	private Node pathPanel;
-	private CreatePathPanel panel;
-	private CreatePathGrid grid;
-	private AuthoringView myView;
+    private StackPane pathRoot;
+    private GridPane pathGrid;
+    private Node pathPanel;
+    private CreatePathPanel panel;
+    private CreatePathGrid grid;
+    private AuthoringView myView;
 
-	protected CreatePathScreen(AuthoringView view) {
-		super(view);
-	}
+    protected CreatePathScreen(AuthoringView view) {
+	super(view);
+    }
+
+    //		Button backgroundButton = (Button) panel.getBackgroundButton();
+    //		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+    //			@Override
+    //			public void handle(ActionEvent e) {
+    //				FileChooser fileChooser = new FileChooser();
+    //				fileChooser.setTitle("View Pictures");
+    //				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+    //				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+    //				File file = fileChooser.showOpenDialog(new Stage());
+    //				grid.setBackgroundmage(file);
+    //			}
+    //		});
 
 
-	private void setGridApplied() {
-		Button applyButton = panel.getApplyButton();
-		applyButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
-				System.out.println(grid.getStartingPosition().size());
-				if (grid.getStartingPosition().size() == 0) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Path Cutomization Error");
-					alert.setContentText("Your path has no starting blocks");
-					alert.show();
-				}
-				for (int key: coordMap.keySet()) {
-					System.out.println(coordMap.get(key).get(0));
-					 if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
-						System.out.println("TRUE");
-						getView().makePath(grid.getCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
-					} else {
-						System.out.println("FALSE");
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Path Cutomization Error");
-						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
-						alert.show();
-					}
-				}
-			}
-		});
-	}
+    //fix error checking!!!!!
+    //fix checkPathConnected 
+    private void setGridApplied() {
+	Button applyButton = getPanel().getApplyButton();
+	applyButton.setOnAction( e -> {
+	   System.out.println("here");
+	  {
+		System.out.println("making it to event handler");
+		HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
+		if (grid.getStartingPosition().size() == 0) {
+		    Alert alert = new Alert(AlertType.INFORMATION);
+		    alert.setTitle("Path Cutomization Error");
+		    alert.setContentText("Your path has no starting blocks");
+		    alert.showAndWait();
+		}
+		for (int key: coordMap.keySet()) {
+		    System.out.println(coordMap.get(key).get(0));
+		    if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
+			System.out.println("TRUE");
+			getView().makePath(grid.getAbsoluteCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
+		    } else {
+			System.out.println("FALSE");
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Path Cutomization Error");
+			alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
+			alert.showAndWait();
+		    }
+		}
+	    }
+	});
+	Button trybutton = getPanel().getApplyButton();
 
-	@Override
-	protected Parent populateScreenWithFields() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    }
 
-	@Override
-	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
+    @Override
+    protected Parent populateScreenWithFields() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	}
+    @Override
+    protected void populateFieldsWithData() {
+	// TODO Auto-generated method stub
 
-	@Override
-	public void initializeGridSettings(CreatePathGrid grid) {
-	    setGridApplied();
-	    setPanel(new CreatePathPanel(getView()));
-	}
-	
+    }
+
+    @Override
+    public void initializeGridSettings(CreatePathGrid grid) {
+	setPanel(new CreatePathPanel(getView()));
+	setGridApplied();
+
+
+    }
+
 }

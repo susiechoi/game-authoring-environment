@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import frontend.Screen;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public abstract class PathPanel extends AuthoringScreen{
     public static final String DEFAULT_PLUS_IMAGE = "file:images/plus.png";
@@ -39,6 +41,8 @@ public abstract class PathPanel extends AuthoringScreen{
 	return hb;
     }
     protected abstract void makePanel();
+    protected abstract Button getApplyButton();
+    protected abstract Node getPanel();
 
 
 }
