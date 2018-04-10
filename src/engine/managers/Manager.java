@@ -31,16 +31,16 @@ public class Manager<E> {
      * 
      * @return
      */
-    public ObservableList<E> getObservableListOfAvailable(){
-	return (ObservableList<E>) available;
+    public List<E> getListOfAvailable(){
+	return available;
     }
     /**
      * Returns observable list of all active objects
      * 
      * @return
      */
-    public ObservableList<E> getObservableListOfActive(){
-	return (ObservableList<E>) active;
+    public List<E> getListOfActive(){
+	return active;
     }
 
     public void addToActiveList(E sprite) {

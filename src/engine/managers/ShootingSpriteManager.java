@@ -25,7 +25,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     public List<Sprite> checkForCollisions(List<ShootingSprites> passedSprites) {
     	myRoundScore = 0;
 	List<Sprite> spritesToBeRemoved = new ArrayList<>();
-    		for (ShootingSprites activeSprite: this.getObservableListOfActive()) {
+    		for (ShootingSprites activeSprite: this.getListOfActive()) {
     			for (ShootingSprites passedActor: passedSprites) {
     			    List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
     			    spritesToBeRemoved.addAll(deadSprites);
@@ -38,7 +38,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 
     public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
     		List<Projectile> newProjectiles = new ArrayList<>();
-    		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
+    		for (ShootingSprites shootingSprite: this.getListOfActive()) {
     			for (ShootingSprites passedSprite: passedSprites) {
     				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
     					Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
@@ -52,7 +52,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     }
     
 	public void moveProjectiles() {
-		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
+		for (ShootingSprites shootingSprite: this.getListOfActive()) {
 			for (Projectile projectile: shootingSprite.getProjectiles()) {
 				projectile.move();
 			}
