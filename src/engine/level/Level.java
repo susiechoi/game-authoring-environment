@@ -92,6 +92,11 @@ public class Level {
 		return myTowers.get(name);
 	}
 
+	/**
+	 * Returns a list of all towers available in the level
+	 * 
+	 * @return List<String>: all the towers available in the level
+	 */
 	public List<String> getAllTowers() {
 		List<String> listToReturn = new ArrayList<String>(); 
 		listToReturn.addAll(myTowers.keySet()); 

@@ -16,15 +16,15 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
     private String myGameName;
     
     protected CustomizationChoicesScreen(AuthoringView view) {
-	//TODO: figure out how to not get gamename!!!
 	super(view);
-	myGameName = "TEST";
+	myGameName = getView().getGameName(); 
     }
 
     @Override
     public Parent makeScreenWithoutStyling(){
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
+	System.out.println(myGameName+" SHOULD BE THE TITLE");
 	Text heading = getUIFactory().makeScreenTitleText(myGameName);
 	vbox.getChildren().add(heading);
 
