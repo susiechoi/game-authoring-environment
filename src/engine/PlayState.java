@@ -40,43 +40,45 @@ public class PlayState implements GameData {
     private boolean isPaused;
 
     public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
+	System.out.println("playstate constructor");
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
-	List<FrontEndTower> availTowers = new ArrayList<>();
-	for (Tower e: levels.get(0).getTowers().values()) {
-	   availTowers.add((FrontEndTower) e);
-	}
-	mediator.setAvailableTowers(availTowers);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	isPaused = false;
 	myScore = score;
 	myResources = resources;
 	UNIVERSAL_TIME = universalTime;
+	List<FrontEndTower> availTowers = new ArrayList<>();
+	for (Tower t: currentLevel.getTowers().values()) {
+	    availTowers.add((FrontEndTower)t);
+	}
+	myMediator.setAvailableTowers(availTowers);
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
     }
 
-	public void update(double elapsedTime) {
-		UNIVERSAL_TIME+=elapsedTime;
-		List<Sprite> toBeRemoved = new ArrayList<>();
-		toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive()));
-		toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive()));
-		myTowerManager.shoot(myEnemyManager.getObservableListOfActive());
-		myTowerManager.moveProjectiles();
-		myTowerManager.moveTowers();
-		for (Projectile projectile: myTowerManager.shoot(myTowerManager.getObservableListOfActive())) {
-			myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-		}
-		for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getObservableListOfActive())) {
-			myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-		}
-		myEnemyManager.moveProjectiles();
-		myEnemyManager.moveEnemies();
-		currentLevel.getNewEnemy(UNIVERSAL_TIME);
-		myMediator.removeListOfSpritesFromScreen(toBeRemoved);
-
+    public void update(double elapsedTime) {
+	UNIVERSAL_TIME+=elapsedTime;
+	List<Sprite> toBeRemoved = new ArrayList<>();
+	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive()));
+	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive()));
+	myTowerManager.shoot(myEnemyManager.getObservableListOfActive());
+	myTowerManager.moveProjectiles();
+	myTowerManager.moveTowers();
+	for (Projectile projectile: myTowerManager.shoot(myTowerManager.getObservableListOfActive())) {
+	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	}
-    
+	for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getObservableListOfActive())) {
+	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+	}
+	myEnemyManager.moveProjectiles();
+	myEnemyManager.moveEnemies();
+	currentLevel.getNewEnemy(UNIVERSAL_TIME);
+	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
+
+    }
+
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);
@@ -96,16 +98,23 @@ public class PlayState implements GameData {
 	isPaused = false;
     }
 
-    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
-    	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-    myResources = placedTower.purchase(myResources);
-    myMediator.updateCurrency(myResources);
-	return (FrontEndTower) myTowerManager.place(location, towerType);
+    public void setInitialObjects() {
+	List<FrontEndTower> availTowers = new ArrayList<>();
+	for (Tower e: currentLevel.getTowers().values()) {
+	    availTowers.add((FrontEndTower) e);
+	}
     }
 
-//    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-//	myResources -= tower.upgrade(upgradeName);
-//    }
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
+	FrontEndTower placedTower = myTowerManager.place(location, towerType);
+	//myResources = placedTower.purchase(myResources);
+	//myMediator.updateCurrency(myResources);
+	return placedTower;
+    }
+
+    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+    //	myResources -= tower.upgrade(upgradeName);
+    //    }
 
     /**
      * Sells the tower, increments users currency, and removes it from collection and screen
