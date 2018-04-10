@@ -19,6 +19,7 @@ public class Sprite  {
 
     private String myName;
     private ImageView myImageView;
+    private String myImageString;
 
 
     /**
@@ -30,6 +31,7 @@ public class Sprite  {
      */
     public Sprite(String name, String image) {
 	myName = name;
+	myImageString = image;
 	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image)));
 	myImageView.setPreserveRatio(true);
     }
@@ -94,6 +96,11 @@ public class Sprite  {
      */
     public Double getDamage() {
 	return (double) 0;
+    }
+    
+    
+    public String getImageString() {
+	return myImageString;
     }
     
     /**

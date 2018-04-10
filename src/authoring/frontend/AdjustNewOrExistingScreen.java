@@ -73,8 +73,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return myIsNewObject; 
 	}
 	
-
-	
 	protected void setEditableOrNot(TextField name, boolean isNewObject) {
 		if (!isNewObject) name.setEditable(false);
 	}
