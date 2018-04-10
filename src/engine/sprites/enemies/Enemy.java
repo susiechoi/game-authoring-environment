@@ -50,7 +50,7 @@ public class Enemy extends ShootingSprites{
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
-	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthImpact+", "+mySpeed+", "+myKillReward);
+	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND IMAGE "+image);
     }
 
     /**
