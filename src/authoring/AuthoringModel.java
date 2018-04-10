@@ -53,7 +53,7 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
 	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
 	private final String myDefaultName; 
-	
+
 	private String myGameName; 
 	private final PropertiesReader myPropertiesReader;
 	private Settings mySettings; 
@@ -207,10 +207,10 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
 		Field field; 
 		Object fieldValue = null; 
 		if (objectType.equals("Enemy")) {
+			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				for (Field aField : enemy.getClass().getDeclaredFields()) {
@@ -227,6 +227,7 @@ public class AuthoringModel implements GameData {
 			}
 		}
 		else if (objectType.equals("Tower")) {
+			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
 				for (Field aField : tower.getClass().getDeclaredFields()) {
@@ -256,9 +257,9 @@ public class AuthoringModel implements GameData {
 		if (fieldValue.getClass() == Double.class) {
 			return Double.toString((double) fieldValue); 
 		} 
-//		else if (fieldValue.getClass() == Image.class) {
-//			return myPropertiesReader.findKey(DEFAULT_IMAGES_PREFIX+objectType+DEFAULT_IMAGES_SUFFIX, fieldValue.);
-//		}
+		//		else if (fieldValue.getClass() == Image.class) {
+		//			return myPropertiesReader.findKey(DEFAULT_IMAGES_PREFIX+objectType+DEFAULT_IMAGES_SUFFIX, fieldValue.);
+		//		}
 		else return (String) fieldValue; 
 	}
 
