@@ -1,5 +1,7 @@
 package engine.sprites.towers;
 
+import java.util.Map;
+
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
@@ -10,7 +12,7 @@ import javafx.scene.image.Image;
  * 
  * @author Katherine Van Dyk
  */
-public class Tower extends ShootingSprites {
+public class Tower extends ShootingSprites implements FrontEndTower {
 	private Launcher myLauncher;
 	private HealthProperty myHealth;
 	private ValueProperty myValue;
@@ -96,6 +98,36 @@ public class Tower extends ShootingSprites {
 	
 	private ValueProperty getValue() {
 		return myValue; 
+	}
+
+	@Override
+	public Map<String, String> getTowerStats() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	public boolean sell() {
+	    // TODO Auto-generated method stub
+	    return false;
+	}
+
+	@Override
+	public Map<String, Double> getUpgrades() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	public String getSpecificUpgradeInfo(String upgradeName) {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	public boolean upgrade(String upgradeName) {
+	    // TODO Auto-generated method stub
+	    return false;
 	}
 	
 }
