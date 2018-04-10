@@ -78,10 +78,11 @@ public class ScreenManager extends View{
     }
 
     public void loadGameScreenNew() {
-
 	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
+	MEDIATOR.startPlay("blah");
+	System.out.println("screen manager start play called on mediator");
     }
 
     public void loadGameScreenContinuation() {

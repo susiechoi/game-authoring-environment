@@ -33,14 +33,16 @@ public class PlayController {
      * 
      * @param stage: Stage to mount Game Player on 
      */
-    public PlayController(StageManager stageManager, String language) {
-	myMediator = new Mediator();
+    AuthoringModel test;
+    public PlayController(StageManager stageManager, String language, AuthoringModel model) {
+	myMediator = new Mediator(this);
 	myGameEngine = new GameEngine(myMediator);
 	myScreenManager = new ScreenManager(stageManager, language, myMediator);
 	myReader = new AuthoringModelReader();
 	myMediator.setGameEngine(myGameEngine);
 	myMediator.setScreenManager(myScreenManager);
 	myScreenManager.loadInstructionScreen();
+	test = model;
     }
     
     /**
@@ -53,7 +55,16 @@ public class PlayController {
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
 	List<Level> levels = playModel.allLevels();
-	PlayState play = new PlayState(myMediator, levels, 0, 0, 0, levels.get(0).getTowers());
+	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+	play.setInitialObjects();
 	myGameEngine.setPlayState(play);
+    }
+    public void setAuthoring() {
+	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+	StackTraceElement element = stackTrace[2];
+	System.out.println("Set authoring was called by a method named:" + element.getMethodName());
+	System.out.println("That method is in class:" + element.getClassName());
+	PlayState tester = new PlayState(myMediator, test.allLevels(), 0, 0, 0);
+	myGameEngine.setPlayState(tester);
     }
 }

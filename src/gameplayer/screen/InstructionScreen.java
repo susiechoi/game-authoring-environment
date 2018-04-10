@@ -41,7 +41,8 @@ public class InstructionScreen extends Screen {
 	textInstructs.setMaxWidth(Double.MAX_VALUE);
 	
 	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
-	newGameButt.setOnMouseClicked((arg0) ->SCREEN_MANEGER.loadGameScreenNew());
+	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenNew());
+	
 	Button continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
 	
 	//this should only be clickable if there is a save file availible
