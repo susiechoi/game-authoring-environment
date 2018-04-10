@@ -1,4 +1,4 @@
-package authoring;
+package engine;
 
 public class Settings {
 
@@ -10,6 +10,7 @@ public class Settings {
 		myGameName = gameName; 
 		myStartingHealth = startingHealth;
 		myStartingMoney = starting$; 
+//		System.out.println(gameName+" "+startingHealth+" "+starting$);
 	}
 	
 }
