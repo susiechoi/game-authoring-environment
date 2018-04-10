@@ -2,7 +2,6 @@ package engine.managers;
 
 import java.awt.Point;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
@@ -51,11 +50,20 @@ public class TowerManager extends ShootingSpriteManager {
     }
     
     public FrontEndTower place(Point location, String type) {
-    		Tower newTower = myTowerTypeToInstance.get(type);
+	System.out.println(myTowerTypeToInstance.get(type).getHealthProperty().getProperty());
+    		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
     		System.out.println(location.getX() + " " + location.getY());
     		System.out.println(newTower.getX() + " " + newTower.getY());
     		return (FrontEndTower) newTower;
+    }
+
+    /**
+     * Removes the tower from the list of active towers
+     * @param tower : front end tower
+     */
+    public void sell(FrontEndTower tower) {
+	this.getListOfActive().remove(tower);
     }
 }

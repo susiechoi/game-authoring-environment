@@ -1,5 +1,7 @@
 package engine.sprites.enemies;
 
+import java.awt.geom.Point2D;
+
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
 import engine.sprites.ShootingSprites;
@@ -8,11 +10,8 @@ import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
-import engine.sprites.towers.projectiles.Projectile;
-import javafx.geometry.Point2D;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -25,51 +24,48 @@ import javafx.scene.image.Image;
  */
 public class Enemy extends ShootingSprites{
 
-	private String myName; 
-	private Image myImage; 
+    private String myName; 
     private HealthProperty myHealth;
     private double myInitialHealth; 
     private DamageProperty myDamage;
     private double myHealthImpact; 
     private ValueProperty myValue;
     private ImageIntersecter myIntersecter;
-    private Path myPath;
     private double mySpeed;
     private double myKillReward;
-//    private double myKillUpgradeCost;
-//    private double myKillUpgradeValue; 
+    private String myImage; 
+    //    private double myKillUpgradeCost;
+    //    private double myKillUpgradeValue; 
 
-    public Enemy(String name, Image image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
+    public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
-	myName = name; 
 	myImage = image; 
+	myName = name; 
 	myHealth = health;
 	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
 	myHealthImpact = myDamage.getProperty();
-//	myHealthImpact = myDamage.getDamage();
+	//	myHealthImpact = myDamage.getDamage();
 	myValue = value;
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
-	myPath = path;
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
-	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthImpact+", "+mySpeed+", "+myKillReward);
+	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND IMAGE "+image);
     }
-    
+
     /**
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-    	super("", copiedEnemy.getImageView().getImage(), copiedEnemy.getImageView().getImage().getWidth(), copiedEnemy.getLauncher());
-    	myName = copiedEnemy.getName(); 
-    	myImage = copiedEnemy.getImageView().getImage(); 
-    	myIntersecter = copiedEnemy.getIntersecter(); 
-    	myHealth = copiedEnemy.getHealth(); 
-    	myDamage = copiedEnemy.getDamageProperty();
-    	myHealthImpact = myDamage.getProperty(); 
-    	myValue = copiedEnemy.getValue();
-    	myPath = copiedEnemy.getPath(); 
-    	mySpeed = copiedEnemy.getSpeed();
+	super("", copiedEnemy.getImageString(), copiedEnemy.getImageView().getImage().getWidth(), copiedEnemy.getLauncher());
+	myName = copiedEnemy.getName(); 
+	setImage(copiedEnemy.getImageView().getImage()); 
+	myIntersecter = copiedEnemy.getIntersecter(); 
+	myHealth = copiedEnemy.getHealth(); 
+	myDamage = copiedEnemy.getDamageProperty();
+	myHealthImpact = myDamage.getProperty(); 
+	myValue = copiedEnemy.getValue();
+	mySpeed = copiedEnemy.getSpeed();
     }
 
     /**
@@ -80,23 +76,21 @@ public class Enemy extends ShootingSprites{
     public boolean overlap(Node otherImage) {
 	return myIntersecter.overlaps(otherImage); 
     }
-
-
+   
     /**
      * Moves the enemy along the path according to how much time has passed
      * @param elapsedTime
      */
-    public void move(double elapsedTime) {
-	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
-	myPath.nextPosition(elapsedTime, mySpeed);
+    public void move(Path path) {
+	Point2D newPosition = path.nextPosition(mySpeed);
 	this.getImageView().setX(newPosition.getX());
 	this.getImageView().setY(newPosition.getY());
     }
 
     public String getName() {
-    	return myName; 
+	return myName; 
     }
-    
+
     /**
      * Handles returning an enemy's damage after hitting a tower
      * 
@@ -106,7 +100,7 @@ public class Enemy extends ShootingSprites{
     public Double getDamage() {
 	return myDamage.getProperty();
     }
-    
+
     /**
      * Returns true if this Enemy is still alive
      */
@@ -115,29 +109,33 @@ public class Enemy extends ShootingSprites{
 	myHealth.loseHealth(collider.getDamage());
 	return myHealth.isAlive();
     }
-    
+
     private ImageIntersecter getIntersecter() {
-    	return myIntersecter; 
+	return myIntersecter; 
     }
-    
+
     private HealthProperty getHealth() {
-    	return myHealth; 
+	return myHealth; 
     }
-    
+
     private DamageProperty getDamageProperty() {
-    	return myDamage; 
+	return myDamage; 
     }
-    
+
     private ValueProperty getValue() {
-    	return myValue; 
+	return myValue; 
     }
-    
-    private Path getPath() {
-    	return myPath; 
-    } 
+    public int getPointValue() {
+    	return (int)this.myValue.getProperty();
+    }
+
     
     private double getSpeed() {
-    	return mySpeed; 
+	return mySpeed; 
     }
     
+    private String getImage() {
+    	return myImage; 
+    }
+
 }

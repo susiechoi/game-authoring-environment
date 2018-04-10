@@ -8,7 +8,6 @@ import java.util.Map;
 
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
-import engine.sprites.towers.Tower;
 
 /**
  * Enemy manager uses composite design pattern to handle updating all 
@@ -19,8 +18,7 @@ import engine.sprites.towers.Tower;
 public class EnemyManager extends ShootingSpriteManager {
     
     private final Map<Path, List<Enemy>> myEnemies;
-    
-	// this doesn't have its own lists like Tower manager does -bma
+
 	
     /**
      * Constructor for Enemy manager

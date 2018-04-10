@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
@@ -40,6 +41,7 @@ public class AuthoringView extends View {
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
 	private String myCurrentCSS;
+	private AuthoringModel myModel;
 	private int myLevel; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
@@ -52,6 +54,10 @@ public class AuthoringView extends View {
 		myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
 	}
 
+	public void setModel(AuthoringModel model) {
+		myModel = model;
+	}
+
 	public void loadInitialScreen() {
 		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
@@ -62,9 +68,6 @@ public class AuthoringView extends View {
 	}
 	public void loadErrorAlert(String error) {
 		loadErrorAlertToStage(myErrorReader.resourceDisplayText(error));
-	}
-	public void loadErrorAlert(String error, Screen returnToScreen) {
-		loadErrorAlertToStage(myErrorReader.resourceDisplayText(error), returnToScreen);
 	}
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
@@ -90,8 +93,14 @@ public class AuthoringView extends View {
 			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 			if(constructor.getParameterTypes().length == 2) {
 				System.out.println("our name "+name);
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
-				myStageManager.switchScreen(nextScreen.getScreen());
+				if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
+					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
+					myStageManager.switchScreen(nextScreen.getScreen());
+				}
+				else {
+					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
+					myStageManager.switchScreen(nextScreen.getScreen());
+				}
 			}
 			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
@@ -134,10 +143,6 @@ public class AuthoringView extends View {
 		} catch (ObjectNotFoundException e) {
 			loadErrorScreen("NoObject");
 		}
-	}
-	
-	public void customizeTowerShooting() {
-		
 	}
 
 	/**
