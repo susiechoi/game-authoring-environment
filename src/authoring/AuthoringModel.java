@@ -65,9 +65,9 @@ public class AuthoringModel implements GameData {
 
 	private void setupDefaultLevel() {
 		Level firstLevel = new Level(1);
-		myLevels.put(1, firstLevel);
 		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
 		firstLevel.addEnemy(DEFAULT_NAME, new Enemy(myDefaultEnemy));
+		myLevels.put(1, firstLevel);
 	}
 
 	/**
@@ -187,11 +187,18 @@ public class AuthoringModel implements GameData {
 		if (objectType.equals("Enemy")) {
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
-				Class enemyClass = enemy.getClass(); 
-				field = enemyClass.getField(attribute);
-				fieldValue = field.get(enemy);
+				System.out.println(enemy.getName());
+				for (Field aField : enemy.getClass().getDeclaredFields()) {
+					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+					if (fieldSimpleString.equals(attribute)) {
+						aField.setAccessible(true);
+						fieldValue = aField.get(enemy);
+						System.out.println(fieldValue+" is our field value");
+						break; 
+					}
+				}
 			}
-			else {
+			if (fieldValue == null) {
 				throw new ObjectNotFoundException(name);
 			}
 		}

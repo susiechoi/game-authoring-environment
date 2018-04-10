@@ -78,7 +78,6 @@ public class AuthoringView extends View {
 	    System.out.println("next class: " + nextScreenClass);
 	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 	    if(constructor.getParameterTypes().length == 2) {
-		System.out.println("makin it to the 2 parameter");
 		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 		myStageManager.switchScreen(nextScreen.getScreen());
 	    }
