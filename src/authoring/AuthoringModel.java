@@ -46,10 +46,11 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
-	public static final String myDefaultName_FILEPATH = "src/frontend/Constants.properties";
+	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
 
 	private String myDefaultName; 
 	private final PropertiesReader myPropertiesReader;
+	private Settings mySettings; 
 	protected AuthoringResources myResources;
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
@@ -60,14 +61,22 @@ public class AuthoringModel implements GameData {
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
 		myPropertiesReader = new PropertiesReader();
-		myDefaultName = myPropertiesReader.findVal(myDefaultName_FILEPATH, "DefaultObjectName");
+		myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
 		try {
 			myDefaultTower = generateGenericTower();
 			myDefaultEnemy = generateGenericEnemy();
 		} catch (NumberFormatException | FileNotFoundException e) {
 			throw new MissingPropertiesException(myDefaultName);
 		}
-		setupDefaultLevel(); 
+		setupDefaultSettings(); 
+		setupDefaultLevel();
+	}
+
+	private void setupDefaultSettings() throws MissingPropertiesException {
+		String defaultGameName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "GameName");
+		int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
+		int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
+		mySettings = new Settings(defaultGameName, startingHealth, startingMoney);
 	}
 
 	private void setupDefaultLevel() {
@@ -227,6 +236,16 @@ public class AuthoringModel implements GameData {
 				throw new ObjectNotFoundException(name);
 			}
 		}
+		else if (objectType.equals("Settings")) {
+			for (Field aField : mySettings.getClass().getDeclaredFields()) {
+				String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+				if (fieldSimpleString.equals(attribute)) {
+					aField.setAccessible(true);
+					fieldValue = aField.get(mySettings);
+					break; 
+				}
+			}
+		}
 		if (fieldValue.getClass() == Double.class) {
 			return Double.toString((double) fieldValue); 
 		}
@@ -240,9 +259,9 @@ public class AuthoringModel implements GameData {
 		}
 		return currentLevel;
 	}
-	
+
 	public List<Level> allLevels() {
-	    return (List<Level>) myLevels.values();
+		return (List<Level>) myLevels.values();
 	}
 
 	/**
@@ -335,8 +354,8 @@ public class AuthoringModel implements GameData {
 	 */
 	public int addNewLevel() {
 		int newLevelNumber = autogenerateLevel(); 
-//		int newLevelNumber = myLevels.size()+1; 
-//		myLevels.put(newLevelNumber, new Level(newLevelNumber));
+		//		int newLevelNumber = myLevels.size()+1; 
+		//		myLevels.put(newLevelNumber, new Level(newLevelNumber));
 		return newLevelNumber; 
 	}
 
