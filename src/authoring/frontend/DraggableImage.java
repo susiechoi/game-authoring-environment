@@ -11,6 +11,7 @@ import javafx.scene.input.TransferMode;
 
 public class DraggableImage {
 	private ImageView pathImage;
+	private String pathName;
 	private EventHandler<MouseEvent> myCopyDragEvent;
 	private EventHandler<MouseEvent> myDragEvent;
 	private EventHandler<DragEvent> myDragDone;
@@ -82,6 +83,14 @@ public class DraggableImage {
 		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myCopyDragDone);
 		pathImage.setOnDragDetected(e -> {});
 		pathImage.setOnDragDone(e -> {});
+	}
+	
+	public void setPathName(int path_num) {
+		pathName = "Path " +String.valueOf(path_num);
+	}
+	
+	public String getPathName() {
+		return pathName;
 	}
 
 

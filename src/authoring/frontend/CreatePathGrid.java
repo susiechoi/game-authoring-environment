@@ -42,10 +42,11 @@ public class CreatePathGrid {
 	private int rowIndex;
 	private GridPane grid;
 	private SelectionModel model;
-	//have these update with change images
+	//have these update with change images, and get images from default file
 	private ImageView startImage = new ImageView(new Image("file:images/start.png"));
 	private ImageView endImage = new ImageView(new Image("file:images/end.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
+	
 	private ArrayList<Integer> startRows;
 	private ArrayList<Integer> startCols;
 	private GridPane checkGrid;
@@ -54,7 +55,7 @@ public class CreatePathGrid {
 	private Label pathLabel;
 	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
-	private boolean startCheck = false;
+	private int startCount = 0;
 
 
 	protected GridPane makePathGrid() {
@@ -76,23 +77,6 @@ public class CreatePathGrid {
 		populateGrid();
 
 		return grid;
-	}
-
-	public void setUpForWaves(EventHandler<MouseEvent> action) {
-		makeUnDraggable();
-		for(DraggableImage image : draggableImagesOnScreen) {
-			image.getPathImage().setOnMouseClicked(e -> action.handle(e));
-		}
-	}
-	private void makeUnDraggable() {
-		for(DraggableImage image : draggableImagesOnScreen) {
-			image.disableDraggable();
-		}
-	}
-
-
-	public void setBackgroundmage(File file) {
-		grid.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
 	}
 
 	//REFACTOR
@@ -117,6 +101,7 @@ public class CreatePathGrid {
 					}
 				});
 
+				//set into different methods
 				cell.setOnDragDropped(new EventHandler <DragEvent>() {
 					public void handle(DragEvent event) {
 						event.acceptTransferModes(TransferMode.ANY);
@@ -130,7 +115,9 @@ public class CreatePathGrid {
 							grid.add(path.getPathImage(), colIndex, rowIndex);
 							draggableImagesOnScreen.add(path);
 							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
-								startCheck = true;
+								startCount++;
+								path.setPathName(startCount);
+								System.out.println(path.getPathName());
 								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
 								startCols.add(colIndex);
@@ -142,29 +129,21 @@ public class CreatePathGrid {
 								pathLabel = new Label("path");
 								checkGrid.add(pathLabel, colIndex, rowIndex);
 							}
-
 							success = true;
 						}
 						event.setDropCompleted(success);
 						event.consume();
 					}
 				});
-
 				grid.add(cell, x, y);
 			}
 		}
 	}
 
 
-	public double getPathSize() {
-		return pathSize;
-	}
-
 	public void setGridConstraints(GridPane grid, double size) {
-
 		grid.getColumnConstraints().clear();
 		grid.getRowConstraints().clear();
-
 		pathSize = size;
 		for (int i = 0; i < 1000/pathSize; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
@@ -180,7 +159,6 @@ public class CreatePathGrid {
 	}
 
 	public boolean checkPathConnected(int row, int col) {
-
 		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount())
 			return false;
 		if ((getNode(checkGrid, col, row) == null))
@@ -206,43 +184,8 @@ public class CreatePathGrid {
 			addCoordinates(row - 1, col);
 			return true;
 		}
-
 		return false;
 	}
-
-	public Node getNode(GridPane gridPane, int col, int row) {
-		Node result = null;
-		for (Node node : gridPane.getChildren()) {
-			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-				result = node;
-				break;
-			}
-		}
-		return result;
-	}
-
-
-	public void removeNode(GridPane grid, int row, int col) {
-		for(Node node : grid.getChildren()) {
-			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-				grid.getChildren().remove(node);
-				break;
-			}
-		} 
-	}
-
-
-	private boolean imageCompare(Image image1, Image image2) {
-		for (int i = 0; i < image1.getWidth(); i++){
-			for (int j = 0; j < image1.getHeight(); j++){
-				if (image1.getPixelReader().getArgb(i, j) != image2.getPixelReader().getArgb(i, j)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
 
 	public HashMap<Integer, ArrayList<Integer>> getStartingPosition() {
 		HashMap<Integer, ArrayList<Integer>> coordMap = new HashMap<Integer, ArrayList<Integer>>();
@@ -261,12 +204,68 @@ public class CreatePathGrid {
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 		Point2D point = new Point2D(x, y);
 		pathCoords.add(point);
+		//add row and col indexes to Map
+	}
+	
+	public Node getNode(GridPane gridPane, int col, int row) {
+		Node result = null;
+		for (Node node : gridPane.getChildren()) {
+			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+				result = node;
+				break;
+			}
+		}
+		return result;
 	}
 
-	public List<Point2D> getCoordinates() {
+	public void removeNode(GridPane grid, int row, int col) {
+		for(Node node : grid.getChildren()) {
+			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+				grid.getChildren().remove(node);
+				break;
+			}
+		} 
+	}
+
+	private boolean imageCompare(Image image1, Image image2) {
+		for (int i = 0; i < image1.getWidth(); i++){
+			for (int j = 0; j < image1.getHeight(); j++){
+				if (image1.getPixelReader().getArgb(i, j) != image2.getPixelReader().getArgb(i, j)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public void setUpForWaves(EventHandler<MouseEvent> action) {
+		makeUnDraggable();
+		for(DraggableImage image : draggableImagesOnScreen) {
+			image.getPathImage().setOnMouseClicked(e -> action.handle(e));
+		}
+	}
+	private void makeUnDraggable() {
+		for(DraggableImage image : draggableImagesOnScreen) {
+			image.disableDraggable();
+		}
+	}
+	
+	
+	
+	
+
+	public void setBackgroundmage(File file) {
+		grid.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
+	}
+	
+	//Get Methods
+	public double getPathSize() {
+		return pathSize;
+	}
+
+	public List<Point2D> getAbsoluteCoordinates() {
 		return pathCoords;
 	}
-
 
 	public GridPane getGrid() {
 		return grid;
@@ -276,7 +275,15 @@ public class CreatePathGrid {
 		return checkGrid;
 	}
 
-	public boolean isStartInGrid() {
-		return startCheck;
+	public int isStartInGrid() {
+		return startCount;
 	}
+
+	
+	//need get background
+	//need get size of grid
+	//need get start/path/end image
+	//need get col/row index for each image -- Map(key -> imageView, value -> List(row, col))
+	
+	
 }
