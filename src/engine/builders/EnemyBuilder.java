@@ -17,9 +17,9 @@ import javafx.scene.image.Image;
  */
 public class EnemyBuilder {
 
-    public Enemy construct(String name, Image image, double speed, double initialHealth, double healthImpact,
+    public Enemy construct(String name, String image, double speed, double initialHealth, double healthImpact,
 	    double killReward, double killUpgradeCost, double killUpgradeValue) {
-	Enemy newEnemy = new Enemy(name, image, speed, image.getWidth(), new Launcher(new FireRateProperty(0,0,0), null, new RangeProperty(0,0,0)), new HealthProperty(0, 0, initialHealth), new DamageProperty(0 , 0 , healthImpact), new ValueProperty(killReward));
+	Enemy newEnemy = new Enemy(name, image, speed, 50, new Launcher(new FireRateProperty(0,0,0), null, new RangeProperty(0,0,0)), new HealthProperty(0, 0, initialHealth), new DamageProperty(0 , 0 , healthImpact), new ValueProperty(killReward));
 	return newEnemy;
     }
 

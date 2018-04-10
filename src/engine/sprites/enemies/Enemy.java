@@ -33,11 +33,13 @@ public class Enemy extends ShootingSprites{
     private ImageIntersecter myIntersecter;
     private double mySpeed;
     private double myKillReward;
+    private String myImage; 
     //    private double myKillUpgradeCost;
     //    private double myKillUpgradeValue; 
 
     public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
+	myImage = image; 
 	myName = name; 
 	myHealth = health;
 	myInitialHealth = myHealth.getProperty();
@@ -130,6 +132,10 @@ public class Enemy extends ShootingSprites{
     
     private double getSpeed() {
 	return mySpeed; 
+    }
+    
+    private String getImage() {
+    	return myImage; 
     }
 
 }
