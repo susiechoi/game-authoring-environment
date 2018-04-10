@@ -57,7 +57,8 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 * @throws NoDuplicateNamesException 
 	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
+	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) 
+			throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
 		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
