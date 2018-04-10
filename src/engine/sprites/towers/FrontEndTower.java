@@ -56,4 +56,6 @@ public interface FrontEndTower {
      */
     public Integer upgrade(String upgradeName) throws CannotAffordException;
     
+    public String getName();
+    
 }
