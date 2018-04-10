@@ -1,21 +1,27 @@
 package engine;
 
 
+
+import engine.sprites.towers.Tower;
+import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
 import java.util.List;
 
 import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
+import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
-import engine.sprites.towers.Tower;
-import gameplayer.ScreenManager;
 import java.awt.Point;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import xml.AuthoringModelReader;
 import xml.PlayLoader;
@@ -146,8 +152,9 @@ public class Mediator {
      * @param location, where the tower should be placed
      * @param towerType, type of tower to be placed
      * @return frontEndTower that can be used to refer to the tower in the future
+     * @throws CannotAffordException 
      */
-    public FrontEndTower placeTower(Point location, String towerType) {
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
         //TODO add in money (decrement when purchased)
          return myGameEngine.getPlayState().placeTower(location, towerType);
     }
@@ -237,6 +244,11 @@ public class Mediator {
 	}
 	
     }
+
+    
+    //    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
+    //	value.addListener(listenerToAdd);
+    //    }
 
 
     // a whole slew of other methods

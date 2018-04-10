@@ -1,10 +1,13 @@
 package gameplayer;
 
-import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
+
+import java.awt.Point;
 
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
@@ -40,7 +43,10 @@ public class ScreenManager extends View{
     private final PromptReader PROMPTS;
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
+    private List<Integer> controlVars;
+    
     //private final FileIO FILE_READER;
+    
 
 
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
@@ -53,6 +59,16 @@ public class ScreenManager extends View{
     }
 
 
+    public List<Integer> getMediatorInts(){
+	controlVars = new ArrayList<Integer>();
+	for(int i = 0; i < 3; i++) {
+	    controlVars.add(Integer.valueOf(0));
+	}
+	return controlVars;
+    }
+
+
+
 
     //TODO set Style sheets
     public void loadInstructionScreen() {
@@ -62,6 +78,7 @@ public class ScreenManager extends View{
     }
 
     public void loadGameScreenNew() {
+
 	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
@@ -115,9 +132,7 @@ public class ScreenManager extends View{
 	GAME_SCREEN.updateCurrency(newBalence);
     }
     
-    public FrontEndTower placeTower(FrontEndTower tower, Point position) {
-	return MEDIATOR.placeTower(position, tower.getName());
-    }
+  
     
 
 
