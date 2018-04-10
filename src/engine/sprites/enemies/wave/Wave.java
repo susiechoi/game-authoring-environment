@@ -45,6 +45,31 @@ public class Wave {
     }
     
     /**
+     * Decrements the number of a specified enemy remaining in the wave
+     * 
+     * @param enemy: the enemy object to decrement
+     */
+    private void decrementEnemyCount(Enemy enemy) {
+	myEnemies.put(enemy, myEnemies.get(enemy) - 1);
+    }
+    
+    /**
+     * Returns the first available enemy object in the wave.
+     * 
+     * @return Enemy: an enemy object
+     */
+    public Enemy getEnemy() {
+	for (Entry<Enemy, Integer> entry : myEnemies.entrySet()) {
+	    if (entry.getValue() > 0) {
+		Enemy retEnemy = entry.getKey();
+		decrementEnemyCount(retEnemy);
+		return retEnemy;
+	    }
+	}
+	return null;
+    }
+    
+    /**
      * Returns a boolean indicating whether the wave is finished or not. A wave is considered
      * finished if there are no enemies left to be spawned. 
      * 
@@ -58,5 +83,4 @@ public class Wave {
 	}
 	return true;
     }
-
 }
