@@ -108,9 +108,7 @@ public class PlayState implements GameData {
 	    myEnemyManager.moveEnemies();
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
-
     }
-
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);

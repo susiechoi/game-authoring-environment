@@ -13,21 +13,23 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 
 public class ShootingSpriteManager extends Manager<ShootingSprites>{
-    
-    private Integer kills = 0;
-    private Integer score = 0;
+	
+	private int myRoundScore;
+
     /**
      * Checks for collisions between between the list of active actors held by the Manager the method
      * was called on and the list of active actors passed as a parameter
      * @param passedSprites
      */
     public List<Sprite> checkForCollisions(List<ShootingSprites> passedSprites) {
+    	myRoundScore = 0;
 	List<Sprite> spritesToBeRemoved = new ArrayList<>();
     		for (ShootingSprites activeSprite: this.getListOfActive()) {
     			for (ShootingSprites passedActor: passedSprites) {
     			    List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
     			    spritesToBeRemoved.addAll(deadSprites);
     			}
+    			myRoundScore += activeSprite.getRoundScore();
     		}
     		return spritesToBeRemoved;
     }
@@ -55,5 +57,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 			}
 		}
 	}
-   
+	public int getRoundScore() {
+		return myRoundScore;
+	}
 }
