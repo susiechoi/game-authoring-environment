@@ -70,7 +70,7 @@ public class AuthoringView extends View {
 	return myCurrentCSS;
     }
     protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
-	myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+	//myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
     }
 
     protected void goBackFrom(String id) {

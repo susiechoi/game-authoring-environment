@@ -11,8 +11,4 @@ public class SpecifyWaveScreen extends SpecifyObjectScreen{
 		super(view, DEFAULT_DESCRIPTION);
 		
 	}
-	protected Node setupAdditionalElements() {
-	    TextField selectTime = new TextField();
-	    
-	}
 }
