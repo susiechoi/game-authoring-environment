@@ -7,6 +7,8 @@ package authoring.frontend;
 
 import java.util.List;
 
+
+import javafx.scene.Node;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -24,7 +26,6 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	private String myDefaultName; 
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
-
 	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
 		myObjectDescription = objectDescription;
@@ -35,7 +36,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 			getView().loadErrorScreen("NoConstants");
 		}
 	}
-
+	
 	/**
 	 * Makes the screen with the option of creating a new object OR editing an existing one 
 	 * @return Parent/root to attach to Scene that will be set on the stage
@@ -61,6 +62,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);
+		vb.getChildren().add(setupAdditionalElements());
 		vb.getChildren().add(backAndApplyButton);
 
 		return vb;
@@ -99,5 +101,6 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected String getDescription() {
 		return myObjectDescription; 
 	}
+	protected abstract Node setupAdditionalElements();
 
 }

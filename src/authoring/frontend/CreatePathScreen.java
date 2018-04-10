@@ -18,7 +18,7 @@ public class CreatePathScreen extends PathScreen {
 
     public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
-    private StackPane pathRoot;
+    //private StackPane pathRoot;
     private GridPane pathGrid;
     private Node pathPanel;
     //private CreatePathPanel panel;
