@@ -1,5 +1,6 @@
 package engine.sprites.towers;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
@@ -65,14 +67,35 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		myValue = value;
 		myTowerValue = value.getProperty();
 	}
-
+	
 	/**
 	 * Copy constructor
 	 */
 	public Tower(Tower copiedTower) {
-		super(copiedTower.getName(), copiedTower.getImageView().getImage(), copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
-		this.myHealth = copiedTower.myHealth; 
-		this.myValue = copiedTower.myValue; 
+		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
+			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
+		myHealth = copiedTower.getHealthProperty();
+		myValue = copiedTower.getValueProperty(); 
+	}
+
+	/**
+	 * Copy constructor
+	 */
+	public Tower(Tower copiedTower, Point point) {
+		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
+			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
+		System.out.println("Health value copied is " + copiedTower.getHealthProperty().getProperty());
+		myHealth = copiedTower.getHealthProperty();
+		myValue = copiedTower.getValueProperty();
+		propertyStats = new HashMap<String, Double>();
+		propertyStats.put(myHealth.getName(), myHealth.getProperty());
+		propertyStats.put(myHealth.getName(), myHealth.getProperty());
+		propertyStats.put(this.getDamageName(), this.getDamage());
+		this.place(point.getX(), point.getY());
+	}
+	
+	private void setConstructorVals() {
+	    
 	}
 
 	/**
@@ -136,6 +159,29 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public String getDamageName() {
 		return this.getLauncher().getDamageName();
 	}
+	
+	/**
+	 * Returns the image
+	 * @return
+	 */
+	public Image getImage() {
+	    return myImage;
+	}
+	
+	/**
+	 * Returns ValueProperty
+	 * @return
+	 */
+	public ValueProperty getValueProperty() {
+	    return myValue;
+	}
+	
+	/**
+	 * Returns the health property
+	 */
+	public HealthProperty getHealthProperty() {
+	    return myHealth;
+	}
 
 	public Map<String, Double> getTowerStats(){
 		return propertyStats;
@@ -151,6 +197,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 			throw new CannotAffordException();
 		}
 		return (int) (myResources - myValue.getProperty());
+	}
+
+	@Override
+	public int getPointValue() {
+		return 0;
 	}
 
 }

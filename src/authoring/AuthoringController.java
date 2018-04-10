@@ -35,6 +35,7 @@ public class AuthoringController {
 		} catch (MissingPropertiesException e) {
 			myAuthoringView.loadErrorScreen("NoDefaultObject");
 		}
+		myAuthoringView.setModel(myModel);
 		myAuthoringView.loadInitialScreen();
 	}
 	

@@ -1,10 +1,8 @@
 package engine.path;
 
 import java.util.List;
-
 import javafx.geometry.Point2D;
 
-import engine.physics.SnapMover;
 
 /**
  * Class for constructing path and determining next coordinates
@@ -17,18 +15,10 @@ public class Path {
     private Point2D currentPosition;
     private double myAngle;
     private int pathIndex;
-   
+
     public Path(List<Point2D> coordinates) {
-    		myCoordinates = coordinates;
-    }
-
-    /**
-     * Adds a start to the path. A path start point represents where enemies spawn.
-     */
-    public void addCoords(double speed){
-    	
+	myCoordinates = coordinates;
 	pathIndex = 0;
-
 	currentPosition = myCoordinates.get(pathIndex);
 	myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
     }
@@ -38,15 +28,15 @@ public class Path {
      * 
      * @param mySpeed
      */
-    public Point2D nextPosition(double elapsedTime, double speed) {
+    public Point2D nextPosition(double speed) {
 	if(checkBounds()) {
 	    currentPosition = myCoordinates.get(pathIndex++);
 	    myAngle = getAngle(currentPosition, myCoordinates.get(pathIndex + 1));
 	    return currentPosition;
 	}
 	else {
-	    double newX = currentPosition.getX() + Math.cos(myAngle) * speed * elapsedTime;
-	    double newY = currentPosition.getY() + Math.sin(myAngle) * speed * elapsedTime;
+	    double newX = currentPosition.getX() + Math.cos(myAngle) * speed;
+	    double newY = currentPosition.getY() + Math.sin(myAngle) * speed;
 	    return new Point2D(newX, newY); 
 	}
     }
@@ -74,5 +64,5 @@ public class Path {
 	double deltaX = point2.getX() - point1.getX();
 	return Math.atan(deltaY/deltaX);
     }
-    
+
 }
