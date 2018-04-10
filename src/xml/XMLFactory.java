@@ -28,7 +28,7 @@ public class XMLFactory {
 	 * @return
 	 * Instance of that implementation of XMLWriter
 	 */
-	public XMLWriter generateWriter(String writerType) {
+	public static XMLWriter generateWriter(String writerType) {
 		try {
 			Class<?> writer = Class.forName("xml." + writerType);
 			System.out.println(writer.toGenericString());
@@ -60,7 +60,7 @@ public class XMLFactory {
 	 * @return
 	 * Instance of that implementation of XMLReader
 	 */
-	public XMLReader generateReader(String readerType) {
+	public static XMLReader generateReader(String readerType) {
 		try {
 			Class<?> writer = Class.forName("xml." + readerType);
 			Constructor<?> c = writer.getConstructor();
