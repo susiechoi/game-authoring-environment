@@ -65,6 +65,6 @@ public class TowerManager extends ShootingSpriteManager {
      * @param tower : front end tower
      */
     public void sell(FrontEndTower tower) {
-	this.getObservableListOfActive().remove(tower);
+	this.getListOfActive().remove(tower);
     }
 }

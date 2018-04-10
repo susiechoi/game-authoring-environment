@@ -28,7 +28,6 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     			for (ShootingSprites passedActor: passedSprites) {
     			    List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
     			    spritesToBeRemoved.addAll(deadSprites);
-    			    kills+=activeSprite.
     			}
     		}
     		return spritesToBeRemoved;
