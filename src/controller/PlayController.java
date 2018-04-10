@@ -40,6 +40,7 @@ public class PlayController {
 	myReader = new AuthoringModelReader();
 	myMediator.setGameEngine(myGameEngine);
 	myMediator.setScreenManager(myScreenManager);
+	myScreenManager.loadInstructionScreen();
     }
     
     /**
