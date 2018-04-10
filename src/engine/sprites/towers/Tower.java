@@ -71,16 +71,16 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		this.myValue = copiedTower.myValue; 
 	}
 
-	/**
-	 * Handles decrementing tower's damage when it gets hit by an enemy
-	 * 
-	 * @return boolean: True if tower is alive, false otherwise
-	 */
-	@Override
-	public boolean handleCollision(Sprite collider) {
-		myHealth.loseHealth(enemyDamage);
-		return (myHealth.getProperty() <= 0);
-	}
+//	/**
+//	 * Handles decrementing tower's damage when it gets hit by an enemy
+//	 * 
+//	 * @return boolean: True if tower is alive, false otherwise
+//	 */
+//	@Override
+//	public boolean handleCollision(Sprite collider) {
+//		myHealth.loseHealth(enemyDamage);
+//		return (myHealth.getProperty() <= 0);
+//	}
 
 	/**
 	 * Handles selling a tower
@@ -141,23 +141,23 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		return propertyStats;
 	}
 
-	@Override
-	public Map<String, Double> getUpgrades() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public String getSpecificUpgradeInfo(String upgradeName) {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public boolean upgrade(String upgradeName) {
-	    // TODO Auto-generated method stub
-	    return false;
-	}
+//	@Override
+//	public Map<String, Double> getUpgrades() {
+//	    // TODO Auto-generated method stub
+//	    return null;
+//	}
+//
+//	@Override
+//	public String getSpecificUpgradeInfo(String upgradeName) {
+//	    // TODO Auto-generated method stub
+//	    return null;
+//	}
+//
+//	@Override
+//	public boolean upgrade(String upgradeName) {
+//	    // TODO Auto-generated method stub
+//	    return false;
+//	}
 	
 	private void updateStatsMap(String name, double value) {
 		propertyStats.put(name, value);
