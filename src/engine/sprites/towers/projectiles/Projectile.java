@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
+	private double mySpeed; 
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -22,9 +23,10 @@ public class Projectile extends Sprite {
 	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
 	 * @param image: image of projectile
 	 */
-	public Projectile(String name, DamageProperty damage, Image image) {
+	public Projectile(String name, DamageProperty damage, Image image, double speed) {
 	    	super(name, image);
 		myDamage = damage;
+		mySpeed = speed; 
 	}
 	
 	/**
@@ -53,6 +55,10 @@ public class Projectile extends Sprite {
 	 */
 	public double getDamage() {
 	    return myDamage.getProperty();
+	}
+	
+	public double getSpeed() {
+		return mySpeed; 
 	}
 
 

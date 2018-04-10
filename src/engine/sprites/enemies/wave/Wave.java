@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 
 /**
@@ -15,10 +16,12 @@ import engine.sprites.enemies.Enemy;
  */
 public class Wave {
     
-    private final Map<Enemy, Integer> ENEMIES;
+    private final Map<Enemy, Integer> myEnemies;
+    private final Path myPath;
     
-    public Wave() {
-	ENEMIES = new TreeMap<Enemy, Integer>();
+    public Wave(Path path) {
+	myEnemies = new TreeMap<Enemy, Integer>();
+	myPath = path;
     }
     
     /**
@@ -28,7 +31,7 @@ public class Wave {
      * @param number: the number of the enemy to be added to the wave
      */
     public void addEnemy(Enemy enemy, int number) {
-	ENEMIES.put(enemy, number);
+	myEnemies.put(enemy, number);
     }
     
     /**
@@ -38,7 +41,7 @@ public class Wave {
      * @return Map<EnemyI, Integer>: an unmodifiable map of the Enemies in the wave
      */
     public Map<Enemy, Integer> getUnmodifiableEnemies(){
-	return Collections.unmodifiableMap(ENEMIES);
+	return Collections.unmodifiableMap(myEnemies);
     }
     
     /**
@@ -48,7 +51,7 @@ public class Wave {
      * @return boolean: true if the wave is finished, false otherwise.
      */
     public boolean isFinished() {
-	for (Entry<Enemy, Integer> entry : ENEMIES.entrySet()) {
+	for (Entry<Enemy, Integer> entry : myEnemies.entrySet()) {
 	    if (entry.getValue() > 0) {
 		return false;
 	    }
