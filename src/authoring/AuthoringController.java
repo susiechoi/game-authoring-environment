@@ -35,6 +35,7 @@ public class AuthoringController {
 		} catch (MissingPropertiesException e) {
 			myAuthoringView.loadErrorScreen("NoDefaultObject");
 		}
+		myAuthoringView.setModel(myAuthoringModel);
 		myAuthoringView.loadInitialScreen();
 	}
 	
@@ -80,8 +81,8 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
-	public void makeResources(double startingHealth, double starting$) {
-		myAuthoringModel.makeResources(startingHealth, starting$);
+	public void makeResources(String gameName, double startingHealth, double starting$) {
+		myAuthoringModel.makeResources(gameName, startingHealth, starting$);
 	}
 	
 	// TODO
@@ -170,6 +171,14 @@ public class AuthoringController {
 	public List<String> levelEnemies(int level) throws ObjectNotFoundException {
 	    Level thisLevel = myAuthoringModel.levelCheck(level);
 	    return thisLevel.getAllEnemies();
+	}
+
+	public void setGameName(String gameName) {
+		myAuthoringModel.setGameName(gameName);
+	}
+
+	public String getGameName() {
+		return myAuthoringModel.getGameName(); 
 	}
 }
 

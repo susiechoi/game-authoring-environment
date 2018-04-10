@@ -2,6 +2,7 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -10,21 +11,24 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import xml.AuthoringModelWriter;
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
     private String myGameName;
+    private AuthoringModel myModel;
     
-    protected CustomizationChoicesScreen(AuthoringView view) {
-	//TODO: figure out how to not get gamename!!!
+    protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
 	super(view);
-	myGameName = "TEST";
+	myGameName = getView().getGameName(); 
+	myModel = model;
     }
 
     @Override
     public Parent makeScreenWithoutStyling(){
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
+	System.out.println(myGameName+" SHOULD BE THE TITLE");
 	Text heading = getUIFactory().makeScreenTitleText(myGameName);
 	vbox.getChildren().add(heading);
 
@@ -39,6 +43,10 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	});
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
+	saveButton.setOnAction(e -> {
+		AuthoringModelWriter writer = new AuthoringModelWriter();
+		writer.write(myModel, myModel.getGameName());
+	});
 	Button mainButton = setupBackButton();
 	String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
 	vbox.getChildren().add(demoButton);
