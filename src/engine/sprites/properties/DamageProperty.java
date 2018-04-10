@@ -8,7 +8,10 @@ package engine.sprites.properties;
  */
 public class DamageProperty extends UpgradeProperty {
 	
+	private double myDamage; 
+	
 	public DamageProperty(double cost, double value, double damage) {
 	    	super(cost, value, damage);
+	    	myDamage = damage; 
 	}
 }

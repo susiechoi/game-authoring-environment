@@ -102,6 +102,7 @@ public class ScreenManager extends View{
 	GAME_SCREEN.displaySprite(sprite);
     }
 
+
     public void remove(FrontEndSprite sprite) {
 	GAME_SCREEN.remove(sprite);
     }
@@ -118,11 +119,6 @@ public class ScreenManager extends View{
 	return MEDIATOR.placeTower(position, tower.getName());
     }
     
-    
-
-
-
-
 
 
 }

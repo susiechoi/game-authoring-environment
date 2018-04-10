@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
 
 /**
  * Static class that creates XMLWriters/XMLReaders to handle data parsing. Holds a main method for testing purposes.
@@ -85,12 +86,15 @@ public class XMLFactory {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-	    AuthoringModelWriter p = (AuthoringModelWriter) XMLFactory.generateWriter("AuthoringModelWriter");
+	public static void main(String[] args) throws MissingPropertiesException {
+	    XMLFactory f = new XMLFactory();
+	    AuthoringModelWriter p = (AuthoringModelWriter) f.generateWriter("AuthoringModelWriter");
 	    AuthoringModel a = new AuthoringModel();
 	    p.write(a, "test1");
-//	    AuthoringModelReader r = (AuthoringModelReader) f.generateReader("AuthoringModelReader");
-//	    r.createModel("test1");
+	    AuthoringModelReader r = (AuthoringModelReader) XMLFactory.generateReader("AuthoringModelReader");
+	    AuthoringModel b = r.createModel("test1");
+	    if (b!= null)
+		System.out.println("not Null");
 	}
 
 }

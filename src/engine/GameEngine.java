@@ -19,16 +19,13 @@ public class GameEngine {
     private final Integer DEFAULT_RELATIVE_SPEED = 5;
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private PlayState myPlayState;
-    private Timer myTimer;
-    private GameLoop myLoop;
     private Mediator myMediator;
     private Timeline ANIMATION;
 
     public GameEngine(Mediator mediator) {
 	myPlayState = null;
 	myMediator = mediator;
-	myTimer = new Timer();
-	myLoop = new GameLoop(this);
+
 	setSpeed(DEFAULT_RELATIVE_SPEED);
 	// attach "game loop" to time line to play it
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
@@ -47,11 +44,10 @@ public class GameEngine {
     }
 
     /**
-     * This is called every ____ number of seconds, according to the Timer
-     * Called from the GameLoop class
+     * This is called every ____ number of seconds
      */
     public void update() {
-	myPlayState.update();
+//	myPlayState.update();
     }
 
     /**
@@ -80,7 +76,6 @@ public class GameEngine {
      */
     public void setSpeed(Integer relativeSpeed) {
 	Integer speed = MILLISECOND_DELAY*(relativeSpeed/DEFAULT_RELATIVE_SPEED);
-	myTimer.schedule(myLoop, speed);
 	//System.out.println("Incomplete setSpeed method, make sure to check this functionality!");
 	//TODO myTimer.schedule may need bugfixing for scaling speed
     }

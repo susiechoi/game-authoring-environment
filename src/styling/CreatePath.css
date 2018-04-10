@@ -1,8 +1,31 @@
-VBox, HBox {
-	-fx-background-color: #B7D5D4;
+VBox {
+	-fx-background-color: #488286;
 	-fx-padding: 5;
-    -fx-spacing: 5;
+    -fx-spacing: 18;
+    -fx-border-color: black;
     -fx-alignment: center;
+}
+
+HBox {
+    -fx-background-color: #488286;
+    -fx-padding: 5;
+    -fx-spacing: 12;
+  /*  -fx-border-color: black;*/
+    -fx-alignment: center;
+}
+
+.rootPanel {
+    -fx-background-color: #488286;
+    -fx-padding: 0;
+    -fx-spacing: 0;
+    -fx-border-color: black;
+    -fx-alignment: center;
+}
+
+.label {
+    -fx-font: bold 18pt "Helvetica";
+    -fx-text-fill: white;
+     -fx-alignment: center;
 }
 
 .text-field {
