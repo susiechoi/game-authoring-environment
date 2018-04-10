@@ -1,6 +1,5 @@
 package authoring.frontend;
 
-
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +11,11 @@ import javafx.scene.input.TransferMode;
 
 public class DraggableImage {
 	private ImageView pathImage;
+	private String pathName;
+	private EventHandler<MouseEvent> myCopyDragEvent;
+	private EventHandler<MouseEvent> myDragEvent;
+	private EventHandler<DragEvent> myDragDone;
+	private EventHandler<DragEvent> myCopyDragDone;
 
 	DraggableImage(Image image) {
 		setPathImage(image);
@@ -25,7 +29,7 @@ public class DraggableImage {
 	}
 
 	public ImageView setCopyDraggable() {
-		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
+		myCopyDragEvent = new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.COPY);
 				ClipboardContent content = new ClipboardContent();
@@ -33,22 +37,24 @@ public class DraggableImage {
 				db.setContent(content);
 				event.consume();    
 			}
-		});
+		};
+		pathImage.setOnDragDetected(myCopyDragEvent);
 
-		pathImage.setOnDragDone(new EventHandler <DragEvent>() {
+		myCopyDragDone = new EventHandler <DragEvent>() {
 			public void handle(DragEvent event){
 				if (event.getTransferMode() == TransferMode.MOVE){
 					pathImage.setImage(null);
 				}
 				event.consume();
 			}
-		});
+		};
+		pathImage.setOnDragDone(myCopyDragDone);
 
 		return pathImage;
 	}
 
 	public void setDraggable() {
-		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
+		myDragEvent = new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
 				ClipboardContent content = new ClipboardContent();
@@ -56,14 +62,40 @@ public class DraggableImage {
 				db.setContent(content);
 				event.consume();    
 			}
-		});
-
-		pathImage.setOnDragDone(e -> {
-			if (e.getTransferMode() == TransferMode.MOVE){
-				((ImageView) e.getSource()).setImage(null);
+		};
+		pathImage.setOnDragDetected(myDragEvent);
+		myDragDone = new EventHandler<DragEvent>() {
+			public void handle(DragEvent e){
+				if (e.getTransferMode() == TransferMode.MOVE){
+					((ImageView) e.getSource()).setImage(null);
+				}
+				e.consume();
 			}
-			e.consume();
-		});
+
+		};
+		pathImage.setOnDragDone(myDragDone);
+	}
+
+	public void disableDraggable() {
+		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myDragEvent);
+		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myCopyDragEvent);
+		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myDragDone);
+		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myCopyDragDone);
+		pathImage.setOnDragDetected(e -> {});
+		pathImage.setOnDragDone(e -> {});
+	}
+	
+	public void setPathName(int path_num) {
+		pathName = "Path " +String.valueOf(path_num);
+	}
+	
+	public String getPathName() {
+		return pathName;
+	}
+
+
+	public void setNewImage(Image image) {
+		pathImage.setImage(image);
 	}
 
 	public ImageView getPathImage() {

@@ -24,7 +24,9 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
 
@@ -137,14 +139,6 @@ public class AuthoringView extends View {
 	}
     }
 
-    //TODO 
-    /**
-     * Method through which information can be sent to instantiate or edit a Path in Authoring Model;
-     */
-    public void makePath() {
-	myController.makePath(myLevel);
-    }
-
 
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
@@ -215,4 +209,8 @@ public class AuthoringView extends View {
 		return myLevel; 
 	}
 
+	public void makePath(List<Point2D> coordinates, GridPane grid) {
+		myController.makePath(myLevel, coordinates, grid);
+	}
+	
 }

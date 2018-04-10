@@ -58,9 +58,9 @@ public class Level {
 	}
 	
 	// TODO 
-	public void addPath() {
-		myPath = new Path(); 
-	}
+//	public void addPath() {
+//		myPath = new Path(); 
+//	}
 			
 	/**
 	 * Adds an available tower to the level
@@ -182,7 +182,7 @@ public class Level {
 		return myPath; 
 	}
 	
-	private Map<String, Tower> getTowers() {
+	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
 	

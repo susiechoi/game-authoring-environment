@@ -9,7 +9,6 @@
 
 package authoring;
 
-
 import java.io.File;
 import java.lang.Double; 
 import java.io.FileInputStream;
@@ -24,6 +23,7 @@ import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import data.GameData;
 import engine.builders.LauncherBuilder;
+import engine.builders.PathBuilder;
 import engine.builders.EnemyBuilder;
 import engine.builders.ProjectileBuilder;
 import engine.builders.TowerBuilder;
@@ -34,9 +34,12 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
+
 
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
@@ -50,6 +53,8 @@ public class AuthoringModel implements GameData {
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
+	private GridPane myGrid;
+	private Path myPath;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -138,9 +143,14 @@ public class AuthoringModel implements GameData {
 	 * Method through which information can be sent to instantiate or edit a path object
 	 * Wraps constructor in case of new object creation
 	 */
-	public Path makePath(int level) {
-		return null;
+
+	//parameters needed to get passed: background image, grid size, location of each image in grid 
+	
+	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {
+		myGrid = grid;
+		myPath = new PathBuilder().construct(level, coordinates);
 	}
+
 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing
@@ -174,6 +184,7 @@ public class AuthoringModel implements GameData {
 	 * @param name - name of object being manipulated
 	 * @param attribute - attribute/field of object being manipulated
 	 * @return requested attribute in String form: used in populating textfield, finding correct dropdown option, etc.
+
 	 * @throws SecurityException 
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
