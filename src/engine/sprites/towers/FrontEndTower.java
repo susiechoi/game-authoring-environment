@@ -68,7 +68,6 @@ public interface FrontEndTower {
 //     * @return if upgrade was successful (did user have enough money)
 //     */
 //    public boolean upgrade(String upgradeName);
-    
-    public String getName();
+   
     
 }
