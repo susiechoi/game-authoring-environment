@@ -158,7 +158,7 @@ public class Mediator {
      */
     public void sellTower(FrontEndTower tower) {
         //TODO increase money when sold in sell method
-        tower.sell();
+        myGameEngine.getPlayState().sellTower(tower);
     }
 
     /**
@@ -190,8 +190,7 @@ public class Mediator {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-        //TODO decrement money
-        tower.upgrade(upgradeName);
+        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
 
     /**

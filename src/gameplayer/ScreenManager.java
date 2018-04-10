@@ -1,5 +1,6 @@
 package gameplayer;
 
+import engine.Mediator;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -26,22 +27,22 @@ public class ScreenManager extends View{
     private Integer level;
     private Integer health;
     private Integer currency;
-
-
-
+    
+    private final Mediator MEDIATOR;
     private final StageManager STAGE_MANAGER;
     private GameScreen CURRENT_SCREEN;
     private String GAME_TITLE;
-    private PromptReader PROMPTS;
+    private final PromptReader PROMPTS;
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
     //private final FileIO FILE_READER;
 
 
-    public ScreenManager(StageManager stageManager, PromptReader prompts) {
+    public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
-	PROMPTS = prompts;
+	PROMPTS = new PromptReader(language, this);
+	MEDIATOR = mediator;
 	findSettings();
 	//setup rest of values once file reader is finished
     }
