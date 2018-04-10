@@ -1,5 +1,6 @@
 package engine;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,8 @@ import java.awt.Point;
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
-import engine.sprites.towers.CannotAffordException;
+import engine.sprites.Sprite;
+
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
@@ -47,18 +49,19 @@ public class PlayState implements GameData {
 	UNIVERSAL_TIME = universalTime;
     }
 
-    public void update(double elapsedTime) {
-	if(!isPaused) {
-	    UNIVERSAL_TIME+=elapsedTime;
-	    myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive());
-	    myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive());
-	    myTowerManager.moveProjectiles();
-	    myTowerManager.moveTowers();
-	    myEnemyManager.moveProjectiles();
-	    myEnemyManager.moveEnemies();
-	    currentLevel.getNewEnemy(UNIVERSAL_TIME);
+	public void update(double elapsedTime) {
+		UNIVERSAL_TIME+=elapsedTime;
+		List<Sprite> toBeRemoved = new ArrayList<>();
+		toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive()));
+		toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive()));
+		myTowerManager.moveProjectiles();
+		myTowerManager.moveTowers();
+		myEnemyManager.moveProjectiles();
+		myEnemyManager.moveEnemies();
+		currentLevel.getNewEnemy(UNIVERSAL_TIME);
+
 	}
-    }
+    
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);

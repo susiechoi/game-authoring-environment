@@ -2,6 +2,7 @@ package engine.sprites.towers.projectiles;
 
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
+import engine.sprites.properties.HealthProperty;
 import javafx.scene.image.Image;
 
 /**
@@ -48,6 +49,7 @@ public class Projectile extends Sprite {
 	public double upgradeDamage(double balance) {
 	    return myDamage.upgrade(balance);
 	}
+
 	
 	/**
 	 * 
