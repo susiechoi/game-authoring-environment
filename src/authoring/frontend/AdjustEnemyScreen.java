@@ -76,17 +76,17 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		HBox enemyValue = getUIFactory().setupSliderWithValue("EnemyValueSlider", enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 		vb.getChildren().add(enemyValue);
 
-		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", getMyMaxPrice());
-		myUpgradeCostSlider = enemyUpgradeCostSlider; 
-		HBox enemyUpgradeCost = getUIFactory().setupSliderWithValue("EnemyUpgradeCostSlider", enemyUpgradeCostSlider, getErrorCheckedPrompt("EnemyUpgradeCost"));
-		vb.getChildren().add(enemyUpgradeCost);
+//		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", getMyMaxPrice());
+//		myUpgradeCostSlider = enemyUpgradeCostSlider; 
+//		HBox enemyUpgradeCost = getUIFactory().setupSliderWithValue("EnemyUpgradeCostSlider", enemyUpgradeCostSlider, getErrorCheckedPrompt("EnemyUpgradeCost"));
+//		vb.getChildren().add(enemyUpgradeCost);
+//
+//		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", getMyMaxUpgradeIncrement());
+//		myUpgradeValueSlider = enemyUpgradeValueSlider; 
+//		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
+//		vb.getChildren().add(enemyUpgradeValue);
 
-		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", getMyMaxUpgradeIncrement());
-		myUpgradeValueSlider = enemyUpgradeValueSlider; 
-		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
-		vb.getChildren().add(enemyUpgradeValue);
-
-		Button backButton = setupBackButtonSuperclass();
+		Button backButton = setupBackButton();
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {

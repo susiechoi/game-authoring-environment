@@ -63,7 +63,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		    }
 		});
 		
-		Button backButton = setupBackButtonSuperclass();
+		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			try {
@@ -89,7 +89,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		
 		setEditableOrNot(myNameField, getIsNewObject());
 
-		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+//		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
 
 		getUIFactory().setSliderToValue(myTowerHealthValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
 

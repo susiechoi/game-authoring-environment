@@ -116,7 +116,7 @@ public class AuthoringModel implements GameData {
 		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
 				projectileImage, projectileDamage, projectileUpgradeCost, 
-				projectileUpgradeValue);
+				projectileUpgradeValue, projectileSpeed);
 		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
 				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
 				launcherValue, towerProjectile); 
@@ -187,13 +187,11 @@ public class AuthoringModel implements GameData {
 		if (objectType.equals("Enemy")) {
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
-				System.out.println(enemy.getName());
 				for (Field aField : enemy.getClass().getDeclaredFields()) {
 					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
 					if (fieldSimpleString.equals(attribute)) {
 						aField.setAccessible(true);
 						fieldValue = aField.get(enemy);
-						System.out.println(fieldValue+" is our field value");
 						break; 
 					}
 				}
@@ -205,9 +203,17 @@ public class AuthoringModel implements GameData {
 		else if (objectType.equals("Tower")) {
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
-				Class towerClass = tower.getClass(); 
-				field = towerClass.getField(attribute);
-				fieldValue = field.get(tower);
+				for (Field aField : tower.getClass().getDeclaredFields()) {
+					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+					if (fieldSimpleString.equals(attribute)) {
+						aField.setAccessible(true);
+						fieldValue = aField.get(tower);
+						break; 
+					}
+				}
+			}
+			if (fieldValue == null) {
+				throw new ObjectNotFoundException(name);
 			}
 		}
 		if (fieldValue.getClass() == Double.class) {
@@ -248,7 +254,8 @@ public class AuthoringModel implements GameData {
 					// TODO add projectile speed !!!!
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")));
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
 			Launcher towerLauncher = new LauncherBuilder().construct(
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 

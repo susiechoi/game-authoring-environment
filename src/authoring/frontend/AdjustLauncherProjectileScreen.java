@@ -131,21 +131,23 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	protected void populateFieldsWithData() {
-		getUIFactory().setComboBoxToValue(myProjectileImage, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+//		getUIFactory().setComboBoxToValue(myProjectileImage, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileImage")); 
 
 		getUIFactory().setSliderToValue(myProjectileDamageSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
 
-		getUIFactory().setSliderToValue(myProjectileValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
-
-		getUIFactory().setSliderToValue(myProjectileUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
-
-		getUIFactory().setSliderToValue(myProjectileUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
-
-		getUIFactory().setSliderToValue(myLauncherValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
-
-		getUIFactory().setSliderToValue(myLauncherUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
-
-		getUIFactory().setSliderToValue(myLauncherUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
+		getUIFactory().setSliderToValue(myProjectileSpeedSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileSpeed"));
+		
+//		getUIFactory().setSliderToValue(myProjectileValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
+//
+//		getUIFactory().setSliderToValue(myProjectileUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
+//
+//		getUIFactory().setSliderToValue(myProjectileUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
+//
+//		getUIFactory().setSliderToValue(myLauncherValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
+//
+//		getUIFactory().setSliderToValue(myLauncherUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
+//
+//		getUIFactory().setSliderToValue(myLauncherUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
 
 		getUIFactory().setSliderToValue(myLauncherRateSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
 

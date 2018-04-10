@@ -11,8 +11,26 @@ import javafx.scene.image.Image;
  * @author Katherine Van Dyk
  */
 public class Tower extends ShootingSprites {
-	private Launcher myLauncher;
+	
+	private Image myImage; 
 	private HealthProperty myHealth;
+	private double myHealthValue;
+	private double myHealthUpgradeCost; 
+	private double myHealthUpgradeValue; 
+	
+	private Launcher myLauncher;
+	private Image myProjectileImage;
+	private double myProjectileDamage; 
+	private double myProjectileSpeed;
+//	private double myProjectileValue;  
+//	private double myProjectileUgradeCost; 
+//	private double myProjectileUpgradeValue; 
+	
+//	private double myLauncherValue; 
+//	private double myLauncherUpgradeCost; 
+//	private double myLauncherUgradeValue; 
+	private double myLauncherRate;
+	private double myLauncherRange; 
 	private ValueProperty myValue;
 
 	/**
@@ -25,8 +43,17 @@ public class Tower extends ShootingSprites {
 	 */
 	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health) {
 		super(name, image, size);
-		myLauncher = launcher;
+		myImage = image; 
 		myHealth = health;
+		myHealthValue = health.getProperty(); 
+		myHealthUpgradeCost = health.getCost();
+		myHealthUpgradeValue = health.getUpgradeValue(); 
+		myLauncher = launcher;
+		myProjectileImage = launcher.getProjectileImage(); 
+		myProjectileDamage = launcher.getProjectileDamage(); 
+		myProjectileSpeed = launcher.getProjectileSpeed();
+		myLauncherRate = launcher.getFireRate(); 
+		myLauncherRange = launcher.getRange(); 
 //		myValue = new ValueProperty();
 	}
 
