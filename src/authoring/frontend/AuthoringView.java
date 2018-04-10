@@ -152,8 +152,8 @@ public class AuthoringView extends View {
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(double startingHealth, double starting$) {
-	myController.makeResources(startingHealth, starting$);
+    public void makeResources(String gameName, double startingHealth, double starting$) {
+	myController.makeResources(gameName, startingHealth, starting$);
     }
 
     /**
@@ -224,6 +224,14 @@ public class AuthoringView extends View {
 
 	public void makePath(List<Point2D> coordinates, GridPane grid) {
 		myController.makePath(myLevel, coordinates, grid);
+	}
+	
+	public String getGameName() {
+		return myController.getGameName(); 
+	}
+
+	public void setGameName(String gameName) {
+		myController.setGameName(gameName);
 	}
 	
 
