@@ -1,12 +1,16 @@
 package controller;
 
+import java.util.List;
+
 import authoring.AuthoringModel;
 import engine.GameEngine;
 import engine.Mediator;
 import engine.PlayState;
+import engine.level.Level;
+import frontend.StageManager;
 import gameplayer.ScreenManager;
-import javafx.stage.Stage;
 import xml.AuthoringModelReader;
+
 
 /**
  * 
@@ -22,22 +26,33 @@ public class PlayController {
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     
+
     /**
      * Constructs main parts of play: Engine for backend controls, ScreenManager (top
      * level of game player) and Mediator, which connects the two
      * 
      * @param stage: Stage to mount Game Player on
      */
-    public PlayController(Stage stage) {
-	myScreenManager = new ScreenManager(stage);
+    public PlayController(String language, StageManager stageManager) {
+	myMediator = new Mediator();
 	myGameEngine = new GameEngine(myMediator);
-	myMediator = new Mediator(myScreenManager, myGameEngine);
+	myScreenManager = new ScreenManager(stageManager, language, myMediator);
+	myReader = new AuthoringModelReader();
+	myMediator.setGameEngine(myGameEngine);
+	myMediator.setScreenManager(myScreenManager);
     }
     
+    /**
+     * Creates a new play based on an XML file and passes authored
+     * parameters to Engine
+     * 
+     * @param pathToXML: Path to game XML file
+     */
     public void newPlay(String pathToXML) {
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
-	PlayState play = new PlayState(myMediator, playModel.getLevels());
+	List<Level> levels = playModel.allLevels();
+	PlayState play = new PlayState(myMediator, levels, 0, 0, 0, levels.get(0).getTowers());
 	myGameEngine.setPlayState(play);
 	// TODO: myScreenManager.setLandscape(landscape);
     }
