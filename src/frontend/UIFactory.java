@@ -64,6 +64,14 @@ public class UIFactory {
 	newButton.setId(id);
 	return newButton; 
     }
+    
+    public Button makeImageViewButton(String id, ImageView buttonImage) {
+	Button newButton = new Button();
+	newButton.setGraphic(buttonImage);
+	newButton.setId(id);
+	return newButton; 
+    }
+    
     public TextField makeTextField(String description) {
 	TextField tf = new TextField();
 	tf.setId(description);

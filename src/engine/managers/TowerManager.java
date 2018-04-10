@@ -27,7 +27,7 @@ public class TowerManager extends ShootingSpriteManager {
      */
     public TowerManager(Map<String, Tower> towerTypeToInstance) {
 	super();
-	myTowerTypeToInstance = new HashMap<>();
+	myTowerTypeToInstance = towerTypeToInstance;
     }
 
     /**
@@ -53,6 +53,9 @@ public class TowerManager extends ShootingSpriteManager {
     public FrontEndTower place(Point location, String type) {
     		Tower newTower = myTowerTypeToInstance.get(type);
     		this.addToActiveList(newTower);
+    		newTower.place(location.getX(), location.getY());
+    		System.out.println(location.getX() + " " + location.getY());
+    		System.out.println(newTower.getX() + " " + newTower.getY());
     		return (FrontEndTower) newTower;
     }
 }
