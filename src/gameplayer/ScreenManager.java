@@ -18,6 +18,17 @@ public class ScreenManager extends View{
     private static final String STARTING_LANGUAGE = "English";
 
 
+    /**
+     * not sure where we're getting these values to display on the panels and stuff
+     * TALK TO ANDREW ABOUT
+     */
+    private Integer score;
+    private Integer level;
+    private Integer health;
+    private Integer currency;
+
+
+
     private final StageManager STAGE_MANAGER;
     private GameScreen CURRENT_SCREEN;
     private String GAME_TITLE;
@@ -67,6 +78,23 @@ public class ScreenManager extends View{
 	DEFAULT_WIDTH = 900;
 
     }
+
+    public void updateCurrency(Integer newCurrency) {
+        currency = newCurrency;
+    }
+
+    public void updateHealth(Integer newHealth) {
+        health = newHealth;
+    }
+
+    public void updateScore(Integer newScore) {
+        score = newScore;
+    }
+
+    public void updateLevelCount(Integer newLevelCount) {
+        level = newLevelCount;
+    }
+
 
 
 

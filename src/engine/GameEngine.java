@@ -55,12 +55,13 @@ public class GameEngine {
 
     /**
      * Pauses Game Loop animation so Game State stays constant
+     * COMMENTED OUT BECAUSE THIS WOULD PAUSE THE ENTIRE GAMEENGINE NOT THE PLAYSTATE
      */
-    public void pause() {
-	myTimer.cancel();
-	ANIMATION.pause();
-
-    }
+//    public void pause() {
+//	myTimer.cancel();
+//	ANIMATION.pause();
+//
+//    }
 
     /**
      * Starts Game Loop animation, so Game State continuously loops
@@ -74,10 +75,12 @@ public class GameEngine {
      * Sets Game Loop speed, to determine how fast level steps through.
      * 
      * @param speed: speed at which animation should iterate
+     * (relative speed of program, 1 being slowest, 5 being normal, 10 being fastest)
      */
     public void setSpeed(Integer speed) {
 	myTimer.schedule(myLoop, speed);
-
+	System.out.println("Incomplete setSpeed method, make sure to check this functionality!");
+	//TODO myTimer.schedule may need bugfixing for scaling speed
     }
 
     /**

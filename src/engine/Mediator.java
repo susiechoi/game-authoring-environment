@@ -9,6 +9,8 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
+import java.awt.Point;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -135,8 +137,99 @@ public class Mediator {
     }
     
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	myScreenManager.setAvailableTowers(availableTowers);
+	    myScreenManager.setAvailableTowers(availableTowers);
     }
+
+    /**
+     * to be called by the frontend when a user drops a tower on the gamescreen.
+     * @param location, where the tower should be placed
+     * @param towerType, type of tower to be placed
+     * @return frontEndTower that can be used to refer to the tower in the future
+     */
+    public FrontEndTower placeTower(Point location, String towerType) {
+        //TODO add in money (decrement when purchased)
+         return myGameEngine.getPlayState().placeTower(location, towerType);
+    }
+
+    /**
+     * to be called when a user sells the tower. Frontend should not call
+     * frontendtower.sell(), let mediator handle.
+     * @param tower
+     */
+    public void sellTower(FrontEndTower tower) {
+        //TODO increase money when sold in sell method
+        tower.sell();
+    }
+
+    /**
+     * to be called by the backend to play the simulation
+     */
+    public void play() {
+        myGameEngine.getPlayState().play();
+    }
+
+    /**
+     * to be called by the backend to pause the simulation
+     */
+    public void pause() {
+        myGameEngine.getPlayState().pause();
+    }
+
+    /**
+     * called by a slider, values between 1-10 (subject to change but between 1 and 10 will make it easier
+     * to speed up and slow down
+     * @param sliderValue
+     */
+    public void fastForward(Integer sliderValue) {
+        myGameEngine.setSpeed(sliderValue);
+    }
+
+    /**
+     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
+     * @param tower
+     * @param upgradeName
+     */
+    public void upgradeTower(FrontEndTower tower, String upgradeName) {
+        //TODO decrement money
+        tower.upgrade(upgradeName);
+    }
+
+    /**
+     * to be called by the backend to tell the frontend the new score that has already be calculated
+     * @param newScore
+     */
+    public void updateScore(Integer newScore) {
+        myScreenManager.updateScore(newScore);
+    }
+
+    /**
+     * to be called by the backend to tell the frontend the new balance of $ the player has
+     * @param newBalance
+     */
+    public void updateCurrency(Integer newBalance) {
+        myScreenManager.updateCurrency(newBalance);
+    }
+
+    /**
+     * to be called by the backend to tell the frontend the new health of the player
+     * @param newHealth
+     */
+    public void updateHealth(Integer newHealth) {
+        myScreenManager.updateHealth(newHealth);
+    }
+
+    /**
+     * to be called by the backend to tell the frontend the new level number
+     * @param newLevel
+     */
+    public void updateLevel(Integer newLevel) {
+        myScreenManager.updateLevelCount(newLevel);
+    }
+
+
+
+
+
     
 
     // a whole slew of other methods
