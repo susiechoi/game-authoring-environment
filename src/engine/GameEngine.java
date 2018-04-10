@@ -16,19 +16,17 @@ public class GameEngine {
 
     private final int FRAMES_PER_SECOND = 60;
     private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private final Integer DEFAULT_RELATIVE_SPEED = 5;
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private PlayState myPlayState;
-    private Timer myTimer;
-    private GameLoop myLoop;
     private Mediator myMediator;
     private Timeline ANIMATION;
 
     public GameEngine(Mediator mediator) {
 	myPlayState = null;
 	myMediator = mediator;
-	myTimer = new Timer();
-	myLoop = new GameLoop(this);
-	setSpeed(MILLISECOND_DELAY);
+
+	setSpeed(DEFAULT_RELATIVE_SPEED);
 	// attach "game loop" to time line to play it
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> loop(SECOND_DELAY));
@@ -46,21 +44,21 @@ public class GameEngine {
     }
 
     /**
-     * This is called every ____ number of seconds, according to the Timer
-     * Called from the GameLoop class
+     * This is called every ____ number of seconds
      */
     public void update() {
-	myPlayState.update();
+//	myPlayState.update();
     }
 
     /**
      * Pauses Game Loop animation so Game State stays constant
+     * COMMENTED OUT BECAUSE THIS WOULD PAUSE THE ENTIRE GAMEENGINE NOT THE PLAYSTATE
      */
-    public void pause() {
-	myTimer.cancel();
-	ANIMATION.pause();
-
-    }
+//    public void pause() {
+//	myTimer.cancel();
+//	ANIMATION.pause();
+//
+//    }
 
     /**
      * Starts Game Loop animation, so Game State continuously loops
@@ -74,10 +72,12 @@ public class GameEngine {
      * Sets Game Loop speed, to determine how fast level steps through.
      * 
      * @param speed: speed at which animation should iterate
+     * (relative speed of program, 1 being slowest, 5 being normal, 10 being fastest)
      */
-    public void setSpeed(Integer speed) {
-	myTimer.schedule(myLoop, speed);
-
+    public void setSpeed(Integer relativeSpeed) {
+	Integer speed = MILLISECOND_DELAY*(relativeSpeed/DEFAULT_RELATIVE_SPEED);
+	//System.out.println("Incomplete setSpeed method, make sure to check this functionality!");
+	//TODO myTimer.schedule may need bugfixing for scaling speed
     }
 
     /**
@@ -112,8 +112,13 @@ public class GameEngine {
 
     }
 
+    /**
+     * Calls the update function every loop
+     * @param elapsedTime
+     */
     public void loop(double elapsedTime) {
 	update();
     }
+    
 
 }

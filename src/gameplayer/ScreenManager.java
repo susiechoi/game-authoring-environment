@@ -3,6 +3,12 @@ package gameplayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.awt.Point;
+
+import engine.Mediator;
+import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.CannotAffordException;
+import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -13,7 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 
 
-public class ScreenManager implements View{
+public class ScreenManager extends View{
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
     public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
@@ -21,10 +27,20 @@ public class ScreenManager implements View{
     private static final String STARTING_LANGUAGE = "English";
 
 
+    /**
+     * not sure where we're getting these values to display on the panels and stuff
+     * TALK TO ANDREW ABOUT
+     */
+    private Integer score;
+    private Integer level;
+    private Integer health;
+    private Integer currency;
+
+    private final Mediator MEDIATOR;
     private final StageManager STAGE_MANAGER;
-    private GameScreen CURRENT_SCREEN;
+    private GameScreen GAME_SCREEN;
     private String GAME_TITLE;
-    private PromptReader PROMPTS;
+    private final PromptReader PROMPTS;
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
     private List<Integer> controlVars;
@@ -32,9 +48,12 @@ public class ScreenManager implements View{
     //private final FileIO FILE_READER;
     
 
-    public ScreenManager(StageManager stageManager, String language) {
+
+    public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
+	super(stageManager);
 	STAGE_MANAGER = stageManager;
 	PROMPTS = new PromptReader(language, this);
+	MEDIATOR = mediator;
 	findSettings();
 	//setup rest of values once file reader is finished
     }
@@ -50,6 +69,7 @@ public class ScreenManager implements View{
 
 
 
+
     //TODO set Style sheets
     public void loadInstructionScreen() {
 	InstructionScreen instructScreen = new InstructionScreen(this, PROMPTS);
@@ -58,9 +78,9 @@ public class ScreenManager implements View{
     }
 
     public void loadGameScreenNew() {
-	System.out.println("hitt");
-	GameScreen gameScreen = new GameScreen(this, PROMPTS);
-	Parent gameScreenRoot = gameScreen.getScreen();
+
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
     }
 
@@ -83,7 +103,39 @@ public class ScreenManager implements View{
     }
 
 
+    public void updateHealth(Integer newHealth) {
+	GAME_SCREEN.updateHealth(newHealth);
+    }
 
+    public void updateScore(Integer newScore) {
+	GAME_SCREEN.updateScore(newScore);
+    }
+
+    public void updateLevelCount(Integer newLevelCount) {
+	GAME_SCREEN.updateLevel(newLevelCount);
+    }
+
+    public void display(FrontEndSprite sprite) {
+	GAME_SCREEN.displaySprite(sprite);
+    }
+
+
+    public void remove(FrontEndSprite sprite) {
+	GAME_SCREEN.remove(sprite);
+    }
+    
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	GAME_SCREEN.setAvailbleTowers(availableTowers);
+    }
+    
+    public void updateCurrency(Integer newBalence) {
+	GAME_SCREEN.updateCurrency(newBalence);
+    }
+    
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
+	return MEDIATOR.placeTower(position, tower.getName());
+    }
+    
 
 
 }

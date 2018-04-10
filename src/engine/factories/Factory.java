@@ -1,7 +1,8 @@
 package engine.factories;
 
 import java.util.Collection;
-import java.util.Map;
+
+import engine.sprites.Sprite;
 
 /**
  * Abstract factory class that is implemented by other factories to make
@@ -13,16 +14,15 @@ import java.util.Map;
  */
 public abstract class Factory {
     
-    Map<String, Collection<Object>> types;
+    Collection<Sprite> availableSprites;
     
     /**
-     * Imports parsed XML data, which will eventually be used to construct 
-     * game objects.
+     * Imports list of all available Sprites
      * 
      * @param data: Map of object type (XML value) to object parameters
      */
-    public Factory(Map<String, Collection<Object>> data) {
-	types = data;
+    public Factory(Collection<Sprite> data) {
+	availableSprites = data;
     }
     
 }

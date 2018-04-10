@@ -1,19 +1,15 @@
-package authoring.frontend;
-
-import java.io.File;
-
-import frontend.Screen;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-
 /**
- * 
+ * @author susiechoi
  * Abstract class of Screens where values that need to be communicated to AuthoringModel
  * are changed (i.e. Screens that have some kind of "Apply" button)
- * @author susiechoi
  *
  */
+
+package authoring.frontend;
+
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
 abstract class AdjustScreen extends AuthoringScreen {
 		
@@ -24,33 +20,18 @@ abstract class AdjustScreen extends AuthoringScreen {
 	}
 	
 	/**
-	 * @return  HBox with back and apply buttons
+	 * For all screens in which users can edit either new or existing objects, the makeScreenWithoutStyling method should 
+	 * ensure that the screen is populated with fields and that, if deemed necessary by the subclass, 
+	 * the fields are populated with data (in the case that an existing object is being edited) 
 	 */
-	protected HBox setupBackAndApplyButton() {
-		HBox hb = new HBox();
-		Button backButton = setupBackButton(this);
-		hb.getChildren().add(backButton);
-		Button applyButton = setupApplyButton();
-		applyButton.setOnMouseClicked((event) -> { 
-			// TODO 
-		});
-		hb.getChildren().add(applyButton);
-		return hb; 
-	}
-
-	//TODO: set up listener here?
-	protected Button setupApplyButton() {
-		Button applyButton = getUIFactory().makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
-		return applyButton;
+	@Override
+	public Parent makeScreenWithoutStyling() {
+		Parent constructedScreen = populateScreenWithFields();
+		populateFieldsWithData(); 
+		return constructedScreen;
 	}
 	
-	protected Button setupBackButton(Screen currentScreen) {
-		Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-		Button backButton = getUIFactory().makeImageButton("backButton",backbuttonImage);
-		backButton.setOnMouseClicked((event) -> { 
-			getView().goBackFrom(currentScreen);
-		}); 
-		return backButton; 
-	}
+	protected abstract Parent populateScreenWithFields();
+	protected abstract void populateFieldsWithData(); 
 	
 }
