@@ -6,6 +6,7 @@ import java.util.List;
 import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
@@ -188,8 +189,9 @@ public class Mediator {
      * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
      * @param tower
      * @param upgradeName
+     * @throws CannotAffordException 
      */
-    public void upgradeTower(FrontEndTower tower, String upgradeName) {
+    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
         myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
 
