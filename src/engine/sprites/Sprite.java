@@ -1,12 +1,7 @@
 package engine.sprites;
 
-import java.util.List;
-import java.util.Map;
-
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Shape;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -33,9 +28,9 @@ public class Sprite  {
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, Image image) {
+    public Sprite(String name, String image) {
 	myName = name;
-	myImageView = new ImageView(image);
+	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image)));
 	myImageView.setPreserveRatio(true);
     }
     
