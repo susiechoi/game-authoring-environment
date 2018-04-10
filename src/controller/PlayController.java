@@ -33,7 +33,7 @@ public class PlayController {
      * 
      * @param stage: Stage to mount Game Player on 
      */
-    public PlayController(StageManager stageManager, String language) {
+    public PlayController(StageManager stageManager, String language, AuthoringModel model) {
 	myMediator = new Mediator();
 	myGameEngine = new GameEngine(myMediator);
 	myScreenManager = new ScreenManager(stageManager, language, myMediator);
@@ -41,6 +41,7 @@ public class PlayController {
 	myMediator.setGameEngine(myGameEngine);
 	myMediator.setScreenManager(myScreenManager);
 	myScreenManager.loadInstructionScreen();
+	setAuthoring(model);
     }
     
     /**
@@ -53,7 +54,11 @@ public class PlayController {
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
 	List<Level> levels = playModel.allLevels();
-	PlayState play = new PlayState(myMediator, levels, 0, 0, 0, levels.get(0).getTowers());
+	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
 	myGameEngine.setPlayState(play);
+    }
+    public void setAuthoring(AuthoringModel test) {
+	PlayState tester = new PlayState(myMediator, test.allLevels(), 0, 0, 0);
+	myGameEngine.setPlayState(tester);
     }
 }
