@@ -91,8 +91,8 @@ public class ShootingSprites extends Sprite{
 		return myLauncher.hasReloaded();
 	}
 	
-	public void launch() {
-		myLauncher.launch();
+	public Projectile launch(Sprite target, double shooterX, double shooterY) {
+		return myLauncher.launch(target, shooterX, shooterY);
 	}
 
 	/**
@@ -104,4 +104,7 @@ public class ShootingSprites extends Sprite{
 	    return intersector.overlaps(projectile.getImageView());
 	}
 
+	public Launcher getLauncher() {
+		return myLauncher;
+	}
 }

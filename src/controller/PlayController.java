@@ -55,6 +55,5 @@ public class PlayController {
 	List<Level> levels = playModel.allLevels();
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0, levels.get(0).getTowers());
 	myGameEngine.setPlayState(play);
-	// TODO: myScreenManager.setLandscape(landscape);
     }
 }

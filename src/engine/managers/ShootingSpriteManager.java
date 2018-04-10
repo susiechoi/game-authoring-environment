@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -29,14 +30,20 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     		return spritesToBeRemoved;
     }
     
-    public void shoot(List<ShootingSprites> passedSprites) {
+
+    public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
+    		List<Projectile> newProjectiles = new ArrayList<>();
     		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
     			for (ShootingSprites passedSprite: passedSprites) {
     				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
-    					shootingSprite.launch();
+    					Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
+    					if (newProjectile != null) {
+    						newProjectiles.add(newProjectile);
+    					}
     				}
     			}
     		}
+    		return newProjectiles;
     }
     
 	public void moveProjectiles() {

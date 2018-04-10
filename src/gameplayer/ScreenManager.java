@@ -1,6 +1,11 @@
 package gameplayer;
 
+import java.awt.Point;
+import java.util.List;
+
 import engine.Mediator;
+import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -13,107 +18,107 @@ import javafx.scene.Parent;
 
 public class ScreenManager extends View{
 
-	public static final String FILE_ERROR_KEY = "FileErrorPrompt";
-	public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
-	public static final String DEFAULT_OWN_CSS = "styling/EngineFrontend.css";
-	private static final String STARTING_LANGUAGE = "English";
+    public static final String FILE_ERROR_KEY = "FileErrorPrompt";
+    public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
+    public static final String DEFAULT_OWN_CSS = "styling/EngineFrontend.css";
+    private static final String STARTING_LANGUAGE = "English";
 
-	/**
-	 * not sure where we're getting these values to display on the panels and stuff
-	 * TALK TO ANDREW ABOUT
-	 */
-	private Integer score;
-	private Integer level;
-	private Integer health;
-	private Integer currency;
 
-	private Mediator MEDIATOR;
-	private final StageManager STAGE_MANAGER;
-	private GameScreen CURRENT_SCREEN;
-	private String GAME_TITLE;
-	private final PromptReader PROMPTS;
-	private double DEFAULT_HEIGHT;
-	private double DEFAULT_WIDTH;
-	//private final FileIO FILE_READER;
+    /**
+     * not sure where we're getting these values to display on the panels and stuff
+     * TALK TO ANDREW ABOUT
+     */
+    private Integer score;
+    private Integer level;
+    private Integer health;
+    private Integer currency;
 
-	// TODO address the fact that authoring frontend needs screenmanager but NOT mediator
-	public ScreenManager(StageManager stageManager, PromptReader promptReader) {
-		super(stageManager);
-		STAGE_MANAGER = stageManager;
-		PROMPTS = promptReader;
-		findSettings();
-		//setup rest of values once file reader is finished
-	}
-	
-	public ScreenManager(StageManager stageManager, String language) {
-		super(stageManager);
-		STAGE_MANAGER = stageManager;
-		PROMPTS = new PromptReader(language, this);
-		findSettings();
-		//setup rest of values once file reader is finished
-	}
+    private final Mediator MEDIATOR;
+    private final StageManager STAGE_MANAGER;
+    private GameScreen GAME_SCREEN;
+    private String GAME_TITLE;
+    private final PromptReader PROMPTS;
+    private double DEFAULT_HEIGHT;
+    private double DEFAULT_WIDTH;
+    //private final FileIO FILE_READER;
 
-	public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
-		super(stageManager);
-		STAGE_MANAGER = stageManager;
-		PROMPTS = new PromptReader(language, this);
-		MEDIATOR = mediator;
-		findSettings();
-		//setup rest of values once file reader is finished
-	}
+
+    public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
+	super(stageManager);
+	STAGE_MANAGER = stageManager;
+	PROMPTS = new PromptReader(language, this);
+	MEDIATOR = mediator;
+	findSettings();
+	//setup rest of values once file reader is finished
+    }
 
 
 
-	//TODO set Style sheets
-	public void loadInstructionScreen() {
-		InstructionScreen instructScreen = new InstructionScreen(this, PROMPTS);
-		Parent instructRoot = instructScreen.getScreen();
-		STAGE_MANAGER.switchScreen(instructRoot);
-	}
+    //TODO set Style sheets
+    public void loadInstructionScreen() {
+	InstructionScreen instructScreen = new InstructionScreen(this, PROMPTS);
+	Parent instructRoot = instructScreen.getScreen();
+	STAGE_MANAGER.switchScreen(instructRoot);
+    }
 
-	public void loadGameScreenNew() {
-		GameScreen gameScreen = new GameScreen(this, PROMPTS);
-		Parent gameScreenRoot = gameScreen.getScreen();
-		STAGE_MANAGER.switchScreen(gameScreenRoot);
-	}
+    public void loadGameScreenNew() {
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+	Parent gameScreenRoot = GAME_SCREEN.getScreen();
+	STAGE_MANAGER.switchScreen(gameScreenRoot);
+    }
 
-	public void loadGameScreenContinuation() {
+    public void loadGameScreenContinuation() {
 
-	}
+    }
 
-	@Override
-	public void loadErrorScreen(String errorMessage) {
-		// TODO Auto-generated method stub
-		System.out.println("missing");
+    @Override
+    public void loadErrorScreen(String errorMessage) {
+	// TODO Auto-generated method stub
+	System.out.println("missing");
 
-	}
+    }
 
-	//TODO read these in from properties file
-	private void findSettings() {
-		DEFAULT_HEIGHT = 650;
-		DEFAULT_WIDTH = 900;
+    //TODO read these in from properties file
+    private void findSettings() {
+	DEFAULT_HEIGHT = 650;
+	DEFAULT_WIDTH = 900;
 
-	}
-
-	public void updateCurrency(Integer newCurrency) {
-		currency = newCurrency;
-	}
-
-	public void updateHealth(Integer newHealth) {
-		health = newHealth;
-	}
-
-	public void updateScore(Integer newScore) {
-		score = newScore;
-	}
-
-	public void updateLevelCount(Integer newLevelCount) {
-		level = newLevelCount;
-	}
+    }
 
 
+    public void updateHealth(Integer newHealth) {
+	GAME_SCREEN.updateHealth(newHealth);
+    }
+
+    public void updateScore(Integer newScore) {
+	GAME_SCREEN.updateScore(newScore);
+    }
+
+    public void updateLevelCount(Integer newLevelCount) {
+	GAME_SCREEN.updateLevel(newLevelCount);
+    }
+
+    public void display(FrontEndSprite sprite) {
+	GAME_SCREEN.displaySprite(sprite);
+    }
 
 
+    public void remove(FrontEndSprite sprite) {
+	GAME_SCREEN.remove(sprite);
+    }
+    
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	GAME_SCREEN.setAvailbleTowers(availableTowers);
+    }
+    
+    public void updateCurrency(Integer newBalence) {
+	GAME_SCREEN.updateCurrency(newBalence);
+    }
+    
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) {
+	return MEDIATOR.placeTower(position, tower.getName());
+    }
+    
 
 
 }
