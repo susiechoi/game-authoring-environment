@@ -44,20 +44,21 @@ public class PlaySaverWriter implements XMLWriter {
 	@Override
 	public void write(GameData g, String filepath) {
 		// check type
-		if (!g.getClass().getSimpleName().equals("GameState")) {
-			throw new BadGameDataException("Incorrect GameData: Must use GameState object to store correct data");
+		if (!g.getClass().getSimpleName().equals("PlayState")) {
+			throw new BadGameDataException("Incorrect GameData: Must use PlayState object to store correct data");
 		}
-		//
-		file = new File("SavedModels/" + filepath + ".xml");
-		// Write data using XStream
-		Element root = d.createElement("Game Rules");
-		root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
-		try {
-			XMLDocumentBuilder.saveXMLFile(d, file);
-		} catch (TransformerFactoryConfigurationError | TransformerException e) {
-			// TODO replace with error pop up?
-			System.out.println("Error configuring XML file");
-		}
+//		//
+//		file = new File("SavedModels/" + filepath + ".xml");
+//		// Write data using XStream
+//		Element root = d.createElement("GameRules");
+//		root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
+//		try {
+//			XMLDocumentBuilder.saveXMLFile(d, file);
+//		} catch (TransformerFactoryConfigurationError | TransformerException e) {
+//			// TODO replace with error pop up?
+//			System.out.println("Error configuring XML file");
+//		}
+		XMLDocumentBuilder.stringToXML(parser.toXML(g), "SavedPlays/" + filepath + ".xml");
 	}
 
 }
