@@ -21,7 +21,7 @@ public class CreatePathScreen extends PathScreen {
     private StackPane pathRoot;
     private GridPane pathGrid;
     private Node pathPanel;
-    private CreatePathPanel panel;
+    //private CreatePathPanel panel;
     private CreatePathGrid grid;
     private AuthoringView myView;
 
@@ -29,28 +29,34 @@ public class CreatePathScreen extends PathScreen {
 	super(view);
     }
 
-    //		Button backgroundButton = (Button) panel.getBackgroundButton();
-    //		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-    //			@Override
-    //			public void handle(ActionEvent e) {
-    //				FileChooser fileChooser = new FileChooser();
-    //				fileChooser.setTitle("View Pictures");
-    //				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-    //				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-    //				File file = fileChooser.showOpenDialog(new Stage());
-    //				grid.setBackgroundmage(file);
-    //			}
-    //		});
-
+    //    protected 
+    //    		Button backgroundButton = (Button) panel.getBackgroundButton();
+    //    		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+    //    			@Override
+    //    			public void handle(ActionEvent e) {
+    //    				FileChooser fileChooser = new FileChooser();
+    //    				fileChooser.setTitle("View Pictures");
+    //    				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+    //    				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+    //    				File file = fileChooser.showOpenDialog(new Stage());
+    //    				grid.setBackgroundmage(file);
+    //    			}
+    //    		});
 
     //fix error checking!!!!!
     //fix checkPathConnected 
     private void setGridApplied() {
-	Button applyButton = getPanel().getApplyButton();
-	applyButton.setOnAction( e -> {
-	   System.out.println("here");
-	  {
-		System.out.println("making it to event handler");
+	Button applyButton = getPathPanel().getApplyButton();
+	//	getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
+	//		@Override
+	//		public void handle(ActionEvent e) {
+	//		    System.out.println("sad face turns happy?");
+	//		}
+	//	});
+	getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent e) {
+
 		HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
 		if (grid.getStartingPosition().size() == 0) {
 		    Alert alert = new Alert(AlertType.INFORMATION);
@@ -59,7 +65,7 @@ public class CreatePathScreen extends PathScreen {
 		    alert.showAndWait();
 		}
 		for (int key: coordMap.keySet()) {
-		    System.out.println(coordMap.get(key).get(0));
+		    //System.out.println(coordMap.get(key).get(0));
 		    if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
 			System.out.println("TRUE");
 			getView().makePath(grid.getAbsoluteCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
@@ -73,28 +79,29 @@ public class CreatePathScreen extends PathScreen {
 		}
 	    }
 	});
-	Button trybutton = getPanel().getApplyButton();
+	//Button trybutton = getPathPanel().getApplyButton();
+
+	}
+
+	@Override
+	protected Parent populateScreenWithFields() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void initializeGridSettings(CreatePathGrid gridIn) {
+	    setPathPanel(new CreatePathPanel(getView()));
+	    grid = gridIn; 
+	    setGridApplied();
+
+
+	}
 
     }
-
-    @Override
-    protected Parent populateScreenWithFields() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    protected void populateFieldsWithData() {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void initializeGridSettings(CreatePathGrid grid) {
-	setPanel(new CreatePathPanel(getView()));
-	setGridApplied();
-
-
-    }
-
-}

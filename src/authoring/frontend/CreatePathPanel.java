@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class CreatePathPanel extends PathPanel {
+public class CreatePathPanel extends PathPanel implements Panel{
     public static final int PANEL_PATH_SIZE = 90;
     public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 
@@ -147,8 +147,8 @@ public class CreatePathPanel extends PathPanel {
 //	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
 
 	applyButton = getUIFactory().makeTextButton("", "Apply");
-	//applyButton.setOnAction(e -> System.out.println("this workssss"));
-
+	applyButton.setId("Heeeelllpppp");
+	
 	backButton = setupBackButton();
 
 	pathSizeButtons = makeSizingButtons();
@@ -180,15 +180,20 @@ public class CreatePathPanel extends PathPanel {
     public HBox getSizeButtons() {
 	return pathSizeButtons;
     }
-
     public Node getPanel() {
 	return pathPanel;
     }
 
     @Override
     public Parent makeScreenWithoutStyling() {
-	// TODO Auto-generated method stub
+	 //TODO Auto-generated method stub
 	return null;
+    }
+
+    @Override
+    protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
+	// TODO Auto-generated method stub
+	applyButton.setOnAction(event -> e.handle(event));
     }
 
 }

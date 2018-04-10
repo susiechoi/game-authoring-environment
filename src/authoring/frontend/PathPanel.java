@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import frontend.Screen;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -43,6 +45,7 @@ public abstract class PathPanel extends AuthoringScreen{
     protected abstract void makePanel();
     protected abstract Button getApplyButton();
     protected abstract Node getPanel();
+    protected abstract void setApplyButtonAction(EventHandler<ActionEvent> e);
 
 
 }

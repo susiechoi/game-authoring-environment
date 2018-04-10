@@ -27,10 +27,10 @@ public abstract class PathScreen extends AdjustScreen {
 	protected PathScreen(AuthoringView view) {	
 	    super(view);
 	}
-	protected void setPanel(PathPanel panelnew) {
+	protected void setPathPanel(PathPanel panelnew) {
 	    panel = panelnew;
 	}
-	protected PathPanel getPanel() {
+	protected PathPanel getPathPanel() {
 	    return panel;
 	}
 	@Override
@@ -44,7 +44,6 @@ public abstract class PathScreen extends AdjustScreen {
 		grid = new CreatePathGrid();
 		initializeGridSettings(grid);
 		pathGrid = grid.makePathGrid();
-		panel.makePanel();
 
 		pathRoot.getChildren().add(pathGrid);
 		pathRoot.getChildren().add(panel.getPanel());
