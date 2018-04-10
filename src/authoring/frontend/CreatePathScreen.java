@@ -1,5 +1,6 @@
 package authoring.frontend;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,8 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
-public class CreatePathScreen extends AdjustScreen {
+public class CreatePathScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
@@ -24,6 +27,7 @@ public class CreatePathScreen extends AdjustScreen {
 	private CreatePathPanel panel;
 	private CreatePathGrid grid;
 	private AuthoringView myView;
+	private String backgroundImageFileName;
 
 	protected CreatePathScreen(AuthoringView view) {
 		super(view);
@@ -37,14 +41,15 @@ public class CreatePathScreen extends AdjustScreen {
 
 		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
-	
+		pathGrid.setGridLinesVisible(true);
+
 		panel = new CreatePathPanel(myView);
 		panel.makePanel();
 		pathPanel = panel.getPanel();
 
 		pathRoot.getChildren().add(pathGrid);
 		pathRoot.getChildren().add(pathPanel);
-		
+
 		StackPane.setAlignment(pathGrid, Pos.CENTER_LEFT);
 		StackPane.setAlignment(pathPanel, Pos.CENTER_RIGHT);
 
@@ -55,7 +60,7 @@ public class CreatePathScreen extends AdjustScreen {
 	}
 
 	private void setGridSizing() {
-	
+
 		Button pathSizePlusButton = (Button) panel.getSizeButtons().getChildrenUnmodifiable().get(0);
 		pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -77,61 +82,48 @@ public class CreatePathScreen extends AdjustScreen {
 			}
 		});
 
-//		Button backgroundButton = (Button) panel.getBackgroundButton();
-//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				FileChooser fileChooser = new FileChooser();
-//				fileChooser.setTitle("View Pictures");
-//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-//				File file = fileChooser.showOpenDialog(new Stage());
-//				grid.setBackgroundmage(file);
-//			}
-//		});
+		Button backgroundButton = (Button) panel.getBackgroundButton();
+		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				backgroundImageFileName = file.toURI().toString();
+				grid.setBackgroundImage(backgroundImageFileName);
+			}
+		});
 	}
 
 	//fix error checking!!!!!
-	//fix checkPathConnected 
 	private void setGridApplied() {
 		Button applyButton = panel.getApplyButton();
-			applyButton.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
-					if (grid.getStartingPosition().size() == 0) {
+		applyButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				
+				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
+				if (grid.getStartingPosition().size() == 0) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Path Cutomization Error");
+					alert.setContentText("Your path has no starting blocks");
+					alert.show();
+				}
+				for (int key: coordMap.keySet()) {
+					if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
+						System.out.println("TRUE");
+						getView().makePath(grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName, panel.getStartImage(), panel.getEndImage(), panel.getPathImage());
+					} else {
+						System.out.println("FALSE");
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Path Cutomization Error");
-						alert.setContentText("Your path has no starting blocks");
+						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
 						alert.show();
 					}
-					for (int key: coordMap.keySet()) {
-						System.out.println(coordMap.get(key).get(0));
-						 if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
-							System.out.println("TRUE");
-							getView().makePath(grid.getAbsoluteCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
-						} else {
-							System.out.println("FALSE");
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Path Cutomization Error");
-							alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
-							alert.show();
-						}
-					}
 				}
-			});
-
-	}
-
-	@Override
-	protected Parent populateScreenWithFields() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
-
+			}
+		});
 	}
 }

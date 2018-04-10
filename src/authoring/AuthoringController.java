@@ -9,14 +9,14 @@
 
 package authoring;
 import java.util.List;
+import java.util.Map;
+
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import frontend.StageManager;
 import javafx.geometry.Point2D;
-import javafx.scene.layout.GridPane;
-
 
 public class AuthoringController {
 	
@@ -81,8 +81,8 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 */
-	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {  //pass entire populated gridpane?
-		myAuthoringModel.makePath(level, coordinates, grid); 
+	public void makePath(int level, List<Point2D> coordinates, Map<String, List<Point2D>> imageCoordinates, String backgroundImage, String startImage, String endImage, String pathImage) { 
+		myAuthoringModel.makePath(level, coordinates, imageCoordinates, backgroundImage, startImage, endImage, pathImage); 
 	}
 	
 	/**

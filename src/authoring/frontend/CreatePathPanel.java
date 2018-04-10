@@ -46,7 +46,7 @@ public class CreatePathPanel extends AuthoringScreen {
 	}
 	
 	
-	public void makePanel() { //separate into smaller methods
+	public void makePanel() {
 
 		pathPanel = new VBox();
 		buttonPanel = new VBox();
@@ -116,8 +116,8 @@ public class CreatePathPanel extends AuthoringScreen {
 		changeImageButton.setOnAction(new EventHandler <ActionEvent>() {
 			public void handle(ActionEvent event) {
 				VBox imageButtons = new VBox();
-				 Scene imageButtonScene = new Scene(imageButtons, 600, 600);
-				 imageButtonScene.getStylesheets().add(CreatePathScreen.DEFAULT_OWN_STYLESHEET);
+				Scene imageButtonScene = new Scene(imageButtons, 600, 600);
+				imageButtonScene.getStylesheets().add(CreatePathScreen.DEFAULT_OWN_STYLESHEET);
 				imageButtons.getChildren().addAll(backgroundButton, pathImageChooser, endImageChooser, startImageChooser);
 				Stage stage = new Stage();
 				stage.setScene(imageButtonScene);
@@ -182,6 +182,19 @@ public class CreatePathPanel extends AuthoringScreen {
 	public Node getPanel() {
 		return pathPanel;
 	}
+	
+	public String getStartImage() {
+		return startImage.getPathImage().getImage().getUrl();
+	}
+
+	public String getEndImage() {
+		return endImage.getPathImage().getImage().getUrl();
+	}
+	
+	public String getPathImage() {
+		return pathImage.getPathImage().getImage().getUrl();
+	}
+	
 
 	@Override
 	public Parent makeScreenWithoutStyling() {

@@ -89,9 +89,9 @@ public class AdjustWaveScreen extends AdjustScreen{
 				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
 				for (int key: coordMap.keySet()) {
 					if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1)) == true) {
-						System.out.println("TRUE");
+						System.out.println("TRUEEEEE");
 					} else {
-						System.out.println("FALSE");
+						System.out.println("FALSEEEEE");
 					}
 				}
 			}

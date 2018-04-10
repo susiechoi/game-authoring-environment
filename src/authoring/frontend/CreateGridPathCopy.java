@@ -1,8 +1,11 @@
 package authoring.frontend;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -18,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
+
 /* 
  * Right click to be able to get specialty paths
  * Back to main button, if apply has not been clicked then prompt (changes will not be saved)
@@ -30,7 +34,7 @@ import javafx.scene.layout.StackPane;
  * auto-populate cells by mouse drag (right click?) or copy and paste
  */
 
-public class CreatePathGrid {
+public class CreateGridPathCopy {
 
 	public static final int INITIAL_PATH_SIZE = 60;
 	private double pathSize;
@@ -38,13 +42,12 @@ public class CreatePathGrid {
 	private int rowIndex;
 	private GridPane grid;
 	private SelectionModel model;
-	
 	//have these update with change images, and get images from default file
 	private ImageView startImage = new ImageView(new Image("file:images/start.png"));
 	private ImageView endImage = new ImageView(new Image("file:images/end.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
-
-	private ArrayList<Integer> startRows; //may be redundant, check later
+	
+	private ArrayList<Integer> startRows;
 	private ArrayList<Integer> startCols;
 	private GridPane checkGrid;
 	private Label startLabel;
@@ -53,10 +56,8 @@ public class CreatePathGrid {
 	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
 	private int startCount = 0;
-	private HashMap<String, List<Point2D>> gridImageCoordinates = new HashMap<String, List<Point2D>>(); //map (imagefileName, (row,col))
-	private ArrayList<Point2D> startPoints = new ArrayList<Point2D>();
-	private ArrayList<Point2D> endPoints = new ArrayList<Point2D>();
-	private ArrayList<Point2D> pathPoints = new ArrayList<Point2D>();
+	private HashMap<String, int[]> gridImageCoordinates = new HashMap<String, int[]>(); //map (imagefileName, (row,col))
+
 
 	protected GridPane makePathGrid() {
 		grid = new GridPane();
@@ -118,19 +119,27 @@ public class CreatePathGrid {
 								startCount++;
 								path.setPathName(startCount);
 								
-								startPoints.add(new Point2D(colIndex, rowIndex));
-	
+								gridImageCoordinates.put(startImage.getImage().getUrl(), new int[] {rowIndex, colIndex});
+								
 								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
 								startCols.add(colIndex);
 								startRows.add(rowIndex);
 							} else if (imageCompare(path.getPathImage().getImage(), endImage.getImage()) == true) {
-								endPoints.add(new Point2D(colIndex, rowIndex));
 								endLabel = new Label("end");
+								
+							
+								gridImageCoordinates.put(endImage.getImage().getUrl(), new int[] {rowIndex, colIndex});
+								System.out.println(gridImageCoordinates);
+								
+								
 								checkGrid.add(endLabel, colIndex, rowIndex);
 							} else if (imageCompare(path.getPathImage().getImage(), pathImage.getImage()) == true) {
-								pathPoints.add(new Point2D(colIndex, rowIndex));
 								pathLabel = new Label("path");
+								
+								gridImageCoordinates.put(pathImage.getImage().getUrl(), new int[] {rowIndex, colIndex});
+								System.out.println(gridImageCoordinates);
+								
 								checkGrid.add(pathLabel, colIndex, rowIndex);
 							}
 							success = true;
@@ -187,15 +196,12 @@ public class CreatePathGrid {
 			addCoordinates(row - 1, col);
 			return true;
 		}
-		
-		checkGrid.add(pathLabel, col, row);
 		return false;
 	}
 
 	public HashMap<Integer, ArrayList<Integer>> getStartingPosition() {
 		HashMap<Integer, ArrayList<Integer>> coordMap = new HashMap<Integer, ArrayList<Integer>>();
 		ArrayList<Integer> coords = new ArrayList<Integer>();
-		
 		for (int i=0; i<startCols.size(); i++) {
 			coords.clear();
 			coords.add(startRows.get(i));
@@ -210,8 +216,9 @@ public class CreatePathGrid {
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 		Point2D point = new Point2D(x, y);
 		pathCoords.add(point);
+		//add row and col indexes to Map
 	}
-
+	
 	public Node getNode(GridPane gridPane, int col, int row) {
 		Node result = null;
 		for (Node node : gridPane.getChildren()) {
@@ -254,19 +261,16 @@ public class CreatePathGrid {
 			image.disableDraggable();
 		}
 	}
-
+	
+	
+	
+	
 	public void setBackgroundImage(String backGroundFileName) {
 		grid.setStyle("-fx-background-image: url(" + backGroundFileName + ")");
 	}
 	
-	public GridPane getGrid() {
-		return grid;
-	}
-
-	public GridPane getCheckGrid() {
-		return checkGrid;
-	}
-
+	
+	//Get Methods
 	public double getPathSize() {
 		return pathSize;
 	}
@@ -275,14 +279,31 @@ public class CreatePathGrid {
 		return pathCoords;
 	}
 
+	public GridPane getGrid() {
+		return grid;
+	}
+
+	public GridPane getCheckGrid() {
+		return checkGrid;
+	}
+
 	public int isStartInGrid() {
 		return startCount;
 	}
 
-	public HashMap<String, List<Point2D>> getGridImageCoordinates() {
-		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
-		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
-		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
+	public Map<String, int[]> getGridImageCoordinates() {
 		return gridImageCoordinates;
+	}
+	
+	public String getStartImage() {
+		return startImage.getImage().getUrl();
+	}
+	
+	public String getEndImage() {
+		return endImage.getImage().getUrl();
+	}
+	
+	public String getPathImage() {
+		return endImage.getImage().getUrl();
 	}
 }

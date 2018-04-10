@@ -53,8 +53,8 @@ public class AuthoringModel implements GameData {
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
-	private GridPane myGrid;
-	private Path myPath;
+	protected GridPane myGrid;
+	protected Path myPath;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -142,15 +142,14 @@ public class AuthoringModel implements GameData {
 	/**
 	 * Method through which information can be sent to instantiate or edit a path object
 	 * Wraps constructor in case of new object creation
+	 * @throws ObjectNotFoundException 
 	 */
 
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 	
-	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {
-		myGrid = grid;
+	public void makePath(int level, List<Point2D> coordinates, Map<String, List<Point2D>> imageCoordinates, String backgroundImage, String startImage, String endImage, String pathImage) {
 		myPath = new PathBuilder().construct(level, coordinates);
 	}
-
 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing

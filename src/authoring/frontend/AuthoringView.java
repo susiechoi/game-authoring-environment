@@ -11,6 +11,7 @@ package authoring.frontend;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import authoring.AuthoringController;
@@ -26,7 +27,6 @@ import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
 
@@ -53,7 +53,7 @@ public class AuthoringView extends View {
 	}
 
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new AdjustWaveScreen(this)).getScreen());
+		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
 	}
 
 	@Override
@@ -109,10 +109,11 @@ public class AuthoringView extends View {
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model;
 	 */
-	public void makePath(List<Point2D> coordinates, GridPane grid) {
-		myController.makePath(myLevel, coordinates, grid);
+	public void makePath(List<Point2D> coordinates, HashMap<String, List<Point2D>> hashMap, String backgroundImage, String startImage, String endImage, String pathImage) {
+		myController.makePath(myLevel, coordinates, hashMap, backgroundImage, startImage, endImage, pathImage);
 	}
 
+	
 	/**
 	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
 	 * @throws NoDuplicateNamesException 
