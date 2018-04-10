@@ -10,6 +10,7 @@ public class Settings {
 		myGameName = gameName; 
 		myStartingHealth = startingHealth;
 		myStartingMoney = starting$; 
+//		System.out.println(gameName+" "+startingHealth+" "+starting$);
 	}
 	
 }
