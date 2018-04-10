@@ -27,6 +27,7 @@ public class ShootingSprites extends Sprite{
 
 	public ShootingSprites(String name, Image image, double size, Launcher launcher) {
 		super(name, image);
+		hitCount=0;
 		intersector = new ImageIntersecter(new ImageView(image));
 		this.getImageView().setFitHeight(size);
 		this.getImageView().setFitWidth(size);
@@ -52,19 +53,20 @@ public class ShootingSprites extends Sprite{
 		this.checkTowerEnemyCollision(shooter);
 		for (Projectile projectile: projectiles) {
 			if(this.intersects(projectile)){
-				toBeRemoved = objectCollision(projectile);
+			    	toBeRemoved = objectCollision(projectile);
 			}
 		}
 		return toBeRemoved;
 	}
 	
-	private List<Sprite> objectCollision(Sprite collider) {
+	private List<Sprite> objectCollision(Sprite attacker) {
 	    List<Sprite> deadSprites = new ArrayList<>();
-	    if(!this.handleCollision(collider)) {
+	    if(!this.handleCollision(attacker)) {
+		hitCount++;
 		deadSprites.add(this);
 	    }
-	    if(!collider.handleCollision(this)) {
-		deadSprites.add(collider);
+	    if(!attacker.handleCollision(this)) {
+		deadSprites.add(attacker);
 	    }
 	    return deadSprites;
 	}
