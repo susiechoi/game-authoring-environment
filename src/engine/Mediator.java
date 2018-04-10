@@ -185,14 +185,15 @@ public class Mediator {
         myGameEngine.setSpeed(sliderValue);
     }
 
-    /**
-     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
-     * @param tower
-     * @param upgradeName
-     */
-    public void upgradeTower(FrontEndTower tower, String upgradeName) {
-        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
-    }
+    //WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED
+//    /**
+//     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
+//     * @param tower
+//     * @param upgradeName
+//     */
+//    public void upgradeTower(FrontEndTower tower, String upgradeName) {
+//        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
+//    }
 
     /**
      * to be called by the backend to tell the frontend the new score that has already be calculated
@@ -237,11 +238,6 @@ public class Mediator {
 	
     }
 
-
-
-
-
-    
 
     // a whole slew of other methods
     // but fr there should be a method for every event that can occur

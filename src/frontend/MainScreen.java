@@ -1,8 +1,5 @@
 package frontend;
 
-import java.io.File;
-import java.io.IOException;
-
 import authoring.AuthoringController;
 import controller.PlayController;
 import frontend.Screen;
@@ -15,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class MainScreen extends Screen {
     //TODO re-factor style sheets to abstract
@@ -42,18 +38,18 @@ public class MainScreen extends Screen {
 	textInstructs.setAlignment(Pos.CENTER);
 	textInstructs.setMaxWidth(Double.MAX_VALUE);
 
-	Button newGameButt = UIFACTORY.makeTextButton(".button", "Author");
-	newGameButt.setOnAction(click->{
-	    System.out.println("hi");
+	Button newAuthorButt = UIFACTORY.makeTextButton(".button", "Author");
+	newAuthorButt.setOnAction(click->{
 	    new AuthoringController(STAGE_MANAGER,DEFAULT_LANGUAGE);
 	});
-	newGameButt.setOnMouseClicked((argo0) -> new PlayController(DEFAULT_LANGUAGE, STAGE_MANAGER));
+	newAuthorButt.setOnMouseClicked((argo0) -> new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE));
 	Button continueButt = UIFACTORY.makeTextButton(".button", "Play");
 
-	//this should only be clickable if there is a save file availible
-	Boolean saveAvailable = isSaveAvailable();
-	continueButt.setDisable(!saveAvailable);
-	//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenContinuation());
+	Button newGameButt = UIFACTORY.makeTextButton(".button", "Game");
+	newGameButt.setOnAction(click->{
+	    new PlayController(STAGE_MANAGER,DEFAULT_LANGUAGE);
+	});
+	newGameButt.setOnMouseClicked((argo0) -> new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE));
 
 	HBox leftCenter = new HBox(newGameButt);
 	leftCenter.setAlignment(Pos.CENTER);
@@ -72,11 +68,6 @@ public class MainScreen extends Screen {
 	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 	return rootBox;
-    }
-
-    //TODO needs to check if valid saveFile is available
-    private boolean isSaveAvailable() {
-	return false;
     }
 
     @Override

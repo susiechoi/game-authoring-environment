@@ -31,15 +31,16 @@ public class PlayController {
      * Constructs main parts of play: Engine for backend controls, ScreenManager (top
      * level of game player) and Mediator, which connects the two
      * 
-     * @param stage: Stage to mount Game Player on
+     * @param stage: Stage to mount Game Player on 
      */
-    public PlayController(String language, StageManager stageManager) {
+    public PlayController(StageManager stageManager, String language) {
 	myMediator = new Mediator();
 	myGameEngine = new GameEngine(myMediator);
 	myScreenManager = new ScreenManager(stageManager, language, myMediator);
 	myReader = new AuthoringModelReader();
 	myMediator.setGameEngine(myGameEngine);
 	myMediator.setScreenManager(myScreenManager);
+	myScreenManager.loadInstructionScreen();
     }
     
     /**
@@ -54,6 +55,5 @@ public class PlayController {
 	List<Level> levels = playModel.allLevels();
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0, levels.get(0).getTowers());
 	myGameEngine.setPlayState(play);
-	// TODO: myScreenManager.setLandscape(landscape);
     }
 }
