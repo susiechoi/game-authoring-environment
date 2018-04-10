@@ -95,6 +95,9 @@ public class Sprite  {
     public void setY(double newY) {
     		this.myImageView.setY(newY);
     }
+    public void setRotate(double rotateVal) {
+    		this.myImageView.setRotate(rotateVal);
+    }
     /**
      * Returns the damage that this sprite inflicts on something (Can be enemy's damage, projectiles damage, etc)
      * @return

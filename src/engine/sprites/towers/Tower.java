@@ -88,8 +88,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	/**
 	 * Handles selling a tower
 	 */
-	public double sell() {
-		return myValue.getProperty();
+	public int sell() {
+		return (int) myValue.getProperty();
 	}
 
 	/**
@@ -127,9 +127,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		return balance;
 	}
 
-	private Launcher getLauncher() {
-		return myLauncher; 
-	}
 	
 	/**private double getDamage() {
 		return this.getLauncher().getDamage();
@@ -142,9 +139,17 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public Map<String, Double> getTowerStats(){
 		return propertyStats;
 	}
-	
+
 	private void updateStatsMap(String name, double value) {
 		propertyStats.put(name, value);
+	}
+
+	@Override
+	public int purchase(int myResources) throws CannotAffordException {
+		if (myResources < myValue.getProperty()) {
+			throw new CannotAffordException();
+		}
+		return (int) (myResources - myValue.getProperty());
 	}
 
 }
