@@ -32,6 +32,20 @@ public interface FrontEndTower {
     public String getName();
     
     /**
+     * Sell tower
+     * @return updated resources value
+     */
+    public int sell();
+
+    /**
+     * 
+     * @param myResources
+     * @return Updated resources value
+     * @throws CannotAffordException 
+     */
+	public int purchase(int myResources) throws CannotAffordException;
+    
+    /**
      * Method to get list of available upgrades, map key would be upgrade type so we can assign
      * a particular image to the icon (health, damage, rate-of-fire, etc) [would be nice to have these
      * standardized between this and getTowerStats but not required] and the map value would be the cost

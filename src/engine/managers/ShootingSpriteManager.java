@@ -30,14 +30,20 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     		return spritesToBeRemoved;
     }
     
-    /**
-     * Called every update on any shooting sprites, will shoot if the rate of fire says it can
-     * @param passedSprites
-     */
-    public void shoot(List<ShootingSprites> targets) {
+
+    public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
+    		List<Projectile> newProjectiles = new ArrayList<>();
     		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
-    			shootingSprite.shoot
+    			for (ShootingSprites passedSprite: passedSprites) {
+    				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
+    					Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
+    					if (newProjectile != null) {
+    						newProjectiles.add(newProjectile);
+    					}
+    				}
+    			}
     		}
+    		return newProjectiles;
     }
     
 	public void moveProjectiles() {
