@@ -87,7 +87,6 @@ public class GameScreen extends Screen {
 
 	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
-	GAME_PANEL.setPath(null, 10, 10);
 	return rootPane;
     }
 
