@@ -29,65 +29,6 @@ public class CreatePathScreen extends PathScreen {
 		super(view);
 	}
 
-	@Override
-	public Parent makeScreenWithoutStyling() {
-		pathRoot = new StackPane();
-		//		Scene myScene = new Scene(pathRoot, 1500, 900);
-
-		grid = new CreatePathGrid();
-		pathGrid = grid.makePathGrid();
-
-		panel = new CreatePathPanel(getView());
-		panel.makePanel();
-		pathPanel = panel.getPanel();
-
-		pathRoot.getChildren().add(pathGrid);
-		pathRoot.getChildren().add(pathPanel);
-		
-		StackPane.setAlignment(pathGrid, Pos.CENTER_LEFT);
-		StackPane.setAlignment(pathPanel, Pos.CENTER_RIGHT);
-
-		setGridSizing();
-		setGridApplied();
-
-		return pathRoot; 	
-	}
-
-	private void setGridSizing() {
-		Button pathSizePlusButton = (Button) panel.getSizeButtons().getChildrenUnmodifiable().get(0);
-		pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (grid.getPathSize() < 100) {
-					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() + 10);
-				}
-			}
-		});
-
-		Button pathSizeMinusButton = (Button) panel.getSizeButtons().getChildren().get(1);
-		pathSizeMinusButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (grid.getPathSize() > 30) {
-					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - 10);
-
-				}
-			}
-		});
-
-//		Button backgroundButton = (Button) panel.getBackgroundButton();
-//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				FileChooser fileChooser = new FileChooser();
-//				fileChooser.setTitle("View Pictures");
-//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-//				File file = fileChooser.showOpenDialog(new Stage());
-//				grid.setBackgroundmage(file);
-//			}
-//		});
-	}
 
 	private void setGridApplied() {
 		Button applyButton = panel.getApplyButton();
@@ -130,4 +71,11 @@ public class CreatePathScreen extends PathScreen {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void initializeGridSettings(CreatePathGrid grid) {
+	    setGridApplied();
+	    setPanel(new CreatePathPanel(getView()));
+	}
+	
 }

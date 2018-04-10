@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class CreatePathPanel extends AuthoringScreen {
+public class CreatePathPanel extends PathPanel {
     public static final int PANEL_PATH_SIZE = 90;
     public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 
@@ -134,18 +134,18 @@ public class CreatePathPanel extends AuthoringScreen {
 	endImageChooser = getUIFactory().makeTextButton("", "Choose End Image");
 	setImageOnButtonPressed(endImageChooser, endImage);
 
-	Image plusImg = new Image("file:images/plus.png", 60, 40, true, false);
-	pathSizePlusButton = getUIFactory().makeImageButton("", plusImg);
-
-	Image minusImg = new Image("file:images/minus.png", 60, 40, true, false);
-	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
+//	Image plusImg = new Image("file:images/plus.png", 60, 40, true, false);
+//	pathSizePlusButton = getUIFactory().makeImageButton("", plusImg);
+//
+//	Image minusImg = new Image("file:images/minus.png", 60, 40, true, false);
+//	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
 
 	applyButton = getUIFactory().makeTextButton("", "Apply");
 
 	backButton = setupBackButton();
 
-	pathSizeButtons = new HBox();
-	pathSizeButtons.getChildren().addAll(pathSizePlusButton, pathSizeMinusButton);
+	pathSizeButtons = makeSizingButtons();
+	pathSizeButtons.getChildren().add(pathSizeButtons);
 
 	dragAndDropPanel.getChildren().addAll(panelTitle, startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage);
 	buttonPanel.getChildren().addAll(pathSizeButtons, changeImageButton, applyButton, backButton);

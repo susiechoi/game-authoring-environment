@@ -24,6 +24,6 @@ public class AdjustWaveScreen extends PathScreen {
     @Override
     public void initializeGridSettings(CreatePathGrid grid) {
 	grid.setUpForWaves(e -> {});//TODO: action here!!!);
-	
+	setPanel(new WavePanel());
     }
 }

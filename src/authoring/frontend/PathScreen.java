@@ -21,7 +21,7 @@ public abstract class PathScreen extends AdjustScreen {
 	private StackPane pathRoot;
 	private GridPane pathGrid;
 	private Node pathPanel;
-	private CreatePathPanel panel;
+	private PathPanel panel;
 	private CreatePathGrid grid;
 
 	protected PathScreen(AuthoringView view) {
@@ -29,6 +29,9 @@ public abstract class PathScreen extends AdjustScreen {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
+	}
+	protected void setPanel(PathPanel panelnew) {
+	    panel = panelnew;
 	}
 
 	@Override
@@ -41,7 +44,6 @@ public abstract class PathScreen extends AdjustScreen {
 
 		panel = new CreatePathPanel(getView());
 		panel.makePanel();
-		pathPanel = panel.getPanel();
 
 		pathRoot.getChildren().add(pathGrid);
 		pathRoot.getChildren().add(pathPanel);
@@ -50,7 +52,7 @@ public abstract class PathScreen extends AdjustScreen {
 		StackPane.setAlignment(pathPanel, Pos.CENTER_RIGHT);
 
 		setGridSizing();
-		setGridApplied();
+		initializeGridSettings(grid);
 
 		return pathRoot; 	
 	}
@@ -58,7 +60,7 @@ public abstract class PathScreen extends AdjustScreen {
 	public abstract void initializeGridSettings(CreatePathGrid grid);
 
 	private void setGridSizing() {
-		Button pathSizePlusButton = (Button) panel.getSizeButtons().getChildrenUnmodifiable().get(0);
+		Button pathSizePlusButton = panel.getPlusButton();
 		pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -68,7 +70,7 @@ public abstract class PathScreen extends AdjustScreen {
 			}
 		});
 
-		Button pathSizeMinusButton = (Button) panel.getSizeButtons().getChildren().get(1);
+		Button pathSizeMinusButton = panel.getMinusButton();
 		pathSizeMinusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -91,36 +93,6 @@ public abstract class PathScreen extends AdjustScreen {
 //				grid.setBackgroundmage(file);
 //			}
 //		});
-	}
-
-	private void setGridApplied() {
-		Button applyButton = panel.getApplyButton();
-		applyButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
-				System.out.println(grid.getStartingPosition().size());
-				if (grid.getStartingPosition().size() == 0) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Path Cutomization Error");
-					alert.setContentText("Your path has no starting blocks");
-					alert.show();
-				}
-				for (int key: coordMap.keySet()) {
-					System.out.println(coordMap.get(key).get(0));
-					 if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
-						System.out.println("TRUE");
-						getView().makePath(grid.getCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
-					} else {
-						System.out.println("FALSE");
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Path Cutomization Error");
-						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
-						alert.show();
-					}
-				}
-			}
-		});
 	}
 
 	@Override
