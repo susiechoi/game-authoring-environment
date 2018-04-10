@@ -1,3 +1,8 @@
+/**
+ * @author susiechoi
+ * Encapsulates information about the starting resources (health & money) in gameplay
+ */
+
 package authoring;
 
 class AuthoringResources {

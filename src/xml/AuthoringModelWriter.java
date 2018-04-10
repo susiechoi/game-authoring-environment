@@ -1,3 +1,4 @@
+
 package xml;
 
 
@@ -17,28 +18,28 @@ import data.GameData;
 
 public class AuthoringModelWriter implements XMLWriter {
 
-    /**
-     * Implementation of XMLWriter that writes an XML file specifying the data written while authoring a game, including tower types, tower functionality, 
-     * enemy types, and path. Utilizes XStream methods to write data about each object in AuthoringModel that is passed to write() method.
-     * 
-     * @author Brendan Cheng 3/31/2018
-     */
+	/**
+	 * Implementation of XMLWriter that writes an XML file specifying the data written while authoring a game, including tower types, tower functionality, 
+	 * enemy types, and path. Utilizes XStream methods to write data about each object in AuthoringModel that is passed to write() method.
+	 * 
+	 * @author Brendan Cheng 3/31/2018
+	 */
 
-    private Document d;
-    private File file;
-    private XStream parser;
+	private Document d;
+	private File file;
+	private XStream parser;
 
-    /**
-     * Initializes file that will be written
-     */
-    public AuthoringModelWriter() {
-	try {
-	    d = XMLDocumentBuilder.initializeDoc();
-	} catch (ParserConfigurationException p) {
-	    System.out.println("Bad configuration"); // update exception
+	/**
+	 * Initializes file that will be written
+	 */
+	public AuthoringModelWriter() {
+		try {
+			d = XMLDocumentBuilder.initializeDoc();
+		} catch (ParserConfigurationException p) {
+			System.out.println("Bad configuration"); // update exception
+		}
+		parser = new XStream(new StaxDriver());
 	}
-	parser = new XStream(new StaxDriver());
-    }
 
     /**
      * Implementation of write method that saves data for authoring to SavedModels folder
@@ -68,3 +69,4 @@ public class AuthoringModelWriter implements XMLWriter {
 
     
 }
+

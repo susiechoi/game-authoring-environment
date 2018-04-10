@@ -40,7 +40,7 @@ public class PlaySaverWriter implements XMLWriter {
 		game = d.createElement("game");
 		d.appendChild(game);
 	}
-	
+
 	@Override
 	public void write(GameData g, String filepath) {
 		// check type
@@ -60,5 +60,5 @@ public class PlaySaverWriter implements XMLWriter {
 //		}
 		XMLDocumentBuilder.stringToXML(parser.toXML(g), "SavedPlays/" + filepath + ".xml");
 	}
-
 }
+
