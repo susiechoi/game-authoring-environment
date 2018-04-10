@@ -54,7 +54,6 @@ public class ShootingSprites extends Sprite{
 		}
 	}
 	
-	//TODO should this be moved into launcher class? -- don't have access to x and y loc in launcher class
 	public boolean hasInRange(ShootingSprites passedSprite) {
 		double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
 		return (distanceBetween <= myLauncher.getRange());
@@ -67,5 +66,8 @@ public class ShootingSprites extends Sprite{
 	public void launch() {
 		myLauncher.launch();
 	}
-
+	
+	public Launcher getLauncher() {
+		return myLauncher;
+	}
 }

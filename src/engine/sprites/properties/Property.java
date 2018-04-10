@@ -9,6 +9,7 @@ package engine.sprites.properties;
 public abstract class Property {
 
     private double myProperty;
+    private String mySimpleName;
     
     /**
      * Constructor for property object
@@ -17,6 +18,7 @@ public abstract class Property {
      */
     public Property(double property) {
 	myProperty = property;
+	mySimpleName = this.getClass().getSimpleName();
     }
    
     /**
@@ -32,5 +34,8 @@ public abstract class Property {
     protected void setProperty(double newValue) {
 	myProperty = newValue;
     }
-
+    
+    public String getName() {
+    	return mySimpleName;
+    }
 }
