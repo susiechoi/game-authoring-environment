@@ -60,11 +60,17 @@ public class AuthoringView extends View {
     public void loadErrorScreen(String error) {
 	loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
     }
+    public void loadErrorAlert(String error) {
+	loadErrorAlertToStage(myErrorReader.resourceDisplayText(error));
+    }
     protected void loadScreen(Screen screen) {
 	myStageManager.switchScreen(screen.getScreen());
     }
     protected String getCurrentCSS() {
 	return myCurrentCSS;
+    }
+    protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
+	myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
     }
 
     protected void goBackFrom(String id) {

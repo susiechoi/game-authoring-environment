@@ -48,9 +48,9 @@ public class CreatePathPanel extends PathPanel implements Panel{
 
     @Override
     public Button getApplyButton() {
-	System.out.println(applyButton.getOnAction());
 	return applyButton;
     }
+
 
     public void makePanel() { //separate into smaller methods
 
