@@ -27,8 +27,8 @@ import engine.sprites.towers.Tower;
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
-    private Integer myScore;
-    private Integer myResources;
+    private int myScore;
+    private int myResources;
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
@@ -61,7 +61,6 @@ public class PlayState implements GameData {
 	}
     }
 
-
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers()); //maybe change so that it adds on to the List and doesn't overwrite old towers
@@ -70,9 +69,7 @@ public class PlayState implements GameData {
 
     public void restartLevel() {
 	// TODO Auto-generated method stub
-
     }
-
 
     public void pause() {
 	isPaused = true;

@@ -15,6 +15,22 @@ import javafx.scene.image.Image;
 public class Tower extends ShootingSprites implements FrontEndTower {
 	private Launcher myLauncher;
 	private HealthProperty myHealth;
+	private double myHealthValue;
+	private double myHealthUpgradeCost; 
+	private double myHealthUpgradeValue; 
+	private Image myImage; 
+	private Image myProjectileImage;
+	private double myProjectileDamage; 
+	private double myProjectileSpeed;
+//	private double myProjectileValue;  
+//	private double myProjectileUgradeCost; 
+//	private double myProjectileUpgradeValue; 
+	
+//	private double myLauncherValue; 
+//	private double myLauncherUpgradeCost; 
+//	private double myLauncherUgradeValue; 
+	private double myLauncherRate;
+	private double myLauncherRange; 
 	private ValueProperty myValue;
 
 	/**
@@ -25,10 +41,23 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * @param health: Initial health of the tower
 	 * @param value: Value of the tower for selling
 	 */
-	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health) {
+	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myLauncher = launcher;
 		myHealth = health;
+		myValue = value;
+		myImage = image; 
+		myHealth = health;
+		myValue = value;
+		myHealthValue = health.getProperty(); 
+		myHealthUpgradeCost = health.getCost();
+		myHealthUpgradeValue = health.getUpgradeValue(); 
+		myLauncher = launcher;
+		myProjectileImage = launcher.getProjectileImage(); 
+		myProjectileDamage = launcher.getProjectileDamage(); 
+		myProjectileSpeed = launcher.getProjectileSpeed();
+		myLauncherRate = launcher.getFireRate(); 
+		myLauncherRange = launcher.getRange(); 
 	}
 
 	/**
