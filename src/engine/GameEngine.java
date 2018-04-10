@@ -16,6 +16,7 @@ public class GameEngine {
 
     private final int FRAMES_PER_SECOND = 60;
     private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private final Integer DEFAULT_RELATIVE_SPEED = 5;
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private PlayState myPlayState;
     private Timer myTimer;
@@ -28,7 +29,7 @@ public class GameEngine {
 	myMediator = mediator;
 	myTimer = new Timer();
 	myLoop = new GameLoop(this);
-	setSpeed(MILLISECOND_DELAY);
+	setSpeed(DEFAULT_RELATIVE_SPEED);
 	// attach "game loop" to time line to play it
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> loop(SECOND_DELAY));
@@ -77,9 +78,10 @@ public class GameEngine {
      * @param speed: speed at which animation should iterate
      * (relative speed of program, 1 being slowest, 5 being normal, 10 being fastest)
      */
-    public void setSpeed(Integer speed) {
+    public void setSpeed(Integer relativeSpeed) {
+	Integer speed = MILLISECOND_DELAY*(relativeSpeed/DEFAULT_RELATIVE_SPEED);
 	myTimer.schedule(myLoop, speed);
-	System.out.println("Incomplete setSpeed method, make sure to check this functionality!");
+	//System.out.println("Incomplete setSpeed method, make sure to check this functionality!");
 	//TODO myTimer.schedule may need bugfixing for scaling speed
     }
 
