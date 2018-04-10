@@ -1,7 +1,6 @@
 package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
-import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
@@ -54,8 +53,9 @@ public class Launcher extends Manager<Projectile>{
      * 
      */
     //TODO need to let frontend know that this projectile was added?
-    public void launch() {
+    public Projectile launch() {
     		this.addToActiveList(myProjectile);
+    		return myProjectile;
     }
     
     public boolean hasReloaded() {
@@ -88,8 +88,8 @@ public class Launcher extends Manager<Projectile>{
     	return myProjectile.getSpeed(); 
     }
 
-    public DamageProperty getDamageProperty() {
-    	return myProjectile.getDamageProperty();
+    public String getDamageName() {
+    	return myProjectile.getDamageName();
     }
     public FireRateProperty getFireRateProperty() {
     	return myFireRate;
@@ -103,6 +103,10 @@ public class Launcher extends Manager<Projectile>{
     }
     public double getFireRate() {
     	return myFireRate.getProperty();
+    }
+
+    public String getFireRateName() {
+    	return myFireRate.getName();
     }
 
 

@@ -13,56 +13,58 @@ import javafx.scene.image.Image;
  */
 public class Projectile extends Sprite {
 
-    private DamageProperty myDamage;
-    private double mySpeed;
-
-    /**
-     * Constructor that takes in a damage value and image, and creates a projectile
-     * class.
-     * 
-     * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
-     * @param image: image of projectile
-     */
-    public Projectile(String name, DamageProperty damage, Image image, double speed) {
-	super(name, image);
-	myDamage = damage;
-	mySpeed = speed; 
-    }
-
-    /**
-     * Moves image in direction of it's orientation
-     */
-    public void move() {
-	double xMove = Math.sin(this.getRotate())*this.mySpeed;
-	double yMove = Math.cos(this.getRotate())*this.mySpeed;
-	this.setX(this.getX()+xMove);
-	this.setY(this.getX()+yMove);
-    }
-
-    /**
-     * Upgrades damage value of projectile
-     * 
-     * @param balance: New user's balance of money
-     * @return double representing new balance of user
-     */
-    public double upgradeDamage(double balance) {
-	return myDamage.upgrade(balance);
-    }
-
-    /**
-     * 
-     * @return : the amount of damage this Projectile does
-     */
-    public double getDamage() {
-	return myDamage.getProperty();
-    }
-
-    public DamageProperty getDamageProperty() {
-	return myDamage;
-    }
-    public double getSpeed() {
-	return mySpeed; 
-    }
+	private DamageProperty myDamage;
+	private double mySpeed;
+	
+	/**
+	 * Constructor that takes in a damage value and image, and creates a projectile
+	 * class.
+	 * 
+	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
+	 * @param image: image of projectile
+	 */
+	public Projectile(String name, DamageProperty damage, Image image, double speed) {
+	    	super(name, image);
+		myDamage = damage;
+		mySpeed = speed;
+	}
+	
+	/**
+	 * Moves image in direction of it's orientation
+	 */
+	public void move() {
+		double xMove = Math.sin(this.getRotate())*this.mySpeed;
+		double yMove = Math.cos(this.getRotate())*this.mySpeed;
+		this.setX(this.getX()+xMove);
+		this.setY(this.getX()+yMove);
+	}
+	
+	/**
+	 * Upgrades damage value of projectile
+	 * 
+	 * @param balance: New user's balance of money
+	 * @return double representing new balance of user
+	 */
+	public double upgradeDamage(double balance) {
+	    return myDamage.upgrade(balance);
+	}
+	
+	/**
+	 * 
+	 * @return : the amount of damage this Projectile does
+	 */
+	public double getDamage() {
+	    return myDamage.getProperty();
+	}
+	
+	public double getSpeed() {
+	    return mySpeed;
+	}
+	
+	
+	public String getDamageName() {
+		return myDamage.getName();
+	}
 
 
 }
