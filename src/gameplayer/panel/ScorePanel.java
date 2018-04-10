@@ -18,7 +18,7 @@ public class ScorePanel extends Panel{
 
     public ScorePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
-	SCORE = 696969;
+	SCORE = 0;
 	HEALTH = 100;
 	LEVEL = 4;
     }
