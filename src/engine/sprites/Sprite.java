@@ -1,5 +1,9 @@
 package engine.sprites;
 
+import java.io.File;
+
+import com.sun.javafx.tools.packager.Main;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -32,7 +36,9 @@ public class Sprite  {
     public Sprite(String name, String image) {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image)));
+	System.out.println(image);
+	myImageView = new ImageView(new Image(Main.class.getResourceAsStream("file:../" + image)));
+//	myImageView = new ImageView(new Image(new File(image), 50, 50, false, false));
 	myImageView.setPreserveRatio(true);
     }
     
