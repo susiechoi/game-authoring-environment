@@ -80,6 +80,9 @@ public class GamePanel extends Panel{
     }
 
     public void addSprite(FrontEndSprite sprite) {
+	ImageView spriteImage = sprite.getImageView();
+	spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
+	spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
 	spriteAdd.getChildren().add(sprite.getImageView());
     }
 
