@@ -157,9 +157,15 @@ public class AuthoringModel implements GameData {
 
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
-	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {
-		myGrid = grid;
-		myPath = new PathBuilder().construct(level, coordinates);
+	public void makePath(int name, int levelNum, List<Point2D> coordinates, GridPane grid) throws ObjectNotFoundException{
+	    	myGrid = grid;
+		myPath = new PathBuilder().construct(levelNum, coordinates);
+		Level level = levelCheck(levelNum);
+		level.addPath(myPath);
+	}
+	
+	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
+	    return levelCheck(levelNum).getPaths().get(name-1);
 	}
 
 

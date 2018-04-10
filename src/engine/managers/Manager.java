@@ -44,7 +44,7 @@ public class Manager<E> {
     }
 
     public void addToAvailableList(E sprite) {
-	active.add(sprite);
+	available.add(sprite);
     }
 
     /**
