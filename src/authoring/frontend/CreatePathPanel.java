@@ -48,9 +48,9 @@ public class CreatePathPanel extends PathPanel implements Panel{
 
     @Override
     public Button getApplyButton() {
-	System.out.println(applyButton.getOnAction());
 	return applyButton;
     }
+
 
     public void makePanel() { //separate into smaller methods
 
@@ -147,7 +147,6 @@ public class CreatePathPanel extends PathPanel implements Panel{
 //	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
 
 	applyButton = getUIFactory().makeTextButton("", "Apply");
-	applyButton.setId("Heeeelllpppp");
 	
 	backButton = setupBackButton();
 

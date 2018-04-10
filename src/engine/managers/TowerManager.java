@@ -2,7 +2,6 @@ package engine.managers;
 
 import java.awt.Point;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;

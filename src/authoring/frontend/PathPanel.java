@@ -37,8 +37,6 @@ public abstract class PathPanel extends AuthoringScreen{
 	Image minusImg = new Image(DEFAULT_MINUS_IMAGE, 60, 40, true, false);
 	myMinusButton = getUIFactory().makeImageButton("", minusImg);
 	mySizingButtons.add(myMinusButton);
-
-	mySizingButtons.add(getUIFactory().makeImageButton("", minusImg));
 	hb.getChildren().addAll(mySizingButtons);
 	return hb;
     }

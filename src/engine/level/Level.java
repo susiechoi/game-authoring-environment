@@ -1,6 +1,7 @@
 package engine.level;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,15 @@ public class Level {
 	public void addPath(Path path) {
 		myPaths.add(path); 
 	}
+	
+	/**
+	 * Returns an unmodifiable list of path objects in the level
+	 * 
+	 * @return List<Path>: a list of path objects in the level
+	 */
+	public List<Path> getUnmodifiablePaths() {
+	    return Collections.unmodifiableList(myPaths);
+	}
 			
 	/**
 	 * Adds an available tower to the level
@@ -92,6 +102,11 @@ public class Level {
 		return myTowers.get(name);
 	}
 
+	/**
+	 * Returns a list of all towers available in the level
+	 * 
+	 * @return List<String>: all the towers available in the level
+	 */
 	public List<String> getAllTowers() {
 		List<String> listToReturn = new ArrayList<String>(); 
 		listToReturn.addAll(myTowers.keySet()); 
@@ -153,6 +168,17 @@ public class Level {
 	public List<Wave> getWaves(Path path) {
 	    return myWaves.get(path);
 	}
+	
+	/**
+	 * Removes the first wave from the level 
+	 * 
+	 * @param path: the path object that the wave is specific to
+	 */
+	public void removeWave(Path path) {
+	    List<Wave> currentWaves = getWaves(path);
+	    currentWaves.remove(0);
+	    myWaves.put(path, currentWaves);
+	}
 
 	/**
 	 * Checks to see if the level is finished.
@@ -161,27 +187,20 @@ public class Level {
 	 */
 	public boolean isFinished() {
 	    for (Path path : myWaves.keySet()) {
-		for (Wave levelWave : myWaves.get(path)) {
-			if (!levelWave.isFinished()) {
-				return false;
-			}
+		if (!myWaves.get(path).isEmpty()) {
+		    return false;
 		}
 	    }
-		return true; 
+	    return true; 
 	}
 
 	/**
-	 * Returns any new Enemy that is supposed to spawn at the given time.
-	 * @param time
-	 * @return
+	 * Returns any new Enemy
 	 */
-	public Enemy getNewEnemy(double time) {
-		//TODO
-		return null;
-	}
-
-	public Enemy getNewEnemy(int time, EnemyManager em) {
-		return null;
+	public Enemy getNewEnemy(Path path) {
+	    Wave currentWave = myWaves.get(path).get(0);
+	    Enemy waveEnemy = currentWave.getEnemy();
+	    return waveEnemy;
 	}
 	
 	protected int getNumber() {

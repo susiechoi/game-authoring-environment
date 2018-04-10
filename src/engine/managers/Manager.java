@@ -3,10 +3,6 @@ package engine.managers;
 import java.util.ArrayList;
 import java.util.List;
 
-import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
-import engine.sprites.towers.Tower;
-import javafx.collections.ObservableList;
 
 /**
  * Uses a composite design pattern to manage all active objects. Used by towers,

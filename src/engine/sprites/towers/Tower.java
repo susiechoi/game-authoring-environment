@@ -199,4 +199,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		return (int) (myResources - myValue.getProperty());
 	}
 
+	@Override
+	public int getPointValue() {
+		return 0;
+	}
+
 }
