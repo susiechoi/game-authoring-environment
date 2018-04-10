@@ -56,6 +56,7 @@ public class PlayState implements GameData {
 		List<Sprite> toBeRemoved = new ArrayList<>();
 		toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive()));
 		toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive()));
+		myTowerManager.shoot(myEnemyManager.getObservableListOfActive());
 		myTowerManager.moveProjectiles();
 		myTowerManager.moveTowers();
 		for (Projectile projectile: myTowerManager.shoot(myTowerManager.getObservableListOfActive())) {
@@ -67,6 +68,7 @@ public class PlayState implements GameData {
 		myEnemyManager.moveProjectiles();
 		myEnemyManager.moveEnemies();
 		currentLevel.getNewEnemy(UNIVERSAL_TIME);
+		myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 
 	}
     

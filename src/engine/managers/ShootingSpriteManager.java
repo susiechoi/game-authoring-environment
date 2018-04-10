@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -29,6 +30,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     		return spritesToBeRemoved;
     }
     
+
     public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
     		List<Projectile> newProjectiles = new ArrayList<>();
     		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
