@@ -3,6 +3,8 @@ package engine.sprites.towers;
 import java.util.Map;
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
@@ -64,9 +66,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * 
 	 * @return boolean: True if tower is alive, false otherwise
 	 */
-	public boolean handleCollision(double enemyDamage) {
-		myHealth.loseHealth(enemyDamage);
-		return (myHealth.getProperty() <= 0);
+	@Override
+	public boolean handleCollision(Sprite collider) {
+		myHealth.loseHealth(collider.getDamage());
+		return myHealth.isAlive();
 	}
 
 	/**
@@ -110,9 +113,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
 		return balance;
 	}
-	private double getDamage() {
-		return this.getLauncher().getDamage();
-	}
+	    
+	
 	
 	public String getDamageName() {
 		return this.getLauncher().getDamageName();
