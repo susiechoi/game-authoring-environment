@@ -39,11 +39,16 @@ public class PlayState implements GameData {
     private Level currentLevel;
     private boolean isPaused;
 
-    public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime, Map<String, Tower> towerMap) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
-	myTowerManager = new TowerManager(towerMap);
+	List<FrontEndTower> availTowers = new ArrayList<>();
+	for (Tower e: levels.get(0).getTowers().values()) {
+	   availTowers.add((FrontEndTower) e);
+	}
+	mediator.setAvailableTowers(availTowers);
+	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	isPaused = false;
 	myScore = score;
