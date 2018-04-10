@@ -1,6 +1,8 @@
 package frontend;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -24,6 +26,11 @@ public abstract class View {
 	errorScreenMessage.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 	vb.getChildren().add(errorScreenMessage);
 	myManager.switchScreen(vb);
+    }
+    public void loadErrorAlertToStage(String errorMessage) {
+		    Alert alert = new Alert(AlertType.ERROR);
+		    alert.setContentText(errorMessage);
+		    alert.showAndWait();
     }
     public abstract void loadErrorScreen(String errorMessage);
     
