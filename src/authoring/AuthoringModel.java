@@ -81,6 +81,7 @@ public class AuthoringModel implements GameData {
 		String defaultGameName = myPropertiesReader.findVal(DEFAULT_PROMPTS, "NewGame");
 		int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
 		int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
+		myGameName = defaultGameName; 
 		mySettings = new SettingsBuilder().construct(defaultGameName, startingHealth, startingMoney);
 	}
 
