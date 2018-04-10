@@ -3,27 +3,25 @@ package engine.physics;
 import javafx.scene.Node;
 
 /**
- * Handles determining whether or not two images have intersected
+ * This interface is to be implemented by an Intersecter which checks if two Nodes are overlapping
+ * Any game object which should have behavior associated with intersecting another object will 
+ * 		hold an IIntersecter interface
+ * Any time a game object needs to check intersection with something else, it will delegate to
+ * 		its IIntersecter
+ * This design is modeled after the design concept of Composition
+ * The implementation of intersection is encapsulated, so methods with different speed and precision 
+ * 		can be interchanged without affecting use in the game object
  * 
- * @author Katherine Van Dyk
- * @date 4/5/18
+ * @author benauriemma
  *
  */
-public class Intersecter implements IIntersecter {
-
-    private Node currentNode;
-    
-    public Intersecter(Node input) {
-	currentNode = input;
-    }
-    /**
-     * Determines if two nodes on the screen overlap
-     * 
-     * @return True if two nodes intersect, false otherwise
-     */
-    @Override
-    public boolean overlaps(Node thatNode) {
-	return currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal());
-    }
-
+public interface Intersecter {
+	
+	/**
+	 * This method is to be used by a game object to check if it is intersecting with another game object
+	 * @param thatNode is the Node that it wants to check intersection with
+	 * @return true if the objects are overlapping, and false if they are not
+	 */
+	boolean overlaps(Node thatNode);
+	
 }

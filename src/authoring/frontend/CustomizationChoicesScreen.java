@@ -18,15 +18,15 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
     protected CustomizationChoicesScreen(AuthoringView view) {
 	//TODO: figure out how to not get gamename!!!
 	super(view);
-	myGameName = "TEST";
+//	myGameName = "TEST";
     }
 
     @Override
     public Parent makeScreenWithoutStyling(){
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
-	Text heading = getUIFactory().makeScreenTitleText(myGameName);
-	vbox.getChildren().add(heading);
+//	Text heading = getUIFactory().makeScreenTitleText(myGameName);
+//	vbox.getChildren().add(heading);
 
 	Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
 	resourcesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"ResourcesButton");});

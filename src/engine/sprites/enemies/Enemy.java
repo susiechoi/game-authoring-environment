@@ -1,14 +1,14 @@
 package engine.sprites.enemies;
 
 import engine.path.Path;
-import engine.physics.IIntersecter;
-import engine.physics.Intersecter;
+import engine.physics.ImageIntersecter;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.geometry.Point2D;
+
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
@@ -23,32 +23,50 @@ import javafx.scene.image.Image;
  */
 public class Enemy extends Sprite{
 
+	private String myName; 
+	private Image myImage; 
     private HealthProperty myHealth;
+    private double myInitialHealth; 
     private DamageProperty myDamage;
+    private double myHealthImpact; 
     private ValueProperty myValue;
-    private IIntersecter myIntersecter;
+    private ImageIntersecter myIntersecter;
     private Path myPath;
     private double mySpeed;
+    private double myKillReward;
+//    private double myKillUpgradeCost;
+//    private double myKillUpgradeValue; 
 
-    public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
-	super("", myImage);
-	myIntersecter = new Intersecter(this.getImage()); 
+    public Enemy(String name, Image image, double speed, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
+	super(name, image);
+	myName = name; 
+	myImage = image; 
 	myHealth = health;
+	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
+	myHealthImpact = myDamage.getDamage();
 	myValue = value;
+	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	myPath = path;
+	mySpeed = speed; 
+	myKillReward = value.getProperty();
+	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthImpact+", "+mySpeed+", "+myKillReward);
     }
     
     /**
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-    	super("", copiedEnemy.getImage().getImage());
+    	super("", copiedEnemy.getImageView().getImage());
+    	myName = copiedEnemy.getName(); 
+    	myImage = copiedEnemy.getImageView().getImage(); 
     	myIntersecter = copiedEnemy.getIntersecter(); 
     	myHealth = copiedEnemy.getHealth(); 
     	myDamage = copiedEnemy.getDamage();
+    	myHealthImpact = myDamage.getDamage(); 
     	myValue = copiedEnemy.getValue();
     	myPath = copiedEnemy.getPath(); 
+    	mySpeed = copiedEnemy.getSpeed();
     }
 
     /**
@@ -72,20 +90,20 @@ public class Enemy extends Sprite{
     }
 
     /**
-     * Handles updating the enemy position to follow the path
+     * Moves the enemy along the path according to how much time has passed
+     * @param elapsedTime
      */
-    public void followPath() {
-	// TODO Auto-generated method stub
-    }
-
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);
-	this.getImage().setX(newPosition.getX());
-	this.getImage().setY(newPosition.getY());
-
+	this.getImageView().setX(newPosition.getX());
+	this.getImageView().setY(newPosition.getY());
     }
 
+    public String getName() {
+    	return myName; 
+    }
+    
     /**
      * Handles returning an enemy's damage after hitting a tower
      * 
@@ -95,7 +113,7 @@ public class Enemy extends Sprite{
 	return myDamage.getProperty();
     }
     
-    private IIntersecter getIntersecter() {
+    private ImageIntersecter getIntersecter() {
     	return myIntersecter; 
     }
     
@@ -114,5 +132,9 @@ public class Enemy extends Sprite{
     private Path getPath() {
     	return myPath; 
     } 
+    
+    private double getSpeed() {
+    	return mySpeed; 
+    }
     
 }
