@@ -3,6 +3,7 @@ package gameplayer.screen;
 import frontend.PromptReader;
 import frontend.Screen;
 import frontend.UIFactory;
+import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -71,4 +72,10 @@ public class InstructionScreen extends Screen {
     private boolean isSaveAvailable() {
 	return false;
     }
+
+	@Override
+	protected View getView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

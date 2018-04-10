@@ -1,12 +1,8 @@
 package engine.managers;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.collections.ObservableList;
 
 /**
  * 
@@ -32,7 +28,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
     			for (ShootingSprites passedSprite: passedSprites) {
     				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
-    					shootingSprite.addProjectile(shootingSprite.launch());
+    					shootingSprite.launch();
     				}
     			}
     		}
@@ -40,11 +36,8 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     
 	public void moveProjectiles() {
 		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
-			if (shootingSprite.enemyWithinRange() && shootingSprite.hasReloaded()) {
-				shootingSprite.shoot();
-			}
 			for (Projectile projectile: shootingSprite.getProjectiles()) {
-				projectile.move();
+//				projectile.move();
 			}
 		}
 	}

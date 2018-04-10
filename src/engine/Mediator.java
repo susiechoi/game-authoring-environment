@@ -18,7 +18,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import xml.AuthoringModelReader;
 import xml.PlayLoader;
-
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
