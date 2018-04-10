@@ -147,7 +147,6 @@ public class CreatePathPanel extends PathPanel implements Panel{
 //	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
 
 	applyButton = getUIFactory().makeTextButton("", "Apply");
-	applyButton.setId("Heeeelllpppp");
 	
 	backButton = setupBackButton();
 

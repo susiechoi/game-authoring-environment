@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class WavePanel extends PathPanel{
     private String myPathString;
@@ -22,13 +23,20 @@ public class WavePanel extends PathPanel{
     private String myWaveNumber;
     public WavePanel(AuthoringView view, DraggableImage grid, String waveNumber) {
 	super(view);
-	myPathString = grid.getPathName();
+	if (grid == null) {
+	    myPathString = "1";
+	}
+	
+	//myPathString = grid.getPathName();
+	if(waveNumber==null) {
+	    waveNumber = "1";
+	}
 	myWaveNumber = waveNumber;
 	setUpPanel();
     }
     public void setUpPanel() {
 	myRoot = new VBox();
-	List<String> enemyOptions = new ArrayList<>(); //TODO!
+	Text waveText = getUIFactory().makeScreenTitleText(getView().getErrorCheckedPrompt("WavescreenHeader") + myWaveNumber);
 	myEnemyDropdown = getUIFactory().makeTextDropdown("", getView().getCurrentObjectOptions("Enemy"));
 	HBox enemyDropdownPrompted = getUIFactory().addPromptAndSetupHBox("", myEnemyDropdown, getView().getErrorCheckedPrompt("ChooseEnemy"));
 	myNumberTextField = new TextField();
@@ -40,7 +48,7 @@ public class WavePanel extends PathPanel{
 	    getView().addWaveEnemy(getView().getLevel(), myPathString, Integer.parseInt(myWaveNumber), 
 		    myEnemyDropdown.getValue(), myEnemyNumber);
 	});
-	myRoot.getChildren().addAll(enemyDropdownPrompted, textFieldPrompted, backButton, applyButton);
+	myRoot.getChildren().addAll(waveText, enemyDropdownPrompted, textFieldPrompted, backButton, applyButton);
     }
     private void errorcheckResponses() {
 	if(myEnemyDropdown.getValue() == null ) {
