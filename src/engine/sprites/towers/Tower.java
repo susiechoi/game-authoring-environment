@@ -74,8 +74,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public Tower(Tower copiedTower) {
 		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
 			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
-		this.myHealth = copiedTower.myHealth; 
-		this.myValue = copiedTower.myValue; 
+		myHealth = copiedTower.getHealthProperty();
+		myValue = copiedTower.getValueProperty(); 
 	}
 
 	/**
@@ -84,9 +84,18 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public Tower(Tower copiedTower, Point point) {
 		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
 			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
-		this.myHealth = copiedTower.myHealth; 
-		this.myValue = copiedTower.myValue; 
+		System.out.println("Health value copied is " + copiedTower.getHealthProperty().getProperty());
+		myHealth = copiedTower.getHealthProperty();
+		myValue = copiedTower.getValueProperty();
+		propertyStats = new HashMap<String, Double>();
+		propertyStats.put(myHealth.getName(), myHealth.getProperty());
+		propertyStats.put(myHealth.getName(), myHealth.getProperty());
+		propertyStats.put(this.getDamageName(), this.getDamage());
 		this.place(point.getX(), point.getY());
+	}
+	
+	private void setConstructorVals() {
+	    
 	}
 
 	/**
@@ -157,6 +166,21 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 */
 	public Image getImage() {
 	    return myImage;
+	}
+	
+	/**
+	 * Returns ValueProperty
+	 * @return
+	 */
+	public ValueProperty getValueProperty() {
+	    return myValue;
+	}
+	
+	/**
+	 * Returns the health property
+	 */
+	public HealthProperty getHealthProperty() {
+	    return myHealth;
 	}
 
 	public Map<String, Double> getTowerStats(){
