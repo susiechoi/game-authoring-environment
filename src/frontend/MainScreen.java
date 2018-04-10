@@ -1,6 +1,8 @@
 package frontend;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
 import frontend.Screen;
 import frontend.UIFactory;
@@ -43,18 +45,21 @@ public class MainScreen extends Screen {
 	    new AuthoringController(STAGE_MANAGER,DEFAULT_LANGUAGE);
 	});
 	newAuthorButt.setOnMouseClicked((argo0) -> new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE));
-	Button continueButt = UIFACTORY.makeTextButton(".button", "Play");
 
 	Button newGameButt = UIFACTORY.makeTextButton(".button", "Game");
 	newGameButt.setOnAction(click->{
-	    new PlayController(STAGE_MANAGER,DEFAULT_LANGUAGE);
+	    try {
+		new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE, new AuthoringModel());
+	    } catch (MissingPropertiesException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 	});
-	newGameButt.setOnMouseClicked((argo0) -> new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE));
 
-	HBox leftCenter = new HBox(newGameButt);
+	HBox leftCenter = new HBox(newAuthorButt);
 	leftCenter.setAlignment(Pos.CENTER);
 	leftCenter.setMaxWidth(Double.MAX_VALUE);
-	HBox rightCenter = new HBox(continueButt);
+	HBox rightCenter = new HBox(newGameButt);
 	rightCenter.setAlignment(Pos.CENTER);
 	rightCenter.setMaxWidth(Double.MAX_VALUE);
 

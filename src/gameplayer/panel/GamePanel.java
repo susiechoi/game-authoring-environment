@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 import javafx.scene.Group;
@@ -55,12 +56,17 @@ public class GamePanel extends Panel{
     public void handleMouseInput(double x, double y) {
 	if(towerPlaceMode) {
 	    Point position = new Point((int)x,(int)y);
-	    FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
-	    if(newTower!= null) {
-		addTowerImageViewAction(newTower);
-		towersPlaced.add(newTower);
-		spriteAdd.getChildren().add(newTower.getImageView());
-		towerPlaceMode = false;
+	    try {
+		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
+		if(newTower!= null) {
+		    addTowerImageViewAction(newTower);
+		    towersPlaced.add(newTower);
+		    spriteAdd.getChildren().add(newTower.getImageView());
+		    towerPlaceMode = false;
+		}
+	    }
+	    catch(CannotAffordException e){
+		//GameScreen popup for cannot afford
 	    }
 	}
     }
@@ -77,7 +83,7 @@ public class GamePanel extends Panel{
     public void removeSprite(FrontEndSprite sprite) {
 	spriteAdd.getChildren().remove(sprite.getImageView());
     }
-    
+
     public void removeTower(FrontEndTower tower) {
 	spriteAdd.getChildren().remove(tower.getImageView());
     }

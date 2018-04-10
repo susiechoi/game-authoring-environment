@@ -13,6 +13,7 @@ import java.util.List;
 
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
@@ -154,8 +155,8 @@ public class GameScreen extends Screen {
 	SCORE_PANEL.updateLevel(newLevel);
     }
     
-    public FrontEndTower placeTower(FrontEndTower tower, Point position) {
-	return SCREEN_MANAGER.placeTower(tower,position);
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
+	return MEDIATOR.placeTower(position, tower.getName());
     }
     
     public void towerClickedOn(FrontEndTower tower) {

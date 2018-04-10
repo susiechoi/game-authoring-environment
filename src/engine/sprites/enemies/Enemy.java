@@ -47,6 +47,7 @@ public class Enemy extends ShootingSprites{
 	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
 	myHealthImpact = myDamage.getProperty();
+//	myHealthImpact = myDamage.getDamage();
 	myValue = value;
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	myPath = path;
