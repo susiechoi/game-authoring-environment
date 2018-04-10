@@ -323,12 +323,20 @@ public class AuthoringModel implements GameData {
 		return null;
 	}
 
-	public int addNewLevel() {
+	/**
+	 * Adds a new level to the authored game
+	 */
+	public void addNewLevel() {
 		int newLevelNumber = myLevels.size()+1; 
 		myLevels.put(newLevelNumber, new Level(newLevelNumber));
 		return newLevelNumber; 
 	}
 	
+	/**
+	 * Returns a list of level numbers as strings currently in the authored game
+	 * 
+	 * @return List<String>: A list of level numbers as strings
+	 */
 	public List<String> getLevels() {
 		List<String> listToReturn = new ArrayList<String>(); 
 		for (Integer level : myLevels.keySet()) {
@@ -337,11 +345,16 @@ public class AuthoringModel implements GameData {
 		return listToReturn; 
 	}
 
+	/**
+	 * Auto generates a new level for the authored game and puts it in the
+	 * levels map. 
+	 * 
+	 * @return int: the number of the new, auto generated level
+	 */
 	public int autogenerateLevel() {
 		int newLevelNumber = myLevels.size()+1;
 		Level copiedLevel = myLevels.get(myLevels.size());
 		myLevels.put(newLevelNumber, new Level(copiedLevel));
 		return newLevelNumber; 
 	}
-	
 }
