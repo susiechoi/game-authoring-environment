@@ -10,6 +10,7 @@ import engine.level.Level;
 import java.util.ArrayList;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
@@ -48,14 +49,16 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	UNIVERSAL_TIME+=elapsedTime;
-	myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive());
-	myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive());
-	myTowerManager.moveProjectiles();
-	myTowerManager.moveTowers();
-	myEnemyManager.moveProjectiles();
-	myEnemyManager.moveEnemies();
-	currentLevel.getNewEnemy(UNIVERSAL_TIME);
+	if(!isPaused) {
+	    UNIVERSAL_TIME+=elapsedTime;
+	    myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive());
+	    myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive());
+	    myTowerManager.moveProjectiles();
+	    myTowerManager.moveTowers();
+	    myEnemyManager.moveProjectiles();
+	    myEnemyManager.moveEnemies();
+	    currentLevel.getNewEnemy(UNIVERSAL_TIME);
+	}
     }
 
     public void setLevel(int levelNumber) {
@@ -66,7 +69,6 @@ public class PlayState implements GameData {
 
     public void restartLevel() {
 	// TODO Auto-generated method stub
-
     }
 
     public void pause() {
@@ -79,6 +81,15 @@ public class PlayState implements GameData {
 
     //TODO potentially move into Mediator? somehow the FrontEndTower has to be returned to the frontend
     public FrontEndTower placeTower(Point location, String towerType) {
+	// TODO: decrement currency or throw an exception if they cant afford it
 	return (FrontEndTower) myTowerManager.place(location, towerType);
+    }
+
+    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+	myResources -= tower.upgrade(upgradeName);
+    }
+
+    public void sellTower(FrontEndTower tower) {
+	myResources += tower.sell();
     }
 }

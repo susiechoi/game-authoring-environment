@@ -25,12 +25,11 @@ public interface FrontEndTower {
      */
     public Map<String,String> getTowerStats();
     
-    /** (OPTIONAL DEPENDING ON WHERE YOU WANT THIS CALL TO BE MADE)
-     * Method to sell tower(optional could be a Mediator call if needed, however you will need a
-     * way to identify the tower, maybe position or a towerID[don't love towerID idea])
-     * @return if sell was successful(don't really know why it wouldn't be)
+    /**
+     * Method to sell tower
+     * @return the amount of money earned from selling this tower
      */
-    public boolean sell();
+    public Integer sell();
     
     /**
      * Method to get list of available upgrades, map key would be upgrade type so we can assign
@@ -49,11 +48,12 @@ public interface FrontEndTower {
     public String getSpecificUpgradeInfo(String upgradeName);
     
     /**
-     * Triggers the actual update
+     * 
      * @param upgradeName	which upgrade to trigger, will be the value given as a key 
      * 				from getUpgrades()
-     * @return if upgrade was successful (did user have enough money)
+     * @return how much the upgrade cost
+     * @throws CannotAffordException if the user does not have enough currency
      */
-    public boolean upgrade(String upgradeName);
+    public Integer upgrade(String upgradeName) throws CannotAffordException;
     
 }
