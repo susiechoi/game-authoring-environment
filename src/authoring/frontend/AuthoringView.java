@@ -24,7 +24,9 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
 
@@ -78,7 +80,6 @@ public class AuthoringView extends View {
 	    System.out.println("next class: " + nextScreenClass);
 	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 	    if(constructor.getParameterTypes().length == 2) {
-		System.out.println("makin it to the 2 parameter");
 		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 		myStageManager.switchScreen(nextScreen.getScreen());
 	    }
@@ -138,14 +139,6 @@ public class AuthoringView extends View {
 	}
     }
 
-    //TODO 
-    /**
-     * Method through which information can be sent to instantiate or edit a Path in Authoring Model;
-     */
-    public void makePath() {
-	myController.makePath(myLevel);
-    }
-
 
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
@@ -199,7 +192,8 @@ public class AuthoringView extends View {
     }
 
 	public void addNewLevel() {
-		myController.addNewLevel(); 
+		int newLevel = myController.addNewLevel(); 
+		setLevel(newLevel);
 	}
 
 	public List<String> getLevels() {
@@ -215,4 +209,8 @@ public class AuthoringView extends View {
 		return myLevel; 
 	}
 
+	public void makePath(List<Point2D> coordinates, GridPane grid) {
+		myController.makePath(myLevel, coordinates, grid);
+	}
+	
 }

@@ -19,6 +19,9 @@ import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
+import javafx.geometry.Point2D;
+import javafx.scene.layout.GridPane;
+
 
 public class AuthoringController {
 	
@@ -83,8 +86,8 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 */
-	public void makePath(int level) {
-		myAuthoringModel.makePath(level); 
+	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {  //pass entire populated gridpane?
+		myAuthoringModel.makePath(level, coordinates, grid); 
 	}
 	
 	/**
@@ -102,8 +105,8 @@ public class AuthoringController {
 
     }
 
-	public void addNewLevel() {
-		myAuthoringModel.addNewLevel(); 
+	public int addNewLevel() {
+		return myAuthoringModel.addNewLevel(); 
 	}
 	
 	public List<String> getLevels() {

@@ -8,7 +8,8 @@ import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.projectiles.Projectile;
-import java.awt.geom.Point2D;
+import javafx.geometry.Point2D;
+
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
@@ -23,20 +24,49 @@ import javafx.scene.image.Image;
  */
 public class Enemy extends Sprite{
 
+	private String myName; 
+	private Image myImage; 
     private HealthProperty myHealth;
+    private double myInitialHealth; 
     private DamageProperty myDamage;
+    private double myHealthImpact; 
     private ValueProperty myValue;
     private IIntersecter myIntersecter;
     private Path myPath;
     private double mySpeed;
+    private double myKillReward;
+//    private double myKillUpgradeCost;
+//    private double myKillUpgradeValue; 
 
-    public Enemy(Image myImage, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
-	super("", myImage);
-	myIntersecter = new Intersecter(this.getImage()); 
+    public Enemy(String name, Image image, double speed, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
+	super(name, image);
+	myName = name; 
+	myImage = image; 
 	myHealth = health;
+	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
+	myHealthImpact = myDamage.getDamage();
 	myValue = value;
+	myIntersecter = new Intersecter(this.getImage()); 
 	myPath = path;
+	mySpeed = speed; 
+	myKillReward = value.getProperty();
+    }
+    
+    /**
+     * Copy constructor
+     */
+    public Enemy(Enemy copiedEnemy) {
+    	super("", copiedEnemy.getImage().getImage());
+    	myName = copiedEnemy.getName(); 
+    	myImage = copiedEnemy.getImage().getImage(); 
+    	myIntersecter = copiedEnemy.getIntersecter(); 
+    	myHealth = copiedEnemy.getHealth(); 
+    	myDamage = copiedEnemy.getDamage();
+    	myHealthImpact = myDamage.getDamage(); 
+    	myValue = copiedEnemy.getValue();
+    	myPath = copiedEnemy.getPath(); 
+    	mySpeed = copiedEnemy.getSpeed();
     }
 
     /**
@@ -74,6 +104,10 @@ public class Enemy extends Sprite{
 
     }
 
+    public String getName() {
+    	return myName; 
+    }
+    
     /**
      * Handles returning an enemy's damage after hitting a tower
      * 
@@ -82,4 +116,29 @@ public class Enemy extends Sprite{
     public Double damage() {
 	return myDamage.getProperty();
     }
+    
+    private IIntersecter getIntersecter() {
+    	return myIntersecter; 
+    }
+    
+    private HealthProperty getHealth() {
+    	return myHealth; 
+    }
+    
+    private DamageProperty getDamage() {
+    	return myDamage; 
+    }
+    
+    private ValueProperty getValue() {
+    	return myValue; 
+    }
+    
+    private Path getPath() {
+    	return myPath; 
+    } 
+    
+    private double getSpeed() {
+    	return mySpeed; 
+    }
+    
 }

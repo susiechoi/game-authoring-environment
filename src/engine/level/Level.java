@@ -178,7 +178,7 @@ public class Level {
 		return null;
 	}
 	
-	protected int getNumber() {
+	private int getNumber() {
 		return myNumber; 
 	}
 	
@@ -190,11 +190,11 @@ public class Level {
 		return myPaths; 
 	}
 	
-	protected Map<String, Tower> getTowers() {
+	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
 	
-	protected Map<String, Enemy> getEnemies() {
+	private Map<String, Enemy> getEnemies() {
 		return myEnemies; 
 	}
 
