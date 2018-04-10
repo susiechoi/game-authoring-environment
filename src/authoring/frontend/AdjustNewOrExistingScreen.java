@@ -80,6 +80,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		if (!isNewObject) name.setEditable(false);
 	}
 	
+	protected String getMyDefaultName() {
+		return myDefaultObjectName; 
+	}
+	
 	/** 
 	 * The following methods are getters for range-specifying constants so that subclasses may know what range to depict on their sliders
 	 * @return int max of the sliders 
