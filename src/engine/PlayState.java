@@ -84,7 +84,10 @@ public class PlayState implements GameData {
 	myEnemyManager.moveEnemies();
 	currentLevel.getNewEnemy(UNIVERSAL_TIME);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
-
+	myScore+=myTowerManager.getRoundScore();
+	myMediator.updateScore(myScore);
+	myResources+=myTowerManager.getRoundScore();
+	myMediator.updateCurrency(myResources);
     }
 
 
