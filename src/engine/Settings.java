@@ -1,4 +1,4 @@
-package authoring;
+package engine;
 
 public class Settings {
 
