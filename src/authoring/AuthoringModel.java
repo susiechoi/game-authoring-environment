@@ -144,6 +144,8 @@ public class AuthoringModel implements GameData {
 	 * Wraps constructor in case of new object creation
 	 */
 
+	//parameters needed to get passed: background image, grid size, location of each image in grid 
+	
 	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {
 		myGrid = grid;
 		myPath = new PathBuilder().construct(level, coordinates);
