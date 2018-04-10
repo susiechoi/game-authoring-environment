@@ -15,19 +15,18 @@ import xml.AuthoringModelWriter;
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
-    private AuthoringModel myModel;
+
     
     protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
 	super(view);
-	myModel = model;
     }
 
     @Override
     public Parent makeScreenWithoutStyling(){
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
-	System.out.println(myModel.getGameName()+" SHOULD BE THE TITLE");
-	Text heading = getUIFactory().makeScreenTitleText(myModel.getGameName());
+	//System.out.println(myGameName+" SHOULD BE THE TITLE");
+	Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
 	vbox.getChildren().add(heading);
 
 	Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
@@ -42,9 +41,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 	saveButton.setOnAction(e -> {
-		AuthoringModelWriter writer = new AuthoringModelWriter();
-		System.out.println("SAVING" + myModel.getGameName());
-		writer.write(myModel, myModel.getGameName());
+	    	getView().writeToFile();
 	});
 	Button mainButton = setupBackButton();
 	String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
@@ -94,7 +91,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 	
 	vbox.getChildren().add(hbox);
-	vbox.getChildren().add(songPrompted);
+	//vbox.getChildren().add(songPrompted); TODO: change to mp3 selector and readd
 	vbox.getChildren().add(mainButton);
 	return vbox;
 
