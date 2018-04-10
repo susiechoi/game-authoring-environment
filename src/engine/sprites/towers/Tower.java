@@ -54,6 +54,7 @@ public class Tower extends ShootingSprites {
 		myProjectileSpeed = launcher.getProjectileSpeed();
 		myLauncherRate = launcher.getFireRate(); 
 		myLauncherRange = launcher.getRange(); 
+		System.out.println("TOWER WAS MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthValue+", "+myProjectileDamage+", "+myLauncherRange);
 //		myValue = new ValueProperty();
 	}
 
