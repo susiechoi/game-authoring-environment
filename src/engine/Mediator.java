@@ -256,9 +256,4 @@ public class Mediator {
     //    }
 
 
-    // a whole slew of other methods
-    // but fr there should be a method for every event that can occur
-
-
-
 }

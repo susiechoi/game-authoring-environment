@@ -42,7 +42,6 @@ public class PlayController {
 	myMediator.setGameEngine(myGameEngine);
 	myMediator.setScreenManager(myScreenManager);
 	myScreenManager.loadInstructionScreen();
-	test = model;
     }
     
     /**
