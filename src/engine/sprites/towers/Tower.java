@@ -27,13 +27,14 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 //	private double myProjectileValue;  
 //	private double myProjectileUgradeCost; 
 //	private double myProjectileUpgradeValue; 
-	
+	private Launcher myLauncher; 
 //	private double myLauncherValue; 
 //	private double myLauncherUpgradeCost; 
 //	private double myLauncherUgradeValue; 
 	private double myLauncherRate;
 	private double myLauncherRange; 
 	private ValueProperty myValue;
+	private double myTowerValue; 
 	private Map<String, Double> propertyStats;
 
 	/**
@@ -44,12 +45,24 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * @param health: Initial health of the tower
 	 * @param value: Value of the tower for selling
 	 */
-	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value, Map<String, Tower> towerToInstance) {
+	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myHealth = health;
 		propertyStats.put(health.getName(), health.getProperty());
 		propertyStats.put(value.getName(), value.getProperty());
 		propertyStats.put(this.getDamageName(), this.getDamage());
+		myHealthValue = health.getProperty(); 
+		myHealthUpgradeCost = health.getCost();
+		myHealthUpgradeValue = health.getUpgradeValue(); 
+		myLauncher = launcher;
+		myProjectileImage = launcher.getProjectileImage(); 
+		myProjectileDamage = launcher.getProjectileDamage(); 
+		myProjectileSpeed = launcher.getProjectileSpeed();
+		myLauncherRate = launcher.getFireRate(); 
+		myLauncherRange = launcher.getRange(); 
+		myValue = value;
+		myTowerValue = value.getProperty();
+		System.out.println("TOWER WAS MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthValue+", "+myProjectileDamage+", "+myLauncherRange);
 	}
 
 	/**
@@ -113,8 +126,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
 		return balance;
 	}
-	    
+
 	
+	/**private double getDamage() {
+		return this.getLauncher().getDamage();
+	} **/
 	
 	public String getDamageName() {
 		return this.getLauncher().getDamageName();
@@ -123,6 +139,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public Map<String, Double> getTowerStats(){
 		return propertyStats;
 	}
+
 	private void updateStatsMap(String name, double value) {
 		propertyStats.put(name, value);
 	}

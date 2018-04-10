@@ -53,6 +53,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			myTowerScreen.setLauncherProjectileValues(myProjectileImage, myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myProjectileSpeedSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
+		    getView().loadScreen(myTowerScreen);
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
