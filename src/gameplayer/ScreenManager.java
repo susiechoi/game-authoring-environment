@@ -1,5 +1,8 @@
 package gameplayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -24,7 +27,10 @@ public class ScreenManager implements View{
     private PromptReader PROMPTS;
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
+    private List<Integer> controlVars;
+    
     //private final FileIO FILE_READER;
+    
 
     public ScreenManager(StageManager stageManager, String language) {
 	STAGE_MANAGER = stageManager;
@@ -32,7 +38,16 @@ public class ScreenManager implements View{
 	findSettings();
 	//setup rest of values once file reader is finished
     }
-    
+
+
+    public List<Integer> getMediatorInts(){
+	controlVars = new ArrayList<Integer>();
+	for(int i = 0; i < 3; i++) {
+	    controlVars.add(Integer.valueOf(0));
+	}
+	return controlVars;
+    }
+
 
 
     //TODO set Style sheets
@@ -43,11 +58,12 @@ public class ScreenManager implements View{
     }
 
     public void loadGameScreenNew() {
+	System.out.println("hitt");
 	GameScreen gameScreen = new GameScreen(this, PROMPTS);
 	Parent gameScreenRoot = gameScreen.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
     }
-    
+
     public void loadGameScreenContinuation() {
 
     }
