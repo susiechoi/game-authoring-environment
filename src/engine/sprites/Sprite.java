@@ -89,12 +89,7 @@ public class Sprite  {
     public double getY() {
     		return this.myImageView.getY();
     }
-    public void setX(double newX) {
-    		this.myImageView.setX(newX);
-    }
-    public void setY(double newY) {
-    		this.myImageView.setY(newY);
-    }
+
     public void setRotate(double rotateVal) {
     		this.myImageView.setRotate(rotateVal);
     }

@@ -124,8 +124,13 @@ public class PlayState implements GameData {
     //	myResources -= tower.upgrade(upgradeName);
     //    }
 
+    /**
+     * Sells the tower, increments users currency, and removes it from collection and screen
+     * @param tower
+     */
     public void sellTower(FrontEndTower tower) {
 	myResources += tower.sell();
+	myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
     }
