@@ -98,6 +98,7 @@ public class AuthoringView extends View {
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
 				else {
+				    	System.out.println("HERE");
 					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
