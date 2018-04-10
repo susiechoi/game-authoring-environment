@@ -1,11 +1,10 @@
 package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
-import engine.sprites.ShootingSprites;
-import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
+import javafx.scene.image.Image;
 
 /**
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
@@ -54,8 +53,9 @@ public class Launcher extends Manager<Projectile>{
      * 
      */
     //TODO need to let frontend know that this projectile was added?
-    public void launch() {
+    public Projectile launch() {
     		this.addToActiveList(myProjectile);
+    		return myProjectile;
     }
     
     public boolean hasReloaded() {
@@ -71,9 +71,25 @@ public class Launcher extends Manager<Projectile>{
     public double upgradeDamage(double balance) {
 	return myProjectile.upgradeDamage(balance);
     }
+    
+    public double getRange() {
+    	return myRange.getProperty(); 
+    }
 
-    public DamageProperty getDamageProperty() {
-    	return myProjectile.getDamageProperty();
+    public Image getProjectileImage() {
+    	return myProjectile.getImageView().getImage(); 
+    }
+    
+    public double getProjectileDamage() {
+    	return myProjectile.getDamage(); 
+    }
+    
+    public double getProjectileSpeed() {
+    	return myProjectile.getSpeed(); 
+    }
+
+    public String getDamageName() {
+    	return myProjectile.getDamageName();
     }
     public FireRateProperty getFireRateProperty() {
     	return myFireRate;
@@ -88,8 +104,10 @@ public class Launcher extends Manager<Projectile>{
     public double getFireRate() {
     	return myFireRate.getProperty();
     }
-    public double getRange() {
-    	return myRange.getProperty();
+
+    public String getFireRateName() {
+    	return myFireRate.getName();
     }
+
 
 }

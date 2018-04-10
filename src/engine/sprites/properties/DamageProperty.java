@@ -11,4 +11,8 @@ public class DamageProperty extends UpgradeProperty {
 	public DamageProperty(double cost, double value, double damage) {
 	    	super(cost, value, damage);
 	}
+	
+	public double getDamage() {
+		return myDamage; 
+	}
 }

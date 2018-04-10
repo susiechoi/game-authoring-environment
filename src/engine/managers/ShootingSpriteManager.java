@@ -40,7 +40,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	public void moveProjectiles() {
 		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
 			for (Projectile projectile: shootingSprite.getProjectiles()) {
-//				projectile.move();
+				projectile.move();
 			}
 		}
 	}
