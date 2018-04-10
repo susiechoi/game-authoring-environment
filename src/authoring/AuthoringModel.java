@@ -9,9 +9,8 @@
 
 package authoring;
 
-import java.io.File;
+import java.awt.geom.Point2D;
 import java.lang.Double; 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,8 +35,6 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
-import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
