@@ -6,6 +6,7 @@ import java.util.List;
 import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
+import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
@@ -223,6 +224,17 @@ public class Mediator {
      */
     public void updateLevel(Integer newLevel) {
         myScreenManager.updateLevelCount(newLevel);
+    }
+
+    /**
+     * Takes a list of sprites that are to be removed from PlayState, removes them
+     * @param list
+     */
+    public void removeListOfSpritesFromScreen(List<Sprite> list) {
+	for(Sprite sprite : list) {
+	    this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
+	}
+	
     }
 
 

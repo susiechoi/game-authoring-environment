@@ -69,7 +69,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	@Override
 	public boolean handleCollision(Sprite collider) {
 		myHealth.loseHealth(collider.getDamage());
-		return (myHealth.getProperty() <= 0);
+		return myHealth.isAlive();
 	}
 
 	/**
@@ -113,9 +113,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
 		return balance;
 	}
-	private double getDamage() {
-		return this.getLauncher().getDamage();
-	}
+	    
+	
 	
 	public String getDamageName() {
 		return this.getLauncher().getDamageName();
