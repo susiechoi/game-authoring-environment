@@ -34,17 +34,4 @@ public class ChiefController {
 	STAGE_MANAGER.switchScene(scene);
     }
 
-    /**
-     * Instantiate a new EngineController object to handle the Game engine
-     */
-    public void play() {
-    }
-    
-    /**
-     * Instantiate a new AuthoringController object to handle the authoring environment
-     */
-    public void author() {
-	new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE);
-    }
-
 }
