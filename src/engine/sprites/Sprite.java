@@ -34,7 +34,12 @@ public class Sprite  {
 	myImageString = image;
 	System.out.println("image is " + image);
 	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image)));
+	myImageView.setFitWidth(50);
+	myImageView.setFitHeight(50);
 	myImageView.setPreserveRatio(true);
+	myImageView.setFitWidth(50);
+	myImageView.setFitHeight(50);
+	System.out.println(myImageView.getFitWidth()+ " sprite width");
     }
     
     /**
