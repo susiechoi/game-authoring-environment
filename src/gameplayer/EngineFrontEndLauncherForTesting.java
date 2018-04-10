@@ -27,24 +27,24 @@ public class EngineFrontEndLauncherForTesting extends Application {
     public void start(Stage primaryStage){
 
 	StageManager stageManager = new StageManager(primaryStage);
-	Mediator mediator = new Mediator();
+//	Mediator mediator = new Mediator();
 
-	ScreenManager manager = new ScreenManager(stageManager, STARTING_LANGUAGE);
+//	ScreenManager manager = new ScreenManager(stageManager, STARTING_LANGUAGE);
 
 	//manager.loadInstructionScreen();
 	ChangeListener<Number> listener = (observable, oldVal, newVal)-> {
 	    System.out.println("ListenerTriggered");
-	    manager.loadInstructionScreen() ;
+//	    manager.loadInstructionScreen() ;
 	};
 
 	ListChangeListener<Tower> listListen = (e) -> {
-	    manager.loadInstructionScreen();
+//	    manager.loadInstructionScreen();
 	};
 
-	mediator.addTowerListener(listListen);
-	ObservableList<Tower> placed = mediator.getPlaceTowers();
-	Tower example = new Tower(null, null,null,null);
-	placed.add(example);
+//	mediator.addTowerListener(listListen);
+//	ObservableList<Tower> placed = mediator.getPlaceTowers();
+//	Tower example = new Tower(null, null,null,null);
+//	placed.add(example);
 
 	//mediator.addLevelListener(listener);
 
