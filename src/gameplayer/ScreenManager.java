@@ -1,6 +1,14 @@
 package gameplayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import java.awt.Point;
+
 import engine.Mediator;
+import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.CannotAffordException;
+import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -18,6 +26,7 @@ public class ScreenManager extends View{
 	public static final String DEFAULT_OWN_CSS = "styling/EngineFrontend.css";
 	private static final String STARTING_LANGUAGE = "English";
 
+
 	/**
 	 * not sure where we're getting these values to display on the panels and stuff
 	 * TALK TO ANDREW ABOUT
@@ -29,11 +38,13 @@ public class ScreenManager extends View{
 
 	private Mediator MEDIATOR;
 	private final StageManager STAGE_MANAGER;
-	private GameScreen CURRENT_SCREEN;
+	private GameScreen GAME_SCREEN;
 	private String GAME_TITLE;
 	private final PromptReader PROMPTS;
 	private double DEFAULT_HEIGHT;
 	private double DEFAULT_WIDTH;
+	private List<Integer> controlVars;
+
 	//private final FileIO FILE_READER;
 
 	// TODO address the fact that authoring frontend needs screenmanager but NOT mediator
@@ -44,7 +55,7 @@ public class ScreenManager extends View{
 		findSettings();
 		//setup rest of values once file reader is finished
 	}
-	
+
 	public ScreenManager(StageManager stageManager, String language) {
 		super(stageManager);
 		STAGE_MANAGER = stageManager;
@@ -52,6 +63,7 @@ public class ScreenManager extends View{
 		findSettings();
 		//setup rest of values once file reader is finished
 	}
+
 
 	public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 		super(stageManager);
@@ -63,6 +75,16 @@ public class ScreenManager extends View{
 	}
 
 
+	public List<Integer> getMediatorInts(){
+		controlVars = new ArrayList<Integer>();
+		for(int i = 0; i < 3; i++) {
+			controlVars.add(Integer.valueOf(0));
+		}
+		return controlVars;
+	}
+
+
+
 
 	//TODO set Style sheets
 	public void loadInstructionScreen() {
@@ -72,9 +94,11 @@ public class ScreenManager extends View{
 	}
 
 	public void loadGameScreenNew() {
-		GameScreen gameScreen = new GameScreen(this, PROMPTS);
-		Parent gameScreenRoot = gameScreen.getScreen();
+		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
+		MEDIATOR.startPlay("blah");
+		System.out.println("screen manager start play called on mediator");
 	}
 
 	public void loadGameScreenContinuation() {
@@ -95,22 +119,35 @@ public class ScreenManager extends View{
 
 	}
 
-	public void updateCurrency(Integer newCurrency) {
-		currency = newCurrency;
-	}
 
 	public void updateHealth(Integer newHealth) {
-		health = newHealth;
+		GAME_SCREEN.updateHealth(newHealth);
 	}
 
 	public void updateScore(Integer newScore) {
-		score = newScore;
+		GAME_SCREEN.updateScore(newScore);
 	}
 
 	public void updateLevelCount(Integer newLevelCount) {
-		level = newLevelCount;
+		GAME_SCREEN.updateLevel(newLevelCount);
 	}
 
+	public void display(FrontEndSprite sprite) {
+		GAME_SCREEN.displaySprite(sprite);
+	}
+
+
+	public void remove(FrontEndSprite sprite) {
+		GAME_SCREEN.remove(sprite);
+	}
+
+	public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+		GAME_SCREEN.setAvailbleTowers(availableTowers);
+	}
+
+	public void updateCurrency(Integer newBalence) {
+		GAME_SCREEN.updateCurrency(newBalence);
+	}
 
 
 

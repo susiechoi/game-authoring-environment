@@ -30,6 +30,7 @@ import engine.builders.ProjectileBuilder;
 import engine.builders.SettingsBuilder;
 import engine.builders.TowerBuilder;
 import engine.level.Level;
+import engine.listeners.LevelChangeListener;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.towers.Tower;
@@ -272,7 +273,11 @@ public class AuthoringModel implements GameData {
 	}
 
 	public List<Level> allLevels() {
-		return (List<Level>) myLevels.values();
+		List<Level> ret = new ArrayList<Level>();
+		for(Level level : myLevels.values()) {
+			ret.add(level);
+		}
+		return ret;
 	}
 
 	/**
