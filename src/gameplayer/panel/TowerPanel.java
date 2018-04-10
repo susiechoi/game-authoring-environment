@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -15,6 +16,7 @@ import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 
 
@@ -30,6 +32,7 @@ public class TowerPanel extends Panel {
     private Integer money;
     private final UIFactory UIFACTORY;
     private Panel bottomPanel;
+    private Button currencyDisplay;
 
     //TODO change to only use availibleTowers
     private final String TOWER_NAMES_FILE_PATH = "images/TowerImageNames.properties"; 
@@ -37,7 +40,7 @@ public class TowerPanel extends Panel {
     //private final FileIO FILE_READER;
 
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
-
+    private Group towerGroup;
 
     public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
 	GAME_SCREEN = gameScreen;
@@ -51,27 +54,13 @@ public class TowerPanel extends Panel {
     @Override
     public void makePanel() {
 
-	VBox towerHolderLeft = new VBox();
-	VBox towerHolderRight = new VBox();
-	towerHolderLeft.setId("towerHolders");
-	towerHolderRight.setId("towerHolders");
-
-
-	fillScrollWithTowers(towerHolderLeft,towerHolderRight);
-
-	towerHolderLeft.setFillWidth(true);
-	towerHolderRight.setFillWidth(true);
-
-	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
 	//TODO need to check if this static stuff is okay
-	HBox.setHgrow(towerHolderRight, Priority.ALWAYS);
-	HBox.setHgrow(towerHolderLeft, Priority.ALWAYS);
 
-	fullTowerHold.setAlignment(Pos.CENTER);
-	ScrollPane towerDisplay = new ScrollPane(fullTowerHold);
+	towerGroup = new Group();
+	ScrollPane towerDisplay = new ScrollPane(towerGroup);
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
-	Button currencyDisplay = new Button();
+	currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
 	currencyDisplay.setText("$" +money.toString());
 	currencyDisplay.setDisable(true);
@@ -79,6 +68,7 @@ public class TowerPanel extends Panel {
 	VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
+
 
 
 	//might want to remove this as control implementation changes but we'll see
@@ -92,55 +82,68 @@ public class TowerPanel extends Panel {
 	//can't do that with interfaces. How would you want to approach that?
     }
 
-    private void fillScrollWithTowers(VBox towerHolderLeft, VBox towerHolderRight) {
+    private HBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
+	VBox towerHolderLeft = new VBox();
+	VBox towerHolderRight = new VBox();
+	towerHolderLeft.setId("towerHolders");
+	towerHolderRight.setId("towerHolders");
 	VBox towerHolder;
-	try {
-	    Map<String, Image> towerMap = PROP_READ.keyToImageMap(TOWER_NAMES_FILE_PATH, TOWER_IMAGE_SIZE,TOWER_IMAGE_SIZE);
-	    int alternator = 0;
-	    for(String towerType : towerMap.keySet()) {
-		Button towerButton = UIFACTORY.makeImageButton("button",towerMap.get(towerType));
-		towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(towerType));
-		if(alternator%2 == 0) {
-		    towerHolder = towerHolderLeft;
-		}
-		else {
-		    towerHolder = towerHolderRight;
-		}
 
-		towerHolder.getChildren().add(towerButton);
-		VBox.setVgrow(towerButton, Priority.ALWAYS);
-		towerButton.setMaxWidth(Double.MAX_VALUE);
-		towerButton.setMaxHeight(Double.MAX_VALUE);
-		alternator++;
+	for(FrontEndTower tower : availableTowers) {
+	    int alternator = 0;
+	    Button towerButton = UIFACTORY.makeImageViewButton("button",tower.getImageView());
+	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower.getName()));
+	    if(alternator%2 == 0) {
+		towerHolder = towerHolderLeft;
 	    }
-	    //TODO pretty bad code that doesn't work, towers should be same height in columns
-//	    if(alternator%2 == 1) {
-//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
-//		towerHolderRight.getChildren().add(voidButton);
-//		VBox.setVgrow(voidButton, Priority.ALWAYS);
-//		voidButton.setMaxWidth(Double.MAX_VALUE);
-//		voidButton.setMaxHeight(Double.MAX_VALUE);
-//		voidButton.setDisable(true);
-//	    }
-	} catch (MissingPropertiesException e) {
-	    System.out.println("PropertiesReadFailed: TowerPanel");
-	    //something went wrong and we don't have the towers
-	    //TODO something reasonable here
-	    //probably have default images that aren't the ones specified by authoring
+	    else {
+		towerHolder = towerHolderRight;
+	    }
+
+	    towerHolder.getChildren().add(towerButton);
+	    VBox.setVgrow(towerButton, Priority.ALWAYS);
+	    towerButton.setMaxWidth(Double.MAX_VALUE);
+	    towerButton.setMaxHeight(Double.MAX_VALUE);
+	    alternator++;
 	}
+
+	towerHolderLeft.setFillWidth(true);
+	towerHolderRight.setFillWidth(true);
+	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
+	fullTowerHold.setAlignment(Pos.CENTER);
+	HBox.setHgrow(towerHolderRight, Priority.ALWAYS);
+	HBox.setHgrow(towerHolderLeft, Priority.ALWAYS);
+	return fullTowerHold;
+	//TODO pretty bad code that doesn't work, towers should be same height in columns
+	//	    if(alternator%2 == 1) {
+	//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
+	//		towerHolderRight.getChildren().add(voidButton);
+	//		VBox.setVgrow(voidButton, Priority.ALWAYS);
+	//		voidButton.setMaxWidth(Double.MAX_VALUE);
+	//		voidButton.setMaxHeight(Double.MAX_VALUE);
+	//		voidButton.setDisable(true);
+	//	    }
+
+	//something went wrong and we don't have the towers
+	//TODO something reasonable here
+	//probably have default images that aren't the ones specified by authoring
     }
 
     private void towerSelected(String towerPropName) {
 
     }
 
-
-
-    private List<Button> makeButtons(){
-	//do some stuff
-	return null;
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	towerGroup.getChildren().clear();
+	towerGroup.getChildren().add(fillScrollWithTowers(availableTowers));
     }
     
+    public void updateCurrency(Integer newBalence) {
+	money = newBalence;
+	currencyDisplay.setText("$" +money.toString());
+    }
+
+
 
 
 }

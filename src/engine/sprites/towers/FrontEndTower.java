@@ -69,4 +69,6 @@ public interface FrontEndTower {
 //     */
 //    public boolean upgrade(String upgradeName);
     
+    public String getName();
+    
 }
