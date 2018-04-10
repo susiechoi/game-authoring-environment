@@ -62,13 +62,13 @@ public class AuthoringModel implements GameData {
 		myLevels = new HashMap<Integer, Level>();
 		myPropertiesReader = new PropertiesReader();
 		myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
+		setupDefaultSettings(); 
 		try {
 			myDefaultTower = generateGenericTower();
 			myDefaultEnemy = generateGenericEnemy();
 		} catch (NumberFormatException | FileNotFoundException e) {
 			throw new MissingPropertiesException(myDefaultName);
 		}
-		setupDefaultSettings(); 
 		setupDefaultLevel();
 	}
 
