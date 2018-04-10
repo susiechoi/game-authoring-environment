@@ -1,9 +1,11 @@
 package engine.sprites.towers;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
@@ -47,6 +49,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myHealth = health;
+		propertyStats = new HashMap<String, Double>();
+		propertyStats.put(health.getName(), health.getProperty());
+		propertyStats.put(value.getName(), value.getProperty());
+		propertyStats.put(this.getDamageName(), this.getDamage());
 		myHealthValue = health.getProperty(); 
 		myHealthUpgradeCost = health.getCost();
 		myHealthUpgradeValue = health.getUpgradeValue(); 
@@ -58,10 +64,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		myLauncherRange = launcher.getRange(); 
 		myValue = value;
 		myTowerValue = value.getProperty();
-		System.out.println("TOWER WAS MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthValue+", "+myProjectileDamage+", "+myLauncherRange);
-//		propertyStats.put(health.getName(), health.getProperty());
-//		propertyStats.put(value.getName(), value.getProperty());
-//		propertyStats.put(this.getDamageName(), this.getDamage());
 	}
 
 	/**
@@ -73,22 +75,22 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		this.myValue = copiedTower.myValue; 
 	}
 
-//	/**
-//	 * Handles decrementing tower's damage when it gets hit by an enemy
-//	 * 
-//	 * @return boolean: True if tower is alive, false otherwise
-//	 */
-//	@Override
-//	public boolean handleCollision(Sprite collider) {
-//		myHealth.loseHealth(enemyDamage);
-//		return (myHealth.getProperty() <= 0);
-//	}
+	/**
+	 * Handles decrementing tower's damage when it gets hit by an enemy
+	 * 
+	 * @return boolean: True if tower is alive, false otherwise
+	 */
+	@Override
+	public boolean handleCollision(Sprite collider) {
+		myHealth.loseHealth(collider.getDamage());
+		return myHealth.isAlive();
+	}
 
 	/**
 	 * Handles selling a tower
 	 */
-	public double sell() {
-		return myValue.getProperty();
+	public int sell() {
+		return (int) myValue.getProperty();
 	}
 
 	/**
@@ -125,15 +127,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
 		return balance;
 	}
-	
 
-	private Launcher getLauncher() {
-		return myLauncher; 
-	}
 	
-	private double getDamage() {
+	/**private double getDamage() {
 		return this.getLauncher().getDamage();
-	}
+	} **/
 	
 	public String getDamageName() {
 		return this.getLauncher().getDamageName();
@@ -143,26 +141,16 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		return propertyStats;
 	}
 
-//	@Override
-//	public Map<String, Double> getUpgrades() {
-//	    // TODO Auto-generated method stub
-//	    return null;
-//	}
-//
-//	@Override
-//	public String getSpecificUpgradeInfo(String upgradeName) {
-//	    // TODO Auto-generated method stub
-//	    return null;
-//	}
-//
-//	@Override
-//	public boolean upgrade(String upgradeName) {
-//	    // TODO Auto-generated method stub
-//	    return false;
-//	}
-	
 	private void updateStatsMap(String name, double value) {
 		propertyStats.put(name, value);
+	}
+
+	@Override
+	public int purchase(int myResources) throws CannotAffordException {
+		if (myResources < myValue.getProperty()) {
+			throw new CannotAffordException();
+		}
+		return (int) (myResources - myValue.getProperty());
 	}
 
 }

@@ -91,8 +91,10 @@ public class XMLFactory {
 	    AuthoringModelWriter p = (AuthoringModelWriter) f.generateWriter("AuthoringModelWriter");
 	    AuthoringModel a = new AuthoringModel();
 	    p.write(a, "test1");
-//	    AuthoringModelReader r = (AuthoringModelReader) f.generateReader("AuthoringModelReader");
-//	    r.createModel("test1");
+	    AuthoringModelReader r = (AuthoringModelReader) XMLFactory.generateReader("AuthoringModelReader");
+	    AuthoringModel b = r.createModel("test1");
+	    if (b!= null)
+		System.out.println("not Null");
 	}
 
 }

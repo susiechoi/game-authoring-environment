@@ -62,7 +62,6 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);
-		vb.getChildren().add(setupAdditionalElements());
 		vb.getChildren().add(backAndApplyButton);
 
 		return vb;
@@ -101,6 +100,5 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected String getDescription() {
 		return myObjectDescription; 
 	}
-	protected abstract Node setupAdditionalElements();
 
 }

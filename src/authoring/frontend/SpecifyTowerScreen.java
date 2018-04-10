@@ -16,9 +16,6 @@ public class SpecifyTowerScreen extends SpecifyObjectScreen {
 	protected SpecifyTowerScreen(AuthoringView view) {
 		super(view, DEFAULT_DESCRIPTION);
 	}
-	protected Node setupAdditionalElements() {
-	    return new Cell<String>(); //default do-nothing behavior
-	}
 
 
 }

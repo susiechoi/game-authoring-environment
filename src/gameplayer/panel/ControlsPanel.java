@@ -49,7 +49,7 @@ public class ControlsPanel extends Panel{
 	    int count = 0;
 	    for(String control : controlsMap.keySet()) {
 		Button controlButton = UIFACTORY.makeImageButton("controlButton", controlsMap.get(control));
-		controlButton.setOnMouseClicked((arg0) -> GAME_SCREEN.controlHit(control));
+		controlButton.setOnMouseClicked((arg0) -> GAME_SCREEN.controlTriggered(control));
 		if(count <controlsSplit)
 		    topControls.getChildren().add(controlButton);
 		else

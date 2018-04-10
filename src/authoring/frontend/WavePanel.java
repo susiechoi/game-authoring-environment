@@ -3,15 +3,19 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.GroupLayout.Alignment;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class WavePanel extends PathPanel{
     private String myPathString;
@@ -22,17 +26,28 @@ public class WavePanel extends PathPanel{
     private String myWaveNumber;
     public WavePanel(AuthoringView view, DraggableImage grid, String waveNumber) {
 	super(view);
-	myPathString = grid.getPathName();
+	if (grid == null) {
+	    myPathString = "1";
+	}
+	
+	//myPathString = grid.getPathName();
+	if(waveNumber==null) {
+	    waveNumber = "1";
+	}
 	myWaveNumber = waveNumber;
 	setUpPanel();
     }
     public void setUpPanel() {
 	myRoot = new VBox();
-	List<String> enemyOptions = new ArrayList<>(); //TODO!
+	myRoot.setMaxSize(280, 900);
+	VBox pseudoRoot = new VBox();
+	Label waveText = new Label(getErrorCheckedPrompt("WavescreenHeader") + myWaveNumber);
 	myEnemyDropdown = getUIFactory().makeTextDropdown("", getView().getCurrentObjectOptions("Enemy"));
-	HBox enemyDropdownPrompted = getUIFactory().addPromptAndSetupHBox("", myEnemyDropdown, getView().getErrorCheckedPrompt("ChooseEnemy"));
+	Text enemyDropdownText = new Text(getView().getErrorCheckedPrompt("ChooseEnemy"));
 	myNumberTextField = new TextField();
-	HBox textFieldPrompted = getUIFactory().addPromptAndSetupHBox("", myNumberTextField, "ChooseEnemyNumber");
+	HBox sizingButtons = makeSizingButtons();
+	Text textFieldPrompt = new Text(getView().getErrorCheckedPrompt("ChooseEnemyNumber"));
+	//HBox textFieldPrompted = getUIFactory().addPromptAndSetupHBox("", myNumberTextField, "ChooseEnemyNumber");
 	Button backButton = setupBackButton();
 	Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 	applyButton.setOnAction(e -> {
@@ -40,7 +55,10 @@ public class WavePanel extends PathPanel{
 	    getView().addWaveEnemy(getView().getLevel(), myPathString, Integer.parseInt(myWaveNumber), 
 		    myEnemyDropdown.getValue(), myEnemyNumber);
 	});
-	myRoot.getChildren().addAll(enemyDropdownPrompted, textFieldPrompted, backButton, applyButton);
+	
+	pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField,sizingButtons, backButton, applyButton);
+	myRoot.getChildren().add(pseudoRoot);
+	myRoot.getStyleClass().add("rootPanel");
     }
     private void errorcheckResponses() {
 	if(myEnemyDropdown.getValue() == null ) {

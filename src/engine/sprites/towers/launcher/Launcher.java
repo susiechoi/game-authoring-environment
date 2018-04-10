@@ -1,6 +1,7 @@
 package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
+import engine.sprites.Sprite;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
@@ -52,17 +53,19 @@ public class Launcher extends Manager<Projectile>{
      * Launch method will make sure that enough time has passed since last shot and then fire a new projectile
      * 
      */
-    //TODO need to let frontend know that this projectile was added?
-    public Projectile launch() {
+    //TODO implement to shoot at where enemy is going
+    public Projectile launch(Sprite target, double shooterX, double shooterY) {
     		this.addToActiveList(myProjectile);
+    		double radianOffset = Math.atan((target.getX()-shooterX)/(target.getY()-shooterY));
+    		myProjectile.setRotate(radianOffset);
     		return myProjectile;
     }
     
     public boolean hasReloaded() {
-    		long currTime = System.nanoTime();
+    	long currTime = System.nanoTime();
      	long timeSinceLastShot = currTime - timeLastFired;
      	if(timeSinceLastShot >= myFireRate.getProperty()) {
-     		timeSinceLastShot = currTime;
+     		timeLastFired = currTime;
      		return true;
      	}
 		return false;
@@ -108,6 +111,4 @@ public class Launcher extends Manager<Projectile>{
     public String getFireRateName() {
     	return myFireRate.getName();
     }
-
-
 }

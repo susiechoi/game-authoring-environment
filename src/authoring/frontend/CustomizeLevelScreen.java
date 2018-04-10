@@ -32,6 +32,9 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		pathButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizePath");});
 		vb.getChildren().add(pathButton);
 
+		Button waveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeWave"));
+		waveButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+ "CustomizeWave");});
+		vb.getChildren().add(waveButton);
 		Button backButton = setupBackButton();
 		vb.getChildren().add(backButton);
 
