@@ -87,7 +87,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 	
 	vbox.getChildren().add(hbox);
-	vbox.getChildren().add(songPrompted);
+	//vbox.getChildren().add(songPrompted); TODO: change to mp3 selector and readd
 	vbox.getChildren().add(mainButton);
 	return vbox;
 
