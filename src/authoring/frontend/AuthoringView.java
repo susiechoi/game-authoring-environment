@@ -80,6 +80,7 @@ public class AuthoringView extends View {
 	    System.out.println("next class: " + nextScreenClass);
 	    Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 	    if(constructor.getParameterTypes().length == 2) {
+	    	System.out.println("our name "+name);
 		AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 		myStageManager.switchScreen(nextScreen.getScreen());
 	    }
@@ -209,6 +210,10 @@ public class AuthoringView extends View {
 
 	public int getLevel() {
 		return myLevel; 
+	}
+	
+	protected PropertiesReader getPropertiesReader() {
+		return myPropertiesReader; 
 	}
 
 	public void makePath(List<Point2D> coordinates, GridPane grid) {
