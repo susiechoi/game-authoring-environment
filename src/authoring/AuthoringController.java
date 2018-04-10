@@ -152,6 +152,19 @@ public class AuthoringController {
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    return levelWaves.size();
 	}
-
+	
+	
+	/**
+	 * Returns a List of the enemies contained in the level 
+	 * 
+	 * @param level: the current level
+	 * @return List<String>: a list of the unique String names for each enemy in the
+	 * level.
+	 * @throws ObjectNotFoundException: thrown if the level isn't found
+	 */
+	public List<String> levelEnemies(int level) throws ObjectNotFoundException {
+	    Level thisLevel = myAuthoringModel.levelCheck(level);
+	    return thisLevel.getAllEnemies();
+	}
 }
 
