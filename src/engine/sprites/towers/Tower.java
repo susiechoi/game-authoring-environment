@@ -48,7 +48,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * @param health: Initial health of the tower
 	 * @param value: Value of the tower for selling
 	 */
-	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
+	public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myHealth = health;
 		propertyStats = new HashMap<String, Double>();
@@ -72,7 +72,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * Copy constructor
 	 */
 	public Tower(Tower copiedTower) {
-		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
+		super(copiedTower.getName(), copiedTower.getImageString(), 
 			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
 		myHealth = copiedTower.getHealthProperty();
 		myValue = copiedTower.getValueProperty(); 
@@ -82,7 +82,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * Copy constructor
 	 */
 	public Tower(Tower copiedTower, Point point) {
-		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
+		super(copiedTower.getName(), copiedTower.getImageString(), 
 			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
 		System.out.println("Health value copied is " + copiedTower.getHealthProperty().getProperty());
 		myHealth = copiedTower.getHealthProperty();

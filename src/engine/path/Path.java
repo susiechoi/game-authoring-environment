@@ -1,7 +1,7 @@
 package engine.path;
 
 import java.util.List;
-import javafx.geometry.Point2D;
+import java.awt.geom.Point2D;
 
 
 /**
@@ -11,12 +11,12 @@ import javafx.geometry.Point2D;
  */
 public class Path {
     private final double THRESHOLD = 5;
-    private List<Point2D> myCoordinates;
+    private List<Point2D.Double> myCoordinates;
     private Point2D currentPosition;
     private double myAngle;
     private int pathIndex;
 
-    public Path(List<Point2D> coordinates) {
+    public Path(List<Point2D.Double> coordinates) {
 	myCoordinates = coordinates;
 	pathIndex = 0;
 	currentPosition = myCoordinates.get(pathIndex);
@@ -37,7 +37,7 @@ public class Path {
 	else {
 	    double newX = currentPosition.getX() + Math.cos(myAngle) * speed;
 	    double newY = currentPosition.getY() + Math.sin(myAngle) * speed;
-	    return new Point2D(newX, newY); 
+	    return new Point2D.Double(newX, newY); 
 	}
     }
 

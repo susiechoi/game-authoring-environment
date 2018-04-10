@@ -6,7 +6,6 @@ import java.util.List;
 import engine.physics.ImageIntersecter;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -25,7 +24,7 @@ public abstract class ShootingSprites extends Sprite{
 	private int roundScore;
 	private ImageIntersecter intersector;
 
-	public ShootingSprites(String name, Image image, double size, Launcher launcher) {
+	public ShootingSprites(String name, String image, double size, Launcher launcher) {
 		super(name, image);
 		hitCount=0;
 		intersector = new ImageIntersecter(new ImageView(image));
