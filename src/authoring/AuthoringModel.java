@@ -9,9 +9,8 @@
 
 package authoring;
 
-import java.io.File;
+import java.awt.geom.Point2D;
 import java.lang.Double; 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -30,15 +29,12 @@ import engine.builders.ProjectileBuilder;
 import engine.builders.SettingsBuilder;
 import engine.builders.TowerBuilder;
 import engine.level.Level;
-import engine.listeners.LevelChangeListener;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
-import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
@@ -109,8 +105,8 @@ public class AuthoringModel implements GameData {
 		else if (!currentLevel.containsEnemy(name) && !newObject) {
 			throw new ObjectNotFoundException(name);
 		}
-		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
-		Enemy newEnemy = new EnemyBuilder().construct(name, enemyImage, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+//		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
+		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 		currentLevel.addEnemy(name, newEnemy);
 	}
 
@@ -133,15 +129,15 @@ public class AuthoringModel implements GameData {
 		else if (!currentLevel.containsTower(name) && !newObject) {
 			throw new ObjectNotFoundException(name);
 		}
-		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
+//		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-				projectileImage, projectileDamage, projectileUpgradeCost, 
+				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
 				projectileUpgradeValue, projectileSpeed);
 		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
 				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
 				launcherValue, towerProjectile); 
-		Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
-		Tower newTower = new TowerBuilder().construct(name, image, 50, health,  // TODO put size SOMEWHERE
+//		Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
+		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, imagePath), 50, health,  // TODO put size SOMEWHERE
 				healthUpgradeValue, healthUpgradeCost, towerLauncher, towerValue, towerUpgradeCost, towerUpgradeValue);
 		currentLevel.addTower(name, newTower);
 	}
@@ -292,6 +288,7 @@ public class AuthoringModel implements GameData {
 	 */
 	public void makeResources(String gameName, double startingHealth, double starting$) {
 		mySettings = new SettingsBuilder().construct(gameName, startingHealth, starting$);
+		myGameName = mySettings.getGameName();
 	}
 
 	/**
@@ -302,11 +299,10 @@ public class AuthoringModel implements GameData {
 	 */
 	private Tower generateGenericTower() throws NumberFormatException, FileNotFoundException {
 		try {
-			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
+//			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
 			Projectile towerProjectile = new ProjectileBuilder().construct(
 					myDefaultName,  
-					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage")), 
-							projectileSize, projectileSize, false, false),
+					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
 					// TODO add projectile speed !!!!
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
@@ -322,8 +318,7 @@ public class AuthoringModel implements GameData {
 			double towerSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerSize"));
 			Tower newTower = new TowerBuilder().construct(
 					myDefaultName, 
-					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage")), 
-							towerSize, towerSize, false, false), 
+					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage"), 
 					towerSize, 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealth")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeValue")), 
@@ -354,8 +349,7 @@ public class AuthoringModel implements GameData {
 			double enemySize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemySize"));
 			Enemy newEnemy = new EnemyBuilder().construct(
 					myDefaultName, 
-					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage")), 
-							enemySize, enemySize, false, false), 
+					myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage"), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemySpeed")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealth")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealthImpact")), 
@@ -415,5 +409,6 @@ public class AuthoringModel implements GameData {
 	public String getGameName() {
 		return myGameName; 
 	}
+
 }
 

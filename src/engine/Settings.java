@@ -25,4 +25,8 @@ public class Settings {
 		myStartingMoney = startingMoney; 
 	}
 	
+	public String getGameName() {
+	    return myGameName;
+	}
+	
 }

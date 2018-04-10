@@ -23,6 +23,7 @@ import gameplayer.ScreenManager;
 
 
 import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -156,7 +157,9 @@ public class GameScreen extends Screen {
     }
     
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-	return MEDIATOR.placeTower(position, tower.getName());
+	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
+	System.out.println(placedTower.getImageView().getFitWidth() + " width ");
+	return placedTower;
     }
     
     public void towerClickedOn(FrontEndTower tower) {

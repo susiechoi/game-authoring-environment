@@ -2,7 +2,6 @@ package engine.sprites.towers.projectiles;
 
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
-import engine.sprites.properties.HealthProperty;
 import javafx.scene.image.Image;
 
 /**
@@ -24,7 +23,7 @@ public class Projectile extends Sprite {
 	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
 	 * @param image: image of projectile
 	 */
-	public Projectile(String name, DamageProperty damage, Image image, double speed) {
+	public Projectile(String name, DamageProperty damage, String image, double speed) {
 	    	super(name, image);
 		myDamage = damage;
 		mySpeed = speed;
@@ -36,8 +35,8 @@ public class Projectile extends Sprite {
 	public void move() {
 		double xMove = Math.sin(this.getRotate())*this.mySpeed;
 		double yMove = Math.cos(this.getRotate())*this.mySpeed;
-		this.setX(this.getX()+xMove);
-		this.setY(this.getX()+yMove);
+		this.getImageView().setX(this.getX()+xMove);
+		this.getImageView().setY(this.getX()+yMove);
 	}
 	
 	/**
@@ -50,7 +49,6 @@ public class Projectile extends Sprite {
 	    return myDamage.upgrade(balance);
 	}
 
-	
 	/**
 	 * 
 	 * @return : the amount of damage this Projectile does

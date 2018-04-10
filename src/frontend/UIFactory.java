@@ -285,7 +285,7 @@ public class UIFactory {
 
     public Button setupBackButton(EventHandler<ActionEvent> action) {
 	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-	Button backButton = makeImageButton("backButton",backbuttonImage);
+	Button backButton = makeTextButton("backButton","Cancel");
 	backButton.setOnAction(e -> {action.handle(e);});
 	return backButton; 
     }
