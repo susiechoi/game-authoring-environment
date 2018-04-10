@@ -55,7 +55,7 @@ public class Projectile extends Sprite {
 	 * 
 	 * @return : the amount of damage this Projectile does
 	 */
-	public double getDamage() {
+	public Double getDamage() {
 	    return myDamage.getProperty();
 	}
 	
