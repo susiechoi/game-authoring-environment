@@ -196,11 +196,11 @@ public class Level {
 		return myPaths; 
 	}
 	
-	protected Map<String, Tower> getTowers() {
+	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
 	
-	protected Map<String, Enemy> getEnemies() {
+	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
 	}
 

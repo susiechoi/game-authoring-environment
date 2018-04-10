@@ -42,4 +42,5 @@ public class EnemyManager extends ShootingSpriteManager {
     public void setEnemies(Collection<Enemy> enemies) {
 
     }
+    
 }

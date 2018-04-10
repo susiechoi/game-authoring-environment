@@ -25,13 +25,14 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 //	private double myProjectileValue;  
 //	private double myProjectileUgradeCost; 
 //	private double myProjectileUpgradeValue; 
-	
+	private Launcher myLauncher; 
 //	private double myLauncherValue; 
 //	private double myLauncherUpgradeCost; 
 //	private double myLauncherUgradeValue; 
 	private double myLauncherRate;
 	private double myLauncherRange; 
 	private ValueProperty myValue;
+	private double myTowerValue; 
 	private Map<String, Double> propertyStats;
 
 	/**
@@ -42,13 +43,24 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * @param health: Initial health of the tower
 	 * @param value: Value of the tower for selling
 	 */
-	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value, Map<String, Tower> towerToInstance) {
+	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myHealth = health;
 		propertyStats.put(health.getName(), health.getProperty());
 		propertyStats.put(value.getName(), value.getProperty());
 		propertyStats.put(this.getDamageName(), this.getDamage());
-
+		myHealthValue = health.getProperty(); 
+		myHealthUpgradeCost = health.getCost();
+		myHealthUpgradeValue = health.getUpgradeValue(); 
+		myLauncher = launcher;
+		myProjectileImage = launcher.getProjectileImage(); 
+		myProjectileDamage = launcher.getProjectileDamage(); 
+		myProjectileSpeed = launcher.getProjectileSpeed();
+		myLauncherRate = launcher.getFireRate(); 
+		myLauncherRange = launcher.getRange(); 
+		myValue = value;
+		myTowerValue = value.getProperty();
+		System.out.println("TOWER WAS MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthValue+", "+myProjectileDamage+", "+myLauncherRange);
 	}
 
 	/**
@@ -60,15 +72,16 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		this.myValue = copiedTower.myValue; 
 	}
 
-	/**
-	 * Handles decrementing tower's damage when it gets hit by an enemy
-	 * 
-	 * @return boolean: True if tower is alive, false otherwise
-	 */
-	public boolean handleCollision(double enemyDamage) {
-		myHealth.loseHealth(enemyDamage);
-		return (myHealth.getProperty() <= 0);
-	}
+//	/**
+//	 * Handles decrementing tower's damage when it gets hit by an enemy
+//	 * 
+//	 * @return boolean: True if tower is alive, false otherwise
+//	 */
+//	@Override
+//	public boolean handleCollision(Sprite collider) {
+//		myHealth.loseHealth(enemyDamage);
+//		return (myHealth.getProperty() <= 0);
+//	}
 
 	/**
 	 * Handles selling a tower
@@ -111,6 +124,12 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
 		return balance;
 	}
+	
+
+	private Launcher getLauncher() {
+		return myLauncher; 
+	}
+	
 	private double getDamage() {
 		return this.getLauncher().getDamage();
 	}
@@ -121,30 +140,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
 	public Map<String, Double> getTowerStats(){
 		return propertyStats;
-	}
-
-	@Override
-	public boolean sell() {
-	    // TODO Auto-generated method stub
-	    return false;
-	}
-
-	@Override
-	public Map<String, Double> getUpgrades() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public String getSpecificUpgradeInfo(String upgradeName) {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public boolean upgrade(String upgradeName) {
-	    // TODO Auto-generated method stub
-	    return false;
 	}
 	
 	private void updateStatsMap(String name, double value) {
