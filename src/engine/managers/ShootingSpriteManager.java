@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -29,13 +30,13 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     		return spritesToBeRemoved;
     }
     
-    public void shoot(List<ShootingSprites> passedSprites) {
+    /**
+     * Called every update on any shooting sprites, will shoot if the rate of fire says it can
+     * @param passedSprites
+     */
+    public void shoot(List<ShootingSprites> targets) {
     		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
-    			for (ShootingSprites passedSprite: passedSprites) {
-    				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
-    					shootingSprite.launch();
-    				}
-    			}
+    			shootingSprite.shoot
     		}
     }
     

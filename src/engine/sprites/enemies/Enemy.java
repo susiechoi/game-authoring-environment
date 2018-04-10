@@ -120,8 +120,6 @@ public class Enemy extends Sprite{
     	return myHealth; 
     }
     
-
-    
     private DamageProperty getDamageProperty() {
     	return myDamage; 
     }
