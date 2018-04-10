@@ -26,7 +26,6 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author benauriemma 4/8
  * @date 4/6/18
  */
-
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
@@ -39,6 +38,15 @@ public class PlayState implements GameData {
     private Level currentLevel;
     private boolean isPaused;
 
+    /**
+     * Constructor for play state object that sets up initial levels.
+     * 
+     * @param mediator
+     * @param levels
+     * @param score
+     * @param resources
+     * @param universalTime
+     */
     public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
 	System.out.println("playstate constructor");
 	myMediator = mediator;

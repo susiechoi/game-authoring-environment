@@ -57,8 +57,8 @@ public class Sprite  {
 	return myImageView;
     }
     
-    public void setImageView(ImageView image) {
-	myImageView  = image;
+    public void setImage(Image image) {
+	myImageView  = new ImageView(image);
     }
     
     public void place(double newX, double newY) {
