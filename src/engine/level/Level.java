@@ -222,5 +222,11 @@ public class Level {
 	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
 	}
+	public boolean containsWave(Path path, int waveNumber) {
+	    if(!myWaves.containsKey(path)) {
+		return false;
+	    }
+	    return (myWaves.get(path).size() > waveNumber);
+	}
 
 }

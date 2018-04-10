@@ -13,19 +13,17 @@ import javafx.scene.text.Text;
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
-    private String myGameName;
     
     protected CustomizationChoicesScreen(AuthoringView view) {
 	super(view);
-	myGameName = getView().getGameName(); 
     }
 
     @Override
     public Parent makeScreenWithoutStyling(){
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
-	System.out.println(myGameName+" SHOULD BE THE TITLE");
-	Text heading = getUIFactory().makeScreenTitleText(myGameName);
+	//System.out.println(myGameName+" SHOULD BE THE TITLE");
+	Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
 	vbox.getChildren().add(heading);
 
 	Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));

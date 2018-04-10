@@ -167,6 +167,10 @@ public class AuthoringController {
 	
 	public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
 	    Level currentLevel = myAuthoringModel.levelCheck(level);
+	    //TODO: issue here - if there is no wave yet then need to make it first!
+	    if(!currentLevel.containsWave(path, waveNumber)) {
+		return new HashMap<String, Integer>();
+	    }
 	    Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies();
 	    Map<String,Integer> enemyNameMap = new HashMap<>();
 	    for(Enemy enemy : enemyMap.keySet()) {
