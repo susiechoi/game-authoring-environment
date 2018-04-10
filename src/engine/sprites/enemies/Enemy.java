@@ -50,6 +50,7 @@ public class Enemy extends Sprite{
 	myPath = path;
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
+	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthImpact+", "+mySpeed+", "+myKillReward);
     }
     
     /**

@@ -69,10 +69,12 @@ public class AuthoringController {
 	 */
 	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
 							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
-							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
+							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
+							double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
-				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange, 
+				towerValue, towerUpgradeCost, towerUpgradeValue);
 	}
 	
 	/**

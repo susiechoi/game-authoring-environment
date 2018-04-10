@@ -43,9 +43,9 @@ public class StartScreen extends AuthoringScreen {
 	editButton.setDisable(true);
 	editButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"Edit");});
 	vbox.getChildren().add(startHeading);
+	vbox.getChildren().add(newGameButton);
 	vbox.getChildren().add(gameChooser);
 	vbox.getChildren().add(editButton);
-	vbox.getChildren().add(newGameButton);
 	return vbox;
 
     }
