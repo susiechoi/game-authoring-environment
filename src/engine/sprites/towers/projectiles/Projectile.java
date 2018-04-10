@@ -36,8 +36,8 @@ public class Projectile extends Sprite {
 	public void move() {
 		double xMove = Math.sin(this.getRotate())*this.mySpeed;
 		double yMove = Math.cos(this.getRotate())*this.mySpeed;
-		this.setX(this.getX()+xMove);
-		this.setY(this.getX()+yMove);
+		this.getImageView().setX(this.getX()+xMove);
+		this.getImageView().setY(this.getX()+yMove);
 	}
 	
 	/**

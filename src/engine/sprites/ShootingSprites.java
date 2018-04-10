@@ -6,7 +6,6 @@ import java.util.List;
 import engine.physics.ImageIntersecter;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -34,8 +33,8 @@ public class ShootingSprites extends Sprite{
 		myLauncher = launcher;
 	}
 	
-	public ObservableList<Projectile> getProjectiles(){
-		return myLauncher.getObservableListOfActive();
+	public List<Projectile> getProjectiles(){
+		return myLauncher.getListOfActive();
 	}
 	
 	public void increaseHitCount(int increaseAmount) {

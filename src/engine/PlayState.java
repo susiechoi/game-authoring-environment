@@ -26,7 +26,6 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author benauriemma 4/8
  * @date 4/6/18
  */
-
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
@@ -39,6 +38,15 @@ public class PlayState implements GameData {
     private Level currentLevel;
     private boolean isPaused;
 
+    /**
+     * Constructor for play state object that sets up initial levels.
+     * 
+     * @param mediator
+     * @param levels
+     * @param score
+     * @param resources
+     * @param universalTime
+     */
     public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
 	System.out.println("playstate constructor");
 	myMediator = mediator;
@@ -61,15 +69,15 @@ public class PlayState implements GameData {
     public void update(double elapsedTime) {
 	UNIVERSAL_TIME+=elapsedTime;
 	List<Sprite> toBeRemoved = new ArrayList<>();
-	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive()));
-	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive()));
-	myTowerManager.shoot(myEnemyManager.getObservableListOfActive());
+	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	myTowerManager.shoot(myEnemyManager.getListOfActive());
 	myTowerManager.moveProjectiles();
 	myTowerManager.moveTowers();
-	for (Projectile projectile: myTowerManager.shoot(myTowerManager.getObservableListOfActive())) {
+	for (Projectile projectile: myTowerManager.shoot(myTowerManager.getListOfActive())) {
 	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	}
-	for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getObservableListOfActive())) {
+	for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getListOfActive())) {
 	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	}
 	myEnemyManager.moveProjectiles();
