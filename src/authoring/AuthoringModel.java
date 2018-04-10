@@ -109,7 +109,7 @@ public class AuthoringModel implements GameData {
 			throw new ObjectNotFoundException(name);
 		}
 //		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
-		Enemy newEnemy = new EnemyBuilder().construct(name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 		currentLevel.addEnemy(name, newEnemy);
 	}
 
@@ -134,13 +134,13 @@ public class AuthoringModel implements GameData {
 		}
 //		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-				projectileImagePath, projectileDamage, projectileUpgradeCost, 
+				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
 				projectileUpgradeValue, projectileSpeed);
 		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
 				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
 				launcherValue, towerProjectile); 
 //		Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
-		Tower newTower = new TowerBuilder().construct(name, imagePath, 50, health,  // TODO put size SOMEWHERE
+		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, imagePath), 50, health,  // TODO put size SOMEWHERE
 				healthUpgradeValue, healthUpgradeCost, towerLauncher, towerValue, towerUpgradeCost, towerUpgradeValue);
 		currentLevel.addTower(name, newTower);
 	}
