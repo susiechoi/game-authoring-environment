@@ -1,20 +1,27 @@
 package engine;
 
 
+
+import engine.sprites.towers.Tower;
+import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
 import java.util.List;
 
 import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
+import engine.sprites.Sprite;
+import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
-import engine.sprites.towers.Tower;
-import gameplayer.ScreenManager;
 import java.awt.Point;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import xml.AuthoringModelReader;
 import xml.PlayLoader;
@@ -53,10 +60,8 @@ public class Mediator {
      * Constructs Mediator object and sets all fields to null.
      * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
      */
-    public Mediator() {
-	myScreenManager = null;
-	myGameEngine = null;
-	myPlayController = null;
+    public Mediator(PlayController p) {
+	myPlayController = p;
 //	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
 //	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
     }
@@ -96,7 +101,13 @@ public class Mediator {
      * @param filename	name of file
      */
     public void startPlay(String filename) {
-	myPlayController.newPlay(filename);
+	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+	StackTraceElement element = stackTrace[2];
+	System.out.println("I was called by a method named:" + element.getMethodName());
+	System.out.println("That method is in class:" + element.getClassName());
+	//myPlayController.newPlay(filename);
+	System.out.println("set authoring call in mediator");
+	myPlayController.setAuthoring();
     }
     
     /**
@@ -137,6 +148,7 @@ public class Mediator {
     }
     
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	System.out.println("AVAIL");
 	    myScreenManager.setAvailableTowers(availableTowers);
     }
 
@@ -145,8 +157,9 @@ public class Mediator {
      * @param location, where the tower should be placed
      * @param towerType, type of tower to be placed
      * @return frontEndTower that can be used to refer to the tower in the future
+     * @throws CannotAffordException 
      */
-    public FrontEndTower placeTower(Point location, String towerType) {
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
         //TODO add in money (decrement when purchased)
          return myGameEngine.getPlayState().placeTower(location, towerType);
     }
@@ -184,14 +197,15 @@ public class Mediator {
         myGameEngine.setSpeed(sliderValue);
     }
 
-    /**
-     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
-     * @param tower
-     * @param upgradeName
-     */
-    public void upgradeTower(FrontEndTower tower, String upgradeName) {
-        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
-    }
+    //WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED
+//    /**
+//     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
+//     * @param tower
+//     * @param upgradeName
+//     */
+//    public void upgradeTower(FrontEndTower tower, String upgradeName) {
+//        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
+//    }
 
     /**
      * to be called by the backend to tell the frontend the new score that has already be calculated
@@ -225,11 +239,22 @@ public class Mediator {
         myScreenManager.updateLevelCount(newLevel);
     }
 
-
-
-
+    /**
+     * Takes a list of sprites that are to be removed from PlayState, removes them
+     * @param list
+     */
+    public void removeListOfSpritesFromScreen(List<Sprite> list) {
+	for(Sprite sprite : list) {
+	    this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
+	}
+	
+    }
 
     
+    //    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
+    //	value.addListener(listenerToAdd);
+    //    }
+
 
     // a whole slew of other methods
     // but fr there should be a method for every event that can occur

@@ -95,13 +95,22 @@ public class Sprite  {
     public void setY(double newY) {
     		this.myImageView.setY(newY);
     }
+    public void setRotate(double rotateVal) {
+    		this.myImageView.setRotate(rotateVal);
+    }
+    /**
+     * Returns the damage that this sprite inflicts on something (Can be enemy's damage, projectiles damage, etc)
+     * @return
+     */
+    public Double getDamage() {
+	return (double) 0;
+    }
     
     /**
-     * 
      * @return : true if the sprite is alive, false if it is dead
      * Can be overridden in subclasses if a collision affects them
      */
-    protected boolean handleCollision(Sprite collider) {
+    public boolean handleCollision(Sprite collider) {
 	return false;
     }
 

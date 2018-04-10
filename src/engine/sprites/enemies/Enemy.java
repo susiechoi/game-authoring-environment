@@ -2,10 +2,12 @@ package engine.sprites.enemies;
 
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
+import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.geometry.Point2D;
 
@@ -21,7 +23,7 @@ import javafx.scene.image.Image;
  * @date 4/8/18
  *
  */
-public class Enemy extends Sprite{
+public class Enemy extends ShootingSprites{
 
 	private String myName; 
 	private Image myImage; 
@@ -37,14 +39,15 @@ public class Enemy extends Sprite{
 //    private double myKillUpgradeCost;
 //    private double myKillUpgradeValue; 
 
-    public Enemy(String name, Image image, double speed, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
-	super(name, image);
+    public Enemy(String name, Image image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value, Path path) {
+	super(name, image, size, launcher);
 	myName = name; 
 	myImage = image; 
 	myHealth = health;
 	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
-	myHealthImpact = myDamage.getDamage();
+	myHealthImpact = myDamage.getProperty();
+//	myHealthImpact = myDamage.getDamage();
 	myValue = value;
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	myPath = path;
@@ -57,13 +60,13 @@ public class Enemy extends Sprite{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-    	super("", copiedEnemy.getImageView().getImage());
+    	super("", copiedEnemy.getImageView().getImage(), copiedEnemy.getImageView().getImage().getWidth(), copiedEnemy.getLauncher());
     	myName = copiedEnemy.getName(); 
     	myImage = copiedEnemy.getImageView().getImage(); 
     	myIntersecter = copiedEnemy.getIntersecter(); 
     	myHealth = copiedEnemy.getHealth(); 
-    	myDamage = copiedEnemy.getDamage();
-    	myHealthImpact = myDamage.getDamage(); 
+    	myDamage = copiedEnemy.getDamageProperty();
+    	myHealthImpact = myDamage.getProperty(); 
     	myValue = copiedEnemy.getValue();
     	myPath = copiedEnemy.getPath(); 
     	mySpeed = copiedEnemy.getSpeed();
@@ -78,16 +81,6 @@ public class Enemy extends Sprite{
 	return myIntersecter.overlaps(otherImage); 
     }
 
-    /**
-     * Handles when the Enemy is hit by a tower
-     * 
-     * @param projectile: the projectile that hit the enemy
-     * @return : returns true if the enemy is still alive, false if it is dead
-     */
-    public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
-	myHealth.loseHealth(projectile.getDamage());
-	return myHealth.isAlive();
-    }
 
     /**
      * Moves the enemy along the path according to how much time has passed
@@ -109,8 +102,18 @@ public class Enemy extends Sprite{
      * 
      * @return Double: damage that Enemy incurs on the tower
      */
-    public Double damage() {
+    @Override
+    public Double getDamage() {
 	return myDamage.getProperty();
+    }
+    
+    /**
+     * Returns true if this Enemy is still alive
+     */
+    @Override
+    public boolean handleCollision(Sprite collider) {
+	myHealth.loseHealth(collider.getDamage());
+	return myHealth.isAlive();
     }
     
     private ImageIntersecter getIntersecter() {
@@ -121,7 +124,7 @@ public class Enemy extends Sprite{
     	return myHealth; 
     }
     
-    private DamageProperty getDamage() {
+    private DamageProperty getDamageProperty() {
     	return myDamage; 
     }
     

@@ -21,6 +21,17 @@ import javafx.scene.image.Image;
  */
 public class PropertiesReader {
 	
+	public String findKey(String filepath, String targetVal) throws MissingPropertiesException {
+		Properties properties = loadProperties(filepath);
+		Map<String, String> readInProperties = read(properties);
+		for (String key : readInProperties.keySet()) {
+			if (readInProperties.get(key).equals(targetVal)) {
+				return key;
+			}
+		}
+		return ""; 
+	}
+	
 	public String findVal(String filepath, String target) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
