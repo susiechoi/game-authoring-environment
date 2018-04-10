@@ -11,6 +11,7 @@ import gameplayer.screen.GameScreen;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 public class GamePanel extends Panel{
 
@@ -18,7 +19,7 @@ public class GamePanel extends Panel{
     private FrontEndTower towerSelected;
     private boolean towerPlaceMode = false;
     private List<FrontEndTower> towersPlaced;
-    private Group spriteAdd;
+    private Pane spriteAdd;
 
 
     public GamePanel(GameScreen gameScreen) {
@@ -31,16 +32,15 @@ public class GamePanel extends Panel{
     public void makePanel() {
 
 	//TODO potentially fix needed?
-	spriteAdd = new Group();
 
-	ScrollPane panelRoot = new ScrollPane(spriteAdd);
+	Pane panelRoot = new Pane();
 	panelRoot.setId("gamePanel");
 	//panelRoot.setBottom(new Up);
 	panelRoot.setMaxWidth(Double.MAX_VALUE);
 	panelRoot.setMaxHeight(Double.MAX_VALUE);
 
 	panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
-
+	spriteAdd = panelRoot;
 	PANEL = panelRoot;
     }
 
@@ -58,11 +58,13 @@ public class GamePanel extends Panel{
 	    Point position = new Point((int)x,(int)y);
 	    try {
 		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
-		System.out.println(newTower.getImageView().getX() + " #andrewProblem " + newTower.getImageView().getY());
+		ImageView towerImage = newTower.getImageView();
+		towerImage.setLayoutX(-towerImage.getFitWidth()/2);
+		towerImage.setLayoutY(-towerImage.getFitHeight()/2);
 		if(newTower!= null) {
 		    addTowerImageViewAction(newTower);
 		    towersPlaced.add(newTower);
-		    spriteAdd.getChildren().add(newTower.getImageView());
+		    spriteAdd.getChildren().add(towerImage);
 		    towerPlaceMode = false;
 		}
 	    }
