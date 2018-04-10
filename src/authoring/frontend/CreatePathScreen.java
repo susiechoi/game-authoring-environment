@@ -14,7 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-public class CreatePathScreen extends AdjustScreen {
+public class CreatePathScreen extends PathScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
@@ -27,8 +27,6 @@ public class CreatePathScreen extends AdjustScreen {
 
 	protected CreatePathScreen(AuthoringView view) {
 		super(view);
-		myView = view;
-		setStyleSheet(DEFAULT_OWN_STYLESHEET); 
 	}
 
 	@Override
