@@ -28,7 +28,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     		for (ShootingSprites shootingSprite: this.getObservableListOfActive()) {
     			for (ShootingSprites passedSprite: passedSprites) {
     				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
-    					shootingSprite.launch();
+    					shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
     				}
     			}
     		}

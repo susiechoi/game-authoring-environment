@@ -94,6 +94,9 @@ public class Sprite  {
     public void setY(double newY) {
     		this.myImageView.setY(newY);
     }
+    public void setRotate(double rotateVal) {
+    		this.myImageView.setRotate(rotateVal);
+    }
 
 	public void handleCollision() {
 		// TODO Auto-generated method stub

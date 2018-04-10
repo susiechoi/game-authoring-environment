@@ -63,8 +63,8 @@ public class ShootingSprites extends Sprite{
 		return myLauncher.hasReloaded();
 	}
 	
-	public void launch() {
-		myLauncher.launch();
+	public void launch(Sprite target, double shooterX, double shooterY) {
+		myLauncher.launch(target, shooterX, shooterY);
 	}
 	
 	public Launcher getLauncher() {
