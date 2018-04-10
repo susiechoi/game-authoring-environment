@@ -2,7 +2,7 @@ package gameplayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 import java.awt.Point;
 
 import engine.Mediator;
@@ -16,6 +16,7 @@ import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
 
@@ -132,8 +133,10 @@ public class ScreenManager extends View{
     public void updateCurrency(Integer newBalence) {
 	GAME_SCREEN.updateCurrency(newBalence);
     }
-    
   
+    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
+	GAME_SCREEN.setPath(imageMap, numRow, numCol);
+    }
     
 
 

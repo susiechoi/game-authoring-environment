@@ -6,6 +6,7 @@ import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import java.util.List;
+import java.util.Map;
 
 import authoring.AuthoringModel;
 import controller.PlayController;
@@ -23,6 +24,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 import xml.AuthoringModelReader;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
@@ -248,6 +250,10 @@ public class Mediator {
 	    this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
 	}
 	
+    }
+    
+    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
+	myScreenManager.setPath(imageMap, numRow, numCol);
     }
 
     

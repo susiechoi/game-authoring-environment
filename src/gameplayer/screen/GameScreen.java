@@ -10,6 +10,7 @@ import gameplayer.panel.ControlsPanel;
 
 import java.awt.Point;
 import java.util.List;
+import java.util.Map;
 
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -20,8 +21,7 @@ import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
-
-
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -87,6 +87,7 @@ public class GameScreen extends Screen {
 
 	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
+	GAME_PANEL.setPath(null, 10, 10);
 	return rootPane;
     }
 
@@ -168,6 +169,10 @@ public class GameScreen extends Screen {
     public void sellTower(FrontEndTower tower) {
 	MEDIATOR.sellTower(tower);
 	GAME_PANEL.removeTower(tower);
+	
+    }
+    
+    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
 	
     }
     
