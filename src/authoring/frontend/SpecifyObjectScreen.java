@@ -5,6 +5,7 @@
 
 package authoring.frontend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,7 +37,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 			getView().loadErrorScreen("NoConstants");
 		}
 	}
-	
+
 	/**
 	 * Makes the screen with the option of creating a new object OR editing an existing one 
 	 * @return Parent/root to attach to Scene that will be set on the stage
@@ -47,15 +48,25 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		Text orText = new Text("or"); 
 
 		Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
+		String prompt = getErrorCheckedPrompt("SpecifyDropdownLabel");
 
-		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
-		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
+		List<String> dropdownOptions = new ArrayList<String>(); 
+		dropdownOptions.add(prompt);
+		dropdownOptions.addAll(myObjectOptions);
 		
-		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
+		Button backButton = setupBackButton();
+
+		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction("objectOptions",dropdownOptions, 
+				e-> { applyButton.setDisable(false); }, 
+				e-> { applyButton.setDisable(true);}, prompt); 
+		applyButton.setDisable(true);
 		applyButton.setOnAction(e -> {
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
 		});
+
+		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
+
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
@@ -66,9 +77,10 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 		return vb;
 	}
+	
 	@Override
 	protected void populateFieldsWithData() {
-	    //null method, since this type of screen only has buttons TODO: make this not an abstract method??
+		//null method, since this type of screen only has buttons TODO: make this not an abstract method??
 	}
 
 	/**
@@ -79,7 +91,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction((event) -> {
-		    getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton", myDefaultName);
+			getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton", myDefaultName);
 		});
 		return newObjectButton;
 	}
