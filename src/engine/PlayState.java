@@ -9,6 +9,8 @@ import java.awt.Point;
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.path.Path;
+import engine.sprites.enemies.wave.Wave;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
@@ -66,23 +68,46 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	UNIVERSAL_TIME+=elapsedTime;
-	List<Sprite> toBeRemoved = new ArrayList<>();
-	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
-	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	myTowerManager.shoot(myEnemyManager.getListOfActive());
-	myTowerManager.moveProjectiles();
-	myTowerManager.moveTowers();
-	for (Projectile projectile: myTowerManager.shoot(myTowerManager.getListOfActive())) {
-	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+	if(!isPaused) {
+	    try {
+		for (Path path : currentLevel.getUnmodifiablePaths()) {
+		    Wave currentWave;
+		    if (!currentLevel.getWaves(path).isEmpty()) {
+			currentWave = currentLevel.getWaves(path).get(0);
+		    }
+		    else {
+			continue;
+		    }
+		    int currentTime = new Double(UNIVERSAL_TIME).intValue();
+		    if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
+			currentLevel.getNewEnemy(path);
+		    }
+		    // TODO: remove "magic numbers", improve this to be 3 seconds
+		    // after the wave finished
+		    if (UNIVERSAL_TIME % 3 == 0 && currentWave.isFinished()) {
+			currentLevel.removeWave(path);
+		    }
+		}
+	    } catch (Exception e) {
+		// do nothing
+	    }
+	    UNIVERSAL_TIME+=elapsedTime;
+	    List<Sprite> toBeRemoved = new ArrayList<>();
+	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	    toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	    myTowerManager.shoot(myEnemyManager.getListOfActive());
+	    myTowerManager.moveProjectiles();
+	    myTowerManager.moveTowers();
+	    for (Projectile projectile: myTowerManager.shoot(myTowerManager.getListOfActive())) {
+		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+	    }
+	    for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getListOfActive())) {
+		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+	    }
+	    myEnemyManager.moveProjectiles();
+	    myEnemyManager.moveEnemies();
+	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
-	for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getListOfActive())) {
-	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-	}
-	myEnemyManager.moveProjectiles();
-	myEnemyManager.moveEnemies();
-	currentLevel.getNewEnemy(UNIVERSAL_TIME);
-	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 
     }
 
