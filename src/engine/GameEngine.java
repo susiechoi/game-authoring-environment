@@ -51,7 +51,7 @@ public class GameEngine {
      * Called from the GameLoop class
      */
     public void update() {
-	myPlayState.update();
+//	myPlayState.update();
     }
 
     /**

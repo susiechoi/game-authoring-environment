@@ -1,8 +1,10 @@
 package engine.managers;
 
+import java.util.Collection;
 import java.util.Map;
 
 import engine.sprites.enemies.Enemy;
+import engine.sprites.towers.Tower;
 
 /**
  * Enemy manager uses composite design pattern to handle updating all 
@@ -37,8 +39,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	
     }
 
-    public void setEnemies(Map<Enemy, Integer> enemies) {
-	// TODO Auto-generated method stub
-	
+    public void setEnemies(Collection<Enemy> enemies) {
+
     }
 }

@@ -57,6 +57,10 @@ public class Projectile extends Sprite {
 	    return myDamage.getProperty();
 	}
 	
+	public double getSpeed() {
+	    return mySpeed;
+	}
+	
 	
 	public String getDamageName() {
 		return myDamage.getName();

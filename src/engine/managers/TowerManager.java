@@ -1,15 +1,9 @@
 package engine.managers;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-
-
-import engine.sprites.ShootingSprites;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
@@ -37,16 +31,13 @@ public class TowerManager extends ShootingSpriteManager {
     }
 
     /**
-     * Sets the AVAILABLE field in the TowerManager to @param towers. Performs a deep copy of 
-     * each individual tower and places them in AVAILABLE.
+     * Sets the AVAILABLE field in the TowerManager to @param towers. 
      * 
      * @param towers: towers taken from the AuthoringModel that are available in the game
      */
-    public void setAvailableTowers(List<Tower> towers) {
-	for (Tower gameTower : towers) {
-	    /* TODO perform the deep copy
-	    Tower copyTower = new Tower(null, null, 0, 0);
-	    AVAILABLE.add(copyTower);*/
+    public void setAvailableTowers(Collection<Tower> towers) {
+	for(Tower tower : towers) {
+	    addToAvailableList(tower);
 	}
     }
 
