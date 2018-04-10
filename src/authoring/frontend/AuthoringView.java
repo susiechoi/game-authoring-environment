@@ -13,6 +13,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import authoring.AuthoringController;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
@@ -26,6 +28,7 @@ import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
 
@@ -40,6 +43,7 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
+	private HashMap<String, List<Point2D>> myImageMap;
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
@@ -52,7 +56,7 @@ public class AuthoringView extends View {
 	}
 
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new StartScreen(this)).getScreen());
+		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
 	}
 
 	@Override
@@ -82,10 +86,8 @@ public class AuthoringView extends View {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 			Class<?> clazz = Class.forName(nextScreenClass);
-			System.out.println("next class: " + nextScreenClass);
 			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 			if(constructor.getParameterTypes().length == 2) {
-				System.out.println("our name "+name);
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
@@ -108,8 +110,6 @@ public class AuthoringView extends View {
 			loadErrorScreen("NoScreenFlow");
 		}
 	}
-
-
 
 
 	/**
@@ -147,8 +147,9 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(List<Point2D> coordinates, HashMap<String, List<Point2D>> hashMap, String backgroundImage) {
-		myController.makePath(myLevel, coordinates, hashMap, backgroundImage);
+	public void makePath(GridPane grid, List<Point2D> coordinates, HashMap<String, List<Point2D>> imageCoordinates, String backgroundImage) {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
+		myImageMap = imageCoordinates;
 	}
 
 	/**
@@ -222,6 +223,10 @@ public class AuthoringView extends View {
 
 	protected PropertiesReader getPropertiesReader() {
 		return myPropertiesReader; 
+	}
+	
+	public HashMap<String, List<Point2D>> getImageCoordinates() {
+		return myImageMap;
 	}
 
 

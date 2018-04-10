@@ -57,8 +57,8 @@ public class AuthoringModel implements GameData {
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
-	protected GridPane myGrid;
 	protected Path myPath;
+	protected HashMap<String, List<Point2D>> myImageMap;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -158,7 +158,8 @@ public class AuthoringModel implements GameData {
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
 	
-	public void makePath(int level, List<Point2D> coordinates, Map<String, List<Point2D>> imageCoordinates, String backgroundImage) {
+	public void makePath(int level, GridPane grid, List<Point2D> coordinates, HashMap<String, List<Point2D>> imageCoordinates, String backgroundImage) {
+		myImageMap = imageCoordinates;
 		myPath = new PathBuilder().construct(level, coordinates);
 	}
 
@@ -247,7 +248,7 @@ public class AuthoringModel implements GameData {
 					break; 
 				}
 			}
-		}
+		} 
 		if (fieldValue.getClass() == Double.class) {
 			return Double.toString((double) fieldValue); 
 		}
@@ -385,6 +386,10 @@ public class AuthoringModel implements GameData {
 		Level copiedLevel = myLevels.get(myLevels.size());
 		myLevels.put(newLevelNumber, new Level(copiedLevel));
 		return newLevelNumber; 
+	}
+	
+	public HashMap<String, List<Point2D>> getImageMap() {
+		return myImageMap;
 	}
 }
 

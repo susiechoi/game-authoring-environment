@@ -9,6 +9,7 @@
  */
 
 package authoring;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,11 +23,13 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.geometry.Point2D;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
 	private AuthoringModel myAuthoringModel; 
+	private HashMap<String, List<Point2D>> myImageMap;
 	
 	public AuthoringController(StageManager stageManager, String languageIn) {
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
@@ -88,8 +91,9 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 */
-	public void makePath(int level, List<Point2D> coordinates, Map<String, List<Point2D>> imageCoordinates, String backgroundImage) { 
-		myAuthoringModel.makePath(level, coordinates, imageCoordinates, backgroundImage); 
+	public void makePath(int level, GridPane grid, List<Point2D> coordinates, HashMap<String, List<Point2D>> imageCoordinates, String backgroundImage) { 
+		myAuthoringModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+		myImageMap = imageCoordinates;
 	}
 	
 	/**
@@ -170,6 +174,10 @@ public class AuthoringController {
 	public List<String> levelEnemies(int level) throws ObjectNotFoundException {
 	    Level thisLevel = myAuthoringModel.levelCheck(level);
 	    return thisLevel.getAllEnemies();
+	}
+	
+	public HashMap<String, List<Point2D>> getGrid() {
+		return myImageMap;
 	}
 }
 

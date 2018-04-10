@@ -12,17 +12,16 @@ import javafx.scene.layout.StackPane;
 
 public abstract class PathScreen extends AdjustScreen {
 
-
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
 	private StackPane pathRoot;
 	private GridPane pathGrid;
-	//private Node pathPanel;
 	private PathPanel panel;
 	private CreatePathGrid grid;
 
 	protected PathScreen(AuthoringView view) {	
 		super(view);
+		grid = new CreatePathGrid(view);
 	}
 	protected void setPathPanel(PathPanel panelnew) {
 		panel = panelnew;
@@ -38,13 +37,11 @@ public abstract class PathScreen extends AdjustScreen {
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
-		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
 		initializeGridSettings(grid);
 
 		setGridSizing();
-
 
 		return pathRoot; 	
 	}

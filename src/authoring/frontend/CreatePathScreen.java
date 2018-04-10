@@ -1,33 +1,20 @@
 package authoring.frontend;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 
 public class CreatePathScreen extends PathScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
-
-	private StackPane pathRoot;
-	private GridPane pathGrid;
-	private Node pathPanel;
+	
 	//private CreatePathPanel panel;
 	private CreatePathGrid grid;
-	private AuthoringView myView;
 	private String backgroundImageFileName;
 
 	protected CreatePathScreen(AuthoringView view) {
@@ -36,7 +23,8 @@ public class CreatePathScreen extends PathScreen {
 	}
 
 	private void setGridBackground() {
-
+		
+		//TODO: panel.getBackgroundButton() fix
 //		Button backgroundButton = (Button) panel.getBackgroundButton();
 //		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
 //			@Override
@@ -52,33 +40,23 @@ public class CreatePathScreen extends PathScreen {
 //		});
 	}
 
-
-	//fix error checking!!!!!
-	//fix checkPathConnected 
+	//TODO: fix checkPathConnected - doesn't work for multiple starts, after moving path, or after set sizing
 	private void setGridApplied() {
-		Button applyButton = getPathPanel().getApplyButton();
-		//	getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
-		//		@Override
-		//		public void handle(ActionEvent e) {
-		//		    System.out.println("sad face turns happy?");
-		//		}
-		//	});
 		getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				System.out.print("HERE");
-				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
+				List<Point2D> startCoords = grid.getStartingPosition();
 				if (grid.getStartingPosition().size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Path Cutomization Error");
 					alert.setContentText("Your path has no starting blocks");
 					alert.showAndWait();
 				}
-				for (int key: coordMap.keySet()) {
-					//System.out.println(coordMap.get(key).get(0));
-					if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
+				for (Point2D point: startCoords) {
+					System.out.println(point);
+					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
-						getView().makePath(grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName); //when apply is clicked and there is a complete path, the info gets passed to view
+						getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName); //when apply is clicked and there is a complete path, the info gets passed to view
 					} else {
 						System.out.println("FALSE");
 						Alert alert = new Alert(AlertType.INFORMATION);
@@ -100,7 +78,6 @@ public class CreatePathScreen extends PathScreen {
 	@Override
 	protected void populateFieldsWithData() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
