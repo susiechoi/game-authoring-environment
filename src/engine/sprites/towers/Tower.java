@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
  * @author Miles Todzo
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
+
     private HealthProperty myHealth;
     private double myHealthValue;
     private double myHealthUpgradeCost; 
@@ -153,6 +154,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
 
     /**private double getDamage() {
+>>>>>>> 5a750604dc04461013be3f0cdce2a6f625b5545b
 		return this.getLauncher().getDamage();
 	} **/
 
