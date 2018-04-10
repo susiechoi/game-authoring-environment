@@ -72,8 +72,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	/**
 	 * Handles selling a tower
 	 */
-	public double sell() {
-		return myValue.getProperty();
+	public int sell() {
+		return (int) myValue.getProperty();
 	}
 
 	/**
@@ -121,39 +121,16 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	public Map<String, Double> getTowerStats(){
 		return propertyStats;
 	}
-
-	@Override
-	public Map<String, String> getTowerStats() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public boolean sell() {
-	    // TODO Auto-generated method stub
-	    return false;
-	}
-
-	@Override
-	public Map<String, Double> getUpgrades() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public String getSpecificUpgradeInfo(String upgradeName) {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public boolean upgrade(String upgradeName) {
-	    // TODO Auto-generated method stub
-	    return false;
-	}
-	
 	private void updateStatsMap(String name, double value) {
 		propertyStats.put(name, value);
+	}
+
+	@Override
+	public int purchase(int myResources) throws CannotAffordException {
+		if (myResources < myValue.getProperty()) {
+			throw new CannotAffordException();
+		}
+		return (int) (myResources - myValue.getProperty());
 	}
 
 }

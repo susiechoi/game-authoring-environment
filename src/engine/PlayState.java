@@ -9,6 +9,7 @@ import java.awt.Point;
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
@@ -80,7 +81,9 @@ public class PlayState implements GameData {
 
     //TODO potentially move into Mediator? somehow the FrontEndTower has to be returned to the frontend
     public FrontEndTower placeTower(Point location, String towerType) {
-	// TODO: decrement currency or throw an exception if they cant afford it
+    	FrontEndTower placedTower = myTowerManager.place(location, towerType);
+    myResources = placedTower.purchase(myResources);
+    myMediator.updateCurrency(myResources);
 	return (FrontEndTower) myTowerManager.place(location, towerType);
     }
 
@@ -90,5 +93,7 @@ public class PlayState implements GameData {
 
     public void sellTower(FrontEndTower tower) {
 	myResources += tower.sell();
+	myMediator.updateCurrency(myResources);
+	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
     }
 }
