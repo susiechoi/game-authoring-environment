@@ -23,10 +23,11 @@ public class Tower extends ShootingSprites {
 	 * @param health: Initial health of the tower
 	 * @param value: Value of the tower for selling
 	 */
-	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health) {
+	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myLauncher = launcher;
 		myHealth = health;
+		myValue = value;
 	}
 
 	/**
