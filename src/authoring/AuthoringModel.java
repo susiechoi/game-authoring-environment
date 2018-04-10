@@ -46,8 +46,9 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
-	public static final String DEFAULT_NAME = "Default";
+	public static final String myDefaultName_FILEPATH = "src/frontend/Constants.properties";
 
+	private String myDefaultName; 
 	private final PropertiesReader myPropertiesReader;
 	protected AuthoringResources myResources;
 	private Map<Integer, Level> myLevels;
@@ -59,19 +60,20 @@ public class AuthoringModel implements GameData {
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
 		myPropertiesReader = new PropertiesReader();
+		myDefaultName = myPropertiesReader.findVal(myDefaultName_FILEPATH, "DefaultObjectName");
 		try {
 			myDefaultTower = generateGenericTower();
 			myDefaultEnemy = generateGenericEnemy();
 		} catch (NumberFormatException | FileNotFoundException e) {
-			throw new MissingPropertiesException(DEFAULT_NAME);
+			throw new MissingPropertiesException(myDefaultName);
 		}
 		setupDefaultLevel(); 
 	}
 
 	private void setupDefaultLevel() {
 		Level firstLevel = new Level(1);
-		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
-		firstLevel.addEnemy(DEFAULT_NAME, new Enemy(myDefaultEnemy));
+		firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
+		firstLevel.addEnemy(myDefaultName, new Enemy(myDefaultEnemy));
 		myLevels.put(1, firstLevel);
 	}
 
@@ -170,6 +172,7 @@ public class AuthoringModel implements GameData {
 				listToReturn.add(myDefaultTower.getName());
 			}
 		}
+		listToReturn.remove(myDefaultName);
 		return listToReturn; 
 	}
 
@@ -260,7 +263,7 @@ public class AuthoringModel implements GameData {
 		try {
 			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
 			Projectile towerProjectile = new ProjectileBuilder().construct(
-					DEFAULT_NAME,  
+					myDefaultName,  
 					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage")), 
 							projectileSize, projectileSize, false, false),
 					// TODO add projectile speed !!!!
@@ -277,7 +280,7 @@ public class AuthoringModel implements GameData {
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), towerProjectile);  
 			double towerSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerSize"));
 			Tower newTower = new TowerBuilder().construct(
-					DEFAULT_NAME, 
+					myDefaultName, 
 					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage")), 
 							towerSize, towerSize, false, false), 
 					towerSize, 
@@ -309,7 +312,7 @@ public class AuthoringModel implements GameData {
 		try {
 			double enemySize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemySize"));
 			Enemy newEnemy = new EnemyBuilder().construct(
-					DEFAULT_NAME, 
+					myDefaultName, 
 					new Image(new FileInputStream(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage")), 
 							enemySize, enemySize, false, false), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemySpeed")), 
