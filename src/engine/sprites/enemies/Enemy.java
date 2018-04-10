@@ -131,6 +131,9 @@ public class Enemy extends ShootingSprites{
     private ValueProperty getValue() {
     	return myValue; 
     }
+    public int getPointValue() {
+    	return (int)this.myValue.getProperty();
+    }
     
     private Path getPath() {
     	return myPath; 

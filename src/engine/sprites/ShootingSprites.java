@@ -19,10 +19,11 @@ import javafx.scene.image.ImageView;
  * @param projectileManager
  */
 
-public class ShootingSprites extends Sprite{
+public abstract class ShootingSprites extends Sprite{
 	
 	private Launcher myLauncher;
 	private int hitCount;
+	private int roundScore;
 	private ImageIntersecter intersector;
 
 	public ShootingSprites(String name, Image image, double size, Launcher launcher) {
@@ -31,6 +32,7 @@ public class ShootingSprites extends Sprite{
 		this.getImageView().setFitHeight(size);
 		this.getImageView().setFitWidth(size);
 		myLauncher = launcher;
+		roundScore = 0;
 	}
 	
 	public ObservableList<Projectile> getProjectiles(){
@@ -46,13 +48,13 @@ public class ShootingSprites extends Sprite{
 	 * @param shooter : Input shooter that is shooting projectiles
 	 * @return : a list of all sprites to be removed from screen (dead)
 	 */
-	public List<Sprite> checkForCollision(ShootingSprites shooter) {
+	public List<Sprite> checkForCollision(ShootingSprites target) {
 	    	List<Sprite> toBeRemoved = new ArrayList<>();
-	    	List<Projectile> projectiles = shooter.getProjectiles();
-		this.checkTowerEnemyCollision(shooter);
+	    	List<Projectile> projectiles = this.getProjectiles();
+		this.checkTowerEnemyCollision(target);
 		for (Projectile projectile: projectiles) {
-			if(this.intersects(projectile)){
-				toBeRemoved = objectCollision(projectile);
+			if(target.intersects(projectile)){
+				toBeRemoved = target.objectCollision(projectile);
 			}
 		}
 		return toBeRemoved;
@@ -60,8 +62,10 @@ public class ShootingSprites extends Sprite{
 	
 	private List<Sprite> objectCollision(Sprite collider) {
 	    List<Sprite> deadSprites = new ArrayList<>();
+	    hitCount++;
 	    if(!this.handleCollision(collider)) {
-		deadSprites.add(this);
+	    		deadSprites.add(this);
+	    		roundScore += this.getPointValue();
 	    }
 	    if(!collider.handleCollision(this)) {
 		deadSprites.add(collider);
@@ -107,4 +111,8 @@ public class ShootingSprites extends Sprite{
 	public Launcher getLauncher() {
 		return myLauncher;
 	}
+	public int getRoundScore() {
+		return roundScore;
+	}
+	public abstract int getPointValue();
 }
