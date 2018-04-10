@@ -1,6 +1,7 @@
 /**
  * 
  * @author susiechoi 
+ * @author Ben Hodgson 4/9/18
  *
  * Class that handles mediating creation of authoring environment objects (towers, enemies, path). 
  * Represents Controller in MVC of the authoring environment. 
@@ -135,6 +136,21 @@ public class AuthoringController {
 		thisWave = levelWaves.get(waveNumber - 1);
 	    }
 	    thisWave.addEnemy(thisEnemy, newAmount);
+	}
+	
+	/**
+	 * Returns the number of waves in a specified level that belong to a specified
+	 * path object.
+	 * 
+	 * @param level: the current level
+	 * @param path: the path that the waves belong to
+	 * @return int: the number of waves that belong to the path in the level
+	 * @throws ObjectNotFoundException: thrown if the level isn't found
+	 */
+	public int wavesNumber(int level, Path path) throws ObjectNotFoundException {
+	    Level thisLevel = myAuthoringModel.levelCheck(level);
+	    List<Wave> levelWaves = thisLevel.getWaves(path);
+	    return levelWaves.size();
 	}
 
 }
