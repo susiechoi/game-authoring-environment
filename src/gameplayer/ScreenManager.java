@@ -1,5 +1,14 @@
 package gameplayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import java.awt.Point;
+
+import engine.Mediator;
+import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.CannotAffordException;
+import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -18,23 +27,47 @@ public class ScreenManager extends View{
     private static final String STARTING_LANGUAGE = "English";
 
 
+    /**
+     * not sure where we're getting these values to display on the panels and stuff
+     * TALK TO ANDREW ABOUT
+     */
+    private Integer score;
+    private Integer level;
+    private Integer health;
+    private Integer currency;
+
+    private final Mediator MEDIATOR;
     private final StageManager STAGE_MANAGER;
-    private GameScreen CURRENT_SCREEN;
+    private GameScreen GAME_SCREEN;
     private String GAME_TITLE;
-    private PromptReader PROMPTS;
+    private final PromptReader PROMPTS;
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
+    private List<Integer> controlVars;
+    
     //private final FileIO FILE_READER;
+    
 
 
-    public ScreenManager(StageManager stageManager, PromptReader prompts) {
+    public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
-	PROMPTS = prompts;
+	PROMPTS = new PromptReader(language, this);
+	MEDIATOR = mediator;
 	findSettings();
 	//setup rest of values once file reader is finished
     }
-    
+
+
+    public List<Integer> getMediatorInts(){
+	controlVars = new ArrayList<Integer>();
+	for(int i = 0; i < 3; i++) {
+	    controlVars.add(Integer.valueOf(0));
+	}
+	return controlVars;
+    }
+
+
 
 
     //TODO set Style sheets
@@ -45,11 +78,13 @@ public class ScreenManager extends View{
     }
 
     public void loadGameScreenNew() {
-	GameScreen gameScreen = new GameScreen(this, PROMPTS);
-	Parent gameScreenRoot = gameScreen.getScreen();
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
+	MEDIATOR.startPlay("blah");
+	System.out.println("screen manager start play called on mediator");
     }
-    
+
     public void loadGameScreenContinuation() {
 
     }
@@ -69,7 +104,37 @@ public class ScreenManager extends View{
     }
 
 
+    public void updateHealth(Integer newHealth) {
+	GAME_SCREEN.updateHealth(newHealth);
+    }
 
+    public void updateScore(Integer newScore) {
+	GAME_SCREEN.updateScore(newScore);
+    }
+
+    public void updateLevelCount(Integer newLevelCount) {
+	GAME_SCREEN.updateLevel(newLevelCount);
+    }
+
+    public void display(FrontEndSprite sprite) {
+	GAME_SCREEN.displaySprite(sprite);
+    }
+
+
+    public void remove(FrontEndSprite sprite) {
+	GAME_SCREEN.remove(sprite);
+    }
+    
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	GAME_SCREEN.setAvailbleTowers(availableTowers);
+    }
+    
+    public void updateCurrency(Integer newBalence) {
+	GAME_SCREEN.updateCurrency(newBalence);
+    }
+    
+  
+    
 
 
 }

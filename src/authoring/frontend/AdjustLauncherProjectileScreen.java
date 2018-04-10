@@ -6,35 +6,36 @@
 
 package authoring.frontend;
 
-import java.util.ArrayList;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
+class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
 	
 	private AdjustTowerScreen myTowerScreen;
 	private ComboBox<String> myProjectileImage;
+	private ImageView myImageDisplay; 
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileValueSlider;
 	private Slider myProjectileUpgradeCostSlider;
 	private Slider myProjectileUpgradeValueSlider;
+	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherValueSlider;
 	private Slider myLauncherUpgradeCostSlider;
 	private Slider myLauncherUpgradeValueSlider;
 	private Slider myLauncherRateSlider;
 	private Slider myLauncherRangeSlider; 
 
-	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen) {
-		super(view);
+	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen, String selectedObjectName) {
+		super(view, selectedObjectName);
 		myTowerScreen = towerScreen; 
 	}
 
@@ -51,9 +52,10 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		});
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			myTowerScreen.setLauncherProjectileValues(myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
+			myTowerScreen.setLauncherProjectileValues(myProjectileImage, myProjectileDamageSlider.getValue(), myProjectileValueSlider.getValue(), myProjectileUpgradeCostSlider.getValue(), myProjectileUpgradeValueSlider.getValue(), myProjectileSpeedSlider.getValue(), myLauncherValueSlider.getValue(), myLauncherUpgradeCostSlider.getValue(), myLauncherUpgradeValueSlider.getValue(), myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
+		    getView().loadScreen(myTowerScreen);
 		});
-		HBox backAndApplyButton = setupBackAndApplyButton(backButton, applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
 				
 		ScrollPane sp = new ScrollPane(vb);
@@ -66,10 +68,11 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 	private void makeProjectileComponents(VBox vb) {
 		ComboBox<String> projectileImageDropdown;
 		HBox projectileImageSelect = new HBox(); 
+		myImageDisplay = new ImageView(); 
 		try {
 			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
 			myProjectileImage = projectileImageDropdown; 
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown);
+			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, myImageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
@@ -94,6 +97,11 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		myProjectileUpgradeValueSlider = projectileUpgradeValueSlider; 
 		HBox projectileUpgradeValue = getUIFactory().setupSliderWithValue("ProjectileUpgradeValueSlider", projectileUpgradeValueSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 		vb.getChildren().add(projectileUpgradeValue);
+		
+		Slider projectileSpeedSlider = getUIFactory().setupSlider("ProjectileSpeed", getMyMaxUpgradeIncrement());
+		myProjectileSpeedSlider = projectileSpeedSlider; 
+		HBox projectileSpeed = getUIFactory().setupSliderWithValue("ProjectileSpeed", myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
+		vb.getChildren().add(projectileSpeed);
 	}
 	
 	private void makeLauncherComponents(VBox vb) {
@@ -123,56 +131,30 @@ abstract class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen 
 		vb.getChildren().add(launcherRange);
 	}
 	
-	protected abstract void populateFieldsWithData(); 
-	
-	/**
-	 * The following methods are getters for features/fields on the Screen
-	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
-	 */
-	protected ComboBox<String> getMyProjectileImage() {
-		return myProjectileImage; 
-	}
-	
-	protected Slider getMyProjectileDamageSlider() {
-		return myProjectileDamageSlider; 
-	}
-	
-	protected Slider getMyProjectileValueSlider() {
-		return myProjectileValueSlider; 
-	}
-	
-	protected Slider getMyProjectileUpgradeCostSlider() {
-		return myProjectileUpgradeCostSlider; 
-	}
-	
-	protected Slider getMyProjectileUpgradeValueSlider() {
-		return myProjectileUpgradeValueSlider; 
+	protected void populateFieldsWithData() {
+//		getUIFactory().setComboBoxToValue(myProjectileImage, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileImage")); 
 
+		getUIFactory().setSliderToValue(myProjectileDamageSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
+
+		getUIFactory().setSliderToValue(myProjectileSpeedSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileSpeed"));
+		
+//		getUIFactory().setSliderToValue(myProjectileValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
+//
+//		getUIFactory().setSliderToValue(myProjectileUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUgradeCost"));
+//
+//		getUIFactory().setSliderToValue(myProjectileUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileUpgradeValue"));
+//
+//		getUIFactory().setSliderToValue(myLauncherValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherValue"));
+//
+//		getUIFactory().setSliderToValue(myLauncherUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUpgradeCost"));
+//
+//		getUIFactory().setSliderToValue(myLauncherUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherUgradeValue"));
+
+		getUIFactory().setSliderToValue(myLauncherRateSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRate"));
+
+		getUIFactory().setSliderToValue(myLauncherRangeSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myLauncherRange"));
 	}
 	
-	protected Slider getMyLauncherValueSlider() {
-		return myLauncherValueSlider; 
-
-	}
 	
-	protected Slider getMyLauncherUpgradeCostSlider() {
-		return myLauncherUpgradeCostSlider; 
-
-	}
-	
-	protected Slider getMyLauncherUpgradeValueSlider() {
-		return myLauncherUpgradeValueSlider; 
-
-	}
-	
-	protected Slider getMyLauncherRateSlider() {
-		return myLauncherRateSlider; 
-
-	}
-	
-	protected Slider getMyLauncherRangeSlider() {
-		return myLauncherRangeSlider; 
-
-	}
 	
 }

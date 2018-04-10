@@ -3,35 +3,41 @@
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
- *
+ * 
  */
 
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
-	public static final String DEFAULT_CONSTANTS = "frontend/Constants.properties";
+	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 	
+	private String mySelectedObjectName; 
+	
+	private String myDefaultObjectName; 
 	private int myMaxHealthImpact;
 	private int myMaxSpeed;
 	private int myMaxRange;
 	private int myMaxPrice; 
 	private int myMaxUpgradeIncrement; 
-	
+
 	private boolean myIsNewObject; 	
 	
-	protected AdjustNewOrExistingScreen(AuthoringView view) {
+	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName) {
 		super(view);
-		setConstants();
+		setConstants(); 
+		mySelectedObjectName = selectedObjectName; 
+		mySelectedObjectName = "Default";
+		myIsNewObject = mySelectedObjectName.equals(myDefaultObjectName);
 	}
 
 	private void setConstants() {
 		try {
+			myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
 			myMaxHealthImpact = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxHealthImpact"));
 			myMaxSpeed = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxSpeed"));
 			myMaxRange = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxRange"));
@@ -57,14 +63,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return constructedScreen;
 	}
 	
-	/**
-	 * To discern whether a Screen corresponds to the creation of a new object or the editing of an existing one
-	 * @param isNewObject - true if new object, false if existing object being edited
-	 */
-	protected void setIsNewObject(boolean isNewObject) {
-		myIsNewObject = isNewObject; 
-	}
-	
 	protected abstract Parent populateScreenWithFields();
 	protected abstract void populateFieldsWithData(); 
 
@@ -76,24 +74,14 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return myIsNewObject; 
 	}
 	
-	/**
-	 * Method used in appropriately-setting the ComboBox when populating data fields with the existing object values
-	 * @param combobox - combobox to be set to a value
-	 * @param selectionValue - the value that the combobox should be set to 
-	 */
-	protected void setComboBoxToValue(ComboBox<String> combobox, String selectionValue) {
-		int dropdownIdx = combobox.getItems().indexOf(selectionValue); 
-		combobox.getSelectionModel().select(dropdownIdx);
+
+	
+	protected void setEditableOrNot(TextField name, boolean isNewObject) {
+		if (!isNewObject) name.setEditable(false);
 	}
 	
-	/**
-	 * Method used in appropriately-setting the slider when populating data fields with the existing object values
-	 * @param slider - slider to be set to a value
-	 * @param valueAsString - the value that the slider should be set to 
-	 */
-	protected void setSliderToValue(Slider slider, String valueAsString) {
-		Double value = Double.parseDouble(valueAsString);
-		slider.setValue(value);
+	protected String getMyDefaultName() {
+		return myDefaultObjectName; 
 	}
 	
 	/** 
@@ -118,6 +106,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	
 	protected int getMyMaxUpgradeIncrement() {
 		return myMaxUpgradeIncrement; 
+	}
+	
+	protected String getMySelectedObjectName() {
+		return mySelectedObjectName; 
 	}
 	
 }

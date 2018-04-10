@@ -1,5 +1,5 @@
-package xml;
 
+package xml;
 
 import data.GameData;
 
@@ -16,16 +16,9 @@ public interface XMLWriter {
 	/**
 	 * Writes the inputted data to an XML file using XStream and XMLDocumentBuilder methods. Saves the file at a specified filepath.
 	 *
-	 * @param g		A GameData object (in this case, AuthorModel or GameState) whose data will be read and written to an XML file
+	 * @param g		An AuthoringModel object (in this case, AuthorModel or GameState) whose data will be read and written to an XML file
 	 * @param filepath		filepath to which file will be saved. Don't include .xml
 	 */
 	public void write(GameData g, String filepath);
-
-	/**
-	 * Changes the current GameData object that this is operating on.
-	 *
-	 * @param g 	GameData object to change to
-	 */
-	public void change(GameData g);
 
 }

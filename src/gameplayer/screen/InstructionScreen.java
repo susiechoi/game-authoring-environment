@@ -3,12 +3,14 @@ package gameplayer.screen;
 import frontend.PromptReader;
 import frontend.Screen;
 import frontend.UIFactory;
+import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class InstructionScreen extends Screen {
@@ -39,7 +41,8 @@ public class InstructionScreen extends Screen {
 	textInstructs.setMaxWidth(Double.MAX_VALUE);
 	
 	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
-	newGameButt.setOnMouseClicked((arg0) ->SCREEN_MANEGER.loadGameScreenNew());
+	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenNew());
+	
 	Button continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
 	
 	//this should only be clickable if there is a save file availible
@@ -70,4 +73,10 @@ public class InstructionScreen extends Screen {
     private boolean isSaveAvailable() {
 	return false;
     }
+
+	@Override
+	protected View getView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
