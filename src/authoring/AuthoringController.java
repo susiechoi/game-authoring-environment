@@ -9,6 +9,7 @@
  */
 
 package authoring;
+import java.awt.geom.Point2D;
 import java.util.List;
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -19,7 +20,6 @@ import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
-import javafx.geometry.Point2D;
 import javafx.scene.layout.GridPane;
 
 

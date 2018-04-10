@@ -1,13 +1,13 @@
 package authoring.frontend;
 
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -203,7 +203,7 @@ public class CreatePathGrid {
 	public void addCoordinates(int row, int col) {
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
-		Point2D point = new Point2D(x, y);
+		Point2D point = new Point2D.Double(x, y);
 		pathCoords.add(point);
 		//add row and col indexes to Map
 	}

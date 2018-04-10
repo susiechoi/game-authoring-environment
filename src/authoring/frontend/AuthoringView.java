@@ -8,6 +8,7 @@
 
 package authoring.frontend;
 
+import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 
