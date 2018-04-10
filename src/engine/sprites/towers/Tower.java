@@ -33,6 +33,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	private double myLauncherRate;
 	private double myLauncherRange; 
 	private ValueProperty myValue;
+	private double myTowerValue; 
 	private Map<String, Double> propertyStats;
 
 	/**
@@ -43,7 +44,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * @param health: Initial health of the tower
 	 * @param value: Value of the tower for selling
 	 */
-	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value, Map<String, Tower> towerToInstance) {
+	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 		super(name, image, size, launcher);
 		myHealth = health;
 		myHealthValue = health.getProperty(); 
@@ -55,11 +56,12 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		myProjectileSpeed = launcher.getProjectileSpeed();
 		myLauncherRate = launcher.getFireRate(); 
 		myLauncherRange = launcher.getRange(); 
+		myValue = value;
+		myTowerValue = value.getProperty();
 		System.out.println("TOWER WAS MADE WITH NAME "+name+" AND A FEW ATTRIBUTES: "+myHealthValue+", "+myProjectileDamage+", "+myLauncherRange);
-//		myValue = new ValueProperty();
-		propertyStats.put(health.getName(), health.getProperty());
-		propertyStats.put(value.getName(), value.getProperty());
-		propertyStats.put(this.getDamageName(), this.getDamage());
+//		propertyStats.put(health.getName(), health.getProperty());
+//		propertyStats.put(value.getName(), value.getProperty());
+//		propertyStats.put(this.getDamageName(), this.getDamage());
 	}
 
 	/**

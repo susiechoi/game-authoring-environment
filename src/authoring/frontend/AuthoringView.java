@@ -112,11 +112,13 @@ public class AuthoringView extends View {
      */
     public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
 	    String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
-	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException {
+	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
+	    double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException {
 	try {
 		myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 			projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
-			launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange);
+			launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange,
+			towerValue, towerUpgradeCost, towerUpgradeValue);
 	} catch (MissingPropertiesException e) {
 		loadErrorScreen("NoImageFile");
 	} catch (ObjectNotFoundException e) {

@@ -106,7 +106,8 @@ public class AuthoringModel implements GameData {
 	 */
 	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
 			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed, 
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
+			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
+			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 		Level currentLevel = levelCheck(level);
 		if (currentLevel.containsTower(name) && newObject) {
 			throw new NoDuplicateNamesException(name);
@@ -123,7 +124,7 @@ public class AuthoringModel implements GameData {
 				launcherValue, towerProjectile); 
 		Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
 		Tower newTower = new TowerBuilder().construct(name, image, 50, health,  // TODO put size SOMEWHERE
-				healthUpgradeValue, healthUpgradeCost, towerLauncher);
+				healthUpgradeValue, healthUpgradeCost, towerLauncher, towerValue, towerUpgradeCost, towerUpgradeValue);
 		currentLevel.addTower(name, newTower);
 	}
 
@@ -283,7 +284,10 @@ public class AuthoringModel implements GameData {
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealth")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeValue")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeCost")), 
-					towerLauncher);
+					towerLauncher,
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerValue")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeCost")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeValue"))); 
 			return newTower;
 		} 
 		catch (MissingPropertiesException e) {
