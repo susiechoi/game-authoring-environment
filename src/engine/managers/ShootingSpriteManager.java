@@ -14,6 +14,9 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 
 public class ShootingSpriteManager extends Manager<ShootingSprites>{
+    
+    private Integer kills = 0;
+    private Integer score = 0;
     /**
      * Checks for collisions between between the list of active actors held by the Manager the method
      * was called on and the list of active actors passed as a parameter
@@ -25,6 +28,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     			for (ShootingSprites passedActor: passedSprites) {
     			    List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
     			    spritesToBeRemoved.addAll(deadSprites);
+    			    kills+=activeSprite.
     			}
     		}
     		return spritesToBeRemoved;
