@@ -12,52 +12,43 @@ import javafx.scene.layout.StackPane;
 
 public abstract class PathScreen extends AdjustScreen {
 
+
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
 	private StackPane pathRoot;
 	private GridPane pathGrid;
 	//private Node pathPanel;
+	private PathPanel panel;
 	private CreatePathGrid grid;
-	protected PathPanel panel;
 
 	protected PathScreen(AuthoringView view) {	
-	    super(view);
+		super(view);
 	}
 	protected void setPathPanel(PathPanel panelnew) {
-	    panel = panelnew;
-	    pathRoot.getChildren().clear();
-	    pathRoot.getChildren().add(panel.getPanel());
-	    pathRoot.getChildren().add(pathGrid);
-	    
+		panel = panelnew;
+		pathRoot.getChildren().clear();
+		pathRoot.getChildren().add(panel.getPanel());
+		pathRoot.getChildren().add(pathGrid);
 		StackPane.setAlignment(pathGrid, Pos.CENTER_LEFT);
 		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
 	}
-	
 	protected PathPanel getPathPanel() {
-	    return panel;
+		return panel;
 	}
-	
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
-
-		grid = new CreatePathGrid();
 		initializeGridSettings(grid);
-		pathGrid = grid.makePathGrid();
-
-//		pathRoot.getChildren().add(pathGrid);
-//		pathRoot.getChildren().add(panel.getPanel());
-		
 
 		setGridSizing();
-		
+
 
 		return pathRoot; 	
 	}
-	
+
 	public abstract void initializeGridSettings(CreatePathGrid grid);
 
 	private void setGridSizing() {
@@ -82,18 +73,18 @@ public abstract class PathScreen extends AdjustScreen {
 			}
 		});
 
-//		Button backgroundButton = (Button) panel.getBackgroundButton();
-//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				FileChooser fileChooser = new FileChooser();
-//				fileChooser.setTitle("View Pictures");
-//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-//				File file = fileChooser.showOpenDialog(new Stage());
-//				grid.setBackgroundmage(file);
-//			}
-//		});
+		//		Button backgroundButton = (Button) panel.getBackgroundButton();
+		//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+		//			@Override
+		//			public void handle(ActionEvent e) {
+		//				FileChooser fileChooser = new FileChooser();
+		//				fileChooser.setTitle("View Pictures");
+		//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+		//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+		//				File file = fileChooser.showOpenDialog(new Stage());
+		//				grid.setBackgroundmage(file);
+		//			}
+		//		});
 	}
 
 	@Override

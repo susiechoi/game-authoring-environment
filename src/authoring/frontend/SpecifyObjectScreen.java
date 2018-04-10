@@ -98,4 +98,5 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected String getDescription() {
 		return myObjectDescription; 
 	}
+
 }

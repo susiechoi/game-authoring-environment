@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class WavePanel extends PathPanel {
-	
+
+public class WavePanel extends PathPanel{
 	private String myPathString;
 	private VBox myRoot;
 	private ComboBox<String> myEnemyDropdown;
@@ -22,11 +22,18 @@ public class WavePanel extends PathPanel {
 	private String myWaveNumber;
 	public WavePanel(AuthoringView view, DraggableImage grid, String waveNumber) {
 		super(view);
-		myPathString = grid.getPathName();
+		if (grid == null) {
+			myPathString = "1";
+		}
+
+		//myPathString = grid.getPathName();
+		if(waveNumber==null) {
+			waveNumber = "1";
+		}
 		myWaveNumber = waveNumber;
 		setUpPanel();
 	}
-	
+
 	public void setUpPanel() {
 		myRoot = new VBox();
 		List<String> enemyOptions = new ArrayList<>(); //TODO!
@@ -43,7 +50,7 @@ public class WavePanel extends PathPanel {
 		});
 		myRoot.getChildren().addAll(enemyDropdownPrompted, textFieldPrompted, backButton, applyButton);
 	}
-	
+
 	private void errorcheckResponses() {
 		if(myEnemyDropdown.getValue() == null ) {
 			getView().loadErrorAlert("BadValue");

@@ -24,8 +24,10 @@ import authoring.frontend.exceptions.ObjectNotFoundException;
 import data.GameData;
 import engine.builders.LauncherBuilder;
 import engine.builders.PathBuilder;
+import engine.Settings;
 import engine.builders.EnemyBuilder;
 import engine.builders.ProjectileBuilder;
+import engine.builders.SettingsBuilder;
 import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
@@ -62,13 +64,13 @@ public class AuthoringModel implements GameData {
 		myLevels = new HashMap<Integer, Level>();
 		myPropertiesReader = new PropertiesReader();
 		myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
+		setupDefaultSettings(); 
 		try {
 			myDefaultTower = generateGenericTower();
 			myDefaultEnemy = generateGenericEnemy();
 		} catch (NumberFormatException | FileNotFoundException e) {
 			throw new MissingPropertiesException(myDefaultName);
 		}
-		setupDefaultSettings(); 
 		setupDefaultLevel();
 	}
 
@@ -76,7 +78,7 @@ public class AuthoringModel implements GameData {
 		String defaultGameName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "GameName");
 		int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
 		int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
-		mySettings = new Settings(defaultGameName, startingHealth, startingMoney);
+		mySettings = new SettingsBuilder().construct(defaultGameName, startingHealth, startingMoney);
 	}
 
 	private void setupDefaultLevel() {

@@ -52,7 +52,7 @@ public class AuthoringView extends View {
 	}
 
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
+		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class AuthoringView extends View {
 		return myCurrentCSS;
 	}
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
-//		myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		//myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
 	}
 
 	protected void goBackFrom(String id) {
@@ -151,8 +151,6 @@ public class AuthoringView extends View {
 		myController.makePath(myLevel, coordinates, hashMap, backgroundImage);
 	}
 
-
-
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
@@ -203,7 +201,6 @@ public class AuthoringView extends View {
 	public String getErrorCheckedPrompt(String prompt) {
 		return myPromptReader.resourceDisplayText(prompt);
 	}
-
 
 	public void addNewLevel() {
 		int newLevel = myController.addNewLevel(); 
