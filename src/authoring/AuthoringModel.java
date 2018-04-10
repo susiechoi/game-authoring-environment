@@ -285,6 +285,7 @@ public class AuthoringModel implements GameData {
 	 */
 	public void makeResources(String gameName, double startingHealth, double starting$) {
 		mySettings = new SettingsBuilder().construct(gameName, startingHealth, starting$);
+		myGameName = mySettings.getGameName();
 	}
 
 	/**
