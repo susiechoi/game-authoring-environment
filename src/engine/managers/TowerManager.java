@@ -51,8 +51,7 @@ public class TowerManager extends ShootingSpriteManager {
     }
     
     public FrontEndTower place(Point location, String type) {
-    		Tower newTower = myTowerTypeToInstance.get(type);
-    		newTower.place(location.getX(), location.getY());
+    		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
     		System.out.println(location.getX() + " " + location.getY());
