@@ -132,9 +132,7 @@ public class ScreenManager extends View{
 	GAME_SCREEN.updateCurrency(newBalence);
     }
     
-    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-	return MEDIATOR.placeTower(position, tower.getName());
-    }
+  
     
 
 
