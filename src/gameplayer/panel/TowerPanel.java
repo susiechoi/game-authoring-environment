@@ -92,7 +92,7 @@ public class TowerPanel extends Panel {
 	for(FrontEndTower tower : availableTowers) {
 	    int alternator = 0;
 	    Button towerButton = UIFACTORY.makeImageViewButton("button",tower.getImageView());
-	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower.getName()));
+	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower));
 	    if(alternator%2 == 0) {
 		towerHolder = towerHolderLeft;
 	    }
