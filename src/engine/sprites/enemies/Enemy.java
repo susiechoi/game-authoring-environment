@@ -46,7 +46,7 @@ public class Enemy extends ShootingSprites{
 	myHealth = health;
 	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
-	myHealthImpact = myDamage.getDamage();
+	myHealthImpact = myDamage.getProperty();
 	myValue = value;
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	myPath = path;
@@ -59,13 +59,13 @@ public class Enemy extends ShootingSprites{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-    	super("", copiedEnemy.getImageView().getImage());
+    	super("", copiedEnemy.getImageView().getImage(), copiedEnemy.getImageView().getImage().getWidth(), copiedEnemy.getLauncher());
     	myName = copiedEnemy.getName(); 
     	myImage = copiedEnemy.getImageView().getImage(); 
     	myIntersecter = copiedEnemy.getIntersecter(); 
     	myHealth = copiedEnemy.getHealth(); 
     	myDamage = copiedEnemy.getDamageProperty();
-    	myHealthImpact = myDamage.getDamage(); 
+    	myHealthImpact = myDamage.getProperty(); 
     	myValue = copiedEnemy.getValue();
     	myPath = copiedEnemy.getPath(); 
     	mySpeed = copiedEnemy.getSpeed();
