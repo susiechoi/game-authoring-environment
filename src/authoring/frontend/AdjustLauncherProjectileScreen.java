@@ -34,12 +34,10 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 //	private Slider myLauncherUpgradeValueSlider;
 	private Slider myLauncherRateSlider;
 	private Slider myLauncherRangeSlider; 
-	private String mySelectedObjectName; 
 
 	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen, String selectedObjectName) {
 		super(view, selectedObjectName);
 		myTowerScreen = towerScreen; 
-		mySelectedObjectName = selectedObjectName; 
 	}
 
 	@Override
@@ -51,12 +49,12 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		makeLauncherComponents(vb);
 		
 		Button backButton = setupBackButtonCustom(e-> {
-			getView().goForwardFrom(this.getClass().getSimpleName()+"Back", mySelectedObjectName);
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Back", getMySelectedObjectName());
 		}); 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			try {
-				getView().makeTower(false, mySelectedObjectName, myTowerScreen.getSelectedImage(),  
+				getView().makeTower(false, getMySelectedObjectName(), myTowerScreen.getSelectedImage(),  
 						myTowerScreen.getTowerHealthValue(),  myTowerScreen.getTowerHealthUpgradeCost(),  myTowerScreen.getTowerHealthUpgradeValue(), 
 						myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), 0, 0, myProjectileSpeedSlider.getValue(), 
 						0, 0, 0, myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue(),

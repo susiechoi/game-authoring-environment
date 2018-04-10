@@ -89,32 +89,6 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		});
 		Button backButton = setupBackButton();
 		vb.getChildren().add(backButton);
-		//		Button applyButton = getUIFactory().setupApplyButton();
-		//		applyButton.setOnAction(e -> {
-		//			if (getIsNewObject()) {
-		//				if (myNameField.getText().equals(getMyDefaultName())) {
-		//					myNameField.setText(getView().getErrorCheckedPrompt("ReplaceDefaultName"));
-		//				}
-		//				else {
-		//					try {
-		//						getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), 
-		//								myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), 
-		//								myProjectileImage.getValue(), myProjectileDamage, 0, 0, myProjectileSpeed, 
-		//								0, 0, 0, myLauncherSpeed, myLauncherRange,
-		//								myTowerValueSlider.getValue(), myTowerUpgradeCostSlider.getValue(), myTowerUpgradeValueSlider.getValue());
-		//							getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
-		//					} catch (NoDuplicateNamesException e1) {
-		//						myNameField.setText(getView().getErrorCheckedPrompt("NoDuplicateNames"));
-		//					}
-		//				}
-		//			}
-		//			else {
-		//				getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
-		//			}
-		//		});
-
-		//		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
-		//		vb.getChildren().add(backAndApplyButton);
 
 		ScrollPane sp = new ScrollPane(vb);
 		sp.setFitToWidth(true);
@@ -198,20 +172,6 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(towerHealthUpgradeValue);
 	}
 
-	//	protected void setLauncherProjectileValues(ComboBox<String> projectileImage, double projectileDamage, double projectileValue, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed, 
-	//			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange) {
-	//		myProjectileImage = projectileImage;
-	//		myProjectileDamage = projectileDamage; 
-	//		//		myProjectileUpgradeCost = projectileUpgradeCost;
-	//		//		myProjectileUpgradeValue = projectileUpgradeValue;
-	//		myProjectileSpeed = projectileSpeed; 
-	//		//		myLauncherValue = launcherValue;
-	//		//		myLauncherUpgradeCost = launcherUpgradeCost; 
-	//		//		myLauncherUpgradeValue = launcherUpgradeValue;
-	//		myLauncherSpeed = launcherSpeed;
-	//		myLauncherRange = launcherRange; 
-	//	}
-	//	
 	protected String getSelectedImage() {
 		return myImageDropdown.getValue(); 
 	}

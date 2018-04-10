@@ -46,8 +46,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * @param health: Initial health of the tower
 	 * @param value: Value of the tower for selling
 	 */
-	public Tower(String name, Image image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
-		super(name, image, size, launcher);
+	public Tower(String name, String imagepath, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
+		super(name, imagepath, size, launcher);
 		myHealth = health;
 		propertyStats = new HashMap<String, Double>();
 		propertyStats.put(health.getName(), health.getProperty());

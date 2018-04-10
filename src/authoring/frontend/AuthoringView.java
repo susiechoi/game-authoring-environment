@@ -135,10 +135,6 @@ public class AuthoringView extends View {
 			loadErrorScreen("NoObject");
 		}
 	}
-	
-	public void customizeTowerShooting() {
-		
-	}
 
 	/**
 	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
