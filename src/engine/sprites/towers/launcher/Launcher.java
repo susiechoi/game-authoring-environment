@@ -3,6 +3,7 @@ package engine.sprites.towers.launcher;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
+import javafx.scene.image.Image;
 
 /**
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
@@ -63,6 +64,26 @@ public class Launcher {
 
     public double upgradeDamage(double balance) {
 	return myProjectile.upgradeDamage(balance);
+    }
+    
+    public double getRange() {
+    	return myRange.getProperty(); 
+    }
+    
+    public double getFireRate() {
+    	return myFireRate.getProperty(); 
+    }
+    
+    public Image getProjectileImage() {
+    	return myProjectile.getImage().getImage(); 
+    }
+    
+    public double getProjectileDamage() {
+    	return myProjectile.getDamage(); 
+    }
+    
+    public double getProjectileSpeed() {
+    	return myProjectile.getSpeed(); 
     }
 
 
