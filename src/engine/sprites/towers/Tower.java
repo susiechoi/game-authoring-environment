@@ -1,6 +1,7 @@
 package engine.sprites.towers;
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
@@ -44,7 +45,8 @@ public class Tower extends ShootingSprites {
 	 * 
 	 * @return boolean: True if tower is alive, false otherwise
 	 */
-	public boolean handleCollision(double enemyDamage) {
+	@Override
+	public boolean handleCollision(Sprite collider) {
 		myHealth.loseHealth(enemyDamage);
 		return (myHealth.getProperty() <= 0);
 	}

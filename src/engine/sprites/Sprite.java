@@ -15,6 +15,7 @@ import javafx.scene.shape.Shape;
  * 
  * @author Katherine Van Dyk
  * @date 4/3/18
+ * @author Ryan Pond
  * @author Miles Todzo
  * @author Ben Hodgson 4/8/18
  */
@@ -66,16 +67,16 @@ public class Sprite  {
     }
     
     // TODO Should this method go in the sprite object? Need to specify that it is projectiles we're dealing with in order to get their damage
-    public void checkForCollision(ShootingSprites shooter, ObservableList<Sprite> projectiles) {
-    		shooter.checkTowerEnemyCollision((ShootingSprites) this); 
-    		for (Sprite projectile: projectiles) {
-    			ImageView spriteImageView = projectile.getImageView();
-    			if(this.myImageView.intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
-    			//	this.handleCollision(projectile.getDamage());
-    				projectile.handleCollision();
-    			}
-    		}
-    }
+//    public void checkForCollision(ShootingSprites shooter, ObservableList<Sprite> projectiles) {
+//    		shooter.checkTowerEnemyCollision((ShootingSprites) this); 
+//    		for (Sprite projectile: projectiles) {
+//    			ImageView spriteImageView = projectile.getImageView();
+//    			if(this.myImageView.intersects(spriteImageView.getX(), spriteImageView.getY(), spriteImageView.getFitWidth(), spriteImageView.getFitHeight())){
+//    			//	this.handleCollision(projectile.getDamage());
+//    				projectile.handleCollision();
+//    			}
+//    		}
+//    }
     
     public double getRotate() {
     		return this.myImageView.getRotate();
@@ -94,9 +95,14 @@ public class Sprite  {
     public void setY(double newY) {
     		this.myImageView.setY(newY);
     }
+    
+    /**
+     * 
+     * @return : true if the sprite is alive, false if it is dead
+     * Can be overridden in subclasses if a collision affects them
+     */
+    protected boolean handleCollision(Sprite collider) {
+	return false;
+    }
 
-	public void handleCollision() {
-		// TODO Auto-generated method stub
-
-	}
 }

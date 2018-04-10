@@ -71,12 +71,9 @@ public class Enemy extends Sprite{
     }
 
     /**
-     * Handles updating the enemy position to follow the path
+     * Moves the enemy along the path according to how much time has passed
+     * @param elapsedTime
      */
-    public void followPath() {
-	// TODO Auto-generated method stub
-    }
-
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);

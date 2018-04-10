@@ -41,4 +41,5 @@ public class EnemyManager extends ShootingSpriteManager {
 	// TODO Auto-generated method stub
 	
     }
+    
 }
