@@ -1,5 +1,7 @@
 package engine.sprites.enemies;
 
+import java.awt.geom.Point2D;
+
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
 import engine.sprites.ShootingSprites;
@@ -8,10 +10,8 @@ import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
-import javafx.geometry.Point2D;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -33,11 +33,13 @@ public class Enemy extends ShootingSprites{
     private ImageIntersecter myIntersecter;
     private double mySpeed;
     private double myKillReward;
+    private String myImage; 
     //    private double myKillUpgradeCost;
     //    private double myKillUpgradeValue; 
 
-    public Enemy(String name, Image image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
+    public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
+	myImage = image; 
 	myName = name; 
 	myHealth = health;
 	myInitialHealth = myHealth.getProperty();
@@ -55,7 +57,7 @@ public class Enemy extends ShootingSprites{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-	super("", copiedEnemy.getImageView().getImage(), copiedEnemy.getImageView().getImage().getWidth(), copiedEnemy.getLauncher());
+	super("", copiedEnemy.getImageString(), copiedEnemy.getImageView().getImage().getWidth(), copiedEnemy.getLauncher());
 	myName = copiedEnemy.getName(); 
 	setImage(copiedEnemy.getImageView().getImage()); 
 	myIntersecter = copiedEnemy.getIntersecter(); 
@@ -130,6 +132,10 @@ public class Enemy extends ShootingSprites{
     
     private double getSpeed() {
 	return mySpeed; 
+    }
+    
+    private String getImage() {
+    	return myImage; 
     }
 
 }

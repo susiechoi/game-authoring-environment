@@ -24,9 +24,9 @@ public class TowerBuilder {
      * @param healthCost: Cost to upgrade Health
      * @return Tower object
      */
-    public Tower construct(String name, Image image, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) {
+    public Tower construct(String name, String imagepath, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) {
 	ValueProperty valueProperty = new ValueProperty(towerValue);
     	HealthProperty healthProperty = new HealthProperty(healthCost, healthValue, health);
-	return new Tower(name, image, size, launcher, healthProperty, valueProperty);
+	return new Tower(name, imagepath, size, launcher, healthProperty, valueProperty);
     }
 }
