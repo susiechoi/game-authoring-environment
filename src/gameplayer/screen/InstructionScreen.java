@@ -19,37 +19,38 @@ import javafx.scene.text.Text;
 
 public class InstructionScreen extends Screen {
     public static final String DEFAULT_SHARED_STYLESHEET = "styling/GameAuthoringStartScreen.css";
-    private final ScreenManager SCREEN_MANEGER;
+    private final ScreenManager SCREEN_MANAGER;
     private final PromptReader PROMPTS;
     private final UIFactory UIFACTORY;
-    private Parent ROOT;
+    private ComboBox<String> allGames;
+    private Button continueButt;
 
     public InstructionScreen(ScreenManager screenManager, PromptReader promptReader) {
-	SCREEN_MANEGER = screenManager;
+	SCREEN_MANAGER = screenManager;
 	UIFACTORY = new UIFactory();
 	PROMPTS = promptReader;
 	setStyleSheet(DEFAULT_SHARED_STYLESHEET);
     }
 
     @Override
-    //TODO all text should be read from language properties files
     public Parent makeScreenWithoutStyling() {
 	VBox rootBox = new VBox();
-	Text title = getUIFactory().makeScreenTitleText("Select a Game to Play");
+	Text title = getUIFactory().makeScreenTitleText("Select a New Game to Play");
+// TODO: Make a load game button
+//	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
+//	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew());
 
-	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
-	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenNew());
+	allGames = UIFACTORY.makeTextDropdown("", gameOptions());
+	allGames.setOnAction(click ->{ 
+	    continueButt.setDisable(false);
+	    });
 
-	ComboBox<String> loadFile = UIFACTORY.makeTextDropdown("", gameOptions());
+	continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
+	continueButt.setDisable(true);
+	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew(allGames.getValue()));
+//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenContinuation());
 
-	Button continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
-
-	//this should only be clickable if there is a save file availible
-	Boolean saveAvailable = isSaveAvailable();
-	continueButt.setDisable(!saveAvailable);
-	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenContinuation());
-
-	VBox center = new VBox(title, newGameButt, loadFile, continueButt);
+	VBox center = new VBox(title, allGames, continueButt);
 	center.setAlignment(Pos.CENTER);
 	center.setMaxWidth(Double.MAX_VALUE);
 	VBox.setVgrow(center, Priority.ALWAYS);
@@ -71,12 +72,7 @@ public class InstructionScreen extends Screen {
 	}
 	return ret;
     }
-    
- 
-    //TODO needs to check if valid saveFile is available
-    private boolean isSaveAvailable() {
-	return false;
-    }
+
 
     @Override
     protected View getView() {

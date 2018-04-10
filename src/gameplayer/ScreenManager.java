@@ -3,19 +3,14 @@ package gameplayer;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.awt.Point;
-
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
-import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.scene.Parent;
 
 
@@ -93,11 +88,11 @@ public class ScreenManager extends View{
 		STAGE_MANAGER.switchScreen(instructRoot);
 	}
 
-	public void loadGameScreenNew() {
+	public void loadGameScreenNew(String filepath) {
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
-		MEDIATOR.startPlay("blah");
+		MEDIATOR.startPlay(filepath);
 		System.out.println("screen manager start play called on mediator");
 	}
 
@@ -118,7 +113,6 @@ public class ScreenManager extends View{
 		DEFAULT_WIDTH = 900;
 
 	}
-
 
 	public void updateHealth(Integer newHealth) {
 		GAME_SCREEN.updateHealth(newHealth);
