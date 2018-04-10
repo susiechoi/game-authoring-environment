@@ -304,5 +304,4 @@ public class AuthoringModel implements GameData {
 		myLevels.put(newLevelNumber, new Level(copiedLevel));
 		return newLevelNumber; 
 	}
-	
 }

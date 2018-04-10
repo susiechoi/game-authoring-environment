@@ -23,16 +23,17 @@ import engine.path.Path;
 public class Level {
 
 	private final int myNumber;
-	private List<Wave> myWaves;
-	private Path myPath;
+	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
+	private Map<Path, List<Wave>> myWaves;
 	private Map<String, Enemy> myEnemies;
 
 	public Level(int number) {
 		myNumber = number;
 		myTowers = new HashMap<String, Tower>();
 		myEnemies = new HashMap<String, Enemy>();
-		myWaves = new ArrayList<Wave>();
+		myWaves = new HashMap<Path, List<Wave>>();
+		myPaths = new ArrayList<Path>();
 	} 
 	
 	/**
@@ -44,7 +45,7 @@ public class Level {
 	public Level(Level copiedLevel) {
 		myNumber = copiedLevel.getNumber() + 1; 
 		myWaves = copiedLevel.getWaves(); 
-		myPath = copiedLevel.getPath(); 
+		myPaths = copiedLevel.getPaths(); 
 		myTowers = copiedLevel.getTowers();
 		myEnemies = copiedLevel.getEnemies();
 	}
@@ -58,8 +59,8 @@ public class Level {
 	}
 	
 	// TODO 
-	public void addPath() {
-		myPath = new Path(); 
+	public void addPath(Path path) {
+		myPaths.add(path); 
 	}
 			
 	/**
@@ -132,14 +133,19 @@ public class Level {
 		return listToReturn; 
 	}
 
-
 	/**
 	 * Adds a wave to the level
 	 * 
 	 * @param wave: a new wave to be added
 	 */
-	public void addWave(Wave wave) {
-		myWaves.add(wave);
+	public void addWave(Path path, Wave wave) {
+		List<Wave> waves = myWaves.get(path);
+		waves.add(wave);
+		myWaves.put(path, waves);
+	}
+	
+	public List<Wave> getWaves(Path path) {
+	    return myWaves.get(path);
 	}
 
 	/**
@@ -148,11 +154,13 @@ public class Level {
 	 * @return boolean: true if the level is finished, false otherwise
 	 */
 	public boolean isFinished() {
-		for (Wave levelWave : myWaves) {
+	    for (Path path : myWaves.keySet()) {
+		for (Wave levelWave : myWaves.get(path)) {
 			if (!levelWave.isFinished()) {
 				return false;
 			}
 		}
+	    }
 		return true; 
 	}
 
@@ -174,12 +182,12 @@ public class Level {
 		return myNumber; 
 	}
 	
-	protected List<Wave> getWaves() {
+	protected Map<Path, List<Wave>> getWaves() {
 		return myWaves; 
 	}
 	
-	protected Path getPath() {
-		return myPath; 
+	protected List<Path> getPaths() {
+		return myPaths; 
 	}
 	
 	protected Map<String, Tower> getTowers() {
