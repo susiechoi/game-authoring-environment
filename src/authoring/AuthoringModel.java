@@ -323,8 +323,6 @@ public class AuthoringModel implements GameData {
 	 * Adds a new level to the authored game
 	 */
 	public int addNewLevel() {
-//		int newLevelNumber = myLevels.size()+1; 
-//		myLevels.put(newLevelNumber, new Level(newLevelNumber));
 		int newLevelNumber = autogenerateLevel(); 
 		return newLevelNumber; 
 	}
