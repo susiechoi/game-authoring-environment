@@ -9,7 +9,10 @@
  */
 
 package authoring;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
@@ -88,8 +91,11 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 */
-	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {  //pass entire populated gridpane?
-		myAuthoringModel.makePath(level, coordinates, grid); 
+	public void makePath(int name, int level, List<Point2D> coordinates, GridPane grid) throws ObjectNotFoundException {  //pass entire populated gridpane?
+		myAuthoringModel.makePath(name, level, coordinates, grid); 
+	}
+	public Path getPathFromName(int name, int level) throws ObjectNotFoundException {
+	    return myAuthoringModel.getPathFromName(name, level);
 	}
 	
 	/**
@@ -143,6 +149,7 @@ public class AuthoringController {
 	    thisWave.addEnemy(thisEnemy, newAmount);
 	}
 	
+	
 	/**
 	 * Returns the number of waves in a specified level that belong to a specified
 	 * path object.
@@ -156,6 +163,17 @@ public class AuthoringController {
 	    Level thisLevel = myAuthoringModel.levelCheck(level);
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    return levelWaves.size();
+	}
+	
+	public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
+	    Level currentLevel = myAuthoringModel.levelCheck(level);
+	    Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies();
+	    Map<String,Integer> enemyNameMap = new HashMap<>();
+	    for(Enemy enemy : enemyMap.keySet()) {
+		enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
+	    }
+	    return enemyNameMap;
+	    
 	}
 	
 	

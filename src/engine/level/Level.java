@@ -197,7 +197,7 @@ public class Level {
 		return myWaves; 
 	}
 	
-	protected List<Path> getPaths() {
+	public List<Path> getPaths() {
 		return myPaths; 
 	}
 	
