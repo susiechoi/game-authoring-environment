@@ -236,6 +236,10 @@ public class AuthoringModel implements GameData {
 		}
 		return currentLevel;
 	}
+	
+	public List<Level> allLevels() {
+	    return (List<Level>) myLevels.values();
+	}
 
 	/**
 	 * Method through which information can be sent to instantiate or edit a path object
@@ -324,6 +328,8 @@ public class AuthoringModel implements GameData {
 	 */
 	public int addNewLevel() {
 		int newLevelNumber = autogenerateLevel(); 
+//		int newLevelNumber = myLevels.size()+1; 
+//		myLevels.put(newLevelNumber, new Level(newLevelNumber));
 		return newLevelNumber; 
 	}
 
@@ -353,3 +359,4 @@ public class AuthoringModel implements GameData {
 		return newLevelNumber; 
 	}
 }
+

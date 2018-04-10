@@ -4,6 +4,8 @@ import java.util.List;
 
 import javafx.geometry.Point2D;
 
+import engine.physics.SnapMover;
+
 /**
  * Class for constructing path and determining next coordinates
  * 

@@ -1,8 +1,7 @@
 package engine.sprites.enemies;
 
 import engine.path.Path;
-import engine.physics.IIntersecter;
-import engine.physics.Intersecter;
+import engine.physics.ImageIntersecter;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
@@ -31,7 +30,7 @@ public class Enemy extends Sprite{
     private DamageProperty myDamage;
     private double myHealthImpact; 
     private ValueProperty myValue;
-    private IIntersecter myIntersecter;
+    private ImageIntersecter myIntersecter;
     private Path myPath;
     private double mySpeed;
     private double myKillReward;
@@ -47,7 +46,7 @@ public class Enemy extends Sprite{
 	myDamage = damage;
 	myHealthImpact = myDamage.getDamage();
 	myValue = value;
-	myIntersecter = new Intersecter(this.getImage()); 
+	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	myPath = path;
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
@@ -58,9 +57,9 @@ public class Enemy extends Sprite{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-    	super("", copiedEnemy.getImage().getImage());
+    	super("", copiedEnemy.getImageView().getImage());
     	myName = copiedEnemy.getName(); 
-    	myImage = copiedEnemy.getImage().getImage(); 
+    	myImage = copiedEnemy.getImageView().getImage(); 
     	myIntersecter = copiedEnemy.getIntersecter(); 
     	myHealth = copiedEnemy.getHealth(); 
     	myDamage = copiedEnemy.getDamage();
@@ -91,18 +90,14 @@ public class Enemy extends Sprite{
     }
 
     /**
-     * Handles updating the enemy position to follow the path
+     * Moves the enemy along the path according to how much time has passed
+     * @param elapsedTime
      */
-    public void followPath() {
-	// TODO Auto-generated method stub
-    }
-
     public void move(double elapsedTime) {
 	Point2D newPosition = myPath.nextPosition(elapsedTime, mySpeed);
 	myPath.nextPosition(elapsedTime, mySpeed);
-	this.getImage().setX(newPosition.getX());
-	this.getImage().setY(newPosition.getY());
-
+	this.getImageView().setX(newPosition.getX());
+	this.getImageView().setY(newPosition.getY());
     }
 
     public String getName() {
@@ -118,7 +113,7 @@ public class Enemy extends Sprite{
 	return myDamage.getProperty();
     }
     
-    private IIntersecter getIntersecter() {
+    private ImageIntersecter getIntersecter() {
     	return myIntersecter; 
     }
     
