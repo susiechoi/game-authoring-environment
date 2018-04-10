@@ -9,6 +9,8 @@ import java.awt.Point;
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.path.Path;
+import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
@@ -56,7 +58,28 @@ public class PlayState implements GameData {
 	    myTowerManager.moveTowers();
 	    myEnemyManager.moveProjectiles();
 	    myEnemyManager.moveEnemies();
-	    currentLevel.getNewEnemy(UNIVERSAL_TIME);
+	    try {
+		for (Path path : currentLevel.getUnmodifiablePaths()) {
+		    Wave currentWave;
+		    if (!currentLevel.getWaves(path).isEmpty()) {
+			currentWave = currentLevel.getWaves(path).get(0);
+		    }
+		    else {
+			continue;
+		    }
+		    int currentTime = new Double(UNIVERSAL_TIME).intValue();
+		    if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
+			currentLevel.getNewEnemy(path);
+		    }
+		    // TODO: remove "magic numbers", improve this to be 3 seconds
+		    // after the wave finished
+		    if (UNIVERSAL_TIME % 3 == 0 && currentWave.isFinished()) {
+			currentLevel.removeWave(path);
+		    }
+		}
+	    } catch (Exception e) {
+		// do nothing
+	    }
 	}
     }
 
