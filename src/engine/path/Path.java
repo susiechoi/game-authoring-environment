@@ -1,6 +1,8 @@
 package engine.path;
 
-import java.awt.geom.Point2D;
+import java.util.List;
+
+import javafx.geometry.Point2D;
 
 import engine.physics.SnapMover;
 
@@ -11,19 +13,24 @@ import engine.physics.SnapMover;
  */
 public class Path {
     private final double THRESHOLD = 5;
-    private Point2D[] myCoordinates;
+    private List<Point2D> myCoordinates;
     private Point2D currentPosition;
     private double myAngle;
     private int pathIndex;
+   
+    public Path(List<Point2D> coordinates) {
+    		myCoordinates = coordinates;
+    }
 
     /**
      * Adds a start to the path. A path start point represents where enemies spawn.
      */
-    public void addCoords(Point2D[] coordinates, double speed){
-	myCoordinates = coordinates;
+    public void addCoords(double speed){
+    	
 	pathIndex = 0;
-	currentPosition = coordinates[pathIndex];
-	myAngle = getAngle(coordinates[pathIndex], coordinates[pathIndex+1]);
+
+	currentPosition = myCoordinates.get(pathIndex);
+	myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
     }
 
     /**
@@ -33,14 +40,14 @@ public class Path {
      */
     public Point2D nextPosition(double elapsedTime, double speed) {
 	if(checkBounds()) {
-	    currentPosition = myCoordinates[pathIndex++];
-	    myAngle = getAngle(currentPosition, myCoordinates[pathIndex + 1]);
+	    currentPosition = myCoordinates.get(pathIndex++);
+	    myAngle = getAngle(currentPosition, myCoordinates.get(pathIndex + 1));
 	    return currentPosition;
 	}
 	else {
 	    double newX = currentPosition.getX() + Math.cos(myAngle) * speed * elapsedTime;
 	    double newY = currentPosition.getY() + Math.sin(myAngle) * speed * elapsedTime;
-	    return new Point2D.Double(newX, newY); 
+	    return new Point2D(newX, newY); 
 	}
     }
 
@@ -50,8 +57,8 @@ public class Path {
      * @return boolean: True if within range of next path coordinate, false otherwise
      */
     private boolean checkBounds() {
-	double xDistance = Math.pow(myCoordinates[pathIndex+1].getX() - currentPosition.getX(), 2);
-	double yDistance = Math.pow(myCoordinates[pathIndex+1].getY() - currentPosition.getY(), 2); 
+	double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX() - currentPosition.getX(), 2);
+	double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPosition.getY(), 2); 
 	return Math.sqrt(xDistance + yDistance) < THRESHOLD;
     }
 

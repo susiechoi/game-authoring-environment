@@ -9,7 +9,6 @@
 
 package authoring;
 
-
 import java.io.File;
 import java.lang.Double; 
 import java.io.FileInputStream;
@@ -24,6 +23,7 @@ import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import data.GameData;
 import engine.builders.LauncherBuilder;
+import engine.builders.PathBuilder;
 import engine.builders.EnemyBuilder;
 import engine.builders.ProjectileBuilder;
 import engine.builders.TowerBuilder;
@@ -34,9 +34,12 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
+
 
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
@@ -50,6 +53,8 @@ public class AuthoringModel implements GameData {
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
+	private GridPane myGrid;
+	private Path myPath;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -65,9 +70,9 @@ public class AuthoringModel implements GameData {
 
 	private void setupDefaultLevel() {
 		Level firstLevel = new Level(1);
-		myLevels.put(1, firstLevel);
 		firstLevel.addTower(DEFAULT_NAME, new Tower(myDefaultTower));
 		firstLevel.addEnemy(DEFAULT_NAME, new Enemy(myDefaultEnemy));
+		myLevels.put(1, firstLevel);
 	}
 
 	/**
@@ -116,7 +121,7 @@ public class AuthoringModel implements GameData {
 		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
 				projectileImage, projectileDamage, projectileUpgradeCost, 
-				projectileUpgradeValue);
+				projectileUpgradeValue, projectileSpeed);
 		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
 				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
 				launcherValue, towerProjectile); 
@@ -138,9 +143,14 @@ public class AuthoringModel implements GameData {
 	 * Method through which information can be sent to instantiate or edit a path object
 	 * Wraps constructor in case of new object creation
 	 */
-	public Path makePath(int level) {
-		return null;
+
+	//parameters needed to get passed: background image, grid size, location of each image in grid 
+	
+	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {
+		myGrid = grid;
+		myPath = new PathBuilder().construct(level, coordinates);
 	}
+
 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing
@@ -174,6 +184,7 @@ public class AuthoringModel implements GameData {
 	 * @param name - name of object being manipulated
 	 * @param attribute - attribute/field of object being manipulated
 	 * @return requested attribute in String form: used in populating textfield, finding correct dropdown option, etc.
+
 	 * @throws SecurityException 
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
@@ -187,20 +198,33 @@ public class AuthoringModel implements GameData {
 		if (objectType.equals("Enemy")) {
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
-				Class enemyClass = enemy.getClass(); 
-				field = enemyClass.getField(attribute);
-				fieldValue = field.get(enemy);
+				for (Field aField : enemy.getClass().getDeclaredFields()) {
+					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+					if (fieldSimpleString.equals(attribute)) {
+						aField.setAccessible(true);
+						fieldValue = aField.get(enemy);
+						break; 
+					}
+				}
 			}
-			else {
+			if (fieldValue == null) {
 				throw new ObjectNotFoundException(name);
 			}
 		}
 		else if (objectType.equals("Tower")) {
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
-				Class towerClass = tower.getClass(); 
-				field = towerClass.getField(attribute);
-				fieldValue = field.get(tower);
+				for (Field aField : tower.getClass().getDeclaredFields()) {
+					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+					if (fieldSimpleString.equals(attribute)) {
+						aField.setAccessible(true);
+						fieldValue = aField.get(tower);
+						break; 
+					}
+				}
+			}
+			if (fieldValue == null) {
+				throw new ObjectNotFoundException(name);
 			}
 		}
 		if (fieldValue.getClass() == Double.class) {
@@ -241,7 +265,8 @@ public class AuthoringModel implements GameData {
 					// TODO add projectile speed !!!!
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")));
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
 			Launcher towerLauncher = new LauncherBuilder().construct(
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
@@ -298,12 +323,20 @@ public class AuthoringModel implements GameData {
 		return null;
 	}
 
+	/**
+	 * Adds a new level to the authored game
+	 */
 	public int addNewLevel() {
 		int newLevelNumber = myLevels.size()+1; 
 		myLevels.put(newLevelNumber, new Level(newLevelNumber));
 		return newLevelNumber; 
 	}
 	
+	/**
+	 * Returns a list of level numbers as strings currently in the authored game
+	 * 
+	 * @return List<String>: A list of level numbers as strings
+	 */
 	public List<String> getLevels() {
 		List<String> listToReturn = new ArrayList<String>(); 
 		for (Integer level : myLevels.keySet()) {
@@ -312,11 +345,17 @@ public class AuthoringModel implements GameData {
 		return listToReturn; 
 	}
 
+	/**
+	 * Auto generates a new level for the authored game and puts it in the
+	 * levels map. 
+	 * 
+	 * @return int: the number of the new, auto generated level
+	 */
 	public int autogenerateLevel() {
 		int newLevelNumber = myLevels.size()+1;
 		Level copiedLevel = myLevels.get(myLevels.size());
 		myLevels.put(newLevelNumber, new Level(copiedLevel));
 		return newLevelNumber; 
 	}
-	
 }
+
