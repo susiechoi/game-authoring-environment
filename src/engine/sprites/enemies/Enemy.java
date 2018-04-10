@@ -62,7 +62,7 @@ public class Enemy extends Sprite{
     	myImage = copiedEnemy.getImageView().getImage(); 
     	myIntersecter = copiedEnemy.getIntersecter(); 
     	myHealth = copiedEnemy.getHealth(); 
-    	myDamage = copiedEnemy.getDamage();
+    	myDamage = copiedEnemy.getDamageProperty();
     	myHealthImpact = myDamage.getDamage(); 
     	myValue = copiedEnemy.getValue();
     	myPath = copiedEnemy.getPath(); 
@@ -78,16 +78,6 @@ public class Enemy extends Sprite{
 	return myIntersecter.overlaps(otherImage); 
     }
 
-    /**
-     * Handles when the Enemy is hit by a tower
-     * 
-     * @param projectile: the projectile that hit the enemy
-     * @return : returns true if the enemy is still alive, false if it is dead
-     */
-    public boolean getHitBy(Projectile projectile) { // I don't think this is supposed to return a boolean -bma
-	myHealth.loseHealth(projectile.getDamage());
-	return myHealth.isAlive();
-    }
 
     /**
      * Moves the enemy along the path according to how much time has passed
@@ -109,8 +99,18 @@ public class Enemy extends Sprite{
      * 
      * @return Double: damage that Enemy incurs on the tower
      */
-    public Double damage() {
+    @Override
+    public Double getDamage() {
 	return myDamage.getProperty();
+    }
+    
+    /**
+     * Returns true if this Enemy is still alive
+     */
+    @Override
+    public boolean handleCollision(Sprite collider) {
+	myHealth.loseHealth(collider.getDamage());
+	return myHealth.isAlive();
     }
     
     private ImageIntersecter getIntersecter() {
@@ -121,7 +121,9 @@ public class Enemy extends Sprite{
     	return myHealth; 
     }
     
-    private DamageProperty getDamage() {
+
+    
+    private DamageProperty getDamageProperty() {
     	return myDamage; 
     }
     
