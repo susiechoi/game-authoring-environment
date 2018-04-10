@@ -45,6 +45,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 	saveButton.setOnAction(e -> {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
+		System.out.println(myModel.getGameName());
 		writer.write(myModel, myModel.getGameName());
 	});
 	Button mainButton = setupBackButton();
