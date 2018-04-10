@@ -17,22 +17,22 @@ import javafx.collections.ObservableList;
  * @author Miles Todzo
  */
 public class Manager<E> {
-    
+
     private List<E> active;
     private List<E> available;
-    
+
     public Manager() {
-    		active = new ArrayList<>();
-    		available = new ArrayList<>();
+	active = new ArrayList<>();
+	available = new ArrayList<>();
     }
-    
+
     /**
      * Returns observable list of all active objects
      * 
      * @return
      */
     public ObservableList<E> getObservableListOfAvailable(){
-    		return (ObservableList<E>) available;
+	return (ObservableList<E>) available;
     }
     /**
      * Returns observable list of all active objects
@@ -40,11 +40,15 @@ public class Manager<E> {
      * @return
      */
     public ObservableList<E> getObservableListOfActive(){
-    		return (ObservableList<E>) active;
+	return (ObservableList<E>) active;
     }
-    
+
     public void addToActiveList(E sprite) {
-    		active.add(sprite);
+	active.add(sprite);
+    }
+
+    public void addToAvailableList(E sprite) {
+	active.add(sprite);
     }
 
     /**
@@ -52,12 +56,12 @@ public class Manager<E> {
      * was called on and the list of active actors passed as a parameter
      * @param passedSprites
      */
-//    public void checkForCollisions(List<Sprite> passedSprites) {
-//    	for (Sprite activeSprite: this.getObservableListOfActive()) {
-//    		for (Sprite passedActor: passedSprites) {
-//    			ShootingSprites shootingSprite = (ShootingSprites) passedActor;
-//    			activeSprite.checkForCollision(shootingSprite, shootingSprite.getProjectiles());
-//    		}
-//    	}
-//    }
+    //    public void checkForCollisions(List<Sprite> passedSprites) {
+    //    	for (Sprite activeSprite: this.getObservableListOfActive()) {
+    //    		for (Sprite passedActor: passedSprites) {
+    //    			ShootingSprites shootingSprite = (ShootingSprites) passedActor;
+    //    			activeSprite.checkForCollision(shootingSprite, shootingSprite.getProjectiles());
+    //    		}
+    //    	}
+    //    }
 }

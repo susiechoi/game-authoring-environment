@@ -1,13 +1,13 @@
 package engine.factories;
 
 import java.util.Collection;
-import java.util.Map;
 
+import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
 public class EnemyFactory extends Factory {
     
-    public EnemyFactory(Map<String, Collection<Object>> data) {
+    public EnemyFactory(Collection<Sprite> data) {
 	super(data);
     }
     

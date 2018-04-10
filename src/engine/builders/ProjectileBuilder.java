@@ -13,9 +13,10 @@ import javafx.scene.image.Image;
  */
 public class ProjectileBuilder {
 
-	public Projectile construct(String name, Image image, double damage, double damageCost, double damageValue, double speed) {
-		DamageProperty damageProperty = new DamageProperty(damageCost, damageValue, damage);
-		return new Projectile(name, damageProperty, image, speed);
-	}
+    public Projectile construct(String name, Image image, double damage, double damageCost, double damageValue, double speed) {
+	DamageProperty damageProperty = new DamageProperty(damageCost, damageValue, damage);
+	return new Projectile(name, damageProperty, image, speed);
+    }
+
 
 }

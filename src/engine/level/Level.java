@@ -172,10 +172,10 @@ public class Level {
 
 	/**
 	 * Returns any new Enemy that is supposed to spawn at the given time.
-	 * @param universalTime
+	 * @param time
 	 * @return
 	 */
-	public Enemy getNewEnemy(int universalTime) {
+	public Enemy getNewEnemy(double time) {
 		//TODO
 		return null;
 	}

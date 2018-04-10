@@ -1,8 +1,7 @@
 package engine.factories;
 
 import java.util.Collection;
-import java.util.Map;
-
+import engine.sprites.Sprite;
 import engine.sprites.towers.launcher.Launcher;
 
 /**
@@ -13,14 +12,12 @@ import engine.sprites.towers.launcher.Launcher;
  */
 public class LauncherFactory extends Factory {
     
-    private ProjectileFactory projectileFactory;
-    
     /**
      * Constructor that takes in parameter data for a launcher
      * 
      * @param data: Map containing launcher type as key, and appropriate parameter data as value
      */
-    public LauncherFactory(Map<String, Collection<Object>> data) {
+    public LauncherFactory(Collection<Sprite> data) {
 	super(data);
     }
     

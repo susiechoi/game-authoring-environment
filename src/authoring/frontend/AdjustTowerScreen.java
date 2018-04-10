@@ -27,7 +27,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private Slider myTowerHealthValueSlider;
 	private Slider myTowerHealthUpgradeCostSlider;
 	private Slider myTowerHealthUpgradeValueSlider;
-
+	private Slider myTowerValueSlider;
+	private Slider myTowerUpgradeCostSlider;
+	private Slider myTowerUpgradeValueSlider; 
 	private ComboBox<String> myProjectileImage;
 	private double myProjectileDamage;
 	private double myProjectileUpgradeCost;
@@ -41,6 +43,16 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName);
+		myProjectileImage = new ComboBox<String>();
+		myProjectileDamage = 0.0; 
+		myProjectileUpgradeCost = 0.0;
+		myProjectileUpgradeValue = 0.0;
+		myProjectileSpeed = 0.0; 
+		myLauncherValue = 0.0;
+		myLauncherUpgradeCost = 0.0; 
+		myLauncherUpgradeValue = 0.0;
+		myLauncherSpeed = 0.0;
+		myLauncherRange = 0.0;
 	}
 
 	@Override
@@ -71,7 +83,11 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 					myNameField.setText(getView().getErrorCheckedPrompt("ReplaceDefaultName"));
 				}
 				else {
-					getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), myProjectileImage.getValue(), myProjectileDamage, myProjectileUpgradeCost, myProjectileUpgradeValue, myProjectileSpeed, myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange);
+					getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), 
+							myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), 
+							myProjectileImage.getValue(), myProjectileDamage, myProjectileUpgradeCost, myProjectileUpgradeValue, myProjectileSpeed, 
+							myLauncherValue, myLauncherUpgradeCost, myLauncherUpgradeValue, myLauncherSpeed, myLauncherRange,
+							myTowerValueSlider.getValue(), myTowerUpgradeCostSlider.getValue(), myTowerUpgradeValueSlider.getValue());
 					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 				}
 			} catch (NoDuplicateNamesException e1) {
@@ -101,6 +117,12 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		getUIFactory().setSliderToValue(myTowerHealthUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
 
 		getUIFactory().setSliderToValue(myTowerHealthUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
+		
+		getUIFactory().setSliderToValue(myTowerValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myTowerValue"));
+
+//		getUIFactory().setSliderToValue(myTowerUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myUpgradeCost"));
+//
+//		getUIFactory().setSliderToValue(myTowerUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myUpgradeValue"));
 
 	}
 
@@ -124,6 +146,21 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 			getView().loadErrorScreen("NoImageFile");
 		}
 		vb.getChildren().add(towerImageSelect);
+		
+		Slider towerValueSlider = getUIFactory().setupSlider("TowerValueSlider", getMyMaxPrice());
+		myTowerValueSlider = towerValueSlider; 
+		HBox towerValue = getUIFactory().setupSliderWithValue("TowerValueSlider", towerValueSlider, getErrorCheckedPrompt("TowerValue"));
+		vb.getChildren().add(towerValue);
+
+		Slider towerUpgradeCostSlider = getUIFactory().setupSlider("TowerUpgradeCostSlider", getMyMaxPrice());
+		myTowerUpgradeCostSlider = towerUpgradeCostSlider;
+		HBox towerUpgradeCost = getUIFactory().setupSliderWithValue("TowerUpgradeCostSlider", towerUpgradeCostSlider, getErrorCheckedPrompt("TowerUpgradeCost"));
+		vb.getChildren().add(towerUpgradeCost);
+
+		Slider towerUpgradeValueSlider = getUIFactory().setupSlider("TowerUpgradeValueSlider", getMyMaxPrice());
+		myTowerUpgradeValueSlider = towerUpgradeValueSlider; 
+		HBox towerUpgradeValue = getUIFactory().setupSliderWithValue("TowerUpgradeValueSlider", towerUpgradeValueSlider, getErrorCheckedPrompt("TowerUpgradeValue"));
+		vb.getChildren().add(towerUpgradeValue);
 	}
 
 	private void makeHealthComponents(VBox vb) {

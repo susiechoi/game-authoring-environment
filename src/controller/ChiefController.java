@@ -1,6 +1,5 @@
 package controller;
 
-import authoring.AuthoringController;
 import frontend.StageManager;
 import javafx.stage.Stage;
 
@@ -17,7 +16,6 @@ public class ChiefController {
 
     private Stage STAGE;
     private final String DEFAULT_LANGUAGE = "English";
-   // private PlayController PLAY; 
    // private AuthoringController AUTHORING;
 
     public ChiefController(Stage stage) {
