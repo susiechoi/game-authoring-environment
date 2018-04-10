@@ -20,6 +20,7 @@ public class PopulateGridMethods {
 	private int colIndex;
 	private int rowIndex;
 	private GridPane grid;
+	
 	private HashMap<String, List<Point2D>> imageMap = new HashMap<String, List<Point2D>>(); //this is passed
 	
 	public GridPane populateGrid() { //populates grid that is
@@ -78,22 +79,22 @@ public class PopulateGridMethods {
 		}
 	}
 	
-	public void setGridConstraints(GridPane grid, HashMap<String, List<Point2D>> map) {
-		imageMap = map;
-		grid.getColumnConstraints().clear();
-		grid.getRowConstraints().clear();
-		for (int i = 0; i < 1000/60; i++) {
-			ColumnConstraints colConst = new ColumnConstraints();
-			colConst.setPrefWidth(60);
-			grid.getColumnConstraints().add(colConst);
-		}
-		for (int i = 0; i < 750/60; i++) {
-			RowConstraints rowConst = new RowConstraints();
-			rowConst.setPrefHeight(60);
-			grid.getRowConstraints().add(rowConst);         
-		}
-		populateGrid();
-	}
+//	public void setGridConstraints(GridPane grid, HashMap<String, List<Point2D>> map) {
+//		imageMap = map;
+//		grid.getColumnConstraints().clear();
+//		grid.getRowConstraints().clear();
+//		for (int i = 0; i < 1000/60; i++) {
+//			ColumnConstraints colConst = new ColumnConstraints();
+//			colConst.setPrefWidth(60);
+//			grid.getColumnConstraints().add(colConst);
+//		}
+//		for (int i = 0; i < 750/60; i++) {
+//			RowConstraints rowConst = new RowConstraints();
+//			rowConst.setPrefHeight(60);
+//			grid.getRowConstraints().add(rowConst);         
+//		}
+//		populateGrid();
+//	}
 
 }
 

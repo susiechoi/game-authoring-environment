@@ -28,27 +28,29 @@ public abstract class PathScreen extends AdjustScreen {
 	    pathRoot.getChildren().clear();
 	    pathRoot.getChildren().add(panel.getPanel());
 	    pathRoot.getChildren().add(pathGrid);
+	    
+		StackPane.setAlignment(pathGrid, Pos.CENTER_LEFT);
+		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
 	}
+	
 	protected PathPanel getPathPanel() {
 	    return panel;
 	}
+	
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
-		//		Scene myScene = new Scene(pathRoot, 1500, 900);
 
 		grid = new CreatePathGrid();
 		initializeGridSettings(grid);
 		pathGrid = grid.makePathGrid();
 
-		pathRoot.getChildren().add(pathGrid);
-		pathRoot.getChildren().add(panel.getPanel());
+//		pathRoot.getChildren().add(pathGrid);
+//		pathRoot.getChildren().add(panel.getPanel());
 		
-		StackPane.setAlignment(pathGrid, Pos.CENTER_LEFT);
-		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
 
 		setGridSizing();
 		

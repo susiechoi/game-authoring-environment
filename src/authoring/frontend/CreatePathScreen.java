@@ -66,7 +66,7 @@ public class CreatePathScreen extends PathScreen {
 		getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-
+				System.out.print("HERE");
 				HashMap<Integer, ArrayList<Integer>> coordMap = grid.getStartingPosition();
 				if (grid.getStartingPosition().size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -89,8 +89,6 @@ public class CreatePathScreen extends PathScreen {
 				}
 			}
 		});
-		//Button trybutton = getPathPanel().getApplyButton();
-
 	}
 
 	@Override

@@ -52,12 +52,12 @@ public class CreatePathGrid {
 	private Label pathLabel;
 	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
-	private int startCount = 0;
 	private HashMap<String, List<Point2D>> gridImageCoordinates = new HashMap<String, List<Point2D>>(); //map (imagefileName, (row,col))
 	private ArrayList<Point2D> startPoints = new ArrayList<Point2D>();
 	private ArrayList<Point2D> endPoints = new ArrayList<Point2D>();
 	private ArrayList<Point2D> pathPoints = new ArrayList<Point2D>();
 	private DraggableImage myCurrentClicked;
+	private int startCount = 0;
 
 
 	protected GridPane makePathGrid() {
@@ -119,9 +119,7 @@ public class CreatePathGrid {
 							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
 								startCount++;
 								path.setPathName(startCount);
-								
 								startPoints.add(new Point2D(colIndex, rowIndex));
-	
 								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
 								startCols.add(colIndex);
@@ -189,7 +187,6 @@ public class CreatePathGrid {
 			addCoordinates(row - 1, col);
 			return true;
 		}
-		
 		checkGrid.add(pathLabel, col, row);
 		return false;
 	}

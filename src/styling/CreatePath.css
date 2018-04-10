@@ -1,13 +1,13 @@
 VBox {
-	-fx-background-color: #488286;
-	-fx-padding: 5;
-    -fx-spacing: 18;
-    -fx-border-color: black;
+    -fx-background-color: #77878B;
+    -fx-padding: 5;
+    -fx-spacing: 15;
     -fx-alignment: center;
+    -fx-border-color: black;
 }
 
 HBox {
-    -fx-background-color: #488286;
+    -fx-background-color: #77878B;
     -fx-padding: 5;
     -fx-spacing: 12;
   /*  -fx-border-color: black;*/
@@ -24,7 +24,7 @@ HBox {
 
 .label {
     -fx-font: bold 18pt "Helvetica";
-    -fx-text-fill: white;
+    /*-fx-text-fill: white;*/
      -fx-alignment: center;
 }
 
@@ -47,13 +47,14 @@ HBox {
 	-fx-min-height: 30;
 }
 
-.button, .combo-box {
-    -fx-text-fill: white;
-    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
+.button {
+        -fx-min-width: 200;
+        -fx-min-height: 50;
+        -fx-background-color: #B7D5D4;
 }
 
-.button:hover {
-    -fx-background-color: linear-gradient(#77878B, #CDCDCD);
+.button:hover{
+    -fx-font: bold 18pt "Helvetica";
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
