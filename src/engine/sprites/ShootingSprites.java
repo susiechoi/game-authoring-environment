@@ -25,7 +25,7 @@ public abstract class ShootingSprites extends Sprite{
 	private int roundScore;
 	private ImageIntersecter intersector;
 
-	public ShootingSprites(String name, Image image, double size, Launcher launcher) {
+	public ShootingSprites(String name, String image, double size, Launcher launcher) {
 		super(name, image);
 		hitCount=0;
 		intersector = new ImageIntersecter(new ImageView(image));

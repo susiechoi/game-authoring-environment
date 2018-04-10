@@ -23,7 +23,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	private double myHealthValue;
 	private double myHealthUpgradeCost; 
 	private double myHealthUpgradeValue; 
-	private Image myImage; 
+	private String myImage; 
 	private Image myProjectileImage;
 	private double myProjectileDamage; 
 	private double myProjectileSpeed;
@@ -72,7 +72,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * Copy constructor
 	 */
 	public Tower(Tower copiedTower) {
-		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
+		super(copiedTower.getName(), copiedTower.getImage(), 
 			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
 		myHealth = copiedTower.getHealthProperty();
 		myValue = copiedTower.getValueProperty(); 
@@ -82,7 +82,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * Copy constructor
 	 */
 	public Tower(Tower copiedTower, Point point) {
-		super(copiedTower.getName(), copiedTower.getImageView().getImage(), 
+		super(copiedTower.getName(), copiedTower.getImage(), 
 			copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
 		System.out.println("Health value copied is " + copiedTower.getHealthProperty().getProperty());
 		myHealth = copiedTower.getHealthProperty();
@@ -164,7 +164,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	 * Returns the image
 	 * @return
 	 */
-	public Image getImage() {
+	public String getImage() {
 	    return myImage;
 	}
 	
