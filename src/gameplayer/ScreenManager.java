@@ -50,7 +50,6 @@ public class ScreenManager extends View{
 
     //private final FileIO FILE_READER;
 
-
     public ScreenManager(StageManager stageManager, String language) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
@@ -60,6 +59,7 @@ public class ScreenManager extends View{
     }
 
 
+
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
@@ -67,8 +67,6 @@ public class ScreenManager extends View{
 	MEDIATOR = mediator;
 	findSettings();
     }
-
-
 
 
     public List<Integer> getMediatorInts(){
