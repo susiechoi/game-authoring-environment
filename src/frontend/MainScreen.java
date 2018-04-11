@@ -46,9 +46,12 @@ public class MainScreen extends Screen {
 	Button newGameButt = getUIFactory().makeTextButton("editbutton", "Load/Play A Game");
 	newGameButt.setOnAction(click->{
 	    try {
-		new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE, new AuthoringModel());
+		new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE, new AuthoringModel())
+		.loadInstructionScreen();
 	    } catch (MissingPropertiesException e) {
 		// TODO Auto-generated catch block
+		System.out.println("Critical error, could not create PlayController "
+			+ "on line 49 in MainScreen.java");
 		e.printStackTrace();
 	    }
 	});

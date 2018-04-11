@@ -66,6 +66,17 @@ public class AuthoringView extends View {
 	public void setModel(AuthoringModel model) {
 		myModel = model;
 	}
+	
+	/**
+	 * Returns the AuthoringModel object the user uses to author a game. 
+	 * Should never return null because the model and view are both created
+	 * in the AuthoringController class and the view's method setModel is called.
+	 * 
+	 * @return AuthoringModel: the model authored by the user
+	 */
+	public AuthoringModel getModel() {
+	    return myModel;
+	}
 
 	public void loadInitialScreen() {
 		myStageManager.switchScreen((new StartScreen(this)).getScreen());
@@ -222,6 +233,16 @@ public class AuthoringView extends View {
 
 	protected Scene getScene() {
 		return myStageManager.getScene();
+	}
+	
+	/**
+	 * Returns the StageManager object used by the game to switch the Screens
+	 * displayed on the Stage.
+	 * 
+	 * @return StageManager: the StageManager object in the game
+	 */
+	public StageManager getStageManager() {
+	    return myStageManager;
 	}
 
 	public String getErrorCheckedPrompt(String prompt) {

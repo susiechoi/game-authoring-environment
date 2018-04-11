@@ -54,6 +54,7 @@ public class GameScreen extends Screen {
 		UIFACTORY = new UIFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
+		makeScreenWithoutStyling();
 
 	}
 
