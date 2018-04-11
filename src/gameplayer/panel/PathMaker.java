@@ -31,6 +31,7 @@ public class PathMaker {
 
 		for (int x = 0 ; x < grid.getColumnCount(); x++) {
 			for (int y = 0 ; y < grid.getRowCount(); y++) {
+
 				StackPane cell = new StackPane();
 
 				final int col = x;

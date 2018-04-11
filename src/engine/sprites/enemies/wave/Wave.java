@@ -1,6 +1,7 @@
 package engine.sprites.enemies.wave;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -20,7 +21,7 @@ public class Wave {
     private final Path myPath;
     
     public Wave(Path path) {
-	myEnemies = new TreeMap<Enemy, Integer>();
+	myEnemies = new HashMap<Enemy, Integer>();
 	myPath = path;
     }
     

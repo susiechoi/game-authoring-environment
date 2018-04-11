@@ -12,9 +12,9 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class ProjectileBuilder {
 
-    public Projectile construct(String name, String imagepath, double damage, double damageCost, double damageValue, double speed) {
+    public Projectile construct(String name, String imagepath, double damage, double damageCost, double damageValue, double size, double speed) {
 	DamageProperty damageProperty = new DamageProperty(damageCost, damageValue, damage);
-	return new Projectile(name, damageProperty, imagepath, speed);
+	return new Projectile(name, damageProperty, speed, imagepath, speed);
     }
 
 

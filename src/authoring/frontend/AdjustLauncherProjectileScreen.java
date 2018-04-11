@@ -33,7 +33,9 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 //	private Slider myLauncherUpgradeCostSlider;
 //	private Slider myLauncherUpgradeValueSlider;
 	private Slider myLauncherRateSlider;
-	private Slider myLauncherRangeSlider; 
+	private Slider myLauncherRangeSlider;
+
+	private Slider myProjectileSizeSlider; 
 
 	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen, String selectedObjectName) {
 		super(view, selectedObjectName);
@@ -56,7 +58,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 			try {
 				getView().makeTower(false, getMySelectedObjectName(), myTowerScreen.getSelectedImage(),  
 						myTowerScreen.getTowerHealthValue(),  myTowerScreen.getTowerHealthUpgradeCost(),  myTowerScreen.getTowerHealthUpgradeValue(), 
-						myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), 0, 0, myProjectileSpeedSlider.getValue(), 
+						myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), 0, 0, myProjectileSizeSlider.getValue(), myProjectileSpeedSlider.getValue(), 
 						0, 0, 0, myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue(),
 						myTowerScreen.getTowerValue(), myTowerScreen.getTowerUpgradeCost(), myTowerScreen.getTowerUpgradeValue());
 			} catch (NoDuplicateNamesException e1) {
@@ -108,6 +110,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 //		HBox projectileUpgradeValue = getUIFactory().setupSliderWithValue("ProjectileUpgradeValueSlider", projectileUpgradeValueSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 //		vb.getChildren().add(projectileUpgradeValue);
 		
+		Slider projectileSizeSlider = getUIFactory().setupSlider("ProjectileSize", getMyMaxUpgradeIncrement());
+		myProjectileSizeSlider = projectileSizeSlider; 
 		Slider projectileSpeedSlider = getUIFactory().setupSlider("ProjectileSpeed", getMyMaxUpgradeIncrement());
 		myProjectileSpeedSlider = projectileSpeedSlider; 
 		HBox projectileSpeed = getUIFactory().setupSliderWithValue("ProjectileSpeed", myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
@@ -147,6 +151,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		getUIFactory().setSliderToValue(myProjectileDamageSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
 
 		getUIFactory().setSliderToValue(myProjectileSpeedSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileSpeed"));
+
+		getUIFactory().setSliderToValue(myProjectileSizeSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileSize"));
 		
 //		getUIFactory().setSliderToValue(myProjectileValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileValue"));
 //

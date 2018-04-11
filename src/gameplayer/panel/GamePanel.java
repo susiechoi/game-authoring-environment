@@ -3,7 +3,6 @@ package gameplayer.panel;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -14,9 +13,6 @@ import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PropertiesReader;
 import gameplayer.screen.GameScreen;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -25,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class GamePanel extends Panel{
+
 
 	private final GameScreen GAME_SCREEN;
 	private FrontEndTower towerSelected;
@@ -80,91 +77,45 @@ public class GamePanel extends Panel{
 		PANEL = panelRoot;
 	}
 
-	public void towerSelected(FrontEndTower tower) {
-		towerSelected = tower;
-		towerPlaceMode = true;
-	}
-
-	//    public void exitTowerPlace() {
-	//	towerPlaceMode = false;
-	//    }
-	//
-	//    public void handleMouseInput(double x, double y) {
-	//	if(towerPlaceMode) {
-	//	    Point position = new Point((int)x,(int)y);
-	//	    try {
-	//		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
-	//		ImageView towerImage = newTower.getImageView();
-	//		towerImage.setLayoutX(-towerImage.getFitWidth()/2);
-	//		towerImage.setLayoutY(-towerImage.getFitHeight()/2);
-	//		if(newTower!= null) {
-	//		    addTowerImageViewAction(newTower);
-	//		    towersPlaced.add(newTower);
-	//		    spriteAdd.getChildren().add(towerImage);
-	//		    towerPlaceMode = false;
-	//		    System.out.println("paneWidth: " + spriteAdd.getWidth() + " height: "+ spriteAdd.getHeight());
-	//		}
-	//	    }
-	//	    catch(CannotAffordException e){
-	//		//GameScreen popup for cannot afford
-	//	    }
-	//	}
-
-
-	//	@Override
-	//	public void makePanel() {
-	//
-	//		//TODO potentially fix needed?
-	//
-	//		Pane panelRoot = new Pane();
-	//		panelRoot.setId("gamePanel");
-	//		//panelRoot.setBottom(new Up);
-	//		panelRoot.setMaxWidth(Double.MAX_VALUE);
-	//		panelRoot.setMaxHeight(Double.MAX_VALUE);
-	//
-	//		panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
-	//		spriteAdd = panelRoot;
-	//		PANEL = panelRoot;
-	//	}
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-	   	System.out.println("Game Panel: " +imageMap);
-		
+		System.out.println("Game Panel: " +imageMap);
+
 		PathMaker pathMaker = new PathMaker();
 		GridPane grid = pathMaker.populateGrid(imageMap, backgroundImageFilePath);
 		setGridConstraints(grid, imageMap);
 		spriteAdd.getChildren().add(grid);
-		
-//		GridPane grid = new GridPane();
-//		grid.setGridLinesVisible(true);
-//		//TODO this must be fixed, shouldn't be manual
-//		grid.setMaxSize(1020.0, 650.0);
-//		grid.setPrefSize(1020.0, 650.0);
-//		grid.setMinSize(1020.0, 650.0);
-//
-//
-//		for (int i = 0; i < numCol; i++) {
-//			ColumnConstraints colConst = new ColumnConstraints();
-//			colConst.setPercentWidth(100.0 / numCol);
-//			grid.getColumnConstraints().add(colConst);
-//		}
-//		for (int i = 0; i < numRow; i++) {
-//			RowConstraints rowConst = new RowConstraints();
-//			rowConst.setPercentHeight(100.0 / numRow);
-//			grid.getRowConstraints().add(rowConst);         
-//		}
-//		addImagesToGrid(imageMap, grid);
+
+		//		GridPane grid = new GridPane();
+		//		grid.setGridLinesVisible(true);
+		//		//TODO this must be fixed, shouldn't be manual
+		//		grid.setMaxSize(1020.0, 650.0);
+		//		grid.setPrefSize(1020.0, 650.0);
+		//		grid.setMinSize(1020.0, 650.0);
+		//
+		//
+		//		for (int i = 0; i < numCol; i++) {
+		//			ColumnConstraints colConst = new ColumnConstraints();
+		//			colConst.setPercentWidth(100.0 / numCol);
+		//			grid.getColumnConstraints().add(colConst);
+		//		}
+		//		for (int i = 0; i < numRow; i++) {
+		//			RowConstraints rowConst = new RowConstraints();
+		//			rowConst.setPercentHeight(100.0 / numRow);
+		//			grid.getRowConstraints().add(rowConst);         
+		//		}
+		//		addImagesToGrid(imageMap, grid);
 	}
 
-//	private void addImagesToGrid(Map<String, List<Point2D>> imageMap, GridPane grid) {
-//		for (String key: imageMap.keySet()) { //goes through images
-//			for (int i = 0; i < imageMap.keySet().size(); i++) {
-//				Point2D point = imageMap.get(key).get(0);
-//				grid.add(new ImageView(new Image(key)), (int)point.getX(), (int)point.getY());
-//			}
-//		}
-//	}
-	
+	//	private void addImagesToGrid(Map<String, List<Point2D>> imageMap, GridPane grid) {
+	//		for (String key: imageMap.keySet()) { //goes through images
+	//			for (int i = 0; i < imageMap.keySet().size(); i++) {
+	//				Point2D point = imageMap.get(key).get(0);
+	//				grid.add(new ImageView(new Image(key)), (int)point.getX(), (int)point.getY());
+	//			}
+	//		}
+	//	}
+
 	public void setGridConstraints(GridPane grid, Map<String, List<Point>> map) {
 		grid.getColumnConstraints().clear();
 		grid.getRowConstraints().clear();
@@ -179,7 +130,11 @@ public class GamePanel extends Panel{
 			grid.getRowConstraints().add(rowConst);         
 		}
 	}
-	
+
+	public void towerSelected(FrontEndTower tower) {
+		towerSelected = tower;
+		towerPlaceMode = true;
+	}
 
 	public void exitTowerPlace() {
 		towerPlaceMode = false;
@@ -193,11 +148,13 @@ public class GamePanel extends Panel{
 				ImageView towerImage = newTower.getImageView();
 				towerImage.setLayoutX(-towerImage.getFitWidth()/2);
 				towerImage.setLayoutY(-towerImage.getFitHeight()/2);
+				System.out.println(towerImage.getFitWidth() + " andrew land " + towerImage.getImage().getWidth());
 				if(newTower!= null) {
 					addTowerImageViewAction(newTower);
 					towersPlaced.add(newTower);
 					spriteAdd.getChildren().add(towerImage);
 					towerPlaceMode = false;
+					System.out.println("paneWidth: " + spriteAdd.getWidth() + " height: "+ spriteAdd.getHeight());
 				}
 			}
 			catch(CannotAffordException e){
@@ -205,6 +162,11 @@ public class GamePanel extends Panel{
 			}
 		}
 	}
+
+
+
+
+
 
 	private void addTowerImageViewAction(FrontEndTower tower) {
 		ImageView towerImage = tower.getImageView();
