@@ -3,6 +3,8 @@ package engine;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import xml.PlaySaverWriter;
+import xml.XMLFactory;
 
 /**
  * This class will handle all of the gameLoop interactions, and will also hold the 
@@ -84,8 +86,9 @@ public class GameEngine {
     /**
      * Saves current Game State to File
      */
-    public void savePlay() {
-
+    public void savePlay(String filename) {
+	PlaySaverWriter p = (PlaySaverWriter) XMLFactory.generateWriter("PlaySaverWriter");
+	p.write(myPlayState, filename);
     }
 
     /**

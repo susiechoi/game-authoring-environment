@@ -22,7 +22,13 @@ import javafx.scene.Scene;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
-
+/**
+ * 
+ * @author Ben Hodgson 4/11/18
+ * 
+ * Class to manage updating Screen elements that remain across the entire game
+ * (score, level, health, currency, etc.)
+ */
 public class ScreenManager extends View{
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
@@ -50,13 +56,14 @@ public class ScreenManager extends View{
     private List<Integer> controlVars;
 
     //private final FileIO FILE_READER;
-
+    
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
 	PROMPTS = new PromptReader(language, this);
 	MEDIATOR = mediator;
 	findSettings();
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
     }
 
     public ScreenManager(StageManager stageManager, String language) {
@@ -64,6 +71,7 @@ public class ScreenManager extends View{
 	STAGE_MANAGER = stageManager;
 	PROMPTS = new PromptReader(language, this);
 	findSettings();
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
     }
 
     public List<Integer> getMediatorInts(){
@@ -82,10 +90,15 @@ public class ScreenManager extends View{
     }
 
     public void loadGameScreenNew(String filepath) {
-	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
 	MEDIATOR.startPlay(filepath);
+	System.out.println("screen manager start play called on mediator");
+    }
+    
+    public void loadGameScreenNew() {
+	Parent gameScreenRoot = GAME_SCREEN.getScreen();
+	STAGE_MANAGER.switchScreen(gameScreenRoot);
 	System.out.println("screen manager start play called on mediator");
     }
 

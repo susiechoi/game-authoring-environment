@@ -475,8 +475,8 @@ public class AuthoringModel implements GameData {
     public int autogenerateLevel() {
 	int newLevelNumGETber = myLevels.size()+1;
 	Level copiedLevel = myLevels.get(myLevels.size());
-//	myLevels.put(newLevelNumber, new Level(copiedLevel));
-//	return newLevelNumber; 
+	//	myLevels.put(newLevelNumber, new Level(copiedLevel));
+	//	return newLevelNumber; 
 	return newLevelNumGETber;
     }
 

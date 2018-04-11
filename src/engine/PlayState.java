@@ -62,6 +62,8 @@ public class PlayState implements GameData {
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
+	System.out.print("Available towers: ");
+	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
     }
