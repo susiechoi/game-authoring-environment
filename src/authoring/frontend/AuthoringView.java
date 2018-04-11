@@ -85,7 +85,12 @@ public class AuthoringView extends View {
 		return myCurrentCSS;
 	}
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
-		//myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		try {
+		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		} catch (ObjectNotFoundException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
 	}
 
 	protected void goBackFrom(String id) {

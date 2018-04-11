@@ -144,7 +144,8 @@ public class AuthoringController {
 	 * @param newAmount: the new amount of the specified enemy to put in the wave
 	 * @throws ObjectNotFoundException: thrown if the level isn't found
 	 */
-	public void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
+	public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
+	    Path path = getPathFromName(Integer.parseInt(pathName), level);
 	    Level thisLevel = myModel.levelCheck(level);
 	    Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
