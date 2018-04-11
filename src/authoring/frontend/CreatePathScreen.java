@@ -5,14 +5,12 @@ import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -23,7 +21,6 @@ public class CreatePathScreen extends PathScreen {
     private Node pathPanel;
     //private CreatePathPanel panel;
     private CreatePathGrid grid;
-    private AuthoringView myView;
 
     protected CreatePathScreen(AuthoringView view) {
 	super(view);
@@ -68,7 +65,7 @@ public class CreatePathScreen extends PathScreen {
 		    //System.out.println(coordMap.get(key).get(0));
 		    if (grid.checkPathConnected(coordMap.get(key).get(0), coordMap.get(key).get(1))) {
 			System.out.println("TRUE");
-			getView().makePath(grid.getAbsoluteCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
+			getView().makePath(key, grid.getAbsoluteCoordinates(), grid.getGrid()); //when apply is clicked and there is a complete path, the info gets passed to view
 		    } else {
 			System.out.println("FALSE");
 			Alert alert = new Alert(AlertType.INFORMATION);

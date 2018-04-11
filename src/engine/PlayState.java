@@ -128,13 +128,6 @@ public class PlayState implements GameData {
 	isPaused = false;
     }
 
-    public void setInitialObjects() {
-	List<FrontEndTower> availTowers = new ArrayList<>();
-	for (Tower e: currentLevel.getTowers().values()) {
-	    availTowers.add((FrontEndTower) e);
-	}
-    }
-
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
 //	myResources = placedTower.purchase(myResources);
@@ -151,8 +144,7 @@ public class PlayState implements GameData {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
-	myResources += tower.sell();
-	myTowerManager.sell(tower);
+	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
     }

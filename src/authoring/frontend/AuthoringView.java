@@ -8,16 +8,20 @@
 
 package authoring.frontend;
 
+import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import engine.path.Path;
 import frontend.ErrorReader;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
@@ -25,9 +29,9 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import xml.AuthoringModelWriter;
 
 public class AuthoringView extends View {
 
@@ -234,8 +238,13 @@ public class AuthoringView extends View {
 		return myPropertiesReader; 
 	}
 
-	public void makePath(List<Point2D> coordinates, GridPane grid) {
-		myController.makePath(myLevel, coordinates, grid);
+	public void makePath(int name, List<Point2D> coordinates, GridPane grid) {
+	    	try {
+	    	    myController.makePath(name, myLevel, coordinates, grid);
+	    	}
+		catch(ObjectNotFoundException e) {
+		    loadErrorAlert("NoObject");
+		}
 	}
 
 	public String getGameName() {
@@ -245,6 +254,21 @@ public class AuthoringView extends View {
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
-
-
+	public Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
+	    try {
+	    Path path = myController.getPathFromName(pathName, level);
+	    return myController.getEnemyNameToNumberMap(level, path, waveNumber);
+	    }
+	    catch(ObjectNotFoundException e) {
+		    loadErrorAlert("NoObject");
+	    }
+	    return new HashMap<String, Integer>();
+	   
+	}
+	public void writeToFile() {
+	    AuthoringModelWriter writer = new AuthoringModelWriter();
+		System.out.println("SAVING" + myModel.getGameName());
+		writer.write(myModel, myModel.getGameName());
+	}
+	
 }
