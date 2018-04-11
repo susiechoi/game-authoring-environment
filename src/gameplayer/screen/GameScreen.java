@@ -169,9 +169,8 @@ public class GameScreen extends Screen {
     }
     
     public void sellTower(FrontEndTower tower) {
-	MEDIATOR.sellTower(tower);
 	GAME_PANEL.removeTower(tower);
-	
+	MEDIATOR.sellTower(tower);
     }
     
     public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
