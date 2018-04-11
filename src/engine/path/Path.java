@@ -1,6 +1,7 @@
 package engine.path;
 
 import java.util.List;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 
 
@@ -11,12 +12,12 @@ import java.awt.geom.Point2D;
  */
 public class Path {
     private final double THRESHOLD = 5;
-    private List<Point2D> myCoordinates;
+    private List<Point> myCoordinates;
     private Point2D currentPosition;
     private double myAngle;
     private int pathIndex;
 
-    public Path(List<Point2D> coordinates) {
+    public Path(List<Point> coordinates) {
 	myCoordinates = coordinates;
 	pathIndex = 0;
 	currentPosition = myCoordinates.get(pathIndex);

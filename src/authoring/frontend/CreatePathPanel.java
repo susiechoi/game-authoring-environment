@@ -2,7 +2,6 @@ package authoring.frontend;
 
 import java.io.File;
 
-import frontend.PropertiesReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -21,179 +20,153 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class CreatePathPanel extends PathPanel implements Panel{
-    public static final int PANEL_PATH_SIZE = 90;
-    public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 
-    private VBox pathPanel;
-    private VBox dragAndDropPanel;
-    private VBox buttonPanel;
-    private DraggableImage pathImage;
-    private DraggableImage startImage;
-    private DraggableImage endImage;
-    private Button pathSizePlusButton;
-    private Button pathSizeMinusButton;
-    private HBox pathSizeButtons;
-    private Button startImageChooser;
-    private Button endImageChooser;
-    private Button pathImageChooser;
-    private Button applyButton;
-    private Button backButton;
-    private Button backgroundButton;
+	public static final int PANEL_PATH_SIZE = 90;
+	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
 
-
-    public CreatePathPanel(AuthoringView view) {
-	super(view);
-	makePanel();
-    }
-
-    @Override
-    public Button getApplyButton() {
-	return applyButton;
-    }
+	private VBox pathPanel;
+	private VBox dragAndDropPanel;
+	private VBox buttonPanel;
+	private DraggableImage pathImage;
+	private DraggableImage startImage;
+	private DraggableImage endImage;
+	private HBox pathSizeButtons;
+	private Button startImageChooser;
+	private Button endImageChooser;
+	private Button pathImageChooser;
+	private Button applyButton;
+	private Button backButton;
+	private Button backgroundButton;
+	private ImageView trashImage;
 
 
-    public void makePanel() { //separate into smaller methods
+	public CreatePathPanel(AuthoringView view) {
+		super(view);
+		makePanel();
+	}
 
-	pathPanel = new VBox();
-	buttonPanel = new VBox();
-	dragAndDropPanel = new VBox();
-
-	pathPanel.setMaxSize(280, 900);
-	buttonPanel.setMinSize(280, 200);
-	pathPanel.getStylesheets();
-
-	Label panelTitle = new Label("Drag and Drop Paths");
-
-	Image pathImg = new Image("file:images/cobblestone.png");
-	pathImage = new DraggableImage(pathImg);
-	pathImage.setCopyDraggable();
-	pathImage.getPathImage().getStyleClass().add("img-view");
-
-	Image startImg = new Image("file:images/start.png");
-	startImage = new DraggableImage(startImg);
-	startImage.setCopyDraggable();
-	startImage.getPathImage().getStyleClass().add("img-view");
-
-	Image endImg = new Image("file:images/end.png");
-	endImage = new DraggableImage(endImg);
-	endImage.setCopyDraggable();
-	endImage.getPathImage().getStyleClass().add("img-view");
-
-	ImageView trashImage = new ImageView(new Image("file:images/trash.png", 120, 120, true, false));
-	trashImage.getStyleClass().add("img-view");
-	trashImage.setOnDragOver(new EventHandler <DragEvent>() {
-	    public void handle(DragEvent event) {
-		if (event.getDragboard().hasImage()) {
-		    event.acceptTransferModes(TransferMode.ANY);
-		}
-	    }
-	});
-
-	trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
-	    public void handle(DragEvent event) {
-		event.acceptTransferModes(TransferMode.ANY);
-		Dragboard db = event.getDragboard();
-		boolean success = false;
-		if (db.hasImage()) {
-		    success = true;
-		}
-		event.setDropCompleted(success);
-		event.consume();
-	    }
-	});
-
-	//		HBox backgroundImageSelector = new HBox();
-	//		ImageView imageDisplay = new ImageView(); 
-	//		try {
-	//			List<String> imageDropdownOptions = getPropertiesReader().allKeys(BACKGROUND_IMAGES);
-	//			ComboBox<String> imageDropdown = getUIFactory().makeTextDropdown("", imageDropdownOptions);
-	//			backgroundImageSelector = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 100, getErrorCheckedPrompt("Background"), getErrorCheckedPrompt("LoadImage"),
-	//					getErrorCheckedPrompt("NewImageName"), imageDropdown, imageDisplay);
-	//		}
-	//		catch(MissingPropertiesException e) {
-	//			getView().loadErrorScreen("NoImageFile");
-	//		}
-	//		HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, getErrorCheckedPrompt("Background"));
+	@Override
+	public Button getApplyButton() {
+		return applyButton;
+	}
 
 
-	backgroundButton = getUIFactory().makeTextButton("", "Choose Background Image");
+	public void makePanel() { //separate into smaller methods
 
-	Button changeImageButton = getUIFactory().makeTextButton("", "Change Images");
-	changeImageButton.setOnAction(new EventHandler <ActionEvent>() {
-	    public void handle(ActionEvent event) {
-		VBox imageButtons = new VBox();
-		Scene imageButtonScene = new Scene(imageButtons, 600, 600);
-		imageButtonScene.getStylesheets().add(CreatePathScreen.DEFAULT_OWN_STYLESHEET);
-		imageButtons.getChildren().addAll(backgroundButton, pathImageChooser, endImageChooser, startImageChooser);
-		Stage stage = new Stage();
-		stage.setScene(imageButtonScene);
-		stage.show();
-	    }
-	});
+		pathPanel = new VBox();
+		buttonPanel = new VBox();
+		dragAndDropPanel = new VBox();
 
-	pathImageChooser = getUIFactory().makeTextButton("", "Choose Path Image");
-	setImageOnButtonPressed(pathImageChooser, pathImage);
+		pathPanel.setMaxSize(280, 900);
+		buttonPanel.setMinSize(280, 200);
+		pathPanel.getStylesheets();
 
-	startImageChooser = getUIFactory().makeTextButton("", "Choose Start Image");
-	setImageOnButtonPressed(startImageChooser, startImage);
+		Label panelTitle = new Label("Drag and Drop Paths");
 
-	endImageChooser = getUIFactory().makeTextButton("", "Choose End Image");
-	setImageOnButtonPressed(endImageChooser, endImage);
+		Image pathImg = new Image("file:images/cobblestone.png");
+		pathImage = new DraggableImage(pathImg);
+		pathImage.setCopyDraggable();
+		pathImage.getPathImage().getStyleClass().add("img-view");
 
-//	Image plusImg = new Image("file:images/plus.png", 60, 40, true, false);
-//	pathSizePlusButton = getUIFactory().makeImageButton("", plusImg);
-//
-//	Image minusImg = new Image("file:images/minus.png", 60, 40, true, false);
-//	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
+		Image startImg = new Image("file:images/start.png");
+		startImage = new DraggableImage(startImg);
+		startImage.setCopyDraggable();
+		startImage.getPathImage().getStyleClass().add("img-view");
 
-	applyButton = getUIFactory().makeTextButton("", "Apply");
-	
-	backButton = setupBackButton();
+		Image endImg = new Image("file:images/end.png");
+		endImage = new DraggableImage(endImg);
+		endImage.setCopyDraggable();
+		endImage.getPathImage().getStyleClass().add("img-view");
+		
 
-	pathSizeButtons = makeSizingButtons();
+		//		HBox backgroundImageSelector = new HBox();
+		//		ImageView imageDisplay = new ImageView(); 
+		//		try {
+		//			List<String> imageDropdownOptions = getPropertiesReader().allKeys(BACKGROUND_IMAGES);
+		//			ComboBox<String> imageDropdown = getUIFactory().makeTextDropdown("", imageDropdownOptions);
+		//			backgroundImageSelector = getUIFactory().setupImageSelector(getPropertiesReader(),"", BACKGROUND_IMAGES, 100, getErrorCheckedPrompt("Background"), getErrorCheckedPrompt("LoadImage"),
+		//					getErrorCheckedPrompt("NewImageName"), imageDropdown, imageDisplay);
+		//		}
+		//		catch(MissingPropertiesException e) {
+		//			getView().loadErrorScreen("NoImageFile");
+		//		}
+		//		HBox backgroundImagePrompted = getUIFactory().addPromptAndSetupHBox("", backgroundImageSelector, getErrorCheckedPrompt("Background"));
 
-	dragAndDropPanel.getChildren().addAll(panelTitle, startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage);
-	buttonPanel.getChildren().addAll(pathSizeButtons, changeImageButton, applyButton, backButton);
-	pathPanel.getChildren().addAll(dragAndDropPanel, buttonPanel);
-	pathPanel.getStyleClass().add("rootPanel");
-    }
 
-    private void setImageOnButtonPressed(Button button, DraggableImage image) {
-	button.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(final ActionEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("View Pictures");
-		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-		File file = fileChooser.showOpenDialog(new Stage());
-		image.setNewImage(new Image(file.toURI().toString()));
-	    }
-	});
-    }
+		backgroundButton = getUIFactory().makeTextButton("", "Choose Background Image");
 
-    public Button getBackgroundButton() {
-	return backgroundButton;
-    }
+		Button changeImageButton = getUIFactory().makeTextButton("", "Change Images");
+		changeImageButton.setOnAction(new EventHandler <ActionEvent>() {
+			public void handle(ActionEvent event) {
+				VBox imageButtons = new VBox();
+				Scene imageButtonScene = new Scene(imageButtons, 600, 600);
+				imageButtonScene.getStylesheets().add(CreatePathScreen.DEFAULT_OWN_STYLESHEET);
+				imageButtons.getChildren().addAll(backgroundButton, pathImageChooser, endImageChooser, startImageChooser);
+				Stage stage = new Stage();
+				stage.setScene(imageButtonScene);
+				stage.show();
+			}
+		});
 
-    public HBox getSizeButtons() {
-	return pathSizeButtons;
-    }
-    public Node getPanel() {
-	return pathPanel;
-    }
+		pathImageChooser = getUIFactory().makeTextButton("", "Choose Path Image");
+		setImageOnButtonPressed(pathImageChooser, pathImage);
 
-    @Override
-    public Parent makeScreenWithoutStyling() {
-	 //TODO Auto-generated method stub
-	return null;
-    }
+		startImageChooser = getUIFactory().makeTextButton("", "Choose Start Image");
+		setImageOnButtonPressed(startImageChooser, startImage);
 
-    @Override
-    protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
-	// TODO Auto-generated method stub
-	applyButton.setOnAction(event -> e.handle(event));
-    }
+		endImageChooser = getUIFactory().makeTextButton("", "Choose End Image");
+		setImageOnButtonPressed(endImageChooser, endImage);
+
+		applyButton = getUIFactory().makeTextButton("", "Apply");
+
+		backButton = setupBackButton();
+
+		pathSizeButtons = makeSizingButtons();
+		
+		trashImage = makeTrashImage();
+
+		dragAndDropPanel.getChildren().addAll(panelTitle, startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage);
+		buttonPanel.getChildren().addAll(pathSizeButtons, changeImageButton, applyButton, backButton);
+		pathPanel.getChildren().addAll(dragAndDropPanel, buttonPanel);
+		pathPanel.getStyleClass().add("rootPanel");
+	}
+
+	private void setImageOnButtonPressed(Button button, DraggableImage image) {
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				image.setNewImage(new Image(file.toURI().toString()));
+			}
+		});
+	}
+
+	public Button getBackgroundButton() {
+		return backgroundButton;
+	}
+
+	public HBox getSizeButtons() {
+		return pathSizeButtons;
+	}
+	public Node getPanel() {
+		return pathPanel;
+	}
+
+	@Override
+	public Parent makeScreenWithoutStyling() {
+		//TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
+		// TODO Auto-generated method stub
+		applyButton.setOnAction(event -> e.handle(event));
+	}
 
 }
 
