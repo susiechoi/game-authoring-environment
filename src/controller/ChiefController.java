@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  * objects. 
  */
 public class ChiefController {
+  //test
     
     private final StageManager STAGE_MANAGER;
  
