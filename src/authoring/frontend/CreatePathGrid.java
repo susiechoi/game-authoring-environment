@@ -83,8 +83,8 @@ public class CreatePathGrid {
 	//REFACTOR
 	private void populateGrid() {
 
-		for (int x = 0 ; x < grid.getColumnCount(); x++) {
-			for (int y = 0 ; y < grid.getRowCount(); y++) {
+		for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
+			for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
 				StackPane cell = new StackPane();
 
 				final int col = x;
@@ -160,7 +160,7 @@ public class CreatePathGrid {
 	}
 
 	public boolean checkPathConnected(int row, int col) {
-		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount())
+		if (col < 0 || col >= grid.impl_getColumnCount() || row < 0 || row >= grid.impl_getRowCount())
 			return false;
 		if ((getNode(checkGrid, col, row) == null))
 			return false;

@@ -270,5 +270,8 @@ public class AuthoringView extends View {
 		System.out.println("SAVING" + myModel.getGameName());
 		writer.write(myModel, myModel.getGameName());
 	}
+	public void readFromFile(String name) {
+	    myController.setModel(name);
+	}
 	
 }

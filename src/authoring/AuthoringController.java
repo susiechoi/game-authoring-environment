@@ -24,6 +24,8 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
+import xml.AuthoringModelReader;
+import xml.AuthoringModelWriter;
 
 
 public class AuthoringController {
@@ -203,6 +205,10 @@ public class AuthoringController {
 
 	public String getGameName() {
 		return myModel.getGameName(); 
+	}
+	public void setModel(String gameName) {
+	    	AuthoringModelReader reader = new AuthoringModelReader();
+		myModel = reader.createModel(gameName);
 	}
 	
 }

@@ -3,6 +3,7 @@ package gameplayer.panel;
 import java.util.HashMap;
 import java.util.List;
 
+import authoring.frontend.DraggableImage;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -23,13 +24,13 @@ public class PathMaker {
 
     private HashMap<String, List<Point2D>> imageMap = new HashMap<String, List<Point2D>>(); //this is passed
 
-    public GridPane populateGrid() { //populates grid that is
+    public GridPane populateGrid(HashMap<String, List<Point2D>>) { //populates grid that is
 
 	grid = new GridPane();
 	grid.setMaxSize(1000, 750);
 
-	for (int x = 0 ; x < grid.getColumnCount(); x++) {
-	    for (int y = 0 ; y < grid.getRowCount(); y++) {
+	for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
+	    for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
 		StackPane cell = new StackPane();
 
 		final int col = x;
@@ -54,10 +55,10 @@ public class PathMaker {
 			if (db.hasImage()) {
 			    //set draggable images (towers), need to make these draggable images
 			    Image path = db.getImage(); 
-			    ImageView pathImageView = new ImageView(path);
-			    pathImageView.fitWidthProperty().bind(cell.widthProperty()); 
-			    pathImageView.fitHeightProperty().bind(cell.heightProperty()); 
-			    grid.add(pathImageView, colIndex, rowIndex);
+			    DraggableImage pathDraggableImageView = new DraggableImage(path);
+			    pathDraggableImageView.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
+			    pathDraggableImageView.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
+			    grid.add(pathDraggableImageView, colIndex, rowIndex);
 			    success = true;
 			}
 			event.setDropCompleted(success);
