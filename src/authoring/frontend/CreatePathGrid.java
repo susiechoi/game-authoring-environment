@@ -43,8 +43,8 @@ public class CreatePathGrid extends AdjustScreen {
 	private SelectionModel model;
 
 	//TODO: have these update with change images, and get images from default file
-	private ImageView startImage = new ImageView(new Image("file:images/start.png"));
-	private ImageView endImage = new ImageView(new Image("file:images/end.png"));
+	private ImageView startImage = new ImageView(new Image("file:images/square.png"));
+	private ImageView endImage = new ImageView(new Image("file:images/hexagonal.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
 	private GridPane checkGrid;
 	private Label startLabel;
@@ -68,10 +68,10 @@ public class CreatePathGrid extends AdjustScreen {
 		grid = new GridPane();
 
 		checkGrid = new GridPane();
-		checkGrid.setMaxSize(1000, 750);
+		checkGrid.setMaxSize(1020.0, 650.0);
 		setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
-		grid.setMaxSize(1000, 750); 
+		grid.setMaxSize(1020.0, 650.0); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
 //		grid.setGridLinesVisible(true);
 
@@ -82,7 +82,7 @@ public class CreatePathGrid extends AdjustScreen {
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
 
-		grid.setStyle("-fx-background-image: url('file:images/white.png')"); 
+		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
 		populateGrid();
 
 		return grid;
@@ -311,16 +311,12 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 
 	
-	
-	
-	//TODO: Fix this
 	public HashMap<String, List<Point>> getGridImageCoordinates() {
 		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
 		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
 		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
 		return gridImageCoordinates;
 	}
-	
 	
 
 	@Override

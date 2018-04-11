@@ -80,7 +80,7 @@ public class AuthoringView extends View {
 	}
 
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new StartScreen(this)).getScreen());
+		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
 	}
 
 	@Override
@@ -202,7 +202,7 @@ public class AuthoringView extends View {
 	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 	    	System.out.println("View:" +imageCoordinates);
 	    	myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
-	    	System.out.println("After view:" + myModel.allLevels().get(1).getLevelPathMap());
+	    	System.out.println("After view:" + myModel.allLevels().get(0).getLevelPathMap());
 		myImageMap = imageCoordinates;
 	}
 

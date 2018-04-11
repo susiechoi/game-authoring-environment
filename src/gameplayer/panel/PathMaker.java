@@ -17,8 +17,6 @@ import javafx.scene.layout.StackPane;
 
 public class PathMaker {
 
-    private int colIndex;
-    private int rowIndex;
     private GridPane grid;
 
     public GridPane populateGrid(Map<String, List<Point>> map, String backgroundImage) { //populates grid that is
@@ -28,8 +26,8 @@ public class PathMaker {
 	for (int x = 0 ; x < grid.getColumnCount(); x++) {
 	    for (int y = 0 ; y < grid.getRowCount(); y++) {
 		StackPane cell = new StackPane();
-//		needs to be fx styled
-//		grid.setStyle(backgroundImage);
+
+		grid.setStyle("-fx-background-image: url(" + backgroundImage + ")");
 		grid.add(cell, x, y);
 
 	    }
