@@ -50,11 +50,13 @@ public class PlayController {
      * @param pathToXML: Path to game XML file
      */
     public void newPlay(String pathToXML) {
+	System.out.println("in newPlay");
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
 	List<Level> levels = playModel.allLevels();
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
 	myGameEngine.setPlayState(play);
+	myGameEngine.start();
     }
     
   /**
