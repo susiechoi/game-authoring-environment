@@ -91,10 +91,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			if ((myNameField.getText().equals(getMyDefaultName()))) {
-				getView().loadErrorAlert("NoDefaultName");
-			}
-			else {
+			if (validNameField(myNameField)) {
 				try {
 					getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), 0, 0);
 					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");			

@@ -61,6 +61,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 				e-> { applyButton.setDisable(true);}, editPrompt); 
 		applyButton.setDisable(true);
 		applyButton.setOnAction(e -> {
+			System.out.println(objectsDropdown.getValue()+" iS THE SELECTION!!!!!!!");
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
 		});
 

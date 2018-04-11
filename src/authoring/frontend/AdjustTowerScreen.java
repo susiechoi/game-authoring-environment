@@ -67,10 +67,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(goToProjectileLauncherButton);
 		goToProjectileLauncherButton.setOnAction(e -> {
 			if(getIsNewObject()) {
-				if (myNameField.getText().equals(getMyDefaultName())) {
-					getView().loadErrorAlert("NoDefaultName");
-				} 
-				else {
+				if (validNameField(myNameField)) {
 					try {
 						getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), 
 								myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), 
@@ -81,8 +78,8 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 					} catch (NoDuplicateNamesException e1) {
 						getView().loadErrorAlert("NoDuplicateNames");
 					}
-				}
-			} 
+				} 
+			}
 			else {
 				getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText())); 
 			}
