@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,17 +22,20 @@ import javafx.scene.text.Text;
  */
 public class StartScreen extends AuthoringScreen {
     public static final String DEFAULT_XML_FOLDER = "/SavedModels";
+    public static final String DEFAULT_STYLINGS  = "src/styling/CurrentCSS.properties";
     private AuthoringView myView; 
-    private final ArrayList<String> myCSSFiles; 
+    private final List<String> myCSSFiles; 
     private int currCSSIndex; 
     
     protected StartScreen(AuthoringView view) {
 	super(view);
 	myView = view; 
-	ArrayList<String> css = new ArrayList<String>(); 
-	css.add("styling/GameAuthoringStartScreen.css");
-	css.add("styling/TintsAndTones.css");
-	css.add("styling/MutedAndMinimal.css");
+	List<String> css = null;
+	try {
+		css = myView.getPropertiesReader().findVals(DEFAULT_STYLINGS);
+	} catch (MissingPropertiesException e) {
+		myView.loadErrorScreen("NoCSS");
+	} 
 	myCSSFiles = css; 
 	currCSSIndex = 0; 
     }
