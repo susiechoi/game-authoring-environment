@@ -45,7 +45,7 @@ public abstract class PathScreen extends AdjustScreen {
 		pathRoot = new StackPane();
 		initializeGridSettings(grid);
 		setGridUIComponents();
-		
+
 		return pathRoot; 	
 	}
 
@@ -72,7 +72,7 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			}
 		});
-		
+
 		ImageView trashImage = panel.makeTrashImage();
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
 			public void handle(DragEvent event) {
@@ -89,14 +89,14 @@ public abstract class PathScreen extends AdjustScreen {
 				boolean success = false;
 				if (db.hasImage()) {
 					success = true;
-//					pathGrid.getChildren().remove(grid.getDraggableImage());
+					//					pathGrid.getChildren().remove(grid.getDraggableImage());
 				}
 				event.setDropCompleted(success);
 				event.consume();
 			}
 		});
-		
-		
+
+
 		//		Button backgroundButton = (Button) panel.getBackgroundButton();
 		//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
 		//			@Override

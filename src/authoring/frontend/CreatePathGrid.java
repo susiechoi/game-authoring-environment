@@ -77,8 +77,8 @@ public class CreatePathGrid extends AdjustScreen {
 		grid.setMaxSize(1000, 750); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
 
-		System.out.println(getView().getImageCoordinates());
-		gridImageCoordinates = getView().getImageCoordinates();
+//		System.out.println(getView().getImageCoordinates());
+//		gridImageCoordinates = getView().getImageCoordinates();
 
 
 		model = new SelectionModel();

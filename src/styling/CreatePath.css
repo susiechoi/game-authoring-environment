@@ -1,14 +1,8 @@
 VBox {
-<<<<<<< HEAD
     -fx-background-color: #77878B;
     -fx-padding: 5;
     -fx-spacing: 15;
-=======
-	-fx-background-color: #488286;
-	-fx-padding: 2;
-    -fx-spacing: 2;
-    -fx-border-color: black;
->>>>>>> 4830eee48cad9c9bc08919af859ad80102c07b00
+
     -fx-alignment: center;
     -fx-border-color: black;
 }
