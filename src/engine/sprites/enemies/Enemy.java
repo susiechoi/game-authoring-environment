@@ -32,6 +32,7 @@ public class Enemy extends ShootingSprites{
     private ValueProperty myValue;
     private ImageIntersecter myIntersecter;
     private double mySpeed;
+    private double mySize;
     private double myKillReward;
     private String myImage; 
     //    private double myKillUpgradeCost;
@@ -57,7 +58,7 @@ public class Enemy extends ShootingSprites{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-	super("", copiedEnemy.getImageString(), copiedEnemy.getImageView().getImage().getWidth(), copiedEnemy.getLauncher());
+	super("", copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher());
 	myName = copiedEnemy.getName(); 
 	setImage(copiedEnemy.getImageView().getImage()); 
 	myIntersecter = copiedEnemy.getIntersecter(); 

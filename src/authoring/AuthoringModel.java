@@ -119,7 +119,7 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed, 
+			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed, 
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 		Level currentLevel = levelCheck(level);
@@ -132,7 +132,7 @@ public class AuthoringModel implements GameData {
 //		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
 				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
-				projectileUpgradeValue, projectileSpeed);
+				projectileUpgradeValue, projectileSize, projectileSpeed);
 		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
 				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
 				launcherValue, towerProjectile); 
@@ -307,6 +307,7 @@ public class AuthoringModel implements GameData {
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
 			Launcher towerLauncher = new LauncherBuilder().construct(
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  

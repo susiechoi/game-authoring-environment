@@ -97,6 +97,7 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		towerImage.setLayoutX(-towerImage.getFitWidth()/2);
 		towerImage.setLayoutY(-towerImage.getFitHeight()/2);
+		System.out.println(towerImage.getFitWidth() + " andrew land " + towerImage.getImage().getWidth());
 		if(newTower!= null) {
 		    addTowerImageViewAction(newTower);
 		    towersPlaced.add(newTower);
