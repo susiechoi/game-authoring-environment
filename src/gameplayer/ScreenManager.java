@@ -50,6 +50,16 @@ public class ScreenManager extends View{
 
     //private final FileIO FILE_READER;
 
+
+    public ScreenManager(StageManager stageManager, String language) {
+	super(stageManager);
+	STAGE_MANAGER = stageManager;
+	PROMPTS = new PromptReader(language, this);
+	findSettings();
+	//setup rest of values once file reader is finished
+    }
+
+
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
@@ -59,14 +69,9 @@ public class ScreenManager extends View{
     }
 
 
-    public ScreenManager(StageManager stageManager, String language) {
-    	super(stageManager);
-    	STAGE_MANAGER = stageManager;
-    	PROMPTS = new PromptReader(language, this);
-    	findSettings();
-	}
-    
-	public List<Integer> getMediatorInts(){
+
+
+    public List<Integer> getMediatorInts(){
 	controlVars = new ArrayList<Integer>();
 	for(int i = 0; i < 3; i++) {
 	    controlVars.add(Integer.valueOf(0));
