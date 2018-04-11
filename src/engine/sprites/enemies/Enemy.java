@@ -50,7 +50,6 @@ public class Enemy extends ShootingSprites{
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
-	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND IMAGE "+image);
     }
 
     /**
@@ -138,7 +137,8 @@ public class Enemy extends ShootingSprites{
 	return myValue; 
     }
     public int getPointValue() {
-    	return (int)this.myValue.getProperty();
+    	return 0;
+   // 	return (int)this.myValue.getProperty();
     }
 
     

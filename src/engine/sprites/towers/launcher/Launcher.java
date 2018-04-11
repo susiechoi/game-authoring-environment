@@ -76,9 +76,9 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-		Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
-    		this.addToActiveList(launchedProjectile);
-    		return launchedProjectile;
+    	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
+    	this.addToActiveList(launchedProjectile);
+    	return launchedProjectile;
     }
     
     /**

@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
- *
+ * @author Miles Todzo
  */
 public class Projectile extends Sprite {
 
@@ -35,6 +35,7 @@ public class Projectile extends Sprite {
 	
 	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	    this.myDamage = myProjectile.myDamage;
 	    myTarget = target;
 	    mySpeed = 300;
 	  //  System.out.println("target x is " + myTarget.getX());
@@ -51,6 +52,7 @@ public class Projectile extends Sprite {
 	 */
 	public void move(double elapsedTime) {
 	    	//myTarget.place(0, 0);
+		//System.out.println(myTarget.getX() + " target x y "+ myTarget.getY());
 	    	rotateImage();
 	//    	System.out.println("speed is " + mySpeed);
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
@@ -106,5 +108,10 @@ public class Projectile extends Sprite {
 	
 	public double getSize() {
 		return mySize; 
+	}
+	
+	@Override
+	public boolean handleCollision(Sprite sprite) {
+		return this.getImageView().getBoundsInParent().intersects(sprite.getImageView().getBoundsInParent());
 	}
 }

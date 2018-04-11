@@ -65,7 +65,6 @@ public class Wave {
 	    if (entry.getValue() > 0) {
 		Enemy retEnemy = entry.getKey();
 		decrementEnemyCount(retEnemy);
-		System.out.println(myEnemies.get(retEnemy) + " this is the name of the enemy we are returning in the Wave class hehe");
 		return new Enemy(retEnemy);
 	    }
 	}

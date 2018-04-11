@@ -67,7 +67,7 @@ public abstract class ShootingSprites extends Sprite{
     public List<Sprite> checkForCollision(ShootingSprites target) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	List<Projectile> projectiles = this.getProjectiles();
-	this.checkTowerEnemyCollision(target);
+	this.checkTowerEnemyCollision(target); //TODO add any dead tower/enemy to toBeRemoved list
 	for (Projectile projectile: projectiles) {
 	    if(target.intersects(projectile)){
 		toBeRemoved = target.objectCollision(projectile);
@@ -80,19 +80,16 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     private List<Sprite> objectCollision(Sprite collider) {
-	List<Sprite> deadSprites = new ArrayList<>();
-	hitCount++;
-	if(!this.handleCollision(collider)) {
-	    deadSprites.add(this);
-	    roundScore += this.getPointValue();
-	    if(!this.handleCollision(collider)) {
-		hitCount++;
-		deadSprites.add(this);
-	    }
-	    if(!collider.handleCollision(this)) {
-		deadSprites.add(collider);
-	    }
-	}
+    	List<Sprite> deadSprites = new ArrayList<>();
+    	hitCount++;
+    	if(!this.handleCollision(collider)) {
+    		//deadSprites.add(this);
+    		roundScore += this.getPointValue();
+    		hitCount++;
+    	}
+    	if(!collider.handleCollision(this)) {
+    		deadSprites.add(collider);
+    	}
 	return deadSprites;
     }
 
@@ -119,7 +116,6 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-	System.out.println("shooter X is " + shooterX);
 	return myLauncher.launch(target, shooterX, shooterY);
     }
 
