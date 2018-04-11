@@ -119,7 +119,7 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed, 
+			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed, 
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 		Level currentLevel = levelCheck(level);
@@ -132,7 +132,7 @@ public class AuthoringModel implements GameData {
 //		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
 				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
-				projectileUpgradeValue, projectileSpeed);
+				projectileUpgradeValue, projectileSize, projectileSpeed);
 		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
 				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
 				launcherValue, towerProjectile); 
@@ -173,6 +173,51 @@ public class AuthoringModel implements GameData {
 
 
 
+	/**
+	 * Reads information from GenericTower.properties file to create a default
+	 * Tower object to be used to populate user input fields.
+	 * 
+	 * @return Tower: a generic tower with attribute read in from .properties file
+	 */
+	private Tower generateGenericTower() throws NumberFormatException, FileNotFoundException {
+		try {
+//			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
+			Projectile towerProjectile = new ProjectileBuilder().construct(
+					myDefaultName,  
+					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
+					// TODO add projectile speed !!!!
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
+			Launcher towerLauncher = new LauncherBuilder().construct(
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherRange")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), towerProjectile);  
+			double towerSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerSize"));
+			Tower newTower = new TowerBuilder().construct(
+					myDefaultName, 
+					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage"), 
+					towerSize, 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealth")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeValue")), 
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeCost")), 
+					towerLauncher,
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerValue")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeCost")),
+					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeValue"))); 
+			return newTower;
+		} 
+		catch (MissingPropertiesException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Could not load GenericTower object!");
+		}
+		return null;
+	}
 
     public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 	return levelCheck(levelNum).getPaths().get(name-1);
@@ -301,51 +346,7 @@ public class AuthoringModel implements GameData {
 	myGameName = mySettings.getGameName();
     }
 
-    /**
-     * Reads information from GenericTower.properties file to create a default
-     * Tower object to be used to populate user input fields.
-     * 
-     * @return Tower: a generic tower with attribute read in from .properties file
-     */
-    private Tower generateGenericTower() throws NumberFormatException, FileNotFoundException {
-	try {
-	    //			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
-	    Projectile towerProjectile = new ProjectileBuilder().construct(
-		    myDefaultName,  
-		    myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
-		    // TODO add projectile speed !!!!
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")),
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
-	    Launcher towerLauncher = new LauncherBuilder().construct(
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherRange")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), towerProjectile);  
-	    double towerSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerSize"));
-	    Tower newTower = new TowerBuilder().construct(
-		    myDefaultName, 
-		    myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage"), 
-		    towerSize, 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealth")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeValue")), 
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeCost")), 
-		    towerLauncher,
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerValue")),
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeCost")),
-		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeValue"))); 
-	    return newTower;
-	} 
-	catch (MissingPropertiesException e) {
-	    // TODO Auto-generated catch block
-	    System.out.println("Could not load GenericTower object!");
-	}
-	return null;
-    }
-
+   
     /**
      * Reads information from GenericEnemy.properties file to create a default
      * Enemy object to be used to populate user input fields.

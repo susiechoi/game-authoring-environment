@@ -90,6 +90,10 @@ public class Launcher extends Manager<Projectile>{
     public double getProjectileSpeed() {
     	return myProjectile.getSpeed(); 
     }
+    
+    public double getProjectileSize() {
+    	return myProjectile.getSize(); 
+    }
 
     public String getDamageName() {
     	return myProjectile.getDamageName();
