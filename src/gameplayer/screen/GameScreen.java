@@ -8,6 +8,7 @@ import gameplayer.panel.TowerInfoPanel;
 import gameplayer.panel.ControlsPanel;
 
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -171,8 +172,9 @@ public class GameScreen extends Screen {
 	MEDIATOR.sellTower(tower);
     }
     
-    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	GAME_PANEL.setPath(imageMap, numRow, numCol);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+    	System.out.println("Game Screen: " +imageMap);
+	GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
     }
     
     

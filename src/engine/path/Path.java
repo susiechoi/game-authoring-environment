@@ -20,7 +20,8 @@ public class Path {
 	private int pathIndex;
 	private Map<String, List<Point>> myPathMap;
 
-	public Path(List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
+	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
+		System.out.println("Path: " +imageCoordinates);
 		myCoordinates = coordinates;
 		pathIndex = 0;
 		currentPosition = myCoordinates.get(pathIndex);

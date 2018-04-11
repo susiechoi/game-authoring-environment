@@ -190,6 +190,26 @@ public class AuthoringModel implements GameData {
     //parameters needed to get passed: background image, grid size, location of each image in grid 
 
 
+    public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	System.out.println("Model: " +imageCoordinates);
+	Level currentLevel = levelCheck(level);
+	Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
+	currentLevel.addPath(newPath);
+
+	//		myImageMap = imageCoordinates;
+	//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
+    }
+
+    // TODO 
+    /**
+     * Method through which information can be sent to instantiate or edit a path object
+     * Wraps constructor in case of new object creation
+     * @throws ObjectNotFoundException 
+     */
+
+    //parameters needed to get passed: background image, grid size, location of each image in grid 
+
+
     public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 	Level currentLevel = levelCheck(level);
 	Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
@@ -451,10 +471,11 @@ public class AuthoringModel implements GameData {
      * @return int: the number of the new, auto generated level
      */
     public int autogenerateLevel() {
-	int newLevelNumber = myLevels.size()+1;
+	int newLevelNumGETber = myLevels.size()+1;
 	Level copiedLevel = myLevels.get(myLevels.size());
-	myLevels.put(newLevelNumber, new Level(copiedLevel));
-	return newLevelNumber; 
+//	myLevels.put(newLevelNumber, new Level(copiedLevel));
+//	return newLevelNumber; 
+	return newLevelNumGETber;
     }
 
     public void setGameName(String gameName) {
@@ -466,8 +487,7 @@ public class AuthoringModel implements GameData {
 	return myGameName; 
     }
 
-
-    public HashMap<String, List<Point>> getImageMap() {
+    public Map<String, List<Point>> getImageMap() {
 	return myImageMap;
     }
 
