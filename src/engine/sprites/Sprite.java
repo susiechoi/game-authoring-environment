@@ -30,15 +30,10 @@ public class Sprite  {
     public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
+	System.out.println(image);
 	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
-//	myImageView.setFitWidth(50);
-//	myImageView.setFitHeight(50);
 	myImageView.setPreserveRatio(true);
-//	myImageView.setFitWidth(size);
-//	myImageView.setFitHeight(size);
-	System.out.println(size + " SIZE");
-	//System.out.println(myImageView.getImage().getWidth() + "frick me up");
-	System.out.println(myImageView.getFitWidth()+ " sprite width");
+
     }
     
     /**

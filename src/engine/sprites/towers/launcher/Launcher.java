@@ -29,6 +29,7 @@ public class Launcher extends Manager<Projectile>{
 	myProjectile = projectile;
 	myRange = range;
 	timeLastFired = System.nanoTime();
+	System.out.println("original timeLastFired " + timeLastFired);
     }
 
     /**
@@ -62,10 +63,17 @@ public class Launcher extends Manager<Projectile>{
     		return launchedProjectile;
     }
     
+    /**
+     * Checks to see if the rate of fire is less than the time elapsed since the last shot
+     * @return 
+     */
     public boolean hasReloaded() {
     	long currTime = System.nanoTime();
      	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()) {
+     	System.out.println("currTime is " + currTime);
+     	System.out.println("timelastFired is " + timeLastFired);
+     	System.out.println("curr timeSinceLastshot is " + timeSinceLastShot);
+     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
      		timeLastFired = currTime;
      		return true;
      	}
