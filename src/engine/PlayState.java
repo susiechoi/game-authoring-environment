@@ -11,6 +11,7 @@ import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
 import engine.path.Path;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -63,6 +64,8 @@ public class PlayState implements GameData {
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
+	myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
+
     }
 
     public void update(double elapsedTime) {
@@ -91,19 +94,19 @@ public class PlayState implements GameData {
 	    }
 	    UNIVERSAL_TIME+=elapsedTime;
 	    List<Sprite> toBeRemoved = new ArrayList<>();
-	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
-	    toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	    myTowerManager.shoot(myEnemyManager.getListOfActive());
+	    //toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
-	    for (Projectile projectile: myTowerManager.shoot(myTowerManager.getListOfActive())) {
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+		System.out.println("added to med");
 	    }
-	    for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getListOfActive())) {
-		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-	    }
-	    myEnemyManager.moveProjectiles();
-	    myEnemyManager.moveEnemies();
+//	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
+//		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+//	    }
+//	    myEnemyManager.moveProjectiles();
+//	    myEnemyManager.moveEnemies();
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
     }

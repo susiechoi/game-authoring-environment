@@ -115,10 +115,10 @@ public class Level {
 	}
 
 	/**
-	 * Adds an available tower to the level
+	 * Adds an available enemy to the level
 	 * 
 	 * @param name: The unique string name for the tower object
-	 * @param tower: The tower object to be added
+	 * @param tower: The enemy object to be added
 	 */
 	public void addEnemy(String name, Enemy enemy) {
 		myEnemies.put(name, enemy);

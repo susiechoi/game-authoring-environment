@@ -93,8 +93,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(Tower copiedTower, Point point) {
 	super(copiedTower.getName(), copiedTower.getImageString(), 
-	copiedTower.mySize, copiedTower.getLauncher()); 
-	System.out.println("Health value copied is " + copiedTower.getHealthProperty().getProperty());
+	copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty();
 	propertyStats = new HashMap<String, Double>();

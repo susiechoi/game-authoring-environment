@@ -30,7 +30,6 @@ public class Sprite  {
     public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
-	System.out.println(image);
 	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
 	myImageView.setPreserveRatio(true);
 
