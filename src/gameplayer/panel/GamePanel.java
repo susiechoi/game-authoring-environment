@@ -63,11 +63,12 @@ public class GamePanel extends Panel{
 	    int random = rand.nextInt(backgroundMap.size());
 	    int count = 0;
 	   for(String s:  backgroundMap.keySet()) {
-	       if(count == random) {
+	       if(count++ == random) {
 		   ImageView imageView = new ImageView();
 		   imageView.setImage(backgroundMap.get(s));
 		   panelRoot.getChildren().add(imageView);
 	       }
+	       
 	   }
 	} catch (MissingPropertiesException e1) {
 	    //TODO should fix but who cares since this will be refactored 
