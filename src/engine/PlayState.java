@@ -95,13 +95,14 @@ public class PlayState implements GameData {
 			} catch (Exception e) {
 				// do nothing
 			}
+			//adding enemy to screen
 			if (currentLevel.getUnmodifiablePaths().get(0) != null && currentLevel.getNewEnemy(currentLevel.getUnmodifiablePaths().get(0))!= null) {
 				System.out.println("NOT NULL AND BEING ADDED TO MEDIATor");
 				myMediator.addSpriteToScreen((FrontEndSprite) currentLevel.getNewEnemy(currentLevel.getUnmodifiablePaths().get(0)));
 			}
 			UNIVERSAL_TIME+=elapsedTime;
 			List<Sprite> toBeRemoved = new ArrayList<>();
-			//toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+			toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 			//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 			myTowerManager.moveProjectiles(elapsedTime);
 			myTowerManager.moveTowers();

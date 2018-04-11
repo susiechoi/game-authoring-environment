@@ -43,14 +43,14 @@ public class Projectile extends Sprite {
 	    System.out.println("Yorig is : " + this.getY());
 	    this.rotateImage();
 	    
-	    myTarget = target;
+	    //myTarget = target;
 	}
 
 	/**
 	 * Moves image in direction of it's orientation
 	 */
 	public void move(double elapsedTime) {
-	    	myTarget.place(0, 0);
+	    	//myTarget.place(0, 0);
 	    	rotateImage();
 	    	System.out.println("speed is " + mySpeed);
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
