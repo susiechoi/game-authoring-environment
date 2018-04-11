@@ -174,7 +174,7 @@ public class GameScreen extends Screen {
     }
     
     public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	
+	GAME_PANEL.setPath(imageMap, numRow, numCol);
     }
     
     
