@@ -1,3 +1,4 @@
+
 package gameplayer.screen;
 
 import gameplayer.panel.TowerPanel;
@@ -8,8 +9,11 @@ import gameplayer.panel.TowerInfoPanel;
 import gameplayer.panel.BuyPanel;
 import gameplayer.panel.ControlsPanel;
 
+
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -20,8 +24,7 @@ import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
-
-
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -47,15 +50,15 @@ public class GameScreen extends Screen {
     private ScreenManager SCREEN_MANAGER;
     private BuyPanel BUY_PANEL;
     private VBox rightPane;
+    private BorderPane leftPane;
     private final Mediator MEDIATOR;
 
-
-    public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
-	SCREEN_MANAGER = ScreenController;
-	UIFACTORY = new UIFactory();
-	PROMPTS = promptReader;
-	MEDIATOR = mediator;
-
+	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
+		SCREEN_MANAGER = ScreenController;
+		UIFACTORY = new UIFactory();
+		PROMPTS = promptReader;
+		MEDIATOR = mediator;
+		makeScreenWithoutStyling();
     }
 
     @Override
@@ -68,21 +71,20 @@ public class GameScreen extends Screen {
 	UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
 	BUY_PANEL = new BuyPanel(this, PROMPTS);
 
-
-
 	rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 	VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
-	BorderPane leftPane = new BorderPane();
+	leftPane = new BorderPane();
 	leftPane.setMaxWidth(Double.MAX_VALUE);
 	leftPane.setMaxHeight(Double.MAX_VALUE);
+
 
 	leftPane.setTop(SCORE_PANEL.getPanel());
 	leftPane.setCenter(GAME_PANEL.getPanel());
 	leftPane.setBottom(UPGRADE_PANEL.getPanel());
 
 	rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
-		rootPane.setCenter(leftPane);
+	rootPane.setCenter(leftPane);
 	rootPane.setRight(rightPane);
 
 	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
@@ -112,23 +114,23 @@ public class GameScreen extends Screen {
 	// TODO Auto-generated method stub
 	return null;
     }
-    
+
     public void displaySprite(FrontEndSprite sprite) {
 	GAME_PANEL.addSprite(sprite);
     }
-    
+
     public void remove(FrontEndSprite sprite) {
-   	GAME_PANEL.removeSprite(sprite);
-       }
-    
+	GAME_PANEL.removeSprite(sprite);
+    }
+
     public void setAvailbleTowers(List<FrontEndTower> availableTowers) {
 	TOWER_PANEL.setAvailableTowers(availableTowers);
     }
-    
+
     public void loadErrorScreen(String message) {
 	SCREEN_MANAGER.loadErrorScreen(message);
     }
-    
+
     //TODO implement reflection//rest of controls
     public void controlTriggered(String control) {
 	if(control.equals("play"))
@@ -138,39 +140,46 @@ public class GameScreen extends Screen {
 	else if(control.equals("speedup"))
 	    MEDIATOR.fastForward(10);    
     }
-    
+
     public void updateCurrency(Integer newBalence) {
 	TOWER_PANEL.updateCurrency(newBalence);
     }
-    
+
     public void updateHealth(Integer newHealth) {
 	SCORE_PANEL.updateHealth(newHealth);
     }
-    
+
     public void updateScore(Integer newScore) {
 	SCORE_PANEL.updateScore(newScore);
     }
-    
+
     public void updateLevel(Integer newLevel) {
 	SCORE_PANEL.updateLevel(newLevel);
     }
-    
+
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-	return MEDIATOR.placeTower(position, tower.getName());
+	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
+	System.out.println(placedTower.getImageView().getFitWidth() + " placed tower width ");
+	return placedTower;
     }
-    
+
     public void towerClickedOn(FrontEndTower tower) {
 	TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 	rightPane.getChildren().clear();
 	rightPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
     }
-    
+
     public void sellTower(FrontEndTower tower) {
-	MEDIATOR.sellTower(tower);
 	GAME_PANEL.removeTower(tower);
-	
+	MEDIATOR.sellTower(tower);
     }
+
     
-    
-    
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+    	System.out.println("Game Screen: " +imageMap);
+	GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
+    }
+
+
 }
+

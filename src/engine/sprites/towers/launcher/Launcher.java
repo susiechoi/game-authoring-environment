@@ -55,16 +55,21 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-    		this.addToActiveList(myProjectile);
+		Projectile launchedProjectile = new Projectile(myProjectile, target);
+    		this.addToActiveList(launchedProjectile);
     		double radianOffset = Math.atan((target.getX()-shooterX)/(target.getY()-shooterY));
-    		myProjectile.setRotate(radianOffset);
-    		return myProjectile;
+    		launchedProjectile.setRotate(radianOffset);
+    		return launchedProjectile;
     }
     
+    /**
+     * Checks to see if the rate of fire is less than the time elapsed since the last shot
+     * @return 
+     */
     public boolean hasReloaded() {
     	long currTime = System.nanoTime();
      	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()) {
+     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
      		timeLastFired = currTime;
      		return true;
      	}
@@ -89,6 +94,10 @@ public class Launcher extends Manager<Projectile>{
     
     public double getProjectileSpeed() {
     	return myProjectile.getSpeed(); 
+    }
+    
+    public double getProjectileSize() {
+    	return myProjectile.getSize(); 
     }
 
     public String getDamageName() {

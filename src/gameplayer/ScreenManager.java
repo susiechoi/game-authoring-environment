@@ -1,24 +1,34 @@
 package gameplayer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import java.awt.Point;
-
-import engine.Mediator;
-import engine.sprites.FrontEndSprite;
-import engine.sprites.towers.CannotAffordException;
-import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.awt.Point;
+
+
+import engine.Mediator;
+import engine.sprites.FrontEndSprite;
+import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
-
+/**
+ * 
+ * @author Ben Hodgson 4/11/18
+ * 
+ * Class to manage updating Screen elements that remain across the entire game
+ * (score, level, health, currency, etc.)
+ */
 public class ScreenManager extends View{
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
@@ -36,7 +46,7 @@ public class ScreenManager extends View{
     private Integer health;
     private Integer currency;
 
-    private final Mediator MEDIATOR;
+    private Mediator MEDIATOR;
     private final StageManager STAGE_MANAGER;
     private GameScreen GAME_SCREEN;
     private String GAME_TITLE;
@@ -44,20 +54,25 @@ public class ScreenManager extends View{
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
     private List<Integer> controlVars;
-    
+
     //private final FileIO FILE_READER;
     
-
-
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
 	PROMPTS = new PromptReader(language, this);
 	MEDIATOR = mediator;
 	findSettings();
-	//setup rest of values once file reader is finished
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
     }
 
+    public ScreenManager(StageManager stageManager, String language) {
+	super(stageManager);
+	STAGE_MANAGER = stageManager;
+	PROMPTS = new PromptReader(language, this);
+	findSettings();
+	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+    }
 
     public List<Integer> getMediatorInts(){
 	controlVars = new ArrayList<Integer>();
@@ -67,9 +82,6 @@ public class ScreenManager extends View{
 	return controlVars;
     }
 
-
-
-
     //TODO set Style sheets
     public void loadInstructionScreen() {
 	InstructionScreen instructScreen = new InstructionScreen(this, PROMPTS);
@@ -77,11 +89,16 @@ public class ScreenManager extends View{
 	STAGE_MANAGER.switchScreen(instructRoot);
     }
 
-    public void loadGameScreenNew() {
-	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+    public void loadGameScreenNew(String filepath) {
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
-	MEDIATOR.startPlay("blah");
+	MEDIATOR.startPlay(filepath);
+	System.out.println("screen manager start play called on mediator");
+    }
+    
+    public void loadGameScreenNew() {
+	Parent gameScreenRoot = GAME_SCREEN.getScreen();
+	STAGE_MANAGER.switchScreen(gameScreenRoot);
 	System.out.println("screen manager start play called on mediator");
     }
 
@@ -124,17 +141,18 @@ public class ScreenManager extends View{
     public void remove(FrontEndSprite sprite) {
 	GAME_SCREEN.remove(sprite);
     }
-    
+
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	GAME_SCREEN.setAvailbleTowers(availableTowers);
     }
-    
+
     public void updateCurrency(Integer newBalence) {
 	GAME_SCREEN.updateCurrency(newBalence);
     }
-    
-  
-    
+
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+	GAME_SCREEN.setPath(imageMap, backgroundImageFilePath);
+    }
 
 
 }

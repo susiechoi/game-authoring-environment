@@ -1,8 +1,8 @@
+
 package engine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import data.GameData;
 
@@ -10,6 +10,9 @@ import java.awt.Point;
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
+import engine.path.Path;
+import engine.sprites.enemies.Enemy;
+import engine.sprites.enemies.wave.Wave;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
@@ -26,7 +29,6 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author benauriemma 4/8
  * @date 4/6/18
  */
-
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
@@ -39,8 +41,16 @@ public class PlayState implements GameData {
     private Level currentLevel;
     private boolean isPaused;
 
+    /**
+     * Constructor for play state object that sets up initial levels.
+     * 
+     * @param mediator
+     * @param levels
+     * @param score
+     * @param resources
+     * @param universalTime
+     */
     public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
-	System.out.println("playstate constructor");
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -51,34 +61,61 @@ public class PlayState implements GameData {
 	myResources = resources;
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
-	for (Tower t: currentLevel.getTowers().values()) {
-	    availTowers.add((FrontEndTower)t);
-	}
+	availTowers.addAll(currentLevel.getTowers().values());
+	System.out.print("Available towers: ");
+	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
     }
 
     public void update(double elapsedTime) {
-	UNIVERSAL_TIME+=elapsedTime;
-	List<Sprite> toBeRemoved = new ArrayList<>();
-	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getObservableListOfActive()));
-	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getObservableListOfActive()));
-	myTowerManager.shoot(myEnemyManager.getObservableListOfActive());
-	myTowerManager.moveProjectiles();
-	myTowerManager.moveTowers();
-	for (Projectile projectile: myTowerManager.shoot(myTowerManager.getObservableListOfActive())) {
-	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+	if(!isPaused) {
+	    try {
+		for (Path path : currentLevel.getUnmodifiablePaths()) {
+		    Wave currentWave;
+		    if (!currentLevel.getWaves(path).isEmpty()) {
+			currentWave = currentLevel.getWaves(path).get(0);
+		    }
+		    else {
+			continue;
+		    }
+		    int currentTime = new Double(UNIVERSAL_TIME).intValue();
+		    if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
+			currentLevel.getNewEnemy(path);
+		    }
+		    // TODO: remove "magic numbers", improve this to be 3 seconds
+		    // after the wave finished
+		    if (UNIVERSAL_TIME % 3 == 0 && currentWave.isFinished()) {
+			currentLevel.removeWave(path);
+		    }
+		}
+	    } catch (Exception e) {
+		// do nothing
+	    }
+	    UNIVERSAL_TIME+=elapsedTime;
+	    List<Sprite> toBeRemoved = new ArrayList<>();
+	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	    toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	    myTowerManager.shoot(myEnemyManager.getListOfActive());
+	    myTowerManager.moveProjectiles(elapsedTime);
+	    myTowerManager.moveTowers();
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
+		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+	    }
+	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
+		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+	    }
+	    myEnemyManager.moveProjectiles();
+	    myEnemyManager.moveEnemies();
+	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
-	for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getObservableListOfActive())) {
-	    myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-	}
-	myEnemyManager.moveProjectiles();
-	myEnemyManager.moveEnemies();
-	currentLevel.getNewEnemy(UNIVERSAL_TIME);
-	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
-
     }
 
+
+
+    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+    //	myResources -= tower.upgrade(upgradeName);
+    //    }
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);
@@ -98,17 +135,10 @@ public class PlayState implements GameData {
 	isPaused = false;
     }
 
-    public void setInitialObjects() {
-	List<FrontEndTower> availTowers = new ArrayList<>();
-	for (Tower e: currentLevel.getTowers().values()) {
-	    availTowers.add((FrontEndTower) e);
-	}
-    }
-
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	//myResources = placedTower.purchase(myResources);
-	//myMediator.updateCurrency(myResources);
+	//	myResources = placedTower.purchase(myResources);
+	//	myMediator.updateCurrency(myResources);
 	return placedTower;
     }
 
@@ -116,9 +146,14 @@ public class PlayState implements GameData {
     //	myResources -= tower.upgrade(upgradeName);
     //    }
 
+    /**
+     * Sells the tower, increments users currency, and removes it from collection and screen
+     * @param tower
+     */
     public void sellTower(FrontEndTower tower) {
-	myResources += tower.sell();
+	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
     }
 }
+

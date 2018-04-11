@@ -6,6 +6,7 @@ import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import java.util.List;
+import java.util.Map;
 
 import authoring.AuthoringModel;
 import controller.PlayController;
@@ -23,10 +24,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 import xml.AuthoringModelReader;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
+import xml.PlayLoader;
 
 /**
  * This class serves as a bridge between the front end, back end, and file I/O of our game player
@@ -101,13 +104,8 @@ public class Mediator {
      * @param filename	name of file
      */
     public void startPlay(String filename) {
-	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-	StackTraceElement element = stackTrace[2];
-	System.out.println("I was called by a method named:" + element.getMethodName());
-	System.out.println("That method is in class:" + element.getClassName());
-	//myPlayController.newPlay(filename);
-	System.out.println("set authoring call in mediator");
-	myPlayController.setAuthoring();
+	myPlayController.newPlay(filename);
+	//myPlayController.setAuthoring();
     }
     
     /**
@@ -147,9 +145,8 @@ public class Mediator {
 	myScreenManager.remove(sprite);
     }
     
-    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	System.out.println("AVAIL");
-	    myScreenManager.setAvailableTowers(availableTowers);
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {  
+	myScreenManager.setAvailableTowers(availableTowers);
     }
 
     /**
@@ -249,16 +246,13 @@ public class Mediator {
 	}
 	
     }
-
     
-    //    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
-    //	value.addListener(listenerToAdd);
-    //    }
-
-
-    // a whole slew of other methods
-    // but fr there should be a method for every event that can occur
-
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+    	System.out.println("Mediator: " +imageMap);
+		
+	myScreenManager.setPath(imageMap, backgroundImageFilePath);
+    }
 
 
 }
+

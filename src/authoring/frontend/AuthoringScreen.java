@@ -24,12 +24,12 @@ public abstract class AuthoringScreen extends Screen {
     }
     
     protected Button setupBackButton() {
-	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());});
+	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());}, myView.getErrorCheckedPrompt("Cancel"));
     }
     protected Button setupBackButtonSuperclass() {
-	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());});
+	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());}, myView.getErrorCheckedPrompt("Cancel"));
     }
     protected Button setupBackButtonCustom(EventHandler<ActionEvent> e) {
-	return getUIFactory().setupBackButton(e);
+	return getUIFactory().setupBackButton(e, myView.getErrorCheckedPrompt("Cancel"));
     }
 }

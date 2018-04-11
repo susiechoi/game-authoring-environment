@@ -1,8 +1,8 @@
 package engine.sprites.towers.projectiles;
 
+import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
-import engine.sprites.properties.HealthProperty;
 import javafx.scene.image.Image;
 
 /**
@@ -12,10 +12,12 @@ import javafx.scene.image.Image;
  * @author Katherine Van Dyk
  *
  */
-public class Projectile extends Sprite {
+public class Projectile extends Sprite implements FrontEndSprite{
 
 	private DamageProperty myDamage;
 	private double mySpeed;
+	private double mySize; 
+	private Sprite myTarget;
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -24,20 +26,38 @@ public class Projectile extends Sprite {
 	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
 	 * @param image: image of projectile
 	 */
-	public Projectile(String name, DamageProperty damage, Image image, double speed) {
-	    	super(name, image);
+	public Projectile(String name, DamageProperty damage, double size, String image, double speed) {
+	    	super(name, image, size);
 		myDamage = damage;
 		mySpeed = speed;
+		mySize = size; 
 	}
 	
+	public Projectile(Projectile myProjectile, Sprite target) {
+	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	    myTarget = target;
+	}
+
 	/**
 	 * Moves image in direction of it's orientation
 	 */
-	public void move() {
-		double xMove = Math.sin(this.getRotate())*this.mySpeed;
-		double yMove = Math.cos(this.getRotate())*this.mySpeed;
-		this.setX(this.getX()+xMove);
-		this.setY(this.getX()+yMove);
+	public void move(double elapsedTime) {
+	    	rotateImage();
+	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
+		double xMove = Math.sin(this.getRotate())*totalDistanceToMove;
+		double yMove = Math.cos(this.getRotate())*totalDistanceToMove;
+		this.getImageView().setX(this.getX()+xMove);
+		this.getImageView().setY(this.getX()+yMove);
+	}
+	
+	/**
+	 * Rotates the image to face the target
+	 */
+	private void rotateImage() {
+	    	double xDifference = myTarget.getX() - this.getX();
+	    	double yDifference = myTarget.getY() - this.getY();
+	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
+	    	this.getImageView().setRotate(Math.toDegrees(angleToRotateRads));
 	}
 	
 	/**
@@ -50,7 +70,6 @@ public class Projectile extends Sprite {
 	    return myDamage.upgrade(balance);
 	}
 
-	
 	/**
 	 * 
 	 * @return : the amount of damage this Projectile does
@@ -66,6 +85,10 @@ public class Projectile extends Sprite {
 	
 	public String getDamageName() {
 		return myDamage.getName();
+	}
+	
+	public double getSize() {
+		return mySize; 
 	}
 
 

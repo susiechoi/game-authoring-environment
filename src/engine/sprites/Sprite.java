@@ -1,29 +1,23 @@
 package engine.sprites;
 
-import java.util.List;
-import java.util.Map;
-
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Shape;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
  * and IDs, as well as methods for moving them and checking their intersections with other 
  * objects.
  * 
- * @author Katherine Van Dyk
- * @date 4/3/18
+ * @author Katherine Van Dyk 4/3/18
  * @author Ryan Pond
  * @author Miles Todzo
  * @author Ben Hodgson 4/8/18
  */
-
 public class Sprite  {
 
     private String myName;
     private ImageView myImageView;
+    private String myImageString;
 
 
     /**
@@ -33,10 +27,13 @@ public class Sprite  {
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, Image image) {
+    public Sprite(String name, String image, double size) {
 	myName = name;
-	myImageView = new ImageView(image);
+	myImageString = image;
+	System.out.println(image);
+	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
 	myImageView.setPreserveRatio(true);
+
     }
     
     /**
@@ -57,8 +54,8 @@ public class Sprite  {
 	return myImageView;
     }
     
-    public void setImageView(ImageView image) {
-	myImageView  = image;
+    public void setImage(Image image) {
+	myImageView  = new ImageView(image);
     }
     
     public void place(double newX, double newY) {
@@ -78,23 +75,30 @@ public class Sprite  {
 //    		}
 //    }
     
+    /**
+     * @return Angle of the sprite
+     */
     public double getRotate() {
     		return this.myImageView.getRotate();
     }
     
+    /**
+     * @return X-coordinate of the sprite
+     */
     public double getX() {
     		return this.myImageView.getX();
     }
     
+    /**
+     * @return Y-coordinate of the sprite
+     */ 
     public double getY() {
     		return this.myImageView.getY();
     }
-    public void setX(double newX) {
-    		this.myImageView.setX(newX);
-    }
-    public void setY(double newY) {
-    		this.myImageView.setY(newY);
-    }
+
+    /**
+     * Sets the shooting sprite's angle to @param rotateVal
+     */
     public void setRotate(double rotateVal) {
     		this.myImageView.setRotate(rotateVal);
     }
@@ -104,6 +108,11 @@ public class Sprite  {
      */
     public Double getDamage() {
 	return (double) 0;
+    }
+    
+    
+    public String getImageString() {
+	return myImageString;
     }
     
     /**

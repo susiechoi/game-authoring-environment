@@ -6,6 +6,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import authoring.frontend.exceptions.NoDuplicateNamesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -26,8 +27,8 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	private Slider myInitialHealthSlider; 
 	private Slider myHealthImpactSlider; 
 	private Slider myValueSlider; 
-	private Slider myUpgradeCostSlider; 
-	private Slider myUpgradeValueSlider; 
+	//	private Slider myUpgradeCostSlider; 
+	//	private Slider myUpgradeValueSlider; 
 
 	protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName);
@@ -76,26 +77,27 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		HBox enemyValue = getUIFactory().setupSliderWithValue("EnemyValueSlider", enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 		vb.getChildren().add(enemyValue);
 
-		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", getMyMaxPrice());
-		myUpgradeCostSlider = enemyUpgradeCostSlider; 
-		HBox enemyUpgradeCost = getUIFactory().setupSliderWithValue("EnemyUpgradeCostSlider", enemyUpgradeCostSlider, getErrorCheckedPrompt("EnemyUpgradeCost"));
-		vb.getChildren().add(enemyUpgradeCost);
-
-		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", getMyMaxUpgradeIncrement());
-		myUpgradeValueSlider = enemyUpgradeValueSlider; 
-		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
-		vb.getChildren().add(enemyUpgradeValue);
+		//		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", getMyMaxPrice());
+		//		myUpgradeCostSlider = enemyUpgradeCostSlider; 
+		//		HBox enemyUpgradeCost = getUIFactory().setupSliderWithValue("EnemyUpgradeCostSlider", enemyUpgradeCostSlider, getErrorCheckedPrompt("EnemyUpgradeCost"));
+		//		vb.getChildren().add(enemyUpgradeCost);
+		//
+		//		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", getMyMaxUpgradeIncrement());
+		//		myUpgradeValueSlider = enemyUpgradeValueSlider; 
+		//		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
+		//		vb.getChildren().add(enemyUpgradeValue);
 
 		Button backButton = setupBackButton();
 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			if (myNameField.getText().equals(getMyDefaultName())) {
-				myNameField.setText(getView().getErrorCheckedPrompt("ReplaceDefaultName"));
-			}
-			else {
-				getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), myUpgradeCostSlider.getValue(), myUpgradeValueSlider.getValue());
-				getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
+			if (validNameField(myNameField)) {
+				try {
+					getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), 0, 0);
+					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");			
+				} catch(NoDuplicateNamesException e1) {
+					getView().loadErrorAlert("NoDuplicateNames");
+				}
 			}
 		});
 
