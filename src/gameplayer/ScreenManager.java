@@ -37,7 +37,7 @@ public class ScreenManager extends View{
     private Integer health;
     private Integer currency;
 
-    private final Mediator MEDIATOR;
+    private Mediator MEDIATOR;
     private final StageManager STAGE_MANAGER;
     private GameScreen GAME_SCREEN;
     private String GAME_TITLE;
@@ -48,19 +48,23 @@ public class ScreenManager extends View{
 
     //private final FileIO FILE_READER;
 
-
-
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
 	PROMPTS = new PromptReader(language, this);
 	MEDIATOR = mediator;
 	findSettings();
-	//setup rest of values once file reader is finished
     }
 
 
-    public List<Integer> getMediatorInts(){
+    public ScreenManager(StageManager stageManager, String language) {
+    	super(stageManager);
+    	STAGE_MANAGER = stageManager;
+    	PROMPTS = new PromptReader(language, this);
+    	findSettings();
+	}
+    
+	public List<Integer> getMediatorInts(){
 	controlVars = new ArrayList<Integer>();
 	for(int i = 0; i < 3; i++) {
 	    controlVars.add(Integer.valueOf(0));
