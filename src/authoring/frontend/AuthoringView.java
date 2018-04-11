@@ -86,9 +86,15 @@ public class AuthoringView extends View {
 	protected void goBackFrom(String id) {
 		goForwardFrom(id+"Back");
 	}
+	
+	protected void goFowardFrom(Screen screen, String id) {
+		goForwardFrom(screen.getClass().getSimpleName()+id); 
+	}
+	
 	protected void goForwardFrom(String id) {
 		goForwardFrom(id, "");
 	}
+	
 	protected void goForwardFrom(String id, String name) {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
