@@ -10,7 +10,6 @@ import java.util.Map;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
-import engine.managers.EnemyManager;
 import engine.path.Path;
 
 /**
@@ -66,6 +65,7 @@ public class Level {
 		myPaths.add(path); 
 	}
 
+	
 	/**
 	 * Returns an unmodifiable list of path objects in the level
 	 * 

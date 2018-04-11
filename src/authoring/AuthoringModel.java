@@ -36,6 +36,7 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
+import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
@@ -50,7 +51,7 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_PATH_START = "images/start.png";
 	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
 	public static final String DEFAULT_PATH_END = "images/end.png";
-	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
+	public static final String DEFAULT_BACKGROUND_IMAGE = "images/grass.png";
 	private final String myDefaultName; 
 
 	private String myGameName; 
@@ -86,7 +87,6 @@ public class AuthoringModel implements GameData {
 	}
 
 	private void setupDefaultLevel() {
-		
 		Level firstLevel = new Level(1);
 		firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
 		Enemy testEnemy = new Enemy(myDefaultEnemy);
@@ -99,34 +99,16 @@ public class AuthoringModel implements GameData {
 		dummyPathPoints.add(new Point(2, 4));
 		HashMap<String, List<Point>> pathImages = new HashMap<>();
 		List<Point> dummyPathStartPoints = new ArrayList<>();
-		dummyPathStartPoints.add(new Point(2, 2));
+		dummyPathStartPoints.add(new Point(10, 10));
 		List<Point> dummyPathMiddlePoints = new ArrayList<>();
-		dummyPathMiddlePoints.add(new Point(2, 3));
-//		dummyPathMiddlePoints.add(new Point(2, 4));
-//		dummyPathMiddlePoints.add(new Point(2, 5));
-//		dummyPathMiddlePoints.add(new Point(2, 6));
-//		dummyPathMiddlePoints.add(new Point(3, 6));
-//		dummyPathMiddlePoints.add(new Point(4, 6));
-//		dummyPathMiddlePoints.add(new Point(5, 6));
-//		dummyPathMiddlePoints.add(new Point(6, 6));
-//		dummyPathMiddlePoints.add(new Point(7, 6));
-//		dummyPathMiddlePoints.add(new Point(7, 7));
-//		dummyPathMiddlePoints.add(new Point(7, 8));
-//		dummyPathMiddlePoints.add(new Point(7, 9));
-//		dummyPathMiddlePoints.add(new Point(7, 10));
-//		dummyPathMiddlePoints.add(new Point(7, 11));
-//		dummyPathMiddlePoints.add(new Point(8, 11));
-//		dummyPathMiddlePoints.add(new Point(9, 11));
-//		dummyPathMiddlePoints.add(new Point(10, 11));
-//		dummyPathMiddlePoints.add(new Point(11, 11));
-//		dummyPathMiddlePoints.add(new Point(11, 11));
+		dummyPathMiddlePoints.add(new Point(10, 11));
 		List<Point> dummyPathEndPoints = new ArrayList<>();
-		dummyPathEndPoints.add(new Point(2, 4));
+		dummyPathEndPoints.add(new Point(10, 12));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
 		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
 		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
 		try {
-			makePath(1, dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
+			makePath(1, new GridPane(), dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
 		}
 		catch(ObjectNotFoundException e) {
 			//TODO: help!!!
@@ -158,7 +140,6 @@ public class AuthoringModel implements GameData {
 		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 		currentLevel.addEnemy(name, newEnemy);
 	}
-
 
 	/**
 	 * Method through which information can be sent to instantiate or edit a tower object
@@ -209,7 +190,7 @@ public class AuthoringModel implements GameData {
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
 
-	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 		System.out.println("Model: " +imageCoordinates);
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
@@ -221,6 +202,24 @@ public class AuthoringModel implements GameData {
 		//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
 	}
 
+	// TODO 
+	/**
+	 * Method through which information can be sent to instantiate or edit a path object
+	 * Wraps constructor in case of new object creation
+	 * @throws ObjectNotFoundException 
+	 */
+
+	//parameters needed to get passed: background image, grid size, location of each image in grid 
+
+
+	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
+		currentLevel.addPath(newPath);
+
+		//		myImageMap = imageCoordinates;
+		//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
+	}
 
 
 	/**
@@ -269,8 +268,8 @@ public class AuthoringModel implements GameData {
 		return null;
 	}
 
-
 	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
+
 		return levelCheck(levelNum).getPaths().get(name-1);
 	}
 
@@ -310,7 +309,6 @@ public class AuthoringModel implements GameData {
 		Level currentLevel = levelCheck(level);
 		return currentLevel.getHighestWaveNumber();
 	}
-
 
 	// TODO once maps have been made 
 	/**
@@ -375,6 +373,23 @@ public class AuthoringModel implements GameData {
 				}
 			}
 		}
+		//	else if (objectType.equals("Wave")) {
+		//	    Level currentLevel = levelCheck(level);
+		//	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
+		//		Wave wave = currentLevel.getWave();
+		//		for (Field aField : tower.getClass().getDeclaredFields()) {
+		//		    String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+		//		    if (fieldSimpleString.equals(attribute)) {
+		//			aField.setAccessible(true);
+		//			fieldValue = aField.get(tower);
+		//			break; 
+		//		    }
+		//		}
+		//	    }
+		//	    if (fieldValue == null) {
+		//		throw new ObjectNotFoundException(name);
+		//	    }
+		//	}
 		if (fieldValue.getClass() == Double.class) {
 			return Double.toString((double) fieldValue); 
 		} 
@@ -480,18 +495,26 @@ public class AuthoringModel implements GameData {
 		return listToReturn; 
 	}
 
-	/**
-	 * Auto generates a new level for the authored game and puts it in the
-	 * levels map. 
-	 * 
-	 * @return int: the number of the new, auto generated level
-	 */
+	//	/**
+	//	 * Auto generates a new level for the authored game and puts it in the
+	//	 * levels map. 
+	//	 * 
+	//	 * @return int: the number of the new, auto generated level
+	//	 */
+	//	public int autogenerateLevel() {
+	////		System.out.println(newLevelNumber+" IS OUR NEW LEVEL NUMBER");
+	//		int newLevelNumber = myLevels.size();
+	//		Level copiedLevel = myLevels.get(myLevels.size()-1);
+	//		myLevels.put(newLevelNumber, new Level(copiedLevel));
+	//		//	return newLevelNumber; 
+	//		return newLevelNumber;
+	//	}
+
 	public int autogenerateLevel() {
-		int newLevelNumGETber = myLevels.size()+1;
+		int newLevelNumber = myLevels.size()+1;
 		Level copiedLevel = myLevels.get(myLevels.size());
-		//	myLevels.put(newLevelNumber, new Level(copiedLevel));
-		//	return newLevelNumber; 
-		return newLevelNumGETber;
+		myLevels.put(newLevelNumber, new Level(copiedLevel));
+		return newLevelNumber; 
 	}
 
 	public void setGameName(String gameName) {
@@ -506,5 +529,7 @@ public class AuthoringModel implements GameData {
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}
+
+
 }
 

@@ -66,6 +66,8 @@ public class PlayState implements GameData {
 	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
+	myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
+
     }
 
     public void update(double elapsedTime) {
@@ -94,19 +96,19 @@ public class PlayState implements GameData {
 	    }
 	    UNIVERSAL_TIME+=elapsedTime;
 	    List<Sprite> toBeRemoved = new ArrayList<>();
-	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
-	    toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	    myTowerManager.shoot(myEnemyManager.getListOfActive());
+	    //toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+		System.out.println("added to med");
 	    }
-	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
-		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-	    }
-	    myEnemyManager.moveProjectiles();
-	    myEnemyManager.moveEnemies();
+//	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
+//		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+//	    }
+//	    myEnemyManager.moveProjectiles();
+//	    myEnemyManager.moveEnemies();
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
     }

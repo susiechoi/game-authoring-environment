@@ -42,16 +42,22 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      */
     public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
 		List<Projectile> newProjectiles = new ArrayList<>();
+		System.out.println("active list size " + this.getListOfActive().size());
+		int i =1;
 		for (ShootingSprites shootingSprite: this.getListOfActive()) {
 		    for (ShootingSprites passedSprite: passedSprites) {
-			if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
+			System.out.println(" on number " + i);
+			if (shootingSprite.hasReloaded()) {
+			    System.out.println("in range for " + i);
 			    Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			    if (newProjectile != null) {
 				newProjectiles.add(newProjectile);
 			    }
 			}
 		    }
+		    i++;
 		}
+		System.out.println("Projectiles size " + newProjectiles.size());
 		return newProjectiles;
     }
 
