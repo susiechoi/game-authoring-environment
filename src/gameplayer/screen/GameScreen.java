@@ -48,6 +48,7 @@ public class GameScreen extends Screen {
     private ScreenManager SCREEN_MANAGER;
     private BuyPanel BUY_PANEL;
     private VBox rightPane;
+    private BorderPane leftPane;
     private final Mediator MEDIATOR;
 
 
@@ -74,7 +75,7 @@ public class GameScreen extends Screen {
 	rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 	VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
-	BorderPane leftPane = new BorderPane();
+	leftPane = new BorderPane();
 	leftPane.setMaxWidth(Double.MAX_VALUE);
 	leftPane.setMaxHeight(Double.MAX_VALUE);
 
