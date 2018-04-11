@@ -23,6 +23,7 @@ public class GameEngine {
     private Timeline ANIMATION;
 
     public GameEngine(Mediator mediator) {
+	System.out.println("in engine");
 	myPlayState = null;
 	myMediator = mediator;
 
@@ -33,6 +34,7 @@ public class GameEngine {
         ANIMATION = new Timeline();
         ANIMATION.setCycleCount(Timeline.INDEFINITE);
         ANIMATION.getKeyFrames().add(frame);
+        ANIMATION.play();
     }
 
     public void setPlayState(PlayState p) {
@@ -42,13 +44,17 @@ public class GameEngine {
     public PlayState getPlayState() {
 	return myPlayState;
     }
+    
 
     /**
-     * This is called every ____ number of seconds
+     * Calls the update function every loop
+     * @param elapsedTime
      */
-    public void update() {
-//	myPlayState.update();
+    public void loop(double elapsedTime) {
+	System.out.println("in loop");
+	myPlayState.update(elapsedTime);
     }
+
 
     /**
      * Pauses Game Loop animation so Game State stays constant
@@ -112,13 +118,6 @@ public class GameEngine {
 
     }
 
-    /**
-     * Calls the update function every loop
-     * @param elapsedTime
-     */
-    public void loop(double elapsedTime) {
-	update();
-    }
     
 
 }
