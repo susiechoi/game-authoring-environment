@@ -55,7 +55,7 @@ public class ScreenManager extends View{
     private List<Integer> controlVars;
 
     //private final FileIO FILE_READER;
-
+    
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
@@ -64,7 +64,6 @@ public class ScreenManager extends View{
 	findSettings();
 	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
     }
-
 
     public ScreenManager(StageManager stageManager, String language) {
 	super(stageManager);

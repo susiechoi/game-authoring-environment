@@ -126,8 +126,12 @@ public class GamePanel extends Panel{
 	    try {
 		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
 		ImageView towerImage = newTower.getImageView();
-		towerImage.setLayoutX(-towerImage.getFitWidth()/2);
-		towerImage.setLayoutY(-towerImage.getFitHeight()/2);
+		Image towerImageActual = towerImage.getImage();
+		
+		System.out.println(towerImage.getFitWidth() + " fitWifht/hgith " + towerImage.getFitHeight());
+		
+		towerImage.setLayoutX(-towerImageActual.getWidth()/2);
+		towerImage.setLayoutY(-towerImageActual.getHeight()/2);
 		if(newTower!= null) {
 		    addTowerImageViewAction(newTower);
 		    towersPlaced.add(newTower);
