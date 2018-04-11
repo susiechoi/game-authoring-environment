@@ -56,6 +56,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	System.out.println("TOWER SIZE : " + size);
 	myHealth = health;
 	propertyStats = new HashMap<String, Double>();
+	System.out.println("health is " + health.getProperty());
+	System.out.println("health is " + value.getProperty());
+	System.out.println("health is " + this.getDamage());
+
+
 	propertyStats.put(health.getName(), health.getProperty());
 	propertyStats.put(value.getName(), value.getProperty());
 	propertyStats.put(this.getDamageName(), this.getDamage());
@@ -88,7 +93,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(Tower copiedTower, Point point) {
 	super(copiedTower.getName(), copiedTower.getImageString(), 
-	copiedTower.mySize, copiedTower.getLauncher()); 
+		copiedTower.mySize, copiedTower.getLauncher()); 
 	System.out.println("Health value copied is " + copiedTower.getHealthProperty().getProperty());
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty();
@@ -155,12 +160,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
 	return balance;
     }
-
-
-    /**private double getDamage() {
->>>>>>> 5a750604dc04461013be3f0cdce2a6f625b5545b
-		return this.getLauncher().getDamage();
-	} **/
 
     public String getDamageName() {
 	return this.getLauncher().getDamageName();

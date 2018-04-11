@@ -98,7 +98,11 @@ public class AuthoringController {
 	 */
 	
 	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
-		myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+		System.out.println("LEVEL: " + level);
+		System.out.println("IMG COORDS" + imageCoordinates);
+	    
+	    
+	    	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage); 
 		System.out.println(imageCoordinates);
 		myImageMap = imageCoordinates;
 	}
@@ -145,12 +149,14 @@ public class AuthoringController {
 	 * @param newAmount: the new amount of the specified enemy to put in the wave
 	 * @throws ObjectNotFoundException: thrown if the level isn't found
 	 */
-	public void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
+	public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
+	    Path path = getPathFromName(Integer.parseInt(pathName), level);
 	    Level thisLevel = myModel.levelCheck(level);
 	    Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    Wave thisWave;
 	    if (levelWaves.size() < waveNumber) {
+		System.out.println("making a new wave!!");
 		thisWave = new Wave(path);
 	    }
 	    else {
@@ -218,5 +224,7 @@ public class AuthoringController {
 	public Map<String, List<Point>> getGrid() {
 		return myImageMap;
 	}
+	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
+	    return myModel.getHighestWaveNumber(level);
+	}
 }
-

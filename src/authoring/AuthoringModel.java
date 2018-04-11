@@ -36,10 +36,8 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
-import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
-
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String DEFAULT_IMAGES_PREFIX = "images/";
@@ -61,9 +59,8 @@ public class AuthoringModel implements GameData {
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
-	private Path myDefaultPath;
-	protected Path myPath;
-	protected Map<String, List<Point>> myImageMap;
+	//private Path myDefaultPath;
+	protected HashMap<String, List<Point>> myImageMap;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -79,6 +76,7 @@ public class AuthoringModel implements GameData {
 		setupDefaultLevel();
 	}
 
+
 	private void setupDefaultSettings() throws MissingPropertiesException {
 		String defaultGameName = myPropertiesReader.findVal(DEFAULT_PROMPTS, "NewGame");
 		int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
@@ -88,32 +86,34 @@ public class AuthoringModel implements GameData {
 	}
 
 	private void setupDefaultLevel() {
+		
 		Level firstLevel = new Level(1);
 		firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
 		Enemy testEnemy = new Enemy(myDefaultEnemy);
 		firstLevel.addEnemy(myDefaultName, testEnemy);
 		myLevels.put(1, firstLevel);
+
 		List<Point> dummyPathPoints = new ArrayList<>();
-		dummyPathPoints.add(new Point(10, 10));
-		dummyPathPoints.add(new Point(10, 11));
-		dummyPathPoints.add(new Point(10, 12));
+		dummyPathPoints.add(new Point(2, 2));
+		dummyPathPoints.add(new Point(2, 3));
+		dummyPathPoints.add(new Point(2, 4));
 		HashMap<String, List<Point>> pathImages = new HashMap<>();
 		List<Point> dummyPathStartPoints = new ArrayList<>();
-		dummyPathStartPoints.add(new Point(10, 10));
+		dummyPathStartPoints.add(new Point(2, 2));
 		List<Point> dummyPathMiddlePoints = new ArrayList<>();
-		dummyPathMiddlePoints.add(new Point(10, 11));
+		dummyPathMiddlePoints.add(new Point(2, 3));
 		List<Point> dummyPathEndPoints = new ArrayList<>();
-		dummyPathEndPoints.add(new Point(10, 12));
+		dummyPathEndPoints.add(new Point(2, 4));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
 		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
 		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
-//		try {
-//			makePath(1, new GridPane(), dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
-//		}
-//		catch(ObjectNotFoundException e) {
-//			//TODO: help!!!
-//			System.out.println("couldn't find object");
-//		}
+		try {
+			makePath(1, dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
+		}
+		catch(ObjectNotFoundException e) {
+			//TODO: help!!!
+			System.out.println("couldn't find object");
+		}
 
 		Wave newWave = new Wave(firstLevel.getPaths().get(0));
 		newWave.addEnemy(testEnemy, 20);
@@ -140,6 +140,7 @@ public class AuthoringModel implements GameData {
 		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 		currentLevel.addEnemy(name, newEnemy);
 	}
+
 
 	/**
 	 * Method through which information can be sent to instantiate or edit a tower object
@@ -190,11 +191,16 @@ public class AuthoringModel implements GameData {
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
 
-	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 		System.out.println("Model: " +imageCoordinates);
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
 		currentLevel.addPath(newPath);
+		System.out.println("We're putting the path at current level");
+		System.out.println(currentLevel);
+
+		//		myImageMap = imageCoordinates;
+		//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
 	}
 
 
@@ -245,6 +251,7 @@ public class AuthoringModel implements GameData {
 		return null;
 	}
 
+
 	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 		return levelCheck(levelNum).getPaths().get(name-1);
 	}
@@ -271,9 +278,21 @@ public class AuthoringModel implements GameData {
 				listToReturn.add(myDefaultTower.getName());
 			}
 		}
+		if(objectType.equals("Wave")) {
+			int size = currentLevel.getHighestWaveNumber();
+			for(Integer k = 1; k<=size; k+=1) {
+				listToReturn.add("Wave " + k.toString());
+			}
+		}
 		listToReturn.remove(myDefaultName);
 		return listToReturn; 
 	}
+
+	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		return currentLevel.getHighestWaveNumber();
+	}
+
 
 	// TODO once maps have been made 
 	/**
@@ -372,7 +391,6 @@ public class AuthoringModel implements GameData {
 		myGameName = mySettings.getGameName();
 	}
 
-
 	/**
 	 * Reads information from GenericEnemy.properties file to create a default
 	 * Enemy object to be used to populate user input fields.
@@ -451,10 +469,11 @@ public class AuthoringModel implements GameData {
 	 * @return int: the number of the new, auto generated level
 	 */
 	public int autogenerateLevel() {
-		int newLevelNumber = myLevels.size()+1;
+		int newLevelNumGETber = myLevels.size()+1;
 		Level copiedLevel = myLevels.get(myLevels.size());
-		myLevels.put(newLevelNumber, new Level(copiedLevel));
-		return newLevelNumber; 
+		//	myLevels.put(newLevelNumber, new Level(copiedLevel));
+		//	return newLevelNumber; 
+		return newLevelNumGETber;
 	}
 
 	public void setGameName(String gameName) {
@@ -466,11 +485,8 @@ public class AuthoringModel implements GameData {
 		return myGameName; 
 	}
 
-
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}
-
-
 }
 

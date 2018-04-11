@@ -29,6 +29,7 @@ public class Path {
 		myPathMap = imageCoordinates;
 	}
 
+
 	/**
 	 * Returns the next position of the object according to its speed
 	 * 
