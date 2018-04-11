@@ -90,7 +90,8 @@ public class AuthoringModel implements GameData {
 	private void setupDefaultLevel() {
 		Level firstLevel = new Level(1);
 		firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
-		firstLevel.addEnemy(myDefaultName, new Enemy(myDefaultEnemy));
+		Enemy testEnemy = new Enemy(myDefaultEnemy);
+		firstLevel.addEnemy(myDefaultName, testEnemy);
 		myLevels.put(1, firstLevel);
 		List<Point> dummyPathPoints = new ArrayList<>();
 		dummyPathPoints.add(new Point(10, 10));
@@ -113,8 +114,9 @@ public class AuthoringModel implements GameData {
 		    //TODO: help!!!
 		    System.out.println("couldn't find object");
 		}
+	
 		Wave newWave = new Wave(firstLevel.getPaths().get(0));
-		newWave.addEnemy(myDefaultEnemy, 20);
+		newWave.addEnemy(testEnemy, 20);
 		firstLevel.addWave(firstLevel.getPaths().get(0), newWave);
 	}
 
