@@ -60,8 +60,7 @@ public class AuthoringModel implements GameData {
     private Map<Integer, Level> myLevels;
     private Tower myDefaultTower;
     private Enemy myDefaultEnemy;
-    private Path myDefaultPath;
-    protected Path myPath;
+    //private Path myDefaultPath;
     protected HashMap<String, List<Point>> myImageMap;
 
     public AuthoringModel() throws MissingPropertiesException {
@@ -93,10 +92,11 @@ public class AuthoringModel implements GameData {
 	Enemy testEnemy = new Enemy(myDefaultEnemy);
 	firstLevel.addEnemy(myDefaultName, testEnemy);
 	myLevels.put(1, firstLevel);
+
 	List<Point> dummyPathPoints = new ArrayList<>();
-	dummyPathPoints.add(new Point(10, 10));
-	dummyPathPoints.add(new Point(10, 11));
-	dummyPathPoints.add(new Point(10, 12));
+	dummyPathPoints.add(new Point(2, 2));
+	dummyPathPoints.add(new Point(2, 3));
+	dummyPathPoints.add(new Point(2, 4));
 	HashMap<String, List<Point>> pathImages = new HashMap<>();
 	List<Point> dummyPathStartPoints = new ArrayList<>();
 	dummyPathStartPoints.add(new Point(10, 10));
@@ -195,6 +195,8 @@ public class AuthoringModel implements GameData {
 	Level currentLevel = levelCheck(level);
 	Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
 	currentLevel.addPath(newPath);
+	System.out.println("We're putting the path at current level");
+	System.out.println(currentLevel);
 
 	//		myImageMap = imageCoordinates;
 	//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
