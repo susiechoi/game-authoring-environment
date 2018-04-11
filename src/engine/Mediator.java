@@ -1,30 +1,35 @@
 package engine;
 
 
+
+import engine.sprites.towers.Tower;
+import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
 import java.util.List;
+import java.util.Map;
 
 import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
-<<<<<<< HEAD
 import engine.sprites.towers.CannotAffordException;
-=======
 import engine.sprites.Sprite;
->>>>>>> 7c3570b74928c79a500c08f56c4ac184a72b0714
 import engine.sprites.towers.FrontEndTower;
-import engine.sprites.towers.Tower;
-import gameplayer.ScreenManager;
 import java.awt.Point;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 import xml.AuthoringModelReader;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
+import xml.PlayLoader;
 
 /**
  * This class serves as a bridge between the front end, back end, and file I/O of our game player
@@ -58,10 +63,8 @@ public class Mediator {
      * Constructs Mediator object and sets all fields to null.
      * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
      */
-    public Mediator() {
-	myScreenManager = null;
-	myGameEngine = null;
-	myPlayController = null;
+    public Mediator(PlayController p) {
+	myPlayController = p;
 //	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
 //	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
     }
@@ -102,6 +105,7 @@ public class Mediator {
      */
     public void startPlay(String filename) {
 	myPlayController.newPlay(filename);
+	//myPlayController.setAuthoring();
     }
     
     /**
@@ -130,6 +134,7 @@ public class Mediator {
      * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
      */
     public void addSpriteToScreen(FrontEndSprite sprite) {
+	System.out.println("adding sprite to screen " + sprite.getClass());
 	myScreenManager.display(sprite);
     }
     
@@ -141,8 +146,8 @@ public class Mediator {
 	myScreenManager.remove(sprite);
     }
     
-    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	    myScreenManager.setAvailableTowers(availableTowers);
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {  
+	myScreenManager.setAvailableTowers(availableTowers);
     }
 
     /**
@@ -150,8 +155,9 @@ public class Mediator {
      * @param location, where the tower should be placed
      * @param towerType, type of tower to be placed
      * @return frontEndTower that can be used to refer to the tower in the future
+     * @throws CannotAffordException 
      */
-    public FrontEndTower placeTower(Point location, String towerType) {
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
         //TODO add in money (decrement when purchased)
          return myGameEngine.getPlayState().placeTower(location, towerType);
     }
@@ -242,11 +248,13 @@ public class Mediator {
 	}
 	
     }
-
-
-    // a whole slew of other methods
-    // but fr there should be a method for every event that can occur
-
+    
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+    	System.out.println("Mediator: " +imageMap);
+		
+	myScreenManager.setPath(imageMap, backgroundImageFilePath);
+    }
 
 
 }
+

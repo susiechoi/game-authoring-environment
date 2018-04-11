@@ -30,6 +30,27 @@ public class Launcher extends Manager<Projectile>{
 	myRange = range;
 	timeLastFired = System.nanoTime();
     }
+    
+    
+
+    public Launcher(Launcher copiedLauncher) {
+	myFireRate = copiedLauncher.getFireRateProperty();
+	myProjectile = copiedLauncher.getProjectile();
+	myRange = copiedLauncher.getRangeProperty();
+	timeLastFired = System.nanoTime();
+    }
+
+
+
+    /**
+     * Returns the projectile object associated with the Launcher
+     * @return
+     */
+    public Projectile getProjectile() {
+	return myProjectile;
+    }
+
+
 
     /**
      * Sets the current projectile type managed by the ProjectileManager
@@ -55,16 +76,19 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-    		this.addToActiveList(myProjectile);
-    		double radianOffset = Math.atan((target.getX()-shooterX)/(target.getY()-shooterY));
-    		myProjectile.setRotate(radianOffset);
-    		return myProjectile;
+		Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
+    		this.addToActiveList(launchedProjectile);
+    		return launchedProjectile;
     }
     
+    /**
+     * Checks to see if the rate of fire is less than the time elapsed since the last shot
+     * @return 
+     */
     public boolean hasReloaded() {
     	long currTime = System.nanoTime();
      	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()) {
+     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
      		timeLastFired = currTime;
      		return true;
      	}
@@ -89,6 +113,10 @@ public class Launcher extends Manager<Projectile>{
     
     public double getProjectileSpeed() {
     	return myProjectile.getSpeed(); 
+    }
+    
+    public double getProjectileSize() {
+    	return myProjectile.getSize(); 
     }
 
     public String getDamageName() {

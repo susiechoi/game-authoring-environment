@@ -1,13 +1,17 @@
+
 package gameplayer.panel;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +52,7 @@ public class TowerPanel extends Panel {
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	money = GAME_SCREEN.getMoney();
+	makePanel();
     }
 
 
@@ -88,11 +93,15 @@ public class TowerPanel extends Panel {
 	towerHolderLeft.setId("towerHolders");
 	towerHolderRight.setId("towerHolders");
 	VBox towerHolder;
+	int alternator = 0;
 
 	for(FrontEndTower tower : availableTowers) {
-	    int alternator = 0;
+	    ImageView imageView = tower.getImageView();
+	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
+	    imageView.setFitHeight(TOWER_IMAGE_SIZE);
+
 	    Button towerButton = UIFACTORY.makeImageViewButton("button",tower.getImageView());
-	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower.getName()));
+	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower));
 	    if(alternator%2 == 0) {
 		towerHolder = towerHolderLeft;
 	    }
@@ -137,13 +146,10 @@ public class TowerPanel extends Panel {
 	towerGroup.getChildren().clear();
 	towerGroup.getChildren().add(fillScrollWithTowers(availableTowers));
     }
-    
+
     public void updateCurrency(Integer newBalence) {
 	money = newBalence;
 	currencyDisplay.setText("$" +money.toString());
     }
-
-
-
-
 }
+

@@ -2,6 +2,8 @@ package authoring.frontend;
 
 
 import frontend.Screen;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -12,9 +14,19 @@ public abstract class AuthoringScreen extends Screen {
 	super();
 	setStyleSheet(view.getCurrentCSS());
 	myView = view;
+	setupCSSListener(); 
     }
     
-    @Override
+    private void setupCSSListener() {
+    	myView.cssChangedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+				setStyleSheet(myView.getCurrentCSS());
+			}
+		});
+	}
+
+	@Override
     public AuthoringView getView() {
 	return myView;
     }
@@ -24,12 +36,12 @@ public abstract class AuthoringScreen extends Screen {
     }
     
     protected Button setupBackButton() {
-	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());});
+	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());}, myView.getErrorCheckedPrompt("Cancel"));
     }
     protected Button setupBackButtonSuperclass() {
-	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());});
+	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());}, myView.getErrorCheckedPrompt("Cancel"));
     }
     protected Button setupBackButtonCustom(EventHandler<ActionEvent> e) {
-	return getUIFactory().setupBackButton(e);
+	return getUIFactory().setupBackButton(e, myView.getErrorCheckedPrompt("Cancel"));
     }
 }

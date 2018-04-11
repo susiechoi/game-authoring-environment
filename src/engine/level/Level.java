@@ -1,6 +1,8 @@
 package engine.level;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,6 @@ import java.util.Map;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
-import engine.managers.EnemyManager;
 import engine.path.Path;
 
 /**
@@ -16,6 +17,7 @@ import engine.path.Path;
  * @author Ben Hodgson 3/29/18
  * @author Ryan Pond
  * @author susiechoi
+ * @author Miles Todzo
  * 
  * Class encapsulates the components of a level
  */
@@ -35,7 +37,7 @@ public class Level {
 		myWaves = new HashMap<Path, List<Wave>>();
 		myPaths = new ArrayList<Path>();
 	} 
-	
+
 	/**
 	 * Copy constructor
 	 * Useful when autogenerating a new level from a prior one
@@ -57,12 +59,22 @@ public class Level {
 	public int myNumber() {
 		return myNumber;
 	}
-	
+
 	// TODO 
 	public void addPath(Path path) {
 		myPaths.add(path); 
 	}
-			
+
+	
+	/**
+	 * Returns an unmodifiable list of path objects in the level
+	 * 
+	 * @return List<Path>: a list of path objects in the level
+	 */
+	public List<Path> getUnmodifiablePaths() {
+		return Collections.unmodifiableList(myPaths);
+	}
+
 	/**
 	 * Adds an available tower to the level
 	 * 
@@ -70,6 +82,7 @@ public class Level {
 	 * @param tower: The tower object to be added
 	 */
 	public void addTower(String name, Tower tower) {
+		System.out.println(tower.getImageView().getFitWidth() + " level tower width");
 		myTowers.put(name, tower);
 	}
 
@@ -92,6 +105,11 @@ public class Level {
 		return myTowers.get(name);
 	}
 
+	/**
+	 * Returns a list of all towers available in the level
+	 * 
+	 * @return List<String>: all the towers available in the level
+	 */
 	public List<String> getAllTowers() {
 		List<String> listToReturn = new ArrayList<String>(); 
 		listToReturn.addAll(myTowers.keySet()); 
@@ -139,11 +157,36 @@ public class Level {
 	 * @param wave: a new wave to be added
 	 */
 	public void addWave(Path path, Wave wave) {
-		List<Wave> waves = myWaves.get(path);
-		waves.add(wave);
-		myWaves.put(path, waves);
+		if(myWaves.containsKey(path)) {
+			List<Wave> waves = myWaves.get(path);
+			System.out.println("is waves null?" + path == null);
+			waves.add(wave);
+		}
+		else {
+			ArrayList<Wave> waveList = new ArrayList<>();
+			waveList.add(wave);
+			myWaves.put(path,waveList);
+		}
+
 	}
-	
+	public boolean containsWaveNumber(int num) {
+		for(List<Wave> waveLists : myWaves.values()) {
+			if(waveLists.size()>= num) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public int getHighestWaveNumber() {
+		int highest = 0;
+		for(List<Wave> waveLists: myWaves.values()) {
+			if(waveLists.size()>= highest) {
+				highest = waveLists.size();
+			}
+		}
+		return highest;
+	}
+
 	/**
 	 * Returns a list of waves for a specified path in the level 
 	 * 
@@ -151,7 +194,18 @@ public class Level {
 	 * @return List<Wave>: A list of wave objects in the level on the path
 	 */
 	public List<Wave> getWaves(Path path) {
-	    return myWaves.get(path);
+		return myWaves.get(path);
+	}
+
+	/**
+	 * Removes the first wave from the level 
+	 * 
+	 * @param path: the path object that the wave is specific to
+	 */
+	public void removeWave(Path path) {
+		List<Wave> currentWaves = getWaves(path);
+		currentWaves.remove(0);
+		myWaves.put(path, currentWaves);
 	}
 
 	/**
@@ -160,48 +214,60 @@ public class Level {
 	 * @return boolean: true if the level is finished, false otherwise
 	 */
 	public boolean isFinished() {
-	    for (Path path : myWaves.keySet()) {
-		for (Wave levelWave : myWaves.get(path)) {
-			if (!levelWave.isFinished()) {
+		for (Path path : myWaves.keySet()) {
+			if (!myWaves.get(path).isEmpty()) {
 				return false;
 			}
 		}
-	    }
 		return true; 
 	}
 
 	/**
-	 * Returns any new Enemy that is supposed to spawn at the given time.
-	 * @param time
-	 * @return
+	 * Returns any new Enemy
 	 */
-	public Enemy getNewEnemy(double time) {
-		//TODO
-		return null;
+	public Enemy getNewEnemy(Path path) {
+		Wave currentWave = myWaves.get(path).get(0);
+		Enemy waveEnemy = currentWave.getEnemy();
+		return waveEnemy;
 	}
 
-	public Enemy getNewEnemy(int time, EnemyManager em) {
-		return null;
-	}
-	
 	protected int getNumber() {
 		return myNumber; 
 	}
-	
+
 	protected Map<Path, List<Wave>> getWaves() {
 		return myWaves; 
 	}
-	
-	protected List<Path> getPaths() {
+
+	public List<Path> getPaths() {
 		return myPaths; 
 	}
-	
+
 	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
-	
+
 	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
+	}
+	public boolean containsWave(Path path, int waveNumber) {
+		if(!myWaves.containsKey(path)) {
+			return false;
+		}
+		return (myWaves.get(path).size() > waveNumber);
+	}
+
+
+
+	public Map<String, List<Point>> getLevelPathMap(){
+		//		Map<String, List<Point>> pathMap = myPaths.get(0).getPathMap();
+		//		for (int x=1; x<myPaths.size(); x++) {
+		//			for (String pathBlock: myPaths.get(x).getPathMap().keySet()) {
+		//				pathMap.get(pathBlock).addAll(myPaths.get(x).getPathMap().get(pathBlock));
+		//			}
+		//		}
+		//		return pathMap;
+		return myPaths.get(0).getPathMap();
 	}
 
 }

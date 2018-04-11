@@ -2,7 +2,6 @@ package engine.builders;
 
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.scene.image.Image;
 
 /**
  * Class that uses builder design pattern to construct a projectile
@@ -13,9 +12,9 @@ import javafx.scene.image.Image;
  */
 public class ProjectileBuilder {
 
-    public Projectile construct(String name, Image image, double damage, double damageCost, double damageValue, double speed) {
+    public Projectile construct(String name, String imagepath, double damage, double damageCost, double damageValue, double size, double speed) {
 	DamageProperty damageProperty = new DamageProperty(damageCost, damageValue, damage);
-	return new Projectile(name, damageProperty, image, speed);
+	return new Projectile(name, damageProperty, speed, imagepath, speed);
     }
 
 

@@ -45,7 +45,6 @@ public class UIFactory {
     public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
     public static final char[] NOT_ALLOWED_FILEPATH = {'*', '.', '\\', '/','\"', '[', ']', ':', ';', '|', '=', ',', ' '};
 
-
     /**
      * Makes Text object for displaying titles of screens to the user
      * @param titleText is String text displayed as title
@@ -283,9 +282,9 @@ public class UIFactory {
     }
 
 
-    public Button setupBackButton(EventHandler<ActionEvent> action) {
-	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-	Button backButton = makeImageButton("backButton",backbuttonImage);
+    public Button setupBackButton(EventHandler<ActionEvent> action, String backText) {
+//	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
+	Button backButton = makeTextButton("backButton",backText);
 	backButton.setOnAction(e -> {action.handle(e);});
 	return backButton; 
     }

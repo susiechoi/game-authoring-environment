@@ -5,5 +5,6 @@ public class SpecifyWaveScreen extends SpecifyObjectScreen{
 
 	protected SpecifyWaveScreen(AuthoringView view) {
 		super(view, DEFAULT_DESCRIPTION);
+		
 	}
 }

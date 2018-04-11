@@ -1,6 +1,8 @@
 package engine.sprites.towers;
 
 import java.util.Map;
+
+import engine.sprites.FrontEndSprite;
 import javafx.scene.image.ImageView;
 
 /**
@@ -9,14 +11,9 @@ import javafx.scene.image.ImageView;
  *
  *NOTE: let me know if you want us to pass any other information on our method calls
  */
-public interface FrontEndTower {
+public interface FrontEndTower extends FrontEndSprite{
     
-    /**
-     * Needed to add the ImageView to the Panel
-     * @return The towers ImageView
-     */
-    public ImageView getImageView();
-    
+       
     /**
      * Method to get information about the tower, was thinking the key would be the 
      * type of statistic (health, damage, rate-of-fire, etc) and then the map value would be
@@ -68,7 +65,6 @@ public interface FrontEndTower {
 //     * @return if upgrade was successful (did user have enough money)
 //     */
 //    public boolean upgrade(String upgradeName);
-    
-    public String getName();
+   
     
 }

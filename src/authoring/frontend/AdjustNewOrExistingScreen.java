@@ -31,8 +31,8 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		super(view);
 		setConstants(); 
 		mySelectedObjectName = selectedObjectName; 
-		mySelectedObjectName = "Default";
-		myIsNewObject = mySelectedObjectName.equals(myDefaultObjectName);
+		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
+//		System.out.println(mySelectedObjectName+" should be nothing ");
 	}
 
 	private void setConstants() {
@@ -74,8 +74,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return myIsNewObject; 
 	}
 	
-
-	
 	protected void setEditableOrNot(TextField name, boolean isNewObject) {
 		if (!isNewObject) name.setEditable(false);
 	}
@@ -110,6 +108,19 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	
 	protected String getMySelectedObjectName() {
 		return mySelectedObjectName; 
+	}
+	
+	protected boolean validNameField(TextField nameField) {
+		boolean valid = true; 
+		if (nameField.getText().length() == 0) {
+			getView().loadErrorAlert("PopulateName");
+			valid = false; 
+		}
+		else if (nameField.getText().equals(myDefaultObjectName)) {
+			getView().loadErrorAlert("NoDefaultName");
+			valid = false; 
+		}
+		return valid; 
 	}
 	
 }

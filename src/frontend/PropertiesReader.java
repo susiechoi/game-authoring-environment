@@ -21,6 +21,17 @@ import javafx.scene.image.Image;
  */
 public class PropertiesReader {
 	
+	public String findKey(String filepath, String targetVal) throws MissingPropertiesException {
+		Properties properties = loadProperties(filepath);
+		Map<String, String> readInProperties = read(properties);
+		for (String key : readInProperties.keySet()) {
+			if (readInProperties.get(key).equals(targetVal)) {
+				return key;
+			}
+		}
+		return ""; 
+	}
+	
 	public String findVal(String filepath, String target) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
@@ -76,6 +87,18 @@ public class PropertiesReader {
 			readInProperties.put(key, val);
 		}
 		return readInProperties; 
+	}
+	
+	public List<String> findVals(String filepath) throws MissingPropertiesException {
+		Properties properties = loadProperties(filepath);
+		List<String> vals = new ArrayList<String>(); 
+		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
+			String key = (String)e.nextElement();
+			String val = properties.getProperty(key);
+			vals.add(val);
+			System.out.println(val);
+		}
+		return vals; 
 	}
 
 }

@@ -5,8 +5,10 @@
 
 package authoring.frontend;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -18,13 +20,20 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
+	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
+
+	private String myDefaultName; 
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
-
 	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
 		myObjectDescription = objectDescription;
 		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
+		try {
+			myDefaultName = getView().getPropertiesReader().findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoConstants");
+		}
 	}
 
 	/**
@@ -37,12 +46,27 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		Text orText = new Text("or"); 
 
 		Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
+		String editPrompt = getErrorCheckedPrompt("EditExisting")+myObjectDescription;
+		String selectPrompt = getErrorCheckedPrompt("SelectExisting")+myObjectDescription;
 
-		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdown("objectOptions",myObjectOptions);
-		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
+		List<String> dropdownOptions = new ArrayList<String>(); 
+		dropdownOptions.add(selectPrompt);
+		dropdownOptions.addAll(myObjectOptions);
 		
-		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
+		Button backButton = setupBackButton();
+
+		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction("objectOptions",dropdownOptions, 
+				e-> { applyButton.setDisable(false); }, 
+				e-> { applyButton.setDisable(true);}, editPrompt); 
+		applyButton.setDisable(true);
+		applyButton.setOnAction(e -> {
+			System.out.println(objectsDropdown.getValue()+" iS THE SELECTION!!!!!!!");
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
+		});
+
+		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, editPrompt);
+
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("Customize"+myObjectDescription)));
@@ -53,9 +77,10 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 		return vb;
 	}
+	
 	@Override
 	protected void populateFieldsWithData() {
-	    //null method, since this type of screen only has buttons TODO: make this not an abstract method??
+		//null method, since this type of screen only has buttons TODO: make this not an abstract method??
 	}
 
 	/**
@@ -66,7 +91,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	protected Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction((event) -> {
-		    getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton");
+			getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton", myDefaultName);
 		});
 		return newObjectButton;
 	}

@@ -1,18 +1,21 @@
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.File;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public abstract class PathScreen extends AdjustScreen {
 
@@ -20,47 +23,46 @@ public abstract class PathScreen extends AdjustScreen {
 
 	private StackPane pathRoot;
 	private GridPane pathGrid;
-	//private Node pathPanel;
-	private PathPanel panel;
+	private CreatePathPanel panel;
+	private CreatePathToolBar toolBar;
 	private CreatePathGrid grid;
 
 	protected PathScreen(AuthoringView view) {	
-	    super(view);
+		super(view);
+		grid = new CreatePathGrid(view);
 	}
-	protected void setPathPanel(PathPanel panelnew) {
-	    panel = panelnew;
+	
+	protected void setPathPanel(CreatePathPanel panelnew, CreatePathToolBar toolbar) {
+		panel = panelnew;
+		toolBar = toolbar;
+		pathRoot.getChildren().clear();
+		pathRoot.getChildren().add(panel.getPanel());
+		pathRoot.getChildren().add(toolBar.getPanel());
+		pathRoot.getChildren().add(pathGrid);
+
+		StackPane.setAlignment(pathGrid, Pos.TOP_LEFT);
+		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
+		StackPane.setAlignment(toolBar.getPanel(), Pos.BOTTOM_LEFT);
 	}
+	
 	protected PathPanel getPathPanel() {
-	    return panel;
+		return panel;
 	}
+
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		setStyleSheet(DEFAULT_OWN_STYLESHEET);
-		grid = new CreatePathGrid();
 		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
-		//		Scene myScene = new Scene(pathRoot, 1500, 900);
-
-		grid = new CreatePathGrid();
 		initializeGridSettings(grid);
-		pathGrid = grid.makePathGrid();
-
-		pathRoot.getChildren().add(pathGrid);
-		pathRoot.getChildren().add(panel.getPanel());
-		
-		StackPane.setAlignment(pathGrid, Pos.CENTER_LEFT);
-		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
-
-		setGridSizing();
-		
-
+		setGridUIComponents();
 		return pathRoot; 	
 	}
-	
+
 	public abstract void initializeGridSettings(CreatePathGrid grid);
 
-	private void setGridSizing() {
-		Button pathSizePlusButton = panel.getPlusButton();
+	private void setGridUIComponents() {
+		Button pathSizePlusButton = toolBar.getPlusButton();
 		pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -70,7 +72,7 @@ public abstract class PathScreen extends AdjustScreen {
 			}
 		});
 
-		Button pathSizeMinusButton = panel.getMinusButton();
+		Button pathSizeMinusButton = toolBar.getMinusButton();
 		pathSizeMinusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -81,18 +83,59 @@ public abstract class PathScreen extends AdjustScreen {
 			}
 		});
 
-//		Button backgroundButton = (Button) panel.getBackgroundButton();
-//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				FileChooser fileChooser = new FileChooser();
-//				fileChooser.setTitle("View Pictures");
-//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-//				File file = fileChooser.showOpenDialog(new Stage());
-//				grid.setBackgroundmage(file);
-//			}
-//		});
+		ImageView trashImage = panel.makeTrashImage();
+		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				if (event.getDragboard().hasImage()) {
+					event.acceptTransferModes(TransferMode.ANY);
+				}
+			}
+		});
+
+		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				event.acceptTransferModes(TransferMode.ANY);
+				Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasImage()) {
+					success = true;
+//					pathGrid.getChildren().remove(grid.getDraggableImage());
+				}
+				event.setDropCompleted(success);
+				event.consume();
+			}
+		});
+
+		Button backgroundButton = (Button) toolBar.getBackgroundButton();
+		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				grid.setBackgroundImage(file.toURI().toString());
+			}
+		});
+		
+		setImageOnButtonPressed(toolBar.getPathImageButton(), panel.getPathImage());
+		setImageOnButtonPressed(toolBar.getStartImageButton(), panel.getStartImage());
+		setImageOnButtonPressed(toolBar.getEndImageButton(), panel.getEndImage());
+	}
+	
+	private void setImageOnButtonPressed(Button button, DraggableImage image) {
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				image.setNewImage(new Image(file.toURI().toString()));
+			}
+		});
 	}
 
 	@Override
