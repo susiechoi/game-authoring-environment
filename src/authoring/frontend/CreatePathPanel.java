@@ -37,6 +37,7 @@ public class CreatePathPanel extends PathPanel implements Panel{
 	private Button applyButton;
 	private Button backButton;
 	private Button backgroundButton;
+	private ImageView trashImage;
 
 
 	public CreatePathPanel(AuthoringView view) {
@@ -76,29 +77,7 @@ public class CreatePathPanel extends PathPanel implements Panel{
 		endImage = new DraggableImage(endImg);
 		endImage.setCopyDraggable();
 		endImage.getPathImage().getStyleClass().add("img-view");
-
-		ImageView trashImage = new ImageView(new Image("file:images/trash.png", 120, 120, true, false));
-		trashImage.getStyleClass().add("img-view");
-		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
-			public void handle(DragEvent event) {
-				if (event.getDragboard().hasImage()) {
-					event.acceptTransferModes(TransferMode.ANY);
-				}
-			}
-		});
-
-		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
-			public void handle(DragEvent event) {
-				event.acceptTransferModes(TransferMode.ANY);
-				Dragboard db = event.getDragboard();
-				boolean success = false;
-				if (db.hasImage()) {
-					success = true;
-				}
-				event.setDropCompleted(success);
-				event.consume();
-			}
-		});
+		
 
 		//		HBox backgroundImageSelector = new HBox();
 		//		ImageView imageDisplay = new ImageView(); 
@@ -138,17 +117,13 @@ public class CreatePathPanel extends PathPanel implements Panel{
 		endImageChooser = getUIFactory().makeTextButton("", "Choose End Image");
 		setImageOnButtonPressed(endImageChooser, endImage);
 
-		//	Image plusImg = new Image("file:images/plus.png", 60, 40, true, false);
-		//	pathSizePlusButton = getUIFactory().makeImageButton("", plusImg);
-		//
-		//	Image minusImg = new Image("file:images/minus.png", 60, 40, true, false);
-		//	pathSizeMinusButton = getUIFactory().makeImageButton("", minusImg);
-
 		applyButton = getUIFactory().makeTextButton("", "Apply");
 
 		backButton = setupBackButton();
 
 		pathSizeButtons = makeSizingButtons();
+		
+		trashImage = makeTrashImage();
 
 		dragAndDropPanel.getChildren().addAll(panelTitle, startImage.getPathImage(), pathImage.getPathImage(), endImage.getPathImage(), trashImage);
 		buttonPanel.getChildren().addAll(pathSizeButtons, changeImageButton, applyButton, backButton);

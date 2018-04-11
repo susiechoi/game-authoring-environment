@@ -7,6 +7,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -40,15 +44,14 @@ public abstract class PathScreen extends AdjustScreen {
 		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
 		initializeGridSettings(grid);
-
-		setGridSizing();
-
+		setGridUIComponents();
+		
 		return pathRoot; 	
 	}
 
 	public abstract void initializeGridSettings(CreatePathGrid grid);
 
-	private void setGridSizing() {
+	private void setGridUIComponents() {
 		Button pathSizePlusButton = panel.getPlusButton();
 		pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -69,7 +72,31 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			}
 		});
+		
+		ImageView trashImage = panel.makeTrashImage();
+		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				if (event.getDragboard().hasImage()) {
+					event.acceptTransferModes(TransferMode.ANY);
+				}
+			}
+		});
 
+		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				event.acceptTransferModes(TransferMode.ANY);
+				Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasImage()) {
+					success = true;
+//					pathGrid.getChildren().remove(grid.getDraggableImage());
+				}
+				event.setDropCompleted(success);
+				event.consume();
+			}
+		});
+		
+		
 		//		Button backgroundButton = (Button) panel.getBackgroundButton();
 		//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
 		//			@Override

@@ -85,7 +85,5 @@ public class CreatePathScreen extends PathScreen {
 		setPathPanel(new CreatePathPanel(getView()));
 		grid = gridIn; 
 		setGridApplied();
-
 	}
-
 }

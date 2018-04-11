@@ -74,8 +74,8 @@ public class CreatePathGrid extends AdjustScreen {
 		grid.setMaxSize(1000, 750); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
 
-//		System.out.println(getView().getImageCoordinates().size());
-//	    gridImageCoordinates = getView().getImageCoordinates();
+		System.out.println(getView().getImageCoordinates());
+		gridImageCoordinates = getView().getImageCoordinates();
 
 
 		model = new SelectionModel();
@@ -98,6 +98,8 @@ public class CreatePathGrid extends AdjustScreen {
 
 				final int col = x;
 				final int row = y;
+
+				checkGrid.add(cell, x, y);
 
 				//This can be separate class (for drag over objects)
 				cell.setOnDragOver(new EventHandler <DragEvent>() {
@@ -178,17 +180,16 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 
 	public boolean checkPathConnected(GridPane grid, int row, int col) {
-		
+
 		if (getNode(grid, col, row) != null) {
 			Label checkLabel = (Label) getNode(grid, col, row);
-			System.out.println(checkLabel.getText());
 			if (checkLabel.getText() == "end") {
 				return true;
 			}
 		} else {
 			return false;
 		}
-		
+
 		removeNode(grid, row, col);
 
 		if ((checkPathConnected(grid, row, col + 1)) == true) {
@@ -217,8 +218,7 @@ public class CreatePathGrid extends AdjustScreen {
 			return true;
 		}
 
-
-		grid.getChildren().add(new Label("path"));
+		grid.add(new Label("path"), col, row);
 		return false;
 	}
 
@@ -232,6 +232,9 @@ public class CreatePathGrid extends AdjustScreen {
 	public Node getNode(GridPane gridPane, int col, int row) {
 		Node result = null;
 		for (Node node : gridPane.getChildren()) {
+			if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
+				result = null;
+			}
 			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
 				result = node;
 				break;
