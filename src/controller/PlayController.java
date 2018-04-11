@@ -11,7 +11,6 @@ import frontend.StageManager;
 import gameplayer.ScreenManager;
 import xml.AuthoringModelReader;
 
-
 /**
  * 
  * @author Ben Hodgson 4/5/18
@@ -20,12 +19,12 @@ import xml.AuthoringModelReader;
  * Created by the ChiefController and makes everything necessary to play a game. 
  */
 public class PlayController {
-    
+
     private Mediator myMediator;
     private AuthoringModelReader myReader;
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
-    
+
 
     /**
      * Constructs main parts of play: Engine for backend controls, ScreenManager (top
@@ -42,7 +41,7 @@ public class PlayController {
 	myMediator.setScreenManager(myScreenManager);
 	myScreenManager.loadInstructionScreen();
     }
-    
+
     /**
      * Creates a new play based on an XML file and passes authored
      * parameters to Engine
@@ -50,18 +49,14 @@ public class PlayController {
      * @param pathToXML: Path to game XML file
      */
     public void newPlay(String pathToXML) {
+	System.out.println("in newPlay");
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
 	List<Level> levels = playModel.allLevels();
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
 	myGameEngine.setPlayState(play);
+	myGameEngine.start();
     }
-    
-  /**
-     * test method for authoring/play 
-     */
-    /**  public void setAuthoring() {
-	PlayState tester = new PlayState(myMediator, test.allLevels(), 0, 0, 0);
-	myGameEngine.setPlayState(tester);
-    } **/
+
+
 }

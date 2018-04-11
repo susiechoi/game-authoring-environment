@@ -35,12 +35,12 @@ public abstract class View {
 		    alert.showAndWait();
     }
     
-    public void loadErrorAlertToStage(String errorMessage, Screen returnToScreen) {
-	    Alert alert = new Alert(AlertType.ERROR);
-	    alert.setContentText(errorMessage);
-	    myManager.switchScreen(returnToScreen.getScreen());
-	    alert.showAndWait();
-}
+//    public void loadErrorAlertToStage(String errorMessage, Screen returnToScreen) {
+//	    Alert alert = new Alert(AlertType.ERROR);
+//	    alert.setContentText(errorMessage);
+//	    myManager.switchScreen(returnToScreen.getScreen());
+//	    alert.showAndWait();
+//}
 
     public abstract void loadErrorScreen(String errorMessage);
     

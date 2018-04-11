@@ -1,7 +1,5 @@
 package engine;
 
-import java.util.Timer;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -23,6 +21,7 @@ public class GameEngine {
     private Timeline ANIMATION;
 
     public GameEngine(Mediator mediator) {
+	System.out.println("in engine");
 	myPlayState = null;
 	myMediator = mediator;
 
@@ -42,20 +41,22 @@ public class GameEngine {
     public PlayState getPlayState() {
 	return myPlayState;
     }
+    
 
     /**
-     * This is called every ____ number of seconds
+     * Calls the update function every loop
+     * @param elapsedTime
      */
-    public void update() {
-//	myPlayState.update();
+    public void loop(double elapsedTime) {
+	myPlayState.update(elapsedTime);
     }
+
 
     /**
      * Pauses Game Loop animation so Game State stays constant
      * COMMENTED OUT BECAUSE THIS WOULD PAUSE THE ENTIRE GAMEENGINE NOT THE PLAYSTATE
      */
 //    public void pause() {
-//	myTimer.cancel();
 //	ANIMATION.pause();
 //
 //    }
@@ -112,13 +113,6 @@ public class GameEngine {
 
     }
 
-    /**
-     * Calls the update function every loop
-     * @param elapsedTime
-     */
-    public void loop(double elapsedTime) {
-	update();
-    }
-    
+   
 
 }
