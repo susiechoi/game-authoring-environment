@@ -50,18 +50,6 @@ public class ScreenManager extends View{
 
     //private final FileIO FILE_READER;
 
-<<<<<<< HEAD
-=======
-    public ScreenManager(StageManager stageManager, String language) {
-   	super(stageManager);
-   	STAGE_MANAGER = stageManager;
-   	PROMPTS = new PromptReader(language, this);
-   	findSettings();
-   	//setup rest of values once file reader is finished
-       }
-
-
->>>>>>> 7de613cec3b7c8f84aa536850ca221a78c33950e
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
