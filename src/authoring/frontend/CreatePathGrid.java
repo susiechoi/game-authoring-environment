@@ -43,8 +43,8 @@ public class CreatePathGrid extends AdjustScreen {
 	private SelectionModel model;
 
 	//TODO: have these update with change images, and get images from default file
-	private ImageView startImage = new ImageView(new Image("file:images/square.png"));
-	private ImageView endImage = new ImageView(new Image("file:images/hexagonal.png"));
+	private ImageView startImage = new ImageView(new Image("file:images/brick.png"));
+	private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
 	private GridPane checkGrid;
 	private Label startLabel;
@@ -180,8 +180,6 @@ public class CreatePathGrid extends AdjustScreen {
 		populateGrid();
 	}
 
-
-
 	public boolean checkPathConnected(GridPane grid, int row, int col) {
 
 		if (getNode(grid, col, row) != null) {
@@ -217,7 +215,6 @@ public class CreatePathGrid extends AdjustScreen {
 			return true;
 		}
 
-//		grid.add(new Label("path"), col, row);
 		return false;
 	}
 

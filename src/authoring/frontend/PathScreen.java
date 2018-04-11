@@ -31,6 +31,7 @@ public abstract class PathScreen extends AdjustScreen {
 		super(view);
 		grid = new CreatePathGrid(view);
 	}
+	
 	protected void setPathPanel(CreatePathPanel panelnew, CreatePathToolBar toolbar) {
 		panel = panelnew;
 		toolBar = toolbar;
@@ -43,6 +44,7 @@ public abstract class PathScreen extends AdjustScreen {
 		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
 		StackPane.setAlignment(toolBar.getPanel(), Pos.BOTTOM_LEFT);
 	}
+	
 	protected PathPanel getPathPanel() {
 		return panel;
 	}
@@ -97,7 +99,7 @@ public abstract class PathScreen extends AdjustScreen {
 				boolean success = false;
 				if (db.hasImage()) {
 					success = true;
-					//					pathGrid.getChildren().remove(grid.getDraggableImage());
+//					pathGrid.getChildren().remove(grid.getDraggableImage());
 				}
 				event.setDropCompleted(success);
 				event.consume();

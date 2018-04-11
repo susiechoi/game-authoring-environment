@@ -59,12 +59,12 @@ public class CreatePathPanel extends PathPanel {
 		pathImage.setCopyDraggable();
 		pathImage.getPathImage().getStyleClass().add("img-view");
 
-		Image startImg = new Image("file:images/square.png");
+		Image startImg = new Image("file:images/brick.png");
 		startImage = new DraggableImage(startImg);
 		startImage.setCopyDraggable();
 		startImage.getPathImage().getStyleClass().add("img-view");
 
-		Image endImg = new Image("file:images/hexagonal.png");
+		Image endImg = new Image("file:images/darkstone.png");
 		endImage = new DraggableImage(endImg);
 		endImage.setCopyDraggable();
 		endImage.getPathImage().getStyleClass().add("img-view");
