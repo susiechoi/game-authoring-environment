@@ -4,6 +4,7 @@ import java.util.List;
 
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.PlayController;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -38,7 +39,12 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			getView().addNewLevel();
 			getView().goForwardFrom(this.getClass().getSimpleName()+"EditNewLevel");
 		});
+		AuthoringModel currentModel = getView().getModel();
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
+		demoButton.setOnAction(e -> {
+			new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
+				currentModel).demoPlay(currentModel);
+		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setOnAction(e -> {
 			getView().writeToFile();

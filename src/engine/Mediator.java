@@ -145,9 +145,8 @@ public class Mediator {
 	myScreenManager.remove(sprite);
     }
     
-    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	System.out.println("AVAIL");
-	    myScreenManager.setAvailableTowers(availableTowers);
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {  
+	myScreenManager.setAvailableTowers(availableTowers);
     }
 
     /**
@@ -253,11 +252,6 @@ public class Mediator {
 		
 	myScreenManager.setPath(imageMap, backgroundImageFilePath);
     }
-
-    
-    //    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
-    //	value.addListener(listenerToAdd);
-    //    }
 
 
 }

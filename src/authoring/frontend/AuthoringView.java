@@ -40,6 +40,7 @@ public class AuthoringView extends View {
 	public static final String DEFAULT_ERROR_FILEPATH_BEGINNING = "languages/";
 	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
+	public static final String DEFAULT_LANGUAGE = "English";
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private ErrorReader myErrorReader;
@@ -65,6 +66,17 @@ public class AuthoringView extends View {
 
 	public void setModel(AuthoringModel model) {
 		myModel = model;
+	}
+	
+	/**
+	 * Returns the AuthoringModel object the user uses to author a game. 
+	 * Should never return null because the model and view are both created
+	 * in the AuthoringController class and the view's method setModel is called.
+	 * 
+	 * @return AuthoringModel: the model authored by the user
+	 */
+	public AuthoringModel getModel() {
+	    return myModel;
 	}
 
 	public void loadInitialScreen() {
@@ -97,7 +109,6 @@ public class AuthoringView extends View {
 		catch(ObjectNotFoundException e) {
 		    loadErrorScreen("NoObject");
 		}
-	   
 	}
 
 	protected void goBackFrom(String id) {
@@ -125,6 +136,7 @@ public class AuthoringView extends View {
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
 				else {
+				    	System.out.println("HERE");
 					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
@@ -134,7 +146,7 @@ public class AuthoringView extends View {
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
 			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, "English"));
+				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
 				myStageManager.switchScreen(nextScreen.getScreen());
 			} //TODO: handle case where switching to gameplay
 			else {
@@ -188,7 +200,9 @@ public class AuthoringView extends View {
 	}
 
 	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
+	    	System.out.println("View:" +imageCoordinates);
+	    	myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
+	    	System.out.println("After view:" + myModel.allLevels().get(1).getLevelPathMap());
 		myImageMap = imageCoordinates;
 	}
 
@@ -239,6 +253,16 @@ public class AuthoringView extends View {
 
 	protected Scene getScene() {
 		return myStageManager.getScene();
+	}
+	
+	/**
+	 * Returns the StageManager object used by the game to switch the Screens
+	 * displayed on the Stage.
+	 * 
+	 * @return StageManager: the StageManager object in the game
+	 */
+	public StageManager getStageManager() {
+	    return myStageManager;
 	}
 
 	public String getErrorCheckedPrompt(String prompt) {
