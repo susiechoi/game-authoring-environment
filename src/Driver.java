@@ -1,5 +1,6 @@
 import controller.ChiefController;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /** 
@@ -18,6 +19,8 @@ public class Driver extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+	primaryStage.setTitle("IfTrueReturnTrue VOOGASALAD");
+	primaryStage.getIcons().add(new Image("/images/sarahbland.png"));
 	ChiefController controller = new ChiefController(primaryStage);
 	controller.start();
     }

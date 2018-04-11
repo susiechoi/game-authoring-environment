@@ -111,7 +111,7 @@ public class AuthoringView extends View {
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
 			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, myPromptReader));
+				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, "English"));
 				myStageManager.switchScreen(nextScreen.getScreen());
 			} //TODO: handle case where switching to gameplay
 			else {
