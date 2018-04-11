@@ -228,4 +228,3 @@ public class AuthoringController {
 	    return myModel.getHighestWaveNumber(level);
 	}
 }
-
