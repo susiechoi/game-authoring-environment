@@ -15,7 +15,7 @@ import java.awt.geom.Point2D;
 public class Path {
 	private final double THRESHOLD = 5;
 	private List<Point> myCoordinates;
-	private Point2D currentPosition;
+	private Point currentPosition;
 	private double myAngle;
 	private int pathIndex;
 	private Map<String, List<Point>> myPathMap;
@@ -57,21 +57,22 @@ public class Path {
 		return Math.sqrt(xDistance + yDistance) < THRESHOLD;
 	}
 
-	/**
-	 * Returns a new angle for the image
-	 * 
-	 * @param point1: initial point
-	 * @param point2: next point
-	 * @return double representing angle
-	 */
-	private double getAngle(Point2D point1, Point2D point2) {
-		double deltaY = point2.getY() - point1.getY();
-		double deltaX = point2.getX() - point1.getX();
-		return Math.atan(deltaY/deltaX);
-	}
-	
-	public Map<String, List<Point>> getPathMap(){
-		return myPathMap;
-	}
+
+    /**
+     * Returns a new angle for the image
+     * 
+     * @param point1: initial point
+     * @param point2: next point
+     * @return double representing angle
+     */
+    private double getAngle(Point point1, Point point2) {
+	double deltaY = point2.getY() - point1.getY();
+	double deltaX = point2.getX() - point1.getX();
+	return Math.atan(deltaY/deltaX);
+    }
+    
+    public Map<String, List<Point>> getPathMap() {
+    		return myPathMap;
+    }
 
 }

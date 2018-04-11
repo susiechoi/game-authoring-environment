@@ -24,6 +24,7 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
+import xml.AuthoringModelReader;
 
 public class AuthoringController {
 	
@@ -93,9 +94,10 @@ public class AuthoringController {
 	// TODO
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
+	 * @throws ObjectNotFoundException 
 	 */
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) { 
+	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
 		myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
 		myImageMap = imageCoordinates;
 	}
@@ -183,8 +185,7 @@ public class AuthoringController {
 	    for(Enemy enemy : enemyMap.keySet()) {
 		enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
 	    }
-	    return enemyNameMap;
-	    
+	    return enemyNameMap;   
 	}
 	
 	
@@ -207,6 +208,10 @@ public class AuthoringController {
 
 	public String getGameName() {
 		return myModel.getGameName(); 
+	}
+	public void setModel(String gameName) {
+	    	AuthoringModelReader reader = new AuthoringModelReader();
+		myModel = reader.createModel(gameName);
 	}
 	
 	public HashMap<String, List<Point>> getGrid() {

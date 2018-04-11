@@ -179,6 +179,8 @@ public class CreatePathGrid extends AdjustScreen {
 		populateGrid();
 	}
 
+
+
 	public boolean checkPathConnected(GridPane grid, int row, int col) {
 
 		if (getNode(grid, col, row) != null) {
@@ -187,6 +189,7 @@ public class CreatePathGrid extends AdjustScreen {
 				return true;
 			}
 		} else {
+
 			return false;
 		}
 

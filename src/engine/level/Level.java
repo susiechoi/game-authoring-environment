@@ -231,6 +231,8 @@ public class Level {
 	    return (myWaves.get(path).size() > waveNumber);
 	}
 	
+	
+	
 	public Map<String, List<Point>> getLevelPathMap(){
 //		Map<String, List<Point>> pathMap = myPaths.get(0).getPathMap();
 //		for (int x=1; x<myPaths.size(); x++) {
