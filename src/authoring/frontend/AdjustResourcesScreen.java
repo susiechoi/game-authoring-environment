@@ -43,7 +43,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeResources(myGameNameEntry.getText(), myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue());
+			getView().makeResources(myGameNameEntry.getText(), myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue());//TODO fix
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);

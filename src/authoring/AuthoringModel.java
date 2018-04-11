@@ -9,9 +9,8 @@
 
 package authoring;
 
-import java.io.File;
+import java.awt.geom.Point2D;
 import java.lang.Double; 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,8 +35,6 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
-import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
@@ -160,9 +157,15 @@ public class AuthoringModel implements GameData {
 
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
-	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {
-		myGrid = grid;
-		myPath = new PathBuilder().construct(level, coordinates);
+	public void makePath(int name, int levelNum, List<Point2D> coordinates, GridPane grid) throws ObjectNotFoundException{
+	    	myGrid = grid;
+		myPath = new PathBuilder().construct(levelNum, coordinates);
+		Level level = levelCheck(levelNum);
+		level.addPath(myPath);
+	}
+	
+	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
+	    return levelCheck(levelNum).getPaths().get(name-1);
 	}
 
 
@@ -285,6 +288,7 @@ public class AuthoringModel implements GameData {
 	 */
 	public void makeResources(String gameName, double startingHealth, double starting$) {
 		mySettings = new SettingsBuilder().construct(gameName, startingHealth, starting$);
+		myGameName = mySettings.getGameName();
 	}
 
 	/**

@@ -211,7 +211,7 @@ public class Level {
 		return myWaves; 
 	}
 	
-	protected List<Path> getPaths() {
+	public List<Path> getPaths() {
 		return myPaths; 
 	}
 	
@@ -221,6 +221,12 @@ public class Level {
 	
 	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
+	}
+	public boolean containsWave(Path path, int waveNumber) {
+	    if(!myWaves.containsKey(path)) {
+		return false;
+	    }
+	    return (myWaves.get(path).size() > waveNumber);
 	}
 
 }
