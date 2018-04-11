@@ -20,7 +20,7 @@ public class MainScreen extends Screen {
     //TODO re-factor style sheets to abstract
     public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
    // private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+//    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
     private final String DEFAULT_LANGUAGE = "English";
 
     private final UIFactory UIFACTORY;
@@ -53,22 +53,22 @@ public class MainScreen extends Screen {
 	    }
 	});
 
-	HBox leftCenter = new HBox(newAuthorButt);
-	leftCenter.setAlignment(Pos.CENTER);
-	leftCenter.setMaxWidth(Double.MAX_VALUE);
-	HBox rightCenter = new HBox(newGameButt);
-	rightCenter.setAlignment(Pos.CENTER);
-	rightCenter.setMaxWidth(Double.MAX_VALUE);
+//	HBox leftCenter = new HBox(newAuthorButt);
+//	leftCenter.setAlignment(Pos.CENTER);
+//	leftCenter.setMaxWidth(Double.MAX_VALUE);
+//	HBox rightCenter = new HBox(newGameButt);
+//	rightCenter.setAlignment(Pos.CENTER);
+//	rightCenter.setMaxWidth(Double.MAX_VALUE);
+//
+//	HBox buttonBox = new HBox(leftCenter,rightCenter);
+//	buttonBox.setAlignment(Pos.CENTER);
+//	HBox.setHgrow(leftCenter, Priority.ALWAYS);
+//	HBox.setHgrow(rightCenter, Priority.ALWAYS);
 
-	HBox buttonBox = new HBox(leftCenter,rightCenter);
-	buttonBox.setAlignment(Pos.CENTER);
-	HBox.setHgrow(leftCenter, Priority.ALWAYS);
-	HBox.setHgrow(rightCenter, Priority.ALWAYS);
-
-	rootBox.getChildren().addAll(title, buttonBox);
+	rootBox.getChildren().addAll(title, newAuthorButt, newGameButt);
 
 	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
+//	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 	return rootBox;
     }
 

@@ -1,5 +1,10 @@
 package gameplayer;
 
+import frontend.PromptReader;
+import frontend.StageManager;
+import frontend.View;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +14,6 @@ import java.awt.Point;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
-import frontend.PromptReader;
-import frontend.StageManager;
-import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.stage.Stage;
@@ -48,6 +50,8 @@ public class ScreenManager extends View{
 
     //private final FileIO FILE_READER;
 
+<<<<<<< HEAD
+=======
     public ScreenManager(StageManager stageManager, String language) {
    	super(stageManager);
    	STAGE_MANAGER = stageManager;
@@ -57,26 +61,30 @@ public class ScreenManager extends View{
        }
 
 
+>>>>>>> 7de613cec3b7c8f84aa536850ca221a78c33950e
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
 	PROMPTS = new PromptReader(language, this);
 	MEDIATOR = mediator;
 	findSettings();
-	//setup rest of values once file reader is finished
     }
 
 
-    public List<Integer> getMediatorInts(){
+    public ScreenManager(StageManager stageManager, String language) {
+    	super(stageManager);
+    	STAGE_MANAGER = stageManager;
+    	PROMPTS = new PromptReader(language, this);
+    	findSettings();
+	}
+    
+	public List<Integer> getMediatorInts(){
 	controlVars = new ArrayList<Integer>();
 	for(int i = 0; i < 3; i++) {
 	    controlVars.add(Integer.valueOf(0));
 	}
 	return controlVars;
     }
-
-
-
 
     //TODO set Style sheets
     public void loadInstructionScreen() {

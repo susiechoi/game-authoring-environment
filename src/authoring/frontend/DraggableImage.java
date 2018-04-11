@@ -1,7 +1,6 @@
 package authoring.frontend;
 
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,7 +10,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
-public class DraggableImage extends Parent{
+public class DraggableImage extends Parent {
 	private ImageView pathImage;
 	private String pathName;
 	private EventHandler<MouseEvent> myCopyDragEvent;
@@ -19,7 +18,7 @@ public class DraggableImage extends Parent{
 	private EventHandler<DragEvent> myDragDone;
 	private EventHandler<DragEvent> myCopyDragDone;
 
-	DraggableImage(Image image) {
+	public DraggableImage(Image image) {
 		setPathImage(image);
 	}
 
@@ -92,6 +91,9 @@ public class DraggableImage extends Parent{
 	}
 	
 	public String getPathName() {
+	    	if(pathName == null) {
+	    	    return "Default";
+	    	}
 		return pathName;
 	}
 
