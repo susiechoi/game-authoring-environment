@@ -9,7 +9,11 @@
  */
 
 package authoring;
+import java.util.HashMap;
+import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Map;
+
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
@@ -19,22 +23,22 @@ import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
-import javafx.geometry.Point2D;
 import javafx.scene.layout.GridPane;
 
 
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
-	private AuthoringModel myAuthoringModel; 
+	private AuthoringModel myModel; 
 	
 	public AuthoringController(StageManager stageManager, String languageIn) {
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
 		try {
-			myAuthoringModel = new AuthoringModel();
+			myModel = new AuthoringModel();
 		} catch (MissingPropertiesException e) {
 			myAuthoringView.loadErrorScreen("NoDefaultObject");
 		}
+		myAuthoringView.setModel(myModel);
 		myAuthoringView.loadInitialScreen();
 	}
 	
@@ -48,7 +52,7 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 */
 	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
-		return myAuthoringModel.getObjectAttribute(level, objectType, name, attribute);
+		return myModel.getObjectAttribute(level, objectType, name, attribute);
 	}
 	
 	/**
@@ -57,8 +61,9 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 * @throws NoDuplicateNamesException 
 	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
-		myAuthoringModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
+	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) 
+			throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
+		myModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 	}
 	
 	/**
@@ -71,7 +76,7 @@ public class AuthoringController {
 							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
 							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 							double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-		myAuthoringModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
+		myModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
 				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange, 
 				towerValue, towerUpgradeCost, towerUpgradeValue);
@@ -80,16 +85,20 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
-	public void makeResources(double startingHealth, double starting$) {
-		myAuthoringModel.makeResources(startingHealth, starting$);
+	public void makeResources(String gameName, double startingHealth, double starting$) {
+		myModel.makeResources(gameName, startingHealth, starting$);
 	}
 	
 	// TODO
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 */
-	public void makePath(int level, List<Point2D> coordinates, GridPane grid) {  //pass entire populated gridpane?
-		myAuthoringModel.makePath(level, coordinates, grid); 
+
+	public void makePath(int name, int level, List<Point2D> coordinates, GridPane grid) throws ObjectNotFoundException {  //pass entire populated gridpane?
+		myModel.makePath(name, level, coordinates, grid); 
+	}
+	public Path getPathFromName(int name, int level) throws ObjectNotFoundException {
+	    return myModel.getPathFromName(name, level);
 	}
 	
 	/**
@@ -97,7 +106,7 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 */
 	public List<String> getCurrentObjectOptions(int level, String objectType) throws ObjectNotFoundException {
-		return myAuthoringModel.getCurrentObjectOptions(level, objectType);
+		return myModel.getCurrentObjectOptions(level, objectType);
 	}
 	
     /**
@@ -108,15 +117,15 @@ public class AuthoringController {
     }
 
 	public int addNewLevel() {
-		return myAuthoringModel.addNewLevel(); 
+		return myModel.addNewLevel(); 
 	}
 	
 	public List<String> getLevels() {
-		return myAuthoringModel.getLevels(); 
+		return myModel.getLevels(); 
 	}
 
 	public int autogenerateLevel() {
-		return myAuthoringModel.autogenerateLevel(); 
+		return myModel.autogenerateLevel(); 
 	}
 	
 	/**
@@ -130,7 +139,7 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException: thrown if the level isn't found
 	 */
 	public void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
-	    Level thisLevel = myAuthoringModel.levelCheck(level);
+	    Level thisLevel = myModel.levelCheck(level);
 	    Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    Wave thisWave;
@@ -143,6 +152,7 @@ public class AuthoringController {
 	    thisWave.addEnemy(thisEnemy, newAmount);
 	}
 	
+	
 	/**
 	 * Returns the number of waves in a specified level that belong to a specified
 	 * path object.
@@ -153,9 +163,24 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException: thrown if the level isn't found
 	 */
 	public int wavesNumber(int level, Path path) throws ObjectNotFoundException {
-	    Level thisLevel = myAuthoringModel.levelCheck(level);
+	    Level thisLevel = myModel.levelCheck(level);
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    return levelWaves.size();
+	}
+	
+	public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
+	    Level currentLevel = myModel.levelCheck(level);
+	    //TODO: issue here - if there is no wave yet then need to make it first!
+	    if(!currentLevel.containsWave(path, waveNumber)) {
+		return new HashMap<String, Integer>();
+	    }
+	    Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies();
+	    Map<String,Integer> enemyNameMap = new HashMap<>();
+	    for(Enemy enemy : enemyMap.keySet()) {
+		enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
+	    }
+	    return enemyNameMap;
+	    
 	}
 	
 	
@@ -168,8 +193,17 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException: thrown if the level isn't found
 	 */
 	public List<String> levelEnemies(int level) throws ObjectNotFoundException {
-	    Level thisLevel = myAuthoringModel.levelCheck(level);
+	    Level thisLevel = myModel.levelCheck(level);
 	    return thisLevel.getAllEnemies();
 	}
+
+	public void setGameName(String gameName) {
+		myModel.setGameName(gameName);
+	}
+
+	public String getGameName() {
+		return myModel.getGameName(); 
+	}
+	
 }
 

@@ -103,13 +103,8 @@ public class Mediator {
      * @param filename	name of file
      */
     public void startPlay(String filename) {
-	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-	StackTraceElement element = stackTrace[2];
-	System.out.println("I was called by a method named:" + element.getMethodName());
-	System.out.println("That method is in class:" + element.getClassName());
-	//myPlayController.newPlay(filename);
-	System.out.println("set authoring call in mediator");
-	myPlayController.setAuthoring();
+	myPlayController.newPlay(filename);
+	//myPlayController.setAuthoring();
     }
     
     /**
@@ -260,11 +255,6 @@ public class Mediator {
     //    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
     //	value.addListener(listenerToAdd);
     //    }
-
-
-    // a whole slew of other methods
-    // but fr there should be a method for every event that can occur
-
 
 
 }

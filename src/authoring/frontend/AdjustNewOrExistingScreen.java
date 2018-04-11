@@ -31,7 +31,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		super(view);
 		setConstants(); 
 		mySelectedObjectName = selectedObjectName; 
-		mySelectedObjectName = "Default";
 		myIsNewObject = mySelectedObjectName.equals(myDefaultObjectName);
 	}
 
@@ -73,8 +72,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected boolean getIsNewObject() {
 		return myIsNewObject; 
 	}
-	
-
 	
 	protected void setEditableOrNot(TextField name, boolean isNewObject) {
 		if (!isNewObject) name.setEditable(false);

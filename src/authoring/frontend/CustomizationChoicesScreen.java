@@ -2,6 +2,7 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -10,22 +11,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import xml.AuthoringModelWriter;
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
     public static final String TEST_PROPERTIES = "images/TestProperties.properties";
-    private String myGameName;
+
     
-    protected CustomizationChoicesScreen(AuthoringView view) {
-	//TODO: figure out how to not get gamename!!!
+    protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
 	super(view);
-	myGameName = "TEST";
     }
 
     @Override
     public Parent makeScreenWithoutStyling(){
 	VBox vbox = new VBox();
 	HBox hbox = new HBox();
-	Text heading = getUIFactory().makeScreenTitleText(myGameName);
+	//System.out.println(myGameName+" SHOULD BE THE TITLE");
+	Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
 	vbox.getChildren().add(heading);
 
 	Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
@@ -39,6 +40,9 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	});
 	Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 	Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
+	saveButton.setOnAction(e -> {
+	    	getView().writeToFile();
+	});
 	Button mainButton = setupBackButton();
 	String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
 	vbox.getChildren().add(demoButton);
@@ -87,7 +91,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 	
 	vbox.getChildren().add(hbox);
-	vbox.getChildren().add(songPrompted);
+	//vbox.getChildren().add(songPrompted); TODO: change to mp3 selector and readd
 	vbox.getChildren().add(mainButton);
 	return vbox;
 

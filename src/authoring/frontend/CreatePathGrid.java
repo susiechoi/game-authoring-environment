@@ -1,13 +1,13 @@
 package authoring.frontend;
 
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -56,6 +56,7 @@ public class CreatePathGrid {
 	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
 	private int startCount = 0;
+	private DraggableImage myCurrentClicked;
 
 
 	protected GridPane makePathGrid() {
@@ -82,8 +83,8 @@ public class CreatePathGrid {
 	//REFACTOR
 	private void populateGrid() {
 
-		for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
-			for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
+		for (int x = 0 ; x < grid.getColumnCount(); x++) {
+			for (int y = 0 ; y < grid.getRowCount(); y++) {
 				StackPane cell = new StackPane();
 
 				final int col = x;
@@ -159,7 +160,7 @@ public class CreatePathGrid {
 	}
 
 	public boolean checkPathConnected(int row, int col) {
-		if (col < 0 || col >= grid.impl_getColumnCount() || row < 0 || row >= grid.impl_getRowCount())
+		if (col < 0 || col >= grid.getColumnCount() || row < 0 || row >= grid.getRowCount())
 			return false;
 		if ((getNode(checkGrid, col, row) == null))
 			return false;
@@ -202,7 +203,7 @@ public class CreatePathGrid {
 	public void addCoordinates(int row, int col) {
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
-		Point2D point = new Point2D(x, y);
+		Point2D point = new Point2D.Double(x, y);
 		pathCoords.add(point);
 		//add row and col indexes to Map
 	}
@@ -241,7 +242,11 @@ public class CreatePathGrid {
 	public void setUpForWaves(EventHandler<MouseEvent> action) {
 		makeUnDraggable();
 		for(DraggableImage image : draggableImagesOnScreen) {
-			image.getPathImage().setOnMouseClicked(e -> action.handle(e));
+			image.getPathImage().setOnMouseClicked(e -> 
+			{
+			myCurrentClicked = image;
+			action.handle(e);
+			});
 		}
 	}
 	private void makeUnDraggable() {
@@ -250,7 +255,9 @@ public class CreatePathGrid {
 		}
 	}
 	
-	
+	protected DraggableImage getMostRecentlyClicked() {
+	    return myCurrentClicked;
+	}
 	
 	
 

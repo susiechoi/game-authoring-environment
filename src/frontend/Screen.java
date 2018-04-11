@@ -3,6 +3,8 @@ import java.util.List;
 
 
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * @author transition to abstract class & error checking - Sarah Bland
@@ -84,6 +86,7 @@ public abstract class Screen {
     protected PropertiesReader getPropertiesReader() {
 	return myPropertiesReader;
     }
+
 }
 
 

@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.awt.Point;
 
+
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
-import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.StageManager;
@@ -45,9 +45,9 @@ public class ScreenManager extends View{
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
     private List<Integer> controlVars;
-    
+
     //private final FileIO FILE_READER;
-    
+
 
 
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
@@ -125,19 +125,18 @@ public class ScreenManager extends View{
     public void remove(FrontEndSprite sprite) {
 	GAME_SCREEN.remove(sprite);
     }
-    
+
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	GAME_SCREEN.setAvailbleTowers(availableTowers);
     }
-    
+
     public void updateCurrency(Integer newBalence) {
 	GAME_SCREEN.updateCurrency(newBalence);
     }
-  
+
     public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
 	GAME_SCREEN.setPath(imageMap, numRow, numCol);
     }
-    
 
 
 }
