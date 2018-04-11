@@ -29,15 +29,17 @@ public class Sprite  {
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, String image) {
+    public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image)));
-	myImageView.setFitWidth(50);
-	myImageView.setFitHeight(50);
+	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
+//	myImageView.setFitWidth(50);
+//	myImageView.setFitHeight(50);
 	myImageView.setPreserveRatio(true);
-	myImageView.setFitWidth(50);
-	myImageView.setFitHeight(50);
+//	myImageView.setFitWidth(size);
+//	myImageView.setFitHeight(size);
+	System.out.println(size + " SIZE");
+	//System.out.println(myImageView.getImage().getWidth() + "frick me up");
 	System.out.println(myImageView.getFitWidth()+ " sprite width");
     }
     
