@@ -106,7 +106,13 @@ public class AuthoringModel implements GameData {
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
 		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
 		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
+		try {
 		makePath(1, new GridPane(), dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
+		}
+		catch(ObjectNotFoundException e) {
+		    //TODO: help!!!
+		    System.out.println("couldn't find object");
+		}
 		Wave newWave = new Wave(firstLevel.getPaths().get(0));
 		newWave.addEnemy(myDefaultEnemy, 20);
 		firstLevel.addWave(firstLevel.getPaths().get(0), newWave);
@@ -182,9 +188,13 @@ public class AuthoringModel implements GameData {
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
-		myImageMap = imageCoordinates;
-		myPath = new PathBuilder().construct(level, coordinates); //add new constructor
+	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
+		currentLevel.addPath(newPath);
+		
+//		myImageMap = imageCoordinates;
+//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
 	}
 
 	

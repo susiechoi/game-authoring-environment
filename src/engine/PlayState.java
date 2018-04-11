@@ -66,6 +66,11 @@ public class PlayState implements GameData {
 		}
 		myMediator.setAvailableTowers(availTowers);
 		myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
+		
+		
+		
+//		myMediator.setPath(currentLevel.getLevelPathMap(), x, y);
+		
 	}
 
 	public void update(double elapsedTime) {

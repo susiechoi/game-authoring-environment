@@ -26,6 +26,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import xml.AuthoringModelReader;
+import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 import xml.PlayLoader;
