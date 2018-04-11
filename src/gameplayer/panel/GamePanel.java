@@ -15,10 +15,8 @@ import frontend.PropertiesReader;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
 
 public class GamePanel extends Panel{
 
@@ -83,54 +81,10 @@ public class GamePanel extends Panel{
 		System.out.println("Game Panel: " +imageMap);
 
 		PathMaker pathMaker = new PathMaker();
-		GridPane grid = pathMaker.populateGrid(imageMap, backgroundImageFilePath);
+		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath);
 		//	setGridConstraints(grid, imageMap);
 		spriteAdd.getChildren().add(grid);
-
-		//		GridPane grid = new GridPane();
-		//		grid.setGridLinesVisible(true);
-		//		//TODO this must be fixed, shouldn't be manual
-		//		grid.setMaxSize(1020.0, 650.0);
-		//		grid.setPrefSize(1020.0, 650.0);
-		//		grid.setMinSize(1020.0, 650.0);
-		//
-		//
-		//		for (int i = 0; i < numCol; i++) {
-		//			ColumnConstraints colConst = new ColumnConstraints();
-		//			colConst.setPercentWidth(100.0 / numCol);
-		//			grid.getColumnConstraints().add(colConst);
-		//		}
-		//		for (int i = 0; i < numRow; i++) {
-		//			RowConstraints rowConst = new RowConstraints();
-		//			rowConst.setPercentHeight(100.0 / numRow);
-		//			grid.getRowConstraints().add(rowConst);         
-		//		}
-		//		addImagesToGrid(imageMap, grid);
 	}
-
-	//	private void addImagesToGrid(Map<String, List<Point2D>> imageMap, GridPane grid) {
-	//		for (String key: imageMap.keySet()) { //goes through images
-	//			for (int i = 0; i < imageMap.keySet().size(); i++) {
-	//				Point2D point = imageMap.get(key).get(0);
-	//				grid.add(new ImageView(new Image(key)), (int)point.getX(), (int)point.getY());
-	//			}
-	//		}
-	//	}
-
-	//    public void setGridConstraints(GridPane grid, Map<String, List<Point>> map) {
-	//	grid.getColumnConstraints().clear();
-	//	grid.getRowConstraints().clear();
-	//	for (int i = 0; i < 1000/60; i++) {
-	//	    ColumnConstraints colConst = new ColumnConstraints();
-	//	    colConst.setPrefWidth(60);
-	//	    grid.getColumnConstraints().add(colConst);
-	//	}
-	//	for (int i = 0; i < 750/60; i++) {
-	//	    RowConstraints rowConst = new RowConstraints();
-	//	    rowConst.setPrefHeight(60);
-	//	    grid.getRowConstraints().add(rowConst);         
-	//	}
-	//    }
 
 
 	public void towerSelected(FrontEndTower tower) {

@@ -50,7 +50,7 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_PATH_START = "images/start.png";
 	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
 	public static final String DEFAULT_PATH_END = "images/end.png";
-	public static final String DEFAULT_BACKGROUND_IMAGE = "images/grass.png";
+	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
 	private final String myDefaultName; 
 
 	private String myGameName; 
@@ -102,6 +102,24 @@ public class AuthoringModel implements GameData {
 		dummyPathStartPoints.add(new Point(2, 2));
 		List<Point> dummyPathMiddlePoints = new ArrayList<>();
 		dummyPathMiddlePoints.add(new Point(2, 3));
+//		dummyPathMiddlePoints.add(new Point(2, 4));
+//		dummyPathMiddlePoints.add(new Point(2, 5));
+//		dummyPathMiddlePoints.add(new Point(2, 6));
+//		dummyPathMiddlePoints.add(new Point(3, 6));
+//		dummyPathMiddlePoints.add(new Point(4, 6));
+//		dummyPathMiddlePoints.add(new Point(5, 6));
+//		dummyPathMiddlePoints.add(new Point(6, 6));
+//		dummyPathMiddlePoints.add(new Point(7, 6));
+//		dummyPathMiddlePoints.add(new Point(7, 7));
+//		dummyPathMiddlePoints.add(new Point(7, 8));
+//		dummyPathMiddlePoints.add(new Point(7, 9));
+//		dummyPathMiddlePoints.add(new Point(7, 10));
+//		dummyPathMiddlePoints.add(new Point(7, 11));
+//		dummyPathMiddlePoints.add(new Point(8, 11));
+//		dummyPathMiddlePoints.add(new Point(9, 11));
+//		dummyPathMiddlePoints.add(new Point(10, 11));
+//		dummyPathMiddlePoints.add(new Point(11, 11));
+//		dummyPathMiddlePoints.add(new Point(11, 11));
 		List<Point> dummyPathEndPoints = new ArrayList<>();
 		dummyPathEndPoints.add(new Point(2, 4));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);

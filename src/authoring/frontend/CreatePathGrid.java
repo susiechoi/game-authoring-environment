@@ -167,12 +167,12 @@ public class CreatePathGrid extends AdjustScreen {
 		grid.getColumnConstraints().clear();
 		grid.getRowConstraints().clear();
 		pathSize = size;
-		for (int i = 0; i < 1000/pathSize; i++) {
+		for (int i = 0; i < 1020.0/pathSize; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
 			colConst.setPrefWidth(pathSize);
 			grid.getColumnConstraints().add(colConst);
 		}
-		for (int i = 0; i < 750/pathSize; i++) {
+		for (int i = 0; i < 650.0/pathSize; i++) {
 			RowConstraints rowConst = new RowConstraints();
 			rowConst.setPrefHeight(pathSize);
 			grid.getRowConstraints().add(rowConst);         
