@@ -9,7 +9,7 @@
 
 package authoring;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 import java.lang.Double; 
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
@@ -57,8 +57,8 @@ public class AuthoringModel implements GameData {
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
-	private GridPane myGrid;
-	private Path myPath;
+	protected Path myPath;
+	protected HashMap<String, List<Point>> myImageMap;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -153,21 +153,21 @@ public class AuthoringModel implements GameData {
 	/**
 	 * Method through which information can be sent to instantiate or edit a path object
 	 * Wraps constructor in case of new object creation
+	 * @throws ObjectNotFoundException 
 	 */
 
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
-	public void makePath(int name, int levelNum, List<Point2D> coordinates, GridPane grid) throws ObjectNotFoundException{
-	    	myGrid = grid;
-		myPath = new PathBuilder().construct(levelNum, coordinates);
-		Level level = levelCheck(levelNum);
-		level.addPath(myPath);
+	
+	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
+		myImageMap = imageCoordinates;
+		myPath = new PathBuilder().construct(level, coordinates); //add new constructor
 	}
+
 	
 	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 	    return levelCheck(levelNum).getPaths().get(name-1);
 	}
-
 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing
@@ -256,7 +256,7 @@ public class AuthoringModel implements GameData {
 					break; 
 				}
 			}
-		}
+		} 
 		if (fieldValue.getClass() == Double.class) {
 			return Double.toString((double) fieldValue); 
 		} 
@@ -409,6 +409,12 @@ public class AuthoringModel implements GameData {
 	public String getGameName() {
 		return myGameName; 
 	}
+
+	
+	public HashMap<String, List<Point>> getImageMap() {
+		return myImageMap;
+	}
+
 
 }
 

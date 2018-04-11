@@ -1,3 +1,4 @@
+
 package gameplayer.panel;
 
 import java.awt.Point;
@@ -109,27 +110,23 @@ public class GamePanel extends Panel{
 		//GameScreen popup for cannot afford
 	    }
 	}
-    }
 
-    private void addTowerImageViewAction(FrontEndTower tower) {
-	ImageView towerImage = tower.getImageView();
-	towerImage.setOnMouseClicked((args) ->GAME_SCREEN.towerClickedOn(tower));
-    }
 
-    public void addSprite(FrontEndSprite sprite) {
-	ImageView spriteImage = sprite.getImageView();
-	spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
-	spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
-	spriteAdd.getChildren().add(sprite.getImageView());
-    }
+	@Override
+	public void makePanel() {
 
-    public void removeSprite(FrontEndSprite sprite) {
-	spriteAdd.getChildren().remove(sprite.getImageView());
-    }
+		//TODO potentially fix needed?
 
-    public void removeTower(FrontEndTower tower) {
-	spriteAdd.getChildren().remove(tower.getImageView());
-    }
+		Pane panelRoot = new Pane();
+		panelRoot.setId("gamePanel");
+		//panelRoot.setBottom(new Up);
+		panelRoot.setMaxWidth(Double.MAX_VALUE);
+		panelRoot.setMaxHeight(Double.MAX_VALUE);
+
+		panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+		spriteAdd = panelRoot;
+		PANEL = panelRoot;
+	}
 
     public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
 	GridPane grid = new GridPane();
@@ -163,4 +160,48 @@ public class GamePanel extends Panel{
 	}
     }
 
+	public void exitTowerPlace() {
+		towerPlaceMode = false;
+	}
+
+	public void handleMouseInput(double x, double y) {
+		if(towerPlaceMode) {
+			Point position = new Point((int)x,(int)y);
+			try {
+				FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
+				ImageView towerImage = newTower.getImageView();
+				towerImage.setLayoutX(-towerImage.getFitWidth()/2);
+				towerImage.setLayoutY(-towerImage.getFitHeight()/2);
+				if(newTower!= null) {
+					addTowerImageViewAction(newTower);
+					towersPlaced.add(newTower);
+					spriteAdd.getChildren().add(towerImage);
+					towerPlaceMode = false;
+				}
+			}
+			catch(CannotAffordException e){
+				//GameScreen popup for cannot afford
+			}
+		}
+	}
+
+	private void addTowerImageViewAction(FrontEndTower tower) {
+		ImageView towerImage = tower.getImageView();
+		towerImage.setOnMouseClicked((args) ->GAME_SCREEN.towerClickedOn(tower));
+	}
+
+	public void addSprite(FrontEndSprite sprite) {
+		ImageView spriteImage = sprite.getImageView();
+		spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
+		spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
+		spriteAdd.getChildren().add(sprite.getImageView());
+	}
+
+	public void removeSprite(FrontEndSprite sprite) {
+		spriteAdd.getChildren().remove(sprite.getImageView());
+	}
+
+	public void removeTower(FrontEndTower tower) {
+		spriteAdd.getChildren().remove(tower.getImageView());
+	}
 }
