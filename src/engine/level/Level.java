@@ -1,5 +1,6 @@
 package engine.level;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import engine.path.Path;
  * @author Ben Hodgson 3/29/18
  * @author Ryan Pond
  * @author susiechoi
+ * @author Miles Todzo
  * 
  * Class encapsulates the components of a level
  */
@@ -227,6 +229,17 @@ public class Level {
 		return false;
 	    }
 	    return (myWaves.get(path).size() > waveNumber);
+	}
+	
+	public Map<String, List<Point>> getLevelPathMap(){
+//		Map<String, List<Point>> pathMap = myPaths.get(0).getPathMap();
+//		for (int x=1; x<myPaths.size(); x++) {
+//			for (String pathBlock: myPaths.get(x).getPathMap().keySet()) {
+//				pathMap.get(pathBlock).addAll(myPaths.get(x).getPathMap().get(pathBlock));
+//			}
+//		}
+//		return pathMap;
+		return myPaths.get(0).getPathMap();
 	}
 
 }

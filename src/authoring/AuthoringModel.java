@@ -161,7 +161,7 @@ public class AuthoringModel implements GameData {
 	
 	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
 		myImageMap = imageCoordinates;
-		myPath = new PathBuilder().construct(level, coordinates); //add new constructor
+		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
 	}
 
 	
