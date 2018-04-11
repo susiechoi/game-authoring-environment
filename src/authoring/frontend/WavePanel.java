@@ -34,10 +34,8 @@ public class WavePanel extends PathPanel{
 			myPathNumber = 1;
 		}
 
-		//myPathString = grid.getPathName();
-		if(waveNumber.equals("Default")) {
-			waveNumber = "1";
-		}
+			
+			waveNumber = getView().getHighestWaveNumber((Integer)(getView().getLevel() + 1)).toString();
 		myWaveNumber = waveNumber;
 		setUpPanel();
 	}
@@ -72,8 +70,12 @@ public class WavePanel extends PathPanel{
 		Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 		applyButton.setOnAction(e -> {
 			errorcheckResponses();
+			System.out.println("addin a wave");
+			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
+			System.out.println("myWaveNumber" + myWaveNumber);
 			getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), Integer.parseInt(myWaveNumber), 
 					myEnemyDropdown.getValue(), myEnemyNumber);
+			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
 		});
 
 		pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField,sizingButtons, backButton, applyButton);
