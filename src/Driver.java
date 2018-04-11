@@ -7,7 +7,7 @@ import javafx.stage.Stage;
  * Use the driver JavaFX library to start the application.
  *
  * @author Ben Hodgson 3/27/18
- *
+ * @author Katherine Van Dyk 4/10/18
  * 
  */
 public class Driver extends Application {  

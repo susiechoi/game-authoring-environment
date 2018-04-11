@@ -11,7 +11,6 @@ import frontend.StageManager;
 import gameplayer.ScreenManager;
 import xml.AuthoringModelReader;
 
-
 /**
  * 
  * @author Ben Hodgson 4/5/18
@@ -56,12 +55,4 @@ public class PlayController {
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
 	myGameEngine.setPlayState(play);
     }
-    
-  /**
-     * test method for authoring/play 
-     */
-    /**  public void setAuthoring() {
-	PlayState tester = new PlayState(myMediator, test.allLevels(), 0, 0, 0);
-	myGameEngine.setPlayState(tester);
-    } **/
 }
