@@ -52,13 +52,12 @@ public class GameScreen extends Screen {
     private BorderPane leftPane;
     private final Mediator MEDIATOR;
 
-
-    public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
-	SCREEN_MANAGER = ScreenController;
-	UIFACTORY = new UIFactory();
-	PROMPTS = promptReader;
-	MEDIATOR = mediator;
-
+	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
+		SCREEN_MANAGER = ScreenController;
+		UIFACTORY = new UIFactory();
+		PROMPTS = promptReader;
+		MEDIATOR = mediator;
+		makeScreenWithoutStyling();
     }
 
     @Override
@@ -70,8 +69,6 @@ public class GameScreen extends Screen {
 	GAME_PANEL = new GamePanel(this);
 	UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
 	BUY_PANEL = new BuyPanel(this, PROMPTS);
-
-
 
 	rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 	VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);

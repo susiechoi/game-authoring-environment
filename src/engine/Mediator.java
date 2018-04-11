@@ -144,8 +144,8 @@ public class Mediator {
 	myScreenManager.remove(sprite);
     }
     
-    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	    myScreenManager.setAvailableTowers(availableTowers);
+    public void setAvailableTowers(List<FrontEndTower> availableTowers) {  
+	myScreenManager.setAvailableTowers(availableTowers);
     }
 
     /**

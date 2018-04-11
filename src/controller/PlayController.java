@@ -39,7 +39,6 @@ public class PlayController {
 	myReader = new AuthoringModelReader();
 	myMediator.setGameEngine(myGameEngine);
 	myMediator.setScreenManager(myScreenManager);
-	myScreenManager.loadInstructionScreen();
     }
 
     /**
@@ -56,6 +55,27 @@ public class PlayController {
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
 	myGameEngine.setPlayState(play);
 	myGameEngine.start();
+    }
+    
+    /**
+     * Creates a new demo play based on the AuthoringModel object authored by
+     * the user
+     * 
+     * @param model: the AuthoringModel object authored by the user
+     */
+    public void demoPlay(AuthoringModel model) {
+	List<Level> levels = model.allLevels();
+	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+	myScreenManager.loadGameScreenNew();
+	myGameEngine.setPlayState(play);
+	myGameEngine.start();
+    }
+    
+    /**
+     * Calls the ScreenManager to load the InstructionScreen
+     */
+    public void loadInstructionScreen() {
+	myScreenManager.loadInstructionScreen();
     }
 
 

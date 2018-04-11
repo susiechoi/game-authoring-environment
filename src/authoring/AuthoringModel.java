@@ -56,7 +56,6 @@ public class AuthoringModel implements GameData {
     private Map<Integer, Level> myLevels;
     private Tower myDefaultTower;
     private Enemy myDefaultEnemy;
-    protected Path myPath;
     protected HashMap<String, List<Point>> myImageMap;
 
     public AuthoringModel() throws MissingPropertiesException {
@@ -160,7 +159,8 @@ public class AuthoringModel implements GameData {
 
     public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
 	myImageMap = imageCoordinates;
-	myPath = new PathBuilder().construct(level, coordinates); //add new constructor
+	Level myLevel = myLevels.get(level);
+	myLevel.addPath(new PathBuilder().construct(level, coordinates)); //add new constructor
     }
 
 
