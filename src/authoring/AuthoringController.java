@@ -156,6 +156,7 @@ public class AuthoringController {
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    Wave thisWave;
 	    if (levelWaves.size() < waveNumber) {
+		System.out.println("making a new wave!!");
 		thisWave = new Wave(path);
 	    }
 	    else {
@@ -222,6 +223,9 @@ public class AuthoringController {
 	
 	public Map<String, List<Point>> getGrid() {
 		return myImageMap;
+	}
+	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
+	    return myModel.getHighestWaveNumber(level);
 	}
 }
 

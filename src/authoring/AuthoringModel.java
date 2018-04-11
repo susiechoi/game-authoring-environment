@@ -269,6 +269,7 @@ public class AuthoringModel implements GameData {
     }
 
     public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
+	
 	return levelCheck(levelNum).getPaths().get(name-1);
     }
 
@@ -294,8 +295,19 @@ public class AuthoringModel implements GameData {
 		listToReturn.add(myDefaultTower.getName());
 	    }
 	}
+	if(objectType.equals("Wave")) {
+	    int size = currentLevel.getHighestWaveNumber();
+	    for(Integer k = 1; k<=size; k+=1) {
+		listToReturn.add("Wave " + k.toString());
+	    }
+	}
 	listToReturn.remove(myDefaultName);
 	return listToReturn; 
+    }
+    
+    public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException {
+	Level currentLevel = levelCheck(level);
+	return currentLevel.getHighestWaveNumber();
     }
 
     // TODO once maps have been made 
@@ -361,6 +373,23 @@ public class AuthoringModel implements GameData {
 		}
 	    }
 	}
+//	else if (objectType.equals("Wave")) {
+//	    Level currentLevel = levelCheck(level);
+//	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
+//		Wave wave = currentLevel.getWave();
+//		for (Field aField : tower.getClass().getDeclaredFields()) {
+//		    String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+//		    if (fieldSimpleString.equals(attribute)) {
+//			aField.setAccessible(true);
+//			fieldValue = aField.get(tower);
+//			break; 
+//		    }
+//		}
+//	    }
+//	    if (fieldValue == null) {
+//		throw new ObjectNotFoundException(name);
+//	    }
+//	}
 	if (fieldValue.getClass() == Double.class) {
 	    return Double.toString((double) fieldValue); 
 	} 
