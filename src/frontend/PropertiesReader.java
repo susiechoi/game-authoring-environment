@@ -88,5 +88,17 @@ public class PropertiesReader {
 		}
 		return readInProperties; 
 	}
+	
+	public List<String> findVals(String filepath) throws MissingPropertiesException {
+		Properties properties = loadProperties(filepath);
+		List<String> vals = new ArrayList<String>(); 
+		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
+			String key = (String)e.nextElement();
+			String val = properties.getProperty(key);
+			vals.add(val);
+			System.out.println(val);
+		}
+		return vals; 
+	}
 
 }
