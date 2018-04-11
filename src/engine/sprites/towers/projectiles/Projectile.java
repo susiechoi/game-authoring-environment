@@ -15,6 +15,7 @@ public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
 	private double mySpeed;
+	private double mySize; 
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -23,10 +24,11 @@ public class Projectile extends Sprite {
 	 * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
 	 * @param image: image of projectile
 	 */
-	public Projectile(String name, DamageProperty damage, String image, double speed) {
-	    	super(name, image);
+	public Projectile(String name, DamageProperty damage, double size, String image, double speed) {
+	    	super(name, image, size);
 		myDamage = damage;
 		mySpeed = speed;
+		mySize = size; 
 	}
 	
 	/**
@@ -64,6 +66,10 @@ public class Projectile extends Sprite {
 	
 	public String getDamageName() {
 		return myDamage.getName();
+	}
+	
+	public double getSize() {
+		return mySize; 
 	}
 
 

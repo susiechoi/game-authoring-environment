@@ -25,12 +25,11 @@ import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelReader;
-import xml.AuthoringModelWriter;
 
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
-	private HashMap<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel; 
 
 	
@@ -76,11 +75,11 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
+							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed,
 							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 							double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 		myModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
+				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSize, projectileSpeed,
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange, 
 				towerValue, towerUpgradeCost, towerUpgradeValue);
 	}
@@ -95,10 +94,12 @@ public class AuthoringController {
 	// TODO
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
+	 * @throws ObjectNotFoundException 
 	 */
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) { 
+	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
 		myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+		System.out.println(imageCoordinates);
 		myImageMap = imageCoordinates;
 	}
 
@@ -185,8 +186,7 @@ public class AuthoringController {
 	    for(Enemy enemy : enemyMap.keySet()) {
 		enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
 	    }
-	    return enemyNameMap;
-	    
+	    return enemyNameMap;   
 	}
 	
 	
@@ -215,7 +215,7 @@ public class AuthoringController {
 		myModel = reader.createModel(gameName);
 	}
 	
-	public HashMap<String, List<Point>> getGrid() {
+	public Map<String, List<Point>> getGrid() {
 		return myImageMap;
 	}
 }

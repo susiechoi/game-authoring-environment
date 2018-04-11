@@ -26,8 +26,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import xml.AuthoringModelReader;
+import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
+import xml.PlayLoader;
 
 /**
  * This class serves as a bridge between the front end, back end, and file I/O of our game player
@@ -246,8 +248,10 @@ public class Mediator {
 	
     }
     
-    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	myScreenManager.setPath(imageMap, numRow, numCol);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+    	System.out.println("Mediator: " +imageMap);
+		
+	myScreenManager.setPath(imageMap, backgroundImageFilePath);
     }
 
     

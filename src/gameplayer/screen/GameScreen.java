@@ -8,6 +8,7 @@ import gameplayer.panel.TowerInfoPanel;
 import gameplayer.panel.ControlsPanel;
 
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -156,7 +157,7 @@ public class GameScreen extends Screen {
     
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
 	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-	System.out.println(placedTower.getImageView().getFitWidth() + " width ");
+	System.out.println(placedTower.getImageView().getFitWidth() + " placed tower width ");
 	return placedTower;
     }
     
@@ -171,8 +172,9 @@ public class GameScreen extends Screen {
 	MEDIATOR.sellTower(tower);
     }
     
-    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	GAME_PANEL.setPath(imageMap, numRow, numCol);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+    	System.out.println("Game Screen: " +imageMap);
+	GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
     }
     
     

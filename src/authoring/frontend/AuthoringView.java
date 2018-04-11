@@ -7,9 +7,7 @@
  */
 
 package authoring.frontend;
-
 import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private HashMap<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel;
 	private BooleanProperty myCSSChanged;
 
@@ -151,12 +149,12 @@ public class AuthoringView extends View {
 	 * @throws NoDuplicateNamesException 
 	 */
 	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
+			String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed,
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException {
 		try {
 			myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-					projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
+					projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSize, projectileSpeed,
 					launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange,
 					towerValue, towerUpgradeCost, towerUpgradeValue);
 		} catch (MissingPropertiesException e) {
@@ -183,7 +181,7 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
+	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
 		myImageMap = imageCoordinates;
 	}
@@ -288,7 +286,7 @@ public class AuthoringView extends View {
 	}
 	
 
-	public HashMap<String, List<Point>> getImageCoordinates() {
+	public Map<String, List<Point>> getImageCoordinates() {
 		return myImageMap;
 	}
 	
