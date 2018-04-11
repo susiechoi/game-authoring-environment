@@ -11,6 +11,7 @@ import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
 import engine.path.Path;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -73,6 +74,7 @@ public class PlayState implements GameData {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
 		    Wave currentWave;
+		    System.out.println("HERE");
 		    if (!currentLevel.getWaves(path).isEmpty()) {
 			currentWave = currentLevel.getWaves(path).get(0);
 		    }
@@ -81,7 +83,8 @@ public class PlayState implements GameData {
 		    }
 		    int currentTime = new Double(UNIVERSAL_TIME).intValue();
 		    if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
-			currentLevel.getNewEnemy(path);
+			Enemy enemy = currentLevel.getNewEnemy(path);
+			myEnemyManager.addEnemy(path, enemy);
 		    }
 		    // TODO: remove "magic numbers", improve this to be 3 seconds
 		    // after the wave finished
@@ -99,10 +102,11 @@ public class PlayState implements GameData {
 	    myTowerManager.shoot(myEnemyManager.getListOfActive());
 	    myTowerManager.moveProjectiles();
 	    myTowerManager.moveTowers();
-	    for (Projectile projectile: myTowerManager.shoot(myTowerManager.getListOfActive())) {
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
+		System.out.println(projectile);
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
-	    for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getListOfActive())) {
+	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
 	    myEnemyManager.moveProjectiles();
