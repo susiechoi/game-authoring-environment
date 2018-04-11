@@ -145,7 +145,6 @@ public class Mediator {
     }
     
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	System.out.println("AVAIL");
 	    myScreenManager.setAvailableTowers(availableTowers);
     }
 
