@@ -19,12 +19,12 @@ import xml.AuthoringModelReader;
  * Created by the ChiefController and makes everything necessary to play a game. 
  */
 public class PlayController {
-    
+
     private Mediator myMediator;
     private AuthoringModelReader myReader;
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
-    
+
 
     /**
      * Constructs main parts of play: Engine for backend controls, ScreenManager (top
@@ -41,7 +41,7 @@ public class PlayController {
 	myMediator.setScreenManager(myScreenManager);
 	myScreenManager.loadInstructionScreen();
     }
-    
+
     /**
      * Creates a new play based on an XML file and passes authored
      * parameters to Engine
@@ -55,4 +55,6 @@ public class PlayController {
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
 	myGameEngine.setPlayState(play);
     }
+
+
 }
