@@ -40,6 +40,7 @@ public class AuthoringView extends View {
 	public static final String DEFAULT_ERROR_FILEPATH_BEGINNING = "languages/";
 	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
+	public static final String DEFAULT_LANGUAGE = "English";
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private ErrorReader myErrorReader;
@@ -116,7 +117,7 @@ public class AuthoringView extends View {
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
 			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, "English"));
+				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
 				myStageManager.switchScreen(nextScreen.getScreen());
 			} //TODO: handle case where switching to gameplay
 			else {
