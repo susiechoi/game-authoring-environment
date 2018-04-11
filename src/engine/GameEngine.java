@@ -34,7 +34,6 @@ public class GameEngine {
         ANIMATION = new Timeline();
         ANIMATION.setCycleCount(Timeline.INDEFINITE);
         ANIMATION.getKeyFrames().add(frame);
-        ANIMATION.play();
     }
 
     public void setPlayState(PlayState p) {
@@ -51,7 +50,6 @@ public class GameEngine {
      * @param elapsedTime
      */
     public void loop(double elapsedTime) {
-	System.out.println("in loop");
 	myPlayState.update(elapsedTime);
     }
 
@@ -61,7 +59,6 @@ public class GameEngine {
      * COMMENTED OUT BECAUSE THIS WOULD PAUSE THE ENTIRE GAMEENGINE NOT THE PLAYSTATE
      */
 //    public void pause() {
-//	myTimer.cancel();
 //	ANIMATION.pause();
 //
 //    }

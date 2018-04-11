@@ -1,5 +1,6 @@
 package engine.sprites.towers.projectiles;
 
+import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
 import javafx.scene.image.Image;
@@ -11,7 +12,7 @@ import javafx.scene.image.Image;
  * @author Katherine Van Dyk
  *
  */
-public class Projectile extends Sprite {
+public class Projectile extends Sprite implements FrontEndSprite{
 
 	private DamageProperty myDamage;
 	private double mySpeed;
