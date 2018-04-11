@@ -66,6 +66,15 @@ public class Level {
 	myPaths.add(path); 
     }
 
+	/**
+	 * Adds an available enemy to the level
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @param tower: The enemy object to be added
+	 */
+	public void addEnemy(String name, Enemy enemy) {
+		myEnemies.put(name, enemy);
+	}
     /**
      * Returns an unmodifiable list of path objects in the level
      * 

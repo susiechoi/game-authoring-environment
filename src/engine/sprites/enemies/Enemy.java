@@ -69,6 +69,18 @@ public class Enemy extends ShootingSprites{
     }
 
     /**
+     * Used for debugging/demo purposes, should not actually be used
+     * @param string
+     * @param string2
+     * @param i
+     */
+    public Enemy(String name, String image, double size) {
+	super(name, image, size, null);
+	myHealth = new HealthProperty(10000,10000,10000);
+	myDamage = new DamageProperty(10000, 10000, 10000);
+    }
+
+    /**
      * Tests to see if another ImageView overlaps with the Enemy
      * @param otherImage : other image (projectile, tower, etc)
      * @return boolean, yes or no
