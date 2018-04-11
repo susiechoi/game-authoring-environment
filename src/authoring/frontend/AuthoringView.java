@@ -28,6 +28,8 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelWriter;
@@ -47,7 +49,7 @@ public class AuthoringView extends View {
 	private int myLevel; 
 	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel;
-
+	private BooleanProperty myCSSChanged;
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
@@ -56,7 +58,8 @@ public class AuthoringView extends View {
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
-		myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
+		myCurrentCSS = DEFAULT_AUTHORING_CSS;
+		myCSSChanged = new SimpleBooleanProperty(false);
 	}
 
 
@@ -78,9 +81,15 @@ public class AuthoringView extends View {
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
 	}
-	protected String getCurrentCSS() {
+	public String getCurrentCSS() {
 		return myCurrentCSS;
 	}
+	
+	public void setCurrentCSS(String css) {
+		myCurrentCSS = css; 
+		myCSSChanged.set(!myCSSChanged.get());
+	}
+	
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
 		//myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
 	}
@@ -279,6 +288,15 @@ public class AuthoringView extends View {
 
 	public Map<String, List<Point>> getImageCoordinates() {
 		return myImageMap;
+	}
+	
+	public BooleanProperty cssChangedProperty() {
+		return myCSSChanged; 
+	}
+
+
+	public String getGameName() {
+		return myModel.getGameName();
 	}
 
 }
