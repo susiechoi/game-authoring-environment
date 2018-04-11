@@ -26,8 +26,8 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
 		//System.out.println(myGameName+" SHOULD BE THE TITLE");
-//		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
-//		vbox.getChildren().add(heading);
+		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
+		vbox.getChildren().add(heading);
 
 		Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
 		resourcesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"ResourcesButton");});

@@ -63,7 +63,7 @@ public class AuthoringModel implements GameData {
 	private Enemy myDefaultEnemy;
 	private Path myDefaultPath;
 	protected Path myPath;
-	protected HashMap<String, List<Point>> myImageMap;
+	protected Map<String, List<Point>> myImageMap;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -190,7 +190,8 @@ public class AuthoringModel implements GameData {
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+		System.out.println("Model: " +imageCoordinates);
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
 		currentLevel.addPath(newPath);
@@ -505,7 +506,7 @@ public class AuthoringModel implements GameData {
     }
 
 	
-	public HashMap<String, List<Point>> getImageMap() {
+	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}
 

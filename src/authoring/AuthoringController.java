@@ -29,7 +29,7 @@ import xml.AuthoringModelReader;
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
-	private HashMap<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel; 
 
 	
@@ -97,8 +97,9 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 */
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
+	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
 		myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+		System.out.println(imageCoordinates);
 		myImageMap = imageCoordinates;
 	}
 
@@ -216,7 +217,7 @@ public class AuthoringController {
 		myModel = reader.createModel(gameName);
 	}
 	
-	public HashMap<String, List<Point>> getGrid() {
+	public Map<String, List<Point>> getGrid() {
 		return myImageMap;
 	}
 	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
