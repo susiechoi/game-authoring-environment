@@ -36,6 +36,14 @@ public abstract class Screen {
 
 	protected void setStyleSheet(String stylesheetString) {
 		myStylesheet = stylesheetString;
+		replaceStyle(myStylesheet);
+	}
+
+	private void replaceStyle(String stylesheet) {
+		if (myRoot != null) {
+			myRoot.getStylesheets().remove(myRoot.getStylesheets().size()-1);
+			myRoot.getStylesheets().add(stylesheet);
+		}
 	}
 
 	/**
