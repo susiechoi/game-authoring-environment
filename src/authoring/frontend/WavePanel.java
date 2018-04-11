@@ -43,7 +43,7 @@ public class WavePanel extends PathPanel{
 	}
 	
 	public void setUpPanel() {
-		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPathNumber, Integer.parseInt(myWaveNumber));
+		//Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPathNumber, Integer.parseInt(myWaveNumber));
 		myRoot = new VBox();
 		myRoot.setMaxSize(280, 900);
 		VBox pseudoRoot = new VBox();
@@ -51,7 +51,7 @@ public class WavePanel extends PathPanel{
 		List<String> enemyOptions = getView().getCurrentObjectOptions("Enemy");
 		myEnemyDropdown = getUIFactory().makeTextDropdown("", enemyOptions);
 		myEnemyDropdown.setOnAction(e -> {
-			enemyMap.get(myEnemyDropdown.getValue()).toString();
+			myNumberTextField.setText(enemyMap.get(myEnemyDropdown.getValue()).toString());
 		});
 		for(String enemyName: enemyOptions) {//TODO: refactor - this is getting pretty messy/repeated!!
 			if(!enemyMap.containsKey(enemyName)) {
@@ -64,7 +64,7 @@ public class WavePanel extends PathPanel{
 
 		Text enemyDropdownText = new Text(getView().getErrorCheckedPrompt("ChooseEnemy"));
 		myNumberTextField = new TextField();
-		myNumberTextField.setText(enemyMap.get(myEnemyDropdown.getValue()).toString());
+		//myNumberTextField.setText(enemyMap.get(myEnemyDropdown.getValue()).toString());
 		HBox sizingButtons = makeSizingButtons();
 		Text textFieldPrompt = new Text(getView().getErrorCheckedPrompt("ChooseEnemyNumber"));
 		//HBox textFieldPrompted = getUIFactory().addPromptAndSetupHBox("", myNumberTextField, "ChooseEnemyNumber");

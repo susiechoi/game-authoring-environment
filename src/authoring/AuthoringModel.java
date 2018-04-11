@@ -49,6 +49,10 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
 	public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
 	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
+	public static final String DEFAULT_PATH_START = "images/start.png";
+	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
+	public static final String DEFAULT_PATH_END = "images/end.png";
+	public static final String DEFAULT_BACKGROUND_IMAGE = "images/grass.png";
 	private final String myDefaultName; 
 
 	private String myGameName; 
@@ -57,6 +61,7 @@ public class AuthoringModel implements GameData {
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
+	private Path myDefaultPath;
 	protected Path myPath;
 	protected HashMap<String, List<Point>> myImageMap;
 
@@ -87,6 +92,24 @@ public class AuthoringModel implements GameData {
 		firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
 		firstLevel.addEnemy(myDefaultName, new Enemy(myDefaultEnemy));
 		myLevels.put(1, firstLevel);
+		List<Point> dummyPathPoints = new ArrayList<>();
+		dummyPathPoints.add(new Point(10, 10));
+		dummyPathPoints.add(new Point(10, 11));
+		dummyPathPoints.add(new Point(10, 12));
+		HashMap<String, List<Point>> pathImages = new HashMap<>();
+		List<Point> dummyPathStartPoints = new ArrayList<>();
+		dummyPathStartPoints.add(new Point(10, 10));
+		List<Point> dummyPathMiddlePoints = new ArrayList<>();
+		dummyPathMiddlePoints.add(new Point(10, 11));
+		List<Point> dummyPathEndPoints = new ArrayList<>();
+		dummyPathEndPoints.add(new Point(10, 12));
+		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
+		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
+		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
+		makePath(1, new GridPane(), dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
+		Wave newWave = new Wave(firstLevel.getPaths().get(0));
+		newWave.addEnemy(myDefaultEnemy, 20);
+		firstLevel.addWave(firstLevel.getPaths().get(0), newWave);
 	}
 
 	/**
