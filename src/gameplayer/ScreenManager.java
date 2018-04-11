@@ -59,6 +59,7 @@ public class ScreenManager extends View{
     }
 
 
+
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
