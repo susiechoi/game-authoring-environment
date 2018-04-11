@@ -169,6 +169,23 @@ public class Level {
 	}
 
     }
+    public boolean containsWaveNumber(int num) {
+	for(List<Wave> waveLists : myWaves.values()) {
+	    if(waveLists.size()>= num) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    public int getHighestWaveNumber() {
+	int highest = 0;
+	for(List<Wave> waveLists: myWaves.values()) {
+	    if(waveLists.size()>= highest) {
+		highest = waveLists.size();
+	    }
+	}
+	return highest;
+    }
 
     /**
      * Returns a list of waves for a specified path in the level 

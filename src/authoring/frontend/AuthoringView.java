@@ -82,7 +82,13 @@ public class AuthoringView extends View {
 		return myCurrentCSS;
 	}
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
-		//myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		try {
+		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		}
+		catch(ObjectNotFoundException e) {
+		    loadErrorScreen("NoObject");
+		}
+	   
 	}
 
 	protected void goBackFrom(String id) {
@@ -265,6 +271,15 @@ public class AuthoringView extends View {
 		}
 		return new HashMap<String, Integer>();
 
+	}
+	protected Integer getHighestWaveNumber(int level) {
+	    try {
+	    return myController.getHighestWaveNumber(level);
+	    }
+	    catch(ObjectNotFoundException e) {
+		loadErrorScreen("NoObject");
+	    }
+	    return 1;
 	}
 	public void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
