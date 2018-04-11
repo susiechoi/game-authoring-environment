@@ -19,6 +19,7 @@ public abstract class View {
     public View(StageManager manager) {
 	myManager = manager;
     }
+    
     public void loadErrorScreenToStage(String errorMessage) {
 	VBox vb = new VBox();
 	Text errorScreenMessage = new Text(errorMessage);
@@ -27,11 +28,20 @@ public abstract class View {
 	vb.getChildren().add(errorScreenMessage);
 	myManager.switchScreen(vb);
     }
+    
     public void loadErrorAlertToStage(String errorMessage) {
 		    Alert alert = new Alert(AlertType.ERROR);
 		    alert.setContentText(errorMessage);
 		    alert.showAndWait();
     }
+    
+//    public void loadErrorAlertToStage(String errorMessage, Screen returnToScreen) {
+//	    Alert alert = new Alert(AlertType.ERROR);
+//	    alert.setContentText(errorMessage);
+//	    myManager.switchScreen(returnToScreen.getScreen());
+//	    alert.showAndWait();
+//}
+
     public abstract void loadErrorScreen(String errorMessage);
     
 }

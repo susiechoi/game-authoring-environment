@@ -1,12 +1,15 @@
 package authoring.frontend;
 
+
+import java.awt.Point;
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -50,12 +53,12 @@ public class CreatePathGrid extends AdjustScreen {
 	private Label startLabel;
 	private Label endLabel;
 	private Label pathLabel;
-	private ArrayList<Point2D> pathCoords = new ArrayList<Point2D>();
+	private ArrayList<Point> pathCoords = new ArrayList<Point>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
-	private HashMap<String, List<Point2D>> gridImageCoordinates = new HashMap<String, List<Point2D>>(); //map (imagefileName, (row,col))
-	private ArrayList<Point2D> startPoints = new ArrayList<Point2D>();
-	private ArrayList<Point2D> endPoints = new ArrayList<Point2D>();
-	private ArrayList<Point2D> pathPoints = new ArrayList<Point2D>();
+	private HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>(); //map (imagefileName, (row,col))
+	private ArrayList<Point> startPoints = new ArrayList<Point>();
+	private ArrayList<Point> endPoints = new ArrayList<Point>();
+	private ArrayList<Point> pathPoints = new ArrayList<Point>();
 	private DraggableImage myCurrentClicked;
 	private int startCount = 0;
 
@@ -128,15 +131,15 @@ public class CreatePathGrid extends AdjustScreen {
 							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
 								startCount++;
 								path.setPathName(startCount);
-								startPoints.add(new Point2D(colIndex, rowIndex));
+								startPoints.add(new Point(colIndex, rowIndex));
 								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
 							} else if (imageCompare(path.getPathImage().getImage(), endImage.getImage()) == true) {
-								endPoints.add(new Point2D(colIndex, rowIndex));
+								endPoints.add(new Point(colIndex, rowIndex));
 								endLabel = new Label("end");
 								checkGrid.add(endLabel, colIndex, rowIndex);
 							} else if (imageCompare(path.getPathImage().getImage(), pathImage.getImage()) == true) {
-								pathPoints.add(new Point2D(colIndex, rowIndex));
+								pathPoints.add(new Point(colIndex, rowIndex));
 								pathLabel = new Label("path");
 								checkGrid.add(pathLabel, colIndex, rowIndex);
 							}
@@ -151,11 +154,11 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	}
 
-	public void addImagesToGrid(Map<String, List<Point2D>> imageCoordinates) {
+	public void addImagesToGrid(Map<String, List<Point>> imageCoordinates) {
 		if (imageCoordinates.size() != 0) {
 			for (String key: imageCoordinates.keySet()) { //goes through images
 				for (int i = 0; i < imageCoordinates.keySet().size(); i++) {
-					Point2D point = imageCoordinates.get(key).get(i);
+					Point point = imageCoordinates.get(key).get(i);
 					grid.add(new DraggableImage(new Image(key)), (int) point.getX(), (int) point.getY());
 				}
 			}
@@ -225,7 +228,7 @@ public class CreatePathGrid extends AdjustScreen {
 	public void addCoordinates(int row, int col) {
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
-		Point2D point = new Point2D(x, y);
+		Point point = new Point((int) x, (int) y);
 		pathCoords.add(point);
 	}
 
@@ -283,7 +286,7 @@ public class CreatePathGrid extends AdjustScreen {
 		return myCurrentClicked;
 	}
 
-	public List<Point2D> getStartingPosition() {
+	public List<Point> getStartingPosition() {
 		return startPoints;
 	}
 
@@ -303,7 +306,7 @@ public class CreatePathGrid extends AdjustScreen {
 		return pathSize;
 	}
 
-	public List<Point2D> getAbsoluteCoordinates() {
+	public List<Point> getAbsoluteCoordinates() {
 		return pathCoords;
 	}
 
@@ -312,7 +315,7 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 
 	//TODO: fix this
-	public HashMap<String, List<Point2D>> getGridImageCoordinates() {
+	public HashMap<String, List<Point>> getGridImageCoordinates() {
 		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
 		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
 		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);

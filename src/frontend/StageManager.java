@@ -28,6 +28,7 @@ public class StageManager {
 	stageHeight = height;
 	myStage.setWidth(stageWidth);
 	myStage.setHeight(stageHeight);
+	myStage.show();
     }
     
     public void switchScene(Scene scene) {

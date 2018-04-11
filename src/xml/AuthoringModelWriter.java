@@ -41,26 +41,32 @@ public class AuthoringModelWriter implements XMLWriter {
 		parser = new XStream(new StaxDriver());
 	}
 
-	/**
-	 * Implementation of write method that saves data for authoring to SavedModels folder
-	 */
-	@Override
-	public void write(GameData g, String filepath) throws BadGameDataException {
-		// check type
-		if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
-			throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
-		}
-		file = new File("SavedModels/" + filepath + ".xml");
-		// Write data using XStream
-		Element root = d.createElement("GameRules");
-		root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
-		// Save data
-		try {
-			XMLDocumentBuilder.saveXMLFile(d, file);
-		} catch (TransformerFactoryConfigurationError | TransformerException e) {
-			// TODO replace with error pop up?
-			System.out.println("Error configuring XML file");
-		}
+    /**
+     * Implementation of write method that saves data for authoring to SavedModels folder
+     */
+    @Override
+    public void write(GameData g, String filepath) throws BadGameDataException {
+	// check type
+	if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
+	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
 	}
+//	file = new File("SavedModels/" + filepath + ".xml");
+//	// Write data using XStream
+//	Element root = d.createElement("GameRules");
+//	root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
+//	// Save data
+//	try {
+//	    XMLDocumentBuilder.saveXMLFile(d, file);
+//	} catch (TransformerFactoryConfigurationError | TransformerException e) {
+//	    // TODO replace with error pop up?
+//	    System.out.println("Error configuring XML file");
+//	}
+//    }
+	
+	XMLDocumentBuilder.stringToXML(parser.toXML(g), "SavedModels/" + filepath + ".xml");
+
+    }
+
+    
 }
 

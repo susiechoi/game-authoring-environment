@@ -64,6 +64,14 @@ public class UIFactory {
 	newButton.setId(id);
 	return newButton; 
     }
+    
+    public Button makeImageViewButton(String id, ImageView buttonImage) {
+	Button newButton = new Button();
+	newButton.setGraphic(buttonImage);
+	newButton.setId(id);
+	return newButton; 
+    }
+    
     public TextField makeTextField(String description) {
 	TextField tf = new TextField();
 	tf.setId(description);
@@ -277,7 +285,7 @@ public class UIFactory {
 
     public Button setupBackButton(EventHandler<ActionEvent> action) {
 	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
-	Button backButton = makeImageButton("backButton",backbuttonImage);
+	Button backButton = makeTextButton("backButton","Cancel");
 	backButton.setOnAction(e -> {action.handle(e);});
 	return backButton; 
     }

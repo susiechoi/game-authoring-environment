@@ -8,6 +8,8 @@
 
 package authoring.frontend;
 
+import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,9 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import engine.path.Path;
 import frontend.ErrorReader;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
@@ -26,9 +30,9 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import xml.AuthoringModelWriter;
 
 public class AuthoringView extends View {
 
@@ -43,7 +47,9 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private HashMap<String, List<Point2D>> myImageMap;
+	private HashMap<String, List<Point>> myImageMap;
+	private AuthoringModel myModel;
+
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
@@ -55,8 +61,13 @@ public class AuthoringView extends View {
 		myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
 	}
 
+
+	public void setModel(AuthoringModel model) {
+		myModel = model;
+	}
+
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
+		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
 
 	@Override
@@ -86,10 +97,18 @@ public class AuthoringView extends View {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 			Class<?> clazz = Class.forName(nextScreenClass);
+			System.out.println("next class: " + nextScreenClass);
 			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 			if(constructor.getParameterTypes().length == 2) {
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
-				myStageManager.switchScreen(nextScreen.getScreen());
+				System.out.println("our name "+name);
+				if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
+					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
+					myStageManager.switchScreen(nextScreen.getScreen());
+				}
+				else {
+					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
+					myStageManager.switchScreen(nextScreen.getScreen());
+				}
 			}
 			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
@@ -134,29 +153,33 @@ public class AuthoringView extends View {
 
 	/**
 	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
+	 * @throws NoDuplicateNamesException 
 	 */
-	public void makeEnemy(boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) {
+
+	public void makeEnemy(boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws NoDuplicateNamesException {
+
 		try {
 			myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 		} catch (MissingPropertiesException e) {
 			loadErrorScreen("NoImageFile");
-		} catch (NoDuplicateNamesException e) {
-			loadErrorScreen("NoDuplicateNames");
-		} catch (ObjectNotFoundException e) {
+		} 
+		catch (ObjectNotFoundException e) {
 			loadErrorScreen("NoObject");
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point2D> coordinates, HashMap<String, List<Point2D>> imageCoordinates, String backgroundImage) {
+	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
 		myImageMap = imageCoordinates;
 	}
 
+
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
-	public void makeResources(double startingHealth, double starting$) {
-		myController.makeResources(startingHealth, starting$);
+
+	public void makeResources(String gameName, double startingHealth, double starting$) {
+		myController.makeResources(gameName, startingHealth, starting$);
 	}
 
 	/**
@@ -224,10 +247,28 @@ public class AuthoringView extends View {
 	protected PropertiesReader getPropertiesReader() {
 		return myPropertiesReader; 
 	}
-	
-	public HashMap<String, List<Point2D>> getImageCoordinates() {
-		return myImageMap;
+
+	public void setGameName(String gameName) {
+		myController.setGameName(gameName);
+	}
+	public Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
+		try {
+			Path path = myController.getPathFromName(pathName, level);
+			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
+		}
+		catch(ObjectNotFoundException e) {
+			loadErrorAlert("NoObject");
+		}
+		return new HashMap<String, Integer>();
+
+	}
+	public void writeToFile() {
+		AuthoringModelWriter writer = new AuthoringModelWriter();
+		System.out.println("SAVING" + myModel.getGameName());
+		writer.write(myModel, myModel.getGameName());
 	}
 
-
+	public HashMap<String, List<Point>> getImageCoordinates() {
+		return myImageMap;
+	}
 }

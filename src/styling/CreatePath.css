@@ -1,7 +1,14 @@
 VBox {
+<<<<<<< HEAD
     -fx-background-color: #77878B;
     -fx-padding: 5;
     -fx-spacing: 15;
+=======
+	-fx-background-color: #488286;
+	-fx-padding: 2;
+    -fx-spacing: 2;
+    -fx-border-color: black;
+>>>>>>> 4830eee48cad9c9bc08919af859ad80102c07b00
     -fx-alignment: center;
     -fx-border-color: black;
 }
@@ -33,9 +40,10 @@ HBox {
     -fx-font-size: 18;
     -fx-text-fill: white;
     -fx-background-color: linear-gradient(#CDCDCD, #77878B);
-    	-fx-min-width: 250;
+    	-fx-min-width: 1;
 	-fx-min-height: 30;
 	-fx-border: 0px;
+	-fx-alignment: center;
 }
 
 .text-field:hover {
@@ -43,8 +51,7 @@ HBox {
 }
 
 .combo-box {
-	-fx-min-width: 250;
-	-fx-min-height: 30;
+	-fx-alignment: center;
 }
 
 .button {
@@ -64,7 +71,7 @@ HBox {
 }
 
 .combo-box .cell {
-    -fx-text-fill: white; 
+    -fx-text-fill: white;
     -fx-background-color: linear-gradient(#CDCDCD, #77878B);
 }
 

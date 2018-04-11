@@ -19,7 +19,8 @@ public class Driver extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 	ChiefController controller = new ChiefController(primaryStage);
-//	controller.play();
+
+	controller.start();
     }
 
     /**

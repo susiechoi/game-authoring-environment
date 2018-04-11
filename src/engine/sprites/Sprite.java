@@ -1,12 +1,7 @@
 package engine.sprites;
 
-import java.util.List;
-import java.util.Map;
-
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Shape;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -24,6 +19,7 @@ public class Sprite  {
 
     private String myName;
     private ImageView myImageView;
+    private String myImageString;
 
 
     /**
@@ -33,10 +29,16 @@ public class Sprite  {
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, Image image) {
+    public Sprite(String name, String image) {
 	myName = name;
-	myImageView = new ImageView(image);
+	myImageString = image;
+	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image)));
+	myImageView.setFitWidth(50);
+	myImageView.setFitHeight(50);
 	myImageView.setPreserveRatio(true);
+	myImageView.setFitWidth(50);
+	myImageView.setFitHeight(50);
+	System.out.println(myImageView.getFitWidth()+ " sprite width");
     }
     
     /**
@@ -57,8 +59,8 @@ public class Sprite  {
 	return myImageView;
     }
     
-    public void setImageView(ImageView image) {
-	myImageView  = image;
+    public void setImage(Image image) {
+	myImageView  = new ImageView(image);
     }
     
     public void place(double newX, double newY) {
@@ -89,19 +91,28 @@ public class Sprite  {
     public double getY() {
     		return this.myImageView.getY();
     }
-    public void setX(double newX) {
-    		this.myImageView.setX(newX);
+
+    public void setRotate(double rotateVal) {
+    		this.myImageView.setRotate(rotateVal);
     }
-    public void setY(double newY) {
-    		this.myImageView.setY(newY);
+    /**
+     * Returns the damage that this sprite inflicts on something (Can be enemy's damage, projectiles damage, etc)
+     * @return
+     */
+    public Double getDamage() {
+	return (double) 0;
+    }
+    
+    
+    public String getImageString() {
+	return myImageString;
     }
     
     /**
-     * 
      * @return : true if the sprite is alive, false if it is dead
      * Can be overridden in subclasses if a collision affects them
      */
-    protected boolean handleCollision(Sprite collider) {
+    public boolean handleCollision(Sprite collider) {
 	return false;
     }
 

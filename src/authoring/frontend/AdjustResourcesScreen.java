@@ -18,6 +18,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 	//private ComboBox<String> myCSSFilenameChooser; TODO: implement!
 	private Slider myStartingHealthSlider;
 	private Slider myStartingCurrencySlider;
+	
     	protected AdjustResourcesScreen(AuthoringView view) {
 		super(view);
 	}
@@ -42,7 +43,8 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			getView().makeResources(myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue());
+			getView().makeResources(myGameNameEntry.getText(), myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue());//TODO fix
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		
@@ -57,10 +59,9 @@ public class AdjustResourcesScreen extends AdjustScreen {
 
 	@Override
 	protected void populateFieldsWithData() {
-		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth"));
-		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney"));
 		myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "myGameName"));
-	    
+		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth"));
+		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney"));	    
 	}
 	
 

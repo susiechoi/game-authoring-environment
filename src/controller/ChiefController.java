@@ -1,6 +1,8 @@
 package controller;
 
+import frontend.MainScreen;
 import frontend.StageManager;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -11,36 +13,29 @@ import javafx.stage.Stage;
  * Class that handles mediating program functionality between other, more specified controller
  * objects. 
  */
-
 public class ChiefController {
 
-    private Stage STAGE;
-    private final String DEFAULT_LANGUAGE = "English";
-   // private AuthoringController AUTHORING;
+	private final StageManager STAGE_MANAGER;
 
-    public ChiefController(Stage stage) {
-	// TODO instantiate instance variables in the constructor
-	STAGE = stage;
-    }
-    
-    /**
-     * Starts the application. Launches the user interfaces and waits for user input
-     */
-    public void start() {
+	/**
+	 * Creates Stage Manager which handles passing stage to different
+	 * aspects of the program
+	 * 
+	 * @param stage: Application stage passed by Driver
+	 */
 
-    }
+	public ChiefController(Stage stage) {
+		STAGE_MANAGER = new StageManager(stage);
+	}
 
-    /**
-     * Instantiate a new EngineController object to handle the Game engine
-     */
-//    public void play() {
-//	new PlayController(DEFAULT_LANGUAGE, new StageManager(STAGE));
-//    }
-    
-    /**
-     * Instantiate a new AuthoringController object to handle the authoring environment
-     */
-    public void author() {
-//	new AuthoringController(STAGE);
-    }
+	/**
+	 * Starts the application. Launches Main Screen and prompts for 
+	 * user input about the size of the screen.
+	 */
+	public void start() {
+		MainScreen mainScreen  = new MainScreen(STAGE_MANAGER);
+		Scene scene = new Scene(mainScreen.getScreen());
+		STAGE_MANAGER.switchScene(scene);
+	}
+
 }

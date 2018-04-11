@@ -1,10 +1,10 @@
 package authoring.frontend;
 
 
+import java.awt.Point;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -45,14 +45,14 @@ public class CreatePathScreen extends PathScreen {
 		getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				List<Point2D> startCoords = grid.getStartingPosition();
+				List<Point> startCoords = grid.getStartingPosition();
 				if (grid.getStartingPosition().size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Path Cutomization Error");
 					alert.setContentText("Your path has no starting blocks");
 					alert.showAndWait();
 				}
-				for (Point2D point: startCoords) {
+				for (Point point: startCoords) {
 					System.out.println(point);
 					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
