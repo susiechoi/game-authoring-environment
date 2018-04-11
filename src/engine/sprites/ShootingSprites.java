@@ -36,8 +36,8 @@ public abstract class ShootingSprites extends Sprite{
 	super(name, image);
 	hitCount=0;
 	intersector = new ImageIntersecter(new ImageView(image));
-	this.getImageView().setFitHeight(size);
-	this.getImageView().setFitWidth(size);
+	//	this.getImageView().setFitHeight(size);
+	//	this.getImageView().setFitWidth(size);
 	myLauncher = launcher;
 	roundScore = 0;
     }

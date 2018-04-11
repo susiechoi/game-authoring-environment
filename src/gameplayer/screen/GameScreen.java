@@ -10,6 +10,7 @@ import gameplayer.panel.ControlsPanel;
 
 import java.awt.Point;
 import java.util.List;
+import java.util.Map;
 
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -20,8 +21,7 @@ import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
-
-
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -158,7 +158,7 @@ public class GameScreen extends Screen {
     
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
 	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-	System.out.println(placedTower.getImageView().getFitWidth() + " width ");
+	System.out.println(placedTower.getImageView().getFitWidth() + " placed tower width ");
 	return placedTower;
     }
     
@@ -169,9 +169,12 @@ public class GameScreen extends Screen {
     }
     
     public void sellTower(FrontEndTower tower) {
-	MEDIATOR.sellTower(tower);
 	GAME_PANEL.removeTower(tower);
-	
+	MEDIATOR.sellTower(tower);
+    }
+    
+    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
+	GAME_PANEL.setPath(imageMap, numRow, numCol);
     }
     
     

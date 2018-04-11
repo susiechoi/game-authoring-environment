@@ -34,6 +34,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private double myProjectileDamage;
 	//	private double myProjectileUpgradeCost;
 	//	private double myProjectileUpgradeValue;
+	private double myProjectileSize;
 	private double myProjectileSpeed; 
 	//	private double myLauncherUpgradeCost;
 	//	private double myLauncherValue;
@@ -74,7 +75,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 					try {
 						getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), 
 								myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), 
-								myProjectileImage.getValue(), myProjectileDamage, 0, 0, myProjectileSpeed, 
+								myProjectileImage.getValue(), myProjectileDamage, 0, 0,myProjectileSize, myProjectileSpeed, 
 								0, 0, 0, myLauncherSpeed, myLauncherRange,
 								myTowerValueSlider.getValue(), myTowerUpgradeCostSlider.getValue(), myTowerUpgradeValueSlider.getValue());
 						getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText()));

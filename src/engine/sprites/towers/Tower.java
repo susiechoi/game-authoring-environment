@@ -25,9 +25,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myHealthUpgradeCost; 
     private double myHealthUpgradeValue; 
     private String myImage; 
+    private double mySize;
     private Image myProjectileImage;
     private double myProjectileDamage; 
     private double myProjectileSpeed;
+    private double myProjectileSize;
     //	private double myProjectileValue;  
     //	private double myProjectileUgradeCost; 
     //	private double myProjectileUpgradeValue; 
@@ -51,6 +53,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 	super(name, image, size, launcher);
+	System.out.println("TOWER SIZE : " + size);
 	myHealth = health;
 	propertyStats = new HashMap<String, Double>();
 	System.out.println("health is " + health.getProperty());
@@ -68,6 +71,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myProjectileImage = launcher.getProjectileImage(); 
 	myProjectileDamage = launcher.getProjectileDamage(); 
 	myProjectileSpeed = launcher.getProjectileSpeed();
+	myProjectileSize = launcher.getProjectileSize(); 
 	myLauncherRate = launcher.getFireRate(); 
 	myLauncherRange = launcher.getRange(); 
 	myValue = value;
@@ -79,7 +83,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(Tower copiedTower) {
 	super(copiedTower.getName(), copiedTower.getImageString(), 
-		copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
+		copiedTower.mySize, copiedTower.getLauncher()); 
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty(); 
     }
@@ -89,7 +93,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(Tower copiedTower, Point point) {
 	super(copiedTower.getName(), copiedTower.getImageString(), 
-	copiedTower.getImageView().getImage().getWidth(), copiedTower.getLauncher()); 
+	copiedTower.mySize, copiedTower.getLauncher()); 
 	System.out.println("Health value copied is " + copiedTower.getHealthProperty().getProperty());
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty();
