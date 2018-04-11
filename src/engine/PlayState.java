@@ -62,8 +62,8 @@ public class PlayState implements GameData {
 		UNIVERSAL_TIME = universalTime;
 		List<FrontEndTower> availTowers = new ArrayList<>();
 		availTowers.addAll(currentLevel.getTowers().values());
-		System.out.print("Available towers: ");
-		System.out.println(availTowers.size());
+		//System.out.print("Available towers: ");
+		//System.out.println(availTowers.size());
 		myMediator.setAvailableTowers(availTowers);
 		myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 		myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
@@ -97,18 +97,18 @@ public class PlayState implements GameData {
 			}
 			//adding enemy to screen
 			if (currentLevel.getUnmodifiablePaths().get(0) != null && currentLevel.getNewEnemy(currentLevel.getUnmodifiablePaths().get(0))!= null) {
-				System.out.println("NOT NULL AND BEING ADDED TO MEDIATor");
+				//System.out.println("NOT NULL AND BEING ADDED TO MEDIATor");
 				myMediator.addSpriteToScreen((FrontEndSprite) currentLevel.getNewEnemy(currentLevel.getUnmodifiablePaths().get(0)));
 			}
 			UNIVERSAL_TIME+=elapsedTime;
 			List<Sprite> toBeRemoved = new ArrayList<>();
-			toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+			//toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 			//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 			myTowerManager.moveProjectiles(elapsedTime);
 			myTowerManager.moveTowers();
 			for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 				myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-				System.out.println("added to med");
+			//	System.out.println("added to med");
 			}
 			//	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
 			//		myMediator.addSpriteToScreen((FrontEndSprite)projectile);

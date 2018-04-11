@@ -148,7 +148,6 @@ public class GamePanel extends Panel{
 	spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
 	spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
 	spriteAdd.getChildren().add(sprite.getImageView());
-	if (sprite.getName().equals("Default")) System.out.println("ENEMY BEING ADDED TO SPRITE ADD IN GAME PANEL CLASS @@@@@@@@@@@@@@@@@@@@@@");
     }
 
     public void removeSprite(FrontEndSprite sprite) {
@@ -171,7 +170,6 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
 
-		System.out.println(towerImage.getFitWidth() + " fitWifht/hgith " + towerImage.getFitHeight());
 
 		towerImage.setLayoutX(-towerImageActual.getWidth()/2);
 		towerImage.setLayoutY(-towerImageActual.getHeight()/2);

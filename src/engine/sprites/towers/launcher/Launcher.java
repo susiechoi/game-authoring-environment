@@ -88,7 +88,7 @@ public class Launcher extends Manager<Projectile>{
     public boolean hasReloaded() {
     	long currTime = System.nanoTime();
      	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
+     	if(timeSinceLastShot >= myFireRate.getProperty()) {
      		timeLastFired = currTime;
      		return true;
      	}
