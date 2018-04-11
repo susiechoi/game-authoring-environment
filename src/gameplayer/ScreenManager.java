@@ -29,7 +29,7 @@ import javafx.scene.Parent;
  * Class to manage updating Screen elements that remain across the entire game
  * (score, level, health, currency, etc.)
  */
-public class ScreenManager extends View{
+public class ScreenManager extends View {
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
     public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";

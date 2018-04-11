@@ -1,5 +1,6 @@
 package engine.sprites;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public abstract class ShootingSprites extends Sprite{
 	myLauncher = launcher;
 	roundScore = 0;
     }
-
+    
     /**
      * @return List of all active projectiles
      */
@@ -118,6 +119,7 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
+	System.out.println("shooter X is " + shooterX);
 	return myLauncher.launch(target, shooterX, shooterY);
     }
 

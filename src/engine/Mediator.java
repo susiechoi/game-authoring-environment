@@ -134,6 +134,7 @@ public class Mediator {
      * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
      */
     public void addSpriteToScreen(FrontEndSprite sprite) {
+	System.out.println("adding sprite to screen " + sprite.getClass());
 	myScreenManager.display(sprite);
     }
     
