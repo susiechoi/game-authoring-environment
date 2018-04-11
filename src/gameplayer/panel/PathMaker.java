@@ -25,8 +25,8 @@ public class PathMaker {
 	grid = new GridPane();
 	grid.setMaxSize(1000, 750);
 
-	for (int x = 0 ; x < grid.getColumnCount(); x++) {
-	    for (int y = 0 ; y < grid.getRowCount(); y++) {
+	for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
+	    for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
 		StackPane cell = new StackPane();
 //		needs to be fx styled
 //		grid.setStyle(backgroundImage);
