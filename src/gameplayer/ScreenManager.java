@@ -50,7 +50,6 @@ public class ScreenManager extends View{
 
     //private final FileIO FILE_READER;
 
-
     public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
