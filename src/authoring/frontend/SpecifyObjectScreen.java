@@ -48,10 +48,11 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		Text orText = new Text("or"); 
 
 		Button newObjectButton = makeCreateNewObjectButton(myObjectDescription);
-		String prompt = getErrorCheckedPrompt("SpecifyDropdownLabel");
+		String editPrompt = getErrorCheckedPrompt("EditExisting")+myObjectDescription;
+		String selectPrompt = getErrorCheckedPrompt("SelectExisting")+myObjectDescription;
 
 		List<String> dropdownOptions = new ArrayList<String>(); 
-		dropdownOptions.add(prompt);
+		dropdownOptions.add(selectPrompt);
 		dropdownOptions.addAll(myObjectOptions);
 		
 		Button applyButton = getUIFactory().setupApplyButton();
@@ -59,13 +60,13 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 
 		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction("objectOptions",dropdownOptions, 
 				e-> { applyButton.setDisable(false); }, 
-				e-> { applyButton.setDisable(true);}, prompt); 
+				e-> { applyButton.setDisable(true);}, editPrompt); 
 		applyButton.setDisable(true);
 		applyButton.setOnAction(e -> {
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
 		});
 
-		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, getErrorCheckedPrompt("EditExisting")+myObjectDescription);
+		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, editPrompt);
 
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
