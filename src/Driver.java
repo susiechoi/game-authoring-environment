@@ -1,5 +1,6 @@
 import controller.ChiefController;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /** 
@@ -14,10 +15,13 @@ public class Driver extends Application {
     /**
      * Initialize the program and begin the animation loop 
      * 
+     * 
      * @param stage: Primary stage to attach all scenes
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+	primaryStage.setTitle("IfTrueReturnTrue VOOGASALAD");
+	primaryStage.getIcons().add(new Image("/images/sarahbland.png"));
 	ChiefController controller = new ChiefController(primaryStage);
 	controller.start();
     }
