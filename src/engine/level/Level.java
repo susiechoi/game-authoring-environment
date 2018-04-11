@@ -126,16 +126,6 @@ public class Level {
     }
 
     /**
-     * Adds an available tower to the level
-     * 
-     * @param name: The unique string name for the tower object
-     * @param tower: The tower object to be added
-     */
-    public void addEnemy(String name, Enemy enemy) {
-	myEnemies.put(name, enemy);
-    }
-
-    /**
      * 
      * @param name: The unique string name for the tower object
      * @return boolean: true if the level contains the tower, false otherwise
