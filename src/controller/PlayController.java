@@ -52,7 +52,10 @@ public class PlayController {
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
 	List<Level> levels = playModel.allLevels();
+	System.out.println("PATH pls");
+	System.out.println(levels.get(0).getLevelPathMap());
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+	myMediator.setPath(levels.get(0).getLevelPathMap(), "");
 	myGameEngine.setPlayState(play);
 	myGameEngine.start();
     }

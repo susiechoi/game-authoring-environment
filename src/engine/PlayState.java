@@ -11,6 +11,7 @@ import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
 import engine.path.Path;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -98,10 +99,10 @@ public class PlayState implements GameData {
 	    myTowerManager.shoot(myEnemyManager.getListOfActive());
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
-	    for (Projectile projectile: myTowerManager.shoot(myTowerManager.getListOfActive())) {
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
-	    for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getListOfActive())) {
+	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
 	    myEnemyManager.moveProjectiles();
@@ -109,6 +110,12 @@ public class PlayState implements GameData {
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
     }
+
+
+
+    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+    //	myResources -= tower.upgrade(upgradeName);
+    //    }
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);

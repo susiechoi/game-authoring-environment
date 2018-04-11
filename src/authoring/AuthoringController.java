@@ -25,12 +25,11 @@ import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelReader;
-import xml.AuthoringModelWriter;
 
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
-	private HashMap<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel; 
 
 	
@@ -95,10 +94,16 @@ public class AuthoringController {
 	// TODO
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
+	 * @throws ObjectNotFoundException 
 	 */
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) { 
-		myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
+		System.out.println("LEVEL: " + level);
+		System.out.println("IMG COORDS" + imageCoordinates);
+	    
+	    
+	    	myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+		System.out.println(imageCoordinates);
 		myImageMap = imageCoordinates;
 	}
 
@@ -186,8 +191,7 @@ public class AuthoringController {
 	    for(Enemy enemy : enemyMap.keySet()) {
 		enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
 	    }
-	    return enemyNameMap;
-	    
+	    return enemyNameMap;   
 	}
 	
 	
@@ -216,7 +220,7 @@ public class AuthoringController {
 		myModel = reader.createModel(gameName);
 	}
 	
-	public HashMap<String, List<Point>> getGrid() {
+	public Map<String, List<Point>> getGrid() {
 		return myImageMap;
 	}
 }

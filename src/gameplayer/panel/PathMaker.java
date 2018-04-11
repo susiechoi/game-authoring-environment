@@ -1,11 +1,10 @@
 package gameplayer.panel;
 
-import java.util.HashMap;
+import java.awt.Point;
 import java.util.List;
+import java.util.Map;
 
-import authoring.frontend.DraggableImage;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -22,78 +21,53 @@ public class PathMaker {
     private int rowIndex;
     private GridPane grid;
 
-    private HashMap<String, List<Point2D>> imageMap = new HashMap<String, List<Point2D>>(); //this is passed
-
-    public GridPane populateGrid(HashMap<String, List<Point2D>> map) { //populates grid that is
-
+    public GridPane populateGrid(Map<String, List<Point>> map, String backgroundImage) { //populates grid that is
 	grid = new GridPane();
 	grid.setMaxSize(1000, 750);
 
 	for (int x = 0 ; x < grid.getColumnCount(); x++) {
 	    for (int y = 0 ; y < grid.getRowCount(); y++) {
 		StackPane cell = new StackPane();
-
-		final int col = x;
-		final int row = y;
-
-		cell.setOnDragOver(new EventHandler <DragEvent>() {
-		    public void handle(DragEvent event) {
-			if (event.getDragboard().hasImage()) {
-			    event.acceptTransferModes(TransferMode.ANY);
-			}
-			colIndex = col;
-			rowIndex = row;
-			event.consume();
-		    }
-		});
-
-		cell.setOnDragDropped(new EventHandler <DragEvent>() {
-		    public void handle(DragEvent event) {
-			event.acceptTransferModes(TransferMode.ANY);
-			Dragboard db = event.getDragboard();
-			boolean success = false;
-			if (db.hasImage()) {
-			    //set draggable images (towers), need to make these draggable images
-			    Image path = db.getImage(); 
-			    DraggableImage pathDraggableImageView = new DraggableImage(path);
-			    pathDraggableImageView.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
-			    pathDraggableImageView.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
-			    grid.add(pathDraggableImageView, colIndex, rowIndex);
-			    success = true;
-			}
-			event.setDropCompleted(success);
-			event.consume();
-		    }
-		});
+//		needs to be fx styled
+//		grid.setStyle(backgroundImage);
 		grid.add(cell, x, y);
+
 	    }
 	}
+	setGridConstraints(grid);
+	addImagesToGrid(map);
 	return grid;
     }
 
-    public void addImagesToGrid() {
-	for (String key: imageMap.keySet()) { //goes through images
-	    for (int i = 0; i < imageMap.keySet().size(); i++) {
-		Point2D point = imageMap.get(key).get(0);
-		grid.add(new ImageView(new Image(key)), (int)point.getX(), (int)point.getY());
+
+    public void addImagesToGrid(Map<String, List<Point>> map) {
+	for (String key: map.keySet()) { //goes through images
+	    List<Point> pointList = map.get(key);
+	    for (int i = 0; i < pointList.size(); i++) {
+		Point point = pointList.get(i);
+		ImageView image = new ImageView(new Image(key));
+		image.setFitWidth(60);
+		image.setFitHeight(60);
+		GridPane.setFillWidth(image, true);
+		GridPane.setFillHeight(image, true);
+		grid.add(image, (int)point.getX(), (int)point.getY());
 	    }
 	}
+
     }
 
-    //	public void setGridConstraints(GridPane grid, HashMap<String, List<Point2D>> map) {
-    //		imageMap = map;
-    //		grid.getColumnConstraints().clear();
-    //		grid.getRowConstraints().clear();
-    //		for (int i = 0; i < 1000/60; i++) {
-    //			ColumnConstraints colConst = new ColumnConstraints();
-    //			colConst.setPrefWidth(60);
-    //			grid.getColumnConstraints().add(colConst);
-    //		}
-    //		for (int i = 0; i < 750/60; i++) {
-    //			RowConstraints rowConst = new RowConstraints();
-    //			rowConst.setPrefHeight(60);
-    //			grid.getRowConstraints().add(rowConst);         
-    //		}
-    //	populateGrid();
-    //}
+
+    public void setGridConstraints(GridPane grid) {
+	for (int i = 0; i < 1000/60; i++) {
+	    ColumnConstraints colConst = new ColumnConstraints();
+	    colConst.setPrefWidth(60);
+	    grid.getColumnConstraints().add(colConst);
+	}
+	for (int i = 0; i < 750/60; i++) {
+	    RowConstraints rowConst = new RowConstraints();
+	    rowConst.setPrefHeight(60);
+	    grid.getRowConstraints().add(rowConst);         
+	}
+    }
 }
+
