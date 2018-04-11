@@ -45,8 +45,6 @@ public class GamePanel extends Panel{
     public void makePanel() {
 
 	//TODO potentially fix needed?
-	
-	
 
 	Pane panelRoot = new Pane();
 	panelRoot.setId("gamePanel");
@@ -86,47 +84,47 @@ public class GamePanel extends Panel{
 	towerPlaceMode = true;
     }
 
-    public void exitTowerPlace() {
-	towerPlaceMode = false;
-    }
+//    public void exitTowerPlace() {
+//	towerPlaceMode = false;
+//    }
+//
+//    public void handleMouseInput(double x, double y) {
+//	if(towerPlaceMode) {
+//	    Point position = new Point((int)x,(int)y);
+//	    try {
+//		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
+//		ImageView towerImage = newTower.getImageView();
+//		towerImage.setLayoutX(-towerImage.getFitWidth()/2);
+//		towerImage.setLayoutY(-towerImage.getFitHeight()/2);
+//		if(newTower!= null) {
+//		    addTowerImageViewAction(newTower);
+//		    towersPlaced.add(newTower);
+//		    spriteAdd.getChildren().add(towerImage);
+//		    towerPlaceMode = false;
+//		    System.out.println("paneWidth: " + spriteAdd.getWidth() + " height: "+ spriteAdd.getHeight());
+//		}
+//	    }
+//	    catch(CannotAffordException e){
+//		//GameScreen popup for cannot afford
+//	    }
+//	}
 
-    public void handleMouseInput(double x, double y) {
-	if(towerPlaceMode) {
-	    Point position = new Point((int)x,(int)y);
-	    try {
-		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
-		ImageView towerImage = newTower.getImageView();
-		towerImage.setLayoutX(-towerImage.getFitWidth()/2);
-		towerImage.setLayoutY(-towerImage.getFitHeight()/2);
-		if(newTower!= null) {
-		    addTowerImageViewAction(newTower);
-		    towersPlaced.add(newTower);
-		    spriteAdd.getChildren().add(towerImage);
-		    towerPlaceMode = false;
-		    System.out.println("paneWidth: " + spriteAdd.getWidth() + " height: "+ spriteAdd.getHeight());
-		}
-	    }
-	    catch(CannotAffordException e){
-		//GameScreen popup for cannot afford
-	    }
-	}
 
-
-	@Override
-	public void makePanel() {
-
-		//TODO potentially fix needed?
-
-		Pane panelRoot = new Pane();
-		panelRoot.setId("gamePanel");
-		//panelRoot.setBottom(new Up);
-		panelRoot.setMaxWidth(Double.MAX_VALUE);
-		panelRoot.setMaxHeight(Double.MAX_VALUE);
-
-		panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
-		spriteAdd = panelRoot;
-		PANEL = panelRoot;
-	}
+//	@Override
+//	public void makePanel() {
+//
+//		//TODO potentially fix needed?
+//
+//		Pane panelRoot = new Pane();
+//		panelRoot.setId("gamePanel");
+//		//panelRoot.setBottom(new Up);
+//		panelRoot.setMaxWidth(Double.MAX_VALUE);
+//		panelRoot.setMaxHeight(Double.MAX_VALUE);
+//
+//		panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+//		spriteAdd = panelRoot;
+//		PANEL = panelRoot;
+//	}
 
     public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
 	GridPane grid = new GridPane();

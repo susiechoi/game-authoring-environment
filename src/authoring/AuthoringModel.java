@@ -159,9 +159,13 @@ public class AuthoringModel implements GameData {
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
-		myImageMap = imageCoordinates;
-		myPath = new PathBuilder().construct(level, coordinates); //add new constructor
+	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
+		currentLevel.addPath(newPath);
+		
+//		myImageMap = imageCoordinates;
+//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
 	}
 
 	
