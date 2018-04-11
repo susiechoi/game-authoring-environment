@@ -51,7 +51,6 @@ public class PlayState implements GameData {
      * @param universalTime
      */
     public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
-	System.out.println("playstate constructor");
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -62,9 +61,7 @@ public class PlayState implements GameData {
 	myResources = resources;
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
-	for (Tower t: currentLevel.getTowers().values()) {
-	    availTowers.add((FrontEndTower)t);
-	}
+	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
     }
@@ -100,7 +97,7 @@ public class PlayState implements GameData {
 	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	    toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.shoot(myEnemyManager.getListOfActive());
-	    myTowerManager.moveProjectiles();
+	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 		System.out.println(projectile);

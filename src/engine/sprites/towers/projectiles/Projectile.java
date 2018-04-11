@@ -17,6 +17,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	private DamageProperty myDamage;
 	private double mySpeed;
 	private double mySize; 
+	private Sprite myTarget;
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -32,14 +33,31 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		mySize = size; 
 	}
 	
+	public Projectile(Projectile myProjectile, Sprite target) {
+	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	    myTarget = target;
+	}
+
 	/**
 	 * Moves image in direction of it's orientation
 	 */
-	public void move() {
-		double xMove = Math.sin(this.getRotate())*this.mySpeed;
-		double yMove = Math.cos(this.getRotate())*this.mySpeed;
+	public void move(double elapsedTime) {
+	    	rotateImage();
+	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
+		double xMove = Math.sin(this.getRotate())*totalDistanceToMove;
+		double yMove = Math.cos(this.getRotate())*totalDistanceToMove;
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getX()+yMove);
+	}
+	
+	/**
+	 * Rotates the image to face the target
+	 */
+	private void rotateImage() {
+	    	double xDifference = myTarget.getX() - this.getX();
+	    	double yDifference = myTarget.getY() - this.getY();
+	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
+	    	this.getImageView().setRotate(Math.toDegrees(angleToRotateRads));
 	}
 	
 	/**
