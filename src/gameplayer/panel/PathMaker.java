@@ -3,10 +3,9 @@ package gameplayer.panel;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import authoring.frontend.DraggableImage;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -21,15 +20,18 @@ public class PathMaker {
 	private int rowIndex;
 	private GridPane grid;
 
-	private HashMap<String, List<Point2D>> imageMap = new HashMap<String, List<Point2D>>(); //this is passed
 
-	public GridPane populateGrid(HashMap<String, List<Point>> map) { //populates grid that is
+	public GridPane populateGrid(Map<String, List<Point>> map, String backgroundImage) { //populates grid that is
 
 		grid = new GridPane();
 		grid.setMaxSize(1000, 750);
 
-		for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
-			for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
+		//		needs to be fx styled
+		//		grid.setStyle(backgroundImage);
+
+		for (int x = 0 ; x < grid.getColumnCount(); x++) {
+			for (int y = 0 ; y < grid.getRowCount(); y++) {
+
 				StackPane cell = new StackPane();
 
 				final int col = x;
@@ -53,11 +55,11 @@ public class PathMaker {
 						boolean success = false;
 						if (db.hasImage()) {
 							//set draggable images (towers), need to make these draggable images
-							Image path = db.getImage(); 
-							DraggableImage pathDraggableImageView = new DraggableImage(path);
-							pathDraggableImageView.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
-							pathDraggableImageView.getPathImage().fitHeightProperty().bind(cell.heightProperty()); 
-							grid.add(pathDraggableImageView, colIndex, rowIndex);
+							ImageView pathImage = new ImageView(db.getImage()); 
+
+							pathImage.fitWidthProperty().bind(cell.widthProperty()); 
+							pathImage.fitHeightProperty().bind(cell.heightProperty()); 
+							grid.add(pathImage, colIndex, rowIndex);
 							success = true;
 						}
 						event.setDropCompleted(success);
@@ -70,29 +72,14 @@ public class PathMaker {
 		return grid;
 	}
 
-	public void addImagesToGrid() {
-		for (String key: imageMap.keySet()) { //goes through images
-			for (int i = 0; i < imageMap.keySet().size(); i++) {
-				Point2D point = imageMap.get(key).get(0);
+	public void addImagesToGrid(HashMap<String, List<Point>> map) {
+		for (String key: map.keySet()) { //goes through images
+			List<Point> pointList = map.get(key);
+			for (int i = 0; i < pointList.size(); i++) {
+				Point point = pointList.get(i);
 				grid.add(new ImageView(new Image(key)), (int)point.getX(), (int)point.getY());
 			}
 		}
 	}
 
-	//	public void setGridConstraints(GridPane grid, HashMap<String, List<Point2D>> map) {
-	//		imageMap = map;
-	//		grid.getColumnConstraints().clear();
-	//		grid.getRowConstraints().clear();
-	//		for (int i = 0; i < 1000/60; i++) {
-	//			ColumnConstraints colConst = new ColumnConstraints();
-	//			colConst.setPrefWidth(60);
-	//			grid.getColumnConstraints().add(colConst);
-	//		}
-	//		for (int i = 0; i < 750/60; i++) {
-	//			RowConstraints rowConst = new RowConstraints();
-	//			rowConst.setPrefHeight(60);
-	//			grid.getRowConstraints().add(rowConst);         
-	//		}
-	//	populateGrid();
-	//}
 }

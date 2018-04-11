@@ -6,6 +6,7 @@ import frontend.View;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
@@ -140,8 +141,8 @@ public class ScreenManager extends View{
 	GAME_SCREEN.updateCurrency(newBalence);
     }
 
-    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	GAME_SCREEN.setPath(imageMap, numRow, numCol);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+	GAME_SCREEN.setPath(imageMap, backgroundImageFilePath);
     }
 
 

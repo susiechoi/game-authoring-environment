@@ -45,7 +45,7 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private HashMap<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel;
 
 
@@ -277,7 +277,7 @@ public class AuthoringView extends View {
 	}
 	
 
-	public HashMap<String, List<Point>> getImageCoordinates() {
+	public Map<String, List<Point>> getImageCoordinates() {
 		return myImageMap;
 	}
 
