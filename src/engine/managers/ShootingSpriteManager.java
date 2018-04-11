@@ -13,8 +13,8 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 
 public class ShootingSpriteManager extends Manager<ShootingSprites>{
-	
-	private int myRoundScore;
+
+    private int myRoundScore;
 
     /**
      * Checks for collisions between between the list of active actors held by the Manager the method
@@ -22,42 +22,50 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      * @param passedSprites
      */
     public List<Sprite> checkForCollisions(List<ShootingSprites> passedSprites) {
-    	myRoundScore = 0;
+	myRoundScore = 0;
 	List<Sprite> spritesToBeRemoved = new ArrayList<>();
-    		for (ShootingSprites activeSprite: this.getListOfActive()) {
-    			for (ShootingSprites passedActor: passedSprites) {
-    			    List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
-    			    spritesToBeRemoved.addAll(deadSprites);
-    			}
-    			myRoundScore += activeSprite.getRoundScore();
-    		}
-    		return spritesToBeRemoved;
+	for (ShootingSprites activeSprite: this.getListOfActive()) {
+	    for (ShootingSprites passedActor: passedSprites) {
+		List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
+		spritesToBeRemoved.addAll(deadSprites);
+	    }
+	    myRoundScore += activeSprite.getRoundScore();
+	}
+	return spritesToBeRemoved;
     }
-    
 
+
+    /**
+     * The Manager shoots from it's Launcher at the passedSprites
+     * @param passedSprites : target being shot at
+     * @return Projectiles to add to the front end view
+     */
     public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
-    		List<Projectile> newProjectiles = new ArrayList<>();
-    		for (ShootingSprites shootingSprite: this.getListOfActive()) {
-    			for (ShootingSprites passedSprite: passedSprites) {
-    				if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
-    					Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
-    					if (newProjectile != null) {
-    						newProjectiles.add(newProjectile);
-    					}
-    				}
-    			}
-    		}
-    		return newProjectiles;
-    }
-    
-	public void moveProjectiles() {
+		List<Projectile> newProjectiles = new ArrayList<>();
 		for (ShootingSprites shootingSprite: this.getListOfActive()) {
-			for (Projectile projectile: shootingSprite.getProjectiles()) {
-				projectile.move();
+		    for (ShootingSprites passedSprite: passedSprites) {
+			if (shootingSprite.hasInRange(passedSprite) && shootingSprite.hasReloaded()) {
+			    Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
+			    if (newProjectile != null) {
+				newProjectiles.add(newProjectile);
+			    }
 			}
+		    }
 		}
+		return newProjectiles;
+    }
+
+    /**
+     * Moves the projectiles. Goes through the Manager and gets the list of projectiles, and moves them
+     */
+    public void moveProjectiles() {
+	for (ShootingSprites shootingSprite: this.getListOfActive()) {
+	    for (Projectile projectile: shootingSprite.getProjectiles()) {
+		projectile.move();
+	    }
 	}
-	public int getRoundScore() {
-		return myRoundScore;
-	}
+    }
+    public int getRoundScore() {
+	return myRoundScore;
+    }
 }

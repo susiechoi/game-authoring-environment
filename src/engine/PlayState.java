@@ -98,10 +98,10 @@ public class PlayState implements GameData {
 	    myTowerManager.shoot(myEnemyManager.getListOfActive());
 	    myTowerManager.moveProjectiles();
 	    myTowerManager.moveTowers();
-	    for (Projectile projectile: myTowerManager.shoot(myTowerManager.getListOfActive())) {
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
-	    for (Projectile projectile: myEnemyManager.shoot(myEnemyManager.getListOfActive())) {
+	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
 	    myEnemyManager.moveProjectiles();

@@ -251,10 +251,5 @@ public class Mediator {
 	myScreenManager.setPath(imageMap, numRow, numCol);
     }
 
-    
-    //    private void addListener(ObservableValue<Object> value, ChangeListener listenerToAdd) {
-    //	value.addListener(listenerToAdd);
-    //    }
-
 
 }
