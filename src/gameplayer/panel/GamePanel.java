@@ -4,10 +4,13 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
+import frontend.PropertiesReader;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -26,6 +29,9 @@ public class GamePanel extends Panel{
     private boolean towerPlaceMode = false;
     private List<FrontEndTower> towersPlaced;
     private Pane spriteAdd;
+    
+    //TODO changes this to be passed from mediator
+    private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
 
 
     public GamePanel(GameScreen gameScreen) {
@@ -38,6 +44,8 @@ public class GamePanel extends Panel{
     public void makePanel() {
 
 	//TODO potentially fix needed?
+	
+	
 
 	Pane panelRoot = new Pane();
 	panelRoot.setId("gamePanel");
@@ -46,6 +54,27 @@ public class GamePanel extends Panel{
 	panelRoot.setMaxHeight(Double.MAX_VALUE);
 
 	panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+	
+	
+	PropertiesReader propReader = new PropertiesReader();
+	Random rand = new Random();
+	try {
+	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
+	    int random = rand.nextInt(backgroundMap.size());
+	    int count = 0;
+	   for(String s:  backgroundMap.keySet()) {
+	       if(count == random) {
+		   ImageView imageView = new ImageView();
+		   imageView.setImage(backgroundMap.get(s));
+		   panelRoot.getChildren().add(imageView);
+	       }
+	   }
+	} catch (MissingPropertiesException e1) {
+	    //TODO should fix but who cares since this will be refactored 
+	    //to be gotten from mediator
+	    System.out.println("Background Images failed to load");
+	}
+	
 	spriteAdd = panelRoot;
 	PANEL = panelRoot;
     }
