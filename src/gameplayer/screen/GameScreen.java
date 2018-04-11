@@ -57,18 +57,17 @@ public class GameScreen extends Screen {
 		UIFACTORY = new UIFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
-		makeScreenWithoutStyling();
+		TOWER_PANEL = new TowerPanel(this, PROMPTS);
+		CONTROLS_PANEL = new ControlsPanel(this);
+		SCORE_PANEL = new ScorePanel(this);
+		GAME_PANEL = new GamePanel(this);
+		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
+		BUY_PANEL = new BuyPanel(this, PROMPTS);
     }
 
     @Override
     public Parent makeScreenWithoutStyling() {
 	BorderPane rootPane = new BorderPane();
-	TOWER_PANEL = new TowerPanel(this, PROMPTS);
-	CONTROLS_PANEL = new ControlsPanel(this);
-	SCORE_PANEL = new ScorePanel(this);
-	GAME_PANEL = new GamePanel(this);
-	UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
-	BUY_PANEL = new BuyPanel(this, PROMPTS);
 
 	rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 	VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
