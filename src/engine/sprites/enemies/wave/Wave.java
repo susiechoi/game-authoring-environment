@@ -60,13 +60,16 @@ public class Wave {
      * @return Enemy: an enemy object
      */
     public Enemy getEnemy() {
+    	
 	for (Entry<Enemy, Integer> entry : myEnemies.entrySet()) {
 	    if (entry.getValue() > 0) {
 		Enemy retEnemy = entry.getKey();
 		decrementEnemyCount(retEnemy);
+		System.out.println(retEnemy.getName() + " this is the name of the enemy we are returning in the Wave class hehe");
 		return retEnemy;
 	    }
 	}
+	System.out.println("WE ARE RETURNING NULL 12345678910111211314151 " + myEnemies.size());
 	return null;
     }
     

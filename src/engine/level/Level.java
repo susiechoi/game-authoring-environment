@@ -220,6 +220,8 @@ public class Level {
     public Enemy getNewEnemy(Path path) {
 	Wave currentWave = myWaves.get(path).get(0);
 	Enemy waveEnemy = currentWave.getEnemy();
+	if (waveEnemy != null)
+	waveEnemy.place(200, 200);
 	return waveEnemy;
     }
 

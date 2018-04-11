@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
  * @author Katherine Van Dyk
  *
  */
-public class Projectile extends Sprite implements FrontEndSprite{
+public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
 	private double mySpeed;
@@ -50,7 +50,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	 * Moves image in direction of it's orientation
 	 */
 	public void move(double elapsedTime) {
-	    	myTarget.place(100, 100);
+	    	myTarget.place(0, 0);
 	    	rotateImage();
 	    	System.out.println("speed is " + mySpeed);
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;

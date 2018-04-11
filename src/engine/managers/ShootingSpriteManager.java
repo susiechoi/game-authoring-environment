@@ -47,7 +47,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 		for (ShootingSprites shootingSprite: this.getListOfActive()) {
 		    for (ShootingSprites passedSprite: passedSprites) {
 			System.out.println(" on number " + i);
-			if (shootingSprite.hasReloaded()) {
+			if (shootingSprite.hasReloaded()) { //TODO add back range check
 			    System.out.println("in range for " + i);
 			    Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			    if (newProjectile != null) {

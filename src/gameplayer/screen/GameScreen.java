@@ -115,6 +115,9 @@ public class GameScreen extends Screen {
     }
 
     public void displaySprite(FrontEndSprite sprite) {
+    	if (sprite.getName().equals("Default")) {
+    		System.out.println("FOUND ENEMY IN GAME SCREEN %%%%%%%%%");
+    	}
 	GAME_PANEL.addSprite(sprite);
     }
 
