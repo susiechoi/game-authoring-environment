@@ -35,6 +35,11 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     }
 
 
+    /**
+     * The Manager shoots from it's Launcher at the passedSprites
+     * @param passedSprites : target being shot at
+     * @return Projectiles to add to the front end view
+     */
     public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
 		List<Projectile> newProjectiles = new ArrayList<>();
 		for (ShootingSprites shootingSprite: this.getListOfActive()) {
@@ -50,6 +55,9 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 		return newProjectiles;
     }
 
+    /**
+     * Moves the projectiles. Goes through the Manager and gets the list of projectiles, and moves them
+     */
     public void moveProjectiles() {
 	for (ShootingSprites shootingSprite: this.getListOfActive()) {
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
