@@ -162,10 +162,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
 
-    /**private double getDamage() {
->>>>>>> 5a750604dc04461013be3f0cdce2a6f625b5545b
-		return this.getLauncher().getDamage();
-	} **/
+    
 
     public String getDamageName() {
 	return this.getLauncher().getDamageName();
