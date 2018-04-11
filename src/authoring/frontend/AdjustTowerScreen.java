@@ -68,7 +68,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		goToProjectileLauncherButton.setOnAction(e -> {
 			if(getIsNewObject()) {
 				if (myNameField.getText().equals(getMyDefaultName())) {
-					myNameField.setText(getView().getErrorCheckedPrompt("ReplaceDefaultName"));
+					getView().loadErrorAlert("NoDefaultName");
 				} 
 				else {
 					try {
@@ -79,7 +79,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 								myTowerValueSlider.getValue(), myTowerUpgradeCostSlider.getValue(), myTowerUpgradeValueSlider.getValue());
 						getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText()));
 					} catch (NoDuplicateNamesException e1) {
-						myNameField.setText(getView().getErrorCheckedPrompt("NoDuplicateNames"));
+						getView().loadErrorAlert("NoDuplicateNames");
 					}
 				}
 			} 
