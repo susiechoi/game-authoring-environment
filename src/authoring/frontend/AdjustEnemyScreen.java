@@ -91,15 +91,12 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			if ((myNameField.getText().equals(getMyDefaultName()))) {
-				myNameField.setText(getView().getErrorCheckedPrompt("ReplaceDefaultName"));
-			}
-			else {
+			if (validNameField(myNameField)) {
 				try {
 					getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), 0, 0);
 					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");			
 				} catch(NoDuplicateNamesException e1) {
-					myNameField.setText(getView().getErrorCheckedPrompt("NoDuplicateNames"));
+					getView().loadErrorAlert("NoDuplicateNames");
 				}
 			}
 		});

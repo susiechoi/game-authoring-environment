@@ -8,6 +8,7 @@
 
 package authoring.frontend;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -46,8 +47,10 @@ public class AuthoringView extends View {
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
 	private String myCurrentCSS;
-	private AuthoringModel myModel;
 	private int myLevel; 
+	private HashMap<String, List<Point>> myImageMap;
+	private AuthoringModel myModel;
+
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
@@ -58,6 +61,7 @@ public class AuthoringView extends View {
 		myController = controller; 
 		myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
 	}
+
 
 	public void setModel(AuthoringModel model) {
 		myModel = model;
@@ -103,6 +107,7 @@ public class AuthoringView extends View {
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
 				else {
+				    	System.out.println("HERE");
 					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
@@ -126,8 +131,6 @@ public class AuthoringView extends View {
 			loadErrorScreen("NoScreenFlow");
 		}
 	}
-
-
 
 
 	/**
@@ -154,7 +157,9 @@ public class AuthoringView extends View {
 	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
 	 * @throws NoDuplicateNamesException 
 	 */
+
 	public void makeEnemy(boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws NoDuplicateNamesException {
+
 		try {
 			myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 		} catch (MissingPropertiesException e) {
@@ -165,10 +170,16 @@ public class AuthoringView extends View {
 		}
 	}
 
+	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
+		myImageMap = imageCoordinates;
+	}
+
 
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
+
 	public void makeResources(String gameName, double startingHealth, double starting$) {
 		myController.makeResources(gameName, startingHealth, starting$);
 	}
@@ -239,37 +250,33 @@ public class AuthoringView extends View {
 		return myPropertiesReader; 
 	}
 
-	public void makePath(int name, List<Point2D> coordinates, GridPane grid) {
-	    	try {
-	    	    myController.makePath(name, myLevel, coordinates, grid);
-	    	}
-		catch(ObjectNotFoundException e) {
-		    loadErrorAlert("NoObject");
-		}
-	}
-
-	public String getGameName() {
-		return myController.getGameName(); 
-	}
-
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
 	public Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
-	    try {
-	    Path path = myController.getPathFromName(pathName, level);
-	    return myController.getEnemyNameToNumberMap(level, path, waveNumber);
-	    }
-	    catch(ObjectNotFoundException e) {
-		    loadErrorAlert("NoObject");
-	    }
-	    return new HashMap<String, Integer>();
-	   
+		try {
+			Path path = myController.getPathFromName(pathName, level);
+			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
+		}
+		catch(ObjectNotFoundException e) {
+			loadErrorAlert("NoObject");
+		}
+		return new HashMap<String, Integer>();
+
 	}
 	public void writeToFile() {
-	    AuthoringModelWriter writer = new AuthoringModelWriter();
+		AuthoringModelWriter writer = new AuthoringModelWriter();
 		System.out.println("SAVING" + myModel.getGameName());
 		writer.write(myModel, myModel.getGameName());
 	}
+
+	public void readFromFile(String name) {
+	    myController.setModel(name);
+	}
 	
+
+	public HashMap<String, List<Point>> getImageCoordinates() {
+		return myImageMap;
+	}
+
 }

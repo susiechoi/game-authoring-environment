@@ -1,7 +1,5 @@
 package engine;
 
-import java.util.Timer;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -115,6 +113,6 @@ public class GameEngine {
 
     }
 
-    
+   
 
 }
