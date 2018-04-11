@@ -18,6 +18,8 @@ public class Path {
     private int pathIndex;
 
     public Path(List<Point> coordinates) {
+	System.out.println("IN PATH:");
+	System.out.println(coordinates);
 	myCoordinates = coordinates;
 	pathIndex = 0;
 	currentPosition = myCoordinates.get(pathIndex);
