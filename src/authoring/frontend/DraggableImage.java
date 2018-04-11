@@ -18,7 +18,7 @@ public class DraggableImage extends Parent {
 	private EventHandler<DragEvent> myDragDone;
 	private EventHandler<DragEvent> myCopyDragDone;
 
-	DraggableImage(Image image) {
+	public DraggableImage(Image image) {
 		setPathImage(image);
 	}
 
@@ -91,6 +91,9 @@ public class DraggableImage extends Parent {
 	}
 	
 	public String getPathName() {
+	    	if(pathName == null) {
+	    	    return "Default";
+	    	}
 		return pathName;
 	}
 

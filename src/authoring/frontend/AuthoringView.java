@@ -268,7 +268,13 @@ public class AuthoringView extends View {
 		writer.write(myModel, myModel.getGameName());
 	}
 
+	public void readFromFile(String name) {
+	    myController.setModel(name);
+	}
+	
+
 	public HashMap<String, List<Point>> getImageCoordinates() {
 		return myImageMap;
 	}
+
 }

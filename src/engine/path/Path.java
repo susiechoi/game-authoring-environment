@@ -65,5 +65,6 @@ public class Path {
 	double deltaX = point2.getX() - point1.getX();
 	return Math.atan(deltaY/deltaX);
     }
+    
 
 }
