@@ -160,9 +160,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return balance;
     }
 
-
-    
-
     public String getDamageName() {
 	return this.getLauncher().getDamageName();
     }

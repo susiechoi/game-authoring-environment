@@ -62,6 +62,8 @@ public class PlayState implements GameData {
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
+	System.out.print("Available towers: ");
+	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
@@ -110,6 +112,12 @@ public class PlayState implements GameData {
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
     }
+
+
+
+    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+    //	myResources -= tower.upgrade(upgradeName);
+    //    }
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);

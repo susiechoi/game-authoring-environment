@@ -7,9 +7,7 @@
  */
 
 package authoring.frontend;
-
 import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -48,7 +46,7 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private HashMap<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel;
 
 
@@ -65,6 +63,17 @@ public class AuthoringView extends View {
 
 	public void setModel(AuthoringModel model) {
 		myModel = model;
+	}
+	
+	/**
+	 * Returns the AuthoringModel object the user uses to author a game. 
+	 * Should never return null because the model and view are both created
+	 * in the AuthoringController class and the view's method setModel is called.
+	 * 
+	 * @return AuthoringModel: the model authored by the user
+	 */
+	public AuthoringModel getModel() {
+	    return myModel;
 	}
 
 	public void loadInitialScreen() {
@@ -85,15 +94,26 @@ public class AuthoringView extends View {
 		return myCurrentCSS;
 	}
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
-		//myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		try {
+		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		} catch (ObjectNotFoundException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
 	}
 
 	protected void goBackFrom(String id) {
 		goForwardFrom(id+"Back");
 	}
+	
+	protected void goFowardFrom(Screen screen, String id) {
+		goForwardFrom(screen.getClass().getSimpleName()+id); 
+	}
+	
 	protected void goForwardFrom(String id) {
 		goForwardFrom(id, "");
 	}
+	
 	protected void goForwardFrom(String id, String name) {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
@@ -170,8 +190,10 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
+	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	    	System.out.println("View:" +imageCoordinates);
+	    	myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
+	    	System.out.println("After view:" + myModel.allLevels().get(1).getLevelPathMap());
 		myImageMap = imageCoordinates;
 	}
 
@@ -222,6 +244,16 @@ public class AuthoringView extends View {
 
 	protected Scene getScene() {
 		return myStageManager.getScene();
+	}
+	
+	/**
+	 * Returns the StageManager object used by the game to switch the Screens
+	 * displayed on the Stage.
+	 * 
+	 * @return StageManager: the StageManager object in the game
+	 */
+	public StageManager getStageManager() {
+	    return myStageManager;
 	}
 
 	public String getErrorCheckedPrompt(String prompt) {
@@ -275,7 +307,7 @@ public class AuthoringView extends View {
 	}
 	
 
-	public HashMap<String, List<Point>> getImageCoordinates() {
+	public Map<String, List<Point>> getImageCoordinates() {
 		return myImageMap;
 	}
 

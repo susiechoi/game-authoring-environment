@@ -4,9 +4,11 @@ package gameplayer.panel;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,6 +52,7 @@ public class TowerPanel extends Panel {
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	money = GAME_SCREEN.getMoney();
+	makePanel();
     }
 
 
@@ -148,6 +151,5 @@ public class TowerPanel extends Panel {
 	money = newBalence;
 	currencyDisplay.setText("$" +money.toString());
     }
-
 }
 
