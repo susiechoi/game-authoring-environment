@@ -7,9 +7,7 @@
  */
 
 package authoring.frontend;
-
 import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -91,9 +89,15 @@ public class AuthoringView extends View {
 	protected void goBackFrom(String id) {
 		goForwardFrom(id+"Back");
 	}
+	
+	protected void goFowardFrom(Screen screen, String id) {
+		goForwardFrom(screen.getClass().getSimpleName()+id); 
+	}
+	
 	protected void goForwardFrom(String id) {
 		goForwardFrom(id, "");
 	}
+	
 	protected void goForwardFrom(String id, String name) {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
@@ -170,7 +174,7 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
+	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
 		myImageMap = imageCoordinates;
 	}

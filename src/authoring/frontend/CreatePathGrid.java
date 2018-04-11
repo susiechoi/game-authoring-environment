@@ -2,13 +2,10 @@ package authoring.frontend;
 
 
 import java.awt.Point;
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -199,32 +196,27 @@ public class CreatePathGrid extends AdjustScreen {
 		removeNode(grid, row, col);
 
 		if ((checkPathConnected(grid, row, col + 1)) == true) {
-			System.out.println("right: " +col);
 			grid.add(new Label("path"), col, row);
-			System.out.println("HERE: " +grid.getChildren());
 			addCoordinates(row, col+1);
 			return true;
 		}
 		if ((checkPathConnected(grid, row + 1 , col)) == true) {
-			System.out.println("down");
 			grid.add(new Label("path"), col, row);
 			addCoordinates(row + 1, col);
 			return true;
 		}
 		if ((checkPathConnected(grid, row, col - 1)) == true) {
-			System.out.println("left");
 			grid.add(new Label("path"), col, row);
 			addCoordinates(row, col - 1);
 			return true;
 		}
 		if ((checkPathConnected(grid, row - 1, col)) == true) {
-			System.out.println("up");
 			grid.add(new Label("path"), col, row);
 			addCoordinates(row - 1, col);
 			return true;
 		}
 
-		grid.add(new Label("path"), col, row);
+//		grid.add(new Label("path"), col, row);
 		return false;
 	}
 
@@ -317,13 +309,18 @@ public class CreatePathGrid extends AdjustScreen {
 		return startCount;
 	}
 
-	//TODO: fix this
+	
+	
+	
+	//TODO: Fix this
 	public HashMap<String, List<Point>> getGridImageCoordinates() {
 		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
 		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
 		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
 		return gridImageCoordinates;
 	}
+	
+	
 
 	@Override
 	protected Parent populateScreenWithFields() {

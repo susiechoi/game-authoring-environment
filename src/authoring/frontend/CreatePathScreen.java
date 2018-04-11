@@ -3,6 +3,8 @@ package authoring.frontend;
 
 import java.awt.Point;
 import java.util.List;
+
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -56,7 +58,11 @@ public class CreatePathScreen extends PathScreen {
 					System.out.println(point);
 					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
-						getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName); //when apply is clicked and there is a complete path, the info gets passed to view
+						try {
+							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName);
+						} catch (ObjectNotFoundException e1) {
+							// TODO Auto-generated catch block
+						}
 					} else {
 						System.out.println("FALSE");
 						Alert alert = new Alert(AlertType.INFORMATION);

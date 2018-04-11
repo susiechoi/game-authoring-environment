@@ -83,39 +83,6 @@ public class GamePanel extends Panel{
 	towerPlaceMode = true;
     }
 
-
-    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	GridPane grid = new GridPane();
-	grid.setGridLinesVisible(true);
-	//TODO this must be fixed, shouldn't be manual
-	grid.setMaxSize(1020.0, 650.0);
-	grid.setPrefSize(1020.0, 650.0);
-	grid.setMinSize(1020.0, 650.0);
-
-
-	for (int i = 0; i < numCol; i++) {
-	    ColumnConstraints colConst = new ColumnConstraints();
-	    colConst.setPercentWidth(100.0 / numCol);
-	    grid.getColumnConstraints().add(colConst);
-	}
-	for (int i = 0; i < numRow; i++) {
-	    RowConstraints rowConst = new RowConstraints();
-	    rowConst.setPercentHeight(100.0 / numRow);
-	    grid.getRowConstraints().add(rowConst);         
-	}
-	addImagesToGrid(imageMap, grid);
-	spriteAdd.getChildren().add(grid);
-    }
-
-    private void addImagesToGrid(Map<String, List<Point2D>> imageMap, GridPane grid) {
-	for (String key: imageMap.keySet()) { //goes through images
-	    for (int i = 0; i < imageMap.keySet().size(); i++) {
-		Point2D point = imageMap.get(key).get(0);
-		grid.add(new ImageView(new Image(key)), (int)point.getX(), (int)point.getY());
-	    }
-	}
-    }
-
     public void exitTowerPlace() {
 	towerPlaceMode = false;
     }
@@ -128,11 +95,13 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		towerImage.setLayoutX(-towerImage.getFitWidth()/2);
 		towerImage.setLayoutY(-towerImage.getFitHeight()/2);
+		System.out.println(towerImage.getFitWidth() + " andrew land " + towerImage.getImage().getWidth());
 		if(newTower!= null) {
 		    addTowerImageViewAction(newTower);
 		    towersPlaced.add(newTower);
 		    spriteAdd.getChildren().add(towerImage);
 		    towerPlaceMode = false;
+		    System.out.println("paneWidth: " + spriteAdd.getWidth() + " height: "+ spriteAdd.getHeight());
 		}
 	    }
 	    catch(CannotAffordException e){

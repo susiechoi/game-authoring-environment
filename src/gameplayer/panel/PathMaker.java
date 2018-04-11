@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,9 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
 public class PathMaker {
@@ -24,8 +23,7 @@ public class PathMaker {
 
     private HashMap<String, List<Point2D>> imageMap = new HashMap<String, List<Point2D>>(); //this is passed
 
-    public GridPane populateGrid(HashMap<String, List<Point2D>> map) { //populates grid that is
-
+    public GridPane populateGrid(HashMap<String, List<Point>> map) { //populates grid that is
 	grid = new GridPane();
 	grid.setMaxSize(1000, 750);
 

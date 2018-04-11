@@ -71,7 +71,6 @@ public class PlayState implements GameData {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
 		    Wave currentWave;
-		    System.out.println("HERE");
 		    if (!currentLevel.getWaves(path).isEmpty()) {
 			currentWave = currentLevel.getWaves(path).get(0);
 		    }
@@ -80,8 +79,7 @@ public class PlayState implements GameData {
 		    }
 		    int currentTime = new Double(UNIVERSAL_TIME).intValue();
 		    if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
-			Enemy enemy = currentLevel.getNewEnemy(path);
-			myEnemyManager.addEnemy(path, enemy);
+			currentLevel.getNewEnemy(path);
 		    }
 		    // TODO: remove "magic numbers", improve this to be 3 seconds
 		    // after the wave finished
@@ -100,7 +98,6 @@ public class PlayState implements GameData {
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
-		System.out.println(projectile);
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
 	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
@@ -111,6 +108,12 @@ public class PlayState implements GameData {
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
     }
+
+
+
+    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+    //	myResources -= tower.upgrade(upgradeName);
+    //    }
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);

@@ -31,6 +31,7 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -38,7 +39,6 @@ import frontend.PropertiesReader;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
-
     public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
     public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
     public static final String DEFAULT_IMAGES_PREFIX = "images/";
@@ -48,6 +48,10 @@ public class AuthoringModel implements GameData {
     public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
     public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
     public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
+    public static final String DEFAULT_PATH_START = "images/start.png";
+    public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
+    public static final String DEFAULT_PATH_END = "images/end.png";
+    public static final String DEFAULT_BACKGROUND_IMAGE = "images/grass.png";
     private final String myDefaultName; 
 
     private String myGameName; 
@@ -56,6 +60,7 @@ public class AuthoringModel implements GameData {
     private Map<Integer, Level> myLevels;
     private Tower myDefaultTower;
     private Enemy myDefaultEnemy;
+    private Path myDefaultPath;
     protected Path myPath;
     protected HashMap<String, List<Point>> myImageMap;
 
@@ -73,6 +78,7 @@ public class AuthoringModel implements GameData {
 	setupDefaultLevel();
     }
 
+
     private void setupDefaultSettings() throws MissingPropertiesException {
 	String defaultGameName = myPropertiesReader.findVal(DEFAULT_PROMPTS, "NewGame");
 	int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
@@ -84,8 +90,34 @@ public class AuthoringModel implements GameData {
     private void setupDefaultLevel() {
 	Level firstLevel = new Level(1);
 	firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
-	firstLevel.addEnemy(myDefaultName, new Enemy(myDefaultEnemy));
+	Enemy testEnemy = new Enemy(myDefaultEnemy);
+	firstLevel.addEnemy(myDefaultName, testEnemy);
 	myLevels.put(1, firstLevel);
+	List<Point> dummyPathPoints = new ArrayList<>();
+	dummyPathPoints.add(new Point(10, 10));
+	dummyPathPoints.add(new Point(10, 11));
+	dummyPathPoints.add(new Point(10, 12));
+	HashMap<String, List<Point>> pathImages = new HashMap<>();
+	List<Point> dummyPathStartPoints = new ArrayList<>();
+	dummyPathStartPoints.add(new Point(10, 10));
+	List<Point> dummyPathMiddlePoints = new ArrayList<>();
+	dummyPathMiddlePoints.add(new Point(10, 11));
+	List<Point> dummyPathEndPoints = new ArrayList<>();
+	dummyPathEndPoints.add(new Point(10, 12));
+	pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
+	pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
+	pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
+	try {
+	    makePath(1, new GridPane(), dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
+	}
+	catch(ObjectNotFoundException e) {
+	    //TODO: help!!!
+	    System.out.println("couldn't find object");
+	}
+
+	Wave newWave = new Wave(firstLevel.getPaths().get(0));
+	newWave.addEnemy(testEnemy, 20);
+	firstLevel.addWave(firstLevel.getPaths().get(0), newWave);
     }
 
     /**
@@ -158,9 +190,13 @@ public class AuthoringModel implements GameData {
     //parameters needed to get passed: background image, grid size, location of each image in grid 
 
 
-    public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) {
-	myImageMap = imageCoordinates;
-	myPath = new PathBuilder().construct(level, coordinates); //add new constructor
+    public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	Level currentLevel = levelCheck(level);
+	Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
+	currentLevel.addPath(newPath);
+
+	//		myImageMap = imageCoordinates;
+	//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
     }
 
 
@@ -209,7 +245,6 @@ public class AuthoringModel implements GameData {
 	}
 	return null;
     }
-
 
     public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 	return levelCheck(levelNum).getPaths().get(name-1);
