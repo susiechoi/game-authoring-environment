@@ -8,13 +8,11 @@ import javafx.scene.image.ImageView;
  * and IDs, as well as methods for moving them and checking their intersections with other 
  * objects.
  * 
- * @author Katherine Van Dyk
- * @date 4/3/18
+ * @author Katherine Van Dyk 4/3/18
  * @author Ryan Pond
  * @author Miles Todzo
  * @author Ben Hodgson 4/8/18
  */
-
 public class Sprite  {
 
     private String myName;
@@ -29,15 +27,17 @@ public class Sprite  {
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, String image) {
+    public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image)));
-	myImageView.setFitWidth(50);
-	myImageView.setFitHeight(50);
+	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
+//	myImageView.setFitWidth(50);
+//	myImageView.setFitHeight(50);
 	myImageView.setPreserveRatio(true);
-	myImageView.setFitWidth(50);
-	myImageView.setFitHeight(50);
+//	myImageView.setFitWidth(size);
+//	myImageView.setFitHeight(size);
+	System.out.println(size + " SIZE");
+	//System.out.println(myImageView.getImage().getWidth() + "frick me up");
 	System.out.println(myImageView.getFitWidth()+ " sprite width");
     }
     
@@ -80,18 +80,30 @@ public class Sprite  {
 //    		}
 //    }
     
+    /**
+     * @return Angle of the sprite
+     */
     public double getRotate() {
     		return this.myImageView.getRotate();
     }
     
+    /**
+     * @return X-coordinate of the sprite
+     */
     public double getX() {
     		return this.myImageView.getX();
     }
     
+    /**
+     * @return Y-coordinate of the sprite
+     */ 
     public double getY() {
     		return this.myImageView.getY();
     }
 
+    /**
+     * Sets the shooting sprite's angle to @param rotateVal
+     */
     public void setRotate(double rotateVal) {
     		this.myImageView.setRotate(rotateVal);
     }

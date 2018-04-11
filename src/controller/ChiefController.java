@@ -39,4 +39,5 @@ public class ChiefController {
 	STAGE_MANAGER.switchScene(scene);
     }
 
+
 }

@@ -9,8 +9,8 @@
  */
 
 package authoring;
+import java.awt.Point;
 import java.util.HashMap;
-import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +24,15 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
-
+import xml.AuthoringModelReader;
+import xml.AuthoringModelWriter;
 
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
+	private HashMap<String, List<Point>> myImageMap;
 	private AuthoringModel myModel; 
+
 	
 	public AuthoringController(StageManager stageManager, String languageIn) {
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
@@ -73,11 +76,11 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 */
 	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSpeed,
+							String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed,
 							double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 							double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 		myModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSpeed,
+				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSize, projectileSpeed,
 				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange, 
 				towerValue, towerUpgradeCost, towerUpgradeValue);
 	}
@@ -93,10 +96,13 @@ public class AuthoringController {
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 */
-
-	public void makePath(int name, int level, List<Point2D> coordinates, GridPane grid) throws ObjectNotFoundException {  //pass entire populated gridpane?
-		myModel.makePath(name, level, coordinates, grid); 
+	
+	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) { 
+		myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+		myImageMap = imageCoordinates;
 	}
+
+	
 	public Path getPathFromName(int name, int level) throws ObjectNotFoundException {
 	    return myModel.getPathFromName(name, level);
 	}
@@ -204,6 +210,13 @@ public class AuthoringController {
 	public String getGameName() {
 		return myModel.getGameName(); 
 	}
+	public void setModel(String gameName) {
+	    	AuthoringModelReader reader = new AuthoringModelReader();
+		myModel = reader.createModel(gameName);
+	}
 	
+	public HashMap<String, List<Point>> getGrid() {
+		return myImageMap;
+	}
 }
 

@@ -7,7 +7,7 @@ import javafx.stage.Stage;
  * Use the driver JavaFX library to start the application.
  *
  * @author Ben Hodgson 3/27/18
- *
+ * @author Katherine Van Dyk 4/10/18
  * 
  */
 public class Driver extends Application {  
@@ -23,6 +23,7 @@ public class Driver extends Application {
 	primaryStage.setTitle("IfTrueReturnTrue VOOGASALAD");
 	primaryStage.getIcons().add(new Image("/images/sarahbland.png"));
 	ChiefController controller = new ChiefController(primaryStage);
+
 	controller.start();
     }
 
