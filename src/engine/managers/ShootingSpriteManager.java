@@ -58,10 +58,10 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     /**
      * Moves the projectiles. Goes through the Manager and gets the list of projectiles, and moves them
      */
-    public void moveProjectiles() {
+    public void moveProjectiles(double elapsedTime) {
 	for (ShootingSprites shootingSprite: this.getListOfActive()) {
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
-		projectile.move();
+		projectile.move(elapsedTime);
 	    }
 	}
     }

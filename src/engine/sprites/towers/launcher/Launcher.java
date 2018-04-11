@@ -55,10 +55,11 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-    		this.addToActiveList(myProjectile);
+		Projectile launchedProjectile = new Projectile(myProjectile, target);
+    		this.addToActiveList(launchedProjectile);
     		double radianOffset = Math.atan((target.getX()-shooterX)/(target.getY()-shooterY));
-    		myProjectile.setRotate(radianOffset);
-    		return myProjectile;
+    		launchedProjectile.setRotate(radianOffset);
+    		return launchedProjectile;
     }
     
     public boolean hasReloaded() {
