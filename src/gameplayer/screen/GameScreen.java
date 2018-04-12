@@ -158,7 +158,6 @@ public class GameScreen extends Screen {
 
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
 	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-	System.out.println(placedTower.getImageView().getFitWidth() + " placed tower width ");
 	return placedTower;
     }
 
@@ -175,7 +174,6 @@ public class GameScreen extends Screen {
 
     
     public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-    	System.out.println("Game Screen: " +imageMap);
 	GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
     }
 
