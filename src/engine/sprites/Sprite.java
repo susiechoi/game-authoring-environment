@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
  * @author Miles Todzo
  * @author Ben Hodgson 4/8/18
  */
-public class Sprite  {
+public class Sprite implements FrontEndSprite{
 
     private String myName;
     private ImageView myImageView;

@@ -74,7 +74,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    	double yDifference = myTarget.getY() - this.getY();
 	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
 	    	this.setRotate(Math.toDegrees(angleToRotateRads));
-	    	System.out.println("rotation in rotateImage is " + this.getRotate());
 	}
 	
 	/**
