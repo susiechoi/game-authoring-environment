@@ -13,36 +13,13 @@ import javafx.scene.control.Alert.AlertType;
 
 public class CreatePathScreen extends PathScreen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
-	
-	//private CreatePathPanel panel;
 	private CreatePathGrid grid;
 	private String backgroundImageFileName;
 
 	protected CreatePathScreen(AuthoringView view) {
 		super(view);
-		setGridBackground();
 	}
-
-	private void setGridBackground() {
-		
-		//TODO: panel.getBackgroundButton() fix
-//		Button backgroundButton = (Button) panel.getBackgroundButton();
-//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				FileChooser fileChooser = new FileChooser();
-//				fileChooser.setTitle("View Pictures");
-//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-//				File file = fileChooser.showOpenDialog(new Stage());
-//				backgroundImageFileName = file.toURI().toString();
-//				grid.setBackgroundImage(backgroundImageFileName);
-//			}
-//		});
-	}
-
-	//TODO: fix checkPathConnected - doesn't work for multiple starts, after moving path, or after set sizing
+	
 	private void setGridApplied() {
 		getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -88,7 +65,7 @@ public class CreatePathScreen extends PathScreen {
 
 	@Override
 	public void initializeGridSettings(CreatePathGrid gridIn) {
-		setPathPanel(new CreatePathPanel(getView()));
+		setPathPanel(new CreatePathPanel(getView()), new CreatePathToolBar(getView()));
 		grid = gridIn; 
 		setGridApplied();
 	}
