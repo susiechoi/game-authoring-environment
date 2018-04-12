@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,10 +22,24 @@ import javafx.scene.text.Text;
  */
 public class StartScreen extends AuthoringScreen {
     public static final String DEFAULT_XML_FOLDER = "/SavedModels";
-
+    public static final String DEFAULT_STYLINGS  = "src/styling/CurrentCSS.properties";
+    private AuthoringView myView; 
+    private final List<String> myCSSFiles; 
+    private int currCSSIndex; 
+    
     protected StartScreen(AuthoringView view) {
 	super(view);
+	myView = view; 
+	List<String> css = null;
+	try {
+		css = myView.getPropertiesReader().findVals(DEFAULT_STYLINGS);
+	} catch (MissingPropertiesException e) {
+		myView.loadErrorScreen("NoCSS");
+	} 
+	myCSSFiles = css; 
+	currCSSIndex = 0; 
     }
+    
     @Override
     public Parent makeScreenWithoutStyling() {
 	Text startHeading = new Text();
@@ -45,10 +60,20 @@ public class StartScreen extends AuthoringScreen {
 	editButton.setDisable(true);
 	editButton.setOnAction(e -> {getView().readFromFile(gameChooser.getValue());
 	    getView().goForwardFrom(this.getClass().getSimpleName()+"Edit", gameChooser.getValue());});
+	Button changeCSS = getUIFactory().makeTextButton("cssbutton", getErrorCheckedPrompt("ChangeStyling"));
+	changeCSS.setOnAction(e -> {
+		currCSSIndex++; 
+		if (currCSSIndex > myCSSFiles.size()-1) {
+			currCSSIndex = 0; 
+		}
+		System.out.println("change to "+myCSSFiles.get(currCSSIndex));
+		myView.setCurrentCSS(myCSSFiles.get(currCSSIndex));
+	});
 	vbox.getChildren().add(startHeading);
 	vbox.getChildren().add(newGameButton);
 	vbox.getChildren().add(gameChooser);
 	vbox.getChildren().add(editButton);
+	vbox.getChildren().add(changeCSS);
 	return vbox;
 
     }
