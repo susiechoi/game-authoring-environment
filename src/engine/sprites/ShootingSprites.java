@@ -23,7 +23,7 @@ public abstract class ShootingSprites extends Sprite{
     private int hitCount;
     private int roundScore;
     private ImageIntersecter intersector;
-
+    private List<Sprite> targetsBeingShotAt;
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
      * on the screen
@@ -41,6 +41,7 @@ public abstract class ShootingSprites extends Sprite{
 	//	this.getImageView().setFitWidth(size);
 	myLauncher = launcher;
 	roundScore = 0;
+	targetsBeingShotAt = new ArrayList<>();
     }
     
     /**
@@ -84,13 +85,13 @@ public abstract class ShootingSprites extends Sprite{
     	List<Sprite> deadSprites = new ArrayList<>();
     	hitCount++;
     	if(this.handleCollision(collider)) {
-    		System.out.println("WEEEWOO");
-    		deadSprites.add(this);
+    	//	System.out.println("WEEEWOO");
+    	//	deadSprites.add(this);
     		roundScore += this.getPointValue();
     		hitCount++;
     	}
     	if(!collider.handleCollision(this)) {
-    		deadSprites.add(collider);
+    	//	deadSprites.add(collider);
     	}
 //    	if(!this.intersects((Projectile)collider)) {
 //    		System.out.println("this is good");
@@ -126,7 +127,11 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-	return myLauncher.launch(target, shooterX, shooterY);
+    	if (!targetsBeingShotAt.contains(target)) {
+    		targetsBeingShotAt.add(target);
+    		return myLauncher.launch(target, shooterX, shooterY);
+    	}
+    	return null;
     }
 
     /**

@@ -114,7 +114,7 @@ public class Projectile extends Sprite {
 	 */
 	@Override
 	public boolean handleCollision(Sprite sprite) {
-		System.out.println("collision with projectile and " + sprite);
+		//System.out.println("collision with projectile and " + sprite);
 		return (this.getImageView().getBoundsInParent().intersects(sprite.getImageView().getBoundsInParent()));
 		//return false;
 	}

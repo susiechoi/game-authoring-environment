@@ -30,6 +30,11 @@ public class Level {
     private Map<String, Tower> myTowers;
     private Map<Path, List<Wave>> myWaves;
     private Map<String, Enemy> myEnemies;
+    
+    
+    private int xLoc = 100;
+    private int yLoc = 100;
+    private int numEnemy = 0;
 
     public Level(int number) {
 	myNumber = number;
@@ -66,15 +71,6 @@ public class Level {
 	myPaths.add(path); 
     }
 
-	/**
-	 * Adds an available enemy to the level
-	 * 
-	 * @param name: The unique string name for the tower object
-	 * @param tower: The enemy object to be added
-	 */
-	public void addEnemy(String name, Enemy enemy) {
-		myEnemies.put(name, enemy);
-	}
     /**
      * Returns an unmodifiable list of path objects in the level
      * 
@@ -220,8 +216,10 @@ public class Level {
     public Enemy getNewEnemy(Path path) {
 	Wave currentWave = myWaves.get(path).get(0);
 	Enemy waveEnemy = currentWave.getEnemy();
-	if (waveEnemy != null)
-	waveEnemy.place(200, 200);
+	if (waveEnemy != null) {
+	waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
+	numEnemy++;
+	}
 	return waveEnemy;
     }
 
