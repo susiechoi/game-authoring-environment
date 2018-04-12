@@ -20,6 +20,11 @@ import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * Class to create the Screen for Path authoring
+ * @author Erik Riis
+ *
+ */
 public class CreatePathScreen extends PathScreen {
 
 	private String backgroundImageFileName;
@@ -78,12 +83,12 @@ public class CreatePathScreen extends PathScreen {
 	}
 
 	@Override
-	public void initializeGridSettings(CreatePathGrid gridIn) {
+	protected void initializeGridSettings(CreatePathGrid gridIn) {
 		setPathPanel(myPathPanel, myPathToolBar);
 		setGridApplied(gridIn);
 	}
 	@Override
-	public void setSpecificUIComponents() {
+	protected void setSpecificUIComponents() {
 	    setGridUIComponents(myPathPanel, myPathToolBar);
 	    ImageView trashImage = myPathPanel.makeTrashImage();
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {

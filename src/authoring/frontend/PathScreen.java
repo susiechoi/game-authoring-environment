@@ -17,6 +17,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * Abstract class representing Screens that need to display the Path in some form (i.e. path
+ * editing or Wave selecting). Dependent on CreatePathGrid to make the grid portion of the
+ * path and on PathPanels/PathToolBars to correctly create the elemnts that make up the screen.
+ * @author Sarahbland
+ *
+ */
 public abstract class PathScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
@@ -52,8 +59,8 @@ public abstract class PathScreen extends AdjustScreen {
 		return pathRoot; 	
 	}
 
-	public abstract void initializeGridSettings(CreatePathGrid grid);
-	public abstract void setSpecificUIComponents();
+	protected abstract void initializeGridSettings(CreatePathGrid grid);
+	protected abstract void setSpecificUIComponents();
 	protected CreatePathGrid getGrid() {
 	    return grid;
 	}

@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 
@@ -55,7 +56,12 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myLauncherSpeed = 0.0;
 		myLauncherRange = 0.0;
 	}
-
+	
+	/**
+	 * Populates screen with ComboBoxes/TextFields/Buttons/Sliders/Selectors needed to 
+	 * fully specify a Tower object
+	 * @see authoring.frontend.AdjustNewOrExistingScreen#populateScreenWithFields()
+	 */
 	@Override
 	public Parent populateScreenWithFields() {		
 		VBox vb = new VBox(); 
