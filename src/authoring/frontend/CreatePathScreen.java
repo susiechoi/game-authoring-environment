@@ -2,6 +2,7 @@ package authoring.frontend;
 
 
 import java.awt.Point;
+import java.io.File;
 import java.util.List;
 
 import authoring.frontend.exceptions.ObjectNotFoundException;
@@ -9,19 +10,32 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class CreatePathScreen extends PathScreen {
 
-	private CreatePathGrid grid;
 	private String backgroundImageFileName;
+	private CreatePathPanel myPathPanel;
+	private CreatePathToolBar myPathToolBar;
+	
 
-	protected CreatePathScreen(AuthoringView view) {
+	public CreatePathScreen(AuthoringView view) {
 		super(view);
+		myPathPanel = new CreatePathPanel(view);
+		myPathToolBar = new CreatePathToolBar(view);
 	}
 	
-	private void setGridApplied() {
-		getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
+	
+	private void setGridApplied(CreatePathGrid grid) {
+		myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				List<Point> startCoords = grid.getStartingPosition();
@@ -65,8 +79,66 @@ public class CreatePathScreen extends PathScreen {
 
 	@Override
 	public void initializeGridSettings(CreatePathGrid gridIn) {
-		setPathPanel(new CreatePathPanel(getView()), new CreatePathToolBar(getView()));
-		grid = gridIn; 
-		setGridApplied();
+		setPathPanel(myPathPanel, myPathToolBar);
+		setGridApplied(gridIn);
 	}
+	@Override
+	public void setSpecificUIComponents() {
+	    setGridUIComponents(myPathPanel, myPathToolBar);
+	    ImageView trashImage = myPathPanel.makeTrashImage();
+		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				if (event.getDragboard().hasImage()) {
+					event.acceptTransferModes(TransferMode.ANY);
+				}
+			}
+		});
+
+		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				event.acceptTransferModes(TransferMode.ANY);
+				Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasImage()) {
+					success = true;
+//					pathGrid.getChildren().remove(grid.getDraggableImage());
+				}
+				event.setDropCompleted(success);
+				event.consume();
+			}
+		});
+
+		Button backgroundButton = (Button) myPathToolBar.getBackgroundButton();
+		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				getGrid().setBackgroundImage(file.toURI().toString());
+			}
+		});
+		
+		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPathImage());
+		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getStartImage());
+		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getEndImage());
+	}
+	
+	private void setImageOnButtonPressed(Button button, DraggableImage image) {
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				image.setNewImage(new Image(file.toURI().toString()));
+			}
+		});
+	}
+
+
 }

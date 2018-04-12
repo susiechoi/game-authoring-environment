@@ -14,6 +14,7 @@ public class PathMaker {
 
 	private GridPane grid;
 
+
 	public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage) {
 		System.out.println("backgroundimage: " +backgroundImage);
 		grid = new GridPane();
