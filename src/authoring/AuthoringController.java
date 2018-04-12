@@ -102,7 +102,7 @@ public class AuthoringController {
 		System.out.println("IMG COORDS" + imageCoordinates);
 	    
 	    
-	    	myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+	    	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage); 
 		System.out.println(imageCoordinates);
 		myImageMap = imageCoordinates;
 	}

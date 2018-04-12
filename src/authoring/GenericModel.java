@@ -1,6 +1,7 @@
 package authoring;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
 
 /**
  * 
@@ -14,7 +15,7 @@ public class GenericModel {
     public static final String DEFAULT = "default";
     private AuthoringModel myModel;
     
-    public GenericModel() {
+    public GenericModel() throws ObjectNotFoundException {
 	try {
 		myModel = new AuthoringModel();
 	} catch (MissingPropertiesException e) {

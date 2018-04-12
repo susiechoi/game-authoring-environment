@@ -62,6 +62,7 @@ public class Level {
 
 	// TODO 
 	public void addPath(Path path) {
+		System.out.println("HERERRRERERE: " +path);
 		myPaths.add(path); 
 	}
 
@@ -256,7 +257,6 @@ public class Level {
 		}
 		return (myWaves.get(path).size() > waveNumber);
 	}
-
 
 
 	public Map<String, List<Point>> getLevelPathMap(){
