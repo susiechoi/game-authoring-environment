@@ -34,10 +34,8 @@ public class WavePanel extends PathPanel{
 			myPathNumber = 1;
 		}
 
-		//myPathString = grid.getPathName();
-		if(waveNumber.equals("Default")) {
-			waveNumber = "1";
-		}
+			
+			waveNumber = getView().getHighestWaveNumber((Integer)(getView().getLevel() + 1)).toString();
 		myWaveNumber = waveNumber;
 		setUpPanel();
 	}
@@ -65,18 +63,22 @@ public class WavePanel extends PathPanel{
 		Text enemyDropdownText = new Text(getView().getErrorCheckedPrompt("ChooseEnemy"));
 		myNumberTextField = new TextField();
 		//myNumberTextField.setText(enemyMap.get(myEnemyDropdown.getValue()).toString());
-		HBox sizingButtons = makeSizingButtons();
+//		HBox sizingButtons = makeSizingButtons();
 		Text textFieldPrompt = new Text(getView().getErrorCheckedPrompt("ChooseEnemyNumber"));
 		//HBox textFieldPrompted = getUIFactory().addPromptAndSetupHBox("", myNumberTextField, "ChooseEnemyNumber");
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 		applyButton.setOnAction(e -> {
 			errorcheckResponses();
+			System.out.println("addin a wave");
+			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
+			System.out.println("myWaveNumber" + myWaveNumber);
 			getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), Integer.parseInt(myWaveNumber), 
 					myEnemyDropdown.getValue(), myEnemyNumber);
+			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
 		});
 
-		pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField,sizingButtons, backButton, applyButton);
+		pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField, backButton, applyButton);
 		myRoot.getChildren().add(pseudoRoot);
 		myRoot.getStyleClass().add("rootPanel");
 	}
