@@ -76,9 +76,9 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-		Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
-    		this.addToActiveList(launchedProjectile);
-    		return launchedProjectile;
+    	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
+    	this.addToActiveList(launchedProjectile);
+    	return launchedProjectile;
     }
     
     /**
@@ -88,7 +88,7 @@ public class Launcher extends Manager<Projectile>{
     public boolean hasReloaded() {
     	long currTime = System.nanoTime();
      	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
+     	if(timeSinceLastShot >= myFireRate.getProperty()) {
      		timeLastFired = currTime;
      		return true;
      	}

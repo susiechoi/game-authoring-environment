@@ -96,25 +96,25 @@ public class GamePanel extends Panel{
 		ImageView towerImage = tower.getImageView();
 		towerImage.setOnMouseClicked((args) ->GAME_SCREEN.towerClickedOn(tower));
 	}
+	
+    public void addSprite(FrontEndSprite sprite) {
+	ImageView spriteImage = sprite.getImageView();
+	spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
+	spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
+	spriteAdd.getChildren().add(sprite.getImageView());
+    }
 
-	public void addSprite(FrontEndSprite sprite) {
-		ImageView spriteImage = sprite.getImageView();
-		spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
-		spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
-		spriteAdd.getChildren().add(sprite.getImageView());
-	}
+    public void removeSprite(FrontEndSprite sprite) {
+	spriteAdd.getChildren().remove(sprite.getImageView());
+    }
 
-	public void removeSprite(FrontEndSprite sprite) {
-		spriteAdd.getChildren().remove(sprite.getImageView());
-	}
+    public void removeTower(FrontEndTower tower) {
+	spriteAdd.getChildren().remove(tower.getImageView());
+    }
 
-	public void removeTower(FrontEndTower tower) {
-		spriteAdd.getChildren().remove(tower.getImageView());
-	}
-
-	public void exitTowerPlace() {
-		towerPlaceMode = false;
-	}
+    public void exitTowerPlace() {
+	towerPlaceMode = false;
+    }
 
 	public void handleMouseInput(double x, double y) {
 		if(towerPlaceMode) {
@@ -123,8 +123,6 @@ public class GamePanel extends Panel{
 				FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
 				ImageView towerImage = newTower.getImageView();
 				Image towerImageActual = towerImage.getImage();
-
-				System.out.println(towerImage.getFitWidth() + " fitWifht/hgith " + towerImage.getFitHeight());
 
 				towerImage.setLayoutX(-towerImageActual.getWidth()/2);
 				towerImage.setLayoutY(-towerImageActual.getHeight()/2);

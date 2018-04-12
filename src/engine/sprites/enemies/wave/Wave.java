@@ -60,13 +60,15 @@ public class Wave {
      * @return Enemy: an enemy object
      */
     public Enemy getEnemy() {
+    	
 	for (Entry<Enemy, Integer> entry : myEnemies.entrySet()) {
 	    if (entry.getValue() > 0) {
 		Enemy retEnemy = entry.getKey();
 		decrementEnemyCount(retEnemy);
-		return retEnemy;
+		return new Enemy(retEnemy);
 	    }
 	}
+	//.out.println("WE ARE RETURNING NULL 12345678910111211314151 " + myEnemies.size());
 	return null;
     }
     
