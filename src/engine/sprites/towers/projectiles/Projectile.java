@@ -52,18 +52,18 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public void move(double elapsedTime) {
 	    	myTarget.place(100, 100);
 	    	rotateImage();
-	    	System.out.println("speed is " + mySpeed);
+	    //	System.out.println("speed is " + mySpeed);
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-	    	System.out.println("total distance is " + totalDistanceToMove);
-	    	System.out.println("rotation is " + this.getRotate());
+	    //	System.out.println("total distance is " + totalDistanceToMove);
+	  //  	System.out.println("rotation is " + this.getRotate());
 		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		
 		
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
-		System.out.println("new X is " + this.getX());
-		System.out.println("new Y is " + this.getY());
+	//	System.out.println("new X is " + this.getX());
+	//	System.out.println("new Y is " + this.getY());
 	}
 	
 	/**
