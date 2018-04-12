@@ -109,9 +109,13 @@ public class Projectile extends Sprite {
 	public double getSize() {
 		return mySize; 
 	}
-	
+	/**
+	 * @return true if intersect
+	 */
 	@Override
 	public boolean handleCollision(Sprite sprite) {
-		return this.getImageView().getBoundsInParent().intersects(sprite.getImageView().getBoundsInParent());
+		System.out.println("collision with projectile and " + sprite);
+		return (this.getImageView().getBoundsInParent().intersects(sprite.getImageView().getBoundsInParent()));
+		//return false;
 	}
 }

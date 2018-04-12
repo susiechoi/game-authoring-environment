@@ -108,10 +108,16 @@ public class PlayState implements GameData {
 			UNIVERSAL_TIME+=elapsedTime;
 			List<Sprite> toBeRemoved = new ArrayList<>();
 			toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+//			for (Sprite sprite: toBeRemoved) {
+//				System.out.println(sprite +" "+sprite.getName() + " is in ToBeREmoved");
+//				
+//			}
+			//myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 			//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 			myTowerManager.moveProjectiles(elapsedTime);
 			myTowerManager.moveTowers();
 			for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
+				System.out.println("shooting");
 				myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 			//	System.out.println("added to med");
 			}

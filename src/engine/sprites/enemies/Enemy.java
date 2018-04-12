@@ -117,8 +117,9 @@ public class Enemy extends ShootingSprites{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	myHealth.loseHealth(collider.getDamage());
-	return myHealth.isAlive();
+    	return false;
+//	myHealth.loseHealth(collider.getDamage());
+//	return myHealth.isAlive();
     }
 
     private ImageIntersecter getIntersecter() {
