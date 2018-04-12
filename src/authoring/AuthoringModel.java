@@ -399,6 +399,12 @@ public class AuthoringModel implements GameData {
 		else return (String) fieldValue; 
 	}
 
+	/**
+	 * Returns Level object corresponding to an integer level number
+	 * @param level is number of level desired
+	 * @return Level object of that number
+	 * @throws ObjectNotFoundException
+	 */
 	public Level levelCheck(int level) throws ObjectNotFoundException {
 		Level currentLevel = myLevels.get(level);
 		if (currentLevel == null) {
@@ -407,6 +413,10 @@ public class AuthoringModel implements GameData {
 		return currentLevel;
 	}
 
+	/**
+	 * Returns a list of Level objects corresponding to all Levels that have been previously made
+	 * @return a list of all Levels currently made in this game
+	 */
 	public List<Level> allLevels() {
 		List<Level> ret = new ArrayList<Level>();
 		for(Level level : myLevels.values()) {
@@ -510,6 +520,10 @@ public class AuthoringModel implements GameData {
 	//		return newLevelNumber;
 	//	}
 
+	/**
+	 * Autogenerates a new level based on the previous Level's settings (enemies, towers, etc.)
+	 * @return int corresponding to level number of level generated
+	 */
 	public int autogenerateLevel() {
 		int newLevelNumber = myLevels.size()+1;
 		Level copiedLevel = myLevels.get(myLevels.size());
@@ -517,15 +531,27 @@ public class AuthoringModel implements GameData {
 		return newLevelNumber; 
 	}
 
+	/**
+	 * Sets the game name of this game so it can be saved/loaded correctly
+	 * @param gameName is new name of this game
+	 */
 	public void setGameName(String gameName) {
 		myGameName = gameName; 
 		mySettings.setGameName(myGameName);
 	}
 
+	/**
+	 * @return String name of this game
+	 */
 	public String getGameName() {
 		return myGameName; 
 	}
 
+	/**
+	 * Returns a Map of String image names to Lists of points where those images should
+	 * be found in the path
+	 * @return Map of image names to Point lists
+	 */
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}

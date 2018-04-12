@@ -12,6 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 
+/**
+ * Class to create the tool bar component of the path authoring screen.
+ * @author Erik Riis
+ *
+ */
+
 public class CreatePathToolBar extends PathToolBar {
 
    // public static final int PANEL_PATH_SIZE = 90;
@@ -30,7 +36,7 @@ public class CreatePathToolBar extends PathToolBar {
     }
 
 
-    public void makePanel() {
+    protected void makePanel() {
 	myImageButtons = new ArrayList<>();
 	backgroundButton = getUIFactory().makeTextButton("", "Choose Background Image");
 
@@ -65,19 +71,19 @@ public class CreatePathToolBar extends PathToolBar {
 //	return hb;
 //    }
 
-    public Button getPathImageButton() {
+    protected Button getPathImageButton() {
 	return pathImageChooser;
     }
 
-    public Button getStartImageButton() {
+    protected Button getStartImageButton() {
 	return startImageChooser;
     }
 
-    public Button getEndImageButton() {
+    protected Button getEndImageButton() {
 	return endImageChooser;
     }
 
-    public Button getBackgroundButton() {
+    protected Button getBackgroundButton() {
 	return backgroundButton;
     }
 
