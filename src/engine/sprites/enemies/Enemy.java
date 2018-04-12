@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
+import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
@@ -22,7 +23,7 @@ import javafx.scene.Node;
  * @date 4/8/18
  *
  */
-public class Enemy extends ShootingSprites{
+public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     private String myName; 
     private HealthProperty myHealth;
