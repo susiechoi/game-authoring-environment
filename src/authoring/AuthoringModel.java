@@ -473,7 +473,8 @@ public class AuthoringModel implements GameData {
 	//    }
 
 	/**
-	 * Adds a new level to the authored game
+	 * Adds a new level to the authored game, based on the previous level that the user has created
+	 * (or the default level if the user has not customized any level) 
 	 */
 	public int addNewLevel() {
 		int newLevelNumber = autogenerateLevel(); 
@@ -484,7 +485,7 @@ public class AuthoringModel implements GameData {
 
 	/**
 	 * Returns a list of level numbers as strings currently in the authored game
-	 * 
+	 * Useful in displaying the levels available for edit by the user
 	 * @return List<String>: A list of level numbers as strings
 	 */
 	public List<String> getLevels() {
@@ -510,6 +511,12 @@ public class AuthoringModel implements GameData {
 	//		return newLevelNumber;
 	//	}
 
+	/**
+	 * Auto generates a new level for the authored game based on the last level created.
+	 * Placed in the levels map. 
+	 * 
+	 * @return int: the number of the new, auto generated level
+	 */
 	public int autogenerateLevel() {
 		int newLevelNumber = myLevels.size()+1;
 		Level copiedLevel = myLevels.get(myLevels.size());
