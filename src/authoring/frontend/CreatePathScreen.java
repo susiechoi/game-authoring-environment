@@ -22,9 +22,9 @@ import javafx.stage.Stage;
 
 public class CreatePathScreen extends PathScreen {
 
-	private String backgroundImageFileName;
 	private CreatePathPanel myPathPanel;
 	private CreatePathToolBar myPathToolBar;
+	private String myBackgroundImage = "Images/generalbackground.jpg";
 	
 
 	public CreatePathScreen(AuthoringView view) {
@@ -50,7 +50,7 @@ public class CreatePathScreen extends PathScreen {
 					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
 						try {
-							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName);
+							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage);
 						} catch (ObjectNotFoundException e1) {
 							// TODO Auto-generated catch block
 						}
@@ -82,6 +82,7 @@ public class CreatePathScreen extends PathScreen {
 		setPathPanel(myPathPanel, myPathToolBar);
 		setGridApplied(gridIn);
 	}
+	
 	@Override
 	public void setSpecificUIComponents() {
 	    setGridUIComponents(myPathPanel, myPathToolBar);
@@ -117,7 +118,8 @@ public class CreatePathScreen extends PathScreen {
 				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
 				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 				File file = fileChooser.showOpenDialog(new Stage());
-				getGrid().setBackgroundImage(file.toURI().toString());
+				myBackgroundImage = file.toURI().toString();
+				getGrid().setBackgroundImage(myBackgroundImage);
 			}
 		});
 		

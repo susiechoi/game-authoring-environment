@@ -19,7 +19,7 @@ public class PathMaker {
 		System.out.println("backgroundimage: " +backgroundImage);
 		grid = new GridPane();
 		grid.setMaxSize(1020, 650);
-		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
+		grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
 		setGridConstraints(grid);
 		addImagesToGrid(map);
 		return grid;

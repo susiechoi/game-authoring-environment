@@ -1,29 +1,20 @@
 package authoring.frontend;
 
-import java.io.File;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public abstract class PathScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
 	private StackPane pathRoot;
-	private GridPane pathGrid;
-	private CreatePathGrid grid;
+	protected GridPane pathGrid;
+	protected CreatePathGrid grid;
 
 	protected PathScreen(AuthoringView view) {	
 		super(view);
@@ -79,8 +70,29 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			}
 		});
-
 		
+//		ImageView trashImage = panel.getPanel();
+//		trashImage.getStyleClass().add("img-view");
+//		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+//			public void handle(DragEvent event) {
+//				if (event.getDragboard().hasImage()) {
+//					event.acceptTransferModes(TransferMode.ANY);
+//				}
+//			}
+//		});
+//
+//		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+//			public void handle(DragEvent event) {
+//				event.acceptTransferModes(TransferMode.ANY);
+//				Dragboard db = event.getDragboard();
+//				boolean success = false;
+//				if (db.hasImage()) {
+//					success = true;
+//				}
+//				event.setDropCompleted(success);
+//				event.consume();
+//			}
+//		});	
 	}
 
 	@Override

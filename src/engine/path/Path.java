@@ -21,7 +21,7 @@ public class Path {
 	private Map<String, List<Point>> myPathMap;
 
 	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
-		System.out.println("Path: " +imageCoordinates);
+		System.out.println("HERE: " +backgroundImage);
 		myCoordinates = coordinates;
 		pathIndex = 0;
 		currentPosition = myCoordinates.get(pathIndex);

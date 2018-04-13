@@ -64,6 +64,7 @@ public class AuthoringModel implements GameData {
 	protected String myBackgroundImage = new String();
 	protected List<Point> myPathCoordinates = new ArrayList<Point>();
 
+	
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
 		myPropertiesReader = new PropertiesReader();
@@ -95,18 +96,13 @@ public class AuthoringModel implements GameData {
 		firstLevel.addEnemy(myDefaultName, testEnemy);
 //		firstLevel.addPath(myDefaultPath);
 		try {
-			makePath(1, myPathCoordinates, myImageMap, DEFAULT_BACKGROUND_IMAGE);
+			makePath(1, myPathCoordinates, myImageMap, myBackgroundImage);
 		}
 		catch(ObjectNotFoundException e) {
 			//TODO: help!!!
 			System.out.println("couldn't find object");
 		}
 		myLevels.put(1, firstLevel);
-
-
-//		Wave newWave = new Wave(firstLevel.getPaths().get(0));
-//		newWave.addEnemy(testEnemy, 20);
-//		firstLevel.addWave(firstLevel.getPaths().get(0), newWave);
 	}
 
 	/**
@@ -142,6 +138,7 @@ public class AuthoringModel implements GameData {
 			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed, 
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
+		System.out.println("MAKE TOWER HAS BEEN CALLED");
 		Level currentLevel = levelCheck(level);
 		if (currentLevel.containsTower(name) && newObject) {
 			throw new NoDuplicateNamesException(name);
@@ -184,10 +181,12 @@ public class AuthoringModel implements GameData {
 		myBackgroundImage = backgroundImage;
 		myPathCoordinates = coordinates;
 		
+		System.out.println("BACKGROUND: " +myBackgroundImage);
 		
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
 		currentLevel.addPath(newPath);
+
 	}
 
 
@@ -431,6 +430,10 @@ public class AuthoringModel implements GameData {
 		dummyPathStartPoints.add(new Point(2, 2));
 		List<Point> dummyPathMiddlePoints = new ArrayList<>();
 		dummyPathMiddlePoints.add(new Point(2, 3));
+				dummyPathMiddlePoints.add(new Point(3, 3));
+				dummyPathMiddlePoints.add(new Point(4, 3));
+				dummyPathMiddlePoints.add(new Point(5, 3));
+				dummyPathMiddlePoints.add(new Point(6, 3));
 		List<Point> dummyPathEndPoints = new ArrayList<>();
 		dummyPathEndPoints.add(new Point(2, 4));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
