@@ -46,7 +46,6 @@ public class CreatePathScreen extends PathScreen {
 					alert.showAndWait();
 				}
 				for (Point point: startCoords) {
-					System.out.println(point);
 					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
 						try {
@@ -55,7 +54,6 @@ public class CreatePathScreen extends PathScreen {
 							// TODO Auto-generated catch block
 						}
 					} else {
-						System.out.println("FALSE");
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Path Cutomization Error");
 						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");

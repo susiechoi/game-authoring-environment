@@ -138,7 +138,6 @@ public class AuthoringModel implements GameData {
 			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed, 
 			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
 			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-		System.out.println("MAKE TOWER HAS BEEN CALLED");
 		Level currentLevel = levelCheck(level);
 		if (currentLevel.containsTower(name) && newObject) {
 			throw new NoDuplicateNamesException(name);
@@ -180,8 +179,6 @@ public class AuthoringModel implements GameData {
 		myImageMap = imageCoordinates;
 		myBackgroundImage = backgroundImage;
 		myPathCoordinates = coordinates;
-		
-		System.out.println("BACKGROUND: " +myBackgroundImage);
 		
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
@@ -335,7 +332,6 @@ public class AuthoringModel implements GameData {
 				if (fieldSimpleString.equals(attribute)) {
 					aField.setAccessible(true);
 					fieldValue = aField.get(mySettings);
-					System.out.println(fieldValue);
 					break; 
 				}
 			}
@@ -500,7 +496,5 @@ public class AuthoringModel implements GameData {
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}
-
-
 }
 

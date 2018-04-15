@@ -16,7 +16,6 @@ public class PathMaker {
 
 
 	public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage) {
-		System.out.println("backgroundimage: " +backgroundImage);
 		grid = new GridPane();
 		grid.setMaxSize(1020, 650);
 		grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 

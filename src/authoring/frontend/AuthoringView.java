@@ -48,7 +48,8 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private Map<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
+	private GridPane myGrid = new GridPane();
 	private AuthoringModel myModel;
 	private BooleanProperty myCSSChanged;
 
@@ -80,7 +81,7 @@ public class AuthoringView extends View {
 	}
 
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new StartScreen(this)).getScreen());
+		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
 	}
 
 	@Override
@@ -127,16 +128,13 @@ public class AuthoringView extends View {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 			Class<?> clazz = Class.forName(nextScreenClass);
-			System.out.println("next class: " + nextScreenClass);
 			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 			if(constructor.getParameterTypes().length == 2) {
-				System.out.println("our name "+name);
 				if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
 					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
 				else {
-				    	System.out.println("HERE");
 					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 					myStageManager.switchScreen(nextScreen.getScreen());
 				}
@@ -200,10 +198,10 @@ public class AuthoringView extends View {
 	}
 
 	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
-	    	System.out.println("View:" +imageCoordinates);
-	    	myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
-//	    	System.out.println("After view:" + myModel.allLevels().get(0).getLevelPathMap());
 		myImageMap = imageCoordinates;
+		myGrid = grid;
+		System.out.println(myGrid.getChildren());
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
 	}
 
 
@@ -316,7 +314,6 @@ public class AuthoringView extends View {
 	}
 	public void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
-		System.out.println("SAVING" + myModel.getGameName());
 		writer.write(myModel, myModel.getGameName());
 	}
 
@@ -324,9 +321,9 @@ public class AuthoringView extends View {
 	    myController.setModel(name);
 	}
 	
-
-	public Map<String, List<Point>> getImageCoordinates() {
-		return myImageMap;
+	
+	public GridPane getPathGrid() {
+		return myGrid;
 	}
 	
 	public BooleanProperty cssChangedProperty() {

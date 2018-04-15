@@ -50,8 +50,6 @@ public class MainScreen extends Screen {
 		.loadInstructionScreen();
 	    } catch (MissingPropertiesException e) {
 		// TODO Auto-generated catch block
-		System.out.println("Critical error, could not create PlayController "
-			+ "on line 49 in MainScreen.java");
 		e.printStackTrace();
 	    }
 	});

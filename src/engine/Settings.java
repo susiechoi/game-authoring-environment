@@ -10,7 +10,6 @@ public class Settings {
 		myGameName = gameName; 
 		myStartingHealth = startingHealth;
 		myStartingMoney = starting$; 
-		System.out.println("settings obj made "+gameName+" "+startingHealth+" "+starting$);
 	}
 	
 	public void setGameName(String gameName) {

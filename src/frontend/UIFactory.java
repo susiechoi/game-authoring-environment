@@ -166,9 +166,7 @@ public class UIFactory {
 
 		    File file = fileChooser.showOpenDialog(new Stage());
 		    file.getAbsolutePath();
-		    System.out.println("here");
 		    File fileCopy = new File("images/" + imageName + extension);
-		    System.out.println("not here");
 		    try{
 
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);

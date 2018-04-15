@@ -134,7 +134,6 @@ public class Mediator {
 	 * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
 	 */
 	public void addSpriteToScreen(FrontEndSprite sprite) {
-		System.out.println("adding sprite to screen " + sprite.getClass());
 		myScreenManager.display(sprite);
 	}
 
@@ -249,7 +248,6 @@ public class Mediator {
 	}
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-		System.out.println("Mediator background: " +backgroundImageFilePath);
 		myScreenManager.setPath(imageMap, backgroundImageFilePath);
 	}
 

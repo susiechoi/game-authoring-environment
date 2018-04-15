@@ -62,8 +62,6 @@ public class PlayState implements GameData {
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
-	System.out.print("Available towers: ");
-	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
@@ -102,7 +100,6 @@ public class PlayState implements GameData {
 	    myTowerManager.moveTowers();
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-		System.out.println("added to med");
 	    }
 //	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
 //		myMediator.addSpriteToScreen((FrontEndSprite)projectile);

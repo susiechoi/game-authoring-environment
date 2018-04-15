@@ -32,7 +32,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		setConstants(); 
 		mySelectedObjectName = selectedObjectName; 
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
-//		System.out.println(mySelectedObjectName+" should be nothing ");
 	}
 
 	private void setConstants() {

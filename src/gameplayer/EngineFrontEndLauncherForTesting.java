@@ -33,7 +33,6 @@ public class EngineFrontEndLauncherForTesting extends Application {
 
 	//manager.loadInstructionScreen();
 	ChangeListener<Number> listener = (observable, oldVal, newVal)-> {
-	    System.out.println("ListenerTriggered");
 //	    manager.loadInstructionScreen() ;
 	};
 
@@ -55,7 +54,6 @@ public class EngineFrontEndLauncherForTesting extends Application {
 	//mediator.test();
 	//test = test+1;
 	//mediator.test();
-	//System.out.println(test);
 	//test = test+1;
 	//manager.triggerTestPlus();
     }

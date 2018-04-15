@@ -37,10 +37,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
 	    myTarget = target;
 	    mySpeed = 300;
-	    System.out.println("target x is " + myTarget.getX());
 	    this.place(shooterX, shooterY);
-	    System.out.println("Xorig is :" + this.getX());
-	    System.out.println("Yorig is : " + this.getY());
 	    this.rotateImage();
 	    
 	    myTarget = target;
@@ -52,18 +49,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public void move(double elapsedTime) {
 	    	myTarget.place(100, 100);
 	    	rotateImage();
-	    	System.out.println("speed is " + mySpeed);
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-	    	System.out.println("total distance is " + totalDistanceToMove);
-	    	System.out.println("rotation is " + this.getRotate());
 		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		
 		
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
-		System.out.println("new X is " + this.getX());
-		System.out.println("new Y is " + this.getY());
 	}
 	
 	/**
@@ -74,7 +66,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    	double yDifference = myTarget.getY() - this.getY();
 	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
 	    	this.setRotate(Math.toDegrees(angleToRotateRads));
-	    	System.out.println("rotation in rotateImage is " + this.getRotate());
 	}
 	
 	/**

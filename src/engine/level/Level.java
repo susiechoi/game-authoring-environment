@@ -62,7 +62,6 @@ public class Level {
 
 	// TODO 
 	public void addPath(Path path) {
-		System.out.println("HERERRRERERE: " +path);
 		myPaths.add(path); 
 	}
 
@@ -83,7 +82,6 @@ public class Level {
 	 * @param tower: The tower object to be added
 	 */
 	public void addTower(String name, Tower tower) {
-		System.out.println(tower.getImageView().getFitWidth() + " level tower width");
 		myTowers.put(name, tower);
 	}
 
@@ -160,7 +158,6 @@ public class Level {
 	public void addWave(Path path, Wave wave) {
 		if(myWaves.containsKey(path)) {
 			List<Wave> waves = myWaves.get(path);
-			System.out.println("is waves null?" + path == null);
 			waves.add(wave);
 		}
 		else {
