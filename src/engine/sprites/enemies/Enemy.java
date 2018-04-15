@@ -48,7 +48,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myDamage = damage;
 	myHealthImpact = myDamage.getProperty();
 	myValue = value;
-	myIntersecter = new ImageIntersecter(this.getImageView()); 
+	myIntersecter = new ImageIntersecter(this); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
     }
