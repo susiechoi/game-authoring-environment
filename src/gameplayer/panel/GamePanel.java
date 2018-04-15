@@ -27,6 +27,7 @@ public class GamePanel extends Panel{
     private boolean towerPlaceMode = false;
     private List<FrontEndTower> towersPlaced;
     private Pane spriteAdd;
+    private Boolean towerClick = false;
 
     //TODO changes this to be passed from mediator
     private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
@@ -97,7 +98,10 @@ public class GamePanel extends Panel{
 
     private void addTowerImageViewAction(FrontEndTower tower) {
 	ImageView towerImage = tower.getImageView();
-	towerImage.setOnMouseClicked((args) ->GAME_SCREEN.towerClickedOn(tower));
+	towerImage.setOnMouseClicked((args) ->{
+	    GAME_SCREEN.towerClickedOn(tower);
+	    towerClick = true;
+	});
     }
 
     public void addSprite(FrontEndSprite sprite) {
@@ -140,6 +144,10 @@ public class GamePanel extends Panel{
 		//GameScreen popup for cannot afford
 	    }
 	}
+	else if(!towerClick) {
+	    GAME_SCREEN.blankGamePanelClick();
+	}
+	towerClick = false;
     }
 }
 

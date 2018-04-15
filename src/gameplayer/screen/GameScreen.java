@@ -166,6 +166,13 @@ public class GameScreen extends Screen {
 	TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 	displayPane.getChildren().clear();
 	displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
+	gamePane.setBottom(UPGRADE_PANEL.getPanel());
+    }
+    
+    public void blankGamePanelClick() {
+	gamePane.setBottom(null);
+	displayPane.getChildren().clear();
+	displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
     }
 
     public void sellTower(FrontEndTower tower) {
