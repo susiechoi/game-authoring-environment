@@ -10,7 +10,6 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Class for tower object in game. Implements Sprite methods.

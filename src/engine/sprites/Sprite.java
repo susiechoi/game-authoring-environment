@@ -1,5 +1,7 @@
 package engine.sprites;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,8 +18,13 @@ import javafx.scene.image.ImageView;
 public class Sprite implements FrontEndSprite{
 
     private String myName;
-    private ImageView myImageView;
     private String myImageString;
+    private double myX;
+    private double myY;
+    private double myRotate;
+    @XStreamOmitField
+    private ImageView myImageView;
+  
 
 
     /**
@@ -30,8 +37,8 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
-	myImageView.setPreserveRatio(true);
+	//myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
+	//myImageView.setPreserveRatio(true);
 
     }
     
@@ -50,16 +57,22 @@ public class Sprite implements FrontEndSprite{
      * @return ImageView representing game object's image
      */
     public ImageView getImageView() { 
-	return myImageView;
+	ImageView imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myImageString), 50, 50, true, true));
+	imageView.setX(myX);
+	imageView.setY(myY);
+	imageView.setRotate(myRotate);
+	imageView.setPreserveRatio(true);
+	return imageView;
     }
     
+    @Deprecated
     public void setImage(Image image) {
 	myImageView  = new ImageView(image);
     }
     
     public void place(double newX, double newY) {
-	myImageView.setX(newX);
-	myImageView.setY(newY);
+	setX(newX);
+	setY(newY);
     }
     
     // TODO Should this method go in the sprite object? Need to specify that it is projectiles we're dealing with in order to get their damage
@@ -78,28 +91,33 @@ public class Sprite implements FrontEndSprite{
      * @return Angle of the sprite
      */
     public double getRotate() {
-    		return this.myImageView.getRotate();
+    		return myRotate;
     }
-    
+    private void setX(double newX) {
+    		myX = newX;
+    }
+    private void setY(double newY) {
+		myY = newY;
+    }
     /**
      * @return X-coordinate of the sprite
      */
     public double getX() {
-    		return this.myImageView.getX();
+    		return myX;
     }
     
     /**
      * @return Y-coordinate of the sprite
      */ 
     public double getY() {
-    		return this.myImageView.getY();
+    		return myY;
     }
 
     /**
      * Sets the shooting sprite's angle to @param rotateVal
      */
     public void setRotate(double rotateVal) {
-    		this.myImageView.setRotate(rotateVal);
+    		myRotate = rotateVal;
     }
     /**
      * Returns the damage that this sprite inflicts on something (Can be enemy's damage, projectiles damage, etc)
@@ -108,7 +126,6 @@ public class Sprite implements FrontEndSprite{
     public Double getDamage() {
 	return (double) 0;
     }
-    
     
     public String getImageString() {
 	return myImageString;
