@@ -75,6 +75,7 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
+	System.out.println("in update");
 	if(count==0) {
 	    myMediator.addSpriteToScreen(fakeEnemy);
 	}

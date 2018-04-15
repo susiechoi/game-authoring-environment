@@ -1,5 +1,6 @@
 package engine.physics;
 
+import engine.sprites.Sprite;
 import javafx.scene.Node;
 
 /**
@@ -13,8 +14,8 @@ public class ImageIntersecter implements Intersecter {
 
     private Node currentNode;
     
-    public ImageIntersecter(Node input) {
-	currentNode = input;
+    public ImageIntersecter(Sprite input) {
+	currentNode = input.getImageView();
     }
     /**
      * Determines if two nodes on the screen overlap
@@ -23,7 +24,8 @@ public class ImageIntersecter implements Intersecter {
      */
     @Override
     public boolean overlaps(Node thatNode) {
-	return currentNode.getBoundsInParent().intersects(thatNode.getBoundsInParent());
+	System.out.println("intersector returns " + currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal()));
+	return currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal());
     }
 
 }
