@@ -9,17 +9,6 @@ package authoring;
 import java.lang.reflect.Field;
 
 public class AttributeFinder {
-
-	public Field retrieveField(String fieldName, Object objectWithFields) throws NullPointerException {
-		Object fieldValue = null; 
-		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
-			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-			if (fieldSimpleString.equals(fieldName)) {
-				return aField; 
-			}
-		}
-		throw new NullPointerException();
-	}
 	
 	/**
 	 * Retrieves value of requested field from specified object

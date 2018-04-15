@@ -6,18 +6,11 @@
 
 package authoring.frontend;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
-import authoring.frontend.exceptions.ObjectNotFoundException;
-import engine.level.Level;
-import engine.sprites.enemies.Enemy;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -30,8 +23,10 @@ import javafx.scene.layout.VBox;
 
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
+	public static final String OBJECT_TYPE = "Tower";
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
+	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 
 	private TextField myNameField;
 	private ComboBox<String> myImageDropdown;
@@ -42,30 +37,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private Slider myTowerValueSlider;
 	private Slider myTowerUpgradeCostSlider;
 	private Slider myTowerUpgradeValueSlider; 
-	private ComboBox<String> myProjectileImage;
-	private double myProjectileDamage;
-	//	private double myProjectileUpgradeCost;
-	//	private double myProjectileUpgradeValue;
-	private double myProjectileSize;
-	private double myProjectileSpeed; 
-	//	private double myLauncherUpgradeCost;
-	//	private double myLauncherValue;
-	//	private double myLauncherUpgradeValue;
-	private double myLauncherSpeed;
-	private double myLauncherRange; 
 
 	protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
-		super(view, selectedObjectName);
-		myProjectileImage = new ComboBox<String>();
-		myProjectileDamage = 0.0; 
-		//		myProjectileUpgradeCost = 0.0;
-		//		myProjectileUpgradeValue = 0.0;
-		myProjectileSpeed = 0.0; 
-		//		myLauncherValue = 0.0;
-		//		myLauncherUpgradeCost = 0.0; 
-		//		myLauncherUpgradeValue = 0.0;
-		myLauncherSpeed = 0.0;
-		myLauncherRange = 0.0;
+		super(view, selectedObjectName, TOWER_FIELDS, OBJECT_TYPE);
 	}
 
 	@Override
@@ -84,8 +58,8 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 					try {
 						getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), 
 								myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), 
-								myProjectileImage.getValue(), myProjectileDamage, 0, 0,myProjectileSize, myProjectileSpeed, 
-								0, 0, 0, myLauncherSpeed, myLauncherRange,
+								DEFAULT_PROJECTILE_IMAGE, 0, 0, 0, 0, 0, 
+								0, 0, 0, 0, 0,
 								myTowerValueSlider.getValue(), myTowerUpgradeCostSlider.getValue(), myTowerUpgradeValueSlider.getValue());
 						getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText()));
 					} catch (NoDuplicateNamesException e1) {
@@ -107,31 +81,10 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		return sp;
 	}
 
-	protected void populateFieldsWithData() { // TODO where to put this? 
-
-		AttributeFinder attributeFinder = new AttributeFinder(); 
-		
+	protected void populateNameField() {
 		myNameField.setText(getMySelectedObjectName());
-
-		Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
-
-		try {
-			fieldsToAttributes = getView().getPropertiesReader().read(TOWER_FIELDS);
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("ObjectAttributeDNE");
-		}
-
-		for (String key : fieldsToAttributes.keySet()) {
-			Object myField = null; 
-			try {
-				myField = attributeFinder.retrieveFieldValue(key, this);
-				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute("Tower", getMySelectedObjectName(), fieldsToAttributes.get(key)));
-			} catch (IllegalArgumentException | NullPointerException | IllegalAccessException e) {
-				getView().loadErrorScreen("ObjectAttributeDNE");
-			}
-
-		}
-
+		
+		setEditableOrNot(myNameField, getIsNewObject());
 	}
 
 	private void makeTowerComponents(VBox vb) {
