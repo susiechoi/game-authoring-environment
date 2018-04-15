@@ -1,6 +1,7 @@
 package engine.sprites.enemies.wave;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -20,7 +21,7 @@ public class Wave {
     private final Path myPath;
     
     public Wave(Path path) {
-	myEnemies = new TreeMap<Enemy, Integer>();
+	myEnemies = new HashMap<Enemy, Integer>();
 	myPath = path;
     }
     
@@ -59,13 +60,15 @@ public class Wave {
      * @return Enemy: an enemy object
      */
     public Enemy getEnemy() {
+    	
 	for (Entry<Enemy, Integer> entry : myEnemies.entrySet()) {
 	    if (entry.getValue() > 0) {
 		Enemy retEnemy = entry.getKey();
 		decrementEnemyCount(retEnemy);
-		return retEnemy;
+		return new Enemy(retEnemy);
 	    }
 	}
+	//.out.println("WE ARE RETURNING NULL 12345678910111211314151 " + myEnemies.size());
 	return null;
     }
     

@@ -10,9 +10,9 @@ import javafx.scene.image.Image;
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
- *
+ * @author Miles Todzo
  */
-public class Projectile extends Sprite implements FrontEndSprite{
+public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
 	private double mySpeed;
@@ -33,9 +33,19 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		mySize = size; 
 	}
 	
-	public Projectile(Projectile myProjectile, Sprite target) {
+	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	    this.myDamage = myProjectile.myDamage;
 	    myTarget = target;
+	    mySpeed = 300;
+	    myTarget.place(100, 100);
+	    myProjectile.place(800, 800);
+	    myDamage = new DamageProperty(100,100,100);
+	    this.place(shooterX, shooterY);
+
+	    this.rotateImage();
+	    
+	    //myTarget = target;
 	}
 
 	/**
@@ -44,20 +54,26 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public void move(double elapsedTime) {
 	    	rotateImage();
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-		double xMove = Math.sin(this.getRotate())*totalDistanceToMove;
-		double yMove = Math.cos(this.getRotate())*totalDistanceToMove;
+
+		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+		
+		
 		this.getImageView().setX(this.getX()+xMove);
-		this.getImageView().setY(this.getX()+yMove);
+		this.getImageView().setY(this.getY()+yMove);
+
 	}
 	
 	/**
 	 * Rotates the image to face the target
 	 */
 	private void rotateImage() {
+
 	    	double xDifference = myTarget.getX() - this.getX();
 	    	double yDifference = myTarget.getY() - this.getY();
-	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
-	    	this.getImageView().setRotate(Math.toDegrees(angleToRotateRads));
+	    	double angleToRotateRads = Math.atan2(xDifference,yDifference);
+	    	this.setRotate(Math.toDegrees(angleToRotateRads));
+
 	}
 	
 	/**
@@ -90,6 +106,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public double getSize() {
 		return mySize; 
 	}
-
-
+	/**
+	 * @return true if intersect
+	 */
+	@Override
+	public boolean handleCollision(Sprite sprite) {
+		//System.out.println("collision with projectile and " + sprite);
+		return (this.getImageView().getBoundsInParent().intersects(sprite.getImageView().getBoundsInParent()));
+		//return false;
+	}
 }

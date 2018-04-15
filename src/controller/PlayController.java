@@ -39,7 +39,6 @@ public class PlayController {
 	myReader = new AuthoringModelReader();
 	myMediator.setGameEngine(myGameEngine);
 	myMediator.setScreenManager(myScreenManager);
-	myScreenManager.loadInstructionScreen();
     }
 
     /**
@@ -53,9 +52,33 @@ public class PlayController {
 	myReader = new AuthoringModelReader();
 	AuthoringModel playModel = myReader.createModel(pathToXML);
 	List<Level> levels = playModel.allLevels();
+	System.out.println("PATH pls");
+	System.out.println(levels.get(0).getLevelPathMap());
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+	myMediator.setPath(levels.get(0).getLevelPathMap(), "");
 	myGameEngine.setPlayState(play);
 	myGameEngine.start();
+    }
+    
+    /**
+     * Creates a new demo play based on the AuthoringModel object authored by
+     * the user
+     * 
+     * @param model: the AuthoringModel object authored by the user
+     */
+    public void demoPlay(AuthoringModel model) {
+	List<Level> levels = model.allLevels();
+	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+	myScreenManager.loadGameScreenNew();
+	myGameEngine.setPlayState(play);
+	myGameEngine.start();
+    }
+    
+    /**
+     * Calls the ScreenManager to load the InstructionScreen
+     */
+    public void loadInstructionScreen() {
+	myScreenManager.loadInstructionScreen();
     }
 
 

@@ -11,6 +11,7 @@ import gameplayer.panel.ControlsPanel;
 
 
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,26 +53,22 @@ public class GameScreen extends Screen {
     private BorderPane leftPane;
     private final Mediator MEDIATOR;
 
-
-    public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
-	SCREEN_MANAGER = ScreenController;
-	UIFACTORY = new UIFactory();
-	PROMPTS = promptReader;
-	MEDIATOR = mediator;
-
+	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
+		SCREEN_MANAGER = ScreenController;
+		UIFACTORY = new UIFactory();
+		PROMPTS = promptReader;
+		MEDIATOR = mediator;
+		TOWER_PANEL = new TowerPanel(this, PROMPTS);
+		CONTROLS_PANEL = new ControlsPanel(this);
+		SCORE_PANEL = new ScorePanel(this);
+		GAME_PANEL = new GamePanel(this);
+		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
+		BUY_PANEL = new BuyPanel(this, PROMPTS);
     }
 
     @Override
     public Parent makeScreenWithoutStyling() {
 	BorderPane rootPane = new BorderPane();
-	TOWER_PANEL = new TowerPanel(this, PROMPTS);
-	CONTROLS_PANEL = new ControlsPanel(this);
-	SCORE_PANEL = new ScorePanel(this);
-	GAME_PANEL = new GamePanel(this);
-	UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
-	BUY_PANEL = new BuyPanel(this, PROMPTS);
-
-
 
 	rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 	VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
@@ -106,7 +103,7 @@ public class GameScreen extends Screen {
 	 * 	-if this is the case this method isn't needed and an updateCurrency Method 
 	 * 	should instead be called in towerPanel upon any action which would spend currency 
 	 */
-	Integer money = 1000; //placeholder
+	Integer money = 0; //placeholder
 	return money;
     }
 
@@ -161,7 +158,6 @@ public class GameScreen extends Screen {
 
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
 	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-	System.out.println(placedTower.getImageView().getFitWidth() + " placed tower width ");
 	return placedTower;
     }
 
@@ -176,10 +172,10 @@ public class GameScreen extends Screen {
 	MEDIATOR.sellTower(tower);
     }
 
-    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	GAME_PANEL.setPath(imageMap, numRow, numCol);
+    
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+	GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
     }
-
 
 
 }

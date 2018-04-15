@@ -23,7 +23,6 @@ public class Driver extends Application {
 	primaryStage.setTitle("IfTrueReturnTrue VOOGASALAD");
 	primaryStage.getIcons().add(new Image("/images/sarahbland.png"));
 	ChiefController controller = new ChiefController(primaryStage);
-
 	controller.start();
     }
 

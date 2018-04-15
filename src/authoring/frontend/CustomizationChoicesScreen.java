@@ -4,6 +4,7 @@ import java.util.List;
 
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.PlayController;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -13,6 +14,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import xml.AuthoringModelWriter;
 
+/**
+ * Class to create Screen where users choose which elements they would like to customize (a level,
+ * settings, etc.) or save/demo a game. Dependent on the View to house/relay information from the Model
+ * and on View screenflow methods to send the user to the correct next screen.
+ * @author Sarahbland
+ *
+ */
+
 public class CustomizationChoicesScreen extends AuthoringScreen {
 	public static final String TEST_PROPERTIES = "images/TestProperties.properties";
 
@@ -21,13 +30,20 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		super(view);
 	}
 
+	
+	/**
+	 * Creates UI elements (buttons, selectors) necessary for User to choose next customization
+	 * or demo/save.
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
+	
 	public Parent makeScreenWithoutStyling(){
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
 		//System.out.println(myGameName+" SHOULD BE THE TITLE");
-//		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
-//		vbox.getChildren().add(heading);
+		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
+		vbox.getChildren().add(heading);
 
 		Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
 		resourcesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"ResourcesButton");});
@@ -38,7 +54,12 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			getView().addNewLevel();
 			getView().goForwardFrom(this.getClass().getSimpleName()+"EditNewLevel");
 		});
+		AuthoringModel currentModel = getView().getModel();
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
+		demoButton.setOnAction(e -> {
+			new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
+				currentModel).demoPlay(currentModel); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
+		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setOnAction(e -> {
 			getView().writeToFile();
