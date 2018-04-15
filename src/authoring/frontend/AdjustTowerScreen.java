@@ -6,6 +6,9 @@
 
 package authoring.frontend;
 
+import java.util.HashMap;
+import java.util.Map;
+import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import javafx.scene.Parent;
@@ -20,7 +23,11 @@ import javafx.scene.layout.VBox;
 
 
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
+
+	public static final String OBJECT_TYPE = "Tower";
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
+	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
+	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 
 	private TextField myNameField;
 	private ComboBox<String> myImageDropdown;
@@ -31,30 +38,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	private Slider myTowerValueSlider;
 	private Slider myTowerUpgradeCostSlider;
 	private Slider myTowerUpgradeValueSlider; 
-	private ComboBox<String> myProjectileImage;
-	private double myProjectileDamage;
-	//	private double myProjectileUpgradeCost;
-	//	private double myProjectileUpgradeValue;
-	private double myProjectileSize;
-	private double myProjectileSpeed; 
-	//	private double myLauncherUpgradeCost;
-	//	private double myLauncherValue;
-	//	private double myLauncherUpgradeValue;
-	private double myLauncherSpeed;
-	private double myLauncherRange; 
 
 	protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
-		super(view, selectedObjectName);
-		myProjectileImage = new ComboBox<String>();
-		myProjectileDamage = 0.0; 
-		//		myProjectileUpgradeCost = 0.0;
-		//		myProjectileUpgradeValue = 0.0;
-		myProjectileSpeed = 0.0; 
-		//		myLauncherValue = 0.0;
-		//		myLauncherUpgradeCost = 0.0; 
-		//		myLauncherUpgradeValue = 0.0;
-		myLauncherSpeed = 0.0;
-		myLauncherRange = 0.0;
+		super(view, selectedObjectName, TOWER_FIELDS, OBJECT_TYPE);
 	}
 	
 	/**
@@ -78,8 +64,8 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 					try {
 						getView().makeTower(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), 
 								myTowerHealthValueSlider.getValue(),  myTowerHealthUpgradeCostSlider.getValue(),  myTowerHealthUpgradeValueSlider.getValue(), 
-								myProjectileImage.getValue(), myProjectileDamage, 0, 0,myProjectileSize, myProjectileSpeed, 
-								0, 0, 0, myLauncherSpeed, myLauncherRange,
+								DEFAULT_PROJECTILE_IMAGE, 0, 0, 0, 0, 0, 
+								0, 0, 0, 0, 0,
 								myTowerValueSlider.getValue(), myTowerUpgradeCostSlider.getValue(), myTowerUpgradeValueSlider.getValue());
 						getView().loadScreen(new AdjustLauncherProjectileScreen(getView(), this, myNameField.getText()));
 					} catch (NoDuplicateNamesException e1) {
@@ -101,25 +87,10 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		return sp;
 	}
 
-	protected void populateFieldsWithData() {
+	protected void populateNameField() {
 		myNameField.setText(getMySelectedObjectName());
-
+		
 		setEditableOrNot(myNameField, getIsNewObject());
-
-		//		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
-
-		getUIFactory().setSliderToValue(myTowerHealthValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
-
-		getUIFactory().setSliderToValue(myTowerHealthUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
-
-		getUIFactory().setSliderToValue(myTowerHealthUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
-
-		getUIFactory().setSliderToValue(myTowerValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myTowerValue"));
-
-		//		getUIFactory().setSliderToValue(myTowerUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myUpgradeCost"));
-		//
-		//		getUIFactory().setSliderToValue(myTowerUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myUpgradeValue"));
-
 	}
 
 	private void makeTowerComponents(VBox vb) {

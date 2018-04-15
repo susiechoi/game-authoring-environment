@@ -315,7 +315,6 @@ public class CreatePathGrid extends AdjustScreen {
 		return startCount;
 	}
 
-	
 	protected HashMap<String, List<Point>> getGridImageCoordinates() {
 		gridImageCoordinates.put(startImage.getImage().impl_getUrl(), startPoints);
 		gridImageCoordinates.put(endImage.getImage().impl_getUrl(), endPoints);

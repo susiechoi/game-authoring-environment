@@ -12,7 +12,6 @@ package authoring;
 import java.awt.Point;
 import java.lang.Double; 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,9 +98,18 @@ public class AuthoringModel implements GameData {
 		dummyPathPoints.add(new Point(2, 4));
 		HashMap<String, List<Point>> pathImages = new HashMap<>();
 		List<Point> dummyPathStartPoints = new ArrayList<>();
-		dummyPathStartPoints.add(new Point(10, 10));
+		dummyPathStartPoints.add(new Point(5, 1));
 		List<Point> dummyPathMiddlePoints = new ArrayList<>();
-		dummyPathMiddlePoints.add(new Point(10, 11));
+		dummyPathMiddlePoints.add(new Point(5, 2));
+		dummyPathMiddlePoints.add(new Point(5, 3));
+		dummyPathMiddlePoints.add(new Point(5, 4));
+		dummyPathMiddlePoints.add(new Point(5, 5));
+		dummyPathMiddlePoints.add(new Point(5, 6));
+		dummyPathMiddlePoints.add(new Point(5, 7));
+		dummyPathMiddlePoints.add(new Point(6, 7));
+		dummyPathMiddlePoints.add(new Point(7, 7));
+		dummyPathMiddlePoints.add(new Point(8, 7));
+		dummyPathMiddlePoints.add(new Point(9, 7));
 		List<Point> dummyPathEndPoints = new ArrayList<>();
 		dummyPathEndPoints.add(new Point(10, 12));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
@@ -326,52 +334,25 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
-		Field field; 
-		Object fieldValue = null; 
+		Object attributeValue = null;
+		
+		AttributeFinder attributeFinder = new AttributeFinder(); 
 		if (objectType.equals("Enemy")) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
-				for (Field aField : enemy.getClass().getDeclaredFields()) {
-					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-					if (fieldSimpleString.equals(attribute)) {
-						aField.setAccessible(true);
-						fieldValue = aField.get(enemy);
-						break; 
-					}
-				}
-			}
-			if (fieldValue == null) {
-				throw new ObjectNotFoundException(name);
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
 			}
 		}
 		else if (objectType.equals("Tower")) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
-				for (Field aField : tower.getClass().getDeclaredFields()) {
-					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-					if (fieldSimpleString.equals(attribute)) {
-						aField.setAccessible(true);
-						fieldValue = aField.get(tower);
-						break; 
-					}
-				}
-			}
-			if (fieldValue == null) {
-				throw new ObjectNotFoundException(name);
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
 			}
 		}
 		else if (objectType.equals("Settings")) {
-			for (Field aField : mySettings.getClass().getDeclaredFields()) {
-				String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-				if (fieldSimpleString.equals(attribute)) {
-					aField.setAccessible(true);
-					fieldValue = aField.get(mySettings);
-					System.out.println(fieldValue);
-					break; 
-				}
-			}
+			attributeValue = attributeFinder.retrieveFieldValue(attribute, mySettings);
 		}
 		//	else if (objectType.equals("Wave")) {
 		//	    Level currentLevel = levelCheck(level);
@@ -390,13 +371,14 @@ public class AuthoringModel implements GameData {
 		//		throw new ObjectNotFoundException(name);
 		//	    }
 		//	}
-		if (fieldValue.getClass() == Double.class) {
-			return Double.toString((double) fieldValue); 
+		if (attributeValue == null) {
+			throw new ObjectNotFoundException(name);
+		}
+		if (attributeValue.getClass() == Double.class) {
+			return Double.toString((double) attributeValue); 
 		} 
-		//		else if (fieldValue.getClass() == Image.class) {
-		//			return myPropertiesReader.findKey(DEFAULT_IMAGES_PREFIX+objectType+DEFAULT_IMAGES_SUFFIX, fieldValue.);
-		//		}
-		else return (String) fieldValue; 
+
+		else return (String) attributeValue; 
 	}
 
 	/**
@@ -444,7 +426,6 @@ public class AuthoringModel implements GameData {
 	 */
 	private Enemy generateGenericEnemy() throws NumberFormatException, FileNotFoundException {
 		try {
-			double enemySize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemySize"));
 			Enemy newEnemy = new EnemyBuilder().construct(
 					myDefaultName, 
 					myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage"), 
@@ -483,7 +464,8 @@ public class AuthoringModel implements GameData {
 	//    }
 
 	/**
-	 * Adds a new level to the authored game
+	 * Adds a new level to the authored game, based on the previous level that the user has created
+	 * (or the default level if the user has not customized any level) 
 	 */
 	public int addNewLevel() {
 		int newLevelNumber = autogenerateLevel(); 
@@ -494,7 +476,7 @@ public class AuthoringModel implements GameData {
 
 	/**
 	 * Returns a list of level numbers as strings currently in the authored game
-	 * 
+	 * Useful in displaying the levels available for edit by the user
 	 * @return List<String>: A list of level numbers as strings
 	 */
 	public List<String> getLevels() {

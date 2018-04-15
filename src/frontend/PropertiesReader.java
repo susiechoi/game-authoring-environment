@@ -99,6 +99,11 @@ public class PropertiesReader {
 		}
 		return properties; 
 	}
+	
+	public Map<String, String> read(String filepath) throws MissingPropertiesException {
+		Properties props = loadProperties(filepath);
+		return read(props);
+	}
 
 	protected Map<String, String> read(Properties properties) {
 		Map<String, String> readInProperties = new HashMap<String, String>(); 

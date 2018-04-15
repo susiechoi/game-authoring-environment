@@ -10,4 +10,6 @@ public interface FrontEndSprite {
      */
     public ImageView getImageView();
     
+    public String getName();
+    
 }

@@ -140,9 +140,11 @@ public class AuthoringController {
     public void demo() {
 
     }
-    	
-	/**
-	 * Wraps Model method to create a new level
+
+    /**
+	 * Invokes a Model method that adds a new level to the authored game, 
+	 * based on the previous level that the user has created
+	 * (or the default level if the user has not customized any level) 
 	 * @return integer of new level created
 	 */
 	public int addNewLevel() {
@@ -150,8 +152,10 @@ public class AuthoringController {
 	}
 	
 	/**
-	 * Returns a list of levels currently created by asking Model
-	 * @return a list of levels currently created
+	 * Invokes a Model method that returns a list of level numbers 
+	 * as strings currently in the authored game
+	 * Useful in displaying the levels available for edit by the user
+	 * @return List<String>: A list of level numbers as strings
 	 */
 	public List<String> getLevels() {
 		return myModel.getLevels(); 
