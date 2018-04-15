@@ -10,6 +10,11 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
+/**
+ * Class of Images that can be drag/dropped for use in the Path.
+ * @author Erik Riis
+ *
+ */
 public class DraggableImage extends Parent {
 	private ImageView pathImage;
 	private String pathName;
@@ -29,7 +34,7 @@ public class DraggableImage extends Parent {
 		pathImage.setFitWidth(CreatePathPanel.PANEL_PATH_SIZE);
 	}
 
-	public ImageView setCopyDraggable() {
+	protected ImageView setCopyDraggable() {
 		myCopyDragEvent = new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.COPY);
@@ -54,7 +59,7 @@ public class DraggableImage extends Parent {
 		return pathImage;
 	}
 
-	public void setDraggable() {
+	protected void setDraggable() {
 		myDragEvent = new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
@@ -77,7 +82,7 @@ public class DraggableImage extends Parent {
 		pathImage.setOnDragDone(myDragDone);
 	}
 
-	public void disableDraggable() {
+	protected void disableDraggable() {
 		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myDragEvent);
 		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myCopyDragEvent);
 		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myDragDone);
@@ -86,11 +91,11 @@ public class DraggableImage extends Parent {
 		pathImage.setOnDragDone(e -> {});
 	}
 	
-	public void setPathName(int path_num) {
+	protected void setPathName(int path_num) {
 		pathName = "Path " +String.valueOf(path_num);
 	}
 	
-	public String getPathName() {
+	protected String getPathName() {
 	    	if(pathName == null) {
 	    	    return "Default";
 	    	}
@@ -98,11 +103,11 @@ public class DraggableImage extends Parent {
 	}
 
 
-	public void setNewImage(Image image) {
+	protected void setNewImage(Image image) {
 		pathImage.setImage(image);
 	}
 
-	public ImageView getPathImage() {
+	protected ImageView getPathImage() {
 		return pathImage;
 	}
 }

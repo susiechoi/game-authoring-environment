@@ -110,7 +110,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	return true;
+    	return true;
 //	myHealth.loseHealth(collider.getDamage());
 //	return myHealth.isAlive();
     }

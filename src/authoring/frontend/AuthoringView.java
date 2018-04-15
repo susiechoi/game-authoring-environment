@@ -28,6 +28,8 @@ import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelWriter;
@@ -48,7 +50,7 @@ public class AuthoringView extends View {
 	private int myLevel; 
 	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel;
-
+	private BooleanProperty myCSSChanged;
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
@@ -57,10 +59,15 @@ public class AuthoringView extends View {
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
-		myCurrentCSS = new String(DEFAULT_AUTHORING_CSS);
+		myCurrentCSS = DEFAULT_AUTHORING_CSS;
+		myCSSChanged = new SimpleBooleanProperty(false);
 	}
 
 
+	/**
+	 * Sets the AuthoringModel used to retrieve backend information.
+	 * @param model is new Model used
+	 */
 	public void setModel(AuthoringModel model) {
 		myModel = model;
 	}
@@ -76,29 +83,54 @@ public class AuthoringView extends View {
 	    return myModel;
 	}
 
+	/**
+	 * Loads the first authoring screen shown to user (currently StartScreen) from which ScreenFlow
+	 *  can direct further screens.
+	 */
 	public void loadInitialScreen() {
 		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
 
+	/**
+	 * Loads an error screen when a user has done something so problematic that the program
+	 * cannot recover (such as choosing a language with no prompts and not having English
+	 * prompts to default to).
+	 * @param error is key to the Error the user has committed
+	 * @see frontend.View#loadErrorScreen(java.lang.String)
+	 */
 	@Override
 	public void loadErrorScreen(String error) {
 		loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
 	}
+	/**
+	 * Loads an error alert when the user needs to be notified, but the program can
+	 * recover.
+	 * @param error is error key for error User has committed
+	 */
 	public void loadErrorAlert(String error) {
 		loadErrorAlertToStage(myErrorReader.resourceDisplayText(error));
 	}
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
 	}
+	/**
+	 * @return current CSS filepath
+	 */
 	protected String getCurrentCSS() {
 		return myCurrentCSS;
 	}
+	
+	protected void setCurrentCSS(String css) {
+		myCurrentCSS = css; 
+		myCSSChanged.set(!myCSSChanged.get());
+	}
+	
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
 		try {
 		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
-		} catch (ObjectNotFoundException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
+		}
+		catch(ObjectNotFoundException e) {
+		    loadErrorScreen("NoObject");
 		}
 	}
 
@@ -190,10 +222,10 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	protected void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 	    	System.out.println("View:" +imageCoordinates);
 	    	myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
-	    	System.out.println("After view:" + myModel.allLevels().get(1).getLevelPathMap());
+	    	System.out.println("After view:" + myModel.allLevels().get(0).getLevelPathMap());
 		myImageMap = imageCoordinates;
 	}
 
@@ -256,25 +288,25 @@ public class AuthoringView extends View {
 	    return myStageManager;
 	}
 
-	public String getErrorCheckedPrompt(String prompt) {
+	protected String getErrorCheckedPrompt(String prompt) {
 		return myPromptReader.resourceDisplayText(prompt);
 	}
 
-	public void addNewLevel() {
+	protected void addNewLevel() {
 		int newLevel = myController.addNewLevel(); 
 		setLevel(newLevel);
 	}
 
-	public List<String> getLevels() {
+	protected List<String> getLevels() {
 		return myController.getLevels(); 
 	}
 
-	public void autogenerateLevel() {
+	protected void autogenerateLevel() {
 		int newLevel = myController.autogenerateLevel(); 
 		setLevel(newLevel); 
 	}
 
-	public int getLevel() {
+	protected int getLevel() {
 		return myLevel; 
 	}
 
@@ -282,10 +314,10 @@ public class AuthoringView extends View {
 		return myPropertiesReader; 
 	}
 
-	public void setGameName(String gameName) {
+	protected void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
-	public Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
+	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
 		try {
 			Path path = myController.getPathFromName(pathName, level);
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
@@ -296,19 +328,37 @@ public class AuthoringView extends View {
 		return new HashMap<String, Integer>();
 
 	}
-	public void writeToFile() {
+	protected Integer getHighestWaveNumber(int level) {
+	    try {
+	    return myController.getHighestWaveNumber(level);
+	    }
+	    catch(ObjectNotFoundException e) {
+		loadErrorScreen("NoObject");
+	    }
+	    return 1;
+	}
+	protected void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		System.out.println("SAVING" + myModel.getGameName());
 		writer.write(myModel, myModel.getGameName());
 	}
 
-	public void readFromFile(String name) {
+	protected void readFromFile(String name) {
 	    myController.setModel(name);
 	}
 	
 
-	public Map<String, List<Point>> getImageCoordinates() {
+	protected Map<String, List<Point>> getImageCoordinates() {
 		return myImageMap;
+	}
+	
+	protected BooleanProperty cssChangedProperty() {
+		return myCSSChanged; 
+	}
+
+
+	protected String getGameName() {
+		return myModel.getGameName();
 	}
 
 }

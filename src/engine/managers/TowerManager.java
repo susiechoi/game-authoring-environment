@@ -67,4 +67,5 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return 0;
     }
+
 }

@@ -123,47 +123,47 @@ public class PlayState implements GameData {
 
 
 
-    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-    //	myResources -= tower.upgrade(upgradeName);
-    //    }
+	//    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+	//	myResources -= tower.upgrade(upgradeName);
+	//    }
 
-    public void setLevel(int levelNumber) {
-	currentLevel = myLevels.get(levelNumber);
-	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
-	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
-    }
+	public void setLevel(int levelNumber) {
+		currentLevel = myLevels.get(levelNumber);
+		myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
+		myEnemyManager.setEnemies(currentLevel.getEnemies().values());
+	}
 
-    public void restartLevel() {
-	// TODO Auto-generated method stub
-    }
+	public void restartLevel() {
+		// TODO Auto-generated method stub
+	}
 
-    public void pause() {
-	isPaused = true;
-    }
+	public void pause() {
+		isPaused = true;
+	}
 
-    public void play() {
-	isPaused = false;
-    }
+	public void play() {
+		isPaused = false;
+	}
 
-    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
-	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	//	myResources = placedTower.purchase(myResources);
-	//	myMediator.updateCurrency(myResources);
-	return placedTower;
-    }
+	public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
+		FrontEndTower placedTower = myTowerManager.place(location, towerType);
+		//	myResources = placedTower.purchase(myResources);
+		//	myMediator.updateCurrency(myResources);
+		return placedTower;
+	}
 
-    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-    //	myResources -= tower.upgrade(upgradeName);
-    //    }
+	//    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
+	//	myResources -= tower.upgrade(upgradeName);
+	//    }
 
-    /**
-     * Sells the tower, increments users currency, and removes it from collection and screen
-     * @param tower
-     */
-    public void sellTower(FrontEndTower tower) {
-	myResources += myTowerManager.sell(tower);
-	myMediator.updateCurrency(myResources);
-	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
-    }
+	/**
+	 * Sells the tower, increments users currency, and removes it from collection and screen
+	 * @param tower
+	 */
+	public void sellTower(FrontEndTower tower) {
+		myResources += myTowerManager.sell(tower);
+		myMediator.updateCurrency(myResources);
+		myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
+	}
 }
 
