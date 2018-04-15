@@ -14,6 +14,11 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
 
+/**
+ * Class to create the righthand panel for the path authoring screen.
+ * @author Erik Riis
+ *
+ */
 public class CreatePathPanel extends PathPanel {
 
 	public static final int PANEL_PATH_SIZE = 90;
@@ -34,11 +39,11 @@ public class CreatePathPanel extends PathPanel {
 	}
 
 	@Override
-	public Button getApplyButton() {
+	protected Button getApplyButton() {
 		return applyButton;
 	}
 
-	public void makePanel() {
+	protected void makePanel() {
 
 		pathPanel = new VBox();
 
@@ -90,6 +95,9 @@ public class CreatePathPanel extends PathPanel {
 		});
 
 		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			/* (non-Javadoc)
+			 * @see javafx.event.EventHandler#handle(javafx.event.Event)
+			 */
 			public void handle(DragEvent event) {
 				event.acceptTransferModes(TransferMode.ANY);
 				Dragboard db = event.getDragboard();
@@ -104,24 +112,30 @@ public class CreatePathPanel extends PathPanel {
 		return trashImage;
 	}
 
-
-	public Node getPanel() {
+	@Override
+	protected Node getPanel() {
 		return pathPanel;
 	}
 	
-	public DraggableImage getPathImage() {
+	protected DraggableImage getPathImage() {
 		return pathImage;
 	}
 	
-	public DraggableImage getStartImage() {
+	protected DraggableImage getStartImage() {
 		return startImage;
 	}
 	
-	public DraggableImage getEndImage() {
+	protected DraggableImage getEndImage() {
 		return endImage;
 	}
 
+	/** 
+	 * TODO: this method is null - should be integrated
+	 *
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
+	
 	public Parent makeScreenWithoutStyling() {
 		//TODO Auto-generated method stub
 		return null;

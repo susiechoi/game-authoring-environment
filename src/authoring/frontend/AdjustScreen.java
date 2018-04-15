@@ -32,6 +32,7 @@ abstract class AdjustScreen extends AuthoringScreen {
 	}
 	
 	protected abstract Parent populateScreenWithFields();
+	
 	protected abstract void populateFieldsWithData(); 
 	
 }

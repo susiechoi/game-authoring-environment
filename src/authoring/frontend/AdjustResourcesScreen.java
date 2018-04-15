@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * @author sarahbland
  * Creates screen in which user can customize the starting resources of the player
  */
 
