@@ -119,9 +119,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-    	return false;
-//	myHealth.loseHealth(collider.getDamage());
-//	return myHealth.isAlive();
+	System.out.println("health is " + myHealth.getProperty());
+	myHealth.loseHealth(collider.getDamage());
+	return myHealth.isAlive();
     }
 
     private ImageIntersecter getIntersecter() {

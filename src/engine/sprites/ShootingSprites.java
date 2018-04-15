@@ -86,7 +86,7 @@ public abstract class ShootingSprites extends Sprite{
    // 	System.out.println(this.getClass() + " COLLIDING WITH "+ collider.getClass());
     	List<Sprite> deadSprites = new ArrayList<>();
     	hitCount++;
-    	if(this.handleCollision(collider)) {
+    	if(!this.handleCollision(collider)) {
     	//	System.out.println("WEEEWOO");
     		deadSprites.add(this);
     		roundScore += this.getPointValue();
