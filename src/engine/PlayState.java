@@ -68,7 +68,7 @@ public class PlayState implements GameData {
 	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
-	 fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
+	fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
 	myEnemyManager.addToActiveList(fakeEnemy);
 	count = 0;
 
