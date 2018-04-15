@@ -1,6 +1,4 @@
 package authoring.frontend;
-
-
 import frontend.Screen;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
