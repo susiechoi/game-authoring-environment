@@ -151,7 +151,7 @@ public class TowerPanel extends Panel {
 	//	    }
 
 	//something went wrong and we don't have the towers
-	//TODO something reasonable here
+	//TODO something reasonable here 
 	//probably have default images that aren't the ones specified by authoring
     }
 
