@@ -32,6 +32,7 @@ import engine.sprites.towers.projectiles.Projectile;
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
+    private int count;
     private int myScore;
     private int myResources;
     private TowerManager myTowerManager;
@@ -40,6 +41,7 @@ public class PlayState implements GameData {
     private List<Level> myLevels;
     private Level currentLevel;
     private boolean isPaused;
+    private Enemy fakeEnemy;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -66,11 +68,17 @@ public class PlayState implements GameData {
 	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
-	myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
+	 fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
+	myEnemyManager.addToActiveList(fakeEnemy);
+	count = 0;
 
     }
 
     public void update(double elapsedTime) {
+	if(count==0) {
+	    myMediator.addSpriteToScreen(fakeEnemy);
+	}
+	count++;
 	if(!isPaused) {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
@@ -96,7 +104,7 @@ public class PlayState implements GameData {
 	    }
 	    UNIVERSAL_TIME+=elapsedTime;
 	    List<Sprite> toBeRemoved = new ArrayList<>();
-	    //toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
