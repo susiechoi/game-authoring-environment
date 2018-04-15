@@ -110,7 +110,11 @@ public abstract class ShootingSprites extends Sprite{
      */
     public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
-	if (!intersector.overlaps(shooter.getImageView())) {
+	System.out.println(" TEST " + "tower X "+ this.getX() + " " +  this.getX()+ this.getImageView().getFitWidth()+ " tower Y " + this.getY()+ " " + this.getImageView().getFitHeight());
+	System.out.println(" TEST " + " enemy X "+ shooter.getX() + " " +  shooter.getX()+ shooter.getImageView().getFitWidth()+ " enemy Y " + shooter.getY()+ " " + shooter.getImageView().getFitHeight());
+	System.out.println("tower width " + this.getImageView().getFitWidth() + " enemy width " + shooter.getImageView().getFitWidth());
+	if (intersector.overlaps(shooter.getImageView())) {
+		System.out.println("TOWER ENEMY COLLISION");
 //		System.out.println(this.getX() + " tower " + this.getY());
 //		System.out.println(shooter.getX() + " enemy " + shooter.getY());
 //		System.out.println("checkTowerEnemyCollision says there was a Tower/Enemy collision");

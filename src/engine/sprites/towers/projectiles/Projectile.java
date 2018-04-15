@@ -38,8 +38,6 @@ public class Projectile extends Sprite {
 	    this.myDamage = myProjectile.myDamage;
 	    myTarget = target;
 	    mySpeed = 300;
-	    myTarget.place(100, 100);
-	    myProjectile.place(800, 800);
 	    myDamage = new DamageProperty(100,100,100);
 	    this.place(shooterX, shooterY);
 
