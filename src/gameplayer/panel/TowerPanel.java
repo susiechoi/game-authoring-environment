@@ -13,6 +13,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +40,9 @@ public class TowerPanel extends Panel {
     private final UIFactory UIFACTORY;
     private Panel bottomPanel;
     private Button currencyDisplay;
+    private final String SWAP_BUTTON_FILEPATH = "images/swap.png";
 
     //TODO change to only use availibleTowers
-    private final String TOWER_NAMES_FILE_PATH = "images/TowerImageNames.properties"; 
 
     //private final FileIO FILE_READER;
 
@@ -65,12 +68,26 @@ public class TowerPanel extends Panel {
 	ScrollPane towerDisplay = new ScrollPane(towerGroup);
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
+
 	currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
 	currencyDisplay.setText("$" +money.toString());
 	currencyDisplay.setDisable(true);
-	currencyDisplay.setMaxWidth(Double.MAX_VALUE);;
-	VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
+	currencyDisplay.setMaxWidth(Double.MAX_VALUE);
+	HBox currencyAndSwap = new HBox(currencyDisplay);
+	currencyAndSwap.setAlignment(Pos.CENTER);
+	try {
+	    Button swapButton = UIFACTORY.makeImageButton("swapButton", new Image(new FileInputStream(SWAP_BUTTON_FILEPATH), 20, 20, false, false));
+	    swapButton.setOnMouseClicked((arg0) -> GAME_SCREEN.swapVertPanel());
+	    HBox swapWrap = new HBox(swapButton);
+	    swapWrap.setAlignment(Pos.CENTER_LEFT);
+	    currencyAndSwap.getChildren().add(swapWrap);
+	} catch (FileNotFoundException e) {
+	    //SWAPBUTTONIMAGEMISSING
+	}
+
+
+	VBox towersAndCurr = new VBox(towerDisplay,currencyAndSwap);
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
 
@@ -142,6 +159,7 @@ public class TowerPanel extends Panel {
 
     }
 
+    
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerGroup.getChildren().clear();
 	towerGroup.getChildren().add(fillScrollWithTowers(availableTowers));
