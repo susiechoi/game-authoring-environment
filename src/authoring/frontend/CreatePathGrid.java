@@ -93,8 +93,8 @@ public class CreatePathGrid extends AdjustScreen {
 	//Given: path images and locations as defaults, change to populate with initial params, 
 	private void populateGrid() {
 
-		for (int x = 0 ; x < grid.getColumnCount(); x++) {
-			for (int y = 0 ; y < grid.getRowCount(); y++) {
+		for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
+			for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
 				StackPane cell = new StackPane();
 
 				final int col = x;
@@ -309,9 +309,9 @@ public class CreatePathGrid extends AdjustScreen {
 
 	
 	public HashMap<String, List<Point>> getGridImageCoordinates() {
-		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
-		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
-		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
+		gridImageCoordinates.put(startImage.getImage().impl_getUrl(), startPoints);
+		gridImageCoordinates.put(endImage.getImage().impl_getUrl(), endPoints);
+		gridImageCoordinates.put(pathImage.getImage().impl_getUrl(), pathPoints);
 		return gridImageCoordinates;
 	}
 	
