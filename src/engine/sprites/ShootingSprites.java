@@ -70,10 +70,12 @@ public abstract class ShootingSprites extends Sprite{
 		List<Projectile> projectiles = this.getProjectiles();
 		this.checkTowerEnemyCollision(target); //TODO add any dead tower/enemy to toBeRemoved list
 		for (Projectile projectile: projectiles) {
-			if(target.intersects(projectile)){
+			if(target.intersects(projectile) && !(projectile.hasHit(target))){
 				toBeRemoved.addAll(target.objectCollision(projectile)); //checks collisions between projectiles and enemy/tower
-				toBeRemoved.add(projectile);
-				this.getLauncher().removeFromActiveList(projectile);
+				if (projectile.handleCollision(target)) {
+					toBeRemoved.add(projectile);
+					this.getLauncher().removeFromActiveList(projectile);
+				}
 				//		if(this.intersects(projectile)){
 				//		    toBeRemoved.addAll(objectCollision(projectile));
 				//		}

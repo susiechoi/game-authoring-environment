@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.sprites.FrontEndSprite;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 
 /**
@@ -113,5 +115,9 @@ public class Projectile extends Sprite {
 		this.hitTargets.add(sprite);
 		this.myHits--;
 		return !(myHits > 0);
+	}
+
+	public boolean hasHit(ShootingSprites target) {
+		return this.hitTargets.contains(target);
 	}
 }
