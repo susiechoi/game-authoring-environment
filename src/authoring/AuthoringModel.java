@@ -335,7 +335,7 @@ public class AuthoringModel implements GameData {
 	 */
 	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		Object attributeValue = null;
-		
+
 		AttributeFinder attributeFinder = new AttributeFinder(); 
 		if (objectType.equals("Enemy")) {
 			Level currentLevel = levelCheck(level);
@@ -536,6 +536,17 @@ public class AuthoringModel implements GameData {
 	 */
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
+	}
+
+
+	public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		if (objectType.equals("Tower")) {
+			currentLevel.removeTower(name);
+		}
+		if (objectType.equals("Enemy")) {
+			currentLevel.removeEnemy(name);
+		}
 	}
 
 

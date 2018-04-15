@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
@@ -107,6 +108,20 @@ public class Level {
      */
     public Tower getTower(String name) {
 	return myTowers.get(name);
+    }
+    
+    public void removeTower(String name) throws ObjectNotFoundException {
+    	if (myTowers.containsKey(name)) {
+    		myTowers.remove(name);
+    	}
+    	throw new ObjectNotFoundException(name);
+    }
+    
+    public void removeEnemy(String name) throws ObjectNotFoundException {
+    	if (myEnemies.containsKey(name)) {
+    		myEnemies.remove(name);
+    	}
+    	throw new ObjectNotFoundException(name);
     }
 
     /**

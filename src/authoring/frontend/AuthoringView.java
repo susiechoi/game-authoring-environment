@@ -361,4 +361,13 @@ public class AuthoringView extends View {
 		return myModel.getGameName();
 	}
 
+
+	protected void deleteObject(String objectType, String objectName) {
+		try {
+			myModel.deleteObject(myLevel, objectType, objectName);
+		} catch (ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+	}
+
 }
