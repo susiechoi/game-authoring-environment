@@ -5,6 +5,8 @@ import java.io.File;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import data.GameData;
+
 /**
  * @author Brendan Cheng 3/29/2018
  * 
@@ -16,10 +18,19 @@ import org.w3c.dom.Element;
 public interface XMLWriter {
 	
 	/**
+	 * Writes the inputted data to an XML file using XStream and XMLDocumentBuilder methods. Saves the file at a specified filepath.
+	 *
+	 * @param g		An AuthoringModel object (in this case, AuthorModel or GameState) whose data will be read and written to an XML file
+	 * @param filepath		filepath to which file will be saved. Don't include .xml
+	 */
+	public void write(GameData g, String filepath);
+    
+	/**
 	 * Creates new instance of a document to be written to
 	 * 
 	 * @return document to be written to
 	 */
+    	@Deprecated
 	public Document initializeDoc();
 	
 	/**
@@ -28,6 +39,7 @@ public interface XMLWriter {
 	 * @param doc   Document being saved
 	 * @param file  File object containing filepath to which doc will be written and saved
 	 */
+	@Deprecated
 	public void saveXMLFile(Document doc, File file);
 	
 	/**
@@ -39,6 +51,7 @@ public interface XMLWriter {
 	 * @param data: The data to be added
 	 * @return A node to be added to the xml file
 	 */
+	@Deprecated
 	public void addData(Document doc, String elemName, Object data);
 	
 	/**
@@ -48,6 +61,7 @@ public interface XMLWriter {
 	 * @param name	 Node name/type
 	 * @return		 Node that has been appended to parent
 	 */
+	@Deprecated
 	public Element appendElement(Element parent, String name, Document file);
 	
 }
