@@ -1,0 +1,86 @@
+.root {
+	-fx-background-image: url("../images/poly.png");
+	-fx-background-size: cover;
+}
+
+Text {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 14pt; 
+}
+
+.button {
+   	-fx-font-family: "Quicksand";
+}
+
+.button:disabled, .button:disabled > * {
+	-fx-opacity: 0.7;
+}
+
+.combo-box .cell {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 12pt; 
+}
+
+#screenTitle {
+  -fx-alignment: center;
+  -fx-font-family: "Quicksand";
+  -fx-font-size: 36pt;
+}
+
+
+VBox, HBox {
+	-fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-alignment: center;
+}
+
+.button {
+	-fx-font-family: "Quicksand";
+	-fx-min-width: 200;		
+	-fx-min-height: 50;
+	-fx-background-color: #B7D5D4;
+}
+
+.button:hover{
+   	-fx-font-size: 21pt; 
+   	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+ComboBox {
+	-fx-font-family: "Quicksand";
+	-fx-background-color: #488286;
+	-fx-min-width: 200;
+	-fx-min-height: 50;
+}
+
+.combo-box:hover {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+
+}
+
+#selector {
+	-fx-background-color: #488286;
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 14pt; 
+}
+
+#selector .Text {
+	-fx-font-family: "Quicksand";
+ 	 -fx-font-size: 14pt;
+}
+
+#selector .HBox, .VBox {
+	-fx-padding: 10;
+	-fx-spacing: 10;
+}
+
+#selector .ComboBox {
+	-fx-padding: 10;
+	-fx-spacing: 10;
+	-fx-background-color: #B7D5D4;
+}
+
+#towerHolders {
+	-fx-padding: 0;
+	-fx-spacing: 0;
+}

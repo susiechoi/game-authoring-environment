@@ -1,0 +1,60 @@
+VBox, HBox {
+	-fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+}
+
+.button, .combo-box {
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#77878B, #CDCDCD);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.combo-box:hover {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: linear-gradient(#77878B, #CDCDCD);
+}
+
+.combo-box .cell {
+    -fx-text-fill: white; 
+    -fx-background-color: linear-gradient(#CDCDCD, #77878B);
+}
+
+.combo-box .cell:hover {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+	-fx-text-fill: #373E40;
+    -fx-background-color: white;
+}
+
+#newObjectButton {
+	-fx-min-width: 200;
+	-fx-min-height: 50;
+}
+
+#objectOptions {
+	-fx-min-width: 250;
+	-fx-min-height: 50;
+}
+
+#backButton {
+	-fx-min-width: 50;
+	-fx-min-height: 30;
+	-fx-border:0;
+    -fx-background-color:transparent;
+}
+
+#applyButton {
+	-fx-background-color: linear-gradient(#364156, #011638);
+}
+
+#goButton:hover, #applyButton:hover {
+	-fx-background-color: linear-gradient(#011638, #364156);
+}
+
+#startingCurrency {
+	-fx-min-width: 300; 
+}

@@ -1,6 +1,10 @@
 package xml;
 
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,8 +21,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+/**
+ * @author Brendan Cheng
+ * 
+ *	Class containing static methods that are common to writing all XML files.
+ */
+
 public class XMLDocumentBuilder {
 
+    private final static String FILE_SETTINGS = "<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"no\\\"?>";
 	
 	/**
 	 * Creates new instance of a document to be written to
@@ -57,9 +68,9 @@ public class XMLDocumentBuilder {
 	 * @param data: The data to be added
 	 * @return A node to be added to the xml file
 	 */
-	public static Node addData(Document doc, String elemName, Object data) {
+	public static Node addData(Document doc, String elemName, String data) {
 		Element e = doc.createElement(elemName);
-		//e.appendChild(doc.createTextNode(data));
+		e.appendChild(doc.createTextNode(data));
 		return e;
 	}
 	
@@ -71,8 +82,26 @@ public class XMLDocumentBuilder {
 	 * @return		 Node that has been appended to parent
 	 */
 	public static Element appendElement(Element parent, String name, Document file) {
-		return null;
+		Element e = file.createElement(name);
+		parent.appendChild(e);
+		return e;
 	}
 	
+	    /**
+	     * Writes and saves a file containing only the inputted String
+	     * 
+	     * @param data	data to be written
+	     * @param filename	name of file to be written to
+	     */
+	    public static void stringToXML(String data, String filename) {
+		try {
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+		    writer.write(data);
+		    writer.close();
+		} catch (IOException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+	    }
 	
 }

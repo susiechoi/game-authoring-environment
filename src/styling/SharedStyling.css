@@ -1,0 +1,23 @@
+Text {
+	  -fx-font: 14pt "Helvetica";
+}
+
+.button {
+   	  -fx-font: 14pt "Helvetica";
+}
+
+.button:disabled, .button:disabled > * {
+	-fx-opacity: 0.7;
+}
+
+.combo-box .cell {
+	  -fx-font: 12pt "Helvetica";
+}
+
+.text-field {
+}
+
+#screenTitle {
+  -fx-alignment: center;
+  -fx-font: bold 36pt "Helvetica";
+}

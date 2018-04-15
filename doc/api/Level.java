@@ -1,7 +1,7 @@
 package api;
 
-import enemies.wave.Wave;
-import path.Path;
+import engine.path.Path;
+import engine.sprites.enemies.wave.Wave;
 
 /**
  * 
