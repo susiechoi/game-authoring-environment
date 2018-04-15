@@ -1,27 +1,98 @@
-VBox, HBox {
-	-fx-background-color: #77878B;
+.root {
+	-fx-background-image: url("../images/poly.png");
+	-fx-background-size: cover;
+}
+
+Text {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 14pt; 
+}
+
+.button:disabled, .button:disabled > * {
+	-fx-opacity: 0.7;
+}
+
+.combo-box .cell {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 12pt; 
+}
+
+#screenTitle {
+  -fx-alignment: center;
+  -fx-font-family: "Quicksand";
+  -fx-font-size: 36pt;
+}
+
+
+VBox {
+	-fx-background-image: url("../images/poly.png");
+	-fx-background-size: cover;
+	-fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-alignment: center;
+}
+
+HBox {
 	-fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;
 }
 
 .button {
-		-fx-min-width: 200;
-		-fx-min-height: 50;
-		-fx-background-color: #B7D5D4;
+	-fx-font-family: "Quicksand";
+	-fx-min-width: 200;		
+	-fx-min-height: 50;
+	-fx-background-color: #B7D5D4;
 }
 
 .button:hover{
-	  -fx-font: bold 18pt "Helvetica";
-	  -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+   	-fx-font-size: 21pt; 
+   	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 ComboBox {
-	-fx-background-color: #488286;
+	-fx-font-family: "Quicksand";
+	-fx-background-color: #B7D5D4;
 	-fx-min-width: 200;
 	-fx-min-height: 50;
 }
 
 .combo-box:hover {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+
+}
+
+#selector {
+	-fx-background-color: #488286;
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 14pt; 
+}
+
+#selector .Text {
+	-fx-font-family: "Quicksand";
+ 	 -fx-font-size: 14pt;
+}
+
+#selector .HBox, .VBox {
+	-fx-padding: 10;
+	-fx-spacing: 10;
+}
+
+#selector .ComboBox {
+	-fx-padding: 10;
+	-fx-spacing: 10;
+	-fx-background-color: #B7D5D4;
+}
+
+#towerHolders {
+	-fx-padding: 0;
+	-fx-spacing: 0;
+}
+
+#backButton {
+	-fx-background-color: #488286; 
+}
+
+#applyButton {
+	-fx-background-color: #488286; 
 }

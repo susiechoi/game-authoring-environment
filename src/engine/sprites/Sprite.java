@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
  * @author Miles Todzo
  * @author Ben Hodgson 4/8/18
  */
-public class Sprite  {
+public class Sprite implements FrontEndSprite{
 
     private String myName;
     private ImageView myImageView;
@@ -30,7 +30,6 @@ public class Sprite  {
     public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
-	System.out.println(image);
 	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
 	myImageView.setPreserveRatio(true);
 

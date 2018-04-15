@@ -2,47 +2,45 @@ package authoring.frontend;
 
 
 import java.awt.Point;
+import java.io.File;
 import java.util.List;
+
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+/**
+ * Class to create the Screen for Path authoring
+ * @author Erik Riis
+ *
+ */
 public class CreatePathScreen extends PathScreen {
 
-	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
-	
-	//private CreatePathPanel panel;
-	private CreatePathGrid grid;
 	private String backgroundImageFileName;
+	private CreatePathPanel myPathPanel;
+	private CreatePathToolBar myPathToolBar;
+	
 
-	protected CreatePathScreen(AuthoringView view) {
+	public CreatePathScreen(AuthoringView view) {
 		super(view);
-		setGridBackground();
+		myPathPanel = new CreatePathPanel(view);
+		myPathToolBar = new CreatePathToolBar(view);
 	}
-
-	private void setGridBackground() {
-		
-		//TODO: panel.getBackgroundButton() fix
-//		Button backgroundButton = (Button) panel.getBackgroundButton();
-//		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				FileChooser fileChooser = new FileChooser();
-//				fileChooser.setTitle("View Pictures");
-//				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
-//				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
-//				File file = fileChooser.showOpenDialog(new Stage());
-//				backgroundImageFileName = file.toURI().toString();
-//				grid.setBackgroundImage(backgroundImageFileName);
-//			}
-//		});
-	}
-
-	//TODO: fix checkPathConnected - doesn't work for multiple starts, after moving path, or after set sizing
-	private void setGridApplied() {
-		getPathPanel().setApplyButtonAction(new EventHandler<ActionEvent>() {
+	
+	
+	private void setGridApplied(CreatePathGrid grid) {
+		myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				List<Point> startCoords = grid.getStartingPosition();
@@ -56,7 +54,11 @@ public class CreatePathScreen extends PathScreen {
 					System.out.println(point);
 					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
-						getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName); //when apply is clicked and there is a complete path, the info gets passed to view
+						try {
+							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName);
+						} catch (ObjectNotFoundException e1) {
+							// TODO Auto-generated catch block
+						}
 					} else {
 						System.out.println("FALSE");
 						Alert alert = new Alert(AlertType.INFORMATION);
@@ -81,9 +83,67 @@ public class CreatePathScreen extends PathScreen {
 	}
 
 	@Override
-	public void initializeGridSettings(CreatePathGrid gridIn) {
-		setPathPanel(new CreatePathPanel(getView()));
-		grid = gridIn; 
-		setGridApplied();
+	protected void initializeGridSettings(CreatePathGrid gridIn) {
+		setPathPanel(myPathPanel, myPathToolBar);
+		setGridApplied(gridIn);
 	}
+	@Override
+	protected void setSpecificUIComponents() {
+	    setGridUIComponents(myPathPanel, myPathToolBar);
+	    ImageView trashImage = myPathPanel.makeTrashImage();
+		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				if (event.getDragboard().hasImage()) {
+					event.acceptTransferModes(TransferMode.ANY);
+				}
+			}
+		});
+
+		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			public void handle(DragEvent event) {
+				event.acceptTransferModes(TransferMode.ANY);
+				Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasImage()) {
+					success = true;
+//					pathGrid.getChildren().remove(grid.getDraggableImage());
+				}
+				event.setDropCompleted(success);
+				event.consume();
+			}
+		});
+
+		Button backgroundButton = (Button) myPathToolBar.getBackgroundButton();
+		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				getGrid().setBackgroundImage(file.toURI().toString());
+			}
+		});
+		
+		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPathImage());
+		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getStartImage());
+		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getEndImage());
+	}
+	
+	private void setImageOnButtonPressed(Button button, DraggableImage image) {
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("View Pictures");
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
+				File file = fileChooser.showOpenDialog(new Stage());
+				image.setNewImage(new Image(file.toURI().toString()));
+			}
+		});
+	}
+
+
 }

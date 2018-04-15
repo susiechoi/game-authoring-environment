@@ -4,13 +4,18 @@ package gameplayer.panel;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +31,8 @@ public class TowerPanel extends Panel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private final int TOWER_IMAGE_SIZE = 70;
+    private final int SWAP_BUTTON_SIZE = 25;
+
 
     private BorderPane PANE;
     private PromptReader PROMPTS;
@@ -35,9 +42,9 @@ public class TowerPanel extends Panel {
     private final UIFactory UIFACTORY;
     private Panel bottomPanel;
     private Button currencyDisplay;
+    private final String ASSORTED_BUTTON_FILEPATH = "src/images/GamePlayerAssorted/GamePlayerAssorted.properties";
 
     //TODO change to only use availibleTowers
-    private final String TOWER_NAMES_FILE_PATH = "images/TowerImageNames.properties"; 
 
     //private final FileIO FILE_READER;
 
@@ -50,6 +57,7 @@ public class TowerPanel extends Panel {
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	money = GAME_SCREEN.getMoney();
+	makePanel();
     }
 
 
@@ -62,12 +70,29 @@ public class TowerPanel extends Panel {
 	ScrollPane towerDisplay = new ScrollPane(towerGroup);
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
+
 	currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
 	currencyDisplay.setText("$" +money.toString());
 	currencyDisplay.setDisable(true);
-	currencyDisplay.setMaxWidth(Double.MAX_VALUE);;
-	VBox towersAndCurr = new VBox(towerDisplay,currencyDisplay);
+	currencyDisplay.setMaxWidth(Double.MAX_VALUE);
+
+
+	VBox currencyAndSwap = new VBox(currencyDisplay);
+	currencyAndSwap.setAlignment(Pos.CENTER);
+	try {
+	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
+	    Button swapButton = UIFACTORY.makeImageButton("swapButton", upgradeMap.get("swap"));
+	    swapButton.setOnMouseClicked((arg0) -> GAME_SCREEN.swapVertPanel());
+	    HBox swapWrap = new HBox(swapButton);
+	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
+	    currencyAndSwap.getChildren().add(swapWrap);
+	} catch (MissingPropertiesException e) {
+	    //SWAPBUTTONIMAGEMISSING
+	}
+
+
+	VBox towersAndCurr = new VBox(towerDisplay,currencyAndSwap);
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
 
@@ -131,13 +156,14 @@ public class TowerPanel extends Panel {
 	//	    }
 
 	//something went wrong and we don't have the towers
-	//TODO something reasonable here
+	//TODO something reasonable here 
 	//probably have default images that aren't the ones specified by authoring
     }
 
     private void towerSelected(String towerPropName) {
 
     }
+
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerGroup.getChildren().clear();
@@ -148,6 +174,5 @@ public class TowerPanel extends Panel {
 	money = newBalence;
 	currencyDisplay.setText("$" +money.toString());
     }
-
 }
 

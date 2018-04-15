@@ -11,6 +11,7 @@ import gameplayer.panel.ControlsPanel;
 
 
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,46 +49,43 @@ public class GameScreen extends Screen {
     private UpgradePanel UPGRADE_PANEL;
     private ScreenManager SCREEN_MANAGER;
     private BuyPanel BUY_PANEL;
-    private VBox rightPane;
-    private BorderPane leftPane;
+    private VBox displayPane;
+    private BorderPane gamePane;
     private final Mediator MEDIATOR;
-
+    private BorderPane rootPane;
 
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 	SCREEN_MANAGER = ScreenController;
 	UIFACTORY = new UIFactory();
 	PROMPTS = promptReader;
 	MEDIATOR = mediator;
-
-    }
-
-    @Override
-    public Parent makeScreenWithoutStyling() {
-	BorderPane rootPane = new BorderPane();
 	TOWER_PANEL = new TowerPanel(this, PROMPTS);
 	CONTROLS_PANEL = new ControlsPanel(this);
 	SCORE_PANEL = new ScorePanel(this);
 	GAME_PANEL = new GamePanel(this);
 	UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
 	BUY_PANEL = new BuyPanel(this, PROMPTS);
+    }
 
+    @Override
+    public Parent makeScreenWithoutStyling() {
+	rootPane = new BorderPane();
 
-
-	rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+	displayPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 	VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
-	leftPane = new BorderPane();
-	leftPane.setMaxWidth(Double.MAX_VALUE);
-	leftPane.setMaxHeight(Double.MAX_VALUE);
+	gamePane = new BorderPane();
+	gamePane.setMaxWidth(Double.MAX_VALUE);
+	gamePane.setMaxHeight(Double.MAX_VALUE);
 
 
-	leftPane.setTop(SCORE_PANEL.getPanel());
-	leftPane.setCenter(GAME_PANEL.getPanel());
-	leftPane.setBottom(UPGRADE_PANEL.getPanel());
+	gamePane.setTop(SCORE_PANEL.getPanel());
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	//leftPane.setBottom(UPGRADE_PANEL.getPanel());
 
 	rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
-	rootPane.setCenter(leftPane);
-	rootPane.setRight(rightPane);
+	rootPane.setCenter(gamePane);
+	setVertPanelsLeft();
 
 	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
@@ -106,7 +104,7 @@ public class GameScreen extends Screen {
 	 * 	-if this is the case this method isn't needed and an updateCurrency Method 
 	 * 	should instead be called in towerPanel upon any action which would spend currency 
 	 */
-	Integer money = 1000; //placeholder
+	Integer money = 0; //placeholder
 	return money;
     }
 
@@ -161,14 +159,13 @@ public class GameScreen extends Screen {
 
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
 	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-	System.out.println(placedTower.getImageView().getFitWidth() + " placed tower width ");
 	return placedTower;
     }
 
     public void towerClickedOn(FrontEndTower tower) {
 	TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
-	rightPane.getChildren().clear();
-	rightPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
+	displayPane.getChildren().clear();
+	displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
     }
 
     public void sellTower(FrontEndTower tower) {
@@ -176,10 +173,31 @@ public class GameScreen extends Screen {
 	MEDIATOR.sellTower(tower);
     }
 
-    public void setPath(Map<String, List<Point2D>> imageMap, int numRow, int numCol) {
-	GAME_PANEL.setPath(imageMap, numRow, numCol);
+
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
+	GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
     }
 
+    private void setVertPanelsLeft() {
+	rootPane.getChildren().remove(displayPane);
+	rootPane.setRight(null);
+	rootPane.setLeft(displayPane);
+
+    }
+    private void setVertPanelsRight() {
+	rootPane.getChildren().remove(displayPane);
+	rootPane.setLeft(null);
+	rootPane.setRight(displayPane);
+    }
+
+    public void swapVertPanel() {
+	if(rootPane.getRight() == null) {
+	    setVertPanelsRight();
+	}
+	else {
+	    setVertPanelsLeft();
+	}
+    }
 
 
 }

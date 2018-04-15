@@ -46,6 +46,10 @@ public class Manager<E> {
     public void addToAvailableList(E sprite) {
 	available.add(sprite);
     }
+    
+    public void removeFromActiveList(E sprite) {
+    	active.remove(sprite);
+    }
 
     /**
      * Checks for collisions between between the list of active actors held by the Manager the method

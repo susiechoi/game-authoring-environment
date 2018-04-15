@@ -1,8 +1,13 @@
 package engine.sprites.towers.projectiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.FrontEndSprite;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 
 /**
@@ -10,14 +15,16 @@ import javafx.scene.image.Image;
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
- *
+ * @author Miles Todzo
  */
-public class Projectile extends Sprite implements FrontEndSprite{
+public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
 	private double mySpeed;
 	private double mySize; 
 	private Sprite myTarget;
+	private List<Sprite> hitTargets;
+	private int myHits = 1;
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -31,11 +38,18 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		myDamage = damage;
 		mySpeed = speed;
 		mySize = size; 
+		hitTargets = new ArrayList<>();
 	}
 	
-	public Projectile(Projectile myProjectile, Sprite target) {
+	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	    this.myDamage = myProjectile.myDamage;
 	    myTarget = target;
+	    mySpeed = 300;
+	    myDamage = new DamageProperty(100,100,100);
+	    this.place(shooterX, shooterY);
+	    this.rotateImage();
+	    hitTargets = new ArrayList<>();
 	}
 
 	/**
@@ -44,20 +58,23 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public void move(double elapsedTime) {
 	    	rotateImage();
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-		double xMove = Math.sin(this.getRotate())*totalDistanceToMove;
-		double yMove = Math.cos(this.getRotate())*totalDistanceToMove;
+		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		this.getImageView().setX(this.getX()+xMove);
-		this.getImageView().setY(this.getX()+yMove);
+		this.getImageView().setY(this.getY()+yMove);
+
 	}
 	
 	/**
 	 * Rotates the image to face the target
 	 */
 	private void rotateImage() {
+
 	    	double xDifference = myTarget.getX() - this.getX();
 	    	double yDifference = myTarget.getY() - this.getY();
-	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
-	    	this.getImageView().setRotate(Math.toDegrees(angleToRotateRads));
+	    	double angleToRotateRads = Math.atan2(xDifference,yDifference);
+	    	this.setRotate(Math.toDegrees(angleToRotateRads));
+
 	}
 	
 	/**
@@ -90,6 +107,17 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public double getSize() {
 		return mySize; 
 	}
+	/**
+	 * @return true if should be removed
+	 */
+	@Override
+	public boolean handleCollision(Sprite sprite) {
+		this.hitTargets.add(sprite);
+		this.myHits--;
+		return !(myHits > 0);
+	}
 
-
+	public boolean hasHit(ShootingSprites target) {
+		return this.hitTargets.contains(target);
+	}
 }

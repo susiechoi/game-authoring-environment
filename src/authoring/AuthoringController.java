@@ -25,15 +25,20 @@ import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelReader;
-import xml.AuthoringModelWriter;
+
 
 public class AuthoringController {
 	
 	private AuthoringView myAuthoringView; 
-	private HashMap<String, List<Point>> myImageMap;
+	private Map<String, List<Point>> myImageMap;
 	private AuthoringModel myModel; 
 
 	
+	/**
+	 * Creates a new AuthoringController
+	 * @param stageManager contains Stage game is being authored on
+	 * @param languageIn is chosen language for prompts
+	 */
 	public AuthoringController(StageManager stageManager, String languageIn) {
 		myAuthoringView = new AuthoringView(stageManager, languageIn, this);
 		try {
@@ -95,14 +100,28 @@ public class AuthoringController {
 	// TODO
 	/**
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
+	 * @throws ObjectNotFoundException 
 	 */
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) { 
-		myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
+		System.out.println("LEVEL: " + level);
+		System.out.println("IMG COORDS" + imageCoordinates);
+	    
+	    
+	    	myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
+		System.out.println(imageCoordinates);
 		myImageMap = imageCoordinates;
 	}
 
 	
+	/**
+	 * Method that wraps Model method to return a Path object given its level and 
+	 * int identifier
+	 * @param name is int identifier of this path
+	 * @param level is current level
+	 * @return Path object corresponding to this level/id
+	 * @throws ObjectNotFoundException
+	 */
 	public Path getPathFromName(int name, int level) throws ObjectNotFoundException {
 	    return myModel.getPathFromName(name, level);
 	}
@@ -122,14 +141,30 @@ public class AuthoringController {
 
     }
 
+    /**
+	 * Invokes a Model method that adds a new level to the authored game, 
+	 * based on the previous level that the user has created
+	 * (or the default level if the user has not customized any level) 
+	 * @return integer of new level created
+	 */
 	public int addNewLevel() {
 		return myModel.addNewLevel(); 
 	}
 	
+	/**
+	 * Invokes a Model method that returns a list of level numbers 
+	 * as strings currently in the authored game
+	 * Useful in displaying the levels available for edit by the user
+	 * @return List<String>: A list of level numbers as strings
+	 */
 	public List<String> getLevels() {
 		return myModel.getLevels(); 
 	}
 
+	/**
+	 * Wraps Model method to autogenerate a level
+	 * @return int level number of new level
+	 */
 	public int autogenerateLevel() {
 		return myModel.autogenerateLevel(); 
 	}
@@ -144,12 +179,14 @@ public class AuthoringController {
 	 * @param newAmount: the new amount of the specified enemy to put in the wave
 	 * @throws ObjectNotFoundException: thrown if the level isn't found
 	 */
-	public void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
+	public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
+	    Path path = getPathFromName(Integer.parseInt(pathName), level);
 	    Level thisLevel = myModel.levelCheck(level);
 	    Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    Wave thisWave;
 	    if (levelWaves.size() < waveNumber) {
+		System.out.println("making a new wave!!");
 		thisWave = new Wave(path);
 	    }
 	    else {
@@ -174,6 +211,15 @@ public class AuthoringController {
 	    return levelWaves.size();
 	}
 	
+	/**
+	 * Gets a Map of the current Enemy names to the number of that enemy for a given wave/path/
+	 * level combination
+	 * @param level of wave desired
+	 * @param path of wave desired
+	 * @param waveNumber of wave desired
+	 * @return Map of enemy names to the number of those enemies going down this path in this wave
+	 * @throws ObjectNotFoundException
+	 */
 	public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
 	    Level currentLevel = myModel.levelCheck(level);
 	    //TODO: issue here - if there is no wave yet then need to make it first!
@@ -185,8 +231,7 @@ public class AuthoringController {
 	    for(Enemy enemy : enemyMap.keySet()) {
 		enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
 	    }
-	    return enemyNameMap;
-	    
+	    return enemyNameMap;   
 	}
 	
 	
@@ -203,20 +248,45 @@ public class AuthoringController {
 	    return thisLevel.getAllEnemies();
 	}
 
+	/**
+	 * Sets name of the game per user entry
+	 * @param gameName  is new game name
+	 */
 	public void setGameName(String gameName) {
 		myModel.setGameName(gameName);
 	}
 
+	/**
+	 * Gets current name of the game
+	 * @return current name of the game
+	 */
 	public String getGameName() {
 		return myModel.getGameName(); 
 	}
+	/**
+	 * Sets the current AuthoringModel being used based on an XML file
+	 * @param gameName is name of game/XML file being loaded in
+	 */
 	public void setModel(String gameName) {
 	    	AuthoringModelReader reader = new AuthoringModelReader();
 		myModel = reader.createModel(gameName);
 	}
 	
-	public HashMap<String, List<Point>> getGrid() {
+	/**
+	 * Returns a map of String image names to a list of Point coordinates where those 
+	 * images should be found on the path
+	 * @return image name to coordinate map
+	 */
+	public Map<String, List<Point>> getGrid() {
 		return myImageMap;
 	}
+	/**
+	 * Method to retrieve the highest wave number found in a level (including all paths)
+	 * @param level is level desired
+	 * @return highest wave number found in that level
+	 * @throws ObjectNotFoundException
+	 */
+	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
+	    return myModel.getHighestWaveNumber(level);
+	}
 }
-
