@@ -6,8 +6,18 @@
 
 package authoring.frontend;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
+import engine.level.Level;
+import engine.sprites.enemies.Enemy;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,7 +29,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
+
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
+	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 
 	private TextField myNameField;
 	private ComboBox<String> myImageDropdown;
@@ -95,24 +107,30 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		return sp;
 	}
 
-	protected void populateFieldsWithData() {
+	protected void populateFieldsWithData() { // TODO where to put this? 
+
+		AttributeFinder attributeFinder = new AttributeFinder(); 
+		
 		myNameField.setText(getMySelectedObjectName());
 
-		setEditableOrNot(myNameField, getIsNewObject());
+		Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
 
-		//		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myImage")); 
+		try {
+			fieldsToAttributes = getView().getPropertiesReader().read(TOWER_FIELDS);
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("ObjectAttributeDNE");
+		}
 
-		getUIFactory().setSliderToValue(myTowerHealthValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthValue"));
+		for (String key : fieldsToAttributes.keySet()) {
+			Object myField = null; 
+			try {
+				myField = attributeFinder.retrieveFieldValue(key, this);
+				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute("Tower", getMySelectedObjectName(), fieldsToAttributes.get(key)));
+			} catch (IllegalArgumentException | NullPointerException | IllegalAccessException e) {
+				getView().loadErrorScreen("ObjectAttributeDNE");
+			}
 
-		getUIFactory().setSliderToValue(myTowerHealthUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeCost"));
-
-		getUIFactory().setSliderToValue(myTowerHealthUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myHealthUpgradeValue"));
-
-		getUIFactory().setSliderToValue(myTowerValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myTowerValue"));
-
-		//		getUIFactory().setSliderToValue(myTowerUpgradeCostSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myUpgradeCost"));
-		//
-		//		getUIFactory().setSliderToValue(myTowerUpgradeValueSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myUpgradeValue"));
+		}
 
 	}
 

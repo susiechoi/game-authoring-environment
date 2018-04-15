@@ -64,8 +64,9 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	}
 	
 	protected abstract Parent populateScreenWithFields();
-	protected abstract void populateFieldsWithData(); 
-
+	
+	protected abstract void populateFieldsWithData();
+	
 	/**
 	 * Used when the changes on the Screen are applied and the Screen must convey whether the object that has been created is new or existing 
 	 * @return
@@ -122,5 +123,5 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		}
 		return valid; 
 	}
-	
+			
 }

@@ -103,7 +103,7 @@ public class GameScreen extends Screen {
 	 * 	-if this is the case this method isn't needed and an updateCurrency Method 
 	 * 	should instead be called in towerPanel upon any action which would spend currency 
 	 */
-	Integer money = 1000; //placeholder
+	Integer money = 0; //placeholder
 	return money;
     }
 

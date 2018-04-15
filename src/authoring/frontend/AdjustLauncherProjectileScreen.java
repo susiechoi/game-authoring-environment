@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
+	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 	
 	private AdjustTowerScreen myTowerScreen;
 	private ComboBox<String> myProjectileImage;
@@ -146,7 +147,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	protected void populateFieldsWithData() {
-//		getUIFactory().setComboBoxToValue(myProjectileImage, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileImage")); 
 
 		getUIFactory().setSliderToValue(myProjectileDamageSlider, getView().getObjectAttribute("Tower", getMySelectedObjectName(), "myProjectileDamage"));
 

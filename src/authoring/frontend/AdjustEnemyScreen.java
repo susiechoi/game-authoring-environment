@@ -20,7 +20,8 @@ import javafx.scene.layout.VBox;
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
-
+	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
+	
 	private TextField myNameField; 
 	private ComboBox<String> myImageDropdown;
 	private Slider mySpeedSlider;
@@ -119,8 +120,6 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		myNameField.setText(getMySelectedObjectName());
 
 		setEditableOrNot(myNameField, getIsNewObject());
-
-		//		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
 
 		getUIFactory().setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
 
