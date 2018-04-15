@@ -51,7 +51,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myIntersecter = new ImageIntersecter(this.getImageView()); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
-	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND IMAGE "+image);
     }
 
     /**
@@ -77,8 +76,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     public Enemy(String name, String image, double size) {
 	super(name, image, size, null);
-	myHealth = new HealthProperty(10000,10000,10000);
+	myHealth = new HealthProperty(10000,10000,100);
 	myDamage = new DamageProperty(10000, 10000, 10000);
+	myValue = new ValueProperty(300);
     }
 
     /**

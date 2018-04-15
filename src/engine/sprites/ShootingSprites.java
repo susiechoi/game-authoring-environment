@@ -70,10 +70,11 @@ public abstract class ShootingSprites extends Sprite{
 	this.checkTowerEnemyCollision(target);
 	for (Projectile projectile: projectiles) {
 	    if(target.intersects(projectile)){
-		toBeRemoved = target.objectCollision(projectile);
+//		toBeRemoved = target.objectCollision(projectile);
 		if(this.intersects(projectile)){
 		    toBeRemoved = objectCollision(projectile);
 		}
+		//toBeRemoved.add(projectile);
 	    }
 	}
 	return toBeRemoved;
@@ -119,7 +120,6 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-	System.out.println("shooter X is " + shooterX);
 	return myLauncher.launch(target, shooterX, shooterY);
     }
 

@@ -147,7 +147,6 @@ public class GamePanel extends Panel{
 	ImageView spriteImage = sprite.getImageView();
 	spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
 	spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
-	System.out.println(spriteAdd.getChildren());
 	spriteAdd.getChildren().add(sprite.getImageView());
     }
 
