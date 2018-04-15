@@ -21,7 +21,7 @@ import javafx.scene.image.Image;
  */
 public class PropertiesReader {
 	
-	public String findKey(String filepath, String targetVal) throws MissingPropertiesException {
+	protected String findKey(String filepath, String targetVal) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
 		for (String key : readInProperties.keySet()) {
@@ -32,6 +32,13 @@ public class PropertiesReader {
 		return ""; 
 	}
 	
+	/**
+	 * Finds a corresponding value given a filepath and a target key
+	 * @param filepath is filepath of Properties file
+	 * @param target is target key
+	 * @return value corresponding to that key
+	 * @throws MissingPropertiesException
+	 */
 	public String findVal(String filepath, String target) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
@@ -41,6 +48,12 @@ public class PropertiesReader {
 		return ""; 
 	}
 	
+	/**
+	 * Gets a list of all keys for a properties file
+	 * @param filepath is filepath of properties file
+	 * @return list of all keys for that properties file
+	 * @throws MissingPropertiesException
+	 */
 	public List<String> allKeys(String filepath) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
@@ -51,6 +64,14 @@ public class PropertiesReader {
 		return allKeys; 
 	}
 	
+	/**
+	 * Creates a map of keys to Images for Properties files holding names and image filepaths
+	 * @param filepath is filepath of Properties file
+	 * @param imageLength is desired length of image
+	 * @param imageHeight is desired height of image
+	 * @return Map of keys to corresponding Images
+	 * @throws MissingPropertiesException
+	 */
 	public Map<String, Image> keyToImageMap(String filepath, double imageLength, double imageHeight) throws MissingPropertiesException {
 		Map<String, Image> imageMap = new HashMap<String, Image>(); 
 		Properties properties = loadProperties(filepath);
@@ -94,6 +115,12 @@ public class PropertiesReader {
 		return readInProperties; 
 	}
 	
+	/**
+	 * Finds all vals of a properties file given the filepath
+	 * @param filepath is filepath of properties file
+	 * @return List of all values in that properties file
+	 * @throws MissingPropertiesException
+	 */
 	public List<String> findVals(String filepath) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		List<String> vals = new ArrayList<String>(); 
