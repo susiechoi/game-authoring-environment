@@ -23,7 +23,7 @@ public abstract class ShootingSprites extends Sprite{
     private int hitCount;
     private int roundScore;
     private ImageIntersecter intersector;
-    private List<Sprite> targetsBeingShotAt;
+ //   private List<Sprite> targetsBeingShotAt;
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
      * on the screen
@@ -41,7 +41,7 @@ public abstract class ShootingSprites extends Sprite{
 	//	this.getImageView().setFitWidth(size);
 	myLauncher = launcher;
 	roundScore = 0;
-	targetsBeingShotAt = new ArrayList<>();
+//	targetsBeingShotAt = new ArrayList<>();
     }
     
     /**
@@ -127,11 +127,12 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-    	if (!targetsBeingShotAt.contains(target)) {
-    		targetsBeingShotAt.add(target);
-    		return myLauncher.launch(target, shooterX, shooterY);
-    	}
-    	return null;
+    	return myLauncher.launch(target, shooterX, shooterY);
+//    	if (!targetsBeingShotAt.contains(target)) {
+//    		targetsBeingShotAt.add(target);
+//    		return myLauncher.launch(target, shooterX, shooterY);
+//    	}
+//    	return null;
     }
 
     /**
