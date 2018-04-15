@@ -31,6 +31,8 @@ public class TowerPanel extends Panel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private final int TOWER_IMAGE_SIZE = 70;
+    private final int SWAP_BUTTON_SIZE = 25;
+
 
     private BorderPane PANE;
     private PromptReader PROMPTS;
@@ -40,7 +42,7 @@ public class TowerPanel extends Panel {
     private final UIFactory UIFACTORY;
     private Panel bottomPanel;
     private Button currencyDisplay;
-    private final String SWAP_BUTTON_FILEPATH = "images/swap.png";
+    private final String ASSORTED_BUTTON_FILEPATH = "src/images/GamePlayerAssorted/GamePlayerAssorted.properties";
 
     //TODO change to only use availibleTowers
 
@@ -74,15 +76,18 @@ public class TowerPanel extends Panel {
 	currencyDisplay.setText("$" +money.toString());
 	currencyDisplay.setDisable(true);
 	currencyDisplay.setMaxWidth(Double.MAX_VALUE);
-	HBox currencyAndSwap = new HBox(currencyDisplay);
+
+
+	VBox currencyAndSwap = new VBox(currencyDisplay);
 	currencyAndSwap.setAlignment(Pos.CENTER);
 	try {
-	    Button swapButton = UIFACTORY.makeImageButton("swapButton", new Image(new FileInputStream(SWAP_BUTTON_FILEPATH), 20, 20, false, false));
+	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
+	    Button swapButton = UIFACTORY.makeImageButton("swapButton", upgradeMap.get("swap"));
 	    swapButton.setOnMouseClicked((arg0) -> GAME_SCREEN.swapVertPanel());
 	    HBox swapWrap = new HBox(swapButton);
-	    swapWrap.setAlignment(Pos.CENTER_LEFT);
+	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
-	} catch (FileNotFoundException e) {
+	} catch (MissingPropertiesException e) {
 	    //SWAPBUTTONIMAGEMISSING
 	}
 
@@ -159,7 +164,7 @@ public class TowerPanel extends Panel {
 
     }
 
-    
+
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerGroup.getChildren().clear();
 	towerGroup.getChildren().add(fillScrollWithTowers(availableTowers));
