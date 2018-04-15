@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Tower";
@@ -41,7 +42,12 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName, TOWER_FIELDS, OBJECT_TYPE);
 	}
-
+	
+	/**
+	 * Populates screen with ComboBoxes/TextFields/Buttons/Sliders/Selectors needed to 
+	 * fully specify a Tower object
+	 * @see authoring.frontend.AdjustNewOrExistingScreen#populateScreenWithFields()
+	 */
 	@Override
 	public Parent populateScreenWithFields() {		
 		VBox vb = new VBox(); 

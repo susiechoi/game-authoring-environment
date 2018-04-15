@@ -14,8 +14,9 @@ import javafx.scene.text.Text;
 
 /**
  * Class to create the original screen users see when entering the Game Authoring environment. 
- * Dependent on the AuthoringView to create it correctly and on the PartsFactory to make UI
- * element
+ * Dependent on the AuthoringView to create it correctly and on the UIFactory to make UI
+ * elements correctly. Also dependent on View to correctly lead Screenflow and load the next
+ * screen.
  * @author Sarahbland
  *
  *
@@ -40,7 +41,13 @@ public class StartScreen extends AuthoringScreen {
 	currCSSIndex = 0; 
     }
     
+    /**
+     * Creates UI elements necessary to display to user (i.e. selection of which game to edit or to 
+     * create a new game).
+     * @see frontend.Screen#makeScreenWithoutStyling()
+     */
     @Override
+    
     public Parent makeScreenWithoutStyling() {
 	Text startHeading = new Text();
 	VBox vbox = new VBox();
@@ -78,7 +85,7 @@ public class StartScreen extends AuthoringScreen {
 
     }
     //Method by Ben Hodgson/Andrew Arnold!
-    public List<String> getFileNames(String folderName) {
+    private List<String> getFileNames(String folderName) {
 	String currentDir = System.getProperty("user.dir");
 	try {
 	    File file = new File(currentDir + File.separator + folderName);

@@ -1,5 +1,10 @@
 package frontend;
 
+/**
+ * Class for reading in Prompts given a key from an Errors properties file.
+ * @author Andrew Arnold
+ *
+ */
 public class PromptReader extends PropertiesBuffer{
     private final String DEFAULT_LANGUAGE_FILEPATH = "languages/";
     private final String DEFAULT_PROMPT_FILENAME = "/Prompts.properties";
