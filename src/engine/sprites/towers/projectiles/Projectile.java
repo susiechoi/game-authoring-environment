@@ -51,7 +51,7 @@ public class Projectile extends Sprite {
 	 * Moves image in direction of it's orientation
 	 */
 	public void move(double elapsedTime) {
-	    	//myTarget.place(0, 0);
+	//    	myTarget.place(0, 0);
 		//System.out.println(myTarget.getX() + " target x y "+ myTarget.getY());
 	    	rotateImage();
 	//    	System.out.println("speed is " + mySpeed);

@@ -110,7 +110,7 @@ public abstract class ShootingSprites extends Sprite{
 	if (!intersector.overlaps(shooter.getImageView())) {
 //		System.out.println(this.getX() + " tower " + this.getY());
 //		System.out.println(shooter.getX() + " enemy " + shooter.getY());
-		System.out.println("checkTowerEnemyCollision says there was a Tower/Enemy collision");
+//		System.out.println("checkTowerEnemyCollision says there was a Tower/Enemy collision");
 	    this.handleCollision(shooter); //TODO - handle these
 	    shooter.handleCollision(this);
 	}

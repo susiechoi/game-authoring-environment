@@ -87,12 +87,14 @@ public class Launcher extends Manager<Projectile>{
      */
     public boolean hasReloaded() {
     	long currTime = System.nanoTime();
-     	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()) {
-     		timeLastFired = currTime;
-     		return true;
-     	}
-		return false;
+    	long timeSinceLastShot = currTime - timeLastFired;
+    	System.out.println(currTime + " currTime and last fired "+ timeLastFired);
+    	System.out.println(timeSinceLastShot + " "+ myFireRate.getProperty());
+    	if(timeSinceLastShot >= (myFireRate.getProperty()*Math.pow(10, 9))) {
+    		timeLastFired = currTime;
+    		return true;
+    	}
+    	return false;
 	}
 
     public double upgradeDamage(double balance) {
