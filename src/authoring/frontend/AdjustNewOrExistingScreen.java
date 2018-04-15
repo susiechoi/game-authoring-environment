@@ -74,7 +74,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected abstract Parent populateScreenWithFields();
 
 	protected abstract void populateNameField();
-
+	
 	protected void populateFieldsWithData() {
 		AttributeFinder attributeFinder = new AttributeFinder(); 
 
