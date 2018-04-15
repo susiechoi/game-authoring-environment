@@ -36,7 +36,7 @@ public abstract class ShootingSprites extends Sprite{
     public ShootingSprites(String name, String image, double size, Launcher launcher) {
 	super(name, image, size);
 	hitCount=0;
-	intersector = new ImageIntersecter(new ImageView(image));
+	intersector = new ImageIntersecter(this);
 	//	this.getImageView().setFitHeight(size);
 	//	this.getImageView().setFitWidth(size);
 	myLauncher = launcher;
@@ -71,12 +71,11 @@ public abstract class ShootingSprites extends Sprite{
 	this.checkTowerEnemyCollision(target); //TODO add any dead tower/enemy to toBeRemoved list
 	for (Projectile projectile: projectiles) {
 	    if(target.intersects(projectile)){
-
 		toBeRemoved.addAll(target.objectCollision(projectile)); //checks collisions between projectiles and enemy/tower
-
-		if(this.intersects(projectile)){
-		    toBeRemoved.addAll(objectCollision(projectile));
-		}
+		toBeRemoved.add(projectile);
+//		if(this.intersects(projectile)){
+//		    toBeRemoved.addAll(objectCollision(projectile));
+//		}
 		//toBeRemoved.add(projectile);
 	    }
 	}
@@ -89,13 +88,13 @@ public abstract class ShootingSprites extends Sprite{
     	hitCount++;
     	if(this.handleCollision(collider)) {
     	//	System.out.println("WEEEWOO");
-    	//	deadSprites.add(this);
+    		deadSprites.add(this);
     		roundScore += this.getPointValue();
     		hitCount++;
     	}
-    	if(!collider.handleCollision(this)) {
-    	//	deadSprites.add(collider);
-    	}
+//    	if(!collider.handleCollision(this)) {
+//    	//	deadSprites.add(collider);
+//    	}
 //    	if(!this.intersects((Projectile)collider)) {
 //    		System.out.println("this is good");
 //    		deadSprites.add(collider);

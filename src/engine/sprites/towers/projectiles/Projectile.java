@@ -52,11 +52,8 @@ public class Projectile extends Sprite {
 	public void move(double elapsedTime) {
 	    	rotateImage();
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-
 		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-		
-		
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
 
