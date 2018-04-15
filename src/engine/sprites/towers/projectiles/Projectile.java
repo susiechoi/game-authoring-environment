@@ -10,9 +10,9 @@ import javafx.scene.image.Image;
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
- *
+ * @author Miles Todzo
  */
-public class Projectile extends Sprite implements FrontEndSprite{
+public class Projectile extends Sprite {
 
 	private DamageProperty myDamage;
 	private double mySpeed;
@@ -35,30 +35,33 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	
 	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	    this.myDamage = myProjectile.myDamage;
 	    myTarget = target;
 	    mySpeed = 300;
 	    myTarget.place(100, 100);
 	    myProjectile.place(800, 800);
 	    myDamage = new DamageProperty(100,100,100);
 	    this.place(shooterX, shooterY);
+
 	    this.rotateImage();
 	    
-	    myTarget = target;
+	    //myTarget = target;
 	}
 
 	/**
 	 * Moves image in direction of it's orientation
 	 */
 	public void move(double elapsedTime) {
-	    	myTarget.place(100, 100);
 	    	rotateImage();
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
+
 		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		
 		
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
+
 	}
 	
 	/**
@@ -103,6 +106,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public double getSize() {
 		return mySize; 
 	}
-
-
+	/**
+	 * @return true if intersect
+	 */
+	@Override
+	public boolean handleCollision(Sprite sprite) {
+		//System.out.println("collision with projectile and " + sprite);
+		return (this.getImageView().getBoundsInParent().intersects(sprite.getImageView().getBoundsInParent()));
+		//return false;
+	}
 }

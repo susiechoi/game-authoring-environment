@@ -33,18 +33,23 @@ import javafx.scene.layout.StackPane;
  * auto-populate cells by mouse drag (right click?) or copy and paste
  */
 
+/**
+ * Class to create/manage the GridPane for path authoring and disply.
+ * @author Erik Riis
+ *
+ */
 public class CreatePathGrid extends AdjustScreen {
 
 	public static final int INITIAL_PATH_SIZE = 60;
 	private double pathSize;
 	private int colIndex;
 	private int rowIndex;
-	private GridPane grid = new GridPane();;
+	private GridPane grid = new GridPane();
 	private SelectionModel model;
 
 	//TODO: have these update with change images, and get images from default file
-	private ImageView startImage = new ImageView(new Image("file:images/start.png"));
-	private ImageView endImage = new ImageView(new Image("file:images/end.png"));
+	private ImageView startImage = new ImageView(new Image("file:images/brick.png"));
+	private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
 	private GridPane checkGrid;
 	private Label startLabel;
@@ -63,16 +68,20 @@ public class CreatePathGrid extends AdjustScreen {
 		super(view);
 	}
 
+	/**
+	 * @return
+	 */
 	protected GridPane makePathGrid() {
 
 		grid = new GridPane();
 
 		checkGrid = new GridPane();
-		checkGrid.setMaxSize(1000, 750);
+		checkGrid.setMaxSize(1020.0, 625.0);
 		setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
-		grid.setMaxSize(1000, 750); 
+		grid.setMaxSize(1020.0, 625.0); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
+//		grid.setGridLinesVisible(true);
 
 //		System.out.println(getView().getImageCoordinates());
 //		gridImageCoordinates = getView().getImageCoordinates();
@@ -81,7 +90,7 @@ public class CreatePathGrid extends AdjustScreen {
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
 
-		grid.setStyle("-fx-background-image: url('file:images/white.png')"); 
+		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
 		populateGrid();
 
 		return grid;
@@ -92,8 +101,8 @@ public class CreatePathGrid extends AdjustScreen {
 	//Given: path images and locations as defaults, change to populate with initial params, 
 	private void populateGrid() {
 
-		for (int x = 0 ; x < grid.getColumnCount(); x++) {
-			for (int y = 0 ; y < grid.getRowCount(); y++) {
+		for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
+			for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
 				StackPane cell = new StackPane();
 
 				final int col = x;
@@ -151,7 +160,7 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	}
 
-	public void addImagesToGrid(Map<String, List<Point>> imageCoordinates) {
+	protected void addImagesToGrid(Map<String, List<Point>> imageCoordinates) {
 		if (imageCoordinates.size() != 0) {
 			for (String key: imageCoordinates.keySet()) { //goes through images
 				for (int i = 0; i < imageCoordinates.keySet().size(); i++) {
@@ -162,16 +171,16 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	}
 
-	public void setGridConstraints(GridPane grid, double size) {
+	protected void setGridConstraints(GridPane grid, double size) {
 		grid.getColumnConstraints().clear();
 		grid.getRowConstraints().clear();
 		pathSize = size;
-		for (int i = 0; i < 1000/pathSize; i++) {
+		for (int i = 0; i < 1020.0/pathSize; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
 			colConst.setPrefWidth(pathSize);
 			grid.getColumnConstraints().add(colConst);
 		}
-		for (int i = 0; i < 750/pathSize; i++) {
+		for (int i = 0; i < 650.0/pathSize; i++) {
 			RowConstraints rowConst = new RowConstraints();
 			rowConst.setPrefHeight(pathSize);
 			grid.getRowConstraints().add(rowConst);         
@@ -179,9 +188,7 @@ public class CreatePathGrid extends AdjustScreen {
 		populateGrid();
 	}
 
-
-
-	public boolean checkPathConnected(GridPane grid, int row, int col) {
+	protected boolean checkPathConnected(GridPane grid, int row, int col) {
 
 		if (getNode(grid, col, row) != null) {
 			Label checkLabel = (Label) getNode(grid, col, row);
@@ -216,18 +223,17 @@ public class CreatePathGrid extends AdjustScreen {
 			return true;
 		}
 
-//		grid.add(new Label("path"), col, row);
 		return false;
 	}
 
-	public void addCoordinates(int row, int col) {
+	protected void addCoordinates(int row, int col) {
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 		Point point = new Point((int) x, (int) y);
 		pathCoords.add(point);
 	}
 
-	public Node getNode(GridPane gridPane, int col, int row) {
+	protected Node getNode(GridPane gridPane, int col, int row) {
 		Node result = null;
 		for (Node node : gridPane.getChildren()) {
 			if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
@@ -241,7 +247,7 @@ public class CreatePathGrid extends AdjustScreen {
 		return result;
 	}
 
-	public void removeNode(GridPane grid, int row, int col) {
+	protected void removeNode(GridPane grid, int row, int col) {
 		for(Node node : grid.getChildren()) {
 			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
 				grid.getChildren().remove(node);
@@ -250,7 +256,7 @@ public class CreatePathGrid extends AdjustScreen {
 		} 
 	}
 
-	private boolean imageCompare(Image image1, Image image2) {
+	protected boolean imageCompare(Image image1, Image image2) {
 		for (int i = 0; i < image1.getWidth(); i++){
 			for (int j = 0; j < image1.getHeight(); j++){
 				if (image1.getPixelReader().getArgb(i, j) != image2.getPixelReader().getArgb(i, j)) {
@@ -261,7 +267,7 @@ public class CreatePathGrid extends AdjustScreen {
 		return true;
 	}
 
-	public void setUpForWaves(EventHandler<MouseEvent> action) {
+	protected void setUpForWaves(EventHandler<MouseEvent> action) {
 		makeUnDraggable();
 		for(DraggableImage image : draggableImagesOnScreen) {
 			image.getPathImage().setOnMouseClicked(e -> 
@@ -281,45 +287,40 @@ public class CreatePathGrid extends AdjustScreen {
 		return myCurrentClicked;
 	}
 
-	public List<Point> getStartingPosition() {
+	protected List<Point> getStartingPosition() {
 		return startPoints;
 	}
 
-	public void setBackgroundImage(String backGroundFileName) {
+	protected void setBackgroundImage(String backGroundFileName) {
 		grid.setStyle("-fx-background-image: url(" + backGroundFileName + ")");
 	}
 
-	public GridPane getGrid() {
+	protected GridPane getGrid() {
 		return grid;
 	}
 
-	public GridPane getCheckGrid() {
+	protected GridPane getCheckGrid() {
 		return checkGrid;
 	}
 
-	public double getPathSize() {
+	protected double getPathSize() {
 		return pathSize;
 	}
 
-	public List<Point> getAbsoluteCoordinates() {
+	protected List<Point> getAbsoluteCoordinates() {
 		return pathCoords;
 	}
 
-	public int isStartInGrid() {
+	protected int isStartInGrid() {
 		return startCount;
 	}
 
-	
-	
-	
-	//TODO: Fix this
-	public HashMap<String, List<Point>> getGridImageCoordinates() {
-		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
-		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
-		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
+	protected HashMap<String, List<Point>> getGridImageCoordinates() {
+		gridImageCoordinates.put(startImage.getImage().impl_getUrl(), startPoints);
+		gridImageCoordinates.put(endImage.getImage().impl_getUrl(), endPoints);
+		gridImageCoordinates.put(pathImage.getImage().impl_getUrl(), pathPoints);
 		return gridImageCoordinates;
 	}
-	
 	
 
 	@Override
