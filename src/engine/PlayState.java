@@ -31,7 +31,6 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class PlayState implements GameData {
 
-<<<<<<< HEAD
     private double UNIVERSAL_TIME;
     private int count;
     private int myScore;
@@ -119,106 +118,8 @@ public class PlayState implements GameData {
 //	    myEnemyManager.moveProjectiles();
 //	    myEnemyManager.moveEnemies();
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
-=======
-	private double UNIVERSAL_TIME;
-	private int myScore;
-	private int myResources;
-	private TowerManager myTowerManager;
-	private EnemyManager myEnemyManager;
-	private Mediator myMediator;
-	private List<Level> myLevels;
-	private Level currentLevel;
-	private boolean isPaused;
-
-	/**
-	 * Constructor for play state object that sets up initial levels.
-	 * 
-	 * @param mediator
-	 * @param levels
-	 * @param score
-	 * @param resources
-	 * @param universalTime
-	 */
-	public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
-		myMediator = mediator;
-		myLevels = levels;
-		currentLevel = myLevels.get(0);
-		myTowerManager = new TowerManager(currentLevel.getTowers());
-		myEnemyManager = new EnemyManager();
-		isPaused = false;
-		myScore = score;
-		myResources = resources;
-		UNIVERSAL_TIME = universalTime;
-		List<FrontEndTower> availTowers = new ArrayList<>();
-		availTowers.addAll(currentLevel.getTowers().values());
-		//System.out.print("Available towers: ");
-		//System.out.println(availTowers.size());
-		myMediator.setAvailableTowers(availTowers);
-		myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
-		myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
-
 	}
-
-	public void update(double elapsedTime) {
-		if(!isPaused) {
-			try {
-				for (Path path : currentLevel.getUnmodifiablePaths()) {
-					Wave currentWave;
-					if (!currentLevel.getWaves(path).isEmpty()) {
-						currentWave = currentLevel.getWaves(path).get(0);
-					}
-					else {
-						continue;
-					}
-					int currentTime = new Double(UNIVERSAL_TIME).intValue();
-					myMediator.addSpriteToScreen((FrontEndSprite)currentLevel.getNewEnemy(path));
-					if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
-						currentLevel.getNewEnemy(path);
-					}
-					// TODO: remove "magic numbers", improve this to be 3 seconds
-					// after the wave finished
-					if (UNIVERSAL_TIME % 3 == 0 && currentWave.isFinished()) {
-						currentLevel.removeWave(path);
-					}
-				}
-			} catch (Exception e) {
-				// do nothing
-			}
-			//adding enemy to screen
-			Enemy newEnemy = currentLevel.getNewEnemy(currentLevel.getUnmodifiablePaths().get(0));
-			if (currentLevel.getUnmodifiablePaths().get(0) != null && newEnemy != null) {
-				//System.out.println("NOT NULL AND BEING ADDED TO MEDIATor");
-				myMediator.addSpriteToScreen((FrontEndSprite) newEnemy);
-				myEnemyManager.addToActiveList(newEnemy);
-				if (newEnemy.getName() == null) {
-					System.out.println("NAME WAS NULL IN PLAYSTATE");
-				}
-			}
-			UNIVERSAL_TIME+=elapsedTime;
-			List<Sprite> toBeRemoved = new ArrayList<>();
-			toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
-//			for (Sprite sprite: toBeRemoved) {
-//				System.out.println(sprite +" "+sprite.getName() + " is in ToBeREmoved");
-//				
-//			}
-			//myMediator.removeListOfSpritesFromScreen(toBeRemoved);
-			//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-			myTowerManager.moveProjectiles(elapsedTime);
-			myTowerManager.moveTowers();
-			for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
-				System.out.println("shooting");
-				myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-			//	System.out.println("added to med");
-			}
-			//	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
-			//		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-			//	    }
-			//	    myEnemyManager.moveProjectiles();
-			//	    myEnemyManager.moveEnemies();
-			myMediator.removeListOfSpritesFromScreen(toBeRemoved);
-		}
->>>>>>> f6f1d26bc34fae891f51773f6e541ab487417a5b
-	}
+    }
 
 
 
