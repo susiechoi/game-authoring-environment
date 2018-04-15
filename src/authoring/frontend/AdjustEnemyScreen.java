@@ -19,7 +19,9 @@ import javafx.scene.layout.VBox;
 
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
+	public static final String OBJECT_DESCRIPTION = "Enemy";
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
 	private TextField myNameField; 
 	private ComboBox<String> myImageDropdown;
@@ -31,7 +33,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	//	private Slider myUpgradeValueSlider; 
 
 	protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
-		super(view, selectedObjectName);
+		super(view, selectedObjectName, ENEMY_FIELDS, OBJECT_DESCRIPTION);
 	}
 
 	@Override
@@ -115,24 +117,11 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	 * To be invoked by the Screen subclasses that manage population of fields with existing object attributes 
 	 */
 
-	protected void populateFieldsWithData() {
+	protected void populateNameField() {
 		myNameField.setText(getMySelectedObjectName());
 
 		setEditableOrNot(myNameField, getIsNewObject());
 
-		//		getUIFactory().setComboBoxToValue(myImageDropdown,getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myImage")); 
-
-		getUIFactory().setSliderToValue(mySpeedSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "mySpeed"));
-
-		getUIFactory().setSliderToValue(myHealthImpactSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myHealthImpact"));
-
-		getUIFactory().setSliderToValue(myInitialHealthSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myInitialHealth"));
-
-		getUIFactory().setSliderToValue(myValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillReward"));
-
-		//		getUIFactory().setSliderToValue(myUpgradeCostSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUgradeCost"));
-		//		
-		//		getUIFactory().setSliderToValue(myUpgradeValueSlider, getView().getObjectAttribute("Enemy", getMySelectedObjectName(), "myKillUpgradeValue"));
 	}
 
 

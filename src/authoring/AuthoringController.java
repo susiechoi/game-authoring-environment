@@ -127,10 +127,21 @@ public class AuthoringController {
 
     }
 
+    /**
+	 * Invokes a Model method that adds a new level to the authored game, 
+	 * based on the previous level that the user has created
+	 * (or the default level if the user has not customized any level) 
+	 */
 	public int addNewLevel() {
 		return myModel.addNewLevel(); 
 	}
 	
+	/**
+	 * Invokes a Model method that returns a list of level numbers 
+	 * as strings currently in the authored game
+	 * Useful in displaying the levels available for edit by the user
+	 * @return List<String>: A list of level numbers as strings
+	 */
 	public List<String> getLevels() {
 		return myModel.getLevels(); 
 	}
