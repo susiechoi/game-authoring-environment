@@ -23,7 +23,6 @@ public class GameEngine {
     private Timeline ANIMATION;
 
     public GameEngine(Mediator mediator) {
-	System.out.println("in engine");
 	myPlayState = null;
 	myMediator = mediator;
 
