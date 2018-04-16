@@ -1,6 +1,5 @@
 package engine.sprites;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,7 @@ public abstract class ShootingSprites extends Sprite{
     private int roundScore;
     private ImageIntersecter intersector;
     private List<Sprite> targetsBeingShotAt;
+    
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
      * on the screen
@@ -37,8 +37,6 @@ public abstract class ShootingSprites extends Sprite{
 	super(name, image, size);
 	hitCount=0;
 	intersector = new ImageIntersecter(new ImageView(image));
-	//	this.getImageView().setFitHeight(size);
-	//	this.getImageView().setFitWidth(size);
 	myLauncher = launcher;
 	roundScore = 0;
 	targetsBeingShotAt = new ArrayList<>();

@@ -30,13 +30,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myProjectileDamage; 
     private double myProjectileSpeed;
     private double myProjectileSize;
-    //	private double myProjectileValue;  
-    //	private double myProjectileUgradeCost; 
-    //	private double myProjectileUpgradeValue; 
     private Launcher myLauncher; 
-    //	private double myLauncherValue; 
-    //	private double myLauncherUpgradeCost; 
-    //	private double myLauncherUgradeValue; 
     private double myLauncherRate;
     private double myLauncherRange; 
     private ValueProperty myValue;
@@ -53,12 +47,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 	super(name, image, size, launcher);
-	System.out.println("TOWER SIZE : " + size);
 	myHealth = health;
 	propertyStats = new HashMap<String, Double>();
-	System.out.println("health is " + health.getProperty());
-	System.out.println("health is " + value.getProperty());
-	System.out.println("health is " + this.getDamage());
 
 
 	propertyStats.put(health.getName(), health.getProperty());
@@ -115,8 +105,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     @Override
     public boolean handleCollision(Sprite collider) {
     	return true;
-//	myHealth.loseHealth(collider.getDamage());
-//	return myHealth.isAlive();
     }
 
     /**

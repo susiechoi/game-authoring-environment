@@ -3,7 +3,6 @@ package engine.sprites.towers.projectiles;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
-import javafx.scene.image.Image;
 
 /**
  * Projectile class is a sprite that is launched from the tower
@@ -37,10 +36,10 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
 	    myTarget = target;
 	    mySpeed = 300;
-	    System.out.println("target x is " + myTarget.getX());
+//	    System.out.println("target x is " + myTarget.getX());
 	    this.place(shooterX, shooterY);
-	    System.out.println("Xorig is :" + this.getX());
-	    System.out.println("Yorig is : " + this.getY());
+//	    System.out.println("Xorig is :" + this.getX());
+//	    System.out.println("Yorig is : " + this.getY());
 	    this.rotateImage();
 	    
 	    myTarget = target;

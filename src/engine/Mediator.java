@@ -248,8 +248,6 @@ public class Mediator {
     }
     
     public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-    	System.out.println("Mediator: " +imageMap);
-		
 	myScreenManager.setPath(imageMap, backgroundImageFilePath);
     }
 
