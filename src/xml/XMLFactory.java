@@ -31,7 +31,6 @@ public class XMLFactory {
 	public static XMLWriter generateWriter(String writerType) {
 		try {
 			Class<?> writer = Class.forName("xml." + writerType);
-			System.out.println(writer.toGenericString());
 			try {
 			    return (XMLWriter) writer.newInstance();
 			} catch (InstantiationException e) {
@@ -93,8 +92,8 @@ public class XMLFactory {
 	    p.write(a, "test1");
 	    AuthoringModelReader r = (AuthoringModelReader) XMLFactory.generateReader("AuthoringModelReader");
 	    AuthoringModel b = r.createModel("test1");
-	    if (b!= null)
-		System.out.println("not Null");
+//	    if (b!= null)
+//		System.out.println("not Null");
 	}
 
 }

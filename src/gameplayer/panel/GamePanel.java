@@ -69,7 +69,6 @@ public class GamePanel extends Panel{
 		} catch (MissingPropertiesException e1) {
 			//TODO should fix but who cares since this will be refactored 
 			//to be gotten from mediator
-			System.out.println("Background Images failed to load");
 		}
 
 		spriteAdd = panelRoot;
@@ -78,7 +77,6 @@ public class GamePanel extends Panel{
 
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-		System.out.println("Game Panel: " +imageMap);
 
 		PathMaker pathMaker = new PathMaker();
 		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath);

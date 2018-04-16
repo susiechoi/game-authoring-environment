@@ -10,7 +10,6 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
@@ -53,12 +52,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 	super(name, image, size, launcher);
-	System.out.println("TOWER SIZE : " + size);
 	myHealth = health;
 	propertyStats = new HashMap<String, Double>();
-	System.out.println("health is " + health.getProperty());
-	System.out.println("health is " + value.getProperty());
-	System.out.println("health is " + this.getDamage());
 
 
 	propertyStats.put(health.getName(), health.getProperty());
