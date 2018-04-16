@@ -8,13 +8,9 @@ import gameplayer.panel.ScorePanel;
 import gameplayer.panel.TowerInfoPanel;
 import gameplayer.panel.BuyPanel;
 import gameplayer.panel.ControlsPanel;
-
-
 import java.awt.Point;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -24,7 +20,6 @@ import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -205,7 +200,6 @@ public class GameScreen extends Screen {
 	    setVertPanelsLeft();
 	}
     }
-
 
 }
 

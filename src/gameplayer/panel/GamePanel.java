@@ -80,7 +80,6 @@ public class GamePanel extends Panel{
 	}
     }
 
-
     public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
 	System.out.println("Game Panel: " +imageMap);
 

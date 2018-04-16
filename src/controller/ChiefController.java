@@ -3,7 +3,6 @@ package controller;
 import frontend.MainScreen;
 import frontend.StageManager;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
  * objects. 
  */
 public class ChiefController {
-  //test
     
     private final StageManager STAGE_MANAGER;
  
@@ -26,7 +24,6 @@ public class ChiefController {
      * @param stage: Application stage passed by Driver
      */
     public ChiefController(Stage stage) {
-
 	STAGE_MANAGER = new StageManager(stage);
     }
     
