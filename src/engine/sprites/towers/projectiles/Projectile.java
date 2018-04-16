@@ -110,6 +110,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public boolean handleCollision(Sprite sprite) {
 		this.hitTargets.add(sprite);
 		this.myHits--;
+		System.out.println("my hits " + myHits);
 		return !(myHits > 0);
 	}
 

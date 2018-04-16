@@ -58,49 +58,40 @@ public abstract class ShootingSprites extends Sprite{
 	hitCount+=increaseAmount;
     }
 
-    /**
-     * This checks for collisions between the shooter's projectiles and this ShootingSprite
-     * @param shooter : Input shooter that is shooting projectiles
-     * @return : a list of all sprites to be removed from screen (dead)
-     */
-    public List<Sprite> checkForCollision(ShootingSprites target) {
-	List<Sprite> toBeRemoved = new ArrayList<>();
-	List<Projectile> projectiles = this.getProjectiles();
-	this.checkTowerEnemyCollision(target); //TODO add any dead tower/enemy to toBeRemoved list
-	for (Projectile projectile: projectiles) {
-	    if(target.intersects(projectile) && !(projectile.hasHit(target))){
-		toBeRemoved.addAll(target.objectCollision(projectile)); //checks collisions between projectiles and enemy/tower
-		if (projectile.handleCollision(target)) {
-		    toBeRemoved.add(projectile);
-		    this.getLauncher().removeFromActiveList(projectile);
+	/**
+	 * This checks for collisions between the shooter's projectiles and this ShootingSprite
+	 * @param shooter : Input shooter that is shooting projectiles
+	 * @return : a list of all sprites to be removed from screen (dead)
+	 */
+	public List<Sprite> checkForCollision(ShootingSprites target) {
+		List<Sprite> toBeRemoved = new ArrayList<>();
+		List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
+		List<Projectile> projectiles = this.getProjectiles();
+		this.checkTowerEnemyCollision(target); //TODO add any dead tower/enemy to toBeRemoved list
+		for (Projectile projectile: projectiles) {
+			if(target.intersects(projectile) && !(projectile.hasHit(target))){
+				toBeRemoved.addAll(target.objectCollision(projectile)); //checks collisions between projectiles and enemy/tower
+				if (projectile.handleCollision(target)) {
+					toBeRemoved.add(projectile);
+					projectilesToBeDeactivated.add(projectile);
+				}
+			}
 		}
-		//		if(this.intersects(projectile)){
-		//		    toBeRemoved.addAll(objectCollision(projectile));
-		//		}
-		//toBeRemoved.add(projectile);
-	    }
-	}
-	return toBeRemoved;
+		for (Projectile deactivatedProjectile: projectilesToBeDeactivated) { //TODO implement method in shootingSprite (deactivateProjectile) that does this
+			this.getLauncher().removeFromActiveList(deactivatedProjectile);
+		}
+		return toBeRemoved;
     }
 
-    private List<Sprite> objectCollision(Sprite collider) {
-	// 	System.out.println(this.getClass() + " COLLIDING WITH "+ collider.getClass());
-	List<Sprite> deadSprites = new ArrayList<>();
-	hitCount++;
-	if(this.handleCollision(collider)) {
-	    //	System.out.println("WEEEWOO");
-	    deadSprites.add(this);
-	    roundScore += this.getPointValue();
-	    hitCount++;
-	}
-	//    	if(!collider.handleCollision(this)) {
-	//    	//	deadSprites.add(collider);
-	//    	}
-	//    	if(!this.intersects((Projectile)collider)) {
-	//    		System.out.println("this is good");
-	//    		deadSprites.add(collider);
-	//    	}
-	return deadSprites;
+	private List<Sprite> objectCollision(Sprite collider) {
+		List<Sprite> deadSprites = new ArrayList<>();
+		hitCount++;
+		if(this.handleCollision(collider)) {
+			deadSprites.add(this);
+			roundScore += this.getPointValue();
+			hitCount++;
+		}
+		return deadSprites;
     }
 
     /**
