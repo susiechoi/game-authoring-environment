@@ -16,12 +16,13 @@ import engine.sprites.enemies.Enemy;
  */
 public class Wave {
     
-    private final Map<Enemy, Integer> myEnemies;
-    private final Path myPath;
+   // private final Map<Enemy, Integer> myEnemies;
+    private final Map<Path, Map<Enemy, Integer>> myWave;
     
-    public Wave(Path path) {
-	myEnemies = new HashMap<Enemy, Integer>();
-	myPath = path;
+    public Wave() {
+//	myEnemies = new HashMap<Enemy, Integer>();
+//	myPath = path;
+	myWave = new HashMap<Path, Map<Enemy, Integer>>();
     }
     
     /**

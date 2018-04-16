@@ -281,6 +281,7 @@ public class AuthoringController {
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
+    
     /**
      * Method to retrieve the highest wave number found in a level (including all paths)
      * @param level is level desired

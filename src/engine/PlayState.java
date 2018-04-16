@@ -81,7 +81,7 @@ public class PlayState implements GameData {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
 		    Wave currentWave;
-		    System.out.println(currentLevel.getWaves(path).size());
+		  //  System.out.println(currentLevel.getWaves(path).size());
 		    if (!currentLevel.getWaves(path).isEmpty()) {
 			currentWave = currentLevel.getWaves(path).get(0);
 		    }
