@@ -8,13 +8,9 @@ import gameplayer.panel.ScorePanel;
 import gameplayer.panel.TowerInfoPanel;
 import gameplayer.panel.BuyPanel;
 import gameplayer.panel.ControlsPanel;
-
-
 import java.awt.Point;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -24,7 +20,6 @@ import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -103,7 +98,7 @@ public class GameScreen extends Screen {
 		 * 	-if this is the case this method isn't needed and an updateCurrency Method 
 		 * 	should instead be called in towerPanel upon any action which would spend currency 
 		 */
-		Integer money = 1000; //placeholder
+		Integer money = 0; //placeholder
 		return money;
 	}
 
@@ -176,7 +171,5 @@ public class GameScreen extends Screen {
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
 		GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
 	}
-
-
 }
 

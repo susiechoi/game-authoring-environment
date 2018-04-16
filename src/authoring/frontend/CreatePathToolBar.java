@@ -5,6 +5,12 @@ import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
+/**
+ * Class to create the tool bar component of the path authoring screen.
+ * @author Erik Riis
+ *
+ */
+
 public class CreatePathToolBar extends PathToolBar {
 
 	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
@@ -34,7 +40,6 @@ public class CreatePathToolBar extends PathToolBar {
 
 		getToolBar().getChildren().addAll(backgroundButton, startImageChooser, pathImageChooser, endImageChooser);
 	}
-
 
 	public Button getPathImageButton() {
 		return pathImageChooser;

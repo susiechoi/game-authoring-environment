@@ -145,6 +145,4 @@ public class CreatePathScreen extends PathScreen {
 			}
 		});
 	}
-
-
 }

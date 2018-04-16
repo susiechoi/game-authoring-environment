@@ -6,6 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
+/**
+ * Abstract class representing the bottom toolbar portion of screens displaying a Path.
+ * Used to add basic sizing functionality to those toolbars and extended to provide other 
+ * functionality.
+ * @author Sarahbland
+ *
+ */
 public abstract class PathToolBar extends AuthoringScreen {
 	public static final String DEFAULT_PLUS_IMAGE = "file:images/plus.png";
 	public static final String DEFAULT_MINUS_IMAGE = "file:images/minus.png";

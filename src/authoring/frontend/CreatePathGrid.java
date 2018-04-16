@@ -31,6 +31,11 @@ import javafx.scene.layout.StackPane;
  * auto-populate cells by mouse drag (right click?) or copy and paste
  */
 
+/**
+ * Class to create/manage the GridPane for path authoring and disply.
+ * @author Erik Riis
+ *
+ */
 public class CreatePathGrid extends AdjustScreen {
 
 	public static final int INITIAL_PATH_SIZE = 60;
@@ -60,6 +65,9 @@ public class CreatePathGrid extends AdjustScreen {
 		super(view);
 	}
 
+	/**
+	 * @return
+	 */
 	protected GridPane makePathGrid() {
 		grid = new GridPane();
 
@@ -147,7 +155,9 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	}
 
-	public void setGridConstraints(GridPane grid, double size) {
+
+
+	protected void setGridConstraints(GridPane grid, double size) {
 		grid.getColumnConstraints().clear();
 		grid.getRowConstraints().clear();
 		pathSize = size;
@@ -163,7 +173,7 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	}
 
-	public boolean checkPathConnected(GridPane grid, int row, int col) {
+	protected boolean checkPathConnected(GridPane grid, int row, int col) {
 
 		if (getNode(grid, col, row) != null) {
 			Label checkLabel = (Label) getNode(grid, col, row);
@@ -200,14 +210,14 @@ public class CreatePathGrid extends AdjustScreen {
 		return false;
 	}
 
-	public void addCoordinates(int row, int col) {
+	protected void addCoordinates(int row, int col) {
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 		Point point = new Point((int) x, (int) y);
 		pathCoords.add(point);
 	}
 
-	public Node getNode(GridPane gridPane, int col, int row) {
+	protected Node getNode(GridPane gridPane, int col, int row) {
 		Node result = null;
 		for (Node node : gridPane.getChildren()) {
 			if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
@@ -221,7 +231,7 @@ public class CreatePathGrid extends AdjustScreen {
 		return result;
 	}
 
-	public void removeNode(GridPane grid, int row, int col) {
+	protected void removeNode(GridPane grid, int row, int col) {
 		for(Node node : grid.getChildren()) {
 			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
 				grid.getChildren().remove(node);
@@ -230,7 +240,7 @@ public class CreatePathGrid extends AdjustScreen {
 		} 
 	}
 
-	private boolean imageCompare(Image image1, Image image2) {
+	protected boolean imageCompare(Image image1, Image image2) {
 		for (int i = 0; i < image1.getWidth(); i++){
 			for (int j = 0; j < image1.getHeight(); j++){
 				if (image1.getPixelReader().getArgb(i, j) != image2.getPixelReader().getArgb(i, j)) {
@@ -241,7 +251,7 @@ public class CreatePathGrid extends AdjustScreen {
 		return true;
 	}
 
-	public void setUpForWaves(EventHandler<MouseEvent> action) {
+	protected void setUpForWaves(EventHandler<MouseEvent> action) {
 		makeUnDraggable();
 		for(DraggableImage image : draggableImagesOnScreen) {
 			image.getPathImage().setOnMouseClicked(e -> 
@@ -261,36 +271,36 @@ public class CreatePathGrid extends AdjustScreen {
 		return myCurrentClicked;
 	}
 
-	public List<Point> getStartingPosition() {
+	protected List<Point> getStartingPosition() {
 		return startPoints;
 	}
 
-	public void setBackgroundImage(String backGroundFileName) {
+	protected void setBackgroundImage(String backGroundFileName) {
 		grid.setStyle("-fx-background-image: url(" + backGroundFileName + ")");
 	}
 
-	public GridPane getGrid() {
+	protected GridPane getGrid() {
 		return grid;
 	}
 
-	public GridPane getCheckGrid() {
+	protected GridPane getCheckGrid() {
 		return checkGrid;
 	}
 
-	public double getPathSize() {
+	protected double getPathSize() {
 		return pathSize;
 	}
 
-	public List<Point> getAbsoluteCoordinates() {
+	protected List<Point> getAbsoluteCoordinates() {
 		return pathCoords;
 	}
 
-	public int isStartInGrid() {
+	protected int isStartInGrid() {
 		return startCount;
 	}
 
 
-	public HashMap<String, List<Point>> getGridImageCoordinates() {
+	protected HashMap<String, List<Point>> getGridImageCoordinates() {
 		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
 		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
 		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);

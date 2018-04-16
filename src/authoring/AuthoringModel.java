@@ -12,7 +12,6 @@ package authoring;
 import java.awt.Point;
 import java.lang.Double; 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +63,7 @@ public class AuthoringModel implements GameData {
 	protected String myBackgroundImage = new String();
 	protected List<Point> myPathCoordinates = new ArrayList<Point>();
 
-	
+
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
 		myPropertiesReader = new PropertiesReader();
@@ -94,7 +93,31 @@ public class AuthoringModel implements GameData {
 		firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
 		Enemy testEnemy = new Enemy(myDefaultEnemy);
 		firstLevel.addEnemy(myDefaultName, testEnemy);
-//		firstLevel.addPath(myDefaultPath);
+
+		//		List<Point> dummyPathPoints = new ArrayList<>();
+		//		dummyPathPoints.add(new Point(2, 2));
+		//		dummyPathPoints.add(new Point(2, 3));
+		//		dummyPathPoints.add(new Point(2, 4));
+		//		HashMap<String, List<Point>> pathImages = new HashMap<>();
+		//		List<Point> dummyPathStartPoints = new ArrayList<>();
+		//		dummyPathStartPoints.add(new Point(5, 1));
+		//		List<Point> dummyPathMiddlePoints = new ArrayList<>();
+		//		dummyPathMiddlePoints.add(new Point(5, 2));
+		//		dummyPathMiddlePoints.add(new Point(5, 3));
+		//		dummyPathMiddlePoints.add(new Point(5, 4));
+		//		dummyPathMiddlePoints.add(new Point(5, 5));
+		//		dummyPathMiddlePoints.add(new Point(5, 6));
+		//		dummyPathMiddlePoints.add(new Point(5, 7));
+		//		dummyPathMiddlePoints.add(new Point(6, 7));
+		//		dummyPathMiddlePoints.add(new Point(7, 7));
+		//		dummyPathMiddlePoints.add(new Point(8, 7));
+		//		dummyPathMiddlePoints.add(new Point(9, 7));
+		//		List<Point> dummyPathEndPoints = new ArrayList<>();
+		//		dummyPathEndPoints.add(new Point(10, 12));
+		//		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
+		//		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
+		//		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
+
 		try {
 			makePath(1, myPathCoordinates, myImageMap, myBackgroundImage);
 		}
@@ -179,7 +202,6 @@ public class AuthoringModel implements GameData {
 		myImageMap = imageCoordinates;
 		myBackgroundImage = backgroundImage;
 		myPathCoordinates = coordinates;
-		
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
 		currentLevel.addPath(newPath);
@@ -290,52 +312,27 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
-		Field field; 
-		Object fieldValue = null; 
+		Object attributeValue = null;
+
+		AttributeFinder attributeFinder = new AttributeFinder(); 
 		if (objectType.equals("Enemy")) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
-				for (Field aField : enemy.getClass().getDeclaredFields()) {
-					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-					if (fieldSimpleString.equals(attribute)) {
-						aField.setAccessible(true);
-						fieldValue = aField.get(enemy);
-						break; 
-					}
-				}
-			}
-			if (fieldValue == null) {
-				throw new ObjectNotFoundException(name);
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
 			}
 		}
 		else if (objectType.equals("Tower")) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
-				for (Field aField : tower.getClass().getDeclaredFields()) {
-					String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-					if (fieldSimpleString.equals(attribute)) {
-						aField.setAccessible(true);
-						fieldValue = aField.get(tower);
-						break; 
-					}
-				}
-			}
-			if (fieldValue == null) {
-				throw new ObjectNotFoundException(name);
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
 			}
 		}
 		else if (objectType.equals("Settings")) {
-			for (Field aField : mySettings.getClass().getDeclaredFields()) {
-				String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-				if (fieldSimpleString.equals(attribute)) {
-					aField.setAccessible(true);
-					fieldValue = aField.get(mySettings);
-					break; 
-				}
-			}
+			attributeValue = attributeFinder.retrieveFieldValue(attribute, mySettings);
 		}
+
 		//	else if (objectType.equals("Wave")) {
 		//	    Level currentLevel = levelCheck(level);
 		//	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
@@ -353,15 +350,22 @@ public class AuthoringModel implements GameData {
 		//		throw new ObjectNotFoundException(name);
 		//	    }
 		//	}
-		if (fieldValue.getClass() == Double.class) {
-			return Double.toString((double) fieldValue); 
+		if (attributeValue == null) {
+			throw new ObjectNotFoundException(name);
+		}
+		if (attributeValue.getClass() == Double.class) {
+			return Double.toString((double) attributeValue); 
 		} 
-		//		else if (fieldValue.getClass() == Image.class) {
-		//			return myPropertiesReader.findKey(DEFAULT_IMAGES_PREFIX+objectType+DEFAULT_IMAGES_SUFFIX, fieldValue.);
-		//		}
-		else return (String) fieldValue; 
+
+		else return (String) attributeValue; 
 	}
 
+	/**
+	 * Returns Level object corresponding to an integer level number
+	 * @param level is number of level desired
+	 * @return Level object of that number
+	 * @throws ObjectNotFoundException
+	 */
 	public Level levelCheck(int level) throws ObjectNotFoundException {
 		Level currentLevel = myLevels.get(level);
 		if (currentLevel == null) {
@@ -370,6 +374,10 @@ public class AuthoringModel implements GameData {
 		return currentLevel;
 	}
 
+	/**
+	 * Returns a list of Level objects corresponding to all Levels that have been previously made
+	 * @return a list of all Levels currently made in this game
+	 */
 	public List<Level> allLevels() {
 		List<Level> ret = new ArrayList<Level>();
 		for(Level level : myLevels.values()) {
@@ -397,7 +405,6 @@ public class AuthoringModel implements GameData {
 	 */
 	private Enemy generateGenericEnemy() throws NumberFormatException, FileNotFoundException {
 		try {
-			double enemySize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemySize"));
 			Enemy newEnemy = new EnemyBuilder().construct(
 					myDefaultName, 
 					myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage"), 
@@ -426,10 +433,6 @@ public class AuthoringModel implements GameData {
 		dummyPathStartPoints.add(new Point(2, 2));
 		List<Point> dummyPathMiddlePoints = new ArrayList<>();
 		dummyPathMiddlePoints.add(new Point(2, 3));
-				dummyPathMiddlePoints.add(new Point(3, 3));
-				dummyPathMiddlePoints.add(new Point(4, 3));
-				dummyPathMiddlePoints.add(new Point(5, 3));
-				dummyPathMiddlePoints.add(new Point(6, 3));
 		List<Point> dummyPathEndPoints = new ArrayList<>();
 		dummyPathEndPoints.add(new Point(2, 4));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
@@ -440,7 +443,8 @@ public class AuthoringModel implements GameData {
 	}
 
 	/**
-	 * Adds a new level to the authored game
+	 * Adds a new level to the authored game, based on the previous level that the user has created
+	 * (or the default level if the user has not customized any level) 
 	 */
 	public int addNewLevel() {
 		int newLevelNumber = autogenerateLevel(); 
@@ -451,7 +455,7 @@ public class AuthoringModel implements GameData {
 
 	/**
 	 * Returns a list of level numbers as strings currently in the authored game
-	 * 
+	 * Useful in displaying the levels available for edit by the user
 	 * @return List<String>: A list of level numbers as strings
 	 */
 	public List<String> getLevels() {
@@ -477,6 +481,10 @@ public class AuthoringModel implements GameData {
 	//		return newLevelNumber;
 	//	}
 
+	/**
+	 * Autogenerates a new level based on the previous Level's settings (enemies, towers, etc.)
+	 * @return int corresponding to level number of level generated
+	 */
 	public int autogenerateLevel() {
 		int newLevelNumber = myLevels.size()+1;
 		Level copiedLevel = myLevels.get(myLevels.size());
@@ -484,15 +492,27 @@ public class AuthoringModel implements GameData {
 		return newLevelNumber; 
 	}
 
+	/**
+	 * Sets the game name of this game so it can be saved/loaded correctly
+	 * @param gameName is new name of this game
+	 */
 	public void setGameName(String gameName) {
 		myGameName = gameName; 
 		mySettings.setGameName(myGameName);
 	}
 
+	/**
+	 * @return String name of this game
+	 */
 	public String getGameName() {
 		return myGameName; 
 	}
 
+	/**
+	 * Returns a Map of String image names to Lists of points where those images should
+	 * be found in the path
+	 * @return Map of image names to Point lists
+	 */
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}

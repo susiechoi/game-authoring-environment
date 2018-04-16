@@ -14,7 +14,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 
+/**
+ * Class to create the panel seen on the righthand side of the WaveScreen that allows
+ * users to specify Enemy information/numbers for a specific wave for a specific path.
+ * Dependent on AuthoringModel to make/retrieve waves correctly and on UIFactory to correctly
+ * create UI elements.
+ * @author Sarahbland
+ *
+ */
+
 public class WavePanel extends PathPanel{
+
 
 	private int myPathNumber;
 	private VBox myRoot;
@@ -32,7 +42,7 @@ public class WavePanel extends PathPanel{
 		setUpPanel();
 	}
 
-	public void setUpPanel() {
+	private void setUpPanel() {
 		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPathNumber, Integer.parseInt(myWaveNumber));
 		myRoot = new VBox();
 		myRoot.setMaxSize(280, 900);
@@ -62,14 +72,18 @@ public class WavePanel extends PathPanel{
 		Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 		applyButton.setOnAction(e -> {
 			errorcheckResponses();
+			System.out.println("addin a wave");
+			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
+			System.out.println("myWaveNumber" + myWaveNumber);
 			getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), Integer.parseInt(myWaveNumber), 
 					myEnemyDropdown.getValue(), myEnemyNumber);
+			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
 		});
-
 		pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField, backButton, applyButton);
 		myRoot.getChildren().add(pseudoRoot);
 		myRoot.getStyleClass().add("rootPanel");
 	}
+
 
 	private void errorcheckResponses() {
 		if(myEnemyDropdown.getValue() == null ) {
@@ -102,6 +116,11 @@ public class WavePanel extends PathPanel{
 		// TODO Auto-generated method stub
 
 	}
+
+	/**
+	 * Do-nothing method for now - to refactor!
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		// TODO Auto-generated method stub

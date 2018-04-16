@@ -244,7 +244,6 @@ public class Mediator {
 		for(Sprite sprite : list) {
 			this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
 		}
-
 	}
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {

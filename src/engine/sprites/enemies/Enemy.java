@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
+import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
@@ -22,7 +23,7 @@ import javafx.scene.Node;
  * @date 4/8/18
  *
  */
-public class Enemy extends ShootingSprites{
+public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     private String myName; 
     private HealthProperty myHealth;
@@ -75,8 +76,9 @@ public class Enemy extends ShootingSprites{
      */
     public Enemy(String name, String image, double size) {
 	super(name, image, size, null);
-	myHealth = new HealthProperty(10000,10000,10000);
+	myHealth = new HealthProperty(10000,10000,100);
 	myDamage = new DamageProperty(10000, 10000, 10000);
+	myValue = new ValueProperty(300);
     }
 
     /**
@@ -117,8 +119,9 @@ public class Enemy extends ShootingSprites{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	myHealth.loseHealth(collider.getDamage());
-	return myHealth.isAlive();
+    	return false;
+//	myHealth.loseHealth(collider.getDamage());
+//	return myHealth.isAlive();
     }
 
     private ImageIntersecter getIntersecter() {
@@ -137,7 +140,8 @@ public class Enemy extends ShootingSprites{
 	return myValue; 
     }
     public int getPointValue() {
-    	return (int)this.myValue.getProperty();
+    	return 0;
+   // 	return (int)this.myValue.getProperty();
     }
 
     

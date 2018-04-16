@@ -64,6 +64,10 @@ public class AuthoringView extends View {
 	}
 
 
+	/**
+	 * Sets the AuthoringModel used to retrieve backend information.
+	 * @param model is new Model used
+	 */
 	public void setModel(AuthoringModel model) {
 		myModel = model;
 	}
@@ -79,25 +83,44 @@ public class AuthoringView extends View {
 	    return myModel;
 	}
 
+	/**
+	 * Loads the first authoring screen shown to user (currently StartScreen) from which ScreenFlow
+	 *  can direct further screens.
+	 */
 	public void loadInitialScreen() {
 		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
 
+	/**
+	 * Loads an error screen when a user has done something so problematic that the program
+	 * cannot recover (such as choosing a language with no prompts and not having English
+	 * prompts to default to).
+	 * @param error is key to the Error the user has committed
+	 * @see frontend.View#loadErrorScreen(java.lang.String)
+	 */
 	@Override
 	public void loadErrorScreen(String error) {
 		loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
 	}
+	/**
+	 * Loads an error alert when the user needs to be notified, but the program can
+	 * recover.
+	 * @param error is error key for error User has committed
+	 */
 	public void loadErrorAlert(String error) {
 		loadErrorAlertToStage(myErrorReader.resourceDisplayText(error));
 	}
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
 	}
-	public String getCurrentCSS() {
+	/**
+	 * @return current CSS filepath
+	 */
+	protected String getCurrentCSS() {
 		return myCurrentCSS;
 	}
 	
-	public void setCurrentCSS(String css) {
+	protected void setCurrentCSS(String css) {
 		myCurrentCSS = css; 
 		myCSSChanged.set(!myCSSChanged.get());
 	}
@@ -259,25 +282,25 @@ public class AuthoringView extends View {
 	    return myStageManager;
 	}
 
-	public String getErrorCheckedPrompt(String prompt) {
+	protected String getErrorCheckedPrompt(String prompt) {
 		return myPromptReader.resourceDisplayText(prompt);
 	}
 
-	public void addNewLevel() {
+	protected void addNewLevel() {
 		int newLevel = myController.addNewLevel(); 
 		setLevel(newLevel);
 	}
 
-	public List<String> getLevels() {
+	protected List<String> getLevels() {
 		return myController.getLevels(); 
 	}
 
-	public void autogenerateLevel() {
+	protected void autogenerateLevel() {
 		int newLevel = myController.autogenerateLevel(); 
 		setLevel(newLevel); 
 	}
 
-	public int getLevel() {
+	protected int getLevel() {
 		return myLevel; 
 	}
 
@@ -285,10 +308,10 @@ public class AuthoringView extends View {
 		return myPropertiesReader; 
 	}
 
-	public void setGameName(String gameName) {
+	protected void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
-	public Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
+	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
 		try {
 			Path path = myController.getPathFromName(pathName, level);
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
@@ -308,25 +331,26 @@ public class AuthoringView extends View {
 	    }
 	    return 1;
 	}
-	public void writeToFile() {
+	protected void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		writer.write(myModel, myModel.getGameName());
 	}
 
-	public void readFromFile(String name) {
+	protected void readFromFile(String name) {
 	    myController.setModel(name);
 	}
 	
+
 	public GridPane getPathGrid() {
 		return myGrid;
 	}
-	
-	public BooleanProperty cssChangedProperty() {
+
+	protected BooleanProperty cssChangedProperty() {
 		return myCSSChanged; 
 	}
 
 
-	public String getGameName() {
+	protected String getGameName() {
 		return myModel.getGameName();
 	}
 

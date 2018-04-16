@@ -31,14 +31,25 @@ public class StageManager {
 	myStage.show();
     }
     
+    /**
+     * Switches which scene is displayed on Screen
+     * @param scene is new scene to be displayed
+     */
     public void switchScene(Scene scene) {
 	myStage.setScene(scene);
     }
+    /**
+     * @return current Scene on stage
+     */
     public Scene getScene() {
 	return myStage.getScene();
     }
     
     
+    /**
+     * Creates and displays a Scene given a Parent node
+     * @param topNode is Parent node containing all elements of Scene
+     */
     public void switchScreen(Parent topNode) {
 	Scene programScene = new Scene(topNode);
 	myStage.setScene(programScene);
