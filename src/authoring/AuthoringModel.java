@@ -30,7 +30,6 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
-import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -197,32 +196,6 @@ public class AuthoringModel implements GameData {
 
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
-
-<<<<<<< HEAD
-	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
-		currentLevel.addPath(newPath);
-	}
-
-	// TODO 
-	/**
-	 * Method through which information can be sent to instantiate or edit a path object
-	 * Wraps constructor in case of new object creation
-	 * @throws ObjectNotFoundException 
-	 */
-
-	//parameters needed to get passed: background image, grid size, location of each image in grid 
-
-
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
-		currentLevel.addPath(newPath);
-
-		//		myImageMap = imageCoordinates;
-		//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
-=======
 	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 		myImageMap = imageCoordinates;
 		myBackgroundImage = backgroundImage;
@@ -230,8 +203,6 @@ public class AuthoringModel implements GameData {
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
 		currentLevel.addPath(newPath);
-
->>>>>>> 53ae313179b794f7e795993c8c4d50f1f8e5b366
 	}
 
 

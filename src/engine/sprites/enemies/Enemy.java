@@ -46,7 +46,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myDamage = damage;
 	myHealthImpact = myDamage.getProperty();
 	myValue = value;
-	myIntersecter = new ImageIntersecter(this.getImageView()); 
+	myIntersecter = new ImageIntersecter(this); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
     }
@@ -117,7 +117,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-    	return false;
+	System.out.println("health is " + myHealth.getProperty());
+	myHealth.loseHealth(collider.getDamage());
+	return myHealth.isAlive();
     }
 
     private ImageIntersecter getIntersecter() {

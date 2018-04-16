@@ -103,14 +103,8 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 */
 	
-<<<<<<< HEAD
-	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 	    
-	    	myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
-		System.out.println(imageCoordinates);
-=======
 	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
 	    	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage); 
->>>>>>> 53ae313179b794f7e795993c8c4d50f1f8e5b366
 		myImageMap = imageCoordinates;
 	}
 
