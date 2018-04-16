@@ -176,13 +176,10 @@ public class AuthoringController {
      */
     public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 	Path path = getPathFromName(Integer.parseInt(pathName), level);
-	System.out.println("PATH NAME: " + pathName);
-	System.out.println("PATH:" + path);
 	Level thisLevel = myModel.levelCheck(level);
-	System.out.println("LEVEL:" + level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
-	System.out.println("ENEMY:" + thisEnemy);
 	Wave thisWave;
+	//TODO: problem, how is this being saved if none of these are instance variables?
 	if(thisLevel.getWaves(path) == null) {
 	    thisWave = new Wave(path);
 	    thisLevel.getWaves(path).add(thisWave);
@@ -190,7 +187,6 @@ public class AuthoringController {
 	else{
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    if (levelWaves.size() < waveNumber) {
-		System.out.println("Entered if statement");
 		thisWave = new Wave(path);
 	    }
 	    else {
