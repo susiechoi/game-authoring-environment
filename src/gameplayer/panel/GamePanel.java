@@ -90,6 +90,10 @@ public class GamePanel extends Panel{
 		spriteAdd.getChildren().add(grid);
 	}
 
+	private void resetCursor() {
+		GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
+		spriteAdd.setOnMouseEntered(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT));
+	}
 
 	public void towerSelected(FrontEndTower tower) {
 		towerSelected = tower;
@@ -136,10 +140,14 @@ public class GamePanel extends Panel{
 
 				towerImage.setLayoutX(-towerImageActual.getWidth()/2);
 				towerImage.setLayoutY(-towerImageActual.getHeight()/2);
+
+
 				if(newTower!= null) {
+
 					addTowerImageViewAction(newTower);
 					towersPlaced.add(newTower);
 					spriteAdd.getChildren().add(towerImage);
+					resetCursor();
 					towerPlaceMode = false;
 				}
 			}
