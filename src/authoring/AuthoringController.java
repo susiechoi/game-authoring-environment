@@ -104,12 +104,7 @@ public class AuthoringController {
 	 */
 	
 	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
-		System.out.println("LEVEL: " + level);
-		System.out.println("IMG COORDS" + imageCoordinates);
-	    
-	    
-	    	myModel.makePath(level, grid, coordinates, imageCoordinates, backgroundImage); 
-		System.out.println(imageCoordinates);
+	    	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage); 
 		myImageMap = imageCoordinates;
 	}
 
@@ -186,7 +181,6 @@ public class AuthoringController {
 	    List<Wave> levelWaves = thisLevel.getWaves(path);
 	    Wave thisWave;
 	    if (levelWaves.size() < waveNumber) {
-		System.out.println("making a new wave!!");
 		thisWave = new Wave(path);
 	    }
 	    else {
