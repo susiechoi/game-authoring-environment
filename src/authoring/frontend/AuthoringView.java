@@ -171,7 +171,11 @@ public class AuthoringView extends View {
 			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
 				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
 				myStageManager.switchScreen(nextScreen.getScreen());
-			} //TODO: handle case where switching to gameplay
+			} 
+			else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
+				Screen nextScreen = (Screen) constructor.newInstance(myStageManager);
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
 			else {
 				throw new MissingPropertiesException("");
 			}

@@ -1,5 +1,6 @@
 package gameplayer;
 
+import frontend.MainScreen;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -153,6 +154,10 @@ public class ScreenManager extends View {
     public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
 	GAME_SCREEN.setPath(imageMap, backgroundImageFilePath);
     }
+
+	public void toMain() {
+		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER).getScreen());
+	}
 
 
 }

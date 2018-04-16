@@ -76,11 +76,14 @@ public class StartScreen extends AuthoringScreen {
 		System.out.println("change to "+myCSSFiles.get(currCSSIndex));
 		myView.setCurrentCSS(myCSSFiles.get(currCSSIndex));
 	});
+	Button backButton = setupBackButton(); 
+	
 	vbox.getChildren().add(startHeading);
 	vbox.getChildren().add(newGameButton);
 	vbox.getChildren().add(gameChooser);
 	vbox.getChildren().add(editButton);
 	vbox.getChildren().add(changeCSS);
+	vbox.getChildren().add(backButton);
 	return vbox;
 
     }
