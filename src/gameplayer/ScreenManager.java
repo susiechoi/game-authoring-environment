@@ -154,5 +154,9 @@ public class ScreenManager extends View {
 	GAME_SCREEN.setPath(imageMap, backgroundImageFilePath);
     }
 
+    public StageManager getStageManager() {
+        return STAGE_MANAGER;
+    }
+
 
 }

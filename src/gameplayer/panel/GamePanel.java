@@ -13,6 +13,8 @@ import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PropertiesReader;
 import gameplayer.screen.GameScreen;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -26,6 +28,7 @@ public class GamePanel extends Panel{
 	private boolean towerPlaceMode = false;
 	private List<FrontEndTower> towersPlaced;
 	private Pane spriteAdd;
+	private boolean mouseChangeToTower = false;
 
 	//TODO changes this to be passed from mediator
 	private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
@@ -90,11 +93,15 @@ public class GamePanel extends Panel{
 	public void towerSelected(FrontEndTower tower) {
 		towerSelected = tower;
 		towerPlaceMode = true;
+		ImageCursor cursor = new ImageCursor(tower.getImageView().getImage());
+		spriteAdd.setOnMouseEntered(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(cursor));
+		spriteAdd.setOnMouseExited(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT));
 	}
 
 	private void addTowerImageViewAction(FrontEndTower tower) {
 		ImageView towerImage = tower.getImageView();
 		towerImage.setOnMouseClicked((args) ->GAME_SCREEN.towerClickedOn(tower));
+
 	}
 
 	public void addSprite(FrontEndSprite sprite) {
@@ -133,12 +140,15 @@ public class GamePanel extends Panel{
 					towersPlaced.add(newTower);
 					spriteAdd.getChildren().add(towerImage);
 					towerPlaceMode = false;
+					mouseChangeToTower = false;
+					GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
 				}
 			}
 			catch(CannotAffordException e){
 				//GameScreen popup for cannot afford
 			}
 		}
+
 	}
 }
 

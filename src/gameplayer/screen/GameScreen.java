@@ -10,6 +10,7 @@ import gameplayer.panel.BuyPanel;
 import gameplayer.panel.ControlsPanel;
 
 
+
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
@@ -29,14 +30,17 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.ImageCursor;
+import javafx.scene.Cursor;
 
 
 
 public class GameScreen extends Screen {
 
     //TODO delete this and re-factor to abstract
-    private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+    private final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+    private final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
 
 
     private final UIFactory UIFACTORY;
@@ -92,7 +96,8 @@ public class GameScreen extends Screen {
     }
 
     public void towerSelectedForPlacement(FrontEndTower tower) {
-	GAME_PANEL.towerSelected(tower);
+
+		GAME_PANEL.towerSelected(tower);
     }
 
     public Integer getMoney() {
@@ -178,6 +183,11 @@ public class GameScreen extends Screen {
     	System.out.println("Game Screen: " +imageMap);
 	GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
     }
+
+    public ScreenManager getScreenManager() {
+		return SCREEN_MANAGER;
+	}
+
 
 
 }
