@@ -54,7 +54,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
-
 	}
 	
 	/**

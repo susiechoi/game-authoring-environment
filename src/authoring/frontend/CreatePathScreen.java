@@ -1,10 +1,8 @@
 package authoring.frontend;
 
-
 import java.awt.Point;
 import java.io.File;
 import java.util.List;
-
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,16 +18,12 @@ import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-/**
- * Class to create the Screen for Path authoring
- * @author Erik Riis
- *
- */
 public class CreatePathScreen extends PathScreen {
 
-	private String backgroundImageFileName;
 	private CreatePathPanel myPathPanel;
 	private CreatePathToolBar myPathToolBar;
+	private String myBackgroundImage = "Images/generalbackground.jpg";
+	private CreatePathGrid myGrid;
 	
 
 	public CreatePathScreen(AuthoringView view) {
@@ -40,6 +34,7 @@ public class CreatePathScreen extends PathScreen {
 	
 	
 	private void setGridApplied(CreatePathGrid grid) {
+		myGrid = grid;
 		myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -51,16 +46,14 @@ public class CreatePathScreen extends PathScreen {
 					alert.showAndWait();
 				}
 				for (Point point: startCoords) {
-					System.out.println(point);
 					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
 						try {
-							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), backgroundImageFileName);
+							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage);
 						} catch (ObjectNotFoundException e1) {
 							// TODO Auto-generated catch block
 						}
 					} else {
-						System.out.println("FALSE");
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Path Cutomization Error");
 						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
@@ -83,12 +76,13 @@ public class CreatePathScreen extends PathScreen {
 	}
 
 	@Override
-	protected void initializeGridSettings(CreatePathGrid gridIn) {
+	public void initializeGridSettings(CreatePathGrid gridIn) {
 		setPathPanel(myPathPanel, myPathToolBar);
 		setGridApplied(gridIn);
 	}
+	
 	@Override
-	protected void setSpecificUIComponents() {
+	public void setSpecificUIComponents() {
 	    setGridUIComponents(myPathPanel, myPathToolBar);
 	    ImageView trashImage = myPathPanel.makeTrashImage();
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
@@ -106,7 +100,6 @@ public class CreatePathScreen extends PathScreen {
 				boolean success = false;
 				if (db.hasImage()) {
 					success = true;
-//					pathGrid.getChildren().remove(grid.getDraggableImage());
 				}
 				event.setDropCompleted(success);
 				event.consume();
@@ -122,19 +115,27 @@ public class CreatePathScreen extends PathScreen {
 				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
 				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 				File file = fileChooser.showOpenDialog(new Stage());
-				getGrid().setBackgroundImage(file.toURI().toString());
+				myBackgroundImage = file.toURI().toString();
+				getGrid().setBackgroundImage(myBackgroundImage);
 			}
 		});
 		
-		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPathImage());
-		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getStartImage());
-		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getEndImage());
+		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPanelPathImage());
+		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getPanelStartImage());
+		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getPanelEndImage());
 	}
 	
 	private void setImageOnButtonPressed(Button button, DraggableImage image) {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
+				if (button.equals(myPathToolBar.getPathImageButton())) {
+					myGrid.setPathImage(myPathPanel.getPanelPathImage().getPathImage());
+				} else if (button.equals(myPathToolBar.getStartImageButton())) {
+					myGrid.setStartImage(myPathPanel.getPanelStartImage().getPathImage());
+				} else if (button.equals(myPathToolBar.getEndImageButton())) {
+					myGrid.setEndImage(myPathPanel.getPanelEndImage().getPathImage());
+				}
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("View Pictures");
 				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
@@ -144,6 +145,4 @@ public class CreatePathScreen extends PathScreen {
 			}
 		});
 	}
-
-
 }

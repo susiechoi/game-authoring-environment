@@ -58,7 +58,6 @@ public class ControlsPanel extends Panel{
 				count++;
 			}
 		} catch (MissingPropertiesException e) {
-			System.out.println("PropertiesReadFailed: ControlsPanel");
 			//something went wrong and we don't have the control images
 			//TODO something reasonable here
 			//probably have default images that aren't the ones specified by authoring
