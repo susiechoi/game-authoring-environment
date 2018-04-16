@@ -24,136 +24,136 @@ import engine.path.Path;
 
 public class Level {
 
-    private final int myNumber;
-    private List<Path> myPaths;
-    private Map<String, Tower> myTowers;
-    private Map<Path, List<Wave>> myWaves;
-    private Map<String, Enemy> myEnemies;
-    
-    
-    private int xLoc = 100;
-    private int yLoc = 100;
-    private int numEnemy = 0;
+	private final int myNumber;
+	private List<Path> myPaths;
+	private Map<String, Tower> myTowers;
+	private Map<Path, List<Wave>> myWaves;
+	private Map<String, Enemy> myEnemies;
 
-    public Level(int number) {
-	myNumber = number;
-	myTowers = new HashMap<String, Tower>();
-	myEnemies = new HashMap<String, Enemy>();
-	myWaves = new HashMap<Path, List<Wave>>();
-	myPaths = new ArrayList<Path>();
-    } 
 
-    /**
-     * Copy constructor
-     * Useful when autogenerating a new level from a prior one
-     * @param copiedLevel - the level's parameters to be copied 
-     * - only difference from copiedLevel is that the level number is incremented
-     */
-    public Level(Level copiedLevel) {
-	myNumber = copiedLevel.getNumber() + 1; 
-	myWaves = copiedLevel.getWaves(); 
-	myPaths = copiedLevel.getPaths(); 
-	myTowers = copiedLevel.getTowers();
-	myEnemies = copiedLevel.getEnemies();
-    }
+	private int xLoc = 100;
+	private int yLoc = 100;
+	private int numEnemy = 0;
 
-    /**
-     * 
-     * @return int: The myNumber of the level Object
-     */
-    public int myNumber() {
-	return myNumber;
-    }
+	public Level(int number) {
+		myNumber = number;
+		myTowers = new HashMap<String, Tower>();
+		myEnemies = new HashMap<String, Enemy>();
+		myWaves = new HashMap<Path, List<Wave>>();
+		myPaths = new ArrayList<Path>();
+	} 
 
-    // TODO 
-    public void addPath(Path path) {
-	myPaths.add(path); 
-    }
+	/**
+	 * Copy constructor
+	 * Useful when autogenerating a new level from a prior one
+	 * @param copiedLevel - the level's parameters to be copied 
+	 * - only difference from copiedLevel is that the level number is incremented
+	 */
+	public Level(Level copiedLevel) {
+		myNumber = copiedLevel.getNumber() + 1; 
+		myWaves = copiedLevel.getWaves(); 
+		myPaths = copiedLevel.getPaths(); 
+		myTowers = copiedLevel.getTowers();
+		myEnemies = copiedLevel.getEnemies();
+	}
 
-    /**
-     * Returns an unmodifiable list of path objects in the level
-     * 
-     * @return List<Path>: a list of path objects in the level
-     */
-    public List<Path> getUnmodifiablePaths() {
-	return Collections.unmodifiableList(myPaths);
-    }
+	/**
+	 * 
+	 * @return int: The myNumber of the level Object
+	 */
+	public int myNumber() {
+		return myNumber;
+	}
 
-    /**
-     * Adds an available tower to the level
-     * 
-     * @param name: The unique string name for the tower object
-     * @param tower: The tower object to be added
-     */
-    public void addTower(String name, Tower tower) {
-	System.out.println(tower.getImageView().getFitWidth() + " level tower width");
-	myTowers.put(name, tower);
-    }
+	// TODO 
+	public void addPath(Path path) {
+		myPaths.add(path); 
+	}
 
-    /**
-     * 
-     * @param name: The unique string name for the tower object
-     * @return boolean: true if the level contains the tower, false otherwise
-     */
-    public boolean containsTower(String name) {
-	return myTowers.containsKey(name);
-    }
+	/**
+	 * Returns an unmodifiable list of path objects in the level
+	 * 
+	 * @return List<Path>: a list of path objects in the level
+	 */
+	public List<Path> getUnmodifiablePaths() {
+		return Collections.unmodifiableList(myPaths);
+	}
 
-    /**
-     * Returns a tower available in the level given a unique tower name.
-     * 
-     * @param name: The unique string name for the tower object
-     * @return Tower: the tower object with the specified name
-     */
-    public Tower getTower(String name) {
-	return myTowers.get(name);
-    }
+	/**
+	 * Adds an available tower to the level
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @param tower: The tower object to be added
+	 */
+	public void addTower(String name, Tower tower) {
+		System.out.println(tower.getImageView().getFitWidth() + " level tower width");
+		myTowers.put(name, tower);
+	}
 
-    /**
-     * Returns a list of all towers available in the level
-     * 
-     * @return List<String>: all the towers available in the level
-     */
-    public List<String> getAllTowers() {
-	List<String> listToReturn = new ArrayList<String>(); 
-	listToReturn.addAll(myTowers.keySet()); 
-	return listToReturn; 
-    }
+	/**
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @return boolean: true if the level contains the tower, false otherwise
+	 */
+	public boolean containsTower(String name) {
+		return myTowers.containsKey(name);
+	}
 
-    /**
-     * Adds an available tower to the level
-     * 
-     * @param name: The unique string name for the tower object
-     * @param tower: The tower object to be added
-     */
-    public void addEnemy(String name, Enemy enemy) {
-	myEnemies.put(name, enemy);
-    }
+	/**
+	 * Returns a tower available in the level given a unique tower name.
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @return Tower: the tower object with the specified name
+	 */
+	public Tower getTower(String name) {
+		return myTowers.get(name);
+	}
 
-    /**
-     * 
-     * @param name: The unique string name for the tower object
-     * @return boolean: true if the level contains the tower, false otherwise
-     */
-    public boolean containsEnemy(String name) {
-	return myEnemies.containsKey(name);
-    }
+	/**
+	 * Returns a list of all towers available in the level
+	 * 
+	 * @return List<String>: all the towers available in the level
+	 */
+	public List<String> getAllTowers() {
+		List<String> listToReturn = new ArrayList<String>(); 
+		listToReturn.addAll(myTowers.keySet()); 
+		return listToReturn; 
+	}
 
-    /**
-     * Returns a tower available in the level given a unique tower name.
-     * 
-     * @param name: The unique string name for the tower object
-     * @return Tower: the tower object with the specified name
-     */
-    public Enemy getEnemy(String name) {
-	return myEnemies.get(name);
-    }
+	/**
+	 * Adds an available tower to the level
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @param tower: The tower object to be added
+	 */
+	public void addEnemy(String name, Enemy enemy) {
+		myEnemies.put(name, enemy);
+	}
 
-    public List<String> getAllEnemies() {
-	List<String> listToReturn = new ArrayList<String>(); 
-	listToReturn.addAll(myEnemies.keySet()); 
-	return listToReturn; 
-    }
+	/**
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @return boolean: true if the level contains the tower, false otherwise
+	 */
+	public boolean containsEnemy(String name) {
+		return myEnemies.containsKey(name);
+	}
+
+	/**
+	 * Returns a tower available in the level given a unique tower name.
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @return Tower: the tower object with the specified name
+	 */
+	public Enemy getEnemy(String name) {
+		return myEnemies.get(name);
+	}
+
+	public List<String> getAllEnemies() {
+		List<String> listToReturn = new ArrayList<String>(); 
+		listToReturn.addAll(myEnemies.keySet()); 
+		return listToReturn; 
+	}
 
 	/**
 	 * Adds a wave to the level
@@ -163,7 +163,6 @@ public class Level {
 	public void addWave(Path path, Wave wave) {
 		if(myWaves.containsKey(path)) {
 			List<Wave> waves = myWaves.get(path);
-			System.out.println("is waves null?" + path == null);
 			waves.add(wave);
 		}
 		else {
@@ -182,38 +181,38 @@ public class Level {
 		return false;
 	}
 
-    /**
-     * Returns any new Enemy
-     */
-    public Enemy getNewEnemy(Path path) {
-	Wave currentWave = myWaves.get(path).get(0);
-	Enemy waveEnemy = currentWave.getEnemy();
-	if (waveEnemy != null) {
-	waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
-	numEnemy++;
+	/**
+	 * Returns any new Enemy
+	 */
+	public Enemy getNewEnemy(Path path) {
+		Wave currentWave = myWaves.get(path).get(0);
+		Enemy waveEnemy = currentWave.getEnemy();
+		if (waveEnemy != null) {
+			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
+			numEnemy++;
+		}
+		return waveEnemy;
 	}
-	return waveEnemy;
-    }
 
-    protected int getNumber() {
-	return myNumber; 
-    }
+	protected int getNumber() {
+		return myNumber; 
+	}
 
-    protected Map<Path, List<Wave>> getWaves() {
-	return myWaves; 
-    }
+	protected Map<Path, List<Wave>> getWaves() {
+		return myWaves; 
+	}
 
-    public List<Path> getPaths() {
-	return myPaths; 
-    }
+	public List<Path> getPaths() {
+		return myPaths; 
+	}
 
-    public Map<String, Tower> getTowers() {
-	return myTowers;
-    }
+	public Map<String, Tower> getTowers() {
+		return myTowers;
+	}
 
-    public Map<String, Enemy> getEnemies() {
-	return myEnemies; 
-    }
+	public Map<String, Enemy> getEnemies() {
+		return myEnemies; 
+	}
 
 	public int getHighestWaveNumber() {
 		int highest = 0;
@@ -265,7 +264,6 @@ public class Level {
 		}
 		return (myWaves.get(path).size() > waveNumber);
 	}
-
 
 
 	public Map<String, List<Point>> getLevelPathMap(){

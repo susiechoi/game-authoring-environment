@@ -82,7 +82,6 @@ public class TestWriter {
 	l.add("B");
 	x.write(l, "TesterFile");
 	ArrayList<String> y = (ArrayList<String>) x.read("TesterFile");
-	System.out.println(y.toString());
     }
 
 }

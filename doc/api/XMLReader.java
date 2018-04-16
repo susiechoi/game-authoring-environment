@@ -2,6 +2,8 @@ package api;
 
 import org.w3c.dom.Document;
 
+import data.GameData;
+
 /**
  * @author Brendan Cheng 3/29/2018
  * 
@@ -13,11 +15,20 @@ import org.w3c.dom.Document;
 public interface XMLReader {
 
 	/**
+	 * Main functional unit of an XMLReader object. Uses XStream to parse a file and return an AuthoringModel object.
+	 * 
+	 * @param filename name of file to be read
+	 * @return AuthoringModel based on specified file
+	 */
+	public GameData createModel(String filename);
+    
+	/**
 	 * Initializes a Document to be read at the specified filepath.
 	 * 
 	 * @param filename name of file to be read
 	 * @return Document containing the file that was read
 	 */
+    	@Deprecated
 	public Document readInFile(String filename);
 	
 	/**
@@ -26,6 +37,7 @@ public interface XMLReader {
 	 * @param elemName Tagname of node to be read
 	 * @return Object that is created based on data in Node
 	 */
+    	@Deprecated
 	public Object getObjectData(String elemName);
 	
 }
