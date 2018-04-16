@@ -114,6 +114,7 @@ public class Projectile extends Sprite {
 	public boolean handleCollision(Sprite sprite) {
 		this.hitTargets.add(sprite);
 		this.myHits--;
+		System.out.println("my hits " + myHits);
 		return !(myHits > 0);
 	}
 
