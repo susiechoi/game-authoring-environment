@@ -28,6 +28,17 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	for (ShootingSprites activeSprite: this.getListOfActive()) {
 	    for (ShootingSprites passedActor: passedSprites) {
 		List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
+//		List<ShootingSprites> activeShootingSprites = this.getListOfActive();
+//		System.out.println("---------------------------------------");
+//		for (ShootingSprites curr: activeShootingSprites) {
+//			System.out.println("** "+ curr);
+//		}
+//		activeShootingSprites.removeAll(deadSprites);
+//		System.out.println("---------------------------------------");
+//		for (ShootingSprites curr: activeShootingSprites) {
+//			System.out.println("** "+ curr);
+//		}
+//		this.setActiveList(activeShootingSprites);
 		spritesToBeRemoved.addAll(deadSprites);
 	    }
 	    myRoundScore += activeSprite.getRoundScore();
