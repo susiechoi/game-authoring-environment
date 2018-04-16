@@ -1,10 +1,8 @@
 package authoring.frontend;
 
-
 import java.awt.Point;
 import java.io.File;
 import java.util.List;
-
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +23,7 @@ public class CreatePathScreen extends PathScreen {
 	private CreatePathPanel myPathPanel;
 	private CreatePathToolBar myPathToolBar;
 	private String myBackgroundImage = "Images/generalbackground.jpg";
+	private CreatePathGrid myGrid;
 	
 
 	public CreatePathScreen(AuthoringView view) {
@@ -35,6 +34,7 @@ public class CreatePathScreen extends PathScreen {
 	
 	
 	private void setGridApplied(CreatePathGrid grid) {
+		myGrid = grid;
 		myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -100,7 +100,6 @@ public class CreatePathScreen extends PathScreen {
 				boolean success = false;
 				if (db.hasImage()) {
 					success = true;
-//					pathGrid.getChildren().remove(grid.getDraggableImage());
 				}
 				event.setDropCompleted(success);
 				event.consume();
@@ -121,15 +120,22 @@ public class CreatePathScreen extends PathScreen {
 			}
 		});
 		
-		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPathImage());
-		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getStartImage());
-		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getEndImage());
+		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPanelPathImage());
+		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getPanelStartImage());
+		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getPanelEndImage());
 	}
 	
 	private void setImageOnButtonPressed(Button button, DraggableImage image) {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
+				if (button.equals(myPathToolBar.getPathImageButton())) {
+					myGrid.setPathImage(myPathPanel.getPanelPathImage().getPathImage());
+				} else if (button.equals(myPathToolBar.getStartImageButton())) {
+					myGrid.setStartImage(myPathPanel.getPanelStartImage().getPathImage());
+				} else if (button.equals(myPathToolBar.getEndImageButton())) {
+					myGrid.setEndImage(myPathPanel.getPanelEndImage().getPathImage());
+				}
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("View Pictures");
 				fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 

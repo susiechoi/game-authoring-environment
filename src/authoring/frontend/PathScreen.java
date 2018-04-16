@@ -70,29 +70,6 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			}
 		});
-		
-//		ImageView trashImage = panel.getPanel();
-//		trashImage.getStyleClass().add("img-view");
-//		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
-//			public void handle(DragEvent event) {
-//				if (event.getDragboard().hasImage()) {
-//					event.acceptTransferModes(TransferMode.ANY);
-//				}
-//			}
-//		});
-//
-//		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
-//			public void handle(DragEvent event) {
-//				event.acceptTransferModes(TransferMode.ANY);
-//				Dragboard db = event.getDragboard();
-//				boolean success = false;
-//				if (db.hasImage()) {
-//					success = true;
-//				}
-//				event.setDropCompleted(success);
-//				event.consume();
-//			}
-//		});	
 	}
 
 	@Override

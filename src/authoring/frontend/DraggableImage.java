@@ -54,13 +54,13 @@ public class DraggableImage extends Parent {
 		return pathImage;
 	}
 
-	public void setDraggable() {
-		//remove former label from checkgrid
-		//if image is already in grid...
+	public void setDraggable(GridPane grid, int row, int col) {
+		
+		//REMOVE FROM CHECK GRID
+		
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
-				
-				//remove based on row and column its in
+				removeNode(grid, row, col);
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
 				ClipboardContent content = new ClipboardContent();
 				content.putImage(pathImage.getImage());

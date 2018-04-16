@@ -1,6 +1,5 @@
 package authoring.frontend;
 
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,8 +39,6 @@ public class CreatePathGrid extends AdjustScreen {
 	private int rowIndex;
 	private GridPane grid = new GridPane();
 	private SelectionModel model;
-
-	//TODO: have these update with change images, and get images from default file
 	private ImageView startImage = new ImageView(new Image("file:images/brick.png"));
 	private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
@@ -89,7 +86,7 @@ public class CreatePathGrid extends AdjustScreen {
 
 	//Given: path images and locations as defaults, change to populate with initial params
 	private void populateGrid() {
-
+		
 		for (int x = 0 ; x < grid.getColumnCount(); x++) {
 			for (int y = 0 ; y < grid.getRowCount(); y++) {
 				StackPane cell = new StackPane();
@@ -97,7 +94,6 @@ public class CreatePathGrid extends AdjustScreen {
 				final int col = x;
 				final int row = y;
 
-				//This can be separate class (for drag over objects)
 				cell.setOnDragOver(new EventHandler <DragEvent>() {
 					public void handle(DragEvent event) {
 						if (event.getDragboard().hasImage()) {
@@ -117,17 +113,14 @@ public class CreatePathGrid extends AdjustScreen {
 						boolean success = false;
 						if (db.hasImage()) {
 							path = new DraggableImage(db.getImage());
-
-							//remove former label from checkgrid
-							//removeNode(checkGrid, rowIndex, colIndex);
-
-							path.setDraggable();
+							path.setDraggable(checkGrid, rowIndex, colIndex);
 							path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty());
 							draggableImagesOnScreen.add(path);
 
 							grid.add(path.getPathImage(), colIndex, rowIndex);
-
+							
+							//imagecompare doesn't work if all same image
 							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
 								startCount++;
 								path.setPathName(startCount);
@@ -153,7 +146,6 @@ public class CreatePathGrid extends AdjustScreen {
 			}
 		}
 	}
-
 
 	public void setGridConstraints(GridPane grid, double size) {
 		grid.getColumnConstraints().clear();
@@ -207,7 +199,6 @@ public class CreatePathGrid extends AdjustScreen {
 		grid.add(new Label("path"), col, row);
 		return false;
 	}
-
 
 	public void addCoordinates(int row, int col) {
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
@@ -306,17 +297,20 @@ public class CreatePathGrid extends AdjustScreen {
 		return gridImageCoordinates;
 	}
 
-
-	public void setStartImage(Image newImage) {
-		startImage = new ImageView(newImage);
+	
+	public void setStartImage(ImageView newImage) {
+		startImage = newImage;
 	}
-	public void setEndImage(Image newImage) {
-		endImage = new ImageView(newImage);
+	public void setEndImage(ImageView newImage) {
+		System.out.println("Change end image: " +newImage);
+		endImage = newImage;
 	}
-	public void setPathImage(Image newImage) {
-		pathImage = new ImageView(newImage);
+	public void setPathImage(ImageView newImage) {
+		System.out.println("Change path image: " +newImage);
+		pathImage = newImage;
 	}
-
+	
+	
 	@Override
 	protected Parent populateScreenWithFields() {
 		// TODO Auto-generated method stub

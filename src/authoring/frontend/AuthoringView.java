@@ -48,7 +48,6 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
 	private GridPane myGrid = new GridPane();
 	private AuthoringModel myModel;
 	private BooleanProperty myCSSChanged;
@@ -81,7 +80,7 @@ public class AuthoringView extends View {
 	}
 
 	public void loadInitialScreen() {
-		myStageManager.switchScreen((new CreatePathScreen(this)).getScreen());
+		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
 
 	@Override
@@ -198,12 +197,9 @@ public class AuthoringView extends View {
 	}
 
 	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
-		myImageMap = imageCoordinates;
 		myGrid = grid;
-		System.out.println(myGrid.getChildren());
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
 	}
-
 
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
@@ -320,7 +316,6 @@ public class AuthoringView extends View {
 	public void readFromFile(String name) {
 	    myController.setModel(name);
 	}
-	
 	
 	public GridPane getPathGrid() {
 		return myGrid;
