@@ -42,6 +42,7 @@ public class TowerPanel extends Panel {
     private final UIFactory UIFACTORY;
     private Panel bottomPanel;
     private Button currencyDisplay;
+    private ScrollPane towerDisplay;
     private final String ASSORTED_BUTTON_FILEPATH = "src/images/GamePlayerAssorted/GamePlayerAssorted.properties";
 
     //TODO change to only use availibleTowers
@@ -49,7 +50,7 @@ public class TowerPanel extends Panel {
     //private final FileIO FILE_READER;
 
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
-    private Group towerGroup;
+    private Pane towerPane;
 
     public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
 	GAME_SCREEN = gameScreen;
@@ -66,8 +67,8 @@ public class TowerPanel extends Panel {
 
 	//TODO need to check if this static stuff is okay
 
-	towerGroup = new Group();
-	ScrollPane towerDisplay = new ScrollPane(towerGroup);
+	towerPane = new Pane();
+	towerDisplay = new ScrollPane(towerPane);
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 
 
@@ -81,8 +82,8 @@ public class TowerPanel extends Panel {
 	VBox currencyAndSwap = new VBox(currencyDisplay);
 	currencyAndSwap.setAlignment(Pos.CENTER);
 	try {
-	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
-	    Button swapButton = UIFACTORY.makeImageButton("swapButton", upgradeMap.get("swap"));
+	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
+	    Button swapButton = UIFACTORY.makeImageButton("swapButton", buttonMap.get("swap"));
 	    swapButton.setOnMouseClicked((arg0) -> GAME_SCREEN.swapVertPanel());
 	    HBox swapWrap = new HBox(swapButton);
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
@@ -109,42 +110,39 @@ public class TowerPanel extends Panel {
 	//can't do that with interfaces. How would you want to approach that?
     }
 
-    private HBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
-	VBox towerHolderLeft = new VBox();
-	VBox towerHolderRight = new VBox();
-	towerHolderLeft.setId("towerHolders");
-	towerHolderRight.setId("towerHolders");
-	VBox towerHolder;
+    private VBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
+	VBox fullTowerHold = new VBox();
+	HBox towerHolder = new HBox();
 	int alternator = 0;
 
 	for(FrontEndTower tower : availableTowers) {
 	    ImageView imageView = tower.getImageView();
 	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
-	    imageView.setFitHeight(TOWER_IMAGE_SIZE);
+	   imageView.setFitHeight(TOWER_IMAGE_SIZE);
 
 	    Button towerButton = UIFACTORY.makeImageViewButton("button",tower.getImageView());
 	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower));
 	    if(alternator%2 == 0) {
-		towerHolder = towerHolderLeft;
-	    }
-	    else {
-		towerHolder = towerHolderRight;
+		towerHolder = new HBox();
+		towerHolder.setFillHeight(true);
+		fullTowerHold.getChildren().add(towerHolder);
+		VBox.setVgrow(towerHolder, Priority.ALWAYS);
 	    }
 
 	    towerHolder.getChildren().add(towerButton);
-	    VBox.setVgrow(towerButton, Priority.ALWAYS);
+	    HBox.setHgrow(towerButton, Priority.ALWAYS);
 	    towerButton.setMaxWidth(Double.MAX_VALUE);
 	    towerButton.setMaxHeight(Double.MAX_VALUE);
 	    alternator++;
 	}
 
-	towerHolderLeft.setFillWidth(true);
-	towerHolderRight.setFillWidth(true);
-	HBox fullTowerHold = new HBox(towerHolderLeft,towerHolderRight);
+
 	fullTowerHold.setAlignment(Pos.CENTER);
-	HBox.setHgrow(towerHolderRight, Priority.ALWAYS);
-	HBox.setHgrow(towerHolderLeft, Priority.ALWAYS);
+	fullTowerHold.setMaxWidth(Double.MAX_VALUE);
+	fullTowerHold.setStyle("-fx-background-color: black");
+
 	return fullTowerHold;
+	
 	//TODO pretty bad code that doesn't work, towers should be same height in columns
 	//	    if(alternator%2 == 1) {
 	//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
@@ -166,8 +164,13 @@ public class TowerPanel extends Panel {
 
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	towerGroup.getChildren().clear();
-	towerGroup.getChildren().add(fillScrollWithTowers(availableTowers));
+	towerPane.getChildren().clear();
+	towerPane.setStyle("-fx-background-color: green");
+	VBox filledWithTowers = fillScrollWithTowers(availableTowers);
+	filledWithTowers.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
+	towerPane.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
+
+	towerPane.getChildren().add(filledWithTowers);
     }
 
     public void updateCurrency(Integer newBalence) {
