@@ -16,6 +16,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Screen that users initially see where they can choose between authoring a game and playing it.
+ * @author Ben Hodgson
+ *
+ */
 public class MainScreen extends Screen {
     //TODO re-factor style sheets to abstract
     public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
@@ -32,7 +37,12 @@ public class MainScreen extends Screen {
 	setStyleSheet(DEFAULT_CSS);
     }
 
+    /**
+     * Creates all UI elements (buttons) for the screen to allow the user to choose an option.
+     * @see frontend.Screen#makeScreenWithoutStyling()
+     */
     @Override
+    
     //TODO all text should be read from language properties files
     public Parent makeScreenWithoutStyling() {
 	VBox rootBox = new VBox();
@@ -50,8 +60,6 @@ public class MainScreen extends Screen {
 		.loadInstructionScreen();
 	    } catch (MissingPropertiesException e) {
 		// TODO Auto-generated catch block
-		System.out.println("Critical error, could not create PlayController "
-			+ "on line 49 in MainScreen.java");
 		e.printStackTrace();
 	    }
 	});

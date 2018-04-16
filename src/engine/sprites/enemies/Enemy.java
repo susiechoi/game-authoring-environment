@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
+import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
@@ -22,7 +23,7 @@ import javafx.scene.Node;
  * @date 4/8/18
  *
  */
-public class Enemy extends ShootingSprites{
+public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     private String myName; 
     private HealthProperty myHealth;
@@ -34,9 +35,7 @@ public class Enemy extends ShootingSprites{
     private double mySpeed;
     private double mySize;
     private double myKillReward;
-    private String myImage; 
-    //    private double myKillUpgradeCost;
-    //    private double myKillUpgradeValue; 
+    private String myImage;  
 
     public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
@@ -47,10 +46,9 @@ public class Enemy extends ShootingSprites{
 	myDamage = damage;
 	myHealthImpact = myDamage.getProperty();
 	myValue = value;
-	myIntersecter = new ImageIntersecter(this.getImageView()); 
+	myIntersecter = new ImageIntersecter(this); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
-	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND IMAGE "+image);
     }
 
     /**
@@ -76,8 +74,9 @@ public class Enemy extends ShootingSprites{
      */
     public Enemy(String name, String image, double size) {
 	super(name, image, size, null);
-	myHealth = new HealthProperty(10000,10000,10000);
+	myHealth = new HealthProperty(10000,10000,100);
 	myDamage = new DamageProperty(10000, 10000, 10000);
+	myValue = new ValueProperty(300);
     }
 
     /**
@@ -118,6 +117,7 @@ public class Enemy extends ShootingSprites{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
+	System.out.println("health is " + myHealth.getProperty());
 	myHealth.loseHealth(collider.getDamage());
 	return myHealth.isAlive();
     }
@@ -138,7 +138,8 @@ public class Enemy extends ShootingSprites{
 	return myValue; 
     }
     public int getPointValue() {
-    	return (int)this.myValue.getProperty();
+    	return 0;
+   // 	return (int)this.myValue.getProperty();
     }
 
     

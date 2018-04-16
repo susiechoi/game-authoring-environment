@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
@@ -60,11 +59,12 @@ public class Wave {
      * @return Enemy: an enemy object
      */
     public Enemy getEnemy() {
+    	
 	for (Entry<Enemy, Integer> entry : myEnemies.entrySet()) {
 	    if (entry.getValue() > 0) {
 		Enemy retEnemy = entry.getKey();
 		decrementEnemyCount(retEnemy);
-		return retEnemy;
+		return new Enemy(retEnemy);
 	    }
 	}
 	return null;

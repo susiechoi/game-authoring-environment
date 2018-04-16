@@ -40,6 +40,22 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+/**
+ * @author Sarahbland
+ *
+ */
+/**
+ * @author Sarahbland
+ *
+ */
+/**
+ * @author Sarahbland
+ *
+ */
+/**
+ * @author Sarahbland
+ *
+ */
 public class UIFactory {
 
     public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
@@ -55,7 +71,13 @@ public class UIFactory {
 	screenTitle.setId("screenTitle");
 	return screenTitle;
     }
-
+    
+    /**
+     * Makes a new button with an image prompt
+     * @param id is CSS id of button
+     * @param buttonImage is Image to be displayed on button
+     * @return Button desired
+     */
     public Button makeImageButton(String id, Image buttonImage) {
 	Button newButton = new Button();
 	ImageView buttonImageView = new ImageView(buttonImage);
@@ -64,6 +86,12 @@ public class UIFactory {
 	return newButton; 
     }
     
+    /**
+     * Makes a new button with an image prompt given an ImageView
+     * @param id is CSS id of button
+     * @param buttonImage is ImageView to be displayed on button
+     * @return Button desired
+     */
     public Button makeImageViewButton(String id, ImageView buttonImage) {
 	Button newButton = new Button();
 	newButton.setGraphic(buttonImage);
@@ -71,18 +99,39 @@ public class UIFactory {
 	return newButton; 
     }
     
+    /**
+     * Makes new Text field
+     * @param description is CSS description of TextField
+     * @return TextField desired
+     */
     public TextField makeTextField(String description) {
 	TextField tf = new TextField();
 	tf.setId(description);
 	return tf;
     }
 
+    /**
+     * Makes a new button with an text prompt 
+     * @param id is CSS id of button
+     * @param buttonImage is text to be displayed on button
+     * @return Button desired
+     */
     public Button makeTextButton(String id, String buttonText) {
 	Button newButton = new Button(buttonText);
 	newButton.setId(id);
 	return newButton; 
     }
 
+    /**
+     * Makes a ComboBox that completes certain actions when a choice other than the prompt is 
+     * selected and other options when the prompt is selected
+     * @param id is CSS id of ComboBox
+     * @param dropdownOptions is list of options to be displayed on ComboBox
+     * @param chooseAction is lambda of action to be taken when a choice is made
+     * @param noChoiceAction is lambda of action to be taken when prompt is chosen (no choice)
+     * @param prompt is Prompt option
+     * @return ComboBox with eventhandlers set
+     */
     public ComboBox<String> makeTextDropdownSelectAction(String id, List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
 	    EventHandler<ActionEvent> noChoiceAction, String prompt){
 	ComboBox<String> dropdown = makeTextDropdown(id, dropdownOptions);
@@ -97,6 +146,12 @@ public class UIFactory {
 	return dropdown;
     }
 
+    /**
+     * Sets up a new ComboBox dropdown with text
+     * @param id is CSS id of dropdown
+     * @param dropdownOptions is list of options to be displayed to user
+     * @return ComboBox dropdown desired
+     */
     public ComboBox<String> makeTextDropdown(String id, List<String> dropdownOptions) {
 	ObservableList<String> options = FXCollections.observableArrayList(dropdownOptions);
 	ComboBox<String> newDropdown = new ComboBox<String>(options);
@@ -105,6 +160,12 @@ public class UIFactory {
 	return newDropdown; 
     }
 
+    /**
+     * Sets up a new Slider given a max value
+     * @param id is CSS id of slider
+     * @param sliderMax is max value allowed on Slider
+     * @return Slider desired
+     */
     public Slider setupSlider(String id, int sliderMax) {
 	Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
 	Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
@@ -120,6 +181,12 @@ public class UIFactory {
 
     }
 
+    /**
+     * Makes a Text Scroll pane with certain options
+     * @param id is CSS id of ScrollPane
+     * @param options is List of options to be displayed
+     * @return ScrollPane
+     */
     public ScrollPane makeTextScrollPane(String id, List<String> options) {
 	ScrollPane newPane = new ScrollPane();
 	String allOptions = "";
@@ -131,6 +198,12 @@ public class UIFactory {
 	return newPane; 
     }
 
+    /**
+     * Makes an Image Scroll pane with certain options
+     * @param id is CSS id of ScrollPane
+     * @param options is List of files containing Image options to be displayed
+     * @return ScrollPane
+     */
     public ScrollPane makeImageScrollPane(String id, File[] files) {
 	ScrollPane newPane = new ScrollPane();
 	VBox imageConsolidator = new VBox();
@@ -144,6 +217,18 @@ public class UIFactory {
 	return newPane; 
     }
 
+    /**
+     * Sets up a FileChooser UI element to allow a user to select a new file
+     * @param id is CSS id of FileChooser
+     * @param newFilePrompt is text prompting to select a new file
+     * @param newFileNamePrompt is text prompting to enter a new filename
+     * @param propertiesFilepath is filepath to properties where filename should be writted
+     * @param action is action to be taken when file is chosen
+     * @param keysAndVals is map of current keys and values in the properties file
+     * @param extension is extension (ex. ".png") of file to be chosen
+     * @return VBox containing filechooser and prompts
+     * @throws MissingPropertiesException
+     */
     public VBox setupFileChooser(String id, String newFilePrompt, String newFileNamePrompt, String propertiesFilepath,
 	    EventHandler<ActionEvent> action, Map<String, String> keysAndVals, String extension) throws MissingPropertiesException{
 	VBox vbox = new VBox();
@@ -166,9 +251,7 @@ public class UIFactory {
 
 		    File file = fileChooser.showOpenDialog(new Stage());
 		    file.getAbsolutePath();
-		    System.out.println("here");
 		    File fileCopy = new File("images/" + imageName + extension);
-		    System.out.println("not here");
 		    try{
 
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -192,6 +275,18 @@ public class UIFactory {
 	return vbox;
     }
 
+    /**
+     * Sets up a Selector to select a file or from given options or a new file
+     * @param propertiesReader is a PropertiesReader
+     * @param description is CSS description
+     * @param propertiesFilepath is filepath to PropertiesFile used to select
+     * @param newFilePrompt is prompt for user to choose a new file
+     * @param newFileNamePrompt is prompt for user to choose a new filename
+     * @param extension is extension of file to choose (ex. ".png")
+     * @param dropdown is ComboBox to populate
+     * @return VBox containing fileChooser/selector options
+     * @throws MissingPropertiesException
+     */
     public VBox setupSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath,
 	    String newFilePrompt, String newFileNamePrompt, String extension, ComboBox<String> dropdown) throws MissingPropertiesException{
 	VBox vb = new VBox();
@@ -224,6 +319,21 @@ public class UIFactory {
 	return vb;
     }
 
+    /**
+     * Sets up a new Image Selector from which users can choose an existing image option or
+     * upload their own image.
+     * @param propertiesReader is PropertiesReader to read from properties file
+     * @param description is CSS id
+     * @param propertiesFilepath is filepath to Properties file housing names/filepaths
+     * @param imageSize is image size desired
+     * @param loadImagePrompt is prompt to user to load an existing image
+     * @param newImagePrompt is prompt to user to create a new image
+     * @param newImageNamePrompt is prompt to user to load a new image name
+     * @param dropdown is ComboBox containing existing choices
+     * @param imageDisplay is ImageView where the chosen image will be displayed
+     * @return HBox containing entire image selector module (image view, file chooser, dropdown)
+     * @throws MissingPropertiesException
+     */
     public HBox setupImageSelector(PropertiesReader propertiesReader, String description, String propertiesFilepath, double imageSize,
 	    String loadImagePrompt, String newImagePrompt, String newImageNamePrompt, ComboBox<String> dropdown, ImageView imageDisplay) throws MissingPropertiesException {
 	Map<String, Image> enemyImageOptions = propertiesReader.keyToImageMap(propertiesFilepath, imageSize, imageSize);
@@ -250,6 +360,13 @@ public class UIFactory {
 	return hb; 
     }
 
+    /**
+     * Sets up a new slider displaying its value next to it
+     * @param id is CSS id
+     * @param slider is Slider already created
+     * @param prompt is prompt to user to change slider
+     * @return HBox containing Slider/prompt/current value displaying
+     */
     public HBox setupSliderWithValue(String id, Slider slider, String prompt) {
 	Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
 	slider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -264,6 +381,13 @@ public class UIFactory {
 	return addPromptAndSetupHBox(id, hb, prompt);
     }
 
+    /**
+     * Adds Prompt and sets up an HBox given a UI element
+     * @param id is CSS ID
+     * @param node is UI element needing to be boxed
+     * @param prompt is prompt to be displayed alongside UI element
+     * @return HBox containing prompt, UI element
+     */
     public HBox addPromptAndSetupHBox(String id, Node node, String prompt) {
 	HBox hbox = new HBox();
 	hbox.setId(id);
@@ -273,6 +397,11 @@ public class UIFactory {
 	return hbox;	
     }
 
+    /**
+     * Makes TextField cursor blink
+     * @param screen is Scene containing TextField
+     * @param textField is TextField that needs to blink
+     */
     public void applyTextFieldFocusAction(Scene screen, TextField textField) {
 	screen.setOnMousePressed(event -> {
 	    if (!textField.equals(event.getSource())) {
@@ -282,6 +411,12 @@ public class UIFactory {
     }
 
 
+    /**
+     * Sets up a generic Back Button
+     * @param action is action to be taken on BackButton press
+     * @param backText is text to be displayed on back button
+     * @return Button desired
+     */
     public Button setupBackButton(EventHandler<ActionEvent> action, String backText) {
 //	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
 	Button backButton = makeTextButton("backButton",backText);
@@ -289,11 +424,20 @@ public class UIFactory {
 	return backButton; 
     }
 
+    /**
+     * @return Button with text Apply
+     */
     public Button setupApplyButton() {
 	Button applyButton = makeTextButton("applyButton", "Apply"); //TODO: set up prompts properties file	
 	return applyButton;
     }
     
+    /**
+     * Creates an HBox to display back and apply buttons
+     * @param back is Back button
+     * @param apply is Apply button
+     * @return HBox displaying the two buttons
+     */
     public HBox setupBackAndApplyButton(Button back, Button apply) {
 		HBox backAndApplyButton = new HBox(); 
 		backAndApplyButton.getChildren().add(back);

@@ -20,6 +20,10 @@ public abstract class View {
 	myManager = manager;
     }
     
+    /**
+     * Loadst the stage with a given ErrorMessage
+     * @param errorMessage is message to be displayed
+     */
     public void loadErrorScreenToStage(String errorMessage) {
 	VBox vb = new VBox();
 	Text errorScreenMessage = new Text(errorMessage);
@@ -29,19 +33,21 @@ public abstract class View {
 	myManager.switchScreen(vb);
     }
     
+    /**
+     * Loads an error alert (does not stop program) to notify user of a problem
+     * @param errorMessage is message to be displayed
+     */
     public void loadErrorAlertToStage(String errorMessage) {
 		    Alert alert = new Alert(AlertType.ERROR);
 		    alert.setContentText(errorMessage);
 		    alert.showAndWait();
     }
+   
     
-//    public void loadErrorAlertToStage(String errorMessage, Screen returnToScreen) {
-//	    Alert alert = new Alert(AlertType.ERROR);
-//	    alert.setContentText(errorMessage);
-//	    myManager.switchScreen(returnToScreen.getScreen());
-//	    alert.showAndWait();
-//}
-
+    /**
+     * Loads error Message and takes action specific to the View when an error occurs
+     * @param errorMessage is message needed to be displayed
+     */
     public abstract void loadErrorScreen(String errorMessage);
     
 }

@@ -23,7 +23,6 @@ public class GameEngine {
     private Timeline ANIMATION;
 
     public GameEngine(Mediator mediator) {
-	System.out.println("in engine");
 	myPlayState = null;
 	myMediator = mediator;
 
@@ -79,7 +78,6 @@ public class GameEngine {
      */
     public void setSpeed(Integer relativeSpeed) {
 	Integer speed = MILLISECOND_DELAY*(relativeSpeed/DEFAULT_RELATIVE_SPEED);
-	//System.out.println("Incomplete setSpeed method, make sure to check this functionality!");
 	//TODO myTimer.schedule may need bugfixing for scaling speed
     }
 

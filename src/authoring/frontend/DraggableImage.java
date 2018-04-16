@@ -1,6 +1,7 @@
 package authoring.frontend;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,7 +10,14 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 
+
+/**
+ * Class of Images that can be drag/dropped for use in the Path.
+ * @author Erik Riis
+ *
+ */
 public class DraggableImage extends Parent {
 	private ImageView pathImage;
 	private String pathName;
@@ -30,7 +38,7 @@ public class DraggableImage extends Parent {
 	}
 
 	public ImageView setCopyDraggable() {
-		myCopyDragEvent = new EventHandler <MouseEvent>() {
+		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.COPY);
 				ClipboardContent content = new ClipboardContent();
@@ -38,46 +46,51 @@ public class DraggableImage extends Parent {
 				db.setContent(content);
 				event.consume();    
 			}
-		};
-		pathImage.setOnDragDetected(myCopyDragEvent);
+		});
 
-		myCopyDragDone = new EventHandler <DragEvent>() {
+		pathImage.setOnDragDone(new EventHandler <DragEvent>() {
 			public void handle(DragEvent event){
 				if (event.getTransferMode() == TransferMode.MOVE){
 					pathImage.setImage(null);
 				}
 				event.consume();
 			}
-		};
-		pathImage.setOnDragDone(myCopyDragDone);
-
+		});
 		return pathImage;
 	}
 
-	public void setDraggable() {
-		myDragEvent = new EventHandler <MouseEvent>() {
+	public void setDraggable(GridPane grid, int row, int col) {
+		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
+				removeNode(grid, row, col);
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
 				ClipboardContent content = new ClipboardContent();
 				content.putImage(pathImage.getImage());
 				db.setContent(content);
 				event.consume();    
 			}
-		};
-		pathImage.setOnDragDetected(myDragEvent);
-		myDragDone = new EventHandler<DragEvent>() {
+		});
+		
+		pathImage.setOnDragDone(new EventHandler<DragEvent>() {
 			public void handle(DragEvent e){
 				if (e.getTransferMode() == TransferMode.MOVE){
 					((ImageView) e.getSource()).setImage(null);
 				}
 				e.consume();
 			}
-
-		};
-		pathImage.setOnDragDone(myDragDone);
+		});
+	}
+	
+	public void removeNode(GridPane grid, int row, int col) {
+		for(Node node : grid.getChildren()) {
+			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+				grid.getChildren().remove(node);
+				break;
+			}
+		} 
 	}
 
-	public void disableDraggable() {
+	protected void disableDraggable() {
 		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myDragEvent);
 		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myCopyDragEvent);
 		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myDragDone);
@@ -86,11 +99,11 @@ public class DraggableImage extends Parent {
 		pathImage.setOnDragDone(e -> {});
 	}
 	
-	public void setPathName(int path_num) {
+	protected void setPathName(int path_num) {
 		pathName = "Path " +String.valueOf(path_num);
 	}
 	
-	public String getPathName() {
+	protected String getPathName() {
 	    	if(pathName == null) {
 	    	    return "Default";
 	    	}
@@ -98,11 +111,11 @@ public class DraggableImage extends Parent {
 	}
 
 
-	public void setNewImage(Image image) {
+	protected void setNewImage(Image image) {
 		pathImage.setImage(image);
 	}
 
-	public ImageView getPathImage() {
+	protected ImageView getPathImage() {
 		return pathImage;
 	}
 }

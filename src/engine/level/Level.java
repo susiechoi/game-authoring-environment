@@ -30,6 +30,11 @@ public class Level {
 	private Map<Path, List<Wave>> myWaves;
 	private Map<String, Enemy> myEnemies;
 
+
+	private int xLoc = 100;
+	private int yLoc = 100;
+	private int numEnemy = 0;
+
 	public Level(int number) {
 		myNumber = number;
 		myTowers = new HashMap<String, Tower>();
@@ -65,7 +70,6 @@ public class Level {
 		myPaths.add(path); 
 	}
 
-	
 	/**
 	 * Returns an unmodifiable list of path objects in the level
 	 * 
@@ -82,7 +86,7 @@ public class Level {
 	 * @param tower: The tower object to be added
 	 */
 	public void addTower(String name, Tower tower) {
-		System.out.println(tower.getImageView().getFitWidth() + " level tower width");
+	//	System.out.println(tower.getImageView().getFitWidth() + " level tower width");
 		myTowers.put(name, tower);
 	}
 
@@ -159,7 +163,6 @@ public class Level {
 	public void addWave(Path path, Wave wave) {
 		if(myWaves.containsKey(path)) {
 			List<Wave> waves = myWaves.get(path);
-			System.out.println("is waves null?" + path == null);
 			waves.add(wave);
 		}
 		else {
@@ -177,6 +180,40 @@ public class Level {
 		}
 		return false;
 	}
+
+	/**
+	 * Returns any new Enemy
+	 */
+	public Enemy getNewEnemy(Path path) {
+		Wave currentWave = myWaves.get(path).get(0);
+		Enemy waveEnemy = currentWave.getEnemy();
+		if (waveEnemy != null) {
+			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
+			numEnemy++;
+		}
+		return waveEnemy;
+	}
+
+	protected int getNumber() {
+		return myNumber; 
+	}
+
+	protected Map<Path, List<Wave>> getWaves() {
+		return myWaves; 
+	}
+
+	public List<Path> getPaths() {
+		return myPaths; 
+	}
+
+	public Map<String, Tower> getTowers() {
+		return myTowers;
+	}
+
+	public Map<String, Enemy> getEnemies() {
+		return myEnemies; 
+	}
+
 	public int getHighestWaveNumber() {
 		int highest = 0;
 		for(List<Wave> waveLists: myWaves.values()) {
@@ -221,42 +258,12 @@ public class Level {
 		}
 		return true; 
 	}
-
-	/**
-	 * Returns any new Enemy
-	 */
-	public Enemy getNewEnemy(Path path) {
-		Wave currentWave = myWaves.get(path).get(0);
-		Enemy waveEnemy = currentWave.getEnemy();
-		return waveEnemy;
-	}
-
-	protected int getNumber() {
-		return myNumber; 
-	}
-
-	protected Map<Path, List<Wave>> getWaves() {
-		return myWaves; 
-	}
-
-	public List<Path> getPaths() {
-		return myPaths; 
-	}
-
-	public Map<String, Tower> getTowers() {
-		return myTowers;
-	}
-
-	public Map<String, Enemy> getEnemies() {
-		return myEnemies; 
-	}
 	public boolean containsWave(Path path, int waveNumber) {
 		if(!myWaves.containsKey(path)) {
 			return false;
 		}
 		return (myWaves.get(path).size() > waveNumber);
 	}
-
 
 
 	public Map<String, List<Point>> getLevelPathMap(){

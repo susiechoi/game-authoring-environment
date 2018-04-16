@@ -1,4 +1,3 @@
-
 package gameplayer.panel;
 
 import java.awt.Point;
@@ -13,12 +12,13 @@ import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PropertiesReader;
 import gameplayer.screen.GameScreen;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 
 public class GamePanel extends Panel{
 
@@ -28,7 +28,7 @@ public class GamePanel extends Panel{
 	private boolean towerPlaceMode = false;
 	private List<FrontEndTower> towersPlaced;
 	private Pane spriteAdd;
-	private boolean mouseChangeToTower = false;
+	private Boolean towerClick = false;
 
 	//TODO changes this to be passed from mediator
 	private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
@@ -45,16 +45,22 @@ public class GamePanel extends Panel{
 
 		//TODO potentially fix needed?
 
-
-		Pane panelRoot = new Pane();
-		panelRoot.setId("gamePanel");
+		Pane gamePane = new Pane();
+		ScrollPane panelRoot = new ScrollPane(gamePane);
+		gamePane.setId("gamePanel");
 		//panelRoot.setBottom(new Up);
-		panelRoot.setMaxWidth(Double.MAX_VALUE);
-		panelRoot.setMaxHeight(Double.MAX_VALUE);
+		gamePane.setMaxWidth(Double.MAX_VALUE);
+		gamePane.setMaxHeight(Double.MAX_VALUE);
 
-		panelRoot.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+		gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 
+		setBackgroundImage(gamePane);
 
+		spriteAdd = gamePane;
+		PANEL = panelRoot;
+	}
+
+	private void setBackgroundImage(Pane gamePane) {
 		PropertiesReader propReader = new PropertiesReader();
 		Random rand = new Random();
 		try {
@@ -62,23 +68,18 @@ public class GamePanel extends Panel{
 			int random = rand.nextInt(backgroundMap.size());
 			int count = 0;
 			for(String s:  backgroundMap.keySet()) {
-				if(count++ == random) {
+				if(s.equals("general")) {
 					ImageView imageView = new ImageView();
 					imageView.setImage(backgroundMap.get(s));
-					panelRoot.getChildren().add(imageView);
+					gamePane.getChildren().add(imageView);
 				}
-
 			}
 		} catch (MissingPropertiesException e1) {
-			//TODO should fix but who cares since this will be refactored 
+			//TODO should fix but who cares since this will be refactored
 			//to be gotten from mediator
 			System.out.println("Background Images failed to load");
 		}
-
-		spriteAdd = panelRoot;
-		PANEL = panelRoot;
 	}
-
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
 		System.out.println("Game Panel: " +imageMap);
@@ -100,8 +101,10 @@ public class GamePanel extends Panel{
 
 	private void addTowerImageViewAction(FrontEndTower tower) {
 		ImageView towerImage = tower.getImageView();
-		towerImage.setOnMouseClicked((args) ->GAME_SCREEN.towerClickedOn(tower));
-
+		towerImage.setOnMouseClicked((args) ->{
+			GAME_SCREEN.towerClickedOn(tower);
+			towerClick = true;
+		});
 	}
 
 	public void addSprite(FrontEndSprite sprite) {
@@ -131,8 +134,6 @@ public class GamePanel extends Panel{
 				ImageView towerImage = newTower.getImageView();
 				Image towerImageActual = towerImage.getImage();
 
-				System.out.println(towerImage.getFitWidth() + " fitWifht/hgith " + towerImage.getFitHeight());
-
 				towerImage.setLayoutX(-towerImageActual.getWidth()/2);
 				towerImage.setLayoutY(-towerImageActual.getHeight()/2);
 				if(newTower!= null) {
@@ -140,15 +141,15 @@ public class GamePanel extends Panel{
 					towersPlaced.add(newTower);
 					spriteAdd.getChildren().add(towerImage);
 					towerPlaceMode = false;
-					mouseChangeToTower = false;
-					GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
 				}
 			}
 			catch(CannotAffordException e){
 				//GameScreen popup for cannot afford
 			}
 		}
-
+		else if(!towerClick) {
+			GAME_SCREEN.blankGamePanelClick();
+		}
+		towerClick = false;
 	}
 }
-

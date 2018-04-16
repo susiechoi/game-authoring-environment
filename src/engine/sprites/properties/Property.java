@@ -20,21 +20,24 @@ public abstract class Property {
 	myProperty = property;
 	mySimpleName = this.getClass().getSimpleName();
     }
-   
+    
     /**
-     * Returns current value of property
+     * @return current value of property
      */
     public double getProperty() {
 	return myProperty;
     }
     
     /**
-     * Returns current value of property
+     * @return current value of property
      */
     protected void setProperty(double newValue) {
 	myProperty = newValue;
     }
     
+    /**
+     * @return String name of property
+     */
     public String getName() {
     	return mySimpleName;
     }

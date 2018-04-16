@@ -1,9 +1,12 @@
 package engine.sprites.towers.projectiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.FrontEndSprite;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
-import javafx.scene.image.Image;
 
 /**
  * Projectile class is a sprite that is launched from the tower
@@ -18,6 +21,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	private double mySpeed;
 	private double mySize; 
 	private Sprite myTarget;
+	private List<Sprite> hitTargets;
+	private int myHits = 1;
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -31,50 +36,40 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		myDamage = damage;
 		mySpeed = speed;
 		mySize = size; 
+		hitTargets = new ArrayList<>();
 	}
 	
 	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
 	    myTarget = target;
 	    mySpeed = 300;
-	    System.out.println("target x is " + myTarget.getX());
+	    myDamage = new DamageProperty(100,100,100);
 	    this.place(shooterX, shooterY);
-	    System.out.println("Xorig is :" + this.getX());
-	    System.out.println("Yorig is : " + this.getY());
 	    this.rotateImage();
-	    
-	    myTarget = target;
+	    hitTargets = new ArrayList<>();
 	}
 
 	/**
 	 * Moves image in direction of it's orientation
 	 */
 	public void move(double elapsedTime) {
-	    	myTarget.place(100, 100);
 	    	rotateImage();
-	    	System.out.println("speed is " + mySpeed);
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-	    	System.out.println("total distance is " + totalDistanceToMove);
-	    	System.out.println("rotation is " + this.getRotate());
 		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-		
-		
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
-		System.out.println("new X is " + this.getX());
-		System.out.println("new Y is " + this.getY());
 	}
 	
 	/**
 	 * Rotates the image to face the target
 	 */
 	private void rotateImage() {
+
 	    	double xDifference = myTarget.getX() - this.getX();
 	    	double yDifference = myTarget.getY() - this.getY();
-	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
+	    	double angleToRotateRads = Math.atan2(xDifference,yDifference);
 	    	this.setRotate(Math.toDegrees(angleToRotateRads));
-	    	System.out.println("rotation in rotateImage is " + this.getRotate());
 	}
 	
 	/**
@@ -107,6 +102,19 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public double getSize() {
 		return mySize; 
 	}
+	
+	/**
+	 * @return true if should be removed
+	 */
+	@Override
+	public boolean handleCollision(Sprite sprite) {
+		this.hitTargets.add(sprite);
+		this.myHits--;
+		System.out.println("my hits " + myHits);
+		return !(myHits > 0);
+	}
 
-
+	public boolean hasHit(ShootingSprites target) {
+		return this.hitTargets.contains(target);
+	}
 }
