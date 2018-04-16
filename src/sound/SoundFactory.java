@@ -50,6 +50,5 @@ public interface SoundFactory {
      * @return the mute button which can be added to a screen and clicked
      */
     public MuteButton createMuteButton();
-    3
 
 }
