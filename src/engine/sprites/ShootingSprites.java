@@ -67,7 +67,7 @@ public abstract class ShootingSprites extends Sprite{
 		List<Sprite> toBeRemoved = new ArrayList<>();
 		List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
 		List<Projectile> projectiles = this.getProjectiles();
-		this.checkTowerEnemyCollision(target); //TODO add any dead tower/enemy to toBeRemoved list
+		toBeRemoved.addAll(this.checkTowerEnemyCollision(target)); //TODO add any dead tower/enemy to toBeRemoved list
 		for (Projectile projectile: projectiles) {
 			if(target.intersects(projectile) && !(projectile.hasHit(target))){
 				toBeRemoved.addAll(target.objectCollision(projectile)); //checks collisions between projectiles and enemy/tower
@@ -86,10 +86,9 @@ public abstract class ShootingSprites extends Sprite{
 	private List<Sprite> objectCollision(Sprite collider) {
 		List<Sprite> deadSprites = new ArrayList<>();
 		hitCount++;
-		if(this.handleCollision(collider)) {
+		if(!this.handleCollision(collider)) {
 			deadSprites.add(this);
 			roundScore += this.getPointValue();
-			hitCount++;
 		}
 		return deadSprites;
     }
@@ -101,14 +100,7 @@ public abstract class ShootingSprites extends Sprite{
      */
     public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
-	//System.out.println(" TEST " + "tower X "+ this.getX() + " " +  this.getX()+ this.getImageView().getFitWidth()+ " tower Y " + this.getY()+ " " + this.getImageView().getFitHeight());
-	//System.out.println(" TEST " + " enemy X "+ shooter.getX() + " " +  shooter.getX()+ shooter.getImageView().getFitWidth()+ " enemy Y " + shooter.getY()+ " " + shooter.getImageView().getFitHeight());
-	//System.out.println("tower width " + this.getImageView().getFitWidth() + " enemy width " + shooter.getImageView().getFitWidth());
-	if (intersector.overlaps(shooter.getImageView())) {
-	  //  System.out.println("TOWER ENEMY COLLISION");
-	    //		System.out.println(this.getX() + " tower " + this.getY());
-	    //		System.out.println(shooter.getX() + " enemy " + shooter.getY());
-	    //		System.out.println("checkTowerEnemyCollision says there was a Tower/Enemy collision");
+	if (intersector.overlaps(shooter.getImageView())) { 
 	    this.handleCollision(shooter); //TODO - handle these
 	    shooter.handleCollision(this);
 	}
