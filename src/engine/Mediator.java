@@ -34,10 +34,10 @@ import xml.PlayLoader;
 /**
  * This class serves as a bridge between the front end, back end, and file I/O of our game player
  * Each of these areas holds an instance of its corresponding class
- * 
+ *
  * Mediator has a method for every event that can occur in the game. These methods delegate tasks to other classes that are more specialized for handling
  * those behaviors.
- * 
+ *
  * @author benauriemma 4/5
  * @author andrewarnold
  * @author Brendan Cheng
@@ -145,7 +145,7 @@ public class Mediator {
 		myScreenManager.remove(sprite);
 	}
 
-	public void setAvailableTowers(List<FrontEndTower> availableTowers) {  
+	public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 		myScreenManager.setAvailableTowers(availableTowers);
 	}
 
@@ -154,7 +154,7 @@ public class Mediator {
 	 * @param location, where the tower should be placed
 	 * @param towerType, type of tower to be placed
 	 * @return frontEndTower that can be used to refer to the tower in the future
-	 * @throws CannotAffordException 
+	 * @throws CannotAffordException
 	 */
 	public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 		//TODO add in money (decrement when purchased)
@@ -242,7 +242,7 @@ public class Mediator {
 	 */
 	public void removeListOfSpritesFromScreen(List<Sprite> list) {
 		for(Sprite sprite : list) {
-			this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
+			this.removeSpriteFromScreen( (FrontEndSprite) sprite);
 		}
 	}
 
