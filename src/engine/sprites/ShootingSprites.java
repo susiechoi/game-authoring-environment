@@ -69,10 +69,13 @@ public abstract class ShootingSprites extends Sprite{
 	this.checkTowerEnemyCollision(target); //TODO add any dead tower/enemy to toBeRemoved list
 	for (Projectile projectile: projectiles) {
 	    if(target.intersects(projectile)){
+
 		toBeRemoved.addAll(target.objectCollision(projectile)); //checks collisions between projectiles and enemy/tower
+
 		if(this.intersects(projectile)){
 		    toBeRemoved.addAll(objectCollision(projectile));
 		}
+		//toBeRemoved.add(projectile);
 	    }
 	}
 	return toBeRemoved;
@@ -125,11 +128,7 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
-    	if (!targetsBeingShotAt.contains(target)) {
-    		targetsBeingShotAt.add(target);
-    		return myLauncher.launch(target, shooterX, shooterY);
-    	}
-    	return null;
+	return myLauncher.launch(target, shooterX, shooterY);
     }
 
     /**
