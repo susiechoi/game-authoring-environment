@@ -6,11 +6,9 @@ import java.util.Map;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
@@ -30,13 +28,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myProjectileDamage; 
     private double myProjectileSpeed;
     private double myProjectileSize;
-    //	private double myProjectileValue;  
-    //	private double myProjectileUgradeCost; 
-    //	private double myProjectileUpgradeValue; 
     private Launcher myLauncher; 
-    //	private double myLauncherValue; 
-    //	private double myLauncherUpgradeCost; 
-    //	private double myLauncherUgradeValue; 
     private double myLauncherRate;
     private double myLauncherRange; 
     private ValueProperty myValue;
@@ -111,8 +103,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     @Override
     public boolean handleCollision(Sprite collider) {
     	return true;
-//	myHealth.loseHealth(collider.getDamage());
-//	return myHealth.isAlive();
     }
 
     /**

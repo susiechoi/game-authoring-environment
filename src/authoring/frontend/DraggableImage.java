@@ -1,6 +1,7 @@
 package authoring.frontend;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,6 +10,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
+
 
 /**
  * Class of Images that can be drag/dropped for use in the Path.
@@ -34,8 +37,8 @@ public class DraggableImage extends Parent {
 		pathImage.setFitWidth(CreatePathPanel.PANEL_PATH_SIZE);
 	}
 
-	protected ImageView setCopyDraggable() {
-		myCopyDragEvent = new EventHandler <MouseEvent>() {
+	public ImageView setCopyDraggable() {
+		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.COPY);
 				ClipboardContent content = new ClipboardContent();
@@ -43,43 +46,48 @@ public class DraggableImage extends Parent {
 				db.setContent(content);
 				event.consume();    
 			}
-		};
-		pathImage.setOnDragDetected(myCopyDragEvent);
+		});
 
-		myCopyDragDone = new EventHandler <DragEvent>() {
+		pathImage.setOnDragDone(new EventHandler <DragEvent>() {
 			public void handle(DragEvent event){
 				if (event.getTransferMode() == TransferMode.MOVE){
 					pathImage.setImage(null);
 				}
 				event.consume();
 			}
-		};
-		pathImage.setOnDragDone(myCopyDragDone);
-
+		});
 		return pathImage;
 	}
 
-	protected void setDraggable() {
-		myDragEvent = new EventHandler <MouseEvent>() {
+	public void setDraggable(GridPane grid, int row, int col) {
+		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			public void handle(MouseEvent event){
+				removeNode(grid, row, col);
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
 				ClipboardContent content = new ClipboardContent();
 				content.putImage(pathImage.getImage());
 				db.setContent(content);
 				event.consume();    
 			}
-		};
-		pathImage.setOnDragDetected(myDragEvent);
-		myDragDone = new EventHandler<DragEvent>() {
+		});
+		
+		pathImage.setOnDragDone(new EventHandler<DragEvent>() {
 			public void handle(DragEvent e){
 				if (e.getTransferMode() == TransferMode.MOVE){
 					((ImageView) e.getSource()).setImage(null);
 				}
 				e.consume();
 			}
-
-		};
-		pathImage.setOnDragDone(myDragDone);
+		});
+	}
+	
+	public void removeNode(GridPane grid, int row, int col) {
+		for(Node node : grid.getChildren()) {
+			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+				grid.getChildren().remove(node);
+				break;
+			}
+		} 
 	}
 
 	protected void disableDraggable() {

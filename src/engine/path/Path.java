@@ -1,6 +1,5 @@
 package engine.path;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
@@ -19,9 +18,7 @@ public class Path {
 	private double myAngle;
 	private int pathIndex;
 	private Map<String, List<Point>> myPathMap;
-
 	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
-		System.out.println("Path: " +imageCoordinates);
 		myCoordinates = coordinates;
 		pathIndex = 0;
 		currentPosition = myCoordinates.get(pathIndex);

@@ -128,7 +128,6 @@ public class PropertiesReader {
 			String key = (String)e.nextElement();
 			String val = properties.getProperty(key);
 			vals.add(val);
-			System.out.println(val);
 		}
 		return vals; 
 	}

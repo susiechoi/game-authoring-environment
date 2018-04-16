@@ -64,8 +64,6 @@ public class PlayState implements GameData {
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
-	System.out.print("Available towers: ");
-	System.out.println(availTowers.size());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
@@ -75,15 +73,15 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	System.out.println("in update");
-	if(count==0) {
+	/*if(count==0) {
 	    myMediator.addSpriteToScreen(fakeEnemy);
 	}
-	count++;
+	count++; */
 	if(!isPaused) {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
 		    Wave currentWave;
+		    System.out.println(currentLevel.getWaves(path).size());
 		    if (!currentLevel.getWaves(path).isEmpty()) {
 			currentWave = currentLevel.getWaves(path).get(0);
 		    }
@@ -111,7 +109,6 @@ public class PlayState implements GameData {
 	    myTowerManager.moveTowers();
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-		System.out.println("added to med");
 	    }
 //	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
 //		myMediator.addSpriteToScreen((FrontEndSprite)projectile);

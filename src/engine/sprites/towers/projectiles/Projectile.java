@@ -7,17 +7,15 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 
 /**
  * Projectile class is a sprite that is launched from the tower
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
- * @author Miles Todzo
+ *
  */
-public class Projectile extends Sprite {
+public class Projectile extends Sprite implements FrontEndSprite{
 
 	private DamageProperty myDamage;
 	private double mySpeed;
@@ -43,7 +41,6 @@ public class Projectile extends Sprite {
 	
 	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
-	    this.myDamage = myProjectile.myDamage;
 	    myTarget = target;
 	    mySpeed = 300;
 	    myDamage = new DamageProperty(100,100,100);
@@ -62,7 +59,6 @@ public class Projectile extends Sprite {
 		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
-
 	}
 	
 	/**
@@ -74,7 +70,6 @@ public class Projectile extends Sprite {
 	    	double yDifference = myTarget.getY() - this.getY();
 	    	double angleToRotateRads = Math.atan2(xDifference,yDifference);
 	    	this.setRotate(Math.toDegrees(angleToRotateRads));
-
 	}
 	
 	/**
@@ -107,6 +102,7 @@ public class Projectile extends Sprite {
 	public double getSize() {
 		return mySize; 
 	}
+	
 	/**
 	 * @return true if should be removed
 	 */
