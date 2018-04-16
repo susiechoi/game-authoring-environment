@@ -164,30 +164,39 @@ public class AuthoringController {
 		return myModel.autogenerateLevel(); 
 	}
 	
-	/**
-	 * Edits/adds an enemy composition in a specified wave
-	 * 
-	 * @param level: the level the wave pertains to
-	 * @param path: the path that specifies the wave
-	 * @param waveNumber: the wave number
-	 * @param enemyKey: the unique String name that identifies the enemy
-	 * @param newAmount: the new amount of the specified enemy to put in the wave
-	 * @throws ObjectNotFoundException: thrown if the level isn't found
-	 */
-	public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
-	    Path path = getPathFromName(Integer.parseInt(pathName), level);
-	    Level thisLevel = myModel.levelCheck(level);
-	    Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
-	    List<Wave> levelWaves = thisLevel.getWaves(path);
-	    Wave thisWave;
-	    if (levelWaves.size() < waveNumber) {
-		thisWave = new Wave(path);
+	    /**
+	     * Edits/adds an enemy composition in a specified wave
+	     * 
+	     * @param level: the level the wave pertains to
+	     * @param path: the path that specifies the wave
+	     * @param waveNumber: the wave number
+	     * @param enemyKey: the unique String name that identifies the enemy
+	     * @param newAmount: the new amount of the specified enemy to put in the wave
+	     * @throws ObjectNotFoundException: thrown if the level isn't found
+	     */
+	    public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
+		Path path = getPathFromName(Integer.parseInt(pathName), level);
+		Level thisLevel = myModel.levelCheck(level);
+		Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
+		Wave thisWave;
+		//TODO: problem, how is this being saved if none of these are instance variables?
+		if(thisLevel.getWaves(path) == null) {
+		    thisWave = new Wave(path);
+		    thisLevel.getWaves(path).add(thisWave);
+		}
+		else{
+		    List<Wave> levelWaves = thisLevel.getWaves(path);
+		    if (levelWaves.size() < waveNumber) {
+			thisWave = new Wave(path);
+		    }
+		    else {
+			thisWave = levelWaves.get(waveNumber - 1);
+		    }
+		}
+		thisWave.addEnemy(thisEnemy, newAmount);
 	    }
-	    else {
-		thisWave = levelWaves.get(waveNumber - 1);
-	    }
-	    thisWave.addEnemy(thisEnemy, newAmount);
-	}
+
+
 	
 	
 	/**
