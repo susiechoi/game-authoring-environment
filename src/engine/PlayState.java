@@ -73,15 +73,15 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	System.out.println("in update");
-	if(count==0) {
+	/*if(count==0) {
 	    myMediator.addSpriteToScreen(fakeEnemy);
 	}
-	count++;
+	count++; */
 	if(!isPaused) {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
 		    Wave currentWave;
+		    System.out.println(currentLevel.getWaves(path).size());
 		    if (!currentLevel.getWaves(path).isEmpty()) {
 			currentWave = currentLevel.getWaves(path).get(0);
 		    }
