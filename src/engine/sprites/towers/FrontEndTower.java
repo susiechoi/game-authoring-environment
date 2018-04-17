@@ -20,7 +20,7 @@ public interface FrontEndTower extends FrontEndSprite{
      * the value of the statistic. NOTE: should include sell price of tower
      * @return
      */
-    public Map<String,Double> getTowerStats();
+    public Map<String,Integer> getTowerStats();
 
     /**
      * 

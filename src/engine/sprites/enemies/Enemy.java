@@ -108,7 +108,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @return Double: damage that Enemy incurs on the tower
      */
     @Override
-    public Double getDamage() {
+    public double getDamage() {
 	return myDamage.getProperty();
     }
 
