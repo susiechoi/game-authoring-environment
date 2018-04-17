@@ -74,7 +74,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     public Enemy(String name, String image, double size) {
 	super(name, image, size, null);
-	myHealth = new HealthProperty(10000,10000,10000);
+	myHealth = new HealthProperty(10000,10000,100);
 	myDamage = new DamageProperty(10000, 10000, 10000);
 	myValue = new ValueProperty(900);
     }

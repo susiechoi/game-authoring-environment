@@ -17,7 +17,9 @@ import javafx.scene.image.Image;
  * @author Miles Todzo
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
-
+    
+    private final String ENEMIES_KILLED = "Enemies Killed";
+    
     private HealthProperty myHealth;
     private double myHealthValue;
     private double myHealthUpgradeCost; 
@@ -175,6 +177,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     public Map<String, Double> getTowerStats(){
+	System.out.println("in map thing " + this.getDeadCount());
+	propertyStats.put(ENEMIES_KILLED, this.getDeadCount());
 	return propertyStats;
     }
 
@@ -189,11 +193,5 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	}
 	return (int) (myResources - myValue.getProperty());
     }
-    
-    @Override
-    public int getEnemiesKilled() {
-	return this.getDeadCount();
-    }
-
 
 }

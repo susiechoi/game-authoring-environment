@@ -42,11 +42,6 @@ public interface FrontEndTower extends FrontEndSprite{
      */
     public int purchase(int myResources) throws CannotAffordException;
 
-    /**
-     * Used by the front end to display in the info bar, the number of enemies this tower has killed
-     * @return
-     */
-    public int getEnemiesKilled();
 
     /**
      * Method to get list of available upgrades, map key would be upgrade type so we can assign

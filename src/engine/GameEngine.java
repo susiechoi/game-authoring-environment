@@ -78,7 +78,6 @@ public class GameEngine {
      */
     public void setSpeed(Integer relativeSpeed) {
 	Integer speed = MILLISECOND_DELAY*(relativeSpeed/DEFAULT_RELATIVE_SPEED);
-	//TODO myTimer.schedule may need bugfixing for scaling speed
     }
 
     /**
