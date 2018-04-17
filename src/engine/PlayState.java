@@ -43,6 +43,7 @@ public class PlayState implements GameData {
 	private Level currentLevel;
 	private boolean isPaused;
 	private Enemy fakeEnemy;
+	private Enemy fakeEnemy2;
 
 	/**
 	 * Constructor for play state object that sets up initial levels.
@@ -68,7 +69,10 @@ public class PlayState implements GameData {
 		myMediator.setAvailableTowers(availTowers);
 		myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 		fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
+		fakeEnemy2 = new Enemy("Miles", "images/zombie.png", 200);
+		fakeEnemy2.place(300, 300);
 		myEnemyManager.addToActiveList(fakeEnemy);
+		myEnemyManager.addToActiveList(fakeEnemy2);
 		count = 0;
 
 	}
@@ -76,6 +80,7 @@ public class PlayState implements GameData {
 	public void update(double elapsedTime) {
 		if(count==0) {
 	    myMediator.addSpriteToScreen(fakeEnemy);
+	    myMediator.addSpriteToScreen(fakeEnemy2);
 	}
 	count++;
 		if(!isPaused) {

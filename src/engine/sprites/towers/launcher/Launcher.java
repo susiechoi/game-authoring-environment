@@ -79,6 +79,7 @@ public class Launcher extends Manager<Projectile>{
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
     	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
     	this.addToActiveList(launchedProjectile);
+    	timeLastFired = System.nanoTime();
     	return launchedProjectile;
     }
     
@@ -87,13 +88,15 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded() {
+//    		long currTime = System.nanoTime();
+//     	long timeSinceLastShot = currTime - timeLastFired;
+//     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
+//     		timeLastFired = currTime;
+//     		return true;
+//     	}
+//		return false;
     	long currTime = System.nanoTime();
-     	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
-     		timeLastFired = currTime;
-     		return true;
-     	}
-		return false;
+    	return (currTime - timeLastFired >= myFireRate.getProperty()*Math.pow(10,9));
 	}
 
     public double upgradeDamage(double balance) {
