@@ -24,8 +24,11 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
+import xml.AuthoringModelReader;
+
 
 public class AuthoringController {
+
     private AuthoringView myAuthoringView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
@@ -154,6 +157,14 @@ public class AuthoringController {
     }
 
     /**
+     * Wraps Model method to autogenerate a level
+     * @return int level number of new level
+     */
+    public int autogenerateLevel() {
+	return myModel.autogenerateLevel(); 
+    }
+
+    /**
      * Edits/adds an enemy composition in a specified wave
      * 
      * @param level: the level the wave pertains to
@@ -188,13 +199,8 @@ public class AuthoringController {
 	thisWave.addEnemy(thisEnemy, path, newAmount);
     }
 
-    /**
-     * Sets name of the game per user entry
-     * @param gameName  is new game name
-     */
-    public void setGameName(String gameName) {
-	myModel.setGameName(gameName);
-    }
+
+
 
     /**
      * Returns the number of waves in a specified level that belong to a specified
@@ -231,7 +237,63 @@ public class AuthoringController {
 	for(Enemy enemy : enemyMap.keySet()) {
 	    enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
 	}
-	return enemyNameMap;
+	return enemyNameMap;   
+    }
+
+
+    /**
+     * Returns a List of the enemies contained in the level 
+     * 
+     * @param level: the current level
+     * @return List<String>: a list of the unique String names for each enemy in the
+     * level.
+     * @throws ObjectNotFoundException: thrown if the level isn't found
+     */
+    public List<String> levelEnemies(int level) throws ObjectNotFoundException {
+	Level thisLevel = myModel.levelCheck(level);
+	return thisLevel.getAllEnemies();
+    }
+
+    /**
+     * Sets name of the game per user entry
+     * @param gameName  is new game name
+     */
+    public void setGameName(String gameName) {
+	myModel.setGameName(gameName);
+    }
+
+    /**
+     * Gets current name of the game
+     * @return current name of the game
+     */
+    public String getGameName() {
+	return myModel.getGameName(); 
+    }
+    /**
+     * Sets the current AuthoringModel being used based on an XML file
+     * @param gameName is name of game/XML file being loaded in
+     */
+    public void setModel(String gameName) {
+	AuthoringModelReader reader = new AuthoringModelReader();
+	myModel = reader.createModel(gameName);
+    }
+
+    /**
+     * Returns a map of String image names to a list of Point coordinates where those 
+     * images should be found on the path
+     * @return image name to coordinate map
+     */
+    public Map<String, List<Point>> getGrid() {
+	return myImageMap;
+    }
+    /**
+     * Method to retrieve the highest wave number found in a level (including all paths)
+     * @param level is level desired
+     * @return highest wave number found in that level
+     * @throws ObjectNotFoundException
+     */
+    public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
+	return myModel.getHighestWaveNumber(level);
     }
 }
 
