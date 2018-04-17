@@ -41,7 +41,6 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 //		this.setActiveList(activeShootingSprites);
 		spritesToBeRemoved.addAll(deadSprites);
 	    }
-	    myRoundScore += activeSprite.getRoundScore();
 	}
 	return spritesToBeRemoved;
     }

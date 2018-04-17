@@ -66,5 +66,14 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return 0;
     }
+    
+    /**
+     * Called from PlayState, tower is to be upgraded by the type specified in upgradeName
+     * @param tower
+     * @param upgradeName
+     */
+    public void upgrade(FrontEndTower tower, String upgradeName) {
+	
+    }
 
 }
