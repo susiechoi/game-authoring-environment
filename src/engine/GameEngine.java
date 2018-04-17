@@ -81,6 +81,8 @@ public class GameEngine {
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Saves current Game State to File
      */
     public void savePlay(String filename) {
@@ -89,12 +91,13 @@ public class GameEngine {
     }
 
     /**
+>>>>>>> a3c8e958bf0a4ac0cf7da5e419420543043c2a3b
      * Updates Game State to new Level as specified in XML File
      * 
      * @param l: integer denoting level to jump to
      */
     public void jumpLevel(int l) {
-
+	//TODO: 
     }
 
     /**
