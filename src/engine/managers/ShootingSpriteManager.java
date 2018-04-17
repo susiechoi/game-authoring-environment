@@ -28,9 +28,19 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	for (ShootingSprites activeSprite: this.getListOfActive()) {
 	    for (ShootingSprites passedActor: passedSprites) {
 		List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
+//		List<ShootingSprites> activeShootingSprites = this.getListOfActive();
+//		System.out.println("---------------------------------------");
+//		for (ShootingSprites curr: activeShootingSprites) {
+//			System.out.println("** "+ curr);
+//		}
+//		activeShootingSprites.removeAll(deadSprites);
+//		System.out.println("---------------------------------------");
+//		for (ShootingSprites curr: activeShootingSprites) {
+//			System.out.println("** "+ curr);
+//		}
+//		this.setActiveList(activeShootingSprites);
 		spritesToBeRemoved.addAll(deadSprites);
 	    }
-	    myRoundScore += activeSprite.getRoundScore();
 	}
 	return spritesToBeRemoved;
     }
@@ -46,7 +56,9 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 		for (ShootingSprites shootingSprite: this.getListOfActive()) {
 		    for (ShootingSprites passedSprite: passedSprites) {
 			if (shootingSprite.hasReloaded() && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {// && !targetsBeingShotAt.contains(passedSprite)) { //TODO add back range check
+			    System.out.println("SHOOTING");
 			    Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
+			    System.out.println("new projectile damage is " + newProjectile.getDamage());
 			    //targetsBeingShotAt.add(passedSprite); //Need to remove the target when projectile misses or dies or whatever
 			    if (newProjectile != null) {
 				newProjectiles.add(newProjectile);
@@ -63,6 +75,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     public void moveProjectiles(double elapsedTime) {
 	for (ShootingSprites shootingSprite: this.getListOfActive()) {
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
+		System.out.println("damage is " + projectile.getDamage());
 		projectile.move(elapsedTime);
 	    }
 	}

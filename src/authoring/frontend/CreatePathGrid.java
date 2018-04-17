@@ -101,7 +101,6 @@ public class CreatePathGrid extends AdjustScreen {
 
 	//Given: path images and locations as defaults, change to populate with initial params
 	private void populateGrid() {
-
 	    for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
 		for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
 		    StackPane cell = new StackPane();
@@ -159,6 +158,7 @@ public class CreatePathGrid extends AdjustScreen {
 			    }
 			    event.setDropCompleted(success);
 			    event.consume();
+
 			}
 		    };
 		    cell.setOnDragDropped(myOnDragDropped);

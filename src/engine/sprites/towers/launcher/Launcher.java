@@ -26,6 +26,7 @@ public class Launcher extends Manager<Projectile>{
 
     public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
 	myFireRate = fireRate;
+	System.out.println("fire rate is " + myFireRate.getProperty());
 	myProjectile = projectile;
 	myRange = range;
 	timeLastFired = System.nanoTime();

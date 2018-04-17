@@ -30,7 +30,6 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
-import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -197,7 +196,6 @@ public class AuthoringModel implements GameData {
 
 	//parameters needed to get passed: background image, grid size, location of each image in grid 
 
-
 	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
 		myImageMap = imageCoordinates;
 		myBackgroundImage = backgroundImage;
@@ -205,7 +203,6 @@ public class AuthoringModel implements GameData {
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
 		currentLevel.addPath(newPath);
-
 	}
 
 

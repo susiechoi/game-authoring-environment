@@ -18,7 +18,6 @@ public class Path {
 	private double myAngle;
 	private int pathIndex;
 	private Map<String, List<Point>> myPathMap;
-
 	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
 		myCoordinates = coordinates;
 		pathIndex = 0;

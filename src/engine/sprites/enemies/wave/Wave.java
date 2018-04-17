@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
@@ -112,7 +111,6 @@ public class Wave {
 	       return potentialEnemy;
 	   }
 	}
-	//.out.println("WE ARE RETURNING NULL 12345678910111211314151 " + myEnemies.size());
 	return null;
 
     }
