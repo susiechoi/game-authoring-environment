@@ -252,7 +252,7 @@ public class Level {
 		return containsWave(waveNumber);
 	}
 	public boolean containsWave(int waveNumber) {
-	    return myWaves.size()>=waveNumber;
+	    return myWaves.size()>waveNumber;
 	}
 
 

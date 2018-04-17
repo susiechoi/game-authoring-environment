@@ -176,24 +176,27 @@ public class AuthoringController {
 	     */
 	    public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 		Path path = getPathFromName(Integer.parseInt(pathName), level);
+		//System.out.println("pathname: " + pathName);
 		Level thisLevel = myModel.levelCheck(level);
 		Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
+		//System.out.println(thisLevel.getPaths());
 		Wave thisWave;
 		//TODO: problem, how is this being saved if none of these are instance variables?
 		if(thisLevel.getWaves(path) == null) {
-		    thisWave = new Wave(path);
+		    thisWave = new Wave();
 		    thisLevel.getWaves(path).add(thisWave);
 		}
 		else{
 		    List<Wave> levelWaves = thisLevel.getWaves(path);
-		    if (levelWaves.size() < waveNumber) {
-			thisWave = new Wave(path);
+		    if (levelWaves.size() <= waveNumber) {
+			thisWave = new Wave();
+			levelWaves.add(thisWave);
 		    }
 		    else {
-			thisWave = levelWaves.get(waveNumber - 1);
+			thisWave = levelWaves.get(waveNumber);
 		    }
 		}
-		thisWave.addEnemy(thisEnemy, newAmount);
+		thisWave.addEnemy(thisEnemy, path, newAmount);
 	    }
 
 
@@ -226,10 +229,10 @@ public class AuthoringController {
 	public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
 	    Level currentLevel = myModel.levelCheck(level);
 	    //TODO: issue here - if there is no wave yet then need to make it first!
-	    if(!currentLevel.containsWave(path, waveNumber)) {
+	    if(!currentLevel.containsWave(waveNumber)) {
 		return new HashMap<String, Integer>();
 	    }
-	    Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies();
+	    Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies(path);
 	    Map<String,Integer> enemyNameMap = new HashMap<>();
 	    for(Enemy enemy : enemyMap.keySet()) {
 		enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));

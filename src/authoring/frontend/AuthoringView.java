@@ -130,6 +130,7 @@ public class AuthoringView extends View {
 		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
+		    e.printStackTrace();
 		    loadErrorScreen("NoObject");
 		}
 	}
@@ -317,6 +318,7 @@ public class AuthoringView extends View {
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
 		}
 		catch(ObjectNotFoundException e) {
+		    	e.printStackTrace();
 			loadErrorAlert("NoObject");
 		}
 		return new HashMap<String, Integer>();
@@ -327,6 +329,7 @@ public class AuthoringView extends View {
 	    return myController.getHighestWaveNumber(level);
 	    }
 	    catch(ObjectNotFoundException e) {
+		e.printStackTrace();
 		loadErrorScreen("NoObject");
 	    }
 	    return 1;
