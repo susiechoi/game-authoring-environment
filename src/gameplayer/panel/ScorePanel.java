@@ -7,7 +7,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
-public class ScorePanel extends Panel{
+public class ScorePanel extends Panel {
+
+
+	private final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
 	private final GameScreen GAME_SCREEN;
 	private Integer SCORE;
@@ -35,13 +38,10 @@ public class ScorePanel extends Panel{
 
 
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
-		ScoreText.setAlignment(Pos.CENTER_LEFT);
 
 		LevelText.setMaxWidth(Double.MAX_VALUE);
-		LevelText.setAlignment(Pos.CENTER);
 
 		HealthText.setMaxWidth(Double.MAX_VALUE);
-		HealthText.setAlignment(Pos.BASELINE_RIGHT);
 
 		HBox panelRoot = new HBox();
 
@@ -52,7 +52,7 @@ public class ScorePanel extends Panel{
 
 		panelRoot.setMaxWidth(Double.MAX_VALUE);
 		panelRoot.setMaxHeight(Double.MAX_VALUE);
-
+		panelRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		PANEL = panelRoot;
 	}
 

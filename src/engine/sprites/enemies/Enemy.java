@@ -76,7 +76,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	super(name, image, size, null);
 	myHealth = new HealthProperty(10000,10000,100);
 	myDamage = new DamageProperty(10000, 10000, 10000);
-	myValue = new ValueProperty(300);
+	myValue = new ValueProperty(900);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @return Double: damage that Enemy incurs on the tower
      */
     @Override
-    public Double getDamage() {
+    public double getDamage() {
 	return myDamage.getProperty();
     }
 
@@ -137,9 +137,10 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private ValueProperty getValue() {
 	return myValue; 
     }
+    
+    @Override
     public int getPointValue() {
-    	return 0;
-   // 	return (int)this.myValue.getProperty();
+    	return (int) myValue.getProperty();
     }
 
     
