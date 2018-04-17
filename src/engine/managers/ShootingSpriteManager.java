@@ -57,7 +57,8 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 		    for (ShootingSprites passedSprite: passedSprites) {
 			if (shootingSprite.hasReloaded() && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {// && !targetsBeingShotAt.contains(passedSprite)) { //TODO add back range check
 			    System.out.println("SHOOTING");
-				Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
+			    Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
+			    System.out.println("new projectile damage is " + newProjectile.getDamage());
 			    //targetsBeingShotAt.add(passedSprite); //Need to remove the target when projectile misses or dies or whatever
 			    if (newProjectile != null) {
 				newProjectiles.add(newProjectile);
@@ -74,6 +75,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     public void moveProjectiles(double elapsedTime) {
 	for (ShootingSprites shootingSprite: this.getListOfActive()) {
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
+		System.out.println("damage is " + projectile.getDamage());
 		projectile.move(elapsedTime);
 	    }
 	}

@@ -93,8 +93,8 @@ public class Sprite implements FrontEndSprite{
      * Returns the damage that this sprite inflicts on something (Can be enemy's damage, projectiles damage, etc)
      * @return
      */
-    public Double getDamage() {
-	return (double) 0;
+    public double getDamage() {
+	return 0.0;
     }
     
     

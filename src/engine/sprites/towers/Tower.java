@@ -35,7 +35,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myLauncherRange; 
     private ValueProperty myValue;
     private double myTowerValue; 
-    private Map<String, Double> propertyStats;
+    private Map<String, Integer> propertyStats;
 
     /**
      * Constructor for a Tower object that accepts parameter properties.
@@ -48,12 +48,12 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 	super(name, image, size, launcher);
 	myHealth = health;
-	propertyStats = new HashMap<String, Double>();
+	propertyStats = new HashMap<String, Integer>();
 
 
-	propertyStats.put(health.getName(), health.getProperty());
-	propertyStats.put(value.getName(), value.getProperty());
-	propertyStats.put(this.getDamageName(), this.getDamage());
+	propertyStats.put(health.getName(), (int) health.getProperty());
+	propertyStats.put(value.getName(), (int) value.getProperty());
+	propertyStats.put(this.getDamageName(), (int) this.getDamage());
 	myHealthValue = health.getProperty(); 
 	myHealthUpgradeCost = health.getCost();
 	myHealthUpgradeValue = health.getUpgradeValue(); 
@@ -86,10 +86,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty();
-	propertyStats = new HashMap<String, Double>();
-	propertyStats.put(myHealth.getName(), myHealth.getProperty());
-	propertyStats.put(myHealth.getName(), myHealth.getProperty());
-	propertyStats.put(this.getDamageName(), this.getDamage());
+	propertyStats = new HashMap<String, Integer>();
+	propertyStats.put(myHealth.getName(),(int) myHealth.getProperty());
+	propertyStats.put(myValue.getName(), (int) myValue.getProperty());
+	propertyStats.put(this.getDamageName(), (int) this.getDamage());
 	this.place(point.getX(), point.getY());
     }
 
@@ -176,14 +176,14 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return myHealth;
     }
 
-    public Map<String, Double> getTowerStats(){
+    public Map<String, Integer> getTowerStats(){
 	System.out.println("in map thing " + this.getDeadCount());
-	propertyStats.put(ENEMIES_KILLED, this.getDeadCount());
+	updateStatsMap(ENEMIES_KILLED, (int) this.getDeadCount());
 	return propertyStats;
     }
 
     private void updateStatsMap(String name, double value) {
-	propertyStats.put(name, value);
+	propertyStats.put(name, (int) value);
     }
 
     @Override
