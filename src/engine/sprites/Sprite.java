@@ -109,5 +109,14 @@ public class Sprite implements FrontEndSprite{
     public boolean handleCollision(Sprite collider) {
 	return false;
     }
+    
+    /**
+     * Returns how many points the user gets for killing this Sprite. Default
+     * set to 0
+     * @return
+     */
+    public int getPointValue() {
+	return 0;
+    }
 
 }

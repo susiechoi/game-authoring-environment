@@ -127,16 +127,19 @@ public class PlayState implements GameData {
 			for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive())) {
 				myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 			}
-			//	    for (Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive())) {
-			//		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-			//	    }
-			//	    myEnemyManager.moveProjectiles();
-			//	    myEnemyManager.moveEnemies();
+			updateScore(toBeRemoved);
 			myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 		}
 	}
 
 
+
+	private void updateScore(List<Sprite> toBeRemoved) {
+	    for(Sprite sprite : toBeRemoved) {
+		myScore+= sprite.getPointValue();
+	    }
+	    myMediator.updateScore(myScore);
+	}
 
 	//    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
 	//	myResources -= tower.upgrade(upgradeName);
@@ -179,6 +182,17 @@ public class PlayState implements GameData {
 		myResources += myTowerManager.sell(tower);
 		myMediator.updateCurrency(myResources);
 		myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
+	}
+	
+	/**
+	 * Called when a certain tower is to be upgraded. The type of upgrade is specified
+	 * with the string upgradeName
+	 * @param tower
+	 * @param upgradeName
+	 */
+	public void upgradeTower(FrontEndTower tower, String upgradeName) {
+	    myTowerManager.upgrade(tower,upgradeName);
+	    
 	}
 }
 
