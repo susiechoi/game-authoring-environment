@@ -64,7 +64,6 @@ public abstract class ShootingSprites extends Sprite{
      * @return : a list of all sprites to be removed from screen (dead)
      */
     public List<Sprite> checkForCollision(ShootingSprites target) {
-	    System.out.println("class is " + this.getClass().toString());
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
 	List<Projectile> projectiles = this.getProjectiles();
