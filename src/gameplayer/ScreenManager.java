@@ -156,5 +156,8 @@ public class ScreenManager extends View {
 		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER).getScreen());
 	}
 
+    public StageManager getStageManager() {
+        return STAGE_MANAGER;
+    }
 
 }

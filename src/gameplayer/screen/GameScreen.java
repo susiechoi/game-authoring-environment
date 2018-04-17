@@ -1,4 +1,3 @@
-
 package gameplayer.screen;
 
 import gameplayer.panel.TowerPanel;
@@ -44,9 +43,10 @@ public class GameScreen extends Screen {
 	private UpgradePanel UPGRADE_PANEL;
 	private ScreenManager SCREEN_MANAGER;
 	private BuyPanel BUY_PANEL;
-	private VBox rightPane;
-	private BorderPane leftPane;
+	private VBox displayPane;
+	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
+	private BorderPane rootPane;
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
@@ -63,23 +63,23 @@ public class GameScreen extends Screen {
 
 	@Override
 	public Parent makeScreenWithoutStyling() {
-		BorderPane rootPane = new BorderPane();
+		rootPane = new BorderPane();
 
-		rightPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+		displayPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 		VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
-		leftPane = new BorderPane();
-		leftPane.setMaxWidth(Double.MAX_VALUE);
-		leftPane.setMaxHeight(Double.MAX_VALUE);
+		gamePane = new BorderPane();
+		gamePane.setMaxWidth(Double.MAX_VALUE);
+		gamePane.setMaxHeight(Double.MAX_VALUE);
 
 
-		leftPane.setTop(SCORE_PANEL.getPanel());
-		leftPane.setCenter(GAME_PANEL.getPanel());
-		leftPane.setBottom(UPGRADE_PANEL.getPanel());
+		gamePane.setTop(SCORE_PANEL.getPanel());
+		gamePane.setCenter(GAME_PANEL.getPanel());
+		//leftPane.setBottom(UPGRADE_PANEL.getPanel());
 
 		rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
-		rootPane.setCenter(leftPane);
-		rootPane.setRight(rightPane);
+		rootPane.setCenter(gamePane);
+		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
@@ -93,10 +93,10 @@ public class GameScreen extends Screen {
 	public Integer getMoney() {
 		//TODO call ObserveHandler.triggerEvent(NeedMoney) to get money sent from playState
 		/**
-		 * also might implement money tracking by passing Integer object of 
+		 * also might implement money tracking by passing Integer object of
 		 * currency from playState in initialization of GameScreen/TowerPanel
-		 * 	-if this is the case this method isn't needed and an updateCurrency Method 
-		 * 	should instead be called in towerPanel upon any action which would spend currency 
+		 * 	-if this is the case this method isn't needed and an updateCurrency Method
+		 * 	should instead be called in towerPanel upon any action which would spend currency
 		 */
 		Integer money = 0; //placeholder
 		return money;
@@ -132,7 +132,7 @@ public class GameScreen extends Screen {
 		else if(control.equals("pause"))
 			MEDIATOR.pause();
 		else if(control.equals("speedup"))
-			MEDIATOR.fastForward(10);    
+			MEDIATOR.fastForward(10);
 	}
 
 	public void updateCurrency(Integer newBalence) {
@@ -158,8 +158,15 @@ public class GameScreen extends Screen {
 
 	public void towerClickedOn(FrontEndTower tower) {
 		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
-		rightPane.getChildren().clear();
-		rightPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
+		displayPane.getChildren().clear();
+		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
+		gamePane.setBottom(UPGRADE_PANEL.getPanel());
+	}
+
+	public void blankGamePanelClick() {
+		gamePane.setBottom(null);
+		displayPane.getChildren().clear();
+		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
 	}
 
 	public void sellTower(FrontEndTower tower) {
@@ -171,5 +178,31 @@ public class GameScreen extends Screen {
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
 		GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
 	}
-}
 
+	private void setVertPanelsLeft() {
+		rootPane.getChildren().remove(displayPane);
+		rootPane.setRight(null);
+		rootPane.setLeft(displayPane);
+
+	}
+	private void setVertPanelsRight() {
+		rootPane.getChildren().remove(displayPane);
+		rootPane.setLeft(null);
+		rootPane.setRight(displayPane);
+	}
+
+	public void swapVertPanel() {
+		if(rootPane.getRight() == null) {
+			setVertPanelsRight();
+		}
+		else {
+			setVertPanelsLeft();
+		}
+	}
+
+	public ScreenManager getScreenManager() {
+		return SCREEN_MANAGER;
+	}
+
+
+}
