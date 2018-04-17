@@ -10,11 +10,15 @@ package authoring.frontend;
  */
 public class AdjustWaveScreen extends PathScreen {
 	private String myWaveNumber;
+	private WaveDirectionsPanel myWaveDirectionsPanel;
+	private WaveToolBar myWaveToolBar;
 
 
 	protected AdjustWaveScreen(AuthoringView view, String waveNumber) {
 		super(view);
 		myWaveNumber = waveNumber;
+		myWaveDirectionsPanel = new WaveDirectionsPanel(getView(), myWaveNumber);
+		myWaveToolBar = new WaveToolBar(getView());
 	}
 	/**
 	 * Sets up grid to show user a new WavePanel (containing choices specific to a given Path) whenever
@@ -23,8 +27,8 @@ public class AdjustWaveScreen extends PathScreen {
 	 */
 	@Override
 	public void initializeGridSettings(CreatePathGrid grid) {
-		setPathPanel(new WavePanel(getView(), grid.getMostRecentlyClicked(), myWaveNumber), new WaveToolBar(getView()));
-		grid.setUpForWaves(e -> {setPathPanel(new WavePanel(getView(), grid.getMostRecentlyClicked(), myWaveNumber), new WaveToolBar(getView()));});//TODO: action here!!!);
+		setPathPanel(myWaveDirectionsPanel, myWaveToolBar);
+		grid.setUpForWaves(e -> {setPathPanel(new WavePanel(getView(), grid.getMostRecentlyClicked(), myWaveNumber), myWaveToolBar);});//TODO: action here!!!);
 	}
 	/**
 	 * There are no specific UI components in the UI of the WaveScreen, so this method is empty.
@@ -32,8 +36,7 @@ public class AdjustWaveScreen extends PathScreen {
 	 */
 	@Override
 	public void setSpecificUIComponents() {
-	    // TODO Auto-generated method stub - need to fix this
-	    
+	    setGridUIComponents(myWaveDirectionsPanel, myWaveToolBar);
 	}
 }
 

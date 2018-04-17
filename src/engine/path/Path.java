@@ -27,6 +27,7 @@ public class Path {
 	}
 
 
+
 	/**
 	 * Returns the next position of the object according to its speed
 	 * 

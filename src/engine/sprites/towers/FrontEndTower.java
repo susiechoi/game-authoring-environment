@@ -3,7 +3,6 @@ package engine.sprites.towers;
 import java.util.Map;
 
 import engine.sprites.FrontEndSprite;
-import javafx.scene.image.ImageView;
 
 /**
  * Interface Gameplayer will use to populate tower-specific panels, and to trigger upgrades of tower

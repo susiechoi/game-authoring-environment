@@ -27,9 +27,9 @@ public class Level {
 	private final int myNumber;
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
-	private Map<Path, List<Wave>> myWaves;
+	private List<Wave> myWaves;
+	//private Map<Path, List<Wave>> myWaves;
 	private Map<String, Enemy> myEnemies;
-
 
 	private int xLoc = 100;
 	private int yLoc = 100;
@@ -39,7 +39,7 @@ public class Level {
 		myNumber = number;
 		myTowers = new HashMap<String, Tower>();
 		myEnemies = new HashMap<String, Enemy>();
-		myWaves = new HashMap<Path, List<Wave>>();
+		myWaves = new ArrayList<Wave>();
 		myPaths = new ArrayList<Path>();
 	} 
 
@@ -160,33 +160,31 @@ public class Level {
 	 * 
 	 * @param wave: a new wave to be added
 	 */
+	@Deprecated
 	public void addWave(Path path, Wave wave) {
-		if(myWaves.containsKey(path)) {
-			List<Wave> waves = myWaves.get(path);
-			waves.add(wave);
-		}
-		else {
-			ArrayList<Wave> waveList = new ArrayList<>();
-			waveList.add(wave);
-			myWaves.put(path,waveList);
-		}
+	    	if(!myWaves.contains(wave)) {
+	    	    myWaves.add(wave);
+	    	}
+//		if(myWaves.containsKey(path)) {
+//			List<Wave> waves = myWaves.get(path);
+//			waves.add(wave);
+//		}
+//		else {
+//			ArrayList<Wave> waveList = new ArrayList<>();
+//			waveList.add(wave);
+//			myWaves.put(path,waveList);
+//		}
 
 	}
 	public boolean containsWaveNumber(int num) {
-		for(List<Wave> waveLists : myWaves.values()) {
-			if(waveLists.size()>= num) {
-				return true;
-			}
-		}
-		return false;
+		return(myWaves.size()>=num);
 	}
 
 	/**
 	 * Returns any new Enemy
 	 */
-	public Enemy getNewEnemy(Path path) {
-		Wave currentWave = myWaves.get(path).get(0);
-		Enemy waveEnemy = currentWave.getEnemy();
+	public Enemy getNewEnemy(Path path) { //TODO: do engine people want this to be based on wave? currently just doing first wave
+		Enemy waveEnemy = myWaves.get(0).getEnemySpecificPath(path);
 		if (waveEnemy != null) {
 			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
 			numEnemy++;
@@ -198,7 +196,7 @@ public class Level {
 		return myNumber; 
 	}
 
-	protected Map<Path, List<Wave>> getWaves() {
+	protected List<Wave> getWaves() {
 		return myWaves; 
 	}
 
@@ -215,13 +213,7 @@ public class Level {
 	}
 
 	public int getHighestWaveNumber() {
-		int highest = 0;
-		for(List<Wave> waveLists: myWaves.values()) {
-			if(waveLists.size()>= highest) {
-				highest = waveLists.size();
-			}
-		}
-		return highest;
+		return myWaves.size();
 	}
 
 	/**
@@ -231,7 +223,7 @@ public class Level {
 	 * @return List<Wave>: A list of wave objects in the level on the path
 	 */
 	public List<Wave> getWaves(Path path) {
-		return myWaves.get(path);
+		return myWaves;
 	}
 
 	/**
@@ -239,10 +231,12 @@ public class Level {
 	 * 
 	 * @param path: the path object that the wave is specific to
 	 */
+	@Deprecated
 	public void removeWave(Path path) {
-		List<Wave> currentWaves = getWaves(path);
-		currentWaves.remove(0);
-		myWaves.put(path, currentWaves);
+		removeWave();
+	}
+	public void removeWave() {
+	    myWaves.remove(0);
 	}
 
 	/**
@@ -251,18 +245,14 @@ public class Level {
 	 * @return boolean: true if the level is finished, false otherwise
 	 */
 	public boolean isFinished() {
-		for (Path path : myWaves.keySet()) {
-			if (!myWaves.get(path).isEmpty()) {
-				return false;
-			}
-		}
-		return true; 
+		return myWaves.size()>0; 
 	}
+	@Deprecated
 	public boolean containsWave(Path path, int waveNumber) {
-		if(!myWaves.containsKey(path)) {
-			return false;
-		}
-		return (myWaves.get(path).size() > waveNumber);
+		return containsWave(waveNumber);
+	}
+	public boolean containsWave(int waveNumber) {
+	    return myWaves.size()>waveNumber;
 	}
 
 
