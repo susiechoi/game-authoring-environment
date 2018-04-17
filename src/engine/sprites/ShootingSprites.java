@@ -64,13 +64,14 @@ public abstract class ShootingSprites extends Sprite{
      * @return : a list of all sprites to be removed from screen (dead)
      */
     public List<Sprite> checkForCollision(ShootingSprites target) {
+	    System.out.println("class is " + this.getClass().toString());
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
 	List<Projectile> projectiles = this.getProjectiles();
 	toBeRemoved.addAll(this.checkTowerEnemyCollision(target)); //TODO add any dead tower/enemy to toBeRemoved list
 	for (Projectile projectile: projectiles) {
 	    if(target.intersects(projectile) && !(projectile.hasHit(target))){
-		toBeRemoved.addAll(target.objectCollision(projectile)); //checks collisions between projectiles and enemy/tower
+		toBeRemoved.addAll(objectCollision(target, projectile)); //checks collisions between projectiles and enemy/tower
 		if (projectile.handleCollision(target)) {
 		    toBeRemoved.add(projectile);
 		    projectilesToBeDeactivated.add(projectile);
@@ -83,12 +84,12 @@ public abstract class ShootingSprites extends Sprite{
 	return toBeRemoved;
     }
 
-    private List<Sprite> objectCollision(Sprite collider) {
+    private List<Sprite> objectCollision(Sprite target, Sprite collider) {
 	List<Sprite> deadSprites = new ArrayList<>();
 	hitCount++;
-	if(!this.handleCollision(collider)) {
+	if(!target.handleCollision(collider)) {
 	    deadCount++;
-	    deadSprites.add(this);
+	    deadSprites.add(target);
 	}
 	return deadSprites;
     }
@@ -137,7 +138,7 @@ public abstract class ShootingSprites extends Sprite{
 	return hitCount;
     }
     
-    protected int getDeadCount() {
+    protected double getDeadCount() {
 	return deadCount;
     }
 
