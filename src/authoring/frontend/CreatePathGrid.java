@@ -69,6 +69,8 @@ public class CreatePathGrid extends AdjustScreen {
 	public CreatePathGrid(AuthoringView view) {
 	    super(view);
 	    unDraggable = false;
+	    
+	    
 	}
 
 	/**
@@ -270,7 +272,7 @@ public class CreatePathGrid extends AdjustScreen {
 	    ///System.out.println("trying to make undraggable");
 	    for(Node newNode: grid.getChildren()){
 		newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
-		newNode.setOnDragDropped(e -> {});
+		//newNode.setOnDragDropped(e -> {});
 		myOnMouseClicked = new EventHandler <MouseEvent>() {
 		    public void handle(MouseEvent event) {
 			myCurrentClicked = new DraggableImage(startImage.getImage()); //TODO
@@ -283,10 +285,8 @@ public class CreatePathGrid extends AdjustScreen {
 	protected void setUpForPathCreation() {
 	    for(Node newNode: grid.getChildren()){
 		if(newNode instanceof StackPane) {
-		    //System.out.println("seeing the node");
-		    //if(myOnMouseClicked!=null|| unDraggable) {
-		    // System.out.println("hellppp");
 		    newNode.removeEventHandler(MouseEvent.MOUSE_CLICKED, myOnMouseClicked);
+		    //newNode.setOnMouseClicked(e -> {});
 		    newNode.setOnDragDropped(myOnDragDropped);
 		}
 	    }

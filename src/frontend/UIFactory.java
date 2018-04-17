@@ -40,25 +40,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
 public class UIFactory {
 
-    public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
+    public static final String DEFAULT_BACK_IMAGE = "src/images/back.gif"; 
     public static final char[] NOT_ALLOWED_FILEPATH = {'*', '.', '\\', '/','\"', '[', ']', ':', ';', '|', '=', ',', ' '};
 
     /**
@@ -251,9 +235,8 @@ public class UIFactory {
 
 		    File file = fileChooser.showOpenDialog(new Stage());
 		    file.getAbsolutePath();
-		    File fileCopy = new File("images/" + imageName + extension);
+		    File fileCopy = new File("src/images/" + imageName + extension);
 		    try{
-
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		    }
 		    catch(IOException e2) {
