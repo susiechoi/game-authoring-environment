@@ -186,9 +186,10 @@ public class AuthoringController {
 		    thisWave = new Wave();
 		    thisLevel.getWaves().add(thisWave);
 		}
-		else{
-
+		else {
+		    
 		}
+		thisWave.addEnemy(thisEnemy, path, newAmount);
 	    }
 
 
