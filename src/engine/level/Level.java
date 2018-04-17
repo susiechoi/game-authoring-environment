@@ -178,7 +178,6 @@ public class Level {
 	public void addWave(Path path, Wave wave) {
 		if(myWaves.containsKey(path)) {
 			List<Wave> waves = myWaves.get(path);
-			System.out.println("is waves null?" + path == null);
 			waves.add(wave);
 		}
 		else {
@@ -197,38 +196,38 @@ public class Level {
 		return false;
 	}
 
-    /**
-     * Returns any new Enemy
-     */
-    public Enemy getNewEnemy(Path path) {
-	Wave currentWave = myWaves.get(path).get(0);
-	Enemy waveEnemy = currentWave.getEnemy();
-	if (waveEnemy != null) {
-	waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
-	numEnemy++;
+	/**
+	 * Returns any new Enemy
+	 */
+	public Enemy getNewEnemy(Path path) {
+		Wave currentWave = myWaves.get(path).get(0);
+		Enemy waveEnemy = currentWave.getEnemy();
+		if (waveEnemy != null) {
+			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
+			numEnemy++;
+		}
+		return waveEnemy;
 	}
-	return waveEnemy;
-    }
 
-    protected int getNumber() {
-	return myNumber; 
-    }
+	protected int getNumber() {
+		return myNumber; 
+	}
 
-    protected Map<Path, List<Wave>> getWaves() {
-	return myWaves; 
-    }
+	protected Map<Path, List<Wave>> getWaves() {
+		return myWaves; 
+	}
 
-    public List<Path> getPaths() {
-	return myPaths; 
-    }
+	public List<Path> getPaths() {
+		return myPaths; 
+	}
 
-    public Map<String, Tower> getTowers() {
-	return myTowers;
-    }
+	public Map<String, Tower> getTowers() {
+		return myTowers;
+	}
 
-    public Map<String, Enemy> getEnemies() {
-	return myEnemies; 
-    }
+	public Map<String, Enemy> getEnemies() {
+		return myEnemies; 
+	}
 
 	public int getHighestWaveNumber() {
 		int highest = 0;
@@ -280,7 +279,6 @@ public class Level {
 		}
 		return (myWaves.get(path).size() > waveNumber);
 	}
-
 
 
 	public Map<String, List<Point>> getLevelPathMap(){

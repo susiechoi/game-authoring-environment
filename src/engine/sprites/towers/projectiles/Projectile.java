@@ -42,7 +42,6 @@ public class Projectile extends Sprite {
 	    myProjectile.place(800, 800);
 	    myDamage = new DamageProperty(100,100,100);
 	    this.place(shooterX, shooterY);
-
 	    this.rotateImage();
 	    
 	    //myTarget = target;
@@ -54,14 +53,12 @@ public class Projectile extends Sprite {
 	public void move(double elapsedTime) {
 	    	rotateImage();
 	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-
 		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 		
 		
 		this.getImageView().setX(this.getX()+xMove);
 		this.getImageView().setY(this.getY()+yMove);
-
 	}
 	
 	/**
@@ -73,7 +70,6 @@ public class Projectile extends Sprite {
 	    	double yDifference = myTarget.getY() - this.getY();
 	    	double angleToRotateRads = Math.atan2(xDifference,yDifference);
 	    	this.setRotate(Math.toDegrees(angleToRotateRads));
-
 	}
 	
 	/**

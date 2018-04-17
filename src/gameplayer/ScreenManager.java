@@ -94,13 +94,11 @@ public class ScreenManager extends View {
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
 	MEDIATOR.startPlay(filepath);
-	System.out.println("screen manager start play called on mediator");
     }
     
     public void loadGameScreenNew() {
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
-	System.out.println("screen manager start play called on mediator");
     }
 
     public void loadGameScreenContinuation() {
@@ -110,7 +108,6 @@ public class ScreenManager extends View {
     @Override
     public void loadErrorScreen(String errorMessage) {
 	// TODO Auto-generated method stub
-	System.out.println("missing");
 
     }
 
