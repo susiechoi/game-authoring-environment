@@ -31,23 +31,29 @@ public class WavePanel extends PathPanel{
 	private ComboBox<String> myEnemyDropdown;
 	private TextField myNumberTextField;
 	private Integer myEnemyNumber;
-	private String myWaveNumber;
+	private Integer myWaveNumber;
 	public WavePanel(AuthoringView view, DraggableImage grid, String waveNumber) {
 		super(view);
-		if (grid == null) {
-			myPathNumber = 1;
+//		if (grid == null) {
+//			myPathNumber = 1;
+//		}
+		if(waveNumber.equals("Default")) {
+		    myWaveNumber = getView().getHighestWaveNumber(getView().getLevel());
 		}
-		waveNumber = getView().getHighestWaveNumber((Integer)(getView().getLevel() + 1)).toString();
-		myWaveNumber = waveNumber;
+		else {
+		    myWaveNumber = Integer.parseInt(waveNumber.split(" ")[1]) - 1;
+		}
+		myPathNumber = 1; //TODO!!
+		
 		setUpPanel();
 	}
 
 	private void setUpPanel() {
-		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPathNumber, Integer.parseInt(myWaveNumber));
+		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPathNumber, myWaveNumber);
 		myRoot = new VBox();
 		myRoot.setMaxSize(280, 900);
 		VBox pseudoRoot = new VBox();
-		Label waveText = new Label(getErrorCheckedPrompt("WavescreenHeader") + myWaveNumber);
+		Label waveText = new Label(getErrorCheckedPrompt("WavescreenHeader") + (myWaveNumber+1));
 		List<String> enemyOptions = getView().getCurrentObjectOptions("Enemy");
 		myEnemyDropdown = getUIFactory().makeTextDropdown("", enemyOptions);
 		myEnemyDropdown.setOnAction(e -> {
@@ -61,23 +67,26 @@ public class WavePanel extends PathPanel{
 		if(enemyOptions.size()>0) {
 			myEnemyDropdown.setValue(enemyOptions.get(0));
 		}
-
 		Text enemyDropdownText = new Text(getView().getErrorCheckedPrompt("ChooseEnemy"));
 		myNumberTextField = new TextField();
-		//myNumberTextField.setText(enemyMap.get(myEnemyDropdown.getValue()).toString());
+		if(myEnemyDropdown.getValue()!=null) {
+		    myNumberTextField.setText(enemyMap.get(myEnemyDropdown.getValue()).toString());
+		}
 		//		HBox sizingButtons = makeSizingButtons();
 		Text textFieldPrompt = new Text(getView().getErrorCheckedPrompt("ChooseEnemyNumber"));
 		//HBox textFieldPrompted = getUIFactory().addPromptAndSetupHBox("", myNumberTextField, "ChooseEnemyNumber");
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 		applyButton.setOnAction(e -> {
-			errorcheckResponses();
-			System.out.println("addin a wave");
-			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
-			System.out.println("myWaveNumber" + myWaveNumber);
-			getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), Integer.parseInt(myWaveNumber), 
-					myEnemyDropdown.getValue(), myEnemyNumber);
-			System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
+			if(errorcheckResponses()) {
+				//System.out.println("addin a wave");
+				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
+				//System.out.println("myWaveNumber" + myWaveNumber);
+				getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), myWaveNumber, 
+						myEnemyDropdown.getValue(), myEnemyNumber);
+				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
+			}
+
 		});
 		pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField, backButton, applyButton);
 		myRoot.getChildren().add(pseudoRoot);
@@ -85,16 +94,19 @@ public class WavePanel extends PathPanel{
 	}
 
 
-	private void errorcheckResponses() {
+	private boolean errorcheckResponses() {
 		if(myEnemyDropdown.getValue() == null ) {
 			getView().loadErrorAlert("BadValue");
+			return false;
 		}
 		try {
 			myEnemyNumber = Integer.parseInt(myNumberTextField.getText());
 		}
 		catch(NumberFormatException e) {
 			getView().loadErrorAlert("BadValue");
+			return false;
 		}
+		return true;
 	}
 
 	@Override
