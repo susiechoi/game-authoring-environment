@@ -182,21 +182,13 @@ public class AuthoringController {
 		//System.out.println(thisLevel.getPaths());
 		Wave thisWave;
 		//TODO: problem, how is this being saved if none of these are instance variables?
-		if(thisLevel.getWaves(path) == null) {
+		if(thisLevel.getWaves() == null) {
 		    thisWave = new Wave();
-		    thisLevel.getWaves(path).add(thisWave);
+		    thisLevel.getWaves().add(thisWave);
 		}
 		else{
-		    List<Wave> levelWaves = thisLevel.getWaves(path);
-		    if (levelWaves.size() <= waveNumber) {
-			thisWave = new Wave();
-			levelWaves.add(thisWave);
-		    }
-		    else {
-			thisWave = levelWaves.get(waveNumber);
-		    }
+
 		}
-		thisWave.addEnemy(thisEnemy, path, newAmount);
 	    }
 
 

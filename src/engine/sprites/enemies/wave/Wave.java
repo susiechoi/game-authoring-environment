@@ -17,7 +17,6 @@ import engine.sprites.enemies.Enemy;
 public class Wave {
 
     private Map<Path, Map<Enemy, Integer>> myWaveMap;
-    //private Map<Enemy, Integer> myAllEnemies;
 
     @Deprecated
     public Wave(Path path) {

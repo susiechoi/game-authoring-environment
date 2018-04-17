@@ -30,6 +30,7 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -182,9 +183,11 @@ public class AuthoringModel implements GameData {
 
 	/**
 	 * Class to make a wave to be used in a specified level
+	 * @throws ObjectNotFoundException 
 	 */
-	public void makeWave() {
-
+	public void makeWave(int level, Wave wave) throws ObjectNotFoundException {
+	   Level currentLevel = levelCheck(level);
+	   currentLevel.addWave(wave);
 	}
 
 	// TODO 
