@@ -8,15 +8,21 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
+
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import data.GameData;
 import engine.level.Level;
+import engine.sprites.enemies.Enemy;
+import engine.sprites.towers.Tower;
 
 public class ManualSerializer implements XMLWriter {
 
     private Document d;
     private File f;
+    private XStream parser;
     
     public ManualSerializer() {
 	try {
@@ -24,6 +30,7 @@ public class ManualSerializer implements XMLWriter {
 	} catch (ParserConfigurationException p) {
 		System.out.println("Bad configuration"); // update exception
 	}
+	parser = new XStream(new StaxDriver());
     }
     
     @Override
@@ -43,7 +50,7 @@ public class ManualSerializer implements XMLWriter {
      * @return		List of Level objects
      */
     private List<Level> getLevels(AuthoringModel am) {
-	ArrayList<Level> levels = new ArrayList<>();
+	List<Level> levels = new ArrayList<>();
 	for (int i = 0; i < am.getLevels().size(); i++) {
 	    try {
 		Level l = am.levelCheck(i);
@@ -56,18 +63,45 @@ public class ManualSerializer implements XMLWriter {
 	return levels;
     }
     
+    /**
+     * Creates the XML data for a serialized level
+     * @param l	Level to be serialized
+     * @return	String representation of serialized level
+     */
     private String serializeLevel(Level l) {
-	ArrayList<String> enemies = (ArrayList<String>) l.getAllEnemies();
-	ArrayList<String> towers = (ArrayList<String>) l.getAllTowers();
+	String enemyData = serializeEnemies(l.getAllEnemies(), l);
+	String towerData = serializeTowers(l.getAllTowers(), l);
 	return null;
     }
     
-    private String serializeEnemies(List<String> enemies) {
-	
+    /**
+     * Generates XML data for the enemies in a level
+     * @param enemies	List of String names of enemy types
+     * @param level	Level object of interest
+     * @return	String representation of serialized enemies
+     */
+    private String serializeEnemies(List<String> enemies, Level level) {
+	String s = "";
+	for (String enemy:enemies) {
+	    Enemy e = level.getEnemy(enemy);
+	    s = s + parser.toXML(e) + "\n";
+	}
+	return s;
     }
     
-    private String serializeTowers(List<String> towers) {
-	
+    /**
+     * Generates XML data for the towers in a level
+     * @param towers	List of String names of tower types
+     * @param level	Level object of interest
+     * @return	String representation of serialized towers
+     */
+    private String serializeTowers(List<String> towers, Level level) {
+	String s = "";
+	for (String tower:towers) {
+	    Tower t = level.getTower(tower);
+	    s = s + parser.toXML(t) + "\n";
+	}
+	return s;
     }
 
 }
