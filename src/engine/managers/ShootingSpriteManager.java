@@ -51,11 +51,11 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      * @param passedSprites : target being shot at
      * @return Projectiles to add to the front end view
      */
-    public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
+    public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
 		List<Projectile> newProjectiles = new ArrayList<>();
 		for (ShootingSprites shootingSprite: this.getListOfActive()) {
 		    for (ShootingSprites passedSprite: passedSprites) {
-			if (shootingSprite.hasReloaded() && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {// && !targetsBeingShotAt.contains(passedSprite)) { //TODO add back range check
+			if (shootingSprite.hasReloaded(elapsedTime) && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {// && !targetsBeingShotAt.contains(passedSprite)) { //TODO add back range check
 			    System.out.println("SHOOTING");
 			    Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			    System.out.println("new projectile damage is " + newProjectile.getDamage());

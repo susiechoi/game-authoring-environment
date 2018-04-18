@@ -113,8 +113,8 @@ public abstract class ShootingSprites extends Sprite{
 	return (distanceBetween <= myLauncher.getRange());
     }
 
-    public boolean hasReloaded() {
-	return myLauncher.hasReloaded();
+    public boolean hasReloaded(double elapsedTime) {
+	return myLauncher.hasReloaded(elapsedTime);
     }
 
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
