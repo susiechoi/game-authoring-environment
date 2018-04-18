@@ -73,8 +73,16 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	protected abstract Parent populateScreenWithFields();
 
-	protected abstract void populateNameField();
-	
+	protected abstract TextField getNameField(); 
+
+	protected void populateNameField() {
+		TextField nameField = getNameField(); 
+		if (nameField != null) {
+			nameField.setText(getMySelectedObjectName());
+			setEditableOrNot(getNameField(), getIsNewObject());
+		}
+	}
+
 	protected void populateFieldsWithData() {
 		AttributeFinder attributeFinder = new AttributeFinder(); 
 
