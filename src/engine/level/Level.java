@@ -183,7 +183,7 @@ public class Level {
 	    }
 	}
 	public boolean containsWaveNumber(int num) {
-		return(myWaves.size()>=(num-1));
+		return(myWaves.size()>=(num));
 	}
 
 	/**

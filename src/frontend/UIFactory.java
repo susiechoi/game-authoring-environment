@@ -42,7 +42,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class UIFactory {
 
-    public static final String DEFAULT_BACK_IMAGE = "src/images/back.gif"; 
+    public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
     public static final char[] NOT_ALLOWED_FILEPATH = {'*', '.', '\\', '/','\"', '[', ']', ':', ';', '|', '=', ',', ' '};
 
     /**
@@ -235,7 +235,7 @@ public class UIFactory {
 
 		    File file = fileChooser.showOpenDialog(new Stage());
 		    file.getAbsolutePath();
-		    File fileCopy = new File("src/images/" + imageName + extension);
+		    File fileCopy = new File("images/" + imageName + extension);
 		    try{
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		    }
