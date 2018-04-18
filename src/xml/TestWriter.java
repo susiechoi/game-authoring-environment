@@ -95,8 +95,11 @@ public class TestWriter extends Application {
     public void start(Stage arg0) throws Exception {
 	File f = new File("/images/flow.png");
 	try {
-	    ImageView i = new ImageView(f.toURI().toURL().toString());
-	    System.out.println(parser.toXML(i));
+	    LocatedImage i = new LocatedImage(f.toURI().toURL().toString());
+	    String path = parser.toXML(i.getUrl());
+	    System.out.println(path);
+	    LocatedImage img = new LocatedImage((String) parser.fromXML(path));
+	    System.out.println(img.getUrl());
 	} catch (MalformedURLException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
