@@ -44,6 +44,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
+		    	setSaved();
 			getView().makeResources(myGameNameEntry.getText(), myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue());//TODO fix
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});

@@ -96,7 +96,8 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 			if (validNameField(myNameField)) {
 				try {
 					getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), 0, 0);
-					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");			
+					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
+					setSaved();
 				} catch(NoDuplicateNamesException e1) {
 					getView().loadErrorAlert("NoDuplicateNames");
 				}

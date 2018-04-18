@@ -78,6 +78,7 @@ public class WavePanel extends PathPanel{
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 		applyButton.setOnAction(e -> {
+		    	setSaved();
 			if(errorcheckResponses()) {
 				//System.out.println("addin a wave");
 				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));

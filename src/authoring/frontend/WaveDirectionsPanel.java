@@ -49,6 +49,7 @@ public class WaveDirectionsPanel extends PathPanel{
 	}
 	Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 	applyButton.setOnAction(e -> {
+	    setSaved();
 	    getView().setWaveTime(myWaveNumber+1,(int) Math.round(myTimeSlider.getValue()));
 	});
 	pseudoRoot.getChildren().add(waveText);
