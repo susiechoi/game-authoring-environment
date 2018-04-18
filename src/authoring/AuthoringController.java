@@ -29,7 +29,7 @@ import xml.AuthoringModelReader;
 
 public class AuthoringController {
 
-    private AuthoringView myAuthoringView; 
+    private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
 
@@ -40,14 +40,14 @@ public class AuthoringController {
      * @param languageIn is chosen language for prompts
      */
     public AuthoringController(StageManager stageManager, String languageIn) {
-	myAuthoringView = new AuthoringView(stageManager, languageIn, this);
+	myView = new AuthoringView(stageManager, languageIn, this);
 	try {
 	    myModel = new AuthoringModel();
 	} catch (MissingPropertiesException e) {
-	    myAuthoringView.loadErrorScreen("NoDefaultObject");
+	    myView.loadErrorScreen("NoDefaultObject");
 	}
-	myAuthoringView.setModel(myModel);
-	myAuthoringView.loadInitialScreen();
+	myView.setModel(myModel);
+	myView.loadInitialScreen();
     }
 
     /**
@@ -263,8 +263,10 @@ public class AuthoringController {
      * @param gameName is name of game/XML file being loaded in
      */
     public void setModel(String gameName) {
+    	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = reader.createModel(gameName);
+	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
 
     /**

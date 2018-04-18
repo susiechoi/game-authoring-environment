@@ -1,5 +1,6 @@
 package gameplayer;
 
+import frontend.MainScreen;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -46,6 +47,8 @@ public class ScreenManager extends View {
     private Integer health;
     private Integer currency;
 
+    private String myLanguage;
+    private String myGameFilePath; 
     private Mediator MEDIATOR;
     private final StageManager STAGE_MANAGER;
     private GameScreen GAME_SCREEN;
@@ -61,6 +64,7 @@ public class ScreenManager extends View {
 	super(stageManager);
 	STAGE_MANAGER = stageManager;
 	PROMPTS = new PromptReader(language, this);
+	myLanguage = language; 
 	MEDIATOR = mediator;
 	findSettings();
 	GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
@@ -90,6 +94,7 @@ public class ScreenManager extends View {
     }
 
     public void loadGameScreenNew(String filepath) {
+    	myGameFilePath = filepath; 
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
 	MEDIATOR.startPlay(filepath);
@@ -151,9 +156,32 @@ public class ScreenManager extends View {
 	GAME_SCREEN.setPath(imageMap, backgroundImageFilePath);
     }
 
+	public void toMain() {
+		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER).getScreen());
+	}
+
     public StageManager getStageManager() {
         return STAGE_MANAGER;
     }
-
+    
+    /**
+     * Returns current language
+     * Useful in instantiating new AuthoringController with correct language 
+     * 	when user decides to continue authoring the game
+     * @return String representing the language
+     */
+    public String getLanguage() {
+    		return myLanguage;
+    }
+    
+    /**
+     * Returns filepath of XML of current game
+     * Useful in instantiating new AuthoringController with correct language 
+     * 	when user decides to continue authoring the game
+     * @return String XML filepath
+     */
+    public String getGameFilePath() {
+    	return myGameFilePath; 
+    }
 
 }

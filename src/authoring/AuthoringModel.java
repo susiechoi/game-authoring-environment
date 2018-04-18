@@ -516,5 +516,16 @@ public class AuthoringModel implements GameData {
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}
+
+	public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		if (objectType.equals("Tower")) {
+			currentLevel.removeTower(name);
+		}
+		if (objectType.equals("Enemy")) {
+			currentLevel.removeEnemy(name);
+		}
+	}
+
 }
 
