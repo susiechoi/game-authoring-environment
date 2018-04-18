@@ -176,8 +176,14 @@ public class Level {
 //		}
 
 	}
+	
+	public void addWave(int waveNumber) {
+	    if(!containsWaveNumber(waveNumber)) {
+		myWaves.add(new Wave());
+	    }
+	}
 	public boolean containsWaveNumber(int num) {
-		return(myWaves.size()>=num);
+		return(myWaves.size()>=(num-1));
 	}
 
 	/**

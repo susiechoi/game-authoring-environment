@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Tower";
-	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
+	public static final String TOWER_IMAGES = "src/images/TowerImageNames.properties";
 	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 

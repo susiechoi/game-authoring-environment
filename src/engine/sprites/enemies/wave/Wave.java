@@ -11,12 +11,14 @@ import engine.sprites.enemies.Enemy;
 /**
  * 
  * @author Ben Hodgson 3/29/18
- *
+ * @author Sarah Bland
  * Class used for defining a wave of enemies to appear in a level
  */
 public class Wave {
+    public static final int DEFAULT_WAVE_TIME = 5;
 
     private Map<Path, Map<Enemy, Integer>> myWaveMap;
+    private int myTime;
     //private Map<Enemy, Integer> myAllEnemies;
 
     @Deprecated
@@ -26,8 +28,10 @@ public class Wave {
 
     public Wave() {
 	myWaveMap = new HashMap<>();
-	//myAllEnemies = new HashMap<>();
+	myTime = DEFAULT_WAVE_TIME;
     }
+    
+    
 
     /**
      * Adds a number of an enemy type to a wave for the level
@@ -40,6 +44,14 @@ public class Wave {
 	Map<Enemy, Integer> enemyMap = new HashMap<>();
 	enemyMap.put(enemy, number);
 	myWaveMap.put(new Path(null, null, null), enemyMap);
+    }
+    
+    public int getWaveTime() {
+	return myTime;
+    }
+    
+    public void setWaveTime(int time) {
+	myTime = time;
     }
 
     public void addEnemy(Enemy enemy, Path path, int number) {

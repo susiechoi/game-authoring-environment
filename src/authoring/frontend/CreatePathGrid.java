@@ -164,6 +164,7 @@ public class CreatePathGrid extends AdjustScreen {
 			}
 		    };
 		    cell.setOnDragDropped(myOnDragDropped);
+		    cell.setOnMouseClicked(myOnMouseClicked);
 		    grid.add(cell, x, y);
 		}
 	    }
@@ -279,6 +280,7 @@ public class CreatePathGrid extends AdjustScreen {
 			action.handle(event);
 		    }
 		};
+		newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
 		newNode.setOnMouseClicked(myOnMouseClicked);
 	    }
 	}

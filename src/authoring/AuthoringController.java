@@ -295,5 +295,14 @@ public class AuthoringController {
     public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
 	return myModel.getHighestWaveNumber(level);
     }
+    
+    public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
+	Level currentLevel = myModel.levelCheck(level);
+	if(!currentLevel.containsWave(waveNumber)) {
+	    currentLevel.addWave(waveNumber);
+	}
+	Wave desiredWave = currentLevel.getWaves(null).get(waveNumber-1);
+	desiredWave.setWaveTime(time);
+    }
 }
 

@@ -30,6 +30,7 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -330,23 +331,13 @@ public class AuthoringModel implements GameData {
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, mySettings);
 		}
 
-		//	else if (objectType.equals("Wave")) {
-		//	    Level currentLevel = levelCheck(level);
-		//	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
-		//		Wave wave = currentLevel.getWave();
-		//		for (Field aField : tower.getClass().getDeclaredFields()) {
-		//		    String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-		//		    if (fieldSimpleString.equals(attribute)) {
-		//			aField.setAccessible(true);
-		//			fieldValue = aField.get(tower);
-		//			break; 
-		//		    }
-		//		}
-		//	    }
-		//	    if (fieldValue == null) {
-		//		throw new ObjectNotFoundException(name);
-		//	    }
-		//	}
+		else if(objectType.equals("Wave")) {
+			Level currentLevel = levelCheck(level);
+			if (currentLevel.containsWave(Integer.parseInt(name))) {
+				Wave wave = currentLevel.getWaves(null).get(Integer.parseInt(name));
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, wave);
+			}
+		}
 		if (attributeValue == null) {
 			throw new ObjectNotFoundException(name);
 		}

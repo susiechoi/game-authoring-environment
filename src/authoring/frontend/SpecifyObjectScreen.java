@@ -73,14 +73,13 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);
 		vb.getChildren().add(backAndApplyButton);
-
 		return vb;
 	}
-	
 	@Override
 	protected void populateFieldsWithData() {
 		//null method, since this type of screen only has buttons TODO: make this not an abstract method??
 	}
+
 
 	/**
 	 * For creating a button option to make a new object
