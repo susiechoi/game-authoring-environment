@@ -40,7 +40,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      * @param passedSprites : target being shot at
      * @return Projectiles to add to the front end view
      */
-    public List<Projectile> shoot(List<ShootingSprites> passedSprites) {
+    public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
 		List<Projectile> newProjectiles = new ArrayList<>();
 		for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
 		    for (ShootingSprites passedSprite: passedSprites) {	//all the enemies
