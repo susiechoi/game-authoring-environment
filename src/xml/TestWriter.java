@@ -15,11 +15,16 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 ///Put this at the top of the file:
 import java.io.*;
+import java.net.MalformedURLException;
 import java.util.*;
 
 import data.GameData;
+import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
-public class TestWriter {
+public class TestWriter extends Application {
     
     private File file;
     private Document d;
@@ -75,14 +80,27 @@ public class TestWriter {
 	}
     
     public static void main(String[] args) {
-	TestWriter x = new TestWriter();
-	ArrayList<String> l = new ArrayList<>();
-	XStream parser = new XStream(new StaxDriver());
-	l.add("A");
-	l.add("B");
-	x.write(l, "TesterFile");
-	ArrayList<String> y = (ArrayList<String>) x.read("TesterFile");
-	System.out.println(y.toString());
+//	TestWriter x = new TestWriter();
+//	ArrayList<String> l = new ArrayList<>();
+//	XStream parser = new XStream(new StaxDriver());
+//	l.add("A");
+//	l.add("B");
+//	x.write(l, "TesterFile");
+//	ArrayList<String> y = (ArrayList<String>) x.read("TesterFile");
+//	System.out.println(y.toString());
+	launch(args);
+	
+    }
+    @Override
+    public void start(Stage arg0) throws Exception {
+	File f = new File("/images/flow.png");
+	try {
+	    ImageView i = new ImageView(f.toURI().toURL().toString());
+	    System.out.println(parser.toXML(i));
+	} catch (MalformedURLException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 
 }
