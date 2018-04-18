@@ -59,7 +59,7 @@ public class AuthoringController {
 	 * @throws NoSuchFieldException 
 	 * @throws ObjectNotFoundException 
 	 */
-	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
+	public Object getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		return myModel.getObjectAttribute(level, objectType, name, attribute);
 	}
 	
@@ -103,8 +103,8 @@ public class AuthoringController {
 	 * @throws ObjectNotFoundException 
 	 */
 	
-	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
-	    	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage); 
+	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException { 
+	    	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathSize); 
 		myImageMap = imageCoordinates;
 	}
 

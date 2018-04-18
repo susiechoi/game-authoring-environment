@@ -246,8 +246,8 @@ public class Mediator {
 		}
 	}
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-		myScreenManager.setPath(imageMap, backgroundImageFilePath);
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
+		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
 	}
 
 

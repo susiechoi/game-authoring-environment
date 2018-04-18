@@ -20,63 +20,63 @@ import xml.AuthoringModelReader;
  */
 public class PlayController {
 
-    private Mediator myMediator;
-    private AuthoringModelReader myReader;
-    private ScreenManager myScreenManager;
-    private GameEngine myGameEngine;
+	private Mediator myMediator;
+	private AuthoringModelReader myReader;
+	private ScreenManager myScreenManager;
+	private GameEngine myGameEngine;
 
 
-    /**
-     * Constructs main parts of play: Engine for backend controls, ScreenManager (top
-     * level of game player) and Mediator, which connects the two
-     * 
-     * @param stage: Stage to mount Game Player on 
-     */
-    public PlayController(StageManager stageManager, String language, AuthoringModel model) {
-	myMediator = new Mediator(this);
-	myGameEngine = new GameEngine(myMediator);
-	myScreenManager = new ScreenManager(stageManager, language, myMediator);
-	myReader = new AuthoringModelReader();
-	myMediator.setGameEngine(myGameEngine);
-	myMediator.setScreenManager(myScreenManager);
-    }
+	/**
+	 * Constructs main parts of play: Engine for backend controls, ScreenManager (top
+	 * level of game player) and Mediator, which connects the two
+	 * 
+	 * @param stage: Stage to mount Game Player on 
+	 */
+	public PlayController(StageManager stageManager, String language, AuthoringModel model) {
+		myMediator = new Mediator(this);
+		myGameEngine = new GameEngine(myMediator);
+		myScreenManager = new ScreenManager(stageManager, language, myMediator);
+		myReader = new AuthoringModelReader();
+		myMediator.setGameEngine(myGameEngine);
+		myMediator.setScreenManager(myScreenManager);
+	}
 
-    /**
-     * Creates a new play based on an XML file and passes authored
-     * parameters to Engine
-     * 
-     * @param pathToXML: Path to game XML file
-     */
-    public void newPlay(String pathToXML) {
-	myReader = new AuthoringModelReader();
-	AuthoringModel playModel = myReader.createModel(pathToXML);
-	List<Level> levels = playModel.allLevels();
-	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
-	myMediator.setPath(levels.get(0).getLevelPathMap(), "");
-	myGameEngine.setPlayState(play);
-	myGameEngine.start();
-    }
-    
-    /**
-     * Creates a new demo play based on the AuthoringModel object authored by
-     * the user
-     * 
-     * @param model: the AuthoringModel object authored by the user
-     */
-    public void demoPlay(AuthoringModel model) {
-	List<Level> levels = model.allLevels();
-	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
-	myScreenManager.loadGameScreenNew();
-	myGameEngine.setPlayState(play);
-	myGameEngine.start();
-    }
-    
-    /**
-     * Calls the ScreenManager to load the InstructionScreen
-     */
-    public void loadInstructionScreen() {
-	myScreenManager.loadInstructionScreen();
-    }
+	/**
+	 * Creates a new play based on an XML file and passes authored
+	 * parameters to Engine
+	 * 
+	 * @param pathToXML: Path to game XML file
+	 */
+	public void newPlay(String pathToXML) {
+		myReader = new AuthoringModelReader();
+		AuthoringModel playModel = myReader.createModel(pathToXML);
+		List<Level> levels = playModel.allLevels();
+		PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize());
+		myGameEngine.setPlayState(play);
+		myGameEngine.start();
+	}
+
+	/**
+	 * Creates a new demo play based on the AuthoringModel object authored by
+	 * the user
+	 * 
+	 * @param model: the AuthoringModel object authored by the user
+	 */
+	public void demoPlay(AuthoringModel model) {
+		List<Level> levels = model.allLevels();
+		PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+		myScreenManager.loadGameScreenNew();
+		myGameEngine.setPlayState(play);
+		myGameEngine.start();
+	}
+
+	/**
+	 * Calls the ScreenManager to load the InstructionScreen
+	 */
+	public void loadInstructionScreen() {
+		myScreenManager.loadInstructionScreen();
+	}
 
 
 }

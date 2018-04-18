@@ -90,7 +90,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			Object myField = null; 
 			try {
 				myField = attributeFinder.retrieveFieldValue(key, this);
-				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)));
+				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
 			} catch (IllegalArgumentException | NullPointerException | IllegalAccessException e) {
 				getView().loadErrorScreen("ObjectAttributeDNE");
 			}

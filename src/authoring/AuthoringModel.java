@@ -30,7 +30,6 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
-import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -46,10 +45,10 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
 	public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
 	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
-	public static final String DEFAULT_PATH_START = "images/start.png";
+	public static final String DEFAULT_PATH_START = "images/brick.png";
 	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
-	public static final String DEFAULT_PATH_END = "images/end.png";
-	public static final String DEFAULT_BACKGROUND_IMAGE = "images/grass.png";
+	public static final String DEFAULT_PATH_END = "images/darkstone.png";
+	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
 	private final String myDefaultName; 
 
 	private String myGameName; 
@@ -59,6 +58,7 @@ public class AuthoringModel implements GameData {
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
 	private Path myDefaultPath;
+	private Path myPath;
 	protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
 	protected String myBackgroundImage = new String();
 	protected List<Point> myPathCoordinates = new ArrayList<Point>();
@@ -118,13 +118,14 @@ public class AuthoringModel implements GameData {
 		//		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
 		//		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
 
-		try {
-			makePath(1, myPathCoordinates, myImageMap, myBackgroundImage);
-		}
-		catch(ObjectNotFoundException e) {
-			//TODO: help!!!
-			System.out.println("couldn't find object");
-		}
+//		try {
+//			makePath(1, myPathCoordinates, myImageMap, myBackgroundImage);
+//		}
+//		catch(ObjectNotFoundException e) {
+//			//TODO: help!!!
+//			System.out.println("couldn't find object");
+//		}
+		firstLevel.addPath(myDefaultPath);
 		myLevels.put(1, firstLevel);
 	}
 
@@ -194,18 +195,13 @@ public class AuthoringModel implements GameData {
 	 * Wraps constructor in case of new object creation
 	 * @throws ObjectNotFoundException 
 	 */
-
-	//parameters needed to get passed: background image, grid size, location of each image in grid 
-
-
-	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
 		myImageMap = imageCoordinates;
 		myBackgroundImage = backgroundImage;
 		myPathCoordinates = coordinates;
 		Level currentLevel = levelCheck(level);
-		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
+		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathSize);
 		currentLevel.addPath(newPath);
-
 	}
 
 
@@ -217,7 +213,7 @@ public class AuthoringModel implements GameData {
 	 */
 	private Tower generateGenericTower() throws NumberFormatException, FileNotFoundException {
 		try {
-			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
+//			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
 			Projectile towerProjectile = new ProjectileBuilder().construct(
 					myDefaultName,  
 					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
@@ -287,6 +283,12 @@ public class AuthoringModel implements GameData {
 				listToReturn.add("Wave " + k.toString());
 			}
 		}
+//		if(objectType.equals("Path")) {
+//			listToReturn.add(currentLevel.getPath());
+//			if (listToReturn.size() == 0) {
+//				listToReturn.add(myDefaultPath.getName());
+//			}
+//		}
 		listToReturn.remove(myDefaultName);
 		return listToReturn; 
 	}
@@ -311,7 +313,7 @@ public class AuthoringModel implements GameData {
 	 * @throws IllegalArgumentException 
 	 * @throws ObjectNotFoundException 
 	 */
-	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
+	public Object getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		Object attributeValue = null;
 
 		AttributeFinder attributeFinder = new AttributeFinder(); 
@@ -320,6 +322,7 @@ public class AuthoringModel implements GameData {
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
+				System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 			}
 		}
 		else if (objectType.equals("Tower")) {
@@ -331,6 +334,14 @@ public class AuthoringModel implements GameData {
 		}
 		else if (objectType.equals("Settings")) {
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, mySettings);
+		}
+		else if (objectType.equals("Path")) {
+			Level currentLevel = levelCheck(level);
+//			if (currentLevel.containsTower(name)) {
+				Path path = currentLevel.getPath();
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
+				System.out.println("PATH INFO: " +attributeValue);
+//			}
 		}
 
 		//	else if (objectType.equals("Wave")) {
@@ -356,8 +367,7 @@ public class AuthoringModel implements GameData {
 		if (attributeValue.getClass() == Double.class) {
 			return Double.toString((double) attributeValue); 
 		} 
-
-		else return (String) attributeValue; 
+		else return attributeValue; 
 	}
 
 	/**
@@ -427,18 +437,14 @@ public class AuthoringModel implements GameData {
 		List<Point> dummyPathPoints = new ArrayList<>();
 		dummyPathPoints.add(new Point(2, 2));
 		dummyPathPoints.add(new Point(2, 3));
-		dummyPathPoints.add(new Point(2, 4));
 		HashMap<String, List<Point>> pathImages = new HashMap<>();
 		List<Point> dummyPathStartPoints = new ArrayList<>();
 		dummyPathStartPoints.add(new Point(2, 2));
-		List<Point> dummyPathMiddlePoints = new ArrayList<>();
-		dummyPathMiddlePoints.add(new Point(2, 3));
 		List<Point> dummyPathEndPoints = new ArrayList<>();
-		dummyPathEndPoints.add(new Point(2, 4));
+		dummyPathEndPoints.add(new Point(2, 3));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
-		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
 		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
-		Path newPath = new PathBuilder().construct(1, dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
+		Path newPath = new PathBuilder().construct(dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE, 60);
 		return newPath;
 	}
 
@@ -514,6 +520,7 @@ public class AuthoringModel implements GameData {
 	 * @return Map of image names to Point lists
 	 */
 	public Map<String, List<Point>> getImageMap() {
+		System.out.println("IS MAP NULL: " +myImageMap);
 		return myImageMap;
 	}
 }
