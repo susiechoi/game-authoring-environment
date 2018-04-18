@@ -1,5 +1,6 @@
 package engine.managers;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,7 +43,10 @@ public class EnemyManager extends ShootingSpriteManager {
     public void moveEnemies() {
 	for (Path path : myEnemies.keySet()) {
 	    for (Enemy enemy : myEnemies.get(path)) {
-		enemy.move(path);
+		Point newPosition = path.nextPosition(enemy.currentPosition());
+		enemy.move(newPosition);
+	//	System.out.println("NEW X:" + enemy.getX());
+	//	System.out.println("NEW Y:" + enemy.getY());
 	    }
 	}
 	

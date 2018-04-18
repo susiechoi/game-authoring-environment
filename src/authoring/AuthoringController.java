@@ -176,31 +176,20 @@ public class AuthoringController {
      */
     public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 	Path path = getPathFromName(Integer.parseInt(pathName), level);
-	//System.out.println("pathname: " + pathName);
 	Level thisLevel = myModel.levelCheck(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
-	//System.out.println(thisLevel.getPaths());
 	Wave thisWave;
-	//TODO: problem, how is this being saved if none of these are instance variables?
-	if(thisLevel.getWaves(path) == null) {
+	if(!thisLevel.containsWave(waveNumber)) {
 	    thisWave = new Wave();
-	    thisLevel.getWaves(path).add(thisWave);
+	    thisLevel.addWave(thisWave);
 	}
 	else{
-	    List<Wave> levelWaves = thisLevel.getWaves(path);
-	    if (levelWaves.size() <= waveNumber) {
-		thisWave = new Wave();
-		levelWaves.add(thisWave);
-	    }
-	    else {
-		thisWave = levelWaves.get(waveNumber);
-	    }
+	    thisWave = thisLevel.getWave(waveNumber);
+
 	}
+	System.out.println("NEW AMOUNT: " + newAmount);
 	thisWave.addEnemy(thisEnemy, path, newAmount);
     }
-
-
-
 
     /**
      * Returns the number of waves in a specified level that belong to a specified
