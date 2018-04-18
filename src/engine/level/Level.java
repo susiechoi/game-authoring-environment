@@ -28,7 +28,6 @@ public class Level {
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
 	private List<Wave> myWaves;
-	//private Map<Path, List<Wave>> myWaves;
 	private Map<String, Enemy> myEnemies;
 
 	private int xLoc = 100;
@@ -238,6 +237,13 @@ public class Level {
 	}
 	public void removeWave() {
 	    myWaves.remove(0);
+	}
+	
+	/**
+	 * @return Wave corresponding to @param waveNumber
+	 */
+	public Wave getWave(int waveNumber) {
+		return myWaves.get(waveNumber);
 	}
 
 	/**

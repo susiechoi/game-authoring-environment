@@ -312,6 +312,7 @@ public class AuthoringView extends View {
 	protected void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
+	
 	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
 		try {
 			Path path = myController.getPathFromName(pathName, level);
@@ -324,6 +325,7 @@ public class AuthoringView extends View {
 		return new HashMap<String, Integer>();
 
 	}
+	
 	protected Integer getHighestWaveNumber(int level) {
 	    try {
 	    return myController.getHighestWaveNumber(level);
@@ -334,6 +336,7 @@ public class AuthoringView extends View {
 	    }
 	    return 1;
 	}
+	
 	protected void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		writer.write(myModel, myModel.getGameName());
