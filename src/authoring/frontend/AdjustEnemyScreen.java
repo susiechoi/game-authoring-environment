@@ -29,8 +29,6 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	private Slider myInitialHealthSlider; 
 	private Slider myHealthImpactSlider; 
 	private Slider myValueSlider; 
-	//	private Slider myUpgradeCostSlider; 
-	//	private Slider myUpgradeValueSlider; 
 
 	protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName, ENEMY_FIELDS, OBJECT_DESCRIPTION);
@@ -47,13 +45,13 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(enemyNameSelect);
 
 		HBox enemyImageSelect = new HBox();
-		ComboBox<String> dropdown = new ComboBox<String>();
+		ComboBox<String> enemyImageDropdown = new ComboBox<String>();
 		ImageView imageDisplay = new ImageView(); 
 		try {
-			dropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
-			myImageDropdown = dropdown; 
+			enemyImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
+			myImageDropdown = enemyImageDropdown; 
 			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), dropdown, imageDisplay);
+					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
@@ -78,16 +76,6 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		myValueSlider = enemyValueSlider;
 		HBox enemyValue = getUIFactory().setupSliderWithValue("EnemyValueSlider", enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 		vb.getChildren().add(enemyValue);
-
-		//		Slider enemyUpgradeCostSlider = getUIFactory().setupSlider("EnemyUpgradeCostSlider", getMyMaxPrice());
-		//		myUpgradeCostSlider = enemyUpgradeCostSlider; 
-		//		HBox enemyUpgradeCost = getUIFactory().setupSliderWithValue("EnemyUpgradeCostSlider", enemyUpgradeCostSlider, getErrorCheckedPrompt("EnemyUpgradeCost"));
-		//		vb.getChildren().add(enemyUpgradeCost);
-		//
-		//		Slider enemyUpgradeValueSlider = getUIFactory().setupSlider("EnemyUpgradeValueSlider", getMyMaxUpgradeIncrement());
-		//		myUpgradeValueSlider = enemyUpgradeValueSlider; 
-		//		HBox enemyUpgradeValue = getUIFactory().setupSliderWithValue("EnemyUpgradeValueSlider", enemyUpgradeValueSlider, getErrorCheckedPrompt("EnemyUpgradeValue"));
-		//		vb.getChildren().add(enemyUpgradeValue);
 
 		Button backButton = setupBackButton();
 

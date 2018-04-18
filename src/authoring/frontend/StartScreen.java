@@ -65,8 +65,9 @@ public class StartScreen extends AuthoringScreen {
 	ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, gameNamePrompt);
 	editButton.setDisable(true);
-	editButton.setOnAction(e -> {getView().readFromFile(gameChooser.getValue());
-	    getView().goForwardFrom(this.getClass().getSimpleName()+"Edit", gameChooser.getValue());});
+	editButton.setOnAction(e -> {
+		getView().readFromFile(gameChooser.getValue());
+	});
 	Button changeCSS = getUIFactory().makeTextButton("cssbutton", getErrorCheckedPrompt("ChangeStyling"));
 	changeCSS.setOnAction(e -> {
 		currCSSIndex++; 

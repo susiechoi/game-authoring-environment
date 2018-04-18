@@ -41,7 +41,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	public Parent makeScreenWithoutStyling(){
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
-		//System.out.println(myGameName+" SHOULD BE THE TITLE");
 		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
 		vbox.getChildren().add(heading);
 

@@ -147,7 +147,7 @@ public class AuthoringView extends View {
 		goForwardFrom(id, "");
 	}
 	
-	protected void goForwardFrom(String id, String name) {
+	public void goForwardFrom(String id, String name) {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 			Class<?> clazz = Class.forName(nextScreenClass);
@@ -313,7 +313,7 @@ public class AuthoringView extends View {
 		return myPropertiesReader; 
 	}
 
-	protected void setGameName(String gameName) {
+	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
 	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 

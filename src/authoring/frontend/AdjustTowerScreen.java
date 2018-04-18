@@ -1,4 +1,3 @@
-
 /**
  * @author susiechoi
  * Abstract class for developing the fields for customizing (new or existing) tower object
