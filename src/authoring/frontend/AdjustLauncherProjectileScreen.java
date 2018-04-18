@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,7 +21,7 @@ import javafx.scene.layout.VBox;
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String OBJECT_DESCRIPTION = "Tower";
-	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
+	public static final String PROJECTILE_IMAGES = "src/images/ProjectileImageNames.properties"; 
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
 	private AdjustTowerScreen myTowerScreen;
@@ -60,7 +61,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 			} catch (NoDuplicateNamesException e1) {
 				// TODO DO NOTHING
 			}
-//			myTowerScreen.setLauncherProjectileValues(myProjectileImage, myProjectileDamageSlider.getValue(), 0, 0, 0, myProjectileSpeedSlider.getValue(), 0, 0, 0, myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue());
 		    getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
@@ -111,12 +111,10 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange"));
 		vb.getChildren().add(launcherRange);
 	}
-	
-	/**
-	 * The AdjustLauncherProjectileScreen has no name field, therefore the populateNameField method doesn't do anything 
-	 */
-	protected void populateNameField() {
-		// DO NOTHING 
+
+	@Override
+	protected TextField getNameField() {
+		return null;
 	}
 	
 	

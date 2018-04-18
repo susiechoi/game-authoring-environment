@@ -3,8 +3,6 @@ package engine.path;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
-import java.awt.geom.Point2D;
-
 
 /**
  * Class for constructing path and determining next coordinates
@@ -14,17 +12,16 @@ import java.awt.geom.Point2D;
 public class Path {
 	private final double THRESHOLD = 5;
 	private List<Point> myCoordinates;
-	private Point currentPosition;
 	private double myAngle;
 	private int pathIndex;
 	private Map<String, List<Point>> myPathMap;
 	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
 		myCoordinates = coordinates;
 		pathIndex = 0;
-		currentPosition = myCoordinates.get(pathIndex);
 		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
 	}
+
 
 
 	/**
@@ -32,16 +29,19 @@ public class Path {
 	 * 
 	 * @param mySpeed
 	 */
-	public Point2D nextPosition(double speed) {
-		if(checkBounds()) {
-			currentPosition = myCoordinates.get(pathIndex++);
-			myAngle = getAngle(currentPosition, myCoordinates.get(pathIndex + 1));
-			return currentPosition;
+	public Point nextPosition(Point currentPos) {
+		if(checkBounds(currentPos)) {
+			currentPos = myCoordinates.get(pathIndex++);
+			myAngle = getAngle(currentPos, myCoordinates.get(pathIndex + 1));
+			return currentPos;
 		}
 		else {
-			double newX = currentPosition.getX() + Math.cos(myAngle) * speed;
-			double newY = currentPosition.getY() + Math.sin(myAngle) * speed;
-			return new Point2D.Double(newX, newY); 
+		    	System.out.println("CURRENT XPOS: " + currentPos.getX());
+		    	System.out.println("CURRENT YPOS: " + currentPos.getY());
+			double newX = currentPos.getX() + Math.cos(myAngle) * 5;
+			double newY = currentPos.getY() + Math.sin(myAngle) * 5;
+			currentPos.setLocation(newX, newY);
+			return currentPos; 
 		}
 	}
 
@@ -50,9 +50,9 @@ public class Path {
 	 * 
 	 * @return boolean: True if within range of next path coordinate, false otherwise
 	 */
-	private boolean checkBounds() {
-		double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX() - currentPosition.getX(), 2);
-		double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPosition.getY(), 2); 
+	private boolean checkBounds(Point currentPos) {
+		double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX() - currentPos.getX(), 2);
+		double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPos.getY(), 2); 
 		return Math.sqrt(xDistance + yDistance) < THRESHOLD;
 	}
 
@@ -72,6 +72,10 @@ public class Path {
     
     public Map<String, List<Point>> getPathMap() {
     		return myPathMap;
+    }
+    
+    public Point initialPoint() {
+	return myCoordinates.get(0);
     }
 
 }

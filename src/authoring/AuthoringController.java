@@ -29,7 +29,7 @@ import xml.AuthoringModelReader;
 
 public class AuthoringController {
 
-    private AuthoringView myAuthoringView; 
+    private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
 
@@ -40,14 +40,14 @@ public class AuthoringController {
      * @param languageIn is chosen language for prompts
      */
     public AuthoringController(StageManager stageManager, String languageIn) {
-	myAuthoringView = new AuthoringView(stageManager, languageIn, this);
+	myView = new AuthoringView(stageManager, languageIn, this);
 	try {
 	    myModel = new AuthoringModel();
 	} catch (MissingPropertiesException e) {
-	    myAuthoringView.loadErrorScreen("NoDefaultObject");
+	    myView.loadErrorScreen("NoDefaultObject");
 	}
-	myAuthoringView.setModel(myModel);
-	myAuthoringView.loadInitialScreen();
+	myView.setModel(myModel);
+	myView.loadInitialScreen();
     }
 
     /**
@@ -179,23 +179,17 @@ public class AuthoringController {
 	Level thisLevel = myModel.levelCheck(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	Wave thisWave;
-	//TODO: problem, how is this being saved if none of these are instance variables?
-	if(thisLevel.getWaves(path) == null) {
-	    thisWave = new Wave(path);
-	    thisLevel.getWaves(path).add(thisWave);
+	if(!thisLevel.containsWave(waveNumber)) {
+	    thisWave = new Wave();
+	    thisLevel.addWave(thisWave);
 	}
 	else{
-	    List<Wave> levelWaves = thisLevel.getWaves(path);
-	    if (levelWaves.size() < waveNumber) {
-		thisWave = new Wave(path);
-	    }
-	    else {
-		thisWave = levelWaves.get(waveNumber - 1);
-	    }
-	}
-	thisWave.addEnemy(thisEnemy, newAmount);
-    }
+	    thisWave = thisLevel.getWave(waveNumber);
 
+	}
+	System.out.println("NEW AMOUNT: " + newAmount);
+	thisWave.addEnemy(thisEnemy, path, newAmount);
+    }
 
     /**
      * Returns the number of waves in a specified level that belong to a specified
@@ -224,10 +218,10 @@ public class AuthoringController {
     public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
 	Level currentLevel = myModel.levelCheck(level);
 	//TODO: issue here - if there is no wave yet then need to make it first!
-	if(!currentLevel.containsWave(path, waveNumber)) {
+	if(!currentLevel.containsWave(waveNumber)) {
 	    return new HashMap<String, Integer>();
 	}
-	Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies();
+	Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies(path);
 	Map<String,Integer> enemyNameMap = new HashMap<>();
 	for(Enemy enemy : enemyMap.keySet()) {
 	    enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
@@ -269,8 +263,10 @@ public class AuthoringController {
      * @param gameName is name of game/XML file being loaded in
      */
     public void setModel(String gameName) {
+    	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = reader.createModel(gameName);
+	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
 
     /**
@@ -291,3 +287,4 @@ public class AuthoringController {
 	return myModel.getHighestWaveNumber(level);
     }
 }
+

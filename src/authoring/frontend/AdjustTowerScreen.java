@@ -1,4 +1,3 @@
-
 /**
  * @author susiechoi
  * Abstract class for developing the fields for customizing (new or existing) tower object
@@ -6,9 +5,6 @@
 
 package authoring.frontend;
 
-import java.util.HashMap;
-import java.util.Map;
-import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import javafx.scene.Parent;
@@ -25,13 +21,12 @@ import javafx.scene.layout.VBox;
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Tower";
-	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
+	public static final String TOWER_IMAGES = "src/images/TowerImageNames.properties";
 	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 
 	private TextField myNameField;
 	private ComboBox<String> myImageDropdown;
-	private ImageView myImageDisplay; 
 	private Slider myTowerHealthValueSlider;
 	private Slider myTowerHealthUpgradeCostSlider;
 	private Slider myTowerHealthUpgradeValueSlider;
@@ -48,8 +43,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	 * fully specify a Tower object
 	 * @see authoring.frontend.AdjustNewOrExistingScreen#populateScreenWithFields()
 	 */
-	@Override
-	public Parent populateScreenWithFields() {		
+	protected Parent populateScreenWithFields() {		
 		VBox vb = new VBox(); 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeTower")));
 
@@ -87,12 +81,10 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		return sp;
 	}
 
-	protected void populateNameField() {
-		myNameField.setText(getMySelectedObjectName());
-		
-		setEditableOrNot(myNameField, getIsNewObject());
+	protected TextField getNameField() {
+		return myNameField; 
 	}
-
+	
 	private void makeTowerComponents(VBox vb) {
 		TextField nameInputField = getUIFactory().makeTextField(""); 
 		myNameField = nameInputField; 
@@ -102,16 +94,20 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(towerNameSelect);
 
 		HBox towerImageSelect = new HBox();
-		ComboBox<String> towerImageDropdown;
-		myImageDisplay = new ImageView(); 
-		try {
-			towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
-			myImageDropdown = towerImageDropdown; 
-			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Tower") + " " , TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), towerImageDropdown, myImageDisplay);
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
+		ComboBox<String> towerImageDropdown = new ComboBox<String>();
+		ImageView imageDisplay = new ImageView(); 
+			try {
+				towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
+			} catch (MissingPropertiesException e) {
+				getView().loadErrorScreen("NoImageFile");
+			}
+			myImageDropdown = towerImageDropdown;  
+			try {
+				towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+						getErrorCheckedPrompt("NewImageName"), towerImageDropdown, imageDisplay);
+			} catch (MissingPropertiesException e) {
+				getView().loadErrorScreen("NoImageFile");
+			}
 		vb.getChildren().add(towerImageSelect);
 
 		Slider towerValueSlider = getUIFactory().setupSlider("TowerValueSlider", getMyMaxPrice());

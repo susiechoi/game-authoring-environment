@@ -79,6 +79,7 @@ public class Launcher extends Manager<Projectile>{
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
     	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
     	this.addToActiveList(launchedProjectile);
+    	timeLastFired = System.nanoTime();
     	return launchedProjectile;
     }
     

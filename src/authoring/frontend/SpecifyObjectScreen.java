@@ -55,13 +55,19 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		Button backButton = setupBackButton();
+		Button deleteButton = getUIFactory().makeTextButton("deleteButton", getErrorCheckedPrompt("Delete"));
 
 		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction("objectOptions",dropdownOptions, 
-				e-> { applyButton.setDisable(false); }, 
-				e-> { applyButton.setDisable(true);}, editPrompt); 
+				e-> { applyButton.setDisable(false); deleteButton.setDisable(false); }, 
+				e-> { applyButton.setDisable(true); deleteButton.setDisable(true); }, editPrompt); 
 		applyButton.setDisable(true);
+		deleteButton.setDisable(true);
 		applyButton.setOnAction(e -> {
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
+		});
+		deleteButton.setOnAction(e -> {
+			getView().deleteObject(myObjectDescription, objectsDropdown.getValue());
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Delete");
 		});
 
 		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, editPrompt);
@@ -72,6 +78,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);
+		vb.getChildren().add(deleteButton);
 		vb.getChildren().add(backAndApplyButton);
 
 		return vb;
