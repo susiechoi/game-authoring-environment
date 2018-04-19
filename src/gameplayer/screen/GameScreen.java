@@ -61,6 +61,9 @@ public class GameScreen extends Screen {
 		CONTROLS_PANEL = new ControlsPanel(this);
 		SCORE_PANEL = new ScorePanel(this);
 		GAME_PANEL = new GamePanel(this);
+		
+		//TODO the null argument on creation is terrible, needs to change once
+		//actual functionality of panels is changed
 		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS, null);
 		BUY_PANEL = new BuyPanel(this, PROMPTS, null);
 	}
