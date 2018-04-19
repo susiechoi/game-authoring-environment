@@ -257,7 +257,7 @@ public class AuthoringModel implements GameData {
 		}
 		if(objectType.equals("Wave")) {
 			int size = currentLevel.getHighestWaveNumber();
-			for(Integer k = 1; k<=size; k+=1) {
+			for(Integer k = 1; k<=(size+1); k+=1) {
 				listToReturn.add("Wave " + k.toString());
 			}
 		}
@@ -322,23 +322,13 @@ public class AuthoringModel implements GameData {
 			//			}
 		}
 
-		//	else if (objectType.equals("Wave")) {
-		//	    Level currentLevel = levelCheck(level);
-		//	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
-		//		Wave wave = currentLevel.getWave();
-		//		for (Field aField : tower.getClass().getDeclaredFields()) {
-		//		    String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-		//		    if (fieldSimpleString.equals(attribute)) {
-		//			aField.setAccessible(true);
-		//			fieldValue = aField.get(tower);
-		//			break; 
-		//		    }
-		//		}
-		//	    }
-		//	    if (fieldValue == null) {
-		//		throw new ObjectNotFoundException(name);
-		//	    }
-		//	}
+		else if(objectType.equals("Wave")) {
+			Level currentLevel = levelCheck(level);
+			if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
+				Wave wave = currentLevel.getWaves().get(Integer.parseInt(name));
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, wave);
+			}
+		}
 		if (attributeValue == null) {
 			throw new ObjectNotFoundException(name);
 		}

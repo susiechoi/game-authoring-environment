@@ -52,7 +52,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		}); 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			try {
+			try {	setSaved();
 				getView().makeTower(false, getMySelectedObjectName(), myTowerScreen.getSelectedImage(),  
 						myTowerScreen.getTowerHealthValue(),  myTowerScreen.getTowerHealthUpgradeCost(),  myTowerScreen.getTowerHealthUpgradeValue(), 
 						myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), 0, 0, myProjectileSizeSlider.getValue(), myProjectileSpeedSlider.getValue(), 

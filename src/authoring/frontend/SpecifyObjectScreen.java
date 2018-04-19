@@ -27,6 +27,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	private String myObjectDescription; 
 	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
+		setSaved();
 		myObjectDescription = objectDescription;
 		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
 		try {
@@ -63,6 +64,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		applyButton.setDisable(true);
 		deleteButton.setDisable(true);
 		applyButton.setOnAction(e -> {
+		    	setSaved();
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
 		});
 		deleteButton.setOnAction(e -> {
@@ -80,14 +82,13 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(objectsWithPrompt);
 		vb.getChildren().add(deleteButton);
 		vb.getChildren().add(backAndApplyButton);
-
 		return vb;
 	}
-	
 	@Override
 	protected void populateFieldsWithData() {
 		//null method, since this type of screen only has buttons TODO: make this not an abstract method??
 	}
+
 
 	/**
 	 * For creating a button option to make a new object

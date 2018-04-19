@@ -25,12 +25,15 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     public List<Sprite> checkForCollisions(List<ShootingSprites> passedSprites) {
 	myRoundScore = 0;
 	List<Sprite> spritesToBeRemoved = new ArrayList<>();
+	//System.out.println("IN MANAGER");
 	for (ShootingSprites activeSprite: this.getListOfActive()) {
+	//	System.out.println("IN LOOP IN MANAGER");
 	    for (ShootingSprites passedActor: passedSprites) {
 		List<Sprite> deadSprites = activeSprite.checkForCollision(passedActor);
 		spritesToBeRemoved.addAll(deadSprites);
 	    }
 	}
+//	System.out.println(spritesToBeRemoved.size() + "sprite to be removed size");
 	return spritesToBeRemoved;
     }
 
