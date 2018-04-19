@@ -58,9 +58,16 @@ public class CreatePathGrid extends AdjustScreen {
 	private DraggableImage myCurrentClicked;
 	private DraggableImage path;
 	private int startCount = 0;
+	private EventHandler<DragEvent> myOnDragDropped;
+	private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
+		public void handle(MouseEvent event) {
+		}
+	};
+	private boolean unDraggable;
 
 	public CreatePathGrid(AuthoringView view) {
 		super(view);
+		unDraggable = false;
 	}
 
 	/**
@@ -79,9 +86,10 @@ public class CreatePathGrid extends AdjustScreen {
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
 
+
 		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
 		populateGrid(grid);
-		
+
 		System.out.println("HERE: " +getView().getObjectAttribute("Path", "", "myPathMap"));
 
 		if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) {
@@ -147,7 +155,7 @@ public class CreatePathGrid extends AdjustScreen {
 			}
 		}
 	}
-	
+
 	protected void setGridConstraints(GridPane grid, int size) {
 		grid.getColumnConstraints().clear();
 		grid.getRowConstraints().clear();
@@ -163,7 +171,7 @@ public class CreatePathGrid extends AdjustScreen {
 			grid.getRowConstraints().add(rowConst);         
 		}
 	}
-	
+
 	public void addImagesToGrid(Map<String, List<Point>> map, int pathSize) {
 		int count = 0;
 		for (String key: map.keySet()) {
@@ -178,16 +186,16 @@ public class CreatePathGrid extends AdjustScreen {
 				path.setDraggable(checkGrid, (int)point.getY(), (int)point.getX());
 				path.getPathImage().setFitWidth(pathSize);
 				path.getPathImage().setFitHeight(pathSize);
-//				TODO: Figure out how to get this to work with path checking
-//				if (count == 1) {
-//					checkGrid.add(startLabel, (int)point.getX(), (int)point.getY());
-//				} else if (count == 2) {
-//					checkGrid.add(pathLabel, (int)point.getX(), (int)point.getY());
-//				} else if (count == 3) {
-//					checkGrid.add(endLabel, (int)point.getX(), (int)point.getY());
-//				}
-				GridPane.setFillWidth(path.getPathImage(), true);
-				GridPane.setFillHeight(path.getPathImage(), true);
+				//				TODO: Figure out how to get this to work with path checking
+				//				if (count == 1) {
+				//					checkGrid.add(startLabel, (int)point.getX(), (int)point.getY());
+				//				} else if (count == 2) {
+				//					checkGrid.add(pathLabel, (int)point.getX(), (int)point.getY());
+				//				} else if (count == 3) {
+				//					checkGrid.add(endLabel, (int)point.getX(), (int)point.getY());
+				//				}
+				//				GridPane.setFillWidth(path.getPathImage(), true);
+				//				GridPane.setFillHeight(path.getPathImage(), true);
 				grid.add(path.getPathImage(), (int)point.getX(), (int)point.getY());
 			}
 		}
@@ -262,21 +270,36 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 
 	protected void setUpForWaves(EventHandler<MouseEvent> action) {
-		makeUnDraggable();
-		for(DraggableImage image : draggableImagesOnScreen) {
-			image.getPathImage().setOnMouseClicked(e -> 
-			{
-				myCurrentClicked = image;
-				action.handle(e);
-			});
+		makeUnDraggable(action);
+	}
+
+	private void makeUnDraggable(EventHandler<MouseEvent> action) {
+		///System.out.println("trying to make undraggable");
+		for(Node newNode: grid.getChildren()){
+			newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
+			newNode.setOnDragDropped(e -> {});
+			myOnMouseClicked = new EventHandler <MouseEvent>() {
+				public void handle(MouseEvent event) {
+					myCurrentClicked = new DraggableImage(startImage.getImage()); //TODO
+					action.handle(event);
+				}
+			};
+			newNode.setOnMouseClicked(myOnMouseClicked);
 		}
 	}
 
-	private void makeUnDraggable() {
-		for(DraggableImage image : draggableImagesOnScreen) {
-			image.disableDraggable();
-		}
+	protected void setUpForPathCreation() {
+		//			for(Node newNode: grid.getChildren()){
+		//				if(newNode instanceof StackPane) {
+		//					System.out.println("seeing the node");
+		//					if(myOnMouseClicked!=null|| unDraggable) {
+		//						System.out.println("hellppp");
+		//					newNode.removeEventHandler(MouseEvent.MOUSE_CLICKED, myOnMouseClicked);
+		//					newNode.setOnDragDropped(myOnDragDropped);
+		//				}
+		//			}
 	}
+
 
 	protected DraggableImage getMostRecentlyClicked() {
 		return myCurrentClicked;
@@ -292,7 +315,6 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 		return startPoints;
 	}
-
 
 	protected void setBackgroundImage(String backGroundFileName) {
 		grid.setStyle("-fx-background-image: url(" + backGroundFileName + ")");
@@ -332,26 +354,26 @@ public class CreatePathGrid extends AdjustScreen {
 		return gridImageCoordinates;
 	}
 
-
 	public void setStartImage(ImageView newImage) {
 		startImage = newImage;
 	}
 	public void setEndImage(ImageView newImage) {
 		endImage = newImage;
 	}
+
 	public void setPathImage(ImageView newImage) {
 		pathImage = newImage;
 	}
-	
+
 	public int getColumnCount() {
 		return grid.getColumnCount();
 	}
-	
+
 	public int getRowCount() {
 		return grid.getRowCount();
 	}
 
-	
+
 	@Override
 	protected Parent populateScreenWithFields() {
 		// TODO Auto-generated method stub
@@ -360,6 +382,5 @@ public class CreatePathGrid extends AdjustScreen {
 
 	@Override
 	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
 	}
 }

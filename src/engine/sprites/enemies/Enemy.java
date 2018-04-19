@@ -1,6 +1,6 @@
 package engine.sprites.enemies;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 import engine.path.Path;
 import engine.physics.ImageIntersecter;
@@ -35,9 +35,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double mySpeed;
     private double mySize;
     private double myKillReward;
-    private String myImage; 
-    //    private double myKillUpgradeCost;
-    //    private double myKillUpgradeValue; 
+    private String myImage;  
+    private Path myPath;
 
     public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
@@ -48,7 +47,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myDamage = damage;
 	myHealthImpact = myDamage.getProperty();
 	myValue = value;
-	myIntersecter = new ImageIntersecter(this.getImageView()); 
+	myIntersecter = new ImageIntersecter(this); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
     }
@@ -78,7 +77,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	super(name, image, size, null);
 	myHealth = new HealthProperty(10000,10000,100);
 	myDamage = new DamageProperty(10000, 10000, 10000);
-	myValue = new ValueProperty(300);
+	myValue = new ValueProperty(900);
     }
 
     /**
@@ -94,10 +93,15 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * Moves the enemy along the path according to how much time has passed
      * @param elapsedTime
      */
-    public void move(Path path) {
-	Point2D newPosition = path.nextPosition(mySpeed);
+    public void move(Point newPosition) {
 	this.getImageView().setX(newPosition.getX());
 	this.getImageView().setY(newPosition.getY());
+    }
+    
+    public Point currentPosition() {
+	Point position = new Point();
+	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
+	return position;
     }
 
     public String getName() {
@@ -110,7 +114,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @return Double: damage that Enemy incurs on the tower
      */
     @Override
-    public Double getDamage() {
+    public double getDamage() {
 	return myDamage.getProperty();
     }
 
@@ -119,9 +123,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-    	return false;
-//	myHealth.loseHealth(collider.getDamage());
-//	return myHealth.isAlive();
+	System.out.println("health is " + myHealth.getProperty());
+	myHealth.loseHealth(collider.getDamage());
+	return myHealth.isAlive();
     }
 
     private ImageIntersecter getIntersecter() {
@@ -139,9 +143,10 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private ValueProperty getValue() {
 	return myValue; 
     }
+    
+    @Override
     public int getPointValue() {
-    	return 0;
-   // 	return (int)this.myValue.getProperty();
+    	return (int) myValue.getProperty();
     }
 
     

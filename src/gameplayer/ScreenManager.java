@@ -1,5 +1,6 @@
 package gameplayer;
 
+import frontend.MainScreen;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -46,6 +47,8 @@ public class ScreenManager extends View {
 	private Integer health;
 	private Integer currency;
 
+	private String myLanguage;
+	private String myGameFilePath; 
 	private Mediator MEDIATOR;
 	private final StageManager STAGE_MANAGER;
 	private GameScreen GAME_SCREEN;
@@ -61,6 +64,7 @@ public class ScreenManager extends View {
 		super(stageManager);
 		STAGE_MANAGER = stageManager;
 		PROMPTS = new PromptReader(language, this);
+		myLanguage = language; 
 		MEDIATOR = mediator;
 		findSettings();
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
@@ -90,8 +94,10 @@ public class ScreenManager extends View {
 	}
 
 	public void loadGameScreenNew(String filepath) {
+		setGameFilePath(filepath); 
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
+		System.out.println("loadGameScreenNew in screen manager");
 		MEDIATOR.startPlay(filepath);
 	}
 
@@ -104,19 +110,12 @@ public class ScreenManager extends View {
 
 	}
 
-	@Override
-	public void loadErrorScreen(String errorMessage) {
-		// TODO Auto-generated method stub
-
-	}
-
 	//TODO read these in from properties file
 	private void findSettings() {
 		DEFAULT_HEIGHT = 650;
 		DEFAULT_WIDTH = 900;
 
 	}
-
 
 	public void updateHealth(Integer newHealth) {
 		GAME_SCREEN.updateHealth(newHealth);
@@ -135,6 +134,44 @@ public class ScreenManager extends View {
 	}
 
 
+	public void toMain() {
+		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER).getScreen());
+	}
+
+	public StageManager getStageManager() {
+		return STAGE_MANAGER;
+	}
+
+	/**
+	 * Returns current language
+	 * Useful in instantiating new AuthoringController with correct language 
+	 * 	when user decides to continue authoring the game
+	 * @return String representing the language
+	 */
+	public String getLanguage() {
+		return myLanguage;
+	}
+
+	public void setGameFilePath(String filepath) {
+		myGameFilePath = filepath; 
+	}
+
+	/**
+	 * Returns filepath of XML of current game
+	 * Useful in instantiating new AuthoringController with correct language 
+	 * 	when user decides to continue authoring the game
+	 * @return String XML filepath
+	 */
+	public String getGameFilePath() {
+		return myGameFilePath; 
+	}
+
+	@Override
+	public void loadErrorScreen(String errorMessage) {
+		// TODO Auto-generated method stub
+
+	}
+
 	public void remove(FrontEndSprite sprite) {
 		GAME_SCREEN.remove(sprite);
 	}
@@ -146,6 +183,7 @@ public class ScreenManager extends View {
 	public void updateCurrency(Integer newBalence) {
 		GAME_SCREEN.updateCurrency(newBalence);
 	}
+
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
 		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize);;

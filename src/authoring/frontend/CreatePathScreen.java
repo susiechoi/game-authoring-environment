@@ -84,6 +84,7 @@ public class CreatePathScreen extends PathScreen {
 	@Override
 	public void initializeGridSettings(CreatePathGrid gridIn) {
 		setPathPanel(myPathPanel, myPathToolBar);
+		gridIn.setUpForPathCreation();
 		setGridApplied(gridIn);
 	}
 	
