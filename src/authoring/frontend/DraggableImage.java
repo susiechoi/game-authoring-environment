@@ -99,17 +99,6 @@ public class DraggableImage extends Parent {
 		pathImage.setOnDragDetected(e -> {});
 		pathImage.setOnDragDone(e -> {});
 	}
-	
-	protected void setPathName(int path_num) {
-		pathName = "Path " +String.valueOf(path_num);
-	}
-	
-	protected String getPathName() {
-	    	if(pathName == null) {
-	    	    return "Default";
-	    	}
-		return pathName;
-	}
 
 
 	protected void setNewImage(Image image) {

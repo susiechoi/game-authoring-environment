@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -27,6 +28,9 @@ import javafx.scene.layout.StackPane;
  * Right click to be able to get specialty paths
  * Apply goes back one screen
  * Auto-generate new levels
+ * 
+ * IMPORTANT:
+ * Package each path (start to end), in add images to grid add identifiers to grid (maybe check grid?), fix problem with loading (not getting background image)
  */
 
 /**
@@ -46,10 +50,7 @@ public class CreatePathGrid extends AdjustScreen {
 	private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
 	private GridPane checkGrid;
-	private Label startLabel = new Label("start");
-	private Label endLabel = new Label("end");
-	private Label pathLabel = new Label("path");
-	private ArrayList<Point> pathCoords = new ArrayList<Point>();
+	private List<Point> pathCoords = new ArrayList<Point>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
 	private HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>();
 	private ArrayList<Point> startPoints = new ArrayList<Point>();
@@ -57,7 +58,6 @@ public class CreatePathGrid extends AdjustScreen {
 	private ArrayList<Point> pathPoints = new ArrayList<Point>();
 	private DraggableImage myCurrentClicked;
 	private DraggableImage path;
-	private int startCount = 0;
 	private EventHandler<DragEvent> myOnDragDropped;
 	private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
 		public void handle(MouseEvent event) {
@@ -86,23 +86,19 @@ public class CreatePathGrid extends AdjustScreen {
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
 
-
 		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
 		populateGrid(grid);
 
-		System.out.println("HERE: " +getView().getObjectAttribute("Path", "", "myPathMap"));
-
-		if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) {
+		if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) { //TODO: better way to check if not default
 			addImagesToGrid((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap"), (int) getView().getObjectAttribute("Path", "", "myPathSize"));
 			setGridConstraints(grid, (int) getView().getObjectAttribute("Path", "", "myPathSize"));
-			grid.setStyle("-fx-background-image: url(" + getView().getObjectAttribute("Path", "", "myBackgroundImage") + ")");
+			grid.setStyle("-fx-background-image: url("+getView().getObjectAttribute("Path", "", "myBackgroundImage")+")");
 		}
 		return grid;
 	}
 
 	//Given: path images and locations as defaults, change to populate with initial params
 	private void populateGrid(GridPane grid) { //grid, 
-
 		for (int x = 0 ; x < grid.getColumnCount(); x++) {
 			for (int y = 0 ; y < grid.getRowCount(); y++) {
 				StackPane cell = new StackPane();
@@ -133,17 +129,15 @@ public class CreatePathGrid extends AdjustScreen {
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty());
 							draggableImagesOnScreen.add(path);
 							grid.add(path.getPathImage(), colIndex, rowIndex);
-							if (((ImageView) event.getGestureSource()).getId() == "start") {
-								startCount++;
+							if (((ImageView) event.getGestureSource()).getId() == "start") {			
 								path.getPathImage().setId("start");
-								path.setPathName(startCount);
-								checkGrid.add(startLabel, colIndex, rowIndex);
+								checkGrid.add(new Label("start"), colIndex, rowIndex);
 							} else if (((ImageView) event.getGestureSource()).getId() == "end") {
 								path.getPathImage().setId("end");
-								checkGrid.add(endLabel, colIndex, rowIndex);
+								checkGrid.add(new Label("end"), colIndex, rowIndex);
 							} else if (((ImageView) event.getGestureSource()).getId() == "path") {
 								path.getPathImage().setId("path");
-								checkGrid.add(pathLabel, colIndex, rowIndex);
+								checkGrid.add(new Label("path"), colIndex, rowIndex);
 							}
 							success = true;
 						}
@@ -177,36 +171,35 @@ public class CreatePathGrid extends AdjustScreen {
 		for (String key: map.keySet()) {
 			count++;
 			List<Point> pointList = map.get(key);
-			System.out.println("key: " +key);
-			System.out.println("points: " +pointList);
-			System.out.println(count);
 			for (int i = 0; i < pointList.size(); i++) {
 				Point point = pointList.get(i);
 				DraggableImage path = new DraggableImage(new Image(key));
 				path.setDraggable(checkGrid, (int)point.getY(), (int)point.getX());
 				path.getPathImage().setFitWidth(pathSize);
 				path.getPathImage().setFitHeight(pathSize);
-				//				TODO: Figure out how to get this to work with path checking
-				//				if (count == 1) {
-				//					checkGrid.add(startLabel, (int)point.getX(), (int)point.getY());
-				//				} else if (count == 2) {
-				//					checkGrid.add(pathLabel, (int)point.getX(), (int)point.getY());
-				//				} else if (count == 3) {
-				//					checkGrid.add(endLabel, (int)point.getX(), (int)point.getY());
-				//				}
-				//				GridPane.setFillWidth(path.getPathImage(), true);
-				//				GridPane.setFillHeight(path.getPathImage(), true);
+				if (count == 1) {
+					checkGrid.add(new Label("start"), (int)point.getX(), (int)point.getY());
+				} else if (count == 2) {
+					checkGrid.add(new Label("path"), (int)point.getX(), (int)point.getY());
+				} else if (count == 3) {
+					checkGrid.add(new Label("end"), (int)point.getX(), (int)point.getY());
+				}
+				GridPane.setFillWidth(path.getPathImage(), true);
+				GridPane.setFillHeight(path.getPathImage(), true);
 				grid.add(path.getPathImage(), (int)point.getX(), (int)point.getY());
 			}
 		}
 	}
 
 	protected boolean checkPathConnected(GridPane grid, int row, int col) {
-
+		
 		if (getNode(grid, col, row) != null) {
 			Label checkLabel = (Label) getNode(grid, col, row);
 			if (checkLabel.getText() == "end") {
 				return true;
+			}
+			if (checkLabel.getText() == "start") {
+				addCoordinates(row, col);
 			}
 		} else {
 			return false;
@@ -239,9 +232,9 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 
 	protected void addCoordinates(int row, int col) {
-		//TODO: add Ids? for start/path/end
-		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
-		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
+		Bounds nodeBounds =  getNode(grid, col, row).getBoundsInParent();
+		double x = (nodeBounds.getMinX() + nodeBounds.getWidth())/2;
+		double y = (nodeBounds.getMinY() + nodeBounds.getHeight())/2;
 		Point point = new Point((int) x, (int) y);
 		pathCoords.add(point);
 	}
@@ -293,7 +286,6 @@ public class CreatePathGrid extends AdjustScreen {
 		//				if(newNode instanceof StackPane) {
 		//					System.out.println("seeing the node");
 		//					if(myOnMouseClicked!=null|| unDraggable) {
-		//						System.out.println("hellppp");
 		//					newNode.removeEventHandler(MouseEvent.MOUSE_CLICKED, myOnMouseClicked);
 		//					newNode.setOnDragDropped(myOnDragDropped);
 		//				}

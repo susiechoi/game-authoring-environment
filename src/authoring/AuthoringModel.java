@@ -300,7 +300,6 @@ public class AuthoringModel implements GameData {
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
-				System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 			}
 		}
 		else if (objectType.equals("Tower")) {
@@ -318,7 +317,6 @@ public class AuthoringModel implements GameData {
 			//			if (currentLevel.containsTower(name)) {
 			Path path = currentLevel.getPath();
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
-			System.out.println("PATH INFO: " +attributeValue);
 			//			}
 		}
 
@@ -498,7 +496,6 @@ public class AuthoringModel implements GameData {
 	 * @return Map of image names to Point lists
 	 */
 	public Map<String, List<Point>> getImageMap() {
-		System.out.println("IS MAP NULL: " +myImageMap);
 		return myImageMap;
 	}
 

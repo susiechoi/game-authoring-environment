@@ -148,9 +148,7 @@ public class AuthoringView extends View {
 	
 	public void goForwardFrom(String id, String name) {
 		try {
-			System.out.println("id " + id);
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
-			System.out.println("next screen class " + nextScreenClass);
 			Class<?> clazz = Class.forName(nextScreenClass);
 			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 			if(constructor.getParameterTypes().length == 2) {
@@ -164,7 +162,6 @@ public class AuthoringView extends View {
 				}
 			}
 			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				System.out.println("making it constructor");
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}

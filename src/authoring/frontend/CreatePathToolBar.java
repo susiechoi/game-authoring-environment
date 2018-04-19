@@ -54,7 +54,6 @@ public class CreatePathToolBar extends PathToolBar {
 	}
 
 	public Button getBackgroundButton() {
-		System.out.println("BACKGROUND: " + backgroundButton);
 		return backgroundButton;
 	}
 

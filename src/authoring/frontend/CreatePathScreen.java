@@ -2,6 +2,7 @@ package authoring.frontend;
 
 import java.awt.Point;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
@@ -24,6 +25,8 @@ public class CreatePathScreen extends PathScreen {
 	private CreatePathToolBar myPathToolBar;
 	private String myBackgroundImage = "Images/generalbackground.jpg";
 	private CreatePathGrid myGrid;
+	private List<List<Point>> myCoords = new ArrayList<List<Point>>();
+	private boolean checkGrid = false;
 	private CreatePathScreen me;
 
 	public CreatePathScreen(AuthoringView view) {
@@ -32,7 +35,7 @@ public class CreatePathScreen extends PathScreen {
 		myPathToolBar = new CreatePathToolBar(view);
 		me = this;
 	}
-	
+
 	private void setGridApplied(CreatePathGrid grid) {
 		myGrid = grid;
 		myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
@@ -46,30 +49,33 @@ public class CreatePathScreen extends PathScreen {
 					alert.showAndWait();
 				}
 				for (Point point: startCoords) {
-					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
-						System.out.println("TRUE");
-						try { //do this outside of for loop...have a boolean check?
-						
-							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
-							getView().getObjectAttribute("Path", "", "myPathMap");
-							getView().getObjectAttribute("Path", "", "myBackgroundImage");
-							getView().getObjectAttribute("Path", "", "myPathSize");
-							
-							getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
-					
-						} catch (ObjectNotFoundException e1) {
-							// TODO Auto-generated catch block
-						}
-					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Path Cutomization Error");
-						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
-						alert.showAndWait();
+					checkGrid = false;
+					grid.getAbsoluteCoordinates().clear();
+					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX()) == true) {
+						checkGrid = true;
+						List<Point> coords = new ArrayList<Point>(grid.getAbsoluteCoordinates());
+						myCoords.add(coords);
 					}
+				}
+				System.out.println("COORDS: " +myCoords);
+				if (checkGrid == true) {
+					try {
+						getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
+						getView().getObjectAttribute("Path", "", "myPathMap");
+						getView().getObjectAttribute("Path", "", "myBackgroundImage");
+						getView().getObjectAttribute("Path", "", "myPathSize");
+						getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
+					} catch (ObjectNotFoundException e1) {
+						// TODO Auto-generated catch block
+					}
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Path Customization Error");
+					alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
+					alert.showAndWait();
 				}
 			}
 		});
-		System.out.println("HERE: " +this.getClass().getSimpleName());
 	}
 
 	@Override
@@ -89,11 +95,11 @@ public class CreatePathScreen extends PathScreen {
 		gridIn.setUpForPathCreation();
 		setGridApplied(gridIn);
 	}
-	
+
 	@Override
 	public void setSpecificUIComponents() {
-	    setGridUIComponents(myPathPanel, myPathToolBar);
-	    ImageView trashImage = myPathPanel.makeTrashImage();
+		setGridUIComponents(myPathPanel, myPathToolBar);
+		ImageView trashImage = myPathPanel.makeTrashImage();
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
 			public void handle(DragEvent event) {
 				if (event.getDragboard().hasImage()) {
@@ -128,13 +134,13 @@ public class CreatePathScreen extends PathScreen {
 				getGrid().setBackgroundImage(myBackgroundImage);
 			}
 		});
-		
+
 		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPanelPathImage());
-		
+
 		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getPanelStartImage());
 		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getPanelEndImage());
 	}
-	
+
 	private void setImageOnButtonPressed(Button button, DraggableImage image) {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

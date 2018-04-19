@@ -118,7 +118,6 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		Slider towerUpgradeCostSlider = getUIFactory().setupSlider("TowerUpgradeCostSlider", getMyMaxPrice());
 		myTowerUpgradeCostSlider = towerUpgradeCostSlider;
 		myTowerUpgradeCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-			System.out.println(newValue.doubleValue());
 		});
 		HBox towerUpgradeCost = getUIFactory().setupSliderWithValue("TowerUpgradeCostSlider", towerUpgradeCostSlider, getErrorCheckedPrompt("TowerUpgradeCost"));
 		vb.getChildren().add(towerUpgradeCost);

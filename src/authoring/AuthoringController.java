@@ -181,7 +181,6 @@ public class AuthoringController {
 			thisWave = thisLevel.getWave(waveNumber);
 
 		}
-		System.out.println("NEW AMOUNT: " + newAmount);
 		thisWave.addEnemy(thisEnemy, path, newAmount);
 	}
 

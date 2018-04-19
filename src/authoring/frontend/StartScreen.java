@@ -74,7 +74,6 @@ public class StartScreen extends AuthoringScreen {
 		if (currCSSIndex > myCSSFiles.size()-1) {
 			currCSSIndex = 0; 
 		}
-		System.out.println("change to "+myCSSFiles.get(currCSSIndex));
 		myView.setCurrentCSS(myCSSFiles.get(currCSSIndex));
 	});
 	Button backButton = setupBackButton(); 

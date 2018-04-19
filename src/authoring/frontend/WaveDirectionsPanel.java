@@ -19,7 +19,6 @@ public class WaveDirectionsPanel extends PathPanel{
   public WaveDirectionsPanel(AuthoringView view, String waveNumber) {
       	super(view);
       	if(waveNumber.equals("Default")) {
-      	    System.out.println("level it thinks" + getView().getLevel());
 	    waveNumber = ((Integer)(getView().getHighestWaveNumber(getView().getLevel()))).toString();
 	}
 	myWaveNumber = waveNumber;

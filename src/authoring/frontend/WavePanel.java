@@ -79,12 +79,8 @@ public class WavePanel extends PathPanel{
 		Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 		applyButton.setOnAction(e -> {
 			if(errorcheckResponses()) {
-				//System.out.println("addin a wave");
-				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
-				//System.out.println("myWaveNumber" + myWaveNumber);
 				getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), myWaveNumber, 
 						myEnemyDropdown.getValue(), myEnemyNumber);
-				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
 			}
 
 		});
