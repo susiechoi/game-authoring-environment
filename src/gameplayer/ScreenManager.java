@@ -32,6 +32,7 @@ import javafx.scene.Parent;
  */
 public class ScreenManager extends View {
 
+
 	public static final String FILE_ERROR_KEY = "FileErrorPrompt";
 	public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
 	public static final String DEFAULT_OWN_CSS = "styling/EngineFrontend.css";
@@ -48,7 +49,7 @@ public class ScreenManager extends View {
 	private Integer currency;
 
 	private String myLanguage;
-	private String myGameFilePath; 
+	private String myGameFilePath;
 	private Mediator MEDIATOR;
 	private final StageManager STAGE_MANAGER;
 	private GameScreen GAME_SCREEN;
@@ -64,7 +65,7 @@ public class ScreenManager extends View {
 		super(stageManager);
 		STAGE_MANAGER = stageManager;
 		PROMPTS = new PromptReader(language, this);
-		myLanguage = language; 
+		myLanguage = language;
 		MEDIATOR = mediator;
 		findSettings();
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
@@ -94,7 +95,7 @@ public class ScreenManager extends View {
 	}
 
 	public void loadGameScreenNew(String filepath) {
-		setGameFilePath(filepath); 
+		setGameFilePath(filepath);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
 		System.out.println("loadGameScreenNew in screen manager");
@@ -104,6 +105,10 @@ public class ScreenManager extends View {
 	public void loadGameScreenNew() {
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
+	}
+
+	public void loadMainScreen() {
+		MainScreen mainScreen = new MainScreen(STAGE_MANAGER);
 	}
 
 	public void loadGameScreenContinuation() {

@@ -22,17 +22,3 @@ Text {
   -fx-font: bold 36pt "Helvetica";
 }
 
-@font-face {
-	src: url("vcr-sd-mono.ttf");
-}
-
-.label {
-	-fx-font-family: "VCR OSD Mono";
-	-fx-font-size: 24;
-	-fx-font-weight: bold;
-	-fx-alignment: center;
-	-fx-background-color: #B7D5D4;
-	-fx-border-width: 2;
-	-fx-border-radius: 6;
-	-fx-background-radius: 6;
-}

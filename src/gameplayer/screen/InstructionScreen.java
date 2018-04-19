@@ -25,6 +25,7 @@ public class InstructionScreen extends Screen {
 	private final UIFactory UIFACTORY;
 	private ComboBox<String> allGames;
 	private Button continueButt;
+	private Button backButton;
 
 	public InstructionScreen(ScreenManager screenManager, PromptReader promptReader) {
 		SCREEN_MANAGER = screenManager;
@@ -54,7 +55,7 @@ public class InstructionScreen extends Screen {
 			SCREEN_MANAGER.toMain();
 		}, PROMPTS.resourceDisplayText("Cancel")); 
 
-		VBox center = new VBox(title, allGames, continueButt, backButton);
+		VBox center = new VBox(title, allGames, continueButt);
 		center.setAlignment(Pos.CENTER);
 		center.setMaxWidth(Double.MAX_VALUE);
 		VBox.setVgrow(center, Priority.ALWAYS);
