@@ -47,18 +47,17 @@ public class CreatePathPanel extends PathPanel {
 	protected void makePanel() {
 
 		pathPanel = new VBox();
-
 		pathPanel.setMaxSize(260, 900);
 		pathPanel.getStylesheets();
 
 		Label panelTitle = new Label("Drag and Drop Paths");
 		
 		Label startLabel = new Label("Start:");
-		startLabel.getStyleClass().add("label-path");
+//		startLabel.getStyleClass().add("label-path");
 		Label pathLabel = new Label("Path:");
-		pathLabel.getStyleClass().add("label-path");
+//		pathLabel.getStyleClass().add("label-path");
 		Label endLabel = new Label("End:");
-		endLabel.getStyleClass().add("label-path");
+//		endLabel.getStyleClass().add("label-path");
 		
 		Image pathImg = new Image(DEFAULT_PATH_IMAGE); 
 		pathImage = new DraggableImage(pathImg);
