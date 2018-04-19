@@ -1,15 +1,12 @@
 package gameplayer.screen;
 
 import authoring.AuthoringModel;
+import authoring.frontend.FrontendLauncherForTesting;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
-import gameplayer.panel.TowerPanel;
-import gameplayer.panel.UpgradePanel;
-import gameplayer.panel.GamePanel;
-import gameplayer.panel.ScorePanel;
-import gameplayer.panel.TowerInfoPanel;
-import gameplayer.panel.BuyPanel;
-import gameplayer.panel.ControlsPanel;
+import engine.Settings;
+import gameplayer.panel.*;
+
 import java.awt.Point;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +34,8 @@ import javafx.scene.layout.VBox;
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-	private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+	private final String DEFAULT_SHARED_STYLESHEET = "styling/theme1.css";
+	private final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
 
 	private final UIFactory UIFACTORY;
 	private final PromptReader PROMPTS;
@@ -50,6 +47,7 @@ public class GameScreen extends Screen {
 	private UpgradePanel UPGRADE_PANEL;
 	private ScreenManager SCREEN_MANAGER;
 	private BuyPanel BUY_PANEL;
+	private SettingsPanel SETTINGS_PANEL;
 	private VBox displayPane;
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
@@ -66,6 +64,7 @@ public class GameScreen extends Screen {
 		GAME_PANEL = new GamePanel(this);
 		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
 		BUY_PANEL = new BuyPanel(this, PROMPTS);
+		SETTINGS_PANEL = new SettingsPanel(this, PROMPTS);
 	}
 
 	@Override
@@ -152,6 +151,21 @@ public class GameScreen extends Screen {
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 		}
+		else if (control.equals("settings")) {
+			settingsClickedOn();
+		}
+	}
+
+	public void settingsTriggered(String setting) {
+		if (setting.equals("volume")) {
+
+		}
+		else if (setting.equals("instructions")) {
+
+		}
+		else if (setting.equals("help")) {
+
+		}
 	}
 
 	public void updateCurrency(Integer newBalence) {
@@ -180,6 +194,19 @@ public class GameScreen extends Screen {
 		displayPane.getChildren().clear();
 		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
+	}
+
+	public void upgradeClickedOn() {
+		BUY_PANEL = new BuyPanel(this,PROMPTS);
+		displayPane.getChildren().clear();
+		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
+		gamePane.setBottom(UPGRADE_PANEL.getPanel());
+	}
+
+	private void settingsClickedOn() {
+		SETTINGS_PANEL = new SettingsPanel(this, PROMPTS);
+		displayPane.getChildren().clear();
+		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), SETTINGS_PANEL.getPanel());
 	}
 
 	public void blankGamePanelClick() {

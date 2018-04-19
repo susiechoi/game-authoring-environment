@@ -44,6 +44,8 @@ public class ControlsPanel extends Panel{
 
 		makeControlButtons(topControls, botControls);
 		VBox panelRoot = new VBox(topControls, botControls);
+
+
 		PANEL = panelRoot;
 	}
 

@@ -91,6 +91,7 @@ public class TowerPanel extends Panel {
 	}
 
 
+
 	VBox towersAndCurr = new VBox(towerDisplay,currencyAndSwap);
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
@@ -98,8 +99,6 @@ public class TowerPanel extends Panel {
 
 
 	//might want to remove this as control implementation changes but we'll see
-
-
 
 	//  panelRoot.getChildren().addAll(buttons);
 	towersAndCurr.setId("towerPanel");
