@@ -36,8 +36,6 @@ public class Path {
 			return currentPos;
 		}
 		else {
-		    	System.out.println("CURRENT XPOS: " + currentPos.getX());
-		    	System.out.println("CURRENT YPOS: " + currentPos.getY());
 			double newX = currentPos.getX() + Math.cos(myAngle) * 5;
 			double newY = currentPos.getY() + Math.sin(myAngle) * 5;
 			currentPos.setLocation(newX, newY);
