@@ -32,7 +32,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import xml.AuthoringModelWriter;
 
 public class AuthoringView extends View {
 
@@ -315,8 +314,7 @@ public class AuthoringView extends View {
 	}
 
 	protected void writeToFile() {
-		AuthoringModelWriter writer = new AuthoringModelWriter();
-		writer.write(myModel, myModel.getGameName());
+		myController.writeToFile(); 
 	}
 
 	protected void readFromFile(String name) {
