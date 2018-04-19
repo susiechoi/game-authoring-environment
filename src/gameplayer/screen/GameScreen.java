@@ -64,7 +64,6 @@ public class GameScreen extends Screen {
 		
 		//TODO the null argument on creation is terrible, needs to change once
 		//actual functionality of panels is changed
-		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS, null);
 		BUY_PANEL = new BuyPanel(this, PROMPTS, null);
 	}
 
@@ -82,7 +81,6 @@ public class GameScreen extends Screen {
 
 		gamePane.setTop(SCORE_PANEL.getPanel());
 		gamePane.setCenter(GAME_PANEL.getPanel());
-		//leftPane.setBottom(UPGRADE_PANEL.getPanel());
 
 		rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
 		rootPane.setCenter(gamePane);
@@ -169,6 +167,7 @@ public class GameScreen extends Screen {
 
 	public void towerClickedOn(FrontEndTower tower) {
 		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
+		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS, tower);
 		displayPane.getChildren().clear();
 		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
