@@ -13,12 +13,13 @@ import javafx.scene.layout.RowConstraints;
 public class PathMaker {
 
 	private GridPane grid;
+	private int myPathSize;
 
-
-	public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage) {
+	public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize) {
 		grid = new GridPane();
 		grid.setMaxSize(1020, 650);
 		grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
+		myPathSize = pathSize;
 		setGridConstraints(grid);
 		addImagesToGrid(map);
 		return grid;
@@ -30,8 +31,8 @@ public class PathMaker {
 			for (int i = 0; i < pointList.size(); i++) {
 				Point point = pointList.get(i);
 				ImageView image = new ImageView(new Image(key));
-				image.setFitWidth(60);
-				image.setFitHeight(60);
+				image.setFitWidth(myPathSize);
+				image.setFitHeight(myPathSize);
 				GridPane.setFillWidth(image, true);
 				GridPane.setFillHeight(image, true);
 				grid.add(image, (int)point.getX(), (int)point.getY());
@@ -40,14 +41,14 @@ public class PathMaker {
 	}
 
 	public void setGridConstraints(GridPane grid) {
-		for (int i = 0; i < 1020/60; i++) {
+		for (int i = 0; i < 1020/myPathSize; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
-			colConst.setPrefWidth(60);
+			colConst.setPrefWidth(myPathSize);
 			grid.getColumnConstraints().add(colConst);
 		}
-		for (int i = 0; i <  750/60; i++) {
+		for (int i = 0; i <  750/myPathSize; i++) {
 			RowConstraints rowConst = new RowConstraints();
-			rowConst.setPrefHeight(60);
+			rowConst.setPrefHeight(myPathSize);
 			grid.getRowConstraints().add(rowConst);         
 		}
 	}

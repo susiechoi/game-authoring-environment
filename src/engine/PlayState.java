@@ -67,11 +67,6 @@ public class PlayState implements GameData {
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
-//	fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
-//	fakeEnemy2 = new Enemy("Miles", "images/zombie.png", 200);
-//	fakeEnemy2.place(300, 300);
-//	myEnemyManager.addToActiveList(fakeEnemy);
-//	myEnemyManager.addToActiveList(fakeEnemy2);
 	count = 0;
 
     }
@@ -86,6 +81,7 @@ public class PlayState implements GameData {
 			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
 			enemy.move(path.initialPoint());
 			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
+			myEnemyManager.addToActiveList(enemy);
 			myMediator.addSpriteToScreen(enemy);
 		    }
 		    if(count % 10 == 0) {

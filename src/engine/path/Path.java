@@ -13,13 +13,15 @@ public class Path {
     private final double THRESHOLD = 61;
     private final double OFFSET = 30;
     private List<Point> myCoordinates;
+    private String myBackgroundImage;
+    private int myPathSize;
     private Map<String, List<Point>> myPathMap;
-    public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
+    public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) {
 	myCoordinates = coordinates;
 	myPathMap = imageCoordinates;
+	myBackgroundImage = backgroundImage;
+	myPathSize = pathSize;
     }
-
-
 
     /**
      * Returns the next position of the object according to its speed
@@ -54,7 +56,6 @@ public class Path {
 	return Math.sqrt(xDistance + yDistance) < THRESHOLD;
     }
 
-
     /**
      * Returns a new angle for the image
      * 
@@ -67,7 +68,7 @@ public class Path {
 	double deltaX = point2.getX() - point1.getX();
 	double angle = Math.atan2(deltaX,deltaY);
 	//System.out.println(angle);
-    	return angle;
+	return angle;
     }
 
     public double pathAngle(int currIndex) {
@@ -94,5 +95,15 @@ public class Path {
 	double yDistance = Math.pow(myCoordinates.get(myCoordinates.size()-1).getY() - currentPos.getY(), 2); 
 	return Math.sqrt(xDistance + yDistance) < 1+THRESHOLD;
     }
+
+    public int getPathSize() {
+	return myPathSize;
+    }
+
+    public String getBackgroundImage() {
+	return myBackgroundImage;
+    }
+
+
 
 }

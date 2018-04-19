@@ -11,7 +11,6 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 
-import javafx.scene.Node;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -83,21 +82,14 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     }
 
     /**
-     * Tests to see if another ImageView overlaps with the Enemy
-     * @param otherImage : other image (projectile, tower, etc)
-     * @return boolean, yes or no
-     */
-    public boolean overlap(Node otherImage) {
-	return myIntersecter.overlaps(otherImage); 
-    }
-
-    /**
      * Moves the enemy along the path according to how much time has passed
      * @param elapsedTime
      */
     public void move(Point newPosition) {
 	this.getImageView().setX(newPosition.getX());
 	this.getImageView().setY(newPosition.getY());
+	System.out.println("image view "+this.getImageView().getX() + " " + this.getImageView().getY());
+	System.out.println(" point" + newPosition.getX() + " " + newPosition.getY());
     }
 
     public Point currentPosition() {
@@ -125,7 +117,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	System.out.println("health is " + myHealth.getProperty());
 	myHealth.loseHealth(collider.getDamage());
 	return myHealth.isAlive();
     }
@@ -166,6 +157,10 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     
     public int getIndex() {
 	return pathIndex;
+    }
+    @Override
+    protected HealthProperty getHealthProp() {
+    	return this.myHealth;
     }
 
     public double getAngle() {
