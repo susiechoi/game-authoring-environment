@@ -134,14 +134,6 @@ public class TowerPanel extends Panel {
 	    towerButton.setMaxHeight(Double.MAX_VALUE);
 	    alternator++;
 	}
-	// odd number of towers added, fill with 11 null towers
-	if (availableTowers.size() %2 != 0) {
-
-
-	}
-	else {
-
-	}
 
 	towerHolderLeft.setFillWidth(true);
 	towerHolderRight.setFillWidth(true);

@@ -1,5 +1,6 @@
 package gameplayer;
 
+import frontend.MainScreen;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
@@ -100,6 +101,10 @@ public class ScreenManager extends View {
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
     }
 
+    public void loadMainScreen() {
+        MainScreen mainScreen = new MainScreen(STAGE_MANAGER);
+
+    }
     public void loadGameScreenContinuation() {
 
     }

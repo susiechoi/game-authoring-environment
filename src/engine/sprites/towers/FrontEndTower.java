@@ -65,6 +65,8 @@ public interface FrontEndTower extends FrontEndSprite{
 //     * @return if upgrade was successful (did user have enough money)
 //     */
 //    public boolean upgrade(String upgradeName);
+
+    public double getTowerRange();
    
     
 }

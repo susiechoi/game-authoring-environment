@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.shape.Circle;
 
 public class GamePanel extends Panel{
 

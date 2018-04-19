@@ -25,6 +25,7 @@ public class InstructionScreen extends Screen {
 	private final UIFactory UIFACTORY;
 	private ComboBox<String> allGames;
 	private Button continueButt;
+	private Button backButton;
 
 	public InstructionScreen(ScreenManager screenManager, PromptReader promptReader) {
 		SCREEN_MANAGER = screenManager;
@@ -51,6 +52,8 @@ public class InstructionScreen extends Screen {
 		continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew(allGames.getValue()));
 		//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenContinuation());
 
+		backButton = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("BackButton"));
+		backButton.setOnMouseClicked((arg0) -> SCREEN_MANAGER.)
 		VBox center = new VBox(title, allGames, continueButt);
 		center.setAlignment(Pos.CENTER);
 		center.setMaxWidth(Double.MAX_VALUE);
