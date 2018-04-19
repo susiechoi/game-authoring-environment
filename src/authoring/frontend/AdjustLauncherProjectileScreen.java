@@ -20,23 +20,22 @@ import javafx.scene.layout.VBox;
 
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
-	public static final String OBJECT_DESCRIPTION = "Tower";
+	public static final String OBJECT_TYPE = "Tower";
 	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
-	private AdjustTowerScreen myTowerScreen;
+	private String myObjectName; 
 	private ComboBox<String> myProjectileImage;
 	private ImageView myImageDisplay; 
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherRateSlider;
 	private Slider myLauncherRangeSlider;
-
 	private Slider myProjectileSizeSlider; 
 
-	protected AdjustLauncherProjectileScreen(AuthoringView view, AdjustTowerScreen towerScreen, String selectedObjectName) {
-		super(view, selectedObjectName, PROJECTILE_FIELDS, OBJECT_DESCRIPTION);
-		myTowerScreen = towerScreen; 
+	protected AdjustLauncherProjectileScreen(AuthoringView view, String selectedObjectName) {
+		super(view, selectedObjectName, PROJECTILE_FIELDS, OBJECT_TYPE);
+		myObjectName = selectedObjectName; 
 	}
 
 	@Override
@@ -52,15 +51,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		}); 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			try {	setSaved();
-				getView().makeTower(false, getMySelectedObjectName(), myTowerScreen.getSelectedImage(),  
-						myTowerScreen.getTowerHealthValue(),  myTowerScreen.getTowerHealthUpgradeCost(),  myTowerScreen.getTowerHealthUpgradeValue(), 
-						myProjectileImage.getValue(), myProjectileDamageSlider.getValue(), 0, 0, myProjectileSizeSlider.getValue(), myProjectileSpeedSlider.getValue(), 
-						0, 0, 0, myLauncherRateSlider.getValue(), myLauncherRangeSlider.getValue(),
-						myTowerScreen.getTowerValue(), myTowerScreen.getTowerUpgradeCost(), myTowerScreen.getTowerUpgradeValue());
-			} catch (NoDuplicateNamesException e1) {
-				// TODO DO NOTHING
-			}
 		    getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
@@ -90,6 +80,9 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		myProjectileDamageSlider = projectileDamageSlider; 
 		HBox projectileDamage = getUIFactory().setupSliderWithValue("ProjectileDamageSlider", projectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 		vb.getChildren().add(projectileDamage);
+		myProjectileDamageSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileDamage", newValue);
+		});
 		
 		Slider projectileSizeSlider = getUIFactory().setupSlider("ProjectileSize", getMyMaxUpgradeIncrement());
 		myProjectileSizeSlider = projectileSizeSlider; 
@@ -97,6 +90,9 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		myProjectileSpeedSlider = projectileSpeedSlider; 
 		HBox projectileSpeed = getUIFactory().setupSliderWithValue("ProjectileSpeed", myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 		vb.getChildren().add(projectileSpeed);
+		myProjectileSpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileSpeed", newValue);
+		});
 	}
 	
 	private void makeLauncherComponents(VBox vb) {
@@ -105,18 +101,17 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		myLauncherRateSlider = launcherRateSlider; 
 		HBox launcherRate = getUIFactory().setupSliderWithValue("LauncherRateSlider", launcherRateSlider, getErrorCheckedPrompt("LauncherRate"));
 		vb.getChildren().add(launcherRate);
+		myLauncherRateSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myLauncherRate", newValue);
+		});
 
 		Slider launcherRangeSlider = getUIFactory().setupSlider("LauncherRangeSlider", getMyMaxRange());
 		myLauncherRangeSlider = launcherRangeSlider; 
 		HBox launcherRange = getUIFactory().setupSliderWithValue("LauncherRangeSlider", launcherRangeSlider, getErrorCheckedPrompt("LauncherRange"));
 		vb.getChildren().add(launcherRange);
-	}
-
-	@Override
-	protected TextField getNameField() {
-		return null;
-	}
-	
-	
+		myLauncherRangeSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myLauncherRange", newValue);
+		});
+	}	
 	
 }

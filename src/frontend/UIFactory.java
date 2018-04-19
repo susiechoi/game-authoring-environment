@@ -151,7 +151,8 @@ public class UIFactory {
      * @return Slider desired
      */
     public Slider setupSlider(String id, int sliderMax) {
-	Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
+	Slider slider = new Slider();
+	slider.setMax(sliderMax);
 	Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 	slider.valueProperty().addListener(new ChangeListener<Number>() {
 	    @Override

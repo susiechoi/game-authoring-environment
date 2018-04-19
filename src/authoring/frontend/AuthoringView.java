@@ -193,44 +193,6 @@ public class AuthoringView extends View {
 		}
 	}
 
-
-	/**
-	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
-	 * @throws NoDuplicateNamesException 
-	 */
-	public void makeTower(boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed,
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
-			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException {
-		try {
-			myController.makeTower(myLevel, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-					projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSize, projectileSpeed,
-					launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange,
-					towerValue, towerUpgradeCost, towerUpgradeValue);
-		} catch (MissingPropertiesException e) {
-			loadErrorScreen("NoImageFile");
-		} catch (ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
-		}
-	}
-
-	/**
-	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
-	 * @throws NoDuplicateNamesException 
-	 */
-
-	public void makeEnemy(boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) throws NoDuplicateNamesException {
-
-		try {
-			myController.makeEnemy(myLevel, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-		} catch (MissingPropertiesException e) {
-			loadErrorScreen("NoImageFile");
-		} 
-		catch (ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
-		}
-	}
-
 	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
 		myGrid = grid;
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathSize);
@@ -374,6 +336,35 @@ public class AuthoringView extends View {
 		try {
 			myModel.deleteObject(myLevel, objectType, objectName);
 		} catch (ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+	}
+
+
+	public void makeTower(String name) {
+		try {
+			myController.makeTower(myLevel, name);
+		} catch (MissingPropertiesException e) {
+			loadErrorScreen("NoImageFile");
+		} catch (NoDuplicateNamesException e) {
+			loadErrorScreen("NoDuplicateNames");
+		} 
+	}
+	
+	public void makeEnemy(String name) {
+		try {
+			myController.makeEnemy(myLevel, name);
+		} catch (MissingPropertiesException e) {
+			loadErrorScreen("NoImageFile");
+		} catch (NoDuplicateNamesException e) {
+			loadErrorScreen("NoDuplicateNames");
+		} 
+	}
+	
+	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
+		try {
+			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
+		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			loadErrorScreen("NoObject");
 		}
 	}
