@@ -127,7 +127,6 @@ public class TowerPanel extends Panel {
 	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower));
 	    if(alternator%2 == 0) {
 		towerHolder = new HBox();
-		towerHolder.setStyle("-fx-background-color: purple");
 		towerHolder.setFillHeight(true);
 
 		fullTowerHold.getChildren().add(towerHolder);
@@ -165,7 +164,6 @@ public class TowerPanel extends Panel {
 
 	fullTowerHold.setAlignment(Pos.CENTER);
 	//fullTowerHold.setMaxWidth(Double.MAX_VALUE);
-	fullTowerHold.setStyle("-fx-background-color: black");
 
 	return fullTowerHold;
 
@@ -191,7 +189,6 @@ public class TowerPanel extends Panel {
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerPane.getChildren().clear();
-	towerPane.setStyle("-fx-background-color: green");
 
 	VBox filledWithTowers = fillScrollWithTowers(availableTowers);
 
