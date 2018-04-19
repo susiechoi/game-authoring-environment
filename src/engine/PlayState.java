@@ -67,34 +67,38 @@ public class PlayState implements GameData {
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
-//	fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
-//	fakeEnemy2 = new Enemy("Miles", "images/zombie.png", 200);
-//	fakeEnemy2.place(300, 300);
-//	myEnemyManager.addToActiveList(fakeEnemy);
-//	myEnemyManager.addToActiveList(fakeEnemy2);
 	count = 0;
 
     }
 
     public void update(double elapsedTime) {
+	System.out.println("in update");
 	count++;
 	if(!isPaused) {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
+		    System.out.println("in for " + currentLevel.getWaves().get(0).getUnmodifiableEnemies().size());
 		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
+			System.out.println("in if");
 			Wave currentWave = currentLevel.getWaves().get(0);
 			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
-			enemy.move(path.initialPoint());
+			System.out.println("initial point is ");
+			enemy.setInitialPoint(path.initialPoint());
+			//enemy.move(path.initialPoint(),elapsedTime);
 			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
 			myEnemyManager.addToActiveList(enemy);
 			myMediator.addSpriteToScreen(enemy);
 		    }
-		    if(count % 10 == 0) {
-			myEnemyManager.moveEnemies();
-		    }
+		    //if(count % 10 == 0) {
+			List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
+			myMediator.removeListOfSpritesFromScreen(deadEnemies); 
+			List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+			activeEnemies.removeAll(deadEnemies);
+		    //}
 		}
+		
 	    } catch (Exception e) {
-		// do nothing
+		e.printStackTrace();
 	    }
 
 
@@ -118,9 +122,8 @@ public class PlayState implements GameData {
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
-	    System.out.println("LOAD YOUR WEAPONS");
-	    System.out.println(" SIZE "+myTowerManager.getListOfActive().size());
-	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(),elapsedTime)) {
+
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
 	    updateScore(toBeRemoved);
@@ -175,6 +178,7 @@ public class PlayState implements GameData {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
+	myTowerManager.upgrade(tower,"rando",myResources);
 	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
@@ -187,7 +191,7 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	myTowerManager.upgrade(tower,upgradeName);
+	 myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
 
     }
 }

@@ -1,6 +1,7 @@
 package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
@@ -63,11 +64,27 @@ public class Launcher extends Manager<Projectile>{
     /**
      * Updates the tower's projectile fire rate
      * 
-     * @param rate: the new fire rate 
-     * @return double: the user's remaining balance
+     * @param balance : balance of the user
+     * @return : returns the new user balance
      */
     public double upgradeFireRate(double balance) {
 	return myFireRate.upgrade(balance);
+    }
+    /**
+     * Upgrades the damage done by the projectile
+     * @param balance : balance of the user
+     * @return : returns new balance
+     */
+    public double upgradeDamage(double balance) {
+	return myProjectile.upgradeDamage(balance);
+    }
+    /**
+     * Upgrades the range of the Launcher
+     * @param balance : balance of the user
+     * @return : returns new balance
+     */
+    public double upgradeRange(double balance) {
+	return myRange.upgrade(balance);
     }
 
 
@@ -76,7 +93,7 @@ public class Launcher extends Manager<Projectile>{
      * 
      */
     //TODO implement to shoot at where enemy is going
-    public Projectile launch(Sprite target, double shooterX, double shooterY) {
+    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
     	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
     	this.addToActiveList(launchedProjectile);
     	return launchedProjectile;
@@ -95,9 +112,7 @@ public class Launcher extends Manager<Projectile>{
 	return false;
     }
 
-    public double upgradeDamage(double balance) {
-	return myProjectile.upgradeDamage(balance);
-    }
+
     
     public double getRange() {
     	return myRange.getProperty(); 

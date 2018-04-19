@@ -10,6 +10,7 @@ import java.awt.Point;
  * @author Katherine Van Dyk 4/8/18
  */
 public class Path {
+
 	private final double THRESHOLD = 5;
 	private List<Point> myCoordinates;
 	private double myAngle;
@@ -32,24 +33,26 @@ public class Path {
 	}
 
 
-
 	/**
 	 * Returns the next position of the object according to its speed
 	 * 
 	 * @param mySpeed
 	 */
-	public Point nextPosition(Point currentPos) {
-		if(checkBounds(currentPos)) {
-			currentPos = myCoordinates.get(pathIndex++);
-			myAngle = getAngle(currentPos, myCoordinates.get(pathIndex + 1));
-			return currentPos;
-		}
-		else {
-			double newX = currentPos.getX() + Math.cos(myAngle) * 5;
-			double newY = currentPos.getY() + Math.sin(myAngle) * 5;
-			currentPos.setLocation(newX, newY);
-			return currentPos; 
-		}
+	public Point nextPosition(Point currentPos, int pathIndex, double pathAngle) {
+		//	if(checkBounds(currentPos, pathIndex)) {
+		//	    currentPos = myCoordinates.get(pathIndex+1);
+		//	    return currentPos;
+		//	}
+		//	else {
+		//	    System.out.println("here");
+		//	    // 	System.out.println("CURRENT XPOS: " + currentPos.getX());
+		//	    // 	System.out.println("CURRENT YPOS: " + currentPos.getY());
+		//	    double newX = currentPos.getX() + OFFSET - Math.cos(pathAngle) * 3;
+		//	    double newY = currentPos.getY() + OFFSET + Math.sin(pathAngle) * 3;
+		//	    currentPos.setLocation(newX, newY);
+		//	    return currentPos; 
+		//	}
+		return myCoordinates.get(pathIndex+1);
 	}
 
 	/**
@@ -57,12 +60,12 @@ public class Path {
 	 * 
 	 * @return boolean: True if within range of next path coordinate, false otherwise
 	 */
-	private boolean checkBounds(Point currentPos) {
-		double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX() - currentPos.getX(), 2);
+	private boolean checkBounds(Point currentPos, int pathIndex) {
+		double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX()  - currentPos.getX(), 2);
 		double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPos.getY(), 2); 
+		System.out.println(Math.sqrt(xDistance + yDistance));
 		return Math.sqrt(xDistance + yDistance) < THRESHOLD;
 	}
-
 
 	/**
 	 * Returns a new angle for the image
@@ -74,19 +77,42 @@ public class Path {
 	private double getAngle(Point point1, Point point2) {
 		double deltaY = point2.getY() - point1.getY();
 		double deltaX = point2.getX() - point1.getX();
-		return Math.atan(deltaY/deltaX);
+		double angle = Math.atan2(deltaX,deltaY);
+		//System.out.println(angle);
+		return angle;
+	}
+
+	public double pathAngle(int currIndex) {
+		return getAngle(myCoordinates.get(currIndex),myCoordinates.get(currIndex++));
 	}
 
 	public Map<String, List<Point>> getPathMap() {
 		return myPathMap;
 	}
 
-	public String getBackgroundImage() {
-		return myBackgroundImage;
+	public Point initialPoint() {
+		return myCoordinates.get(0);
+	}
+
+	public int getIndex(Point currentPos, int pathIndex) {
+		if(checkBounds(currentPos, pathIndex)) {
+			return pathIndex + 1;
+		}
+		return pathIndex;
+	}
+
+	public boolean checkKill(Point currentPos) {
+		double xDistance = Math.pow(myCoordinates.get(myCoordinates.size()-1).getX() - currentPos.getX(), 2);
+		double yDistance = Math.pow(myCoordinates.get(myCoordinates.size()-1).getY() - currentPos.getY(), 2); 
+		return Math.sqrt(xDistance + yDistance) < 1+THRESHOLD;
 	}
 
 	public int getPathSize() {
 		return myPathSize;
+	}
+
+	public String getBackgroundImage() {
+		return myBackgroundImage;
 	}
 	
 	public int getColumnCount() {
@@ -95,10 +121,6 @@ public class Path {
 	
 	public int getRowCount() {
 		return myRows;
-	}
-
-	public Point initialPoint() {
-		return myCoordinates.get(0);
 	}
 
 }

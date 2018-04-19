@@ -2,7 +2,6 @@ package engine.sprites.enemies;
 
 import java.awt.Point;
 
-import engine.path.Path;
 import engine.physics.ImageIntersecter;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
@@ -12,7 +11,6 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 
-import javafx.scene.Node;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -36,7 +34,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double mySize;
     private double myKillReward;
     private String myImage;  
-    private Path myPath;
+    private int pathIndex;
+    private double pathAngle;
+    private Point targetPosition;
 
     public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
@@ -50,6 +50,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myIntersecter = new ImageIntersecter(this); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
+	pathIndex = 0;
+	pathAngle = 0;
     }
 
     /**
@@ -79,29 +81,59 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myDamage = new DamageProperty(10000, 10000, 10000);
 	myValue = new ValueProperty(900);
     }
-
     /**
-     * Tests to see if another ImageView overlaps with the Enemy
-     * @param otherImage : other image (projectile, tower, etc)
-     * @return boolean, yes or no
+     * Sets the initial spawning point of the enemy
+     * @param initialPoint
      */
-    public boolean overlap(Node otherImage) {
-	return myIntersecter.overlaps(otherImage); 
-    }
-   
+    public void setInitialPoint(Point initialPoint) {
+	targetPosition = initialPoint;
+	this.getImageView().setX(initialPoint.getX());
+	this.getImageView().setY(initialPoint.getY());
+    } 
+
     /**
      * Moves the enemy along the path according to how much time has passed
      * @param elapsedTime
      */
-    public void move(Point newPosition) {
-	this.getImageView().setX(newPosition.getX());
-	this.getImageView().setY(newPosition.getY());
+    public void move(double elapsedTime) {
+	rotateImage();
+	double totalDistanceToMove = this.mySpeed*elapsedTime;
+	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+	this.getImageView().setX(this.getX()+xMove);
+	this.getImageView().setY(this.getY()+yMove);
     }
-    
+    /**
+     * Rotates the image to face the target
+     */
+    private void rotateImage() {
+	double xDifference = targetPosition.getX() - this.getX();
+	double yDifference = targetPosition.getY() - this.getY();
+	double angleToRotateRads = Math.atan2(xDifference,yDifference);
+
+	this.setRotate(Math.toDegrees(angleToRotateRads));
+    }
+
+    /**
+     * Returns the current position in a Point of the enemy
+     * @return
+     */
     public Point currentPosition() {
 	Point position = new Point();
 	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
 	return position;
+    }
+
+    /**
+     * Returns the next target position it is going after
+     * @return
+     */
+    public Point targetPosition() {
+	return targetPosition;
+    }
+
+    public void setNewPosition(Point newPosition) {
+	targetPosition = newPosition;
     }
 
     public String getName() {
@@ -123,7 +155,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	System.out.println("health is " + myHealth.getProperty());
 	myHealth.loseHealth(collider.getDamage());
 	return myHealth.isAlive();
     }
@@ -143,19 +174,43 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private ValueProperty getValue() {
 	return myValue; 
     }
-    
+
     @Override
     public int getPointValue() {
-    	return (int) myValue.getProperty();
+	return (int) myValue.getProperty();
     }
 
-    
+
     private double getSpeed() {
 	return mySpeed; 
     }
-    
+
     private String getImage() {
-    	return myImage; 
+	return myImage; 
     }
+
+    public void setIndex(int i) {
+	pathIndex = i;
+    } 
+
+    public int getIndex() {
+	return pathIndex;
+    }
+    @Override
+    protected HealthProperty getHealthProp() {
+	return this.myHealth;
+    }
+
+    public double getAngle() {
+	return pathAngle;
+    }
+
+    public void setAngle(double a) {
+	pathAngle = a;
+    }
+
+
+
+
 
 }

@@ -191,8 +191,14 @@ public class Level {
 //		}
 
 	}
+	
+	public void addWave(int waveNumber) {
+	    if(!containsWaveNumber(waveNumber)) {
+		myWaves.add(new Wave());
+	    }
+	}
 	public boolean containsWaveNumber(int num) {
-		return(myWaves.size()>=num);
+		return(myWaves.size()>(num));
 	}
 
 	/**
@@ -224,7 +230,7 @@ public class Level {
 	}
 
 	public int getHighestWaveNumber() {
-		return myWaves.size();
+		return myWaves.size()-1;
 	}
 
 	/**
@@ -272,7 +278,7 @@ public class Level {
 	}
 	@Deprecated
 	public boolean containsWave(Path path, int waveNumber) {
-		return containsWave(waveNumber);
+		return containsWaveNumber(waveNumber);
 	}
 	public boolean containsWave(int waveNumber) {
 	    return myWaves.size()>waveNumber;

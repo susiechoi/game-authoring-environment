@@ -63,34 +63,6 @@ public class AuthoringController {
 		return myModel.getObjectAttribute(level, objectType, name, attribute);
 	}
 
-
-	/**
-	 * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
-	 * @throws MissingPropertiesException 
-	 * @throws ObjectNotFoundException 
-	 * @throws NoDuplicateNamesException 
-	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) 
-			throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
-		myModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-	}
-
-	/**
-	 * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
-	 * @throws NoDuplicateNamesException 
-	 * @throws MissingPropertiesException 
-	 * @throws ObjectNotFoundException 
-	 */
-	public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed,
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
-			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-		myModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-				projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSize, projectileSpeed,
-				launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange, 
-				towerValue, towerUpgradeCost, towerUpgradeValue);
-	}
-
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
@@ -103,7 +75,6 @@ public class AuthoringController {
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 * @throws ObjectNotFoundException 
 	 */
-
 	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
 		myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathSize, col, row); 
 		myImageMap = imageCoordinates;
@@ -173,7 +144,7 @@ public class AuthoringController {
 		Level thisLevel = myModel.levelCheck(level);
 		Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 		Wave thisWave;
-		if(!thisLevel.containsWave(waveNumber)) {
+		if(!thisLevel.containsWaveNumber(waveNumber)) {
 			thisWave = new Wave();
 			thisLevel.addWave(thisWave);
 		}
@@ -195,9 +166,10 @@ public class AuthoringController {
 	 */
 	public int wavesNumber(int level, Path path) throws ObjectNotFoundException {
 		Level thisLevel = myModel.levelCheck(level);
-		List<Wave> levelWaves = thisLevel.getWaves(path);
+		List<Wave> levelWaves = thisLevel.getWaves();
 		return levelWaves.size();
 	}
+
 
 	/**
 	 * Gets a Map of the current Enemy names to the number of that enemy for a given wave/path/
@@ -211,10 +183,10 @@ public class AuthoringController {
 	public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
 		Level currentLevel = myModel.levelCheck(level);
 		//TODO: issue here - if there is no wave yet then need to make it first!
-		if(!currentLevel.containsWave(waveNumber)) {
+		if(!currentLevel.containsWaveNumber(waveNumber) || currentLevel.getWaves().get(waveNumber).getUnmodifiableEnemies(path)==null) {
 			return new HashMap<String, Integer>();
 		}
-		Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies(path);
+		Map<Enemy, Integer> enemyMap = currentLevel.getWaves().get(waveNumber).getUnmodifiableEnemies(path);
 		Map<String,Integer> enemyNameMap = new HashMap<>();
 		for(Enemy enemy : enemyMap.keySet()) {
 			enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
@@ -279,5 +251,26 @@ public class AuthoringController {
 	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
 		return myModel.getHighestWaveNumber(level);
 	}
-}
 
+	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		myModel.makeTower(level, name);
+	}
+
+	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+		myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
+	}
+
+	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		myModel.makeEnemy(myLevel, name);
+	}
+
+
+	public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
+		Level currentLevel = myModel.levelCheck(level);
+		if(!currentLevel.containsWaveNumber(waveNumber)) {
+			currentLevel.addWave(waveNumber);
+		}
+		Wave desiredWave = currentLevel.getWaves().get(waveNumber);
+		desiredWave.setWaveTime(time);
+	}
+}
