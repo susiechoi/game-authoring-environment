@@ -67,6 +67,7 @@ public class Level {
 
 	// TODO 
 	public void addPath(Path path) {
+		myPaths.clear();
 		myPaths.add(path); 
 	}
 
@@ -277,7 +278,11 @@ public class Level {
 	    return myWaves.size()>waveNumber;
 	}
 
-
+	
+	public Path getPath() {
+		return myPaths.get(myPaths.size() - 1);
+	}
+	
 	public Map<String, List<Point>> getLevelPathMap(){
 		//		Map<String, List<Point>> pathMap = myPaths.get(0).getPathMap();
 		//		for (int x=1; x<myPaths.size(); x++) {
@@ -286,7 +291,18 @@ public class Level {
 		//			}
 		//		}
 		//		return pathMap;
-		return myPaths.get(0).getPathMap();
+		if (myPaths.size() > 0) {
+			return myPaths.get(0).getPathMap();
+		}
+		return null;
+	}
+	
+	public String getBackGroundImage() {
+		return myPaths.get(0).getBackgroundImage();
+	}
+	
+	public int getPathSize() {
+		return myPaths.get(0).getPathSize();
 	}
 	
 	/**

@@ -183,8 +183,8 @@ public class GameScreen extends Screen {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-		GAME_PANEL.setPath(imageMap, backgroundImageFilePath);
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
+		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize);
 	}
 
 	private void setVertPanelsLeft() {
