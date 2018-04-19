@@ -372,4 +372,33 @@ public class AuthoringView extends View {
 		}
 	}
 
+
+	public void makeTower(String name) {
+		try {
+			myController.makeTower(myLevel, name);
+		} catch (MissingPropertiesException e) {
+			loadErrorScreen("NoImageFile");
+		} catch (NoDuplicateNamesException e) {
+			loadErrorScreen("NoDuplicateNames");
+		} 
+	}
+	
+	public void makeEnemy(String name) {
+		try {
+			myController.makeEnemy(myLevel, name);
+		} catch (MissingPropertiesException e) {
+			loadErrorScreen("NoImageFile");
+		} catch (NoDuplicateNamesException e) {
+			loadErrorScreen("NoDuplicateNames");
+		} 
+	}
+	
+	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
+		try {
+			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
+		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+	}
+
 }

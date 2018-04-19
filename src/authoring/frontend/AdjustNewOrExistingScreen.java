@@ -66,22 +66,11 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		Parent constructedScreen = populateScreenWithFields();
-		populateNameField(); 
 		populateFieldsWithData(); 
 		return constructedScreen;
 	}
 
 	protected abstract Parent populateScreenWithFields();
-
-	protected abstract TextField getNameField(); 
-
-	protected void populateNameField() {
-		TextField nameField = getNameField(); 
-		if (nameField != null) {
-			nameField.setText(getMySelectedObjectName());
-			setEditableOrNot(getNameField(), getIsNewObject());
-		}
-	}
 
 	protected void populateFieldsWithData() {
 		AttributeFinder attributeFinder = new AttributeFinder(); 
@@ -148,19 +137,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	protected String getMySelectedObjectName() {
 		return mySelectedObjectName; 
-	}
-
-	protected boolean validNameField(TextField nameField) {
-		boolean valid = true; 
-		if (nameField.getText().length() == 0) {
-			getView().loadErrorAlert("PopulateName");
-			valid = false; 
-		}
-		else if (nameField.getText().equals(myDefaultObjectName)) {
-			getView().loadErrorAlert("NoDefaultName");
-			valid = false; 
-		}
-		return valid; 
 	}
 
 }

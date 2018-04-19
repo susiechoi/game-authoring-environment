@@ -279,5 +279,18 @@ public class AuthoringController {
     public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException{
 	return myModel.getHighestWaveNumber(level);
     }
+
+	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		myModel.makeTower(level, name);
+	}
+	
+	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+		myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
+	}
+
+	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		myModel.makeEnemy(myLevel, name);
+	}
+	
 }
 
