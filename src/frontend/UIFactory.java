@@ -40,22 +40,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
 public class UIFactory {
 
     public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
@@ -254,7 +238,6 @@ public class UIFactory {
 		    file.getAbsolutePath();
 		    File fileCopy = new File("images/" + imageName + extension);
 		    try{
-
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		    }
 		    catch(IOException e2) {

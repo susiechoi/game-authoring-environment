@@ -33,12 +33,10 @@ public class GamePanel extends Panel{
 	//TODO changes this to be passed from mediator
 	private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
 
-
 	public GamePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
 		towersPlaced = new ArrayList<FrontEndTower>();
 	}
-
 
 	@Override
 	public void makePanel() {
@@ -81,11 +79,10 @@ public class GamePanel extends Panel{
 		}
 	}
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-		System.out.println("Game Panel: " +imageMap);
 
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
 		PathMaker pathMaker = new PathMaker();
-		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath);
+		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize);
 		//	setGridConstraints(grid, imageMap);
 		spriteAdd.getChildren().add(grid);
 	}

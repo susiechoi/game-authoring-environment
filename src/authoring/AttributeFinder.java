@@ -42,5 +42,6 @@ public class AttributeFinder {
 		}
 		throw new NullPointerException();
 	}
+
 }
 

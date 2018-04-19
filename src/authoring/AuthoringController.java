@@ -59,9 +59,11 @@ public class AuthoringController {
      * @throws NoSuchFieldException 
      * @throws ObjectNotFoundException 
      */
-    public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
+    public Object getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 	return myModel.getObjectAttribute(level, objectType, name, attribute);
     }
+
+
 
     /**
      * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
@@ -103,10 +105,12 @@ public class AuthoringController {
      * @throws ObjectNotFoundException 
      */
 
-    public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException { 
-	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage); 
+    public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException { 
+	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathSize); 
 	myImageMap = imageCoordinates;
     }
+
+
 
 
     /**
@@ -172,7 +176,7 @@ public class AuthoringController {
 	Level thisLevel = myModel.levelCheck(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	Wave thisWave;
-	if(!thisLevel.containsWave(waveNumber)) {
+	if(!thisLevel.containsWaveNumber(waveNumber)) {
 	    thisWave = new Wave();
 	    thisLevel.addWave(thisWave);
 	}
@@ -195,7 +199,7 @@ public class AuthoringController {
      */
     public int wavesNumber(int level, Path path) throws ObjectNotFoundException {
 	Level thisLevel = myModel.levelCheck(level);
-	List<Wave> levelWaves = thisLevel.getWaves(path);
+	List<Wave> levelWaves = thisLevel.getWaves();
 	return levelWaves.size();
     }
 
@@ -211,10 +215,10 @@ public class AuthoringController {
     public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
 	Level currentLevel = myModel.levelCheck(level);
 	//TODO: issue here - if there is no wave yet then need to make it first!
-	if(!currentLevel.containsWave(waveNumber)) {
+	if(!currentLevel.containsWaveNumber(waveNumber) || currentLevel.getWaves().get(waveNumber).getUnmodifiableEnemies(path)==null) {
 	    return new HashMap<String, Integer>();
 	}
-	Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies(path);
+	Map<Enemy, Integer> enemyMap = currentLevel.getWaves().get(waveNumber).getUnmodifiableEnemies(path);
 	Map<String,Integer> enemyNameMap = new HashMap<>();
 	for(Enemy enemy : enemyMap.keySet()) {
 	    enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
@@ -256,7 +260,7 @@ public class AuthoringController {
      * @param gameName is name of game/XML file being loaded in
      */
     public void setModel(String gameName) {
-    	myView.setGameName(gameName);
+	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = reader.createModel(gameName);
 	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
@@ -292,5 +296,13 @@ public class AuthoringController {
 		myModel.makeEnemy(myLevel, name);
 	}
 	
-}
 
+    public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
+	Level currentLevel = myModel.levelCheck(level);
+	if(!currentLevel.containsWaveNumber(waveNumber)) {
+	    currentLevel.addWave(waveNumber);
+	}
+	Wave desiredWave = currentLevel.getWaves().get(waveNumber);
+	desiredWave.setWaveTime(time);
+    }
+}
