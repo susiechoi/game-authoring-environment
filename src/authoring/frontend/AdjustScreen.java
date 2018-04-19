@@ -1,19 +1,15 @@
 /**
  * @author susiechoi
+ * Abstract class of Screens where values that need to be communicated to AuthoringModel
+ * are changed (i.e. Screens that have some kind of "Apply" button)
+ *
  */
 
 package authoring.frontend;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-
-/**
- * 
- * Abstract class of Screens where values that need to be communicated to AuthoringModel
- * are changed (i.e. Screens that have some kind of "Apply" button)
- * @author susiechoi
- *
- */
 
 abstract class AdjustScreen extends AuthoringScreen {
 		
@@ -23,11 +19,20 @@ abstract class AdjustScreen extends AuthoringScreen {
 		super(view);
 	}
 	
-	protected HBox setupBackAndApplyButton(Button back, Button apply) {
-		HBox backAndApplyButton = new HBox(); 
-		backAndApplyButton.getChildren().add(back);
-		backAndApplyButton.getChildren().add(apply);
-		return backAndApplyButton; 
+	/**
+	 * For all screens in which users can edit either new or existing objects, the makeScreenWithoutStyling method should 
+	 * ensure that the screen is populated with fields and that, if deemed necessary by the subclass, 
+	 * the fields are populated with data (in the case that an existing object is being edited) 
+	 */
+	@Override
+	public Parent makeScreenWithoutStyling() {
+		Parent constructedScreen = populateScreenWithFields();
+		populateFieldsWithData(); 
+		return constructedScreen;
 	}
+	
+	protected abstract Parent populateScreenWithFields();
+	
+	protected abstract void populateFieldsWithData(); 
 	
 }

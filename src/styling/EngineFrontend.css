@@ -2,23 +2,26 @@ Text {
 	-fx-font-family: "Helvetica";
     -fx-font-size: 18;
 }
+VBox, HBox {
+	-fx-background-color: #77878B;
+	-fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-alignment: center;
+}
 .button {
     -fx-alignment: center;
 	-fx-background-radius: 6;
-	-fx-background-color: #364156;	
-	-fx-border-style: solid inside;
+	-fx-background-color: #B7D5D4;	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #011638;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 .button:hover{
-	-fx-background-color: linear-gradient(#364156, #011638);
-	-fx-font: 12px Dekko;
-	-fx-font-weight: bold;
+	-fx-font: bold 12pt "Helvetica";
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 .button:disabled, .button:disabled > * {
@@ -44,11 +47,19 @@ Text {
   -fx-font: bold 24pt "Helvetica";
 }
 
+
+@font-face {
+    src: url("vcr-sd-mono.ttf");
+}
+
 #currencyButton {
-	-fx-font-family: "Helvetica";
+	-fx-font-family: "VCR OSD Mono";
     -fx-font-size: 30;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+    -fx-background-color: green;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
     
 }
 #currencyButton{

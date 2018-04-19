@@ -1,73 +1,88 @@
+
 package gameplayer.screen;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import frontend.PromptReader;
 import frontend.Screen;
 import frontend.UIFactory;
+import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class InstructionScreen extends Screen {
-    //TODO re-factor style sheets to abstract
-    private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
-    
-    private final ScreenManager SCREEN_MANEGER;
-    private final PromptReader PROMPTS;
-    private final UIFactory UIFACTORY;
-    private Parent ROOT;
-    
-    public InstructionScreen(ScreenManager screenManager, PromptReader promptReader) {
-	SCREEN_MANEGER = screenManager;
-	UIFACTORY = new UIFactory();
-	PROMPTS = promptReader;
-	//setStyleSheet(DEFAULT_OWN_CSS);
-    }
+	public static final String DEFAULT_SHARED_STYLESHEET = "styling/GameAuthoringStartScreen.css";
+	private final ScreenManager SCREEN_MANAGER;
+	private final PromptReader PROMPTS;
+	private final UIFactory UIFACTORY;
+	private ComboBox<String> allGames;
+	private Button continueButt;
+	private Button backButton;
 
-    @Override
-    //TODO all text should be read from language properties files
-    public Parent makeScreenWithoutStyling() {
-	VBox rootBox = new VBox();
-	Label textInstructs = new Label();
-	textInstructs.setWrapText(true);
-	textInstructs.setText("Instructions");
-	textInstructs.setAlignment(Pos.CENTER);
-	textInstructs.setMaxWidth(Double.MAX_VALUE);
-	
-	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
-	newGameButt.setOnMouseClicked((arg0) ->SCREEN_MANEGER.loadGameScreenNew());
-	Button continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
-	
-	//this should only be clickable if there is a save file availible
-	Boolean saveAvailable = isSaveAvailable();
-	continueButt.setDisable(!saveAvailable);
-	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANEGER.loadGameScreenContinuation());
-	
-	HBox leftCenter = new HBox(newGameButt);
-	leftCenter.setAlignment(Pos.CENTER);
-	leftCenter.setMaxWidth(Double.MAX_VALUE);
-	HBox rightCenter = new HBox(continueButt);
-	rightCenter.setAlignment(Pos.CENTER);
-	rightCenter.setMaxWidth(Double.MAX_VALUE);
+	public InstructionScreen(ScreenManager screenManager, PromptReader promptReader) {
+		SCREEN_MANAGER = screenManager;
+		UIFACTORY = new UIFactory();
+		PROMPTS = promptReader;
+		setStyleSheet(DEFAULT_SHARED_STYLESHEET);
+	}
 
-	HBox buttonBox = new HBox(leftCenter,rightCenter);
-	buttonBox.setAlignment(Pos.CENTER);
-	HBox.setHgrow(leftCenter, Priority.ALWAYS);
-	HBox.setHgrow(rightCenter, Priority.ALWAYS);
+	@Override
+	public Parent makeScreenWithoutStyling() {
+		VBox rootBox = new VBox();
+		Text title = getUIFactory().makeScreenTitleText("Select a New Game to Play");
+		// TODO: Make a load game button
+		//	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
+		//	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew());
 
-	rootBox.getChildren().addAll(textInstructs, buttonBox);
-	
-	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
-	return rootBox;
-    }
-    
-    //TODO needs to check if valid saveFile is available
-    private boolean isSaveAvailable() {
-	return false;
-    }
+		allGames = UIFACTORY.makeTextDropdown("", gameOptions());
+		allGames.setOnAction(click ->{ 
+			continueButt.setDisable(false);
+		});
+
+		continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
+		continueButt.setDisable(true);
+		continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew(allGames.getValue()));
+		//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenContinuation());
+		Button backButton = UIFACTORY.setupBackButton(e->{
+			SCREEN_MANAGER.toMain();
+		}, PROMPTS.resourceDisplayText("Cancel")); 
+
+		VBox center = new VBox(title, allGames, continueButt);
+		center.setAlignment(Pos.CENTER);
+		center.setMaxWidth(Double.MAX_VALUE);
+		VBox.setVgrow(center, Priority.ALWAYS);
+
+		rootBox.getChildren().addAll(center);
+		return rootBox;
+	}
+
+	/**
+	 * Returns all models in savedModels directory for display on the instruction screen
+	 * 
+	 * @return List<String>: containing all game options
+	 */
+	private List<String> gameOptions(){
+		File[] files = new File("SavedModels/").listFiles();
+		List<String> ret = new ArrayList<String>();
+		for(File file : files){
+			ret.add(file.getName().substring(0, file.getName().indexOf(".")));
+		}
+		return ret;
+	}
+
+
+	@Override
+	protected View getView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
+

@@ -1,8 +1,8 @@
 package engine.factories;
 
 import java.util.Collection;
-import java.util.Map;
 
+import engine.sprites.Sprite;
 import engine.sprites.towers.Tower;
 
 /**
@@ -12,15 +12,13 @@ import engine.sprites.towers.Tower;
  *
  */
 public class TowerFactory extends Factory {
-    
-    private LauncherFactory launcherFactory;
-    
+        
     /**
      * Constructor that takes in Tower parameter data for all types of towers.
      * 
      * @param data: Map of Tower type to its specific collection of parameter data
      */
-    public TowerFactory(Map<String, Collection<Object>> data) {
+    public TowerFactory(Collection<Sprite> data) {
 	super(data);
     }
     
@@ -33,6 +31,5 @@ public class TowerFactory extends Factory {
     public Tower construct(String type) {
 	return null;
     }
-    
-    
+
 }

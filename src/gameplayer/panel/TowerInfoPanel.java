@@ -1,5 +1,9 @@
+
 package gameplayer.panel;
 
+import java.util.Map;
+
+import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
@@ -10,39 +14,48 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class TowerInfoPanel extends Panel {
+public class TowerInfoPanel extends SpecificPanel {
 
-    private final GameScreen GAME_SCREEN;
-    private final UIFactory UI_FACTORY;
-    private PropertiesReader PROP_READ;
-    private PromptReader PROMPTS;
+	private final GameScreen GAME_SCREEN;
+	private final UIFactory UI_FACTORY;
+	private PropertiesReader PROP_READ;
+	private PromptReader PROMPTS;
+	public TowerInfoPanel(GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
+		super(tower);
+	    	GAME_SCREEN = gameScreen;
+		PROMPTS = promptReader;	
+		UI_FACTORY = new UIFactory();
+		PROP_READ = new PropertiesReader();
+	}
 
-    public TowerInfoPanel(GameScreen gameScreen, PromptReader promptReader) {
-        GAME_SCREEN = gameScreen;
-        PROMPTS = promptReader;	
-        UI_FACTORY = new UIFactory();
-        PROP_READ = new PropertiesReader();
-    }
+	@Override
+	public void makePanel() {
+		//TODO add SellTower info pri
+		Map<String,Integer> towerStats = TOWER.getTowerStats();
+		Label TowerInfo = new Label(prepareStats(towerStats));
+		Button sellTower = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("SellTowerButton"));
+		sellTower.setOnMouseClicked((arg0) -> GAME_SCREEN.sellTower(TOWER));
 
-    @Override
-    public void makePanel() {
+		VBox panelRoot = new VBox(TowerInfo, sellTower);
+		VBox.setVgrow(sellTower, Priority.ALWAYS);
+		panelRoot.setAlignment(Pos.CENTER);
+		panelRoot.setId("sellTowerPanel");
+		PANEL = panelRoot;
+	}
 
-        //TODO add SellTower info pri
-        Label TowerInfo = new Label("return value from getTowerInfoOnClick method");
-        Button sellTower = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("SellTowerButton"));
-        //sellTower.setOnMouseClicked((arg0) -> /**BACKENDUPGRADETOWERMETHOD**/);
+	private String prepareStats(Map<String,Integer> towerStats) {
+		String fullString  = "";
+		for(String key: towerStats.keySet()) {
+			fullString = fullString + key + ": " + towerStats.get(key) + "\n";
+		}
+		return fullString;
+	}
 
-        VBox panelRoot = new VBox(TowerInfo, sellTower);
-        VBox.setVgrow(sellTower, Priority.ALWAYS);
-        panelRoot.setAlignment(Pos.CENTER);
-        panelRoot.setId("sellTowerPanel");
-        PANEL = panelRoot;
-    }
-
-    public String getTowerInfoOnClick() {
-        //TODO Once backend is linked, write method to take information from button click on upgradePanel
-        //TODO and send it over to the buyPanel
-        return null;
-    }
+	public String getTowerInfoOnClick() {
+		//TODO Once backend is linked, write method to take information from button click on upgradePanel
+		//TODO and send it over to the buyPanel
+		return null;
+	}
 
 }
+
