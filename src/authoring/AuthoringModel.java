@@ -500,6 +500,9 @@ public class AuthoringModel implements GameData {
 		if (objectType.equals("Enemy")) {
 			currentLevel.removeEnemy(name);
 		}
+		if (objectType.equals("Wave")) {
+		    	currentLevel.removeWave(name.split(" ")[1]);
+		}
 	}
 }
 

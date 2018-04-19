@@ -260,6 +260,9 @@ public class Level {
 	public void removeWave() {
 	    myWaves.remove(0);
 	}
+	public void removeWave(String name) {
+	    myWaves.remove(Integer.parseInt(name)-1);
+	}
 	
 	/**
 	 * @return Wave corresponding to @param waveNumber
