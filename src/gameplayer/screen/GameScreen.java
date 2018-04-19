@@ -218,6 +218,7 @@ public class GameScreen extends Screen {
 	public void sellTower(FrontEndTower tower) {
 		GAME_PANEL.removeTower(tower);
 		MEDIATOR.sellTower(tower);
+		blankGamePanelClick();
 	}
 
 
