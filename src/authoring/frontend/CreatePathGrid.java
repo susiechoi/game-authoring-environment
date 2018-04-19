@@ -102,8 +102,8 @@ public class CreatePathGrid extends AdjustScreen {
     //Given: path images and locations as defaults, change to populate with initial params
     private void populateGrid(GridPane grid) { //grid, 
 
-	for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
-	    for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
+	for (int x = 0 ; x < grid.getColumnCount(); x++) {
+	    for (int y = 0 ; y < grid.getRowCount(); y++) {
 		StackPane cell = new StackPane();
 
 		final int col = x;
@@ -136,13 +136,13 @@ public class CreatePathGrid extends AdjustScreen {
 				startCount++;
 				path.getPathImage().setId("start");
 				path.setPathName(startCount);
-				checkGrid.add(startLabel, colIndex, rowIndex);
+				checkGrid.add(new Label("start"), colIndex, rowIndex);
 			    } else if (((ImageView) event.getGestureSource()).getId() == "end") {
 				path.getPathImage().setId("end");
-				checkGrid.add(endLabel, colIndex, rowIndex);
+				checkGrid.add(new Label("end"), colIndex, rowIndex);
 			    } else if (((ImageView) event.getGestureSource()).getId() == "path") {
 				path.getPathImage().setId("path");
-				checkGrid.add(pathLabel, colIndex, rowIndex);
+				checkGrid.add(new Label("path"), colIndex, rowIndex);
 			    }
 			    success = true;
 			}
@@ -305,8 +305,8 @@ public class CreatePathGrid extends AdjustScreen {
     }
 
     protected List<Point> getStartingPosition() { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
-	for (int x = 0; x < checkGrid.impl_getColumnCount(); x++) {
-	    for (int y = 0; y < checkGrid.impl_getRowCount(); y++) {
+	for (int x = 0; x < checkGrid.getColumnCount(); x++) {
+	    for (int y = 0; y < checkGrid.getRowCount(); y++) {
 		if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText().equals("start")) {
 		    startPoints.add(new Point(x, y));
 		}
@@ -336,8 +336,8 @@ public class CreatePathGrid extends AdjustScreen {
     }
 
     protected HashMap<String, List<Point>> getGridImageCoordinates() {
-	for (int x = 0; x < checkGrid.impl_getColumnCount(); x++) {
-	    for (int y = 0; y < checkGrid.impl_getRowCount(); y++) {
+	for (int x = 0; x < checkGrid.getColumnCount(); x++) {
+	    for (int y = 0; y < checkGrid.getRowCount(); y++) {
 		if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "path") {
 		    pathPoints.add(new Point(x, y));
 		} else if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "start") {
@@ -347,9 +347,9 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	    }
 	}
-	gridImageCoordinates.put(startImage.getImage().impl_getUrl(), startPoints);
-	gridImageCoordinates.put(endImage.getImage().impl_getUrl(), endPoints);
-	gridImageCoordinates.put(pathImage.getImage().impl_getUrl(), pathPoints);
+	gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
+	gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
+	gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
 	return gridImageCoordinates;
     }
 
@@ -365,11 +365,11 @@ public class CreatePathGrid extends AdjustScreen {
     }
 
     public int getColumnCount() {
-	return grid.impl_getColumnCount();
+	return grid.getColumnCount();
     }
 
     public int getRowCount() {
-	return grid.impl_getRowCount();
+	return grid.getRowCount();
     }
 
 

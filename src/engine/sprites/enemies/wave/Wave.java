@@ -42,7 +42,7 @@ public class Wave {
     public void addEnemy(Enemy enemy, int number) {
 	Map<Enemy, Integer> enemyMap = new HashMap<>();
 	enemyMap.put(enemy, number);
-	myWaveMap.put(new Path(null, null, null, number), enemyMap);
+	myWaveMap.put(new Path(null, null, null, 0), enemyMap);
     }
     
     public int getWaveTime() {
@@ -112,8 +112,6 @@ public class Wave {
      */
     private void decrementEnemyCount(Enemy enemy, Path path) {
 	Map<Enemy, Integer> enemyMap = myWaveMap.get(path);
-	System.out.println("IN WAVE OBJECT");
-	    System.out.println(enemyMap.get(enemy)-1);
 	enemyMap.put(enemy, enemyMap.get(enemy)-1);
     }
 
@@ -143,7 +141,6 @@ public class Wave {
 		    return new Enemy(retEnemy);
 		}
 	    }
-	System.out.println("RETURNING NULL");
 	return null;
     }
 
