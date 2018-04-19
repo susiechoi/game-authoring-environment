@@ -1,6 +1,7 @@
 package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
@@ -76,8 +77,7 @@ public class Launcher extends Manager<Projectile>{
      * 
      */
     //TODO implement to shoot at where enemy is going
-    public Projectile launch(Sprite target, double shooterX, double shooterY) {
-	System.out.println("rate of fire is " + myFireRate.getProperty());
+    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
     	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
     	this.addToActiveList(launchedProjectile);
     	return launchedProjectile;

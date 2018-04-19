@@ -87,6 +87,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public void move(Point newPosition) {
 	this.getImageView().setX(newPosition.getX());
 	this.getImageView().setY(newPosition.getY());
+	System.out.println("image view "+this.getImageView().getX() + " " + this.getImageView().getY());
+	System.out.println(" point" + newPosition.getX() + " " + newPosition.getY());
     }
     
     public Point currentPosition() {
@@ -146,6 +148,10 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     
     private String getImage() {
     	return myImage; 
+    }
+    @Override
+    protected HealthProperty getHealthProp() {
+    	return this.myHealth;
     }
 
 }
