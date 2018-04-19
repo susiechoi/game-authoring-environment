@@ -61,16 +61,13 @@ public class CreatePathGrid extends AdjustScreen {
     private DraggableImage path;
     private int startCount = 0;
     private EventHandler<DragEvent> myOnDragDropped;
+    private EventHandler<DragEvent> myOnDragOver;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
 	public void handle(MouseEvent event) {
 	}
     };
-	private boolean unDraggable;
 	public CreatePathGrid(AuthoringView view) {
 	    super(view);
-	    unDraggable = false;
-	    
-	    
 	}
 
 	/**
@@ -109,8 +106,9 @@ public class CreatePathGrid extends AdjustScreen {
 
 		    final int col = x;
 		    final int row = y;
-
-		    cell.setOnDragOver(new EventHandler <DragEvent>() {
+		    
+		    
+		    myOnDragOver = new EventHandler <DragEvent>() {
 			public void handle(DragEvent event) {
 			    if (event.getDragboard().hasImage()) {
 				event.acceptTransferModes(TransferMode.ANY);
@@ -120,7 +118,7 @@ public class CreatePathGrid extends AdjustScreen {
 
 			    event.consume();
 			}
-		    });
+		    };
 		    myOnDragDropped = new EventHandler <DragEvent>() {
 			public void handle(DragEvent event) {
 			    event.acceptTransferModes(TransferMode.ANY);
@@ -131,13 +129,6 @@ public class CreatePathGrid extends AdjustScreen {
 				path.setDraggable(checkGrid, rowIndex, colIndex);
 				path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 				path.getPathImage().fitHeightProperty().bind(cell.heightProperty());
-				System.out.println("should be adding??");
-				if(draggableImagesOnScreen==null) {
-				    draggableImagesOnScreen = new ArrayList<>();
-				}
-				if(!draggableImagesOnScreen.contains(path)) {
-				    draggableImagesOnScreen.add(path);
-				}
 				grid.add(path.getPathImage(), colIndex, rowIndex);
 
 				//imagecompare doesn't work if all same image
@@ -164,7 +155,8 @@ public class CreatePathGrid extends AdjustScreen {
 			}
 		    };
 		    cell.setOnDragDropped(myOnDragDropped);
-		    cell.setOnMouseClicked(myOnMouseClicked);
+		    cell.setOnDragOver(myOnDragOver);
+		//    cell.setOnMouseClicked(myOnMouseClicked);
 		    grid.add(cell, x, y);
 		}
 	    }
@@ -272,7 +264,7 @@ public class CreatePathGrid extends AdjustScreen {
 	private void makeUnDraggable(EventHandler<MouseEvent> action) {
 	    ///System.out.println("trying to make undraggable");
 	    for(Node newNode: grid.getChildren()){
-		newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
+		//newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
 		//newNode.setOnDragDropped(e -> {});
 		myOnMouseClicked = new EventHandler <MouseEvent>() {
 		    public void handle(MouseEvent event) {
@@ -280,18 +272,23 @@ public class CreatePathGrid extends AdjustScreen {
 			action.handle(event);
 		    }
 		};
-		newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
+		newNode.setOnDragDropped(null);
+		//newNode.setOnDragDropped(myOnDragDropped);
+		newNode.setOnDragOver(null);
+		//newNode.removeEventHandler(DragEvent.DRAG_OVER, myOnDragOver);
 		newNode.setOnMouseClicked(myOnMouseClicked);
 	    }
 	}
 	protected void setUpForPathCreation() {
-	    for(Node newNode: grid.getChildren()){
-		if(newNode instanceof StackPane) {
-		    newNode.removeEventHandler(MouseEvent.MOUSE_CLICKED, myOnMouseClicked);
-		    //newNode.setOnMouseClicked(e -> {});
-		    newNode.setOnDragDropped(myOnDragDropped);
-		}
-	    }
+	    populateGrid();
+//	    for(Node newNode: grid.getChildren()){
+//		if(newNode instanceof StackPane) {
+//		  //  newNode.removeEventHandler(MouseEvent.MOUSE_CLICKED, myOnMouseClicked);
+//		    newNode.setOnMouseClicked(null);
+//		    newNode.setOnDragDropped(myOnDragDropped);
+//		    newNode.setOnDragOver(myOnDragOver);
+//		}
+//	    }
 	}
 	//myOnMouseClicked = null;
 	// }
