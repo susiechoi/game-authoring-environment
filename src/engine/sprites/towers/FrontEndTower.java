@@ -3,7 +3,6 @@ package engine.sprites.towers;
 import java.util.Map;
 
 import engine.sprites.FrontEndSprite;
-import javafx.scene.image.ImageView;
 
 /**
  * Interface Gameplayer will use to populate tower-specific panels, and to trigger upgrades of tower
@@ -12,22 +11,22 @@ import javafx.scene.image.ImageView;
  *NOTE: let me know if you want us to pass any other information on our method calls
  */
 public interface FrontEndTower extends FrontEndSprite{
-    
-       
+
+
     /**
      * Method to get information about the tower, was thinking the key would be the 
      * type of statistic (health, damage, rate-of-fire, etc) and then the map value would be
      * the value of the statistic. NOTE: should include sell price of tower
      * @return
      */
-    public Map<String,Double> getTowerStats();
-    
-	/**
-	 * 
-	 * @return The name (type) of the tower
-	 */
+    public Map<String,Integer> getTowerStats();
+
+    /**
+     * 
+     * @return The name (type) of the tower
+     */
     public String getName();
-    
+
     /**
      * Sell tower
      * @return updated resources value
@@ -40,8 +39,9 @@ public interface FrontEndTower extends FrontEndSprite{
      * @return Updated resources value
      * @throws CannotAffordException 
      */
-	public int purchase(int myResources) throws CannotAffordException;
-    
+    public int purchase(int myResources) throws CannotAffordException;
+
+
     /**
      * Method to get list of available upgrades, map key would be upgrade type so we can assign
      * a particular image to the icon (health, damage, rate-of-fire, etc) [would be nice to have these
@@ -68,5 +68,5 @@ public interface FrontEndTower extends FrontEndSprite{
 
     public double getTowerRange();
    
-    
+
 }

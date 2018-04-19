@@ -30,6 +30,7 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -38,7 +39,6 @@ import frontend.PropertiesReader;
 public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final String DEFAULT_IMAGES_PREFIX = "images/";
 	public static final String DEFAULT_IMAGES_SUFFIX = "ImageNames.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
@@ -182,9 +182,11 @@ public class AuthoringModel implements GameData {
 
 	/**
 	 * Class to make a wave to be used in a specified level
+	 * @throws ObjectNotFoundException 
 	 */
-	public void makeWave() {
-
+	public void makeWave(int level, Wave wave) throws ObjectNotFoundException {
+	   Level currentLevel = levelCheck(level);
+	   currentLevel.addWave(wave);
 	}
 
 	// TODO 
@@ -513,5 +515,16 @@ public class AuthoringModel implements GameData {
 	public Map<String, List<Point>> getImageMap() {
 		return myImageMap;
 	}
+
+	public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		if (objectType.equals("Tower")) {
+			currentLevel.removeTower(name);
+		}
+		if (objectType.equals("Enemy")) {
+			currentLevel.removeEnemy(name);
+		}
+	}
+
 }
 

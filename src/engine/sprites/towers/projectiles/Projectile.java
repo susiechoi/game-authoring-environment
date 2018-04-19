@@ -42,8 +42,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
 	    myTarget = target;
-	    mySpeed = 300;
-	    myDamage = new DamageProperty(100,100,100);
+	    mySpeed = myProjectile.getSpeed();
+	    myDamage = myProjectile.getDamageProperty();
 	    this.place(shooterX, shooterY);
 	    this.rotateImage();
 	    hitTargets = new ArrayList<>();
@@ -86,8 +86,12 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	 * 
 	 * @return : the amount of damage this Projectile does
 	 */
-	public Double getDamage() {
+	public double getDamage() {
 	    return myDamage.getProperty();
+	}
+	
+	public DamageProperty getDamageProperty() {
+	    return myDamage;
 	}
 	
 	public double getSpeed() {
@@ -110,7 +114,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	public boolean handleCollision(Sprite sprite) {
 		this.hitTargets.add(sprite);
 		this.myHits--;
-		System.out.println("my hits " + myHits);
 		return !(myHits > 0);
 	}
 

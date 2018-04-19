@@ -22,6 +22,7 @@ public class Sprite implements FrontEndSprite{
 
     /**
      * Constructor that takes in a sprite's image
+     * Source for the image path fix: https://stackoverflow.com/questions/16099427/cannot-load-image-in-javafx @author susiechoi
      * Source for resizing image: https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
      * 
      * @param image: tower's initial image
@@ -30,7 +31,7 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
+	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true));
 	myImageView.setPreserveRatio(true);
 
     }
@@ -93,8 +94,8 @@ public class Sprite implements FrontEndSprite{
      * Returns the damage that this sprite inflicts on something (Can be enemy's damage, projectiles damage, etc)
      * @return
      */
-    public Double getDamage() {
-	return (double) 0;
+    public double getDamage() {
+	return 0.0;
     }
     
     
@@ -108,6 +109,15 @@ public class Sprite implements FrontEndSprite{
      */
     public boolean handleCollision(Sprite collider) {
 	return false;
+    }
+    
+    /**
+     * Returns how many points the user gets for killing this Sprite. Default
+     * set to 0
+     * @return
+     */
+    public int getPointValue() {
+	return 0;
     }
 
 }
