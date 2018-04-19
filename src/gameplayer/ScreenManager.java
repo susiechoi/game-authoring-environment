@@ -94,7 +94,7 @@ public class ScreenManager extends View {
     }
 
     public void loadGameScreenNew(String filepath) {
-    	myGameFilePath = filepath; 
+    	setGameFilePath(filepath); 
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
 	System.out.println("loadGameScreenNew in screen manager");
@@ -107,12 +107,6 @@ public class ScreenManager extends View {
     }
 
     public void loadGameScreenContinuation() {
-
-    }
-
-    @Override
-    public void loadErrorScreen(String errorMessage) {
-	// TODO Auto-generated method stub
 
     }
 
@@ -175,6 +169,10 @@ public class ScreenManager extends View {
     		return myLanguage;
     }
     
+    public void setGameFilePath(String filepath) {
+    	myGameFilePath = filepath; 
+    }
+    
     /**
      * Returns filepath of XML of current game
      * Useful in instantiating new AuthoringController with correct language 
@@ -184,5 +182,11 @@ public class ScreenManager extends View {
     public String getGameFilePath() {
     	return myGameFilePath; 
     }
+
+	@Override
+	public void loadErrorScreen(String errorMessage) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
