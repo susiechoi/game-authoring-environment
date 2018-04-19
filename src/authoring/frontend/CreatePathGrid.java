@@ -34,7 +34,7 @@ import javafx.scene.layout.StackPane;
  * @author Erik Riis
  *
  */
-public class CreatePathGrid extends AdjustScreen {
+public class CreatePathGrid {
 
     public static final int INITIAL_PATH_SIZE = 60;
     private int pathSize;
@@ -60,6 +60,7 @@ public class CreatePathGrid extends AdjustScreen {
     private DraggableImage myCurrentClicked;
     private DraggableImage path;
     private int startCount = 0;
+    private AuthoringView myView;
     // private EventHandler<DragEvent> myOnDragDropped;
     // private EventHandler<DragEvent> myOnDragOver;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
@@ -67,7 +68,10 @@ public class CreatePathGrid extends AdjustScreen {
 	}
     };
     public CreatePathGrid(AuthoringView view) {
-	super(view);
+	myView = view;
+    }
+    private AuthoringView getView() {
+	return myView;
     }
 
     /**
@@ -372,14 +376,4 @@ public class CreatePathGrid extends AdjustScreen {
 	return grid.impl_getRowCount();
     }
 
-
-    @Override
-    protected Parent populateScreenWithFields() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    protected void populateFieldsWithData() {
-    }
 }
