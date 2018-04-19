@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_DESCRIPTION = "Enemy";
-	public static final String ENEMY_IMAGES = "src/images/EnemyImageNames.properties";
+	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
 	private TextField myNameField; 

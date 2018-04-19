@@ -37,19 +37,18 @@ import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
 
 public class AuthoringModel implements GameData {
-	public static final String DEFAULT_ENEMY_IMAGES = "src/images/EnemyImageNames.properties";
-	public static final String DEFAULT_TOWER_IMAGES = "src/images/TowerImageNames.properties";
-	public static final String DEFAULT_IMAGES_PREFIX = "src/images/";
+	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String DEFAULT_IMAGES_SUFFIX = "ImageNames.properties";
-	public static final String DEFAULT_PROJECTILE_IMAGES = "src/images/ProjectileImageNames.properties";
+	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
 	public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
 	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
-	public static final String DEFAULT_PATH_START = "src/images/start.png";
-	public static final String DEFAULT_PATH_MIDDLE = "src/images/cobblestone.png";
-	public static final String DEFAULT_PATH_END = "src/images/end.png";
-	public static final String DEFAULT_BACKGROUND_IMAGE = "src/images/grass.png";
+	public static final String DEFAULT_PATH_START = "images/start.png";
+	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
+	public static final String DEFAULT_PATH_END = "images/end.png";
+	public static final String DEFAULT_BACKGROUND_IMAGE = "images/grass.png";
 	private final String myDefaultName; 
 
 	private String myGameName; 
