@@ -1,9 +1,11 @@
 package frontend;
 import java.util.List;
 
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 
 /**
@@ -99,7 +101,6 @@ public abstract class Screen {
 	protected PropertiesReader getPropertiesReader() {
 		return myPropertiesReader;
 	}
-
 }
 
 

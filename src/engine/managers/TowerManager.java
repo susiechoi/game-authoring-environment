@@ -53,7 +53,6 @@ public class TowerManager extends ShootingSpriteManager {
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
-    		System.out.println("size is " + this.getListOfActive().size());
     		return (FrontEndTower) newTower;
     }
 
@@ -66,6 +65,15 @@ public class TowerManager extends ShootingSpriteManager {
 	    return tower.sell();
 	}
 	return 0;
+    }
+    
+    /**
+     * Called from PlayState, tower is to be upgraded by the type specified in upgradeName
+     * @param tower
+     * @param upgradeName
+     */
+    public void upgrade(FrontEndTower tower, String upgradeName) {
+	
     }
 
 }

@@ -35,32 +35,37 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
-import javafx.scene.layout.GridPane;
 
 public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String DEFAULT_ENEMY_IMAGE = "Zombie";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final String DEFAULT_IMAGES_PREFIX = "images/";
 	public static final String DEFAULT_IMAGES_SUFFIX = "ImageNames.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
+	public static final String DEFAULT_TOWER_IMAGE = "Pisa";
+	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
 	public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
 	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
-	public static final String DEFAULT_PATH_START = "images/start.png";
+	public static final String DEFAULT_PATH_START = "images/brick.png";
 	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
-	public static final String DEFAULT_PATH_END = "images/end.png";
-	public static final String DEFAULT_BACKGROUND_IMAGE = "images/grass.png";
+	public static final String DEFAULT_PATH_END = "images/darkstone.png";
+	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
+	
 	private final String myDefaultName; 
-
 	private String myGameName; 
 	private final PropertiesReader myPropertiesReader;
 	private Settings mySettings; 
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
-	//private Path myDefaultPath;
-	protected HashMap<String, List<Point>> myImageMap;
+	private Path myDefaultPath;
+	//	private Path myPath;
+	protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
+	protected String myBackgroundImage = new String();
+	protected List<Point> myPathCoordinates = new ArrayList<Point>();
+
 
 	public AuthoringModel() throws MissingPropertiesException {
 		myLevels = new HashMap<Integer, Level>();
@@ -70,6 +75,7 @@ public class AuthoringModel implements GameData {
 		try {
 			myDefaultTower = generateGenericTower();
 			myDefaultEnemy = generateGenericEnemy();
+			myDefaultPath = generateGenericPath();
 		} catch (NumberFormatException | FileNotFoundException e) {
 			throw new MissingPropertiesException(myDefaultName);
 		}
@@ -90,102 +96,17 @@ public class AuthoringModel implements GameData {
 		firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
 		Enemy testEnemy = new Enemy(myDefaultEnemy);
 		firstLevel.addEnemy(myDefaultName, testEnemy);
+		firstLevel.addPath(myDefaultPath);
 		myLevels.put(1, firstLevel);
-
-		List<Point> dummyPathPoints = new ArrayList<>();
-		dummyPathPoints.add(new Point(2, 2));
-		dummyPathPoints.add(new Point(2, 3));
-		dummyPathPoints.add(new Point(2, 4));
-		HashMap<String, List<Point>> pathImages = new HashMap<>();
-		List<Point> dummyPathStartPoints = new ArrayList<>();
-		dummyPathStartPoints.add(new Point(5, 1));
-		List<Point> dummyPathMiddlePoints = new ArrayList<>();
-		dummyPathMiddlePoints.add(new Point(5, 2));
-		dummyPathMiddlePoints.add(new Point(5, 3));
-		dummyPathMiddlePoints.add(new Point(5, 4));
-		dummyPathMiddlePoints.add(new Point(5, 5));
-		dummyPathMiddlePoints.add(new Point(5, 6));
-		dummyPathMiddlePoints.add(new Point(5, 7));
-		dummyPathMiddlePoints.add(new Point(6, 7));
-		dummyPathMiddlePoints.add(new Point(7, 7));
-		dummyPathMiddlePoints.add(new Point(8, 7));
-		dummyPathMiddlePoints.add(new Point(9, 7));
-		List<Point> dummyPathEndPoints = new ArrayList<>();
-		dummyPathEndPoints.add(new Point(10, 12));
-		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
-		pathImages.put(DEFAULT_PATH_MIDDLE, dummyPathMiddlePoints);
-		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
-		try {
-			makePath(1, new GridPane(), dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE);
-		}
-		catch(ObjectNotFoundException e) {
-			//TODO: help!!!
-			System.out.println("couldn't find object");
-		}
-
-		Wave newWave = new Wave(firstLevel.getPaths().get(0));
-		newWave.addEnemy(testEnemy, 20);
-		firstLevel.addWave(firstLevel.getPaths().get(0), newWave);
-	}
-
-	/**
-	 * Method through which information can be sent to instantiate or edit an enemy object
-	 * Wraps constructor in case of new object creation
-	 * @throws MissingPropertiesException 
-	 * @throws NoDuplicateNamesException 
-	 * @throws ObjectNotFoundException 
-	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact,
-			double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		if (currentLevel.containsEnemy(name) && newObject) {
-			throw new NoDuplicateNamesException(name);
-		}
-		else if (!currentLevel.containsEnemy(name) && !newObject) {
-			throw new ObjectNotFoundException(name);
-		}
-		//		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
-		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-		currentLevel.addEnemy(name, newEnemy);
-	}
-
-	/**
-	 * Method through which information can be sent to instantiate or edit a tower object
-	 * Wraps constructor in case of new object creation
-	 * @throws NoDuplicateNamesException: if the user tries to make an already existing
-	 * tower, throw exception.
-	 * @throws MissingPropertiesException 
-	 * @throws ObjectNotFoundException 
-	 */
-	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed, 
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
-			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		if (currentLevel.containsTower(name) && newObject) {
-			throw new NoDuplicateNamesException(name);
-		}
-		else if (!currentLevel.containsTower(name) && !newObject) {
-			throw new ObjectNotFoundException(name);
-		}
-		//		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
-		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
-				projectileUpgradeValue, projectileSize, projectileSpeed);
-		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
-				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
-				launcherValue, towerProjectile); 
-		//		Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
-		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, imagePath), 50, health,  // TODO put size SOMEWHERE
-				healthUpgradeValue, healthUpgradeCost, towerLauncher, towerValue, towerUpgradeCost, towerUpgradeValue);
-		currentLevel.addTower(name, newTower);
 	}
 
 	/**
 	 * Class to make a wave to be used in a specified level
+	 * @throws ObjectNotFoundException 
 	 */
-	public void makeWave() {
-
+	public void makeWave(int level, Wave wave) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		currentLevel.addWave(wave);
 	}
 
 	// TODO 
@@ -195,38 +116,13 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 
-	//parameters needed to get passed: background image, grid size, location of each image in grid 
-
-
-	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
-		System.out.println("Model: " +imageCoordinates);
+	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
+		myImageMap = imageCoordinates;
+		myBackgroundImage = backgroundImage;
+		myPathCoordinates = coordinates;
 		Level currentLevel = levelCheck(level);
-		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
+		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathSize);
 		currentLevel.addPath(newPath);
-		System.out.println("We're putting the path at current level");
-		System.out.println(currentLevel);
-
-		//		myImageMap = imageCoordinates;
-		//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
-	}
-
-	// TODO 
-	/**
-	 * Method through which information can be sent to instantiate or edit a path object
-	 * Wraps constructor in case of new object creation
-	 * @throws ObjectNotFoundException 
-	 */
-
-	//parameters needed to get passed: background image, grid size, location of each image in grid 
-
-
-	public void makePath(int level, GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		Path newPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage);
-		currentLevel.addPath(newPath);
-
-		//		myImageMap = imageCoordinates;
-		//		myPath = new PathBuilder().construct(level, coordinates, imageCoordinates, backgroundImage); //add new constructor
 	}
 
 
@@ -277,7 +173,6 @@ public class AuthoringModel implements GameData {
 	}
 
 	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
-
 		return levelCheck(levelNum).getPaths().get(name-1);
 	}
 
@@ -305,10 +200,16 @@ public class AuthoringModel implements GameData {
 		}
 		if(objectType.equals("Wave")) {
 			int size = currentLevel.getHighestWaveNumber();
-			for(Integer k = 1; k<=size; k+=1) {
+			for(Integer k = 1; k<=(size+1); k+=1) {
 				listToReturn.add("Wave " + k.toString());
 			}
 		}
+		//		if(objectType.equals("Path")) {
+		//			listToReturn.add(currentLevel.getPath());
+		//			if (listToReturn.size() == 0) {
+		//				listToReturn.add(myDefaultPath.getName());
+		//			}
+		//		}
 		listToReturn.remove(myDefaultName);
 		return listToReturn; 
 	}
@@ -333,15 +234,16 @@ public class AuthoringModel implements GameData {
 	 * @throws IllegalArgumentException 
 	 * @throws ObjectNotFoundException 
 	 */
-	public String getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
+	public Object getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		Object attributeValue = null;
-		
+
 		AttributeFinder attributeFinder = new AttributeFinder(); 
 		if (objectType.equals("Enemy")) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
+				System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 			}
 		}
 		else if (objectType.equals("Tower")) {
@@ -354,31 +256,29 @@ public class AuthoringModel implements GameData {
 		else if (objectType.equals("Settings")) {
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, mySettings);
 		}
-		//	else if (objectType.equals("Wave")) {
-		//	    Level currentLevel = levelCheck(level);
-		//	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
-		//		Wave wave = currentLevel.getWave();
-		//		for (Field aField : tower.getClass().getDeclaredFields()) {
-		//		    String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-		//		    if (fieldSimpleString.equals(attribute)) {
-		//			aField.setAccessible(true);
-		//			fieldValue = aField.get(tower);
-		//			break; 
-		//		    }
-		//		}
-		//	    }
-		//	    if (fieldValue == null) {
-		//		throw new ObjectNotFoundException(name);
-		//	    }
-		//	}
+		else if (objectType.equals("Path")) {
+			Level currentLevel = levelCheck(level);
+			//			if (currentLevel.containsTower(name)) {
+			Path path = currentLevel.getPath();
+			attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
+			System.out.println("PATH INFO: " +attributeValue);
+			//			}
+		}
+
+		else if(objectType.equals("Wave")) {
+			Level currentLevel = levelCheck(level);
+			if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
+				Wave wave = currentLevel.getWaves().get(Integer.parseInt(name));
+				attributeValue = attributeFinder.retrieveFieldValue(attribute, wave);
+			}
+		}
 		if (attributeValue == null) {
 			throw new ObjectNotFoundException(name);
 		}
 		if (attributeValue.getClass() == Double.class) {
 			return Double.toString((double) attributeValue); 
 		} 
-
-		else return (String) attributeValue; 
+		else return attributeValue; 
 	}
 
 	/**
@@ -443,25 +343,21 @@ public class AuthoringModel implements GameData {
 		}
 		return null;
 	}
-	//    private Path generateGenericPath() throws NumberFormatException, FileNotFoundException {
-	//	try {
-	//	    Path newPath = new PathBuilder().construct(
-	//		    myDefaultName, 
-	//		    myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage"), 
-	//		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemySpeed")), 
-	//		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealth")), 
-	//		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealthImpact")), 
-	//		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillReward")), 
-	//		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillUpgradeCost")), 
-	//		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillUpgradeValue")));
-	//	    return newEnemy;
-	//
-	//	} catch (MissingPropertiesException e) {
-	//	    // TODO Auto-generated catch block
-	//	    System.out.println("Could not load GenericTower object!");
-	//	}
-	//	return null;
-	//    }
+
+	private Path generateGenericPath() throws NumberFormatException, FileNotFoundException {
+		List<Point> dummyPathPoints = new ArrayList<>();
+		dummyPathPoints.add(new Point(2, 2));
+		dummyPathPoints.add(new Point(2, 3));
+		HashMap<String, List<Point>> pathImages = new HashMap<>();
+		List<Point> dummyPathStartPoints = new ArrayList<>();
+		dummyPathStartPoints.add(new Point(2, 2));
+		List<Point> dummyPathEndPoints = new ArrayList<>();
+		dummyPathEndPoints.add(new Point(2, 3));
+		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
+		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
+		Path newPath = new PathBuilder().construct(dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE, 60);
+		return newPath;
+	}
 
 	/**
 	 * Adds a new level to the authored game, based on the previous level that the user has created
@@ -535,9 +431,64 @@ public class AuthoringModel implements GameData {
 	 * @return Map of image names to Point lists
 	 */
 	public Map<String, List<Point>> getImageMap() {
+		System.out.println("IS MAP NULL: " +myImageMap);
 		return myImageMap;
 	}
 
+	public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
+		Level currentLevel = levelCheck(level);
+		if (objectType.equals("Tower")) {
+			currentLevel.removeTower(name);
+		}
+		if (objectType.equals("Enemy")) {
+			currentLevel.removeEnemy(name);
+		}
+	}
 
+	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		Level currentLevel = myLevels.get(level);
+		if (currentLevel.containsTower(name)) {
+			throw new NoDuplicateNamesException(name);
+		}
+		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
+				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, DEFAULT_PROJECTILE_IMAGE), 0, 0, 
+				0, 0, 0);
+		Launcher towerLauncher = new LauncherBuilder().construct(0, 0, 0, 0, 0, 0, towerProjectile); 
+		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, DEFAULT_TOWER_IMAGE), 50, 0, 
+				0, 0, towerLauncher, 0, 0, 0);
+		currentLevel.addTower(name, newTower);
+	}
+	
+	public void makeEnemy(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		Level currentLevel = myLevels.get(level);
+		if (currentLevel.containsEnemy(name)) {
+			throw new NoDuplicateNamesException(name);
+		}
+		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, DEFAULT_ENEMY_IMAGE), 0, 0, 0, 0, 0, 0);
+		currentLevel.addEnemy(name, newEnemy);
+		System.out.println(level+" "+name);
+	}
+	
+	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+		AttributeFinder attributeFinder = new AttributeFinder();
+		if (objectType.equals("Enemy")) {
+			Level currentLevel = levelCheck(level);
+			if (currentLevel.containsEnemy(name)) {
+				Enemy enemy = currentLevel.getEnemy(name);
+				attributeFinder.setFieldValue(attribute, enemy, attributeValue);
+			}
+		}
+		else if (objectType.equals("Tower")) {
+			Level currentLevel = levelCheck(level);
+			if (currentLevel.containsTower(name)) {
+				Tower tower = currentLevel.getTower(name);
+				attributeFinder.setFieldValue(attribute, tower, attributeValue);
+			}
+		}
+		else if (objectType.equals("Settings")) {
+			attributeFinder.setFieldValue(attribute, mySettings, attributeValue);
+		}
+	}
+	
 }
 

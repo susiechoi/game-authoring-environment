@@ -1,5 +1,5 @@
 .root {
-	-fx-background-image: url("../images/poly.png");
+	-fx-background-image: url("file:images/poly.png");
 	-fx-background-size: cover;
 }
 
@@ -8,8 +8,8 @@ Text {
 	-fx-font-size: 14pt; 
 }
 
-.button {
-   	-fx-font-family: "Quicksand";
+TextField {
+	-fx-max-width: 200; 
 }
 
 .button:disabled, .button:disabled > * {
@@ -28,7 +28,15 @@ Text {
 }
 
 
-VBox, HBox {
+VBox {
+	-fx-background-image: url("file:images/poly.png");
+	-fx-background-size: cover;
+	-fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-alignment: center;
+}
+
+HBox {
 	-fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;
@@ -48,7 +56,7 @@ VBox, HBox {
 
 ComboBox {
 	-fx-font-family: "Quicksand";
-	-fx-background-color: #488286;
+	-fx-background-color: #B7D5D4;
 	-fx-min-width: 200;
 	-fx-min-height: 50;
 }
@@ -83,4 +91,12 @@ ComboBox {
 #towerHolders {
 	-fx-padding: 0;
 	-fx-spacing: 0;
+}
+
+#backButton {
+	-fx-background-color: #488286; 
+}
+
+#applyButton {
+	-fx-background-color: #488286; 
 }

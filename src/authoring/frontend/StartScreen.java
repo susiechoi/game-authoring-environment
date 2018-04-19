@@ -30,6 +30,7 @@ public class StartScreen extends AuthoringScreen {
     
     protected StartScreen(AuthoringView view) {
 	super(view);
+	setSaved();
 	myView = view; 
 	List<String> css = null;
 	try {
@@ -65,8 +66,9 @@ public class StartScreen extends AuthoringScreen {
 	ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, gameNamePrompt);
 	editButton.setDisable(true);
-	editButton.setOnAction(e -> {getView().readFromFile(gameChooser.getValue());
-	    getView().goForwardFrom(this.getClass().getSimpleName()+"Edit", gameChooser.getValue());});
+	editButton.setOnAction(e -> {
+		getView().readFromFile(gameChooser.getValue());
+	});
 	Button changeCSS = getUIFactory().makeTextButton("cssbutton", getErrorCheckedPrompt("ChangeStyling"));
 	changeCSS.setOnAction(e -> {
 		currCSSIndex++; 
@@ -76,11 +78,14 @@ public class StartScreen extends AuthoringScreen {
 		System.out.println("change to "+myCSSFiles.get(currCSSIndex));
 		myView.setCurrentCSS(myCSSFiles.get(currCSSIndex));
 	});
+	Button backButton = setupBackButton(); 
+	
 	vbox.getChildren().add(startHeading);
 	vbox.getChildren().add(newGameButton);
 	vbox.getChildren().add(gameChooser);
 	vbox.getChildren().add(editButton);
 	vbox.getChildren().add(changeCSS);
+	vbox.getChildren().add(backButton);
 	return vbox;
 
     }

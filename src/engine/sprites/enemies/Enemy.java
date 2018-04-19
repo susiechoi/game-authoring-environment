@@ -1,8 +1,7 @@
 package engine.sprites.enemies;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
-import engine.path.Path;
 import engine.physics.ImageIntersecter;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
@@ -12,7 +11,6 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 
-import javafx.scene.Node;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -35,9 +33,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double mySpeed;
     private double mySize;
     private double myKillReward;
-    private String myImage; 
-    //    private double myKillUpgradeCost;
-    //    private double myKillUpgradeValue; 
+    private String myImage;  
+    private int pathIndex;
+    private double pathAngle;
 
     public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
@@ -48,9 +46,11 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myDamage = damage;
 	myHealthImpact = myDamage.getProperty();
 	myValue = value;
-	myIntersecter = new ImageIntersecter(this.getImageView()); 
+	myIntersecter = new ImageIntersecter(this); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
+	pathIndex = 0;
+	pathAngle = 0;
     }
 
     /**
@@ -78,26 +78,24 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	super(name, image, size, null);
 	myHealth = new HealthProperty(10000,10000,100);
 	myDamage = new DamageProperty(10000, 10000, 10000);
-	myValue = new ValueProperty(300);
+	myValue = new ValueProperty(900);
     }
 
-    /**
-     * Tests to see if another ImageView overlaps with the Enemy
-     * @param otherImage : other image (projectile, tower, etc)
-     * @return boolean, yes or no
-     */
-    public boolean overlap(Node otherImage) {
-	return myIntersecter.overlaps(otherImage); 
-    }
-   
     /**
      * Moves the enemy along the path according to how much time has passed
      * @param elapsedTime
      */
-    public void move(Path path) {
-	Point2D newPosition = path.nextPosition(mySpeed);
+    public void move(Point newPosition) {
 	this.getImageView().setX(newPosition.getX());
 	this.getImageView().setY(newPosition.getY());
+	System.out.println("image view "+this.getImageView().getX() + " " + this.getImageView().getY());
+	System.out.println(" point" + newPosition.getX() + " " + newPosition.getY());
+    }
+
+    public Point currentPosition() {
+	Point position = new Point();
+	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
+	return position;
     }
 
     public String getName() {
@@ -110,7 +108,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @return Double: damage that Enemy incurs on the tower
      */
     @Override
-    public Double getDamage() {
+    public double getDamage() {
 	return myDamage.getProperty();
     }
 
@@ -119,9 +117,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-    	return false;
-//	myHealth.loseHealth(collider.getDamage());
-//	return myHealth.isAlive();
+	myHealth.loseHealth(collider.getDamage());
+	return myHealth.isAlive();
     }
 
     private ImageIntersecter getIntersecter() {
@@ -139,18 +136,39 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private ValueProperty getValue() {
 	return myValue; 
     }
+
+    @Override
     public int getPointValue() {
-    	return 0;
-   // 	return (int)this.myValue.getProperty();
+	return (int) myValue.getProperty();
     }
 
-    
+
     private double getSpeed() {
 	return mySpeed; 
     }
-    
+
     private String getImage() {
-    	return myImage; 
+	return myImage; 
     }
+
+    public void setIndex(int i) {
+	pathIndex = i;
+    } 
+    
+    public int getIndex() {
+	return pathIndex;
+    }
+    @Override
+    protected HealthProperty getHealthProp() {
+    	return this.myHealth;
+    }
+
+    public double getAngle() {
+	return pathAngle;
+    }
+    
+    public void setAngle(double a) {
+	pathAngle = a;
+    } 
 
 }
