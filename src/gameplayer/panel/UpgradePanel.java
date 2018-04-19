@@ -63,13 +63,12 @@ public class UpgradePanel extends SpecificPanel {
 	try {
 	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(UPGRADE_NAMES_FILE_PATH, UPGRADE_IMAGE_SIZE, UPGRADE_IMAGE_SIZE);
 	    for (String upgradeType: upgradeMap.keySet()) {
-		Button upgradeButton = UI_FACTORY.makeImageButton("button", upgradeMap.get(upgradeType));
-		
-		//upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.
-		upgrades.getChildren().add(upgradeButton);
-		HBox.setHgrow(upgradeButton, Priority.ALWAYS);
-		upgradeButton.setMaxWidth(Double.MAX_VALUE);
-		upgradeButton.setMaxHeight(Double.MAX_VALUE);
+			Button upgradeButton = UI_FACTORY.makeImageButton("button", upgradeMap.get(upgradeType));
+			upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.upgradeClickedOn());
+			upgrades.getChildren().add(upgradeButton);
+			HBox.setHgrow(upgradeButton, Priority.ALWAYS);
+			upgradeButton.setMaxWidth(Double.MAX_VALUE);
+			upgradeButton.setMaxHeight(Double.MAX_VALUE);
 	    }
 	}
 	catch (MissingPropertiesException e) {

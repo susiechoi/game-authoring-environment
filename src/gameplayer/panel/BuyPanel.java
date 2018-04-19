@@ -10,6 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+
+import javax.swing.*;
 
 public class BuyPanel extends SpecificPanel {
 
@@ -38,6 +41,7 @@ public class BuyPanel extends SpecificPanel {
         VBox.setVgrow(TowerInfo, Priority.ALWAYS);
         panelRoot.setAlignment(Pos.CENTER);
         panelRoot.setId("buyUpgradePanel");
+        panelRoot.setMaxWidth(Double.parseDouble(PROMPTS.resourceDisplayText("upgradePanelWidth")));
         PANEL = panelRoot;
     }
 
