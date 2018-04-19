@@ -142,7 +142,6 @@ public abstract class ShootingSprites extends Sprite{
 	return myLauncher;
     }
     
-    @Override
     public double getDamage() {
 	return myLauncher.getProjectileDamage();
     }

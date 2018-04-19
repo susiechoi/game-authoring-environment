@@ -19,17 +19,14 @@ public class GameEngine {
     private final Integer DEFAULT_RELATIVE_SPEED = 5;
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private PlayState myPlayState;
-    private Mediator myMediator;
     private Timeline ANIMATION;
     private double timeFactor;
 
     public GameEngine(Mediator mediator) {
 	myPlayState = null;
-	myMediator = mediator;
 	timeFactor = 1;
 
 	setSpeed(DEFAULT_RELATIVE_SPEED);
-	// attach "game loop" to time line to play it
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> loop(SECOND_DELAY));
         ANIMATION = new Timeline();
@@ -45,7 +42,6 @@ public class GameEngine {
     public PlayState getPlayState() {
 	return myPlayState;
     }
-    
 
     /**
      * Calls the update function every loop
@@ -54,16 +50,6 @@ public class GameEngine {
     public void loop(double elapsedTime) {
 	myPlayState.update(elapsedTime*timeFactor);
     }
-
-
-    /**
-     * Pauses Game Loop animation so Game State stays constant
-     * COMMENTED OUT BECAUSE THIS WOULD PAUSE THE ENTIRE GAMEENGINE NOT THE PLAYSTATE
-     */
-//    public void pause() {
-//	ANIMATION.pause();
-//
-//    }
 
     /**
      * Starts Game Loop animation, so Game State continuously loops
@@ -83,8 +69,6 @@ public class GameEngine {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Saves current Game State to File
      */
     public void savePlay(String filename) {
@@ -93,7 +77,6 @@ public class GameEngine {
     }
 
     /**
->>>>>>> a3c8e958bf0a4ac0cf7da5e419420543043c2a3b
      * Updates Game State to new Level as specified in XML File
      * 
      * @param l: integer denoting level to jump to
@@ -117,7 +100,5 @@ public class GameEngine {
     public void restartLevel() {
 
     }
-
-   
 
 }

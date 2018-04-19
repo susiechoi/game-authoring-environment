@@ -41,8 +41,6 @@ public class PlayState implements GameData {
     private List<Level> myLevels;
     private Level currentLevel;
     private boolean isPaused;
-    private Enemy fakeEnemy;
-    private Enemy fakeEnemy2;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -59,7 +57,7 @@ public class PlayState implements GameData {
 	currentLevel = myLevels.get(0);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
-	isPaused = false;
+	isPaused = true;
 	myScore = score;
 	myResources = resources;
 	UNIVERSAL_TIME = universalTime;
@@ -94,25 +92,12 @@ public class PlayState implements GameData {
 		// do nothing
 	    }
 
-
-	    //			Path path = currentLevel.getUnmodifiablePaths().get(0);
-	    //			Wave currentWave = currentLevel.getWaves(path).get(0);
-	    //			int currentTime = new Double(UNIVERSAL_TIME).intValue();
-	    //			if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
-	    //				Enemy newEnemy = currentLevel.getNewEnemy(path);
-	    //				newEnemy.place(count*10, count*10);
-	    //				myEnemyManager.addEnemy(path, newEnemy);
-	    //				count++;
-	    //			}
-
-
 	    UNIVERSAL_TIME+=elapsedTime;
 	    List<Sprite> toBeRemoved = new ArrayList<>();
 	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	    List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
 	    activeEnemies.removeAll(toBeRemoved);
 	    myEnemyManager.setActiveList(activeEnemies);
-	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
 
@@ -123,19 +108,14 @@ public class PlayState implements GameData {
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
     }
-
-
-
+    
+    
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
 	    myScore+= sprite.getPointValue();
 	}
 	myMediator.updateScore(myScore);
     }
-
-    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-    //	myResources -= tower.upgrade(upgradeName);
-    //    }
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);
@@ -157,14 +137,8 @@ public class PlayState implements GameData {
 
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	//	myResources = placedTower.purchase(myResources);
-	//	myMediator.updateCurrency(myResources);
 	return placedTower;
     }
-
-    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-    //	myResources -= tower.upgrade(upgradeName);
-    //    }
 
     /**
      * Sells the tower, increments users currency, and removes it from collection and screen
