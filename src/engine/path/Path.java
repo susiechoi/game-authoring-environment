@@ -29,19 +29,20 @@ public class Path {
      * @param mySpeed
      */
     public Point nextPosition(Point currentPos, int pathIndex, double pathAngle) {
-	if(checkBounds(currentPos, pathIndex)) {
-	    currentPos = myCoordinates.get(pathIndex+1);
-	    return currentPos;
-	}
-	else {
-	    System.out.println("here");
-	    // 	System.out.println("CURRENT XPOS: " + currentPos.getX());
-	    // 	System.out.println("CURRENT YPOS: " + currentPos.getY());
-	    double newX = currentPos.getX() + OFFSET - Math.cos(pathAngle) * 3;
-	    double newY = currentPos.getY() + OFFSET + Math.sin(pathAngle) * 3;
-	    currentPos.setLocation(newX, newY);
-	    return currentPos; 
-	}
+//	if(checkBounds(currentPos, pathIndex)) {
+//	    currentPos = myCoordinates.get(pathIndex+1);
+//	    return currentPos;
+//	}
+//	else {
+//	    System.out.println("here");
+//	    // 	System.out.println("CURRENT XPOS: " + currentPos.getX());
+//	    // 	System.out.println("CURRENT YPOS: " + currentPos.getY());
+//	    double newX = currentPos.getX() + OFFSET - Math.cos(pathAngle) * 3;
+//	    double newY = currentPos.getY() + OFFSET + Math.sin(pathAngle) * 3;
+//	    currentPos.setLocation(newX, newY);
+//	    return currentPos; 
+//	}
+	return myCoordinates.get(pathIndex+1);
     }
 
     /**
