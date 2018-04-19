@@ -24,14 +24,14 @@ public class CreatePathScreen extends PathScreen {
 	private CreatePathToolBar myPathToolBar;
 	private String myBackgroundImage = "Images/generalbackground.jpg";
 	private CreatePathGrid myGrid;
-	
+	private CreatePathScreen me;
 
 	public CreatePathScreen(AuthoringView view) {
 		super(view);
 		myPathPanel = new CreatePathPanel(view);
 		myPathToolBar = new CreatePathToolBar(view);
+		me = this;
 	}
-	
 	
 	private void setGridApplied(CreatePathGrid grid) {
 		myGrid = grid;
@@ -51,11 +51,12 @@ public class CreatePathScreen extends PathScreen {
 						try { //do this outside of for loop...have a boolean check?
 						
 							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
-					
 							getView().getObjectAttribute("Path", "", "myPathMap");
 							getView().getObjectAttribute("Path", "", "myBackgroundImage");
 							getView().getObjectAttribute("Path", "", "myPathSize");
-//							getView().goForwardFrom(this.getClass().getSimpleName()+"Apply"); //TODO: Not Getting the class name
+							
+							getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
+					
 						} catch (ObjectNotFoundException e1) {
 							// TODO Auto-generated catch block
 						}
@@ -68,6 +69,7 @@ public class CreatePathScreen extends PathScreen {
 				}
 			}
 		});
+		System.out.println("HERE: " +this.getClass().getSimpleName());
 	}
 
 	@Override
