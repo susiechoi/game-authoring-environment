@@ -32,7 +32,7 @@ public class SettingsPanel extends Panel {
     private final PropertiesReader PROP_READ;
     private final PromptReader PROMPTS;
     private final UIFactory UIFACTORY;
-    private final ITRTSoundFactory SOUND_FACTORY;
+    private ITRTSoundFactory SOUND_FACTORY;
     private Button helpButton;
     private Button instrButton;
 

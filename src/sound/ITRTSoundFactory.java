@@ -112,6 +112,8 @@ public class ITRTSoundFactory implements SoundFactory {
     public void setVolume(Integer percentVolume) {
 	this.myVolume = percentVolume/100.0; //this hard-coded value exists because the parameter is on a percentage scale, 
 	//but is used as a value between 0 and 1. This value should never be changed
+	System.out.println(myVolume);
+	System.out.println("Media player is null:"+(myMediaPlayer==null));
 	this.myMediaPlayer.setVolume(myVolume);
     }
 
