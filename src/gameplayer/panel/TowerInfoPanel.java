@@ -20,13 +20,12 @@ public class TowerInfoPanel extends SpecificPanel {
 	private final UIFactory UI_FACTORY;
 	private PropertiesReader PROP_READ;
 	private PromptReader PROMPTS;
-	private final FrontEndTower TOWER;
 	public TowerInfoPanel(GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
-		GAME_SCREEN = gameScreen;
+		super(tower);
+	    	GAME_SCREEN = gameScreen;
 		PROMPTS = promptReader;	
 		UI_FACTORY = new UIFactory();
 		PROP_READ = new PropertiesReader();
-		TOWER = tower;
 	}
 
 	@Override
