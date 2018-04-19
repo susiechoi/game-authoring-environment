@@ -22,18 +22,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private final String ENEMIES_KILLED = "Enemies Killed";
     
     private HealthProperty myHealth;
-    private double myHealthValue;
-    private double myHealthUpgradeCost; 
-    private double myHealthUpgradeValue; 
     private String myImage; 
     private double mySize;
-    private Image myProjectileImage;
-    private double myProjectileDamage; 
-    private double myProjectileSpeed;
-    private double myProjectileSize;
     private Launcher myLauncher; 
-    private double myLauncherRate;
-    private double myLauncherRange; 
     private ValueProperty myValue;
     private double myTowerValue; 
     private Map<String, Integer> propertyStats;
@@ -55,16 +46,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	propertyStats.put(health.getName(), (int) health.getProperty());
 	propertyStats.put(value.getName(), (int) value.getProperty());
 	propertyStats.put(this.getDamageName(), (int) this.getDamage());
-	myHealthValue = health.getProperty(); 
-	myHealthUpgradeCost = health.getCost();
-	myHealthUpgradeValue = health.getUpgradeValue(); 
 	myLauncher = launcher;
-	myProjectileImage = launcher.getProjectileImage(); 
-	myProjectileDamage = launcher.getProjectileDamage(); 
-	myProjectileSpeed = launcher.getProjectileSpeed();
-	myProjectileSize = launcher.getProjectileSize(); 
-	myLauncherRate = launcher.getFireRate(); 
-	myLauncherRange = launcher.getRange(); 
 	myValue = value;
 	myTowerValue = value.getProperty();
     }
@@ -92,10 +74,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	propertyStats.put(myValue.getName(), (int) myValue.getProperty());
 	propertyStats.put(this.getDamageName(), (int) this.getDamage());
 	this.place(point.getX(), point.getY());
-    }
-
-    private void setConstructorVals() {
-
     }
 
     /**
