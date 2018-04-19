@@ -186,8 +186,5 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		return 0;
 	}
 
-    @Override
-    public double getTowerRange() {
-        return myLauncherRange;
-    }
 }
+

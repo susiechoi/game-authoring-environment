@@ -66,7 +66,7 @@ public interface FrontEndTower extends FrontEndSprite{
 //     */
 //    public boolean upgrade(String upgradeName);
 
-    public double getTowerRange();
+    //public double getTowerRange();
    
 
 }
