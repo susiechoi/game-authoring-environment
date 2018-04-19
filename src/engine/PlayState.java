@@ -89,7 +89,9 @@ public class PlayState implements GameData {
 			myMediator.addSpriteToScreen(enemy);
 		    }
 		    if(count % 10 == 0) {
-			myEnemyManager.moveEnemies();
+			List<Sprite> deadEnemies = myEnemyManager.moveEnemies();
+			myMediator.removeListOfSpritesFromScreen(deadEnemies); 
+			myEnemyManager.removeFromActiveList((ShootingSprites) deadEnemies);
 		    }
 		}
 	    } catch (Exception e) {

@@ -93,8 +93,6 @@ public class Wave {
      */
     private void decrementEnemyCount(Enemy enemy, Path path) {
 	Map<Enemy, Integer> enemyMap = myWaveMap.get(path);
-	System.out.println("IN WAVE OBJECT");
-	    System.out.println(enemyMap.get(enemy)-1);
 	enemyMap.put(enemy, enemyMap.get(enemy)-1);
     }
 
@@ -124,7 +122,6 @@ public class Wave {
 		    return new Enemy(retEnemy);
 		}
 	    }
-	System.out.println("RETURNING NULL");
 	return null;
     }
 

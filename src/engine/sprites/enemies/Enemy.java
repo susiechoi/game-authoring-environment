@@ -2,7 +2,6 @@ package engine.sprites.enemies;
 
 import java.awt.Point;
 
-import engine.path.Path;
 import engine.physics.ImageIntersecter;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
@@ -36,7 +35,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double mySize;
     private double myKillReward;
     private String myImage;  
-    private Path myPath;
+    private int pathIndex;
+    private double pathAngle;
 
     public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
@@ -50,6 +50,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myIntersecter = new ImageIntersecter(this); 
 	mySpeed = speed; 
 	myKillReward = value.getProperty();
+	pathIndex = 0;
+	pathAngle = 0;
     }
 
     /**
@@ -88,7 +90,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public boolean overlap(Node otherImage) {
 	return myIntersecter.overlaps(otherImage); 
     }
-   
+
     /**
      * Moves the enemy along the path according to how much time has passed
      * @param elapsedTime
@@ -97,7 +99,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	this.getImageView().setX(newPosition.getX());
 	this.getImageView().setY(newPosition.getY());
     }
-    
+
     public Point currentPosition() {
 	Point position = new Point();
 	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
@@ -143,19 +145,35 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private ValueProperty getValue() {
 	return myValue; 
     }
-    
+
     @Override
     public int getPointValue() {
-    	return (int) myValue.getProperty();
+	return (int) myValue.getProperty();
     }
 
-    
+
     private double getSpeed() {
 	return mySpeed; 
     }
-    
+
     private String getImage() {
-    	return myImage; 
+	return myImage; 
     }
+
+    public void setIndex(int i) {
+	pathIndex = i;
+    } 
+    
+    public int getIndex() {
+	return pathIndex;
+    }
+
+    public double getAngle() {
+	return pathAngle;
+    }
+    
+    public void setAngle(double a) {
+	pathAngle = a;
+    } 
 
 }
