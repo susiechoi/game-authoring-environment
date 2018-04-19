@@ -43,9 +43,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
 		List<Projectile> newProjectiles = new ArrayList<>();
 		for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
-			System.out.println("ENEMY LIST SIZE "+ passedSprites.size());
 		    for (ShootingSprites passedSprite: passedSprites) {	//all the enemies
-		    	System.out.println(shootingSprite + " " +shootingSprite.hasReloaded(elapsedTime)+ " " + shootingSprite.hasInRange(passedSprite));
 			if (shootingSprite.hasReloaded(elapsedTime) && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {
 			    Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			    if (newProjectile != null) {
