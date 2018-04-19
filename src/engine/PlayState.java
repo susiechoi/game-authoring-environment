@@ -72,26 +72,33 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
+	System.out.println("in update");
 	count++;
 	if(!isPaused) {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
+		    System.out.println("in for " + currentLevel.getWaves().get(0).getUnmodifiableEnemies().size());
 		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
+			System.out.println("in if");
 			Wave currentWave = currentLevel.getWaves().get(0);
 			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
-			enemy.move(path.initialPoint());
+			System.out.println("initial point is ");
+			enemy.setInitialPoint(path.initialPoint());
+			//enemy.move(path.initialPoint(),elapsedTime);
 			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
 			myEnemyManager.addToActiveList(enemy);
 			myMediator.addSpriteToScreen(enemy);
 		    }
-		    if(count % 10 == 0) {
-			List<Sprite> deadEnemies = myEnemyManager.moveEnemies();
+		    //if(count % 10 == 0) {
+			List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
 			myMediator.removeListOfSpritesFromScreen(deadEnemies); 
-			myEnemyManager.removeFromActiveList((ShootingSprites) deadEnemies);
-		    }
+			List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+			activeEnemies.removeAll(deadEnemies);
+		    //}
 		}
+		
 	    } catch (Exception e) {
-		// do nothing
+		e.printStackTrace();
 	    }
 
 
@@ -171,6 +178,7 @@ public class PlayState implements GameData {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
+	myTowerManager.upgrade(tower,"rando",myResources);
 	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
@@ -183,7 +191,7 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	myTowerManager.upgrade(tower,upgradeName);
+	 myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
 
     }
 }
