@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
@@ -30,12 +31,13 @@ public class GamePanel extends Panel{
 
     private final GameScreen GAME_SCREEN;
     private FrontEndTower towerSelected;
+    private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
     private List<FrontEndTower> towersPlaced;
     private Pane spriteAdd;
     private Boolean towerClick = false;
     private ImageView highLightedImageVew;
-    private PropertiesReader PROP_READ;
+    private Circle rangeIndicator;
 
     //TODO changes this to be passed from mediator
     private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
@@ -71,6 +73,7 @@ public class GamePanel extends Panel{
 	PropertiesReader propReader = new PropertiesReader();
 	Random rand = new Random();
 	try {
+	    //TODO fix this hardcoding, should just expand to fill space given(don't care about scaling
 	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
 	    int random = rand.nextInt(backgroundMap.size());
 	    int count = 0;
@@ -114,9 +117,27 @@ public class GamePanel extends Panel{
 	towerImage.setOnMouseClicked((args) ->{
 	    GAME_SCREEN.towerClickedOn(tower);
 	    highLightedImageVew = towerImage;
-	    applySelectionGlow(towerImage);
+	   // applySelectionGlow(towerImage);
+	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
+    }
+
+    private void addRangeIndicator(FrontEndTower tower) {
+	ImageView towImage = tower.getImageView();
+	rangeIndicator = new Circle(towImage.getX(), towImage.getY(), tower.getTowerRange());
+	rangeIndicator.setStroke(Color.ORANGE);
+	try {
+	    String opacity = PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerRangeIndicatorOpacity");
+	    rangeIndicator.setOpacity(Double.parseDouble(opacity));
+	    spriteAdd.getChildren().add(rangeIndicator);
+	    towImage.toFront();
+	} catch (MissingPropertiesException e) {
+	    System.out.println("Constants property file not found");
+	}
+
+
+
     }
 
     private void applySelectionGlow(ImageView towerImage) {
@@ -176,8 +197,8 @@ public class GamePanel extends Panel{
 	}
 	else if(!towerClick) {
 	    GAME_SCREEN.blankGamePanelClick();
-	    if(highLightedImageVew.getEffect() != null) 
-		highLightedImageVew.setEffect(null);
+	    if(spriteAdd.getChildren().contains(rangeIndicator)) 
+		spriteAdd.getChildren().remove(rangeIndicator);
 
 	}
 	towerClick = false;
