@@ -50,7 +50,7 @@ public class TowerPanel extends Panel {
     //private final FileIO FILE_READER;
 
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
-    private Pane towerPane;
+    private HBox towerPane;
 
     public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
 	GAME_SCREEN = gameScreen;
@@ -67,16 +67,18 @@ public class TowerPanel extends Panel {
 
 	//TODO need to check if this static stuff is okay
 
-	towerPane = new Pane();
+	towerPane = new HBox();
 	towerDisplay = new ScrollPane(towerPane);
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
+	towerDisplay.setFitToHeight(true); //remove this line if seen
+
 
 
 	currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
 	currencyDisplay.setText("$" +money.toString());
 	currencyDisplay.setDisable(true);
-	currencyDisplay.setMaxWidth(Double.MAX_VALUE);
+	//currencyDisplay.setMaxWidth(Double.MAX_VALUE);
 
 
 	VBox currencyAndSwap = new VBox(currencyDisplay);
@@ -97,10 +99,7 @@ public class TowerPanel extends Panel {
 	VBox.setVgrow(towerDisplay, Priority.ALWAYS);
 	towersAndCurr.setAlignment(Pos.CENTER);
 
-
-
 	//might want to remove this as control implementation changes but we'll see
-
 
 
 	//  panelRoot.getChildren().addAll(buttons);
@@ -114,35 +113,62 @@ public class TowerPanel extends Panel {
 	VBox fullTowerHold = new VBox();
 	HBox towerHolder = new HBox();
 	int alternator = 0;
+	Button prevTowerButton = new Button();
 
 	for(FrontEndTower tower : availableTowers) {
 	    ImageView imageView = tower.getImageView();
 	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
-	   imageView.setFitHeight(TOWER_IMAGE_SIZE);
+	//    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
+	//    imageView.setPreserveRatio(false);
+	    Button towerButton = UIFACTORY.makeImageViewButton("button",imageView);
 
-	    Button towerButton = UIFACTORY.makeImageViewButton("button",tower.getImageView());
+	    towerButton.setMaxWidth(Double.MAX_VALUE);
+	    towerButton.setMaxHeight(Double.MAX_VALUE);
 	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower));
 	    if(alternator%2 == 0) {
 		towerHolder = new HBox();
+		towerHolder.setStyle("-fx-background-color: purple");
 		towerHolder.setFillHeight(true);
+
 		fullTowerHold.getChildren().add(towerHolder);
 		VBox.setVgrow(towerHolder, Priority.ALWAYS);
+		
+		prevTowerButton = towerButton;
 	    }
-
+	    else {
+		towerButton.setPrefWidth(towerHolder.getPrefWidth());
+		prevTowerButton.setPrefWidth(towerHolder.getPrefWidth());
+	    }
+	    
 	    towerHolder.getChildren().add(towerButton);
+	    
 	    HBox.setHgrow(towerButton, Priority.ALWAYS);
-	    towerButton.setMaxWidth(Double.MAX_VALUE);
-	    towerButton.setMaxHeight(Double.MAX_VALUE);
+
 	    alternator++;
+	}
+	if(alternator%2 ==1) {
+	    ImageView voidView = new ImageView();
+	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
+//	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
+	    Button voidButton = UIFACTORY.makeImageViewButton("button", voidView);
+	  
+	    voidButton.setGraphic(voidView);
+	    
+	    voidButton.setMaxWidth(Double.MAX_VALUE);
+	    voidButton.setMaxHeight(Double.MAX_VALUE);
+	    voidButton.setDisable(true);
+
+	    towerHolder.getChildren().add(voidButton);
+	    HBox.setHgrow(voidButton, Priority.ALWAYS);
 	}
 
 
 	fullTowerHold.setAlignment(Pos.CENTER);
-	fullTowerHold.setMaxWidth(Double.MAX_VALUE);
+	//fullTowerHold.setMaxWidth(Double.MAX_VALUE);
 	fullTowerHold.setStyle("-fx-background-color: black");
 
 	return fullTowerHold;
-	
+
 	//TODO pretty bad code that doesn't work, towers should be same height in columns
 	//	    if(alternator%2 == 1) {
 	//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
@@ -166,11 +192,14 @@ public class TowerPanel extends Panel {
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerPane.getChildren().clear();
 	towerPane.setStyle("-fx-background-color: green");
+
 	VBox filledWithTowers = fillScrollWithTowers(availableTowers);
-	filledWithTowers.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
-	towerPane.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
 
 	towerPane.getChildren().add(filledWithTowers);
+	HBox.setHgrow(filledWithTowers, Priority.ALWAYS);
+	//filledWithTowers.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
+	//towerPane.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
+
     }
 
     public void updateCurrency(Integer newBalence) {
