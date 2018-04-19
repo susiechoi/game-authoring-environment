@@ -106,10 +106,23 @@ public class GamePanel extends Panel{
 
     public void towerSelected(FrontEndTower tower) {
 	towerSelected = tower;
+	ImageView towerImage = tower.getImageView();
 	towerPlaceMode = true;
 	ImageCursor cursor = new ImageCursor(tower.getImageView().getImage());
-	spriteAdd.setOnMouseEntered(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(cursor));
-	spriteAdd.setOnMouseExited(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT));
+	
+	spriteAdd.setOnMouseEntered(e -> {
+	    GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(cursor);
+	    addRangeIndicator(tower);
+	});
+	spriteAdd.setOnMouseExited(e -> {
+	    GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
+	    spriteAdd.getChildren().remove(rangeIndicator);
+	});
+	
+	spriteAdd.setOnMouseMoved(e -> {
+	    rangeIndicator.setCenterX(e.getX()+(towerImage.getImage().getWidth()/2));
+	    rangeIndicator.setCenterY(e.getY()+(towerImage.getImage().getHeight()/2));
+	});
     }
 
     private void addTowerImageViewAction(FrontEndTower tower) {
@@ -125,7 +138,7 @@ public class GamePanel extends Panel{
 
     private void addRangeIndicator(FrontEndTower tower) {
 	ImageView towImage = tower.getImageView();
-	rangeIndicator = new Circle(towImage.getX(), towImage.getY(), tower.getTowerRange());
+	rangeIndicator = new Circle(towImage.getX(), towImage.getY(), 50);//tower.getTowerRange()
 	rangeIndicator.setStroke(Color.ORANGE);
 	try {
 	    String opacity = PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerRangeIndicatorOpacity");
@@ -140,6 +153,11 @@ public class GamePanel extends Panel{
 
     }
 
+    //TODO delete if not used in end
+    /**
+     * Makes the tower glow on click, looks kinda tacky
+     * @param towerImage
+     */
     private void applySelectionGlow(ImageView towerImage) {
 	try {
 	    String glowIntensity =PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerGlowOnSelection");
@@ -178,8 +196,8 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
 
-		towerImage.setLayoutX(-towerImageActual.getWidth()/2);
-		towerImage.setLayoutY(-towerImageActual.getHeight()/2);
+//		towerImage.setLayoutX(-towerImageActual.getWidth()/2);
+//		towerImage.setLayoutY(-towerImageActual.getHeight()/2);
 
 
 		if(newTower!= null) {
@@ -187,6 +205,7 @@ public class GamePanel extends Panel{
 		    addTowerImageViewAction(newTower);
 		    towersPlaced.add(newTower);
 		    spriteAdd.getChildren().add(towerImage);
+		    spriteAdd.setOnMouseMoved(null);
 		    resetCursor();
 		    towerPlaceMode = false;
 		}
