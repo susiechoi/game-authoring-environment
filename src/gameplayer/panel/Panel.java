@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 public abstract class Panel {
 
     protected Parent PANEL;
+    
     /**
      * Returns the panel object to be loaded on the screen
      */
