@@ -125,7 +125,7 @@ public class GamePanel extends Panel{
 
     private void addRangeIndicator(FrontEndTower tower) {
 	ImageView towImage = tower.getImageView();
-	rangeIndicator = new Circle(towImage.getX(), towImage.getY(), 50);//tower.getTowerRange()
+	rangeIndicator = new Circle(towImage.getX(), towImage.getY(), tower.getTowerRange());
 	rangeIndicator.setStroke(Color.ORANGE);
 	try {
 	    String opacity = PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerRangeIndicatorOpacity");
