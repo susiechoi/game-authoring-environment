@@ -1,5 +1,7 @@
 package engine.sprites;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,6 +18,7 @@ import javafx.scene.image.ImageView;
 public class Sprite implements FrontEndSprite{
 
     private String myName;
+    @XStreamOmitField
     private ImageView myImageView;
     private String myImageString;
 

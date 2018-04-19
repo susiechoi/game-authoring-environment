@@ -20,8 +20,11 @@ import java.util.*;
 
 import data.GameData;
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class TestWriter extends Application {
@@ -80,26 +83,37 @@ public class TestWriter extends Application {
 	}
     
     public static void main(String[] args) {
-//	TestWriter x = new TestWriter();
-//	ArrayList<String> l = new ArrayList<>();
-//	XStream parser = new XStream(new StaxDriver());
-//	l.add("A");
-//	l.add("B");
-//	x.write(l, "TesterFile");
-//	ArrayList<String> y = (ArrayList<String>) x.read("TesterFile");
-//	System.out.println(y.toString());
-	launch(args);
+	TestWriter x = new TestWriter();
+	ArrayList<String> l = new ArrayList<>();
+	XStream parser = new XStream(new StaxDriver());
+	l.add("A");
+	l.add("B");
+	System.out.println(parser.toXML(l));
+	x.write(l, "TesterFile");
+	ArrayList<String> y = (ArrayList<String>) x.read("TesterFile");
+	System.out.println(y.toString());
+	System.out.println("<?xml version=\"1.0\" ?>");
+	//launch(args);
 	
     }
     @Override
     public void start(Stage arg0) throws Exception {
+	Stage s = new Stage();
+	Group parent = new Group();
+	Scene scene = new Scene(parent, 1000, 1000);
+	s.setScene(scene);
 	File f = new File("/images/flow.png");
 	try {
+	    HBox h = new HBox();
 	    LocatedImage i = new LocatedImage(f.toURI().toURL().toString());
+	    h.getChildren().add(i);
+	    parent.getChildren().add(h);
 	    String path = parser.toXML(i.getUrl());
+	    s.show();
 	    System.out.println(path);
 	    LocatedImage img = new LocatedImage((String) parser.fromXML(path));
-	    System.out.println(img.getUrl());
+	    System.out.println(img.getUrl() + "\n");
+	    System.out.println(parser.toXML(img));
 	} catch (MalformedURLException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();

@@ -18,6 +18,13 @@ import engine.level.Level;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.towers.Tower;
 
+/**
+ * ']]]]]]]n']jm
+ * 
+ * @author Brendan Cheng
+ *
+ */
+
 public class ManualSerializer implements XMLWriter {
 
     private Document d;

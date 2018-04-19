@@ -39,6 +39,7 @@ public class AuthoringModelWriter implements XMLWriter {
 			System.out.println("Bad configuration"); // update exception
 		}
 		parser = new XStream(new StaxDriver());
+		parser.autodetectAnnotations(true);
 	}
 
     /**

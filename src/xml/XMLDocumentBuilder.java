@@ -30,6 +30,7 @@ import org.w3c.dom.Node;
 public class XMLDocumentBuilder {
 
     private final static String FILE_SETTINGS = "<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"no\\\"?>";
+    private final static String XSTREAM_DEFAULT_CONFIG = "<?xml version=\"1.0\" ?>";
 	
 	/**
 	 * Creates new instance of a document to be written to
@@ -94,6 +95,7 @@ public class XMLDocumentBuilder {
 	     * @param filename	name of file to be written to
 	     */
 	    protected static void stringToXML(String data, String filename) {
+		data = processData(data);
 		try {
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 		    writer.write(data);
@@ -102,6 +104,21 @@ public class XMLDocumentBuilder {
 		    // TODO Auto-generated catch block
 		    e.printStackTrace();
 		}
+	    }
+	    
+	    /**
+	     * Removes XML configurations from an XStreamed data string (i.e. xml version, encoding, etc.) and returns the data with only one
+	     * XML configuration node at the top
+	     * @param data	Combined data from all XStreamed data
+	     * @return		Modified data string to be written
+	     */
+	    protected static String processData(String data) {
+		String[] parsedData = data.split(XSTREAM_DEFAULT_CONFIG); // remove initial XStream configurations
+		String xml = "";
+		for (String node:parsedData) {
+		    xml = xml + node + "\n";
+		}
+		return xml;
 	    }
 	
 }

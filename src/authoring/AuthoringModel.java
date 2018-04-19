@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
@@ -55,7 +58,7 @@ public class AuthoringModel implements GameData {
 
 	private String myGameName; 
 	private final PropertiesReader myPropertiesReader;
-	private Settings mySettings; 
+	private Settings mySettings;
 	private Map<Integer, Level> myLevels;
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
