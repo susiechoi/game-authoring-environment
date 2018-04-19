@@ -101,61 +101,6 @@ public class AuthoringModel implements GameData {
 	}
 
 	/**
-	 * Method through which information can be sent to instantiate or edit an enemy object
-	 * Wraps constructor in case of new object creation
-	 * @throws MissingPropertiesException 
-	 * @throws NoDuplicateNamesException 
-	 * @throws ObjectNotFoundException 
-	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact,
-			double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		if (currentLevel.containsEnemy(name) && newObject) {
-			throw new NoDuplicateNamesException(name);
-		}
-		else if (!currentLevel.containsEnemy(name) && !newObject) {
-			throw new ObjectNotFoundException(name);
-		}
-		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-		currentLevel.addEnemy(name, newEnemy);
-	}
-
-	//	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-	//	double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-	//		makeTower(level, newObject, name, imagePath, health, healthUpgradeCost, healthUpgradeValue, DEFAULT_PROJECTILE_IMAGE, 0, 0, 0, 0, 0, 0, 0, 0, towerValue, towerUpgradeCost, towerUpgradeValue);
-	//	}
-	//	
-	/**
-	 * Method through which information can be sent to instantiate or edit a tower object
-	 * Wraps constructor in case of new object creation
-	 * @throws NoDuplicateNamesException: if the user tries to make an already existing
-	 * tower, throw exception.
-	 * @throws MissingPropertiesException 
-	 * @throws ObjectNotFoundException 
-	 */
-	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed, 
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
-			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		if (currentLevel.containsTower(name) && newObject) {
-			throw new NoDuplicateNamesException(name);
-		}
-		else if (!currentLevel.containsTower(name) && !newObject) {
-			throw new ObjectNotFoundException(name);
-		}
-		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
-				projectileUpgradeValue, projectileSize, projectileSpeed);
-		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
-				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
-				launcherValue, towerProjectile); 
-		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, imagePath), 50, health,  // TODO put size SOMEWHERE
-				healthUpgradeValue, healthUpgradeCost, towerLauncher, towerValue, towerUpgradeCost, towerUpgradeValue);
-		currentLevel.addTower(name, newTower);
-	}
-
-	/**
 	 * Class to make a wave to be used in a specified level
 	 * @throws ObjectNotFoundException 
 	 */

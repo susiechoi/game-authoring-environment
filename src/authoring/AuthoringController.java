@@ -63,35 +63,6 @@ public class AuthoringController {
 	return myModel.getObjectAttribute(level, objectType, name, attribute);
     }
 
-
-
-    /**
-     * Method through which information can be sent to instantiate or edit an enemy object in Authoring Model;
-     * @throws MissingPropertiesException 
-     * @throws ObjectNotFoundException 
-     * @throws NoDuplicateNamesException 
-     */
-    public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact, double killReward, double killUpgradeCost, double killUpgradeValue) 
-	    throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
-	myModel.makeEnemy(level, newObject, name, image, speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-    }
-
-    /**
-     * Method through which information can be sent to instantiate or edit a tower object in Authoring Model;
-     * @throws NoDuplicateNamesException 
-     * @throws MissingPropertiesException 
-     * @throws ObjectNotFoundException 
-     */
-    public void makeTower(int level, boolean newObject, String name, String image, double health, double healthUpgradeCost, double healthUpgradeValue,
-	    String projectileImage, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed,
-	    double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
-	    double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-	myModel.makeTower(level, newObject, name, image, health, healthUpgradeCost, healthUpgradeValue, 
-		projectileImage, projectileDamage, projectileUpgradeCost, projectileUpgradeValue, projectileSize, projectileSpeed,
-		launcherValue, launcherUpgradeCost, launcherUpgradeValue, launcherSpeed, launcherRange, 
-		towerValue, towerUpgradeCost, towerUpgradeValue);
-    }
-
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
