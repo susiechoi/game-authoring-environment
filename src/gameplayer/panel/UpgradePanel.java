@@ -13,6 +13,7 @@ import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 
 public class UpgradePanel extends SpecificPanel {
@@ -40,7 +41,6 @@ public class UpgradePanel extends SpecificPanel {
     @Override
     public void makePanel() {
 	//TODO read in text from properties file
-	Label upgradeText = new Label("Upgrades: ");
 	HBox towerUpgrades = new HBox();
 	fillUpgrades(towerUpgrades);
 	towerUpgrades.setFillHeight(true);
@@ -49,8 +49,8 @@ public class UpgradePanel extends SpecificPanel {
 	ScrollPane upgradeDisplay = new ScrollPane(towerUpgrades);
 	upgradeDisplay.setFitToWidth(true);
 
-	HBox panelRoot = new HBox(upgradeText, upgradeDisplay);
-	HBox.setHgrow(upgradeDisplay, Priority.ALWAYS);
+	VBox panelRoot = new VBox(upgradeDisplay);
+	VBox.setVgrow(upgradeDisplay, Priority.ALWAYS);
 	panelRoot.setAlignment(Pos.CENTER);
 	panelRoot.setId("upgradePanel");
 	PANEL = panelRoot;

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
@@ -27,9 +28,8 @@ public class Level {
 	private final int myNumber;
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
-	private Map<Path, List<Wave>> myWaves;
+	private List<Wave> myWaves;
 	private Map<String, Enemy> myEnemies;
-
 
 	private int xLoc = 100;
 	private int yLoc = 100;
@@ -39,7 +39,7 @@ public class Level {
 		myNumber = number;
 		myTowers = new HashMap<String, Tower>();
 		myEnemies = new HashMap<String, Enemy>();
-		myWaves = new HashMap<Path, List<Wave>>();
+		myWaves = new ArrayList<Wave>();
 		myPaths = new ArrayList<Path>();
 	} 
 
@@ -67,6 +67,7 @@ public class Level {
 
 	// TODO 
 	public void addPath(Path path) {
+		myPaths.clear();
 		myPaths.add(path); 
 	}
 
@@ -86,7 +87,7 @@ public class Level {
 	 * @param tower: The tower object to be added
 	 */
 	public void addTower(String name, Tower tower) {
-		System.out.println(tower.getImageView().getFitWidth() + " level tower width");
+	//	System.out.println(tower.getImageView().getFitWidth() + " level tower width");
 		myTowers.put(name, tower);
 	}
 
@@ -154,39 +155,57 @@ public class Level {
 		listToReturn.addAll(myEnemies.keySet()); 
 		return listToReturn; 
 	}
+	
+    public void removeTower(String name) throws ObjectNotFoundException {
+    	if (myTowers.containsKey(name)) {
+    		myTowers.remove(name);
+    	}
+    	throw new ObjectNotFoundException(name);
+    }
+    
+    public void removeEnemy(String name) throws ObjectNotFoundException {
+    	if (myEnemies.containsKey(name)) {
+    		myEnemies.remove(name);
+    	}
+    	throw new ObjectNotFoundException(name);
+    }
 
 	/**
 	 * Adds a wave to the level
 	 * 
 	 * @param wave: a new wave to be added
 	 */
+	@Deprecated
 	public void addWave(Path path, Wave wave) {
-		if(myWaves.containsKey(path)) {
-			List<Wave> waves = myWaves.get(path);
-			waves.add(wave);
-		}
-		else {
-			ArrayList<Wave> waveList = new ArrayList<>();
-			waveList.add(wave);
-			myWaves.put(path,waveList);
-		}
+	    	if(!myWaves.contains(wave)) {
+	    	    myWaves.add(wave);
+	    	}
+//		if(myWaves.containsKey(path)) {
+//			List<Wave> waves = myWaves.get(path);
+//			waves.add(wave);
+//		}
+//		else {
+//			ArrayList<Wave> waveList = new ArrayList<>();
+//			waveList.add(wave);
+//			myWaves.put(path,waveList);
+//		}
 
 	}
+	
+	public void addWave(int waveNumber) {
+	    if(!containsWaveNumber(waveNumber)) {
+		myWaves.add(new Wave());
+	    }
+	}
 	public boolean containsWaveNumber(int num) {
-		for(List<Wave> waveLists : myWaves.values()) {
-			if(waveLists.size()>= num) {
-				return true;
-			}
-		}
-		return false;
+		return(myWaves.size()>(num));
 	}
 
 	/**
 	 * Returns any new Enemy
 	 */
-	public Enemy getNewEnemy(Path path) {
-		Wave currentWave = myWaves.get(path).get(0);
-		Enemy waveEnemy = currentWave.getEnemy();
+	public Enemy getNewEnemy(Path path) { //TODO: do engine people want this to be based on wave? currently just doing first wave
+		Enemy waveEnemy = myWaves.get(0).getEnemySpecificPath(path);
 		if (waveEnemy != null) {
 			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
 			numEnemy++;
@@ -196,10 +215,6 @@ public class Level {
 
 	protected int getNumber() {
 		return myNumber; 
-	}
-
-	protected Map<Path, List<Wave>> getWaves() {
-		return myWaves; 
 	}
 
 	public List<Path> getPaths() {
@@ -215,13 +230,7 @@ public class Level {
 	}
 
 	public int getHighestWaveNumber() {
-		int highest = 0;
-		for(List<Wave> waveLists: myWaves.values()) {
-			if(waveLists.size()>= highest) {
-				highest = waveLists.size();
-			}
-		}
-		return highest;
+		return myWaves.size()-1;
 	}
 
 	/**
@@ -230,8 +239,13 @@ public class Level {
 	 * @param path: the path object that the wave is specific to
 	 * @return List<Wave>: A list of wave objects in the level on the path
 	 */
+	@Deprecated
 	public List<Wave> getWaves(Path path) {
-		return myWaves.get(path);
+		return myWaves;
+	}
+
+	public List<Wave> getWaves() {
+		return myWaves;
 	}
 
 	/**
@@ -239,10 +253,19 @@ public class Level {
 	 * 
 	 * @param path: the path object that the wave is specific to
 	 */
+	@Deprecated
 	public void removeWave(Path path) {
-		List<Wave> currentWaves = getWaves(path);
-		currentWaves.remove(0);
-		myWaves.put(path, currentWaves);
+		removeWave();
+	}
+	public void removeWave() {
+	    myWaves.remove(0);
+	}
+	
+	/**
+	 * @return Wave corresponding to @param waveNumber
+	 */
+	public Wave getWave(int waveNumber) {
+		return myWaves.get(waveNumber);
 	}
 
 	/**
@@ -251,21 +274,21 @@ public class Level {
 	 * @return boolean: true if the level is finished, false otherwise
 	 */
 	public boolean isFinished() {
-		for (Path path : myWaves.keySet()) {
-			if (!myWaves.get(path).isEmpty()) {
-				return false;
-			}
-		}
-		return true; 
+		return myWaves.size()>0; 
 	}
+	@Deprecated
 	public boolean containsWave(Path path, int waveNumber) {
-		if(!myWaves.containsKey(path)) {
-			return false;
-		}
-		return (myWaves.get(path).size() > waveNumber);
+		return containsWaveNumber(waveNumber);
+	}
+	public boolean containsWave(int waveNumber) {
+	    return myWaves.size()>waveNumber;
 	}
 
-
+	
+	public Path getPath() {
+		return myPaths.get(myPaths.size() - 1);
+	}
+	
 	public Map<String, List<Point>> getLevelPathMap(){
 		//		Map<String, List<Point>> pathMap = myPaths.get(0).getPathMap();
 		//		for (int x=1; x<myPaths.size(); x++) {
@@ -274,7 +297,28 @@ public class Level {
 		//			}
 		//		}
 		//		return pathMap;
-		return myPaths.get(0).getPathMap();
+		if (myPaths.size() > 0) {
+			return myPaths.get(0).getPathMap();
+		}
+		return null;
+	}
+	
+	public String getBackGroundImage() {
+		return myPaths.get(0).getBackgroundImage();
+	}
+	
+	public int getPathSize() {
+		return myPaths.get(0).getPathSize();
+	}
+	
+	/**
+	 * Adds a wave to the level
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @param tower: The tower object to be added
+	 */
+	public void addWave(Wave wave) {
+		myWaves.add(wave);
 	}
 
 }

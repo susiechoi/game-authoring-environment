@@ -44,6 +44,7 @@ public class AdjustResourcesScreen extends AdjustScreen {
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
+		    	setSaved();
 			getView().makeResources(myGameNameEntry.getText(), myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue());//TODO fix
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
@@ -60,10 +61,8 @@ public class AdjustResourcesScreen extends AdjustScreen {
 
 	@Override
 	protected void populateFieldsWithData() {
-		myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "myGameName"));
-		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth"));
-		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney"));	    
+		myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "myGameName").toString());
+		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth").toString());
+		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney").toString());	    
 	}
-	
-
 }

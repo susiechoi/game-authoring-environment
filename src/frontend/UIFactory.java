@@ -40,22 +40,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
 public class UIFactory {
 
     public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
@@ -167,7 +151,8 @@ public class UIFactory {
      * @return Slider desired
      */
     public Slider setupSlider(String id, int sliderMax) {
-	Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
+	Slider slider = new Slider();
+	slider.setMax(sliderMax);
 	Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 	slider.valueProperty().addListener(new ChangeListener<Number>() {
 	    @Override
@@ -253,7 +238,6 @@ public class UIFactory {
 		    file.getAbsolutePath();
 		    File fileCopy = new File("images/" + imageName + extension);
 		    try{
-
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		    }
 		    catch(IOException e2) {
@@ -418,7 +402,6 @@ public class UIFactory {
      * @return Button desired
      */
     public Button setupBackButton(EventHandler<ActionEvent> action, String backText) {
-//	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
 	Button backButton = makeTextButton("backButton",backText);
 	backButton.setOnAction(e -> {action.handle(e);});
 	return backButton; 

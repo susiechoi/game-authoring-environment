@@ -14,6 +14,11 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
 
+/**
+ * Class to create the righthand panel for the path authoring screen.
+ * @author Erik Riis
+ *
+ */
 public class CreatePathPanel extends PathPanel {
 
 	public static final int PANEL_PATH_SIZE = 90;
@@ -35,11 +40,11 @@ public class CreatePathPanel extends PathPanel {
 	}
 
 	@Override
-	public Button getApplyButton() {
+	protected Button getApplyButton() {
 		return applyButton;
 	}
 
-	public void makePanel() {
+	protected void makePanel() {
 
 		pathPanel = new VBox();
 
@@ -58,16 +63,19 @@ public class CreatePathPanel extends PathPanel {
 		Image pathImg = new Image(DEFAULT_PATH_IMAGE); 
 		pathImage = new DraggableImage(pathImg);
 		pathImage.setCopyDraggable();
+		pathImage.getPathImage().setId("path");
 		pathImage.getPathImage().getStyleClass().add("img-view");
 
 		Image startImg = new Image(DEFAULT_START_IMAGE);
 		startImage = new DraggableImage(startImg);
 		startImage.setCopyDraggable();
+		startImage.getPathImage().setId("start");
 		startImage.getPathImage().getStyleClass().add("img-view");
 
 		Image endImg = new Image(DEFAULT_END_IMAGE);
 		endImage = new DraggableImage(endImg);
 		endImage.setCopyDraggable();
+		endImage.getPathImage().setId("end");
 		endImage.getPathImage().getStyleClass().add("img-view");
 
 		applyButton = getUIFactory().makeTextButton("", "Apply");
@@ -104,24 +112,31 @@ public class CreatePathPanel extends PathPanel {
 		return trashImage;
 	}
 
-
-	public Node getPanel() {
+	@Override
+	protected Node getPanel() {
 		return pathPanel;
 	}
 	
-	public DraggableImage getPanelPathImage() {
+
+	protected DraggableImage getPanelPathImage() {
 		return pathImage;
 	}
 	
-	public DraggableImage getPanelStartImage() {
+	protected DraggableImage getPanelStartImage() {
 		return startImage;
 	}
 	
-	public DraggableImage getPanelEndImage() {
+	protected DraggableImage getPanelEndImage() {
 		return endImage;
 	}
 
+	/** 
+	 * TODO: this method is null - should be integrated
+	 *
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
+	
 	public Parent makeScreenWithoutStyling() {
 		//TODO Auto-generated method stub
 		return null;
@@ -129,7 +144,12 @@ public class CreatePathPanel extends PathPanel {
 
 	@Override
 	protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
-		applyButton.setOnAction(event -> e.handle(event));
+		applyButton.setOnAction(
+			event -> {
+			    setSaved();
+			    e.handle(event);
+			});
 	}
 
 }
+
