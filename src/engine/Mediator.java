@@ -158,6 +158,7 @@ public class Mediator {
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	//TODO add in money (decrement when purchased)
+    	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
 
