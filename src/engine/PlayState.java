@@ -86,6 +86,7 @@ public class PlayState implements GameData {
 			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
 			enemy.move(path.initialPoint());
 			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
+			myEnemyManager.addToActiveList(enemy);
 			myMediator.addSpriteToScreen(enemy);
 		    }
 		    if(count % 10 == 0) {
@@ -117,6 +118,8 @@ public class PlayState implements GameData {
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
+	    System.out.println("LOAD YOUR WEAPONS");
+	    System.out.println(" SIZE "+myTowerManager.getListOfActive().size());
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(),elapsedTime)) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
