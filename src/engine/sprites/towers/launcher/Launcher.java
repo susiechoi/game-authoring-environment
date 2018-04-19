@@ -88,6 +88,7 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
+	System.out.println("elapsedTime is " + elapsedTime);
      	if(timeSinceLastShot >= myFireRate.getProperty()) {
      		timeSinceLastShot=0;
      		return true;

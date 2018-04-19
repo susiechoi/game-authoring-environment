@@ -79,15 +79,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myDamage = new DamageProperty(10000, 10000, 10000);
 	myValue = new ValueProperty(900);
     }
-
-    /**
-     * Tests to see if another ImageView overlaps with the Enemy
-     * @param otherImage : other image (projectile, tower, etc)
-     * @return boolean, yes or no
-     */
-    public boolean overlap(Node otherImage) {
-	return myIntersecter.overlaps(otherImage); 
-    }
    
     /**
      * Moves the enemy along the path according to how much time has passed
@@ -125,7 +116,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	System.out.println("health is " + myHealth.getProperty());
 	myHealth.loseHealth(collider.getDamage());
 	return myHealth.isAlive();
     }

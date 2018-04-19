@@ -37,7 +37,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName, TOWER_FIELDS, OBJECT_TYPE);
 	}
-	
+
 	/**
 	 * Populates screen with ComboBoxes/TextFields/Buttons/Sliders/Selectors needed to 
 	 * fully specify a Tower object
@@ -84,7 +84,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	protected TextField getNameField() {
 		return myNameField; 
 	}
-	
+
 	private void makeTowerComponents(VBox vb) {
 		TextField nameInputField = getUIFactory().makeTextField(""); 
 		myNameField = nameInputField; 
@@ -96,18 +96,18 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		HBox towerImageSelect = new HBox();
 		ComboBox<String> towerImageDropdown = new ComboBox<String>();
 		ImageView imageDisplay = new ImageView(); 
-			try {
-				towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
-			} catch (MissingPropertiesException e) {
-				getView().loadErrorScreen("NoImageFile");
-			}
-			myImageDropdown = towerImageDropdown;  
-			try {
-				towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-						getErrorCheckedPrompt("NewImageName"), towerImageDropdown, imageDisplay);
-			} catch (MissingPropertiesException e) {
-				getView().loadErrorScreen("NoImageFile");
-			}
+		try {
+			towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGES));
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		}
+		myImageDropdown = towerImageDropdown;  
+		try {
+			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+					getErrorCheckedPrompt("NewImageName"), towerImageDropdown, imageDisplay);
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		}
 		vb.getChildren().add(towerImageSelect);
 
 		Slider towerValueSlider = getUIFactory().setupSlider("TowerValueSlider", getMyMaxPrice());
@@ -117,6 +117,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 		Slider towerUpgradeCostSlider = getUIFactory().setupSlider("TowerUpgradeCostSlider", getMyMaxPrice());
 		myTowerUpgradeCostSlider = towerUpgradeCostSlider;
+		myTowerUpgradeCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			System.out.println(newValue.doubleValue());
+		});
 		HBox towerUpgradeCost = getUIFactory().setupSliderWithValue("TowerUpgradeCostSlider", towerUpgradeCostSlider, getErrorCheckedPrompt("TowerUpgradeCost"));
 		vb.getChildren().add(towerUpgradeCost);
 
