@@ -14,9 +14,14 @@ public class Path {
 	private List<Point> myCoordinates;
 	private double myAngle;
 	private int pathIndex;
+	private int myPathSize;
 	private Map<String, List<Point>> myPathMap;
-	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
+	private String myBackgroundImage;
+
+	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) {
 		myCoordinates = coordinates;
+		myBackgroundImage = backgroundImage;
+		myPathSize = pathSize;
 		pathIndex = 0;
 		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
@@ -55,25 +60,33 @@ public class Path {
 	}
 
 
-    /**
-     * Returns a new angle for the image
-     * 
-     * @param point1: initial point
-     * @param point2: next point
-     * @return double representing angle
-     */
-    private double getAngle(Point point1, Point point2) {
-	double deltaY = point2.getY() - point1.getY();
-	double deltaX = point2.getX() - point1.getX();
-	return Math.atan(deltaY/deltaX);
-    }
-    
-    public Map<String, List<Point>> getPathMap() {
-    		return myPathMap;
-    }
-    
-    public Point initialPoint() {
-	return myCoordinates.get(0);
-    }
+	/**
+	 * Returns a new angle for the image
+	 * 
+	 * @param point1: initial point
+	 * @param point2: next point
+	 * @return double representing angle
+	 */
+	private double getAngle(Point point1, Point point2) {
+		double deltaY = point2.getY() - point1.getY();
+		double deltaX = point2.getX() - point1.getX();
+		return Math.atan(deltaY/deltaX);
+	}
+
+	public Map<String, List<Point>> getPathMap() {
+		return myPathMap;
+	}
+
+	public String getBackgroundImage() {
+		return myBackgroundImage;
+	}
+
+	public int getPathSize() {
+		return myPathSize;
+	}
+
+	public Point initialPoint() {
+		return myCoordinates.get(0);
+	}
 
 }

@@ -25,6 +25,7 @@ public class DraggableImage extends Parent {
 	private EventHandler<MouseEvent> myDragEvent;
 	private EventHandler<DragEvent> myDragDone;
 	private EventHandler<DragEvent> myCopyDragDone;
+	private String imageType = "";
 
 	public DraggableImage(Image image) {
 		setPathImage(image);
@@ -67,7 +68,7 @@ public class DraggableImage extends Parent {
 				ClipboardContent content = new ClipboardContent();
 				content.putImage(pathImage.getImage());
 				db.setContent(content);
-				event.consume();    
+				event.consume();
 			}
 		});
 		
@@ -118,4 +119,22 @@ public class DraggableImage extends Parent {
 	protected ImageView getPathImage() {
 		return pathImage;
 	}
+	
+	protected void setPath() {
+		imageType = "path";
+	}
+	
+	protected void setStart() {
+		imageType = "start";
+	}
+	
+	protected void setEnd() {
+		imageType = "end";
+	}
+	
+	protected String getImageType() {
+		return imageType;
+	}
+	//way to designate as path, start, or end
+	
 }
