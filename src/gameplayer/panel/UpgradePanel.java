@@ -12,6 +12,7 @@ import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import engine.sprites.towers.FrontEndTower;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -30,7 +31,8 @@ public class UpgradePanel extends SpecificPanel {
     private final String UPGRADE_NAMES_FILE_PATH = "images/UpgradeImageNames.properties";
 
 
-    public UpgradePanel (GameScreen gameScreen, PromptReader promptReader) {
+    public UpgradePanel (GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
+	super(tower);
 	GAME_SCREEN = gameScreen;
 	UI_FACTORY = new UIFactory();
 	PROP_READ = new PropertiesReader();
