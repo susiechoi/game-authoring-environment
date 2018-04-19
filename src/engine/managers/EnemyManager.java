@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import engine.path.Path;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
@@ -43,23 +44,30 @@ public class EnemyManager extends ShootingSpriteManager {
     /**
      * Moves all the enemies along the path on every step
      */
-    public List<Sprite> moveEnemies() {
-	List<Sprite> deadEnemies = new ArrayList<Sprite>();
+    public List<Sprite> moveEnemies(double elapsedTime) {
+	List<Sprite> deadEnemies = new ArrayList<>();
 	for (Path path : myEnemies.keySet()) {
 	    for (Enemy enemy : myEnemies.get(path)) {
 		if(path.checkKill(enemy.currentPosition())) {
 		    deadEnemies.add(enemy);
 		}
+		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
+		    System.out.println("curr is " + enemy.currentPosition().getY());
+		    System.out.println("tar is " + enemy.targetPosition().getY());
+		    enemy.move(elapsedTime);
+		}
 		else {
+		    System.out.println("in else");
 		    Point newPosition = path.nextPosition(enemy.currentPosition(), enemy.getIndex(),enemy.getAngle());
-		    System.out.println("COUNT:" + count);
+//		    System.out.println("COUNT:" + count);
 		    System.out.println("NEW POS:" + newPosition);
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
-		    if(pathIndex != enemy.getIndex()) {
-			double pathAngle = path.pathAngle(enemy.getIndex());
-			enemy.setAngle(pathAngle);
-		    }
-		    enemy.move(newPosition);
+//		    if(pathIndex != enemy.getIndex()) {
+//			double pathAngle = path.pathAngle(enemy.getIndex());
+//			enemy.setAngle(pathAngle);
+//		    }
+		    enemy.setNewPosition(newPosition);
+		    enemy.move(elapsedTime);
 		    enemy.setIndex(pathIndex);
 		}
 		//	System.out.println("NEW X:" + enemy.getX());
@@ -68,6 +76,10 @@ public class EnemyManager extends ShootingSpriteManager {
 	}
 	return deadEnemies;
 
+    }
+    
+    private boolean isInRange(Point curr, Point target) {
+	return curr.distance(target)<10;
     }
 
     public void setEnemies(Collection<Enemy> enemies) {

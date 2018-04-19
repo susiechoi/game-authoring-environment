@@ -55,7 +55,7 @@ public class SoundTestDriver extends Application {
         myAnimation.getKeyFrames().add(frame);
         primaryStage.show();
 	mySoundFactory = new ITRTSoundFactory();
-        mySoundFactory.setBackgroundMusic("src/sound/files/epic.mp3");
+        mySoundFactory.setBackgroundMusic("epic");
         Button b = mySoundFactory.createPlayBackgroundMusicButton();
         myRoot.getChildren().add(b);
         Slider v = mySoundFactory.createVolumeSlider();

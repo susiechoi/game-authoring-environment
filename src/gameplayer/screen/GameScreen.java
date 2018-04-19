@@ -158,7 +158,7 @@ public class GameScreen extends Screen {
 		}
 		else if (setting.equals("play")) {
 			try{
-				SOUND_FACTORY.setBackgroundMusic("src/sound/files/epic.mp3");
+				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
 

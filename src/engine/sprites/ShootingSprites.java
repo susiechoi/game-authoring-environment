@@ -164,5 +164,43 @@ public abstract class ShootingSprites extends Sprite{
 		return new HealthProperty(0,0,0);
 	}
 
+    /**
+     * Method that will upgrade the Sprite
+     * @param upgradeName : Property to be upgraded
+     */
+    public double upgrade(String upgradeName, double balance) {
+	if(upgradeName == "FireRate") {
+	    return upgradeFireRate(balance);
+	}
+	if(upgradeName == "Health") {
+	    return upgradeHealth(balance);
+	}
+	if(upgradeName == "Damage") {
+	    return upgradeDamage(balance);
+	}
+	if(upgradeName == "Range") {
+	    return upgradeRange(balance);
+	}
+	return balance;
+	
+    }
+
+    private double upgradeFireRate(double balance) {
+	return this.getLauncher().upgradeFireRate(balance);
+    }
+
+    private double upgradeHealth(double balance) {
+	return balance;
+	
+    }
+
+    private double upgradeDamage(double balance) {
+	return this.getLauncher().upgradeDamage(balance);
+    }
+
+    private double upgradeRange(double balance) {
+	return this.getLauncher().upgradeRange(balance);
+    }
+
 
 }
