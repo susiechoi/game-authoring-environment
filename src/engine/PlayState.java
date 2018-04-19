@@ -67,11 +67,6 @@ public class PlayState implements GameData {
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
-//	fakeEnemy = new Enemy("Ryan", "images/robot.png", 100);
-//	fakeEnemy2 = new Enemy("Miles", "images/zombie.png", 200);
-//	fakeEnemy2.place(300, 300);
-//	myEnemyManager.addToActiveList(fakeEnemy);
-//	myEnemyManager.addToActiveList(fakeEnemy2);
 	count = 0;
 
     }
@@ -118,8 +113,6 @@ public class PlayState implements GameData {
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
-	    System.out.println("LOAD YOUR WEAPONS");
-	    System.out.println(" SIZE "+myTowerManager.getListOfActive().size());
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(),elapsedTime)) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }

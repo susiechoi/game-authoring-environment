@@ -77,6 +77,7 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(Sprite target, double shooterX, double shooterY) {
+	System.out.println("rate of fire is " + myFireRate.getProperty());
     	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
     	this.addToActiveList(launchedProjectile);
     	return launchedProjectile;
@@ -87,6 +88,7 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
+	System.out.println("elapsedTime is " + elapsedTime);
      	if(timeSinceLastShot >= myFireRate.getProperty()) {
      		timeSinceLastShot=0;
      		return true;

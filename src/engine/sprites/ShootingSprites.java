@@ -126,7 +126,8 @@ public abstract class ShootingSprites extends Sprite{
      * @return intersect or not
      */
     public boolean intersects(Projectile projectile) {
-	return intersector.overlaps(projectile.getImageView());
+	return this.getImageView().getBoundsInLocal().intersects(projectile.getImageView().getBoundsInLocal());
+	//return intersector.overlaps(projectile.getImageView());
     }
 
     public Launcher getLauncher() {
