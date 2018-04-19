@@ -30,6 +30,7 @@ public class StartScreen extends AuthoringScreen {
     
     protected StartScreen(AuthoringView view) {
 	super(view);
+	setSaved();
 	myView = view; 
 	List<String> css = null;
 	try {

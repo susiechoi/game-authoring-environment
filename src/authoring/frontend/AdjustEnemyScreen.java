@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_DESCRIPTION = "Enemy";
-	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String ENEMY_IMAGES = "src/images/EnemyImageNames.properties";
 	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
 	private TextField myNameField; 
@@ -84,7 +84,8 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 			if (validNameField(myNameField)) {
 				try {
 					getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), 0, 0);
-					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");			
+					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
+					setSaved();
 				} catch(NoDuplicateNamesException e1) {
 					getView().loadErrorAlert("NoDuplicateNames");
 				}

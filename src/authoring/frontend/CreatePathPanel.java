@@ -144,7 +144,11 @@ public class CreatePathPanel extends PathPanel {
 
 	@Override
 	protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
-		applyButton.setOnAction(event -> e.handle(event));
+		applyButton.setOnAction(
+			event -> {
+			    setSaved();
+			    e.handle(event);
+			});
 	}
 
 }

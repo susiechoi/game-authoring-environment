@@ -124,7 +124,14 @@ public class AuthoringView extends View {
 		myCurrentCSS = css; 
 		myCSSChanged.set(!myCSSChanged.get());
 	}
-	
+	protected void setWaveTime(int waveNumber, int time) {
+	    try {
+	    	myController.setWaveTime(getLevel(), waveNumber, time);
+	    }
+	    catch(ObjectNotFoundException e) {
+		loadErrorScreen("NoObject");
+	    }
+	}
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
 		try {
 		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
