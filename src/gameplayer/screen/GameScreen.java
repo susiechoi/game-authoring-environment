@@ -140,7 +140,6 @@ public class GameScreen extends Screen {
 			MEDIATOR.pause();
 		else if(control.equals("speedup"))
 			MEDIATOR.fastForward(10);
-<<<<<<< HEAD
 		else if(control.equals("quit")) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 			try {
 				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
@@ -149,12 +148,10 @@ public class GameScreen extends Screen {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-=======
 		else if (control.equals("edit")) { // Susie added this
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 		}
->>>>>>> b4b70a2c914facbd7ecf0b6923a5718d1ee6f4d2
 	}
 
 	public void updateCurrency(Integer newBalence) {
