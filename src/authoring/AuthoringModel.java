@@ -39,7 +39,6 @@ import frontend.PropertiesReader;
 public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final String DEFAULT_IMAGES_PREFIX = "images/";
 	public static final String DEFAULT_IMAGES_SUFFIX = "ImageNames.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";

@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String OBJECT_DESCRIPTION = "Tower";
-	public static final String PROJECTILE_IMAGES = "src/images/ProjectileImageNames.properties"; 
+	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
 	private AdjustTowerScreen myTowerScreen;
