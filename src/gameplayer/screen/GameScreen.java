@@ -64,7 +64,6 @@ public class GameScreen extends Screen {
 		GAME_PANEL = new GamePanel(this);
 		//TODO the null argument on creation is terrible, needs to change once
 		//actual functionality of panels is changed
-		BUY_PANEL = new BuyPanel(this, PROMPTS, null);
 	}
 
 	@Override
@@ -196,8 +195,8 @@ public class GameScreen extends Screen {
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
-	public void upgradeClickedOn() {
-		BUY_PANEL = new BuyPanel(this,PROMPTS, null);
+	public void upgradeClickedOn(FrontEndTower tower) {
+		BUY_PANEL = new BuyPanel(this,PROMPTS, tower);
 		displayPane.getChildren().clear();
 		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
