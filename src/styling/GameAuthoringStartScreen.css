@@ -8,6 +8,10 @@ Text {
 	-fx-font-size: 14pt; 
 }
 
+TextField {
+	-fx-max-width: 200; 
+}
+
 .button:disabled, .button:disabled > * {
 	-fx-opacity: 0.7;
 }
