@@ -90,6 +90,7 @@ public class TowerPanel extends Panel {
 	    swapButton.setOnMouseClicked((arg0) -> GAME_SCREEN.swapVertPanel());
 	    HBox swapWrap = new HBox(swapButton);
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
+	    swapWrap.setId("swapWrap");
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
 	    //SWAPBUTTONIMAGEMISSING

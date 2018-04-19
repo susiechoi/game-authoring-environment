@@ -21,7 +21,7 @@ public class SettingsPanel extends Panel {
 
 
     private final int DEFAULT_SETTINGS_BUTTON_HEIGHT = 50;
-    private final int DEFAULT_SETTINGS_BUTTON_WIDTH = 150;
+    private final int DEFAULT_SETTINGS_BUTTON_WIDTH = 50;
 
     private final String UPGRADE_BUTTON_FILEPATH = "images/settingsPanelImages/SettingsButtonNames.properties";
     private final GameScreen GAME_SCREEN;
