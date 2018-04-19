@@ -4,6 +4,8 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -34,6 +36,7 @@ public class SoundTestDriver extends Application {
     private String myFileName;
     //private Scene myScene;
     private SoundFactory mySoundFactory;
+    private Group myRoot;
 
     /**
      * Initialize the program and begin the animation loop 
@@ -50,10 +53,14 @@ public class SoundTestDriver extends Application {
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
         primaryStage.show();
-        mySoundFactory = new ITRTSoundFactory();
+	mySoundFactory = new ITRTSoundFactory();
         mySoundFactory.setBackgroundMusic("src/sound/files/epic.mp3");
-        mySoundFactory.playBackgroundMusic();
-        int count = 0;
+        Button b = mySoundFactory.createPlayBackgroundMusicButton();
+        myRoot.getChildren().add(b);
+        Slider v = mySoundFactory.createVolumeSlider();
+        myRoot.getChildren().add(v);
+       // mySoundFactory.playBackgroundMusic();
+        /*
         long start = System.currentTimeMillis();
         while(System.currentTimeMillis()<start + 10000) {
             
@@ -61,12 +68,13 @@ public class SoundTestDriver extends Application {
         // THIS TESTING IS CURRENTLY INCOMPLETE
         System.out.println("Out of loop");
         mySoundFactory.setVolume(10);
+        */
         //myAnimation.play();
     }
     
     private Scene setupScene () {
-	Group root = new Group();
-	Scene scene = new Scene(root, SIZE, SIZE, BACKGROUND);
+	myRoot = new Group();
+	Scene scene = new Scene(myRoot, SIZE, SIZE, BACKGROUND);
 	return scene;
 }
 
