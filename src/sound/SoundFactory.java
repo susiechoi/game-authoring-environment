@@ -2,6 +2,9 @@ package sound;
 
 import java.io.FileNotFoundException;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+
 /**
  * This serves as the API for our Sound Factory utility
  * Currently, it proves basic functionality such as playing mp3 files, setting volume, and generating basic buttons
@@ -58,21 +61,20 @@ public interface SoundFactory {
     
     /**
      * This method is used to generate a button which plays a specific sound when clicked
-     * @param soundName is the sound to be played when this button is pressed. This can be changed later with a method call on PlaySoundButton
      * @return the PlaySoundButton which can be added to a screen and clicked
      */
-    public PlaySoundButton createPlaySoundButton(String soundName) throws FileNotFoundException;
+    public Button createPlayBackgroundMusicButton() throws FileNotFoundException;
     
     /**
      * This method is used to create a volume slider which can be used to set the volume of all sounds played from this SoundFactory
      * @return the volume slider which can be added to the screen and interacted with
      */
-    public VolumeSlider createVolumeSlider();
+    public Slider createVolumeSlider();
     
     /**
      * This method is used to create a button which, when clicked, mutes all sounds played from this instance of SoundFactory
      * @return the mute button which can be added to a screen and clicked
      */
-    public MuteButton createMuteButton();
+    public Button createMuteButton();
 
 }
