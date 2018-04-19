@@ -43,6 +43,7 @@ public class WavePanel extends PathPanel{
 		else {
 		    myWaveNumber = Integer.parseInt(waveNumber.split(" ")[1]) - 1;
 		}
+		System.out.println("highest wave number panel: " + getView().getHighestWaveNumber(getView().getLevel()));
 		myPathNumber = 1; //TODO!!
 		
 		setUpPanel();

@@ -24,11 +24,19 @@ public class WaveDirectionsPanel extends PathPanel{
 	super(view);
 	if(waveNumber.equals("Default")) {
 	   // System.out.println("level it thinks" + getView().getLevel());
-	    myWaveNumber = getView().getHighestWaveNumber(getView().getLevel());
+	    myWaveNumber = getView().getHighestWaveNumber(getView().getLevel())+1;
+		try {
+			getView().setWaveTime(myWaveNumber,Integer.parseInt(getPropertiesReader().findVal(AdjustNewOrExistingScreen.DEFAULT_CONSTANTS, "DefaultWaveTime")));
+			System.out.println("highest wave number directions: " + getView().getHighestWaveNumber(getView().getLevel()));
+		}
+			catch(MissingPropertiesException e) {
+			    getView().loadErrorScreen("NoFile");
+			}
 	}
 	else {
 	    myWaveNumber = Integer.parseInt(waveNumber.split(" ")[1]) - 1;
 	}
+
 	
 	setUpPanel();
     }
@@ -50,7 +58,7 @@ public class WaveDirectionsPanel extends PathPanel{
 	Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
 	applyButton.setOnAction(e -> {
 	    setSaved();
-	    getView().setWaveTime(myWaveNumber+1,(int) Math.round(myTimeSlider.getValue()));
+	    getView().setWaveTime(myWaveNumber,(int) Math.round(myTimeSlider.getValue()));
 	});
 	pseudoRoot.getChildren().add(waveText);
 	pseudoRoot.getChildren().add(directions);

@@ -172,7 +172,7 @@ public class AuthoringController {
 	Level thisLevel = myModel.levelCheck(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	Wave thisWave;
-	if(!thisLevel.containsWave(waveNumber)) {
+	if(!thisLevel.containsWaveNumber(waveNumber)) {
 	    thisWave = new Wave();
 	    thisLevel.addWave(thisWave);
 	}
@@ -195,7 +195,7 @@ public class AuthoringController {
      */
     public int wavesNumber(int level, Path path) throws ObjectNotFoundException {
 	Level thisLevel = myModel.levelCheck(level);
-	List<Wave> levelWaves = thisLevel.getWaves(path);
+	List<Wave> levelWaves = thisLevel.getWaves();
 	return levelWaves.size();
     }
 
@@ -211,10 +211,10 @@ public class AuthoringController {
     public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
 	Level currentLevel = myModel.levelCheck(level);
 	//TODO: issue here - if there is no wave yet then need to make it first!
-	if(!currentLevel.containsWave(waveNumber)) {
+	if(!currentLevel.containsWaveNumber(waveNumber) || currentLevel.getWaves().get(waveNumber).getUnmodifiableEnemies(path)==null) {
 	    return new HashMap<String, Integer>();
 	}
-	Map<Enemy, Integer> enemyMap = currentLevel.getWaves(path).get(waveNumber).getUnmodifiableEnemies(path);
+	Map<Enemy, Integer> enemyMap = currentLevel.getWaves().get(waveNumber).getUnmodifiableEnemies(path);
 	Map<String,Integer> enemyNameMap = new HashMap<>();
 	for(Enemy enemy : enemyMap.keySet()) {
 	    enemyNameMap.put(enemy.getName(), enemyMap.get(enemy));
@@ -282,10 +282,10 @@ public class AuthoringController {
     
     public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
 	Level currentLevel = myModel.levelCheck(level);
-	if(!currentLevel.containsWave(waveNumber)) {
+	if(!currentLevel.containsWaveNumber(waveNumber)) {
 	    currentLevel.addWave(waveNumber);
 	}
-	Wave desiredWave = currentLevel.getWaves(null).get(waveNumber-1);
+	Wave desiredWave = currentLevel.getWaves().get(waveNumber);
 	desiredWave.setWaveTime(time);
     }
 }

@@ -289,7 +289,7 @@ public class AuthoringModel implements GameData {
 		}
 		if(objectType.equals("Wave")) {
 			int size = currentLevel.getHighestWaveNumber();
-			for(Integer k = 1; k<=size; k+=1) {
+			for(Integer k = 1; k<=(size+1); k+=1) {
 				listToReturn.add("Wave " + k.toString());
 			}
 		}
@@ -341,8 +341,8 @@ public class AuthoringModel implements GameData {
 
 		else if(objectType.equals("Wave")) {
 			Level currentLevel = levelCheck(level);
-			if (currentLevel.containsWave(Integer.parseInt(name))) {
-				Wave wave = currentLevel.getWaves(null).get(Integer.parseInt(name));
+			if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
+				Wave wave = currentLevel.getWaves().get(Integer.parseInt(name));
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, wave);
 			}
 		}

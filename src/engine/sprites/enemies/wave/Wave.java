@@ -80,7 +80,14 @@ public class Wave {
     }
 
     public Map<Enemy, Integer> getUnmodifiableEnemies(Path path) {
-	return Collections.unmodifiableMap(myWaveMap.get(path));
+	if(myWaveMap.containsKey(path)) {
+	    return Collections.unmodifiableMap(myWaveMap.get(path));
+	}
+	else {
+	    Map<Enemy, Integer> enemiesMap = new HashMap<>();
+	    myWaveMap.put(path, enemiesMap);
+	    return Collections.unmodifiableMap(enemiesMap);
+	}
     }
 
 
