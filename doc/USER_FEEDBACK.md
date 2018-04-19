@@ -1,0 +1,23 @@
+# User Testing Notes
+
+- overwhelmed by lots of screens
+    - what are they all doing?? have to edit shooting of tower after menu
+- error checking for apply is weird
+- massive blocks when on dragboard
+    - would be nice if close to same size
+- need confirmation with apply/save
+    - onclick something
+- don't know which is default tower, which is named tower - tower labels
+- get rid of default tower if user creates a tower
+- tower placing not exactly where you want it
+- pause doesn't work
+- way too many screens, need to make them more intuitive
+- the tower jumps when placed
+- ability to drop mulitple towers at once?
+- make more clear what start/path/end blockser
+- drag and drop to trash 
+- click to select?
+- clear button
+- undo
+- make game creation flow more easy?
+    - ie what should you make first, make second - minimize potential flow errors

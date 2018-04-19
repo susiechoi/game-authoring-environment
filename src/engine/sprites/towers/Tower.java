@@ -18,9 +18,9 @@ import javafx.scene.image.Image;
  * @author Miles Todzo
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
-    
+
     private final String ENEMIES_KILLED = "Enemies Killed";
-    
+
     private HealthProperty myHealth;
     private String myImage; 
     private double mySize;
@@ -66,7 +66,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(Tower copiedTower, Point point) {
 	super(copiedTower.getName(), copiedTower.getImageString(), 
-	copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
+		copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty();
 	propertyStats = new HashMap<String, Integer>();
@@ -83,7 +83,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-    	return true;
+	return true;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	removeAllProjectiles();
 	return (int) myValue.getProperty();
     }
-    
+
     private void removeAllProjectiles() {
 	for(Projectile projectile : this.getProjectiles()) {
 	    projectile.place(-100000, -100000);
@@ -180,11 +180,16 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return (int) (myResources - myValue.getProperty());
     }
 
-	@Override
-	public int getPointValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public int getPointValue() {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+    
+    @Override
+    public double getTowerRange() {
+        return this.getLauncher().getRange();
+    }
+
 
 }
-
