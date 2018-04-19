@@ -231,9 +231,9 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage) throws ObjectNotFoundException {
+	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
 		myGrid = grid;
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage);
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathSize);
 	}
 
 	/**
@@ -261,8 +261,8 @@ public class AuthoringView extends View {
 	 * Method through which information about object fields can be requested
 	 * Invoked when populating authoring frontend screens used to edit existing objects
 	 */
-	public String getObjectAttribute(String objectType, String objectName, String attribute) {
-		String returnedObjectAttribute = ""; 
+	public Object getObjectAttribute(String objectType, String objectName, String attribute) {
+		Object returnedObjectAttribute = ""; 
 		try {
 			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
@@ -348,6 +348,10 @@ public class AuthoringView extends View {
 	    return 1;
 	}
 	
+	public GridPane getPathGrid() {
+		return myGrid;
+	}
+
 	protected void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		writer.write(myModel, myModel.getGameName());
@@ -358,14 +362,9 @@ public class AuthoringView extends View {
 	}
 	
 
-	public GridPane getPathGrid() {
-		return myGrid;
-	}
-
 	protected BooleanProperty cssChangedProperty() {
 		return myCSSChanged; 
 	}
-
 
 	protected String getGameName() {
 		return myModel.getGameName();

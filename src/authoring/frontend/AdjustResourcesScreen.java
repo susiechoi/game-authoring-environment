@@ -61,10 +61,8 @@ public class AdjustResourcesScreen extends AdjustScreen {
 
 	@Override
 	protected void populateFieldsWithData() {
-		myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "myGameName"));
-		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth"));
-		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney"));	    
+		myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "myGameName").toString());
+		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth").toString());
+		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney").toString());	    
 	}
-	
-
 }

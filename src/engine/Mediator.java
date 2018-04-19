@@ -1,35 +1,18 @@
 package engine;
 
 
-
-import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
-import javafx.beans.property.IntegerProperty;
 import java.util.List;
 import java.util.Map;
-
-import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import java.awt.Point;
-
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableIntegerValue;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import xml.AuthoringModelReader;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
-import xml.PlayLoader;
 
 /**
  * This class serves as a bridge between the front end, back end, and file I/O of our game player
@@ -45,6 +28,7 @@ import xml.PlayLoader;
  *
  */
 public class Mediator {
+
 
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
@@ -247,8 +231,8 @@ public class Mediator {
 	}
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-	myScreenManager.setPath(imageMap, backgroundImageFilePath);
-    }
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
+		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
+	}
 }
 

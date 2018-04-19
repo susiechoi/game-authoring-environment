@@ -40,7 +40,7 @@ public class CreatePathScreen extends PathScreen {
 			public void handle(ActionEvent e) {
 			    	setSaved();
 				List<Point> startCoords = grid.getStartingPosition();
-				if (grid.getStartingPosition().size() == 0) {
+				if (startCoords.size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Path Cutomization Error");
 					alert.setContentText("Your path has no starting blocks");
@@ -49,8 +49,14 @@ public class CreatePathScreen extends PathScreen {
 				for (Point point: startCoords) {
 					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX())) {
 						System.out.println("TRUE");
-						try {
-							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage);
+						try { //do this outside of for loop...have a boolean check?
+						
+							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage, grid.getPathSize());
+					
+							getView().getObjectAttribute("Path", "", "myPathMap");
+							getView().getObjectAttribute("Path", "", "myBackgroundImage");
+							getView().getObjectAttribute("Path", "", "myPathSize");
+//							getView().goForwardFrom(this.getClass().getSimpleName()+"Apply"); //TODO: Not Getting the class name
 						} catch (ObjectNotFoundException e1) {
 							// TODO Auto-generated catch block
 						}
@@ -123,6 +129,7 @@ public class CreatePathScreen extends PathScreen {
 		});
 		
 		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPanelPathImage());
+		
 		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getPanelStartImage());
 		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getPanelEndImage());
 	}
@@ -133,10 +140,13 @@ public class CreatePathScreen extends PathScreen {
 			public void handle(final ActionEvent event) {
 				if (button.equals(myPathToolBar.getPathImageButton())) {
 					myGrid.setPathImage(myPathPanel.getPanelPathImage().getPathImage());
+					myPathPanel.getPanelPathImage().setPath();
 				} else if (button.equals(myPathToolBar.getStartImageButton())) {
 					myGrid.setStartImage(myPathPanel.getPanelStartImage().getPathImage());
+					myPathPanel.getPanelPathImage().setStart();
 				} else if (button.equals(myPathToolBar.getEndImageButton())) {
 					myGrid.setEndImage(myPathPanel.getPanelEndImage().getPathImage());
+					myPathPanel.getPanelPathImage().setEnd();
 				}
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("View Pictures");
