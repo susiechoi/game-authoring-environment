@@ -56,6 +56,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		AuthoringModel currentModel = getView().getModel();
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
+			getView().writeToFile();
 			new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
 				currentModel).demoPlay(currentModel); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
 		});

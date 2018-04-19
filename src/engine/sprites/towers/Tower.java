@@ -8,6 +8,7 @@ import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
+import engine.sprites.towers.projectiles.Projectile;
 import javafx.scene.image.Image;
 
 /**
@@ -111,7 +112,14 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * Handles selling a tower
      */
     public int sell() {
+	removeAllProjectiles();
 	return (int) myValue.getProperty();
+    }
+    
+    private void removeAllProjectiles() {
+	for(Projectile projectile : this.getProjectiles()) {
+	    projectile.place(-100000, -100000);
+	}
     }
 
     /**
