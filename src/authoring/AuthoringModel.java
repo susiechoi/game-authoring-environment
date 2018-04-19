@@ -116,7 +116,7 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 
-	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) throws ObjectNotFoundException {
+	public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) throws ObjectNotFoundException {
 		myImageMap = imageCoordinates;
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathSize, col, row);
@@ -344,6 +344,8 @@ public class AuthoringModel implements GameData {
 		List<Point> dummyPathPoints = new ArrayList<>();
 		dummyPathPoints.add(new Point(2, 2));
 		dummyPathPoints.add(new Point(2, 3));
+		List<List<Point>> dummyCoordinates = new ArrayList<>();
+		dummyCoordinates.add(dummyPathPoints);
 		HashMap<String, List<Point>> pathImages = new HashMap<>();
 		List<Point> dummyPathStartPoints = new ArrayList<>();
 		dummyPathStartPoints.add(new Point(2, 2));
@@ -351,7 +353,7 @@ public class AuthoringModel implements GameData {
 		dummyPathEndPoints.add(new Point(2, 3));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
 		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
-		Path newPath = new PathBuilder().construct(dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE, 60, 1020/60, 650/60);
+		Path newPath = new PathBuilder().construct(dummyCoordinates, pathImages, DEFAULT_BACKGROUND_IMAGE, 60, 1020/60, 650/60);
 		return newPath;
 	}
 

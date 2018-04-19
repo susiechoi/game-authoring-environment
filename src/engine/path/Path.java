@@ -13,6 +13,7 @@ public class Path {
 
 	private final double THRESHOLD = 5;
 	private List<Point> myCoordinates;
+	private List<List<Point>> newCoordinates;
 	private double myAngle;
 	private int pathIndex;
 	private int myPathSize;
@@ -21,14 +22,15 @@ public class Path {
 	private Map<String, List<Point>> myPathMap;
 	private String myBackgroundImage;
 
-	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) {
-		myCoordinates = coordinates;
+	public Path(List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) {
+		myCoordinates = null;
+		newCoordinates = coordinates;
 		myBackgroundImage = backgroundImage;
 		myPathSize = pathSize;
 		myCols = col;
 		myRows = row;
 		pathIndex = 0;
-		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
+//		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
 	}
 

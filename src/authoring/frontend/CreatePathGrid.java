@@ -23,7 +23,7 @@ import javafx.scene.layout.StackPane;
 
 /* 
  * IMPORTANT TODO: integrate styling
- * TONIGHT: PASS Row and column counts (make methods to get rid of get column count...?), make load to edit work, fix path coordinates
+ * TONIGHT: make load to edit work
  * 
  * Right click to be able to get specialty paths
  * Apply goes back one screen
@@ -63,11 +63,9 @@ public class CreatePathGrid extends AdjustScreen {
 		public void handle(MouseEvent event) {
 		}
 	};
-	private boolean unDraggable;
 
 	public CreatePathGrid(AuthoringView view) {
 		super(view);
-		unDraggable = false;
 	}
 
 	/**

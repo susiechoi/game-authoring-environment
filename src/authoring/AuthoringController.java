@@ -75,7 +75,7 @@ public class AuthoringController {
 	 * Method through which information can be sent to instantiate or edit a Path in Authoring Model
 	 * @throws ObjectNotFoundException 
 	 */
-	public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
+	public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
 		myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathSize, col, row); 
 		myImageMap = imageCoordinates;
 	}
