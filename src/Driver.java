@@ -21,7 +21,7 @@ public class Driver extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 	primaryStage.setTitle("IfTrueReturnTrue VOOGASALAD");
-	primaryStage.getIcons().add(new Image("/images/sarahbland.png"));
+	primaryStage.getIcons().add(new Image("file:images/sarahbland.png"));
 	ChiefController controller = new ChiefController(primaryStage);
 	controller.start();
     }

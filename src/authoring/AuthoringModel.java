@@ -52,8 +52,8 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
 	public static final String DEFAULT_PATH_END = "images/darkstone.png";
 	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
+	
 	private final String myDefaultName; 
-
 	private String myGameName; 
 	private final PropertiesReader myPropertiesReader;
 	private Settings mySettings; 

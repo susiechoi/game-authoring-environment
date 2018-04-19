@@ -5,6 +5,7 @@ import authoring.frontend.exceptions.NoDuplicateNamesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 abstract class SpecifyNameScreen extends AdjustScreen {
@@ -44,6 +45,7 @@ abstract class SpecifyNameScreen extends AdjustScreen {
 		vb.getChildren().add(nameField);
 		myNameField = nameField; 
 
+		Button backButton = setupBackButton(); 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 			if (validNameField(myNameField)) {
@@ -56,7 +58,8 @@ abstract class SpecifyNameScreen extends AdjustScreen {
 				getView().goForwardFrom(this.getClass().getSimpleName()+"Apply",myNameField.getText());
 			}
 		});
-		vb.getChildren().add(applyButton);
+		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
+		vb.getChildren().add(backAndApplyButton);
 
 		return vb;
 	}
