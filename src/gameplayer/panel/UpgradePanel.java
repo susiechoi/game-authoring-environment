@@ -12,6 +12,7 @@ import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import engine.sprites.towers.FrontEndTower;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -30,7 +31,8 @@ public class UpgradePanel extends SpecificPanel {
     private final String UPGRADE_NAMES_FILE_PATH = "images/UpgradeImageNames.properties";
 
 
-    public UpgradePanel (GameScreen gameScreen, PromptReader promptReader) {
+    public UpgradePanel (GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
+	super(tower);
 	GAME_SCREEN = gameScreen;
 	UI_FACTORY = new UIFactory();
 	PROP_READ = new PropertiesReader();
@@ -62,6 +64,7 @@ public class UpgradePanel extends SpecificPanel {
 	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(UPGRADE_NAMES_FILE_PATH, UPGRADE_IMAGE_SIZE, UPGRADE_IMAGE_SIZE);
 	    for (String upgradeType: upgradeMap.keySet()) {
 		Button upgradeButton = UI_FACTORY.makeImageButton("button", upgradeMap.get(upgradeType));
+		
 		//upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.
 		upgrades.getChildren().add(upgradeButton);
 		HBox.setHgrow(upgradeButton, Priority.ALWAYS);
