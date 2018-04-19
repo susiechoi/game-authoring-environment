@@ -154,7 +154,7 @@ public class AuthoringView extends View {
 		goForwardFrom(id, "");
 	}
 	
-	protected void goForwardFrom(String id, String name) {
+	public void goForwardFrom(String id, String name) {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 			Class<?> clazz = Class.forName(nextScreenClass);
@@ -176,7 +176,11 @@ public class AuthoringView extends View {
 			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
 				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
 				myStageManager.switchScreen(nextScreen.getScreen());
-			} //TODO: handle case where switching to gameplay
+			} 
+			else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
+				Screen nextScreen = (Screen) constructor.newInstance(myStageManager);
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
 			else {
 				throw new MissingPropertiesException("");
 			}
@@ -316,9 +320,10 @@ public class AuthoringView extends View {
 		return myPropertiesReader; 
 	}
 
-	protected void setGameName(String gameName) {
+	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
+	
 	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
 		try {
 			Path path = myController.getPathFromName(pathName, level);
@@ -331,6 +336,7 @@ public class AuthoringView extends View {
 		return new HashMap<String, Integer>();
 
 	}
+	
 	protected Integer getHighestWaveNumber(int level) {
 	    try {
 	    return myController.getHighestWaveNumber(level);
@@ -341,6 +347,7 @@ public class AuthoringView extends View {
 	    }
 	    return 1;
 	}
+	
 	protected void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		writer.write(myModel, myModel.getGameName());
@@ -362,6 +369,14 @@ public class AuthoringView extends View {
 
 	protected String getGameName() {
 		return myModel.getGameName();
+	}
+
+	protected void deleteObject(String objectType, String objectName) {
+		try {
+			myModel.deleteObject(myLevel, objectType, objectName);
+		} catch (ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
 	}
 
 }

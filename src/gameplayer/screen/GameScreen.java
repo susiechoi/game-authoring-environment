@@ -10,12 +10,17 @@ import gameplayer.panel.ControlsPanel;
 import java.awt.Point;
 import java.util.List;
 import java.util.Map;
+
+import authoring.AuthoringController;
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
+import frontend.StageManager;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
@@ -31,7 +36,6 @@ public class GameScreen extends Screen {
 	//TODO delete this and re-factor to abstract
 	private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
-
 
 	private final UIFactory UIFACTORY;
 	private final PromptReader PROMPTS;
@@ -133,6 +137,10 @@ public class GameScreen extends Screen {
 			MEDIATOR.pause();
 		else if(control.equals("speedup"))
 			MEDIATOR.fastForward(10);
+		else if (control.equals("edit")) { // Susie added this
+			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
+			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
+		}
 	}
 
 	public void updateCurrency(Integer newBalence) {

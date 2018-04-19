@@ -29,7 +29,7 @@ import xml.AuthoringModelReader;
 
 public class AuthoringController {
 
-    private AuthoringView myAuthoringView; 
+    private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
 
@@ -40,14 +40,14 @@ public class AuthoringController {
      * @param languageIn is chosen language for prompts
      */
     public AuthoringController(StageManager stageManager, String languageIn) {
-	myAuthoringView = new AuthoringView(stageManager, languageIn, this);
+	myView = new AuthoringView(stageManager, languageIn, this);
 	try {
 	    myModel = new AuthoringModel();
 	} catch (MissingPropertiesException e) {
-	    myAuthoringView.loadErrorScreen("NoDefaultObject");
+	    myView.loadErrorScreen("NoDefaultObject");
 	}
-	myAuthoringView.setModel(myModel);
-	myAuthoringView.loadInitialScreen();
+	myView.setModel(myModel);
+	myView.loadInitialScreen();
     }
 
     /**
@@ -130,13 +130,6 @@ public class AuthoringController {
     }
 
     /**
-     * Instantiates the game engine to demo the authored game in its current state
-     */
-    public void demo() {
-
-    }
-
-    /**
      * Invokes a Model method that adds a new level to the authored game, 
      * based on the previous level that the user has created
      * (or the default level if the user has not customized any level) 
@@ -176,31 +169,20 @@ public class AuthoringController {
      */
     public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 	Path path = getPathFromName(Integer.parseInt(pathName), level);
-	//System.out.println("pathname: " + pathName);
 	Level thisLevel = myModel.levelCheck(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
-	//System.out.println(thisLevel.getPaths());
 	Wave thisWave;
-	//TODO: problem, how is this being saved if none of these are instance variables?
-	if(thisLevel.getWaves(path) == null) {
+	if(!thisLevel.containsWave(waveNumber)) {
 	    thisWave = new Wave();
-	    thisLevel.getWaves(path).add(thisWave);
+	    thisLevel.addWave(thisWave);
 	}
 	else{
-	    List<Wave> levelWaves = thisLevel.getWaves(path);
-	    if (levelWaves.size() <= waveNumber) {
-		thisWave = new Wave();
-		levelWaves.add(thisWave);
-	    }
-	    else {
-		thisWave = levelWaves.get(waveNumber);
-	    }
+	    thisWave = thisLevel.getWave(waveNumber);
+
 	}
+	System.out.println("NEW AMOUNT: " + newAmount);
 	thisWave.addEnemy(thisEnemy, path, newAmount);
     }
-
-
-
 
     /**
      * Returns the number of waves in a specified level that belong to a specified
@@ -274,8 +256,10 @@ public class AuthoringController {
      * @param gameName is name of game/XML file being loaded in
      */
     public void setModel(String gameName) {
+    	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = reader.createModel(gameName);
+	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
 
     /**

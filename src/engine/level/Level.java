@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
@@ -28,7 +29,6 @@ public class Level {
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
 	private List<Wave> myWaves;
-	//private Map<Path, List<Wave>> myWaves;
 	private Map<String, Enemy> myEnemies;
 
 	private int xLoc = 100;
@@ -154,6 +154,20 @@ public class Level {
 		listToReturn.addAll(myEnemies.keySet()); 
 		return listToReturn; 
 	}
+	
+    public void removeTower(String name) throws ObjectNotFoundException {
+    	if (myTowers.containsKey(name)) {
+    		myTowers.remove(name);
+    	}
+    	throw new ObjectNotFoundException(name);
+    }
+    
+    public void removeEnemy(String name) throws ObjectNotFoundException {
+    	if (myEnemies.containsKey(name)) {
+    		myEnemies.remove(name);
+    	}
+    	throw new ObjectNotFoundException(name);
+    }
 
 	/**
 	 * Adds a wave to the level
@@ -202,10 +216,6 @@ public class Level {
 		return myNumber; 
 	}
 
-	protected List<Wave> getWaves() {
-		return myWaves; 
-	}
-
 	public List<Path> getPaths() {
 		return myPaths; 
 	}
@@ -228,7 +238,12 @@ public class Level {
 	 * @param path: the path object that the wave is specific to
 	 * @return List<Wave>: A list of wave objects in the level on the path
 	 */
+	@Deprecated
 	public List<Wave> getWaves(Path path) {
+		return myWaves;
+	}
+
+	public List<Wave> getWaves() {
 		return myWaves;
 	}
 
@@ -243,6 +258,13 @@ public class Level {
 	}
 	public void removeWave() {
 	    myWaves.remove(0);
+	}
+	
+	/**
+	 * @return Wave corresponding to @param waveNumber
+	 */
+	public Wave getWave(int waveNumber) {
+		return myWaves.get(waveNumber);
 	}
 
 	/**
@@ -271,6 +293,16 @@ public class Level {
 		//		}
 		//		return pathMap;
 		return myPaths.get(0).getPathMap();
+	}
+	
+	/**
+	 * Adds a wave to the level
+	 * 
+	 * @param name: The unique string name for the tower object
+	 * @param tower: The tower object to be added
+	 */
+	public void addWave(Wave wave) {
+		myWaves.add(wave);
 	}
 
 }
