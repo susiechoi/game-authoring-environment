@@ -9,7 +9,7 @@ package authoring;
 import java.lang.reflect.Field;
 
 public class AttributeFinder {
-	
+
 	/**
 	 * Retrieves value of requested field from specified object
 	 * @param fieldName - name of the field whose info is desired
@@ -30,4 +30,18 @@ public class AttributeFinder {
 		}
 		throw new NullPointerException();
 	}
+
+	public void setFieldValue(String fieldName, Object objectWithFields, Object fieldValue) throws IllegalArgumentException, IllegalAccessException {
+		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
+			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+			if (fieldSimpleString.equals(fieldName)) {
+				aField.setAccessible(true);
+				aField.set(objectWithFields, fieldValue);
+				return; 
+			}
+		}
+		throw new NullPointerException();
+	}
+
 }
+

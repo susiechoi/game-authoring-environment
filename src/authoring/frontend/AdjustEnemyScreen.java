@@ -19,10 +19,11 @@ import javafx.scene.layout.VBox;
 
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
-	public static final String OBJECT_DESCRIPTION = "Enemy";
+	public static final String OBJECT_TYPE = "Enemy";
 	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
 	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
+	private String myObjectName; 
 	private TextField myNameField; 
 	private ComboBox<String> myImageDropdown;
 	private Slider mySpeedSlider;
@@ -31,18 +32,14 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	private Slider myValueSlider; 
 
 	protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
-		super(view, selectedObjectName, ENEMY_FIELDS, OBJECT_DESCRIPTION);
+		super(view, selectedObjectName, ENEMY_FIELDS, OBJECT_TYPE);
+		myObjectName = selectedObjectName; 
 	}
 
 	@Override
 	protected Parent populateScreenWithFields() {
 		VBox vb = new VBox(); 	
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeEnemy")));
-
-		TextField nameInputField = getUIFactory().makeTextField("");
-		myNameField = nameInputField; 
-		HBox enemyNameSelect = getUIFactory().addPromptAndSetupHBox("", nameInputField, getErrorCheckedPrompt("EnemyName"));
-		vb.getChildren().add(enemyNameSelect);
 
 		HBox enemyImageSelect = new HBox();
 		ComboBox<String> enemyImageDropdown = new ComboBox<String>();
@@ -61,34 +58,39 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		mySpeedSlider = enemySpeedSlider; 
 		HBox enemySpeed = getUIFactory().setupSliderWithValue("", enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed"));
 		vb.getChildren().add(enemySpeed);
+		mySpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "mySpeed", newValue);
+		});
 
 		Slider enemyInitialHealthSlider = getUIFactory().setupSlider("enemyInitialHealthSlider",  getMyMaxHealthImpact()); 
 		myInitialHealthSlider = enemyInitialHealthSlider; 
 		HBox initialHealth = getUIFactory().setupSliderWithValue("enemyInitialHealthSlider", enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 
 		vb.getChildren().add(initialHealth);
+		myInitialHealthSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myInitialHealth", newValue);
+		});
 
 		Slider enemyHealthImpactSlider = getUIFactory().setupSlider("enemyImpactSlider",  getMyMaxHealthImpact()); 
 		myHealthImpactSlider = enemyHealthImpactSlider; 
 		HBox enemyImpact = getUIFactory().setupSliderWithValue("enemyImpactSlider", enemyHealthImpactSlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 		vb.getChildren().add(enemyImpact);
+		myHealthImpactSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthImpact", newValue);
+		});
 
 		Slider enemyValueSlider = getUIFactory().setupSlider("EnemyValueSlider", getMyMaxPrice());
 		myValueSlider = enemyValueSlider;
 		HBox enemyValue = getUIFactory().setupSliderWithValue("EnemyValueSlider", enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 		vb.getChildren().add(enemyValue);
+		myValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myKillReward", newValue);
+		});
 
 		Button backButton = setupBackButton();
 
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
-			if (validNameField(myNameField)) {
-				try {
-					getView().makeEnemy(getIsNewObject(), myNameField.getText(), myImageDropdown.getValue(), mySpeedSlider.getValue(), myInitialHealthSlider.getValue(), myHealthImpactSlider.getValue(), myValueSlider.getValue(), 0, 0);
-					getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");			
-				} catch(NoDuplicateNamesException e1) {
-					getView().loadErrorAlert("NoDuplicateNames");
-				}
-			}
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");			
 		});
 
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
