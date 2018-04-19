@@ -168,6 +168,7 @@ public class PlayState implements GameData {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
+	myTowerManager.upgrade(tower,"rando",myResources);
 	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
@@ -180,7 +181,7 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	myTowerManager.upgrade(tower,upgradeName);
+	 myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
 
     }
 }
