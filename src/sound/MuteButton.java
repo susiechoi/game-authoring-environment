@@ -1,6 +1,8 @@
 package sound;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * This class represents and place-able, click-able button

@@ -70,6 +70,10 @@ VBox, HBox {
     -fx-opacity: 1.0;
 }
 
+#swapWrap {
+
+}
+
 #voidButton{
 
 }
@@ -77,11 +81,4 @@ VBox, HBox {
     -fx-opacity: 1.0;
 }
 
-
-#swapWrap {
-    -fx-background-color: white;
-    -fx-padding: 5;
-    -fx-spacing: 5;
-    -fx-alignment: center;
-}
 

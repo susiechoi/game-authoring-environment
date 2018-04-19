@@ -8,6 +8,7 @@ import engine.Settings;
 import gameplayer.panel.*;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
+import sound.ITRTSoundFactory;
 
 
 public class GameScreen extends Screen {
@@ -52,10 +53,12 @@ public class GameScreen extends Screen {
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
 	private BorderPane rootPane;
+	private ITRTSoundFactory SOUND_FACTORY;
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
 		UIFACTORY = new UIFactory();
+		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this, PROMPTS);
@@ -155,8 +158,22 @@ public class GameScreen extends Screen {
 	}
 
 	public void settingsTriggered(String setting) {
-		if (setting.equals("volume")) {
+		if (setting.equals("volumeToggle")) {
+			SOUND_FACTORY.mute();
+		}
+		else if (setting.equals("play")) {
+			try{
+				SOUND_FACTORY.setBackgroundMusic("src/sound/files/epic.mp3");
+			}
+			catch (FileNotFoundException e) {
 
+			}
+			SOUND_FACTORY.playBackgroundMusic();
+
+
+		}
+		else if (setting.equals("pause")) {
+			SOUND_FACTORY.pauseBackgroundMusic();
 		}
 		else if (setting.equals("instructions")) {
 

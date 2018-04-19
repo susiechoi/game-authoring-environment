@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
 
 /**
  * This class represents IfTrueReturnTrue's implementation of the SoundFactory interface
@@ -176,7 +178,7 @@ public class ITRTSoundFactory implements SoundFactory {
      */
     @Override
     public Button createMuteButton() {
-	return new MuteButton(this);
+	    return new MuteButton(this);
     }
 
 }

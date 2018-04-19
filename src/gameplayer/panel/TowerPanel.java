@@ -4,18 +4,12 @@ package gameplayer.panel;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -89,8 +83,8 @@ public class TowerPanel extends Panel {
 	    Button swapButton = UIFACTORY.makeImageButton("swapButton", buttonMap.get("swap"));
 	    swapButton.setOnMouseClicked((arg0) -> GAME_SCREEN.swapVertPanel());
 	    HBox swapWrap = new HBox(swapButton);
-	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    swapWrap.setId("swapWrap");
+	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
 	    //SWAPBUTTONIMAGEMISSING
