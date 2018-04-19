@@ -61,8 +61,8 @@ public class GameScreen extends Screen {
 		CONTROLS_PANEL = new ControlsPanel(this);
 		SCORE_PANEL = new ScorePanel(this);
 		GAME_PANEL = new GamePanel(this);
-		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);
-		BUY_PANEL = new BuyPanel(this, PROMPTS);
+		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS, null);
+		BUY_PANEL = new BuyPanel(this, PROMPTS, null);
 	}
 
 	@Override

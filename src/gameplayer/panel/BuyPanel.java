@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import gameplayer.screen.GameScreen;
 import frontend.PropertiesReader;
@@ -10,15 +11,16 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class BuyPanel extends Panel {
+public class BuyPanel extends SpecificPanel {
 
     private final GameScreen GAME_SCREEN;
     private final UIFactory UI_FACTORY;
     private PropertiesReader PROP_READ;
     private PromptReader PROMPTS;
 
-    public BuyPanel(GameScreen gameScreen, PromptReader promptReader) {
-        GAME_SCREEN = gameScreen;
+    public BuyPanel(GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
+        super(tower);
+	GAME_SCREEN = gameScreen;
         PROMPTS = promptReader;
         UI_FACTORY = new UIFactory();
         PROP_READ = new PropertiesReader();
