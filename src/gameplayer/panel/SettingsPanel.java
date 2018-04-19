@@ -42,7 +42,7 @@ public class SettingsPanel extends Panel {
         PROMPTS =  promptReader;
         PROP_READ = new PropertiesReader();
         UIFACTORY = new UIFactory();
-        SOUND_FACTORY = new ITRTSoundFactory();
+        SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
     }
 
     private Button createHelp() {

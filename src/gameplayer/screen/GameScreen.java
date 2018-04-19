@@ -267,5 +267,9 @@ public class GameScreen extends Screen {
 		return SCREEN_MANAGER;
 	}
 
+	public ITRTSoundFactory getSoundFactory() {
+		return SOUND_FACTORY;
+	}
+
 
 }
