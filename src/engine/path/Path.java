@@ -15,13 +15,17 @@ public class Path {
 	private double myAngle;
 	private int pathIndex;
 	private int myPathSize;
+	private int myCols;
+	private int myRows;
 	private Map<String, List<Point>> myPathMap;
 	private String myBackgroundImage;
 
-	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) {
+	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) {
 		myCoordinates = coordinates;
 		myBackgroundImage = backgroundImage;
 		myPathSize = pathSize;
+		myCols = col;
+		myRows = row;
 		pathIndex = 0;
 		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
@@ -83,6 +87,14 @@ public class Path {
 
 	public int getPathSize() {
 		return myPathSize;
+	}
+	
+	public int getColumnCount() {
+		return myCols;
+	}
+	
+	public int getRowCount() {
+		return myRows;
 	}
 
 	public Point initialPoint() {

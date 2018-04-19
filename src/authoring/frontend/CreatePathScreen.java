@@ -50,7 +50,7 @@ public class CreatePathScreen extends PathScreen {
 						System.out.println("TRUE");
 						try { //do this outside of for loop...have a boolean check?
 						
-							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage, grid.getPathSize());
+							getView().makePath(grid.getGrid(), grid.getAbsoluteCoordinates(), grid.getGridImageCoordinates(), myBackgroundImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
 					
 							getView().getObjectAttribute("Path", "", "myPathMap");
 							getView().getObjectAttribute("Path", "", "myBackgroundImage");

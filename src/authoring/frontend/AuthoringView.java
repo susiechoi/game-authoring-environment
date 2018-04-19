@@ -48,7 +48,6 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private GridPane myGrid = new GridPane();
 	private AuthoringModel myModel;
 	private BooleanProperty myCSSChanged;
 
@@ -224,9 +223,8 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
-		myGrid = grid;
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathSize);
+	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathSize, col, row);
 	}
 
 	/**
@@ -341,9 +339,6 @@ public class AuthoringView extends View {
 	    return 1;
 	}
 	
-	public GridPane getPathGrid() {
-		return myGrid;
-	}
 
 	protected void writeToFile() {
 		AuthoringModelWriter writer = new AuthoringModelWriter();

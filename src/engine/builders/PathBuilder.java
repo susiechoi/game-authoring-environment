@@ -11,8 +11,8 @@ import java.util.Map;
 import engine.path.Path;
 
 public class PathBuilder {
-	public Path construct(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) {
-		Path newPath = new Path(coordinates, imageCoordinates, backgroundImage, pathSize);
+	public Path construct(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) {
+		Path newPath = new Path(coordinates, imageCoordinates, backgroundImage, pathSize, col, row);
 		return newPath;
 	}
 }

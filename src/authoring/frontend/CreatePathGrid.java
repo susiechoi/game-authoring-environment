@@ -22,7 +22,7 @@ import javafx.scene.layout.StackPane;
 
 /* 
  * IMPORTANT TODO: Correctly pass background image, fix image checking, integrate styling 
- * TONIGHT: PASS Row and column counts (make methods to get rid of get column count...?), make laod to edit work
+ * TONIGHT: PASS Row and column counts (make methods to get rid of get column count...?), make load to edit work, fix path coordinates
  * 
  * Right click to be able to get specialty paths
  * Apply goes back one screen

@@ -185,7 +185,7 @@ public class ScreenManager extends View {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize);;
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
 	}
 }
