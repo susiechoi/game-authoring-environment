@@ -58,7 +58,7 @@ public class AuthoringModel implements GameData {
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
 	private Path myDefaultPath;
-	private Path myPath;
+//	private Path myPath;
 	protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
 	protected String myBackgroundImage = new String();
 	protected List<Point> myPathCoordinates = new ArrayList<Point>();

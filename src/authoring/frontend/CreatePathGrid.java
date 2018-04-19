@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,6 +22,7 @@ import javafx.scene.layout.StackPane;
 
 /* 
  * IMPORTANT TODO: Correctly pass background image, fix image checking, integrate styling 
+ * TONIGHT: PASS Row and column counts (make methods to get rid of get column count...?), make laod to edit work
  * 
  * Right click to be able to get specialty paths
  * Apply goes back one screen
@@ -46,12 +46,12 @@ public class CreatePathGrid extends AdjustScreen {
 	private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
 	private GridPane checkGrid;
-	private Label startLabel;
-	private Label endLabel;
-	private Label pathLabel;
+	private Label startLabel = new Label("start");
+	private Label endLabel = new Label("end");
+	private Label pathLabel = new Label("path");
 	private ArrayList<Point> pathCoords = new ArrayList<Point>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
-	private HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>(); //map (imagefileName, (row,col))
+	private HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>();
 	private ArrayList<Point> startPoints = new ArrayList<Point>();
 	private ArrayList<Point> endPoints = new ArrayList<Point>();
 	private ArrayList<Point> pathPoints = new ArrayList<Point>();
@@ -86,6 +86,7 @@ public class CreatePathGrid extends AdjustScreen {
 
 		if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) {
 			addImagesToGrid((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap"), (int) getView().getObjectAttribute("Path", "", "myPathSize"));
+			setGridConstraints(grid, (int) getView().getObjectAttribute("Path", "", "myPathSize"));
 			grid.setStyle("-fx-background-image: url(" + getView().getObjectAttribute("Path", "", "myBackgroundImage") + ")");
 		}
 		return grid;
@@ -124,26 +125,16 @@ public class CreatePathGrid extends AdjustScreen {
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty());
 							draggableImagesOnScreen.add(path);
 							grid.add(path.getPathImage(), colIndex, rowIndex);
-
 							if (((ImageView) event.getGestureSource()).getId() == "start") {
 								startCount++;
 								path.getPathImage().setId("start");
 								path.setPathName(startCount);
-
-								//								startPoints.add(new Point(colIndex, rowIndex));
-								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
 							} else if (((ImageView) event.getGestureSource()).getId() == "end") {
 								path.getPathImage().setId("end");
-
-								//								endPoints.add(new Point(colIndex, rowIndex));
-								endLabel = new Label("end");
 								checkGrid.add(endLabel, colIndex, rowIndex);
 							} else if (((ImageView) event.getGestureSource()).getId() == "path") {
 								path.getPathImage().setId("path");
-
-								//								pathPoints.add(new Point(colIndex, rowIndex));
-								pathLabel = new Label("path");
 								checkGrid.add(pathLabel, colIndex, rowIndex);
 							}
 							success = true;
@@ -174,14 +165,27 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 	
 	public void addImagesToGrid(Map<String, List<Point>> map, int pathSize) {
-		for (String key: map.keySet()) { //goes through images
+		int count = 0;
+		for (String key: map.keySet()) {
+			count++;
 			List<Point> pointList = map.get(key);
+			System.out.println("key: " +key);
+			System.out.println("points: " +pointList);
+			System.out.println(count);
 			for (int i = 0; i < pointList.size(); i++) {
 				Point point = pointList.get(i);
 				DraggableImage path = new DraggableImage(new Image(key));
-				path.setDraggable(checkGrid, rowIndex, colIndex);
+				path.setDraggable(checkGrid, (int)point.getY(), (int)point.getX());
 				path.getPathImage().setFitWidth(pathSize);
 				path.getPathImage().setFitHeight(pathSize);
+//				TODO: Figure out how to get this to work with path checking
+//				if (count == 1) {
+//					checkGrid.add(startLabel, (int)point.getX(), (int)point.getY());
+//				} else if (count == 2) {
+//					checkGrid.add(pathLabel, (int)point.getX(), (int)point.getY());
+//				} else if (count == 3) {
+//					checkGrid.add(endLabel, (int)point.getX(), (int)point.getY());
+//				}
 				GridPane.setFillWidth(path.getPathImage(), true);
 				GridPane.setFillHeight(path.getPathImage(), true);
 				grid.add(path.getPathImage(), (int)point.getX(), (int)point.getY());
@@ -281,7 +285,6 @@ public class CreatePathGrid extends AdjustScreen {
 	protected List<Point> getStartingPosition() { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
 		for (int x = 0; x < checkGrid.getColumnCount(); x++) {
 			for (int y = 0; y < checkGrid.getRowCount(); y++) {
-				//check if start points already contains that point
 				if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText().equals("start")) {
 					startPoints.add(new Point(x, y));
 				}
@@ -311,10 +314,6 @@ public class CreatePathGrid extends AdjustScreen {
 		return pathCoords;
 	}
 
-	protected int isStartInGrid() {
-		return startCount;
-	}
-
 	protected HashMap<String, List<Point>> getGridImageCoordinates() {
 		for (int x = 0; x < checkGrid.getColumnCount(); x++) {
 			for (int y = 0; y < checkGrid.getRowCount(); y++) {
@@ -327,10 +326,6 @@ public class CreatePathGrid extends AdjustScreen {
 				}
 			}
 		}
-//		System.out.println("START: " +startPoints);
-//		System.out.println("END: " +endPoints);
-//		System.out.println("PATH: " +pathPoints);
-
 		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
 		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
 		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
@@ -347,8 +342,16 @@ public class CreatePathGrid extends AdjustScreen {
 	public void setPathImage(ImageView newImage) {
 		pathImage = newImage;
 	}
+	
+	public int getColumnCount() {
+		return grid.getColumnCount();
+	}
+	
+	public int getRowCount() {
+		return grid.getRowCount();
+	}
 
-
+	
 	@Override
 	protected Parent populateScreenWithFields() {
 		// TODO Auto-generated method stub
@@ -358,6 +361,5 @@ public class CreatePathGrid extends AdjustScreen {
 	@Override
 	protected void populateFieldsWithData() {
 		// TODO Auto-generated method stub
-
 	}
 }
