@@ -97,6 +97,7 @@ public class ScreenManager extends View {
     	myGameFilePath = filepath; 
 	Parent gameScreenRoot = GAME_SCREEN.getScreen();
 	STAGE_MANAGER.switchScreen(gameScreenRoot);
+	System.out.println("loadGameScreenNew in screen manager");
 	MEDIATOR.startPlay(filepath);
     }
     
