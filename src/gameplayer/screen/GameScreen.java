@@ -61,7 +61,7 @@ public class GameScreen extends Screen {
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this, PROMPTS);
-		CONTROLS_PANEL = new ControlsPanel(this);
+		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
 		SCORE_PANEL = new ScorePanel(this);
 		GAME_PANEL = new GamePanel(this);
 		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS);

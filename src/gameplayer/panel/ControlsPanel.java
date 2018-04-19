@@ -12,21 +12,26 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Tooltip;
+import frontend.PromptReader;
+
 
 public class ControlsPanel extends Panel{
 
 	//TODO read this from settings or properties file, even better would be autoscaling to fit space
 	private final int DEFAULT_CONTROL_BUTTON_SIZE = 35;
 
+	private final PromptReader PROMPTS;
 	private final GameScreen GAME_SCREEN;
 	private final UIFactory UIFACTORY;
 	private final String CONTROL_BUTTON_FILEPATH = "images/ControlPanelImages/ControlButtonNames.properties";
 	private final PropertiesReader PROP_READ;
 
-	public ControlsPanel(GameScreen gameScreen) {
+	public ControlsPanel(GameScreen gameScreen, PromptReader promptReader) {
 		GAME_SCREEN = gameScreen;
 		UIFACTORY = new UIFactory();
 		PROP_READ = new PropertiesReader();
+		PROMPTS = promptReader;
 	}
 
 
@@ -51,6 +56,7 @@ public class ControlsPanel extends Panel{
 			for(String control : controlsMap.keySet()) {
 				Button controlButton = UIFACTORY.makeImageButton("controlButton", controlsMap.get(control));
 				controlButton.setOnMouseClicked((arg0) -> GAME_SCREEN.controlTriggered(control));
+				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control+"Tooltip")));
 				if(count <controlsSplit)
 					topControls.getChildren().add(controlButton);
 				else
