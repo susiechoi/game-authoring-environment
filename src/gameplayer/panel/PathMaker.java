@@ -47,7 +47,7 @@ public class PathMaker {
 			colConst.setPrefWidth(myPathSize);
 			grid.getColumnConstraints().add(colConst);
 		}
-		for (int i = 0; i <  750/myPathSize; i++) {
+		for (int i = 0; i < 750/myPathSize; i++) {
 			RowConstraints rowConst = new RowConstraints();
 			rowConst.setPrefHeight(myPathSize);
 			grid.getRowConstraints().add(rowConst);         

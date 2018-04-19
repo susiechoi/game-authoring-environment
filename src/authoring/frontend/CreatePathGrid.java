@@ -192,41 +192,35 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 
 	protected boolean checkPathConnected(GridPane grid, int row, int col) {
-		
 		if (getNode(grid, col, row) != null) {
 			Label checkLabel = (Label) getNode(grid, col, row);
 			if (checkLabel.getText() == "end") {
 				return true;
-			}
-			if (checkLabel.getText() == "start") {
-				addCoordinates(row, col);
 			}
 		} else {
 			return false;
 		}
 
 		removeNode(grid, row, col);
+		addCoordinates(row, col);
 
 		if ((checkPathConnected(grid, row, col + 1)) == true) {
 			grid.add(new Label("path"), col, row);
-			addCoordinates(row, col+1);
 			return true;
 		}
 		if ((checkPathConnected(grid, row + 1 , col)) == true) {
 			grid.add(new Label("path"), col, row);
-			addCoordinates(row + 1, col);
 			return true;
 		}
 		if ((checkPathConnected(grid, row, col - 1)) == true) {
 			grid.add(new Label("path"), col, row);
-			addCoordinates(row, col - 1);
 			return true;
 		}
 		if ((checkPathConnected(grid, row - 1, col)) == true) {
 			grid.add(new Label("path"), col, row);
-			addCoordinates(row - 1, col);
 			return true;
 		}
+
 		grid.add(new Label("path"), col, row);
 		return false;
 	}

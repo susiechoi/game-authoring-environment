@@ -118,8 +118,6 @@ public class AuthoringModel implements GameData {
 
 	public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) throws ObjectNotFoundException {
 		myImageMap = imageCoordinates;
-//		myBackgroundImage = backgroundImage;
-//		myPathCoordinates = coordinates;
 		Level currentLevel = levelCheck(level);
 		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathSize, col, row);
 		currentLevel.addPath(newPath);
