@@ -27,7 +27,6 @@ public class Launcher extends Manager<Projectile>{
 
     public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
 	myFireRate = fireRate;
-	System.out.println("fire rate is " + myFireRate.getProperty());
 	myProjectile = projectile;
 	myRange = range;
 	timeSinceLastShot = 0;
@@ -94,6 +93,7 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+	timeSinceLastShot=0;
     	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
     	this.addToActiveList(launchedProjectile);
     	return launchedProjectile;
@@ -105,7 +105,6 @@ public class Launcher extends Manager<Projectile>{
      */
     public boolean hasReloaded(double elapsedTime) {
      	if(timeSinceLastShot >= myFireRate.getProperty()) {
-     		timeSinceLastShot=0;
      		return true;
      	}
      	timeSinceLastShot+=elapsedTime;
