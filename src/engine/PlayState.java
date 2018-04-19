@@ -79,22 +79,22 @@ public class PlayState implements GameData {
     public void update(double elapsedTime) {
 	count++;
 	if(!isPaused) {
-//	    try {
-//		for (Path path : currentLevel.getUnmodifiablePaths()) {
-//		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
-//			Wave currentWave = currentLevel.getWaves().get(0);
-//			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
-//			enemy.move(path.initialPoint());
-//			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
-//			myMediator.addSpriteToScreen(enemy);
-//		    }
-//		    if(count % 10 == 0) {
-//			myEnemyManager.moveEnemies();
-//		    }
-//		}
-//	    } catch (Exception e) {
-//		// do nothing
-//	    }
+	    try {
+		for (Path path : currentLevel.getUnmodifiablePaths()) {
+		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
+			Wave currentWave = currentLevel.getWaves().get(0);
+			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
+			enemy.move(path.initialPoint());
+			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
+			myMediator.addSpriteToScreen(enemy);
+		    }
+		    if(count % 10 == 0) {
+			myEnemyManager.moveEnemies();
+		    }
+		}
+	    } catch (Exception e) {
+		// do nothing
+	    }
 
 
 	    //			Path path = currentLevel.getUnmodifiablePaths().get(0);
@@ -117,6 +117,7 @@ public class PlayState implements GameData {
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
+	    System.out.println("enemy manager size " + myEnemyManager.getListOfActive().size());
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(),elapsedTime)) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
