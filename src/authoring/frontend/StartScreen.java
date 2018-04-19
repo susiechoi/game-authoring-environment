@@ -67,7 +67,12 @@ public class StartScreen extends AuthoringScreen {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, gameNamePrompt);
 	editButton.setDisable(true);
 	editButton.setOnAction(e -> {
-		getView().readFromFile(gameChooser.getValue());
+		try {
+		    getView().readFromFile(gameChooser.getValue());
+		} catch (MissingPropertiesException e1) {
+		    // TODO Auto-generated catch block
+		    getView().loadErrorScreen("NoObject");
+		}
 	});
 	Button changeCSS = getUIFactory().makeTextButton("cssbutton", getErrorCheckedPrompt("ChangeStyling"));
 	changeCSS.setOnAction(e -> {

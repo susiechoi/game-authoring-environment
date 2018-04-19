@@ -41,6 +41,7 @@ public class HealthProperty extends UpgradeProperty {
 	return this.getProperty() > 0;
     }
     
+    @Override
     public double getCost() {
     	return myCost; 
     }

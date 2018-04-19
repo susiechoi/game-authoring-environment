@@ -63,6 +63,7 @@ public class CreatePathGrid extends AdjustScreen {
     // private EventHandler<DragEvent> myOnDragDropped;
     // private EventHandler<DragEvent> myOnDragOver;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
+	@Override
 	public void handle(MouseEvent event) {
 	}
     };
@@ -110,6 +111,7 @@ public class CreatePathGrid extends AdjustScreen {
 		final int row = y;
 
 		cell.setOnDragOver(new EventHandler <DragEvent>() {
+		    @Override
 		    public void handle(DragEvent event) {
 			if (event.getDragboard().hasImage()) {
 			    event.acceptTransferModes(TransferMode.ANY);
@@ -121,6 +123,7 @@ public class CreatePathGrid extends AdjustScreen {
 		});
 
 		cell.setOnDragDropped(new EventHandler <DragEvent>() {
+		    @Override
 		    public void handle(DragEvent event) {
 			event.acceptTransferModes(TransferMode.ANY);
 			Dragboard db = event.getDragboard();
@@ -278,6 +281,7 @@ public class CreatePathGrid extends AdjustScreen {
 	    //newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
 	    //newNode.setOnDragDropped(e -> {});
 	    myOnMouseClicked = new EventHandler <MouseEvent>() {
+		@Override
 		public void handle(MouseEvent event) {
 		    myCurrentClicked = new DraggableImage(startImage.getImage()); //TODO
 		    action.handle(event);

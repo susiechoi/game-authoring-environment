@@ -227,7 +227,7 @@ public class Mediator {
      */
     public void removeListOfSpritesFromScreen(List<Sprite> list) {
 	for(Sprite sprite : list) {
-	    this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
+	    this.removeSpriteFromScreen( sprite); 
 	}
     }
 

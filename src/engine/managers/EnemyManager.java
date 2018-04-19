@@ -48,7 +48,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	for (Path path : myEnemies.keySet()) {
 	    for (Enemy enemy : myEnemies.get(path)) {
 		if(path.checkKill(enemy.currentPosition())) {
-		    deadEnemies.add((Sprite) enemy);
+		    deadEnemies.add(enemy);
 		}
 		else {
 		    Point newPosition = path.nextPosition(enemy.currentPosition(), enemy.getIndex(),enemy.getAngle());

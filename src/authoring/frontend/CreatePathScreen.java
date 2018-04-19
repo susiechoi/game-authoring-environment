@@ -94,6 +94,7 @@ public class CreatePathScreen extends PathScreen {
 	    setGridUIComponents(myPathPanel, myPathToolBar);
 	    ImageView trashImage = myPathPanel.makeTrashImage();
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				if (event.getDragboard().hasImage()) {
 					event.acceptTransferModes(TransferMode.ANY);
@@ -102,6 +103,7 @@ public class CreatePathScreen extends PathScreen {
 		});
 
 		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				event.acceptTransferModes(TransferMode.ANY);
 				Dragboard db = event.getDragboard();
@@ -114,7 +116,7 @@ public class CreatePathScreen extends PathScreen {
 			}
 		});
 
-		Button backgroundButton = (Button) myPathToolBar.getBackgroundButton();
+		Button backgroundButton = myPathToolBar.getBackgroundButton();
 		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

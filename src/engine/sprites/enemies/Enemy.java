@@ -98,6 +98,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	return position;
     }
 
+    @Override
     public String getName() {
 	return myName; 
     }

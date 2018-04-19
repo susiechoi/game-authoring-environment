@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import xml.AuthoringModelWriter;
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
@@ -59,7 +58,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		demoButton.setOnAction(e -> {
 		    	getView().writeToFile();
 		    	new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
-				currentModel).demoPlay(currentModel); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
+				currentModel).demoPlay(currentModel.getGame()); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
 		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setOnAction(e -> {

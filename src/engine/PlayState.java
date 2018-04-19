@@ -117,7 +117,7 @@ public class PlayState implements GameData {
 	    myTowerManager.moveTowers();
 
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
-		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+		myMediator.addSpriteToScreen(projectile);
 	    }
 	    updateScore(toBeRemoved);
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
@@ -173,7 +173,7 @@ public class PlayState implements GameData {
     public void sellTower(FrontEndTower tower) {
 	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
-	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
+	myMediator.removeSpriteFromScreen(tower);
     }
 
     /**

@@ -2,7 +2,6 @@ package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;

@@ -38,7 +38,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class UIFactory {
 
@@ -352,8 +351,9 @@ public class UIFactory {
      * @return HBox containing Slider/prompt/current value displaying
      */
     public HBox setupSliderWithValue(String id, Slider slider, String prompt) {
-	Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
+	Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 	slider.valueProperty().addListener(new ChangeListener<Number>() {
+	    @Override
 	    public void changed(ObservableValue<? extends Number> ov,
 		    Number old_val, Number new_val) {
 		sliderValue.setText(String.format("%03d", (int)(double)new_val));
