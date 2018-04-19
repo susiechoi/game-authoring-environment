@@ -11,12 +11,14 @@ import engine.sprites.enemies.Enemy;
 /**
  * 
  * @author Ben Hodgson 3/29/18
- *
+ * @author Sarah Bland
  * Class used for defining a wave of enemies to appear in a level
  */
 public class Wave {
+    public static final int DEFAULT_WAVE_TIME = 5;
 
     private Map<Path, Map<Enemy, Integer>> myWaveMap;
+    private int myTime;
 
     @Deprecated
     public Wave(Path path) {
@@ -25,8 +27,10 @@ public class Wave {
 
     public Wave() {
 	myWaveMap = new HashMap<>();
-	//myAllEnemies = new HashMap<>();
+	myTime = DEFAULT_WAVE_TIME;
     }
+    
+    
 
     /**
      * Adds a number of an enemy type to a wave for the level
@@ -38,7 +42,15 @@ public class Wave {
     public void addEnemy(Enemy enemy, int number) {
 	Map<Enemy, Integer> enemyMap = new HashMap<>();
 	enemyMap.put(enemy, number);
-	myWaveMap.put(new Path(null, null, null, number), enemyMap);
+	myWaveMap.put(new Path(null, null, null, 0), enemyMap);
+    }
+    
+    public int getWaveTime() {
+	return myTime;
+    }
+    
+    public void setWaveTime(int time) {
+	myTime = time;
     }
 
     public void addEnemy(Enemy enemy, Path path, int number) {
@@ -68,7 +80,14 @@ public class Wave {
     }
 
     public Map<Enemy, Integer> getUnmodifiableEnemies(Path path) {
-	return Collections.unmodifiableMap(myWaveMap.get(path));
+	if(myWaveMap.containsKey(path)) {
+	    return Collections.unmodifiableMap(myWaveMap.get(path));
+	}
+	else {
+	    Map<Enemy, Integer> enemiesMap = new HashMap<>();
+	    myWaveMap.put(path, enemiesMap);
+	    return Collections.unmodifiableMap(enemiesMap);
+	}
     }
 
 
@@ -93,8 +112,6 @@ public class Wave {
      */
     private void decrementEnemyCount(Enemy enemy, Path path) {
 	Map<Enemy, Integer> enemyMap = myWaveMap.get(path);
-	System.out.println("IN WAVE OBJECT");
-	    System.out.println(enemyMap.get(enemy)-1);
 	enemyMap.put(enemy, enemyMap.get(enemy)-1);
     }
 
@@ -124,7 +141,6 @@ public class Wave {
 		    return new Enemy(retEnemy);
 		}
 	    }
-	System.out.println("RETURNING NULL");
 	return null;
     }
 
