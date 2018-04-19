@@ -14,7 +14,10 @@ import javafx.scene.control.Label;
 import gameplayer.screen.GameScreen;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import sound.ITRTSoundFactory;
+import javafx.scene.control.Slider;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class SettingsPanel extends Panel {
@@ -28,6 +31,7 @@ public class SettingsPanel extends Panel {
     private final PropertiesReader PROP_READ;
     private final PromptReader PROMPTS;
     private final UIFactory UIFACTORY;
+    private final ITRTSoundFactory SOUND_FACTORY;
 
 
     public SettingsPanel(GameScreen gameScreen, PromptReader promptReader) {
@@ -35,12 +39,16 @@ public class SettingsPanel extends Panel {
         PROMPTS =  promptReader;
         PROP_READ = new PropertiesReader();
         UIFACTORY = new UIFactory();
+        SOUND_FACTORY = new ITRTSoundFactory();
     }
 
     @Override
     public void makePanel() {
 
         VBox panelRoot = new VBox();
+        Button volumeToggle = SOUND_FACTORY.createMuteButton();
+        Slider volumeSlider = SOUND_FACTORY.createVolumeSlider();
+        Button musicToggle = SOUND_FACTORY.createPlayBackgroundMusicButton();
         panelRoot.setAlignment(Pos.CENTER);
         makeSettingsButtons(panelRoot);
         System.out.println(panelRoot.getPrefHeight());
