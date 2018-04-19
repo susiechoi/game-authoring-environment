@@ -22,13 +22,14 @@ public class Launcher extends Manager<Projectile>{
     private RangeProperty myRange;
     private FireRateProperty myFireRate;
     private Projectile myProjectile;
-    private long timeLastFired;
+    private double timeSinceLastShot;
 
     public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
 	myFireRate = fireRate;
+	System.out.println("fire rate is " + myFireRate.getProperty());
 	myProjectile = projectile;
 	myRange = range;
-	timeLastFired = System.nanoTime();
+	timeSinceLastShot = 0;
     }
     
     
@@ -37,7 +38,7 @@ public class Launcher extends Manager<Projectile>{
 	myFireRate = copiedLauncher.getFireRateProperty();
 	myProjectile = copiedLauncher.getProjectile();
 	myRange = copiedLauncher.getRangeProperty();
-	timeLastFired = System.nanoTime();
+	timeSinceLastShot = 0;
     }
 
 
@@ -85,15 +86,14 @@ public class Launcher extends Manager<Projectile>{
      * Checks to see if the rate of fire is less than the time elapsed since the last shot
      * @return 
      */
-    public boolean hasReloaded() {
-    	long currTime = System.nanoTime();
-     	long timeSinceLastShot = currTime - timeLastFired;
-     	if(timeSinceLastShot >= myFireRate.getProperty()*1000000000) {
-     		timeLastFired = currTime;
+    public boolean hasReloaded(double elapsedTime) {
+     	if(timeSinceLastShot >= myFireRate.getProperty()) {
+     		timeSinceLastShot=0;
      		return true;
      	}
-		return false;
-	}
+     	timeSinceLastShot+=elapsedTime;
+	return false;
+    }
 
     public double upgradeDamage(double balance) {
 	return myProjectile.upgradeDamage(balance);

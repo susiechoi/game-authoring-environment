@@ -1,6 +1,5 @@
 package authoring.frontend;
 
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,95 +21,95 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
 /* 
+ * IMPORTANT TODO: Correctly pass background image, fix image checking, integrate styling 
+ * TONIGHT: PASS Row and column counts (make methods to get rid of get column count...?), make laod to edit work
+ * 
  * Right click to be able to get specialty paths
- * Back to main button, if apply has not been clicked then prompt (changes will not be saved)
- * 
- * Need a way to get style info for defaults
- * check for completed path before demo (percolation), cannot click apply until this is done (The apply button will 
- * reassign the path in the AuthoringModel.java class to be used in the game)
- * 
- * Auto-generate new levels, reading in for default parameters
- * auto-populate cells by mouse drag (right click?) or copy and paste
+ * Apply goes back one screen
+ * Auto-generate new levels
  */
 
 /**
- * Class to create/manage the GridPane for path authoring and disply.
+ * Class to create/manage the GridPane for path authoring and display.
  * @author Erik Riis
  *
  */
 public class CreatePathGrid extends AdjustScreen {
 
 	public static final int INITIAL_PATH_SIZE = 60;
-	private double pathSize;
+	private int pathSize;
 	private int colIndex;
 	private int rowIndex;
 	private GridPane grid = new GridPane();
 	private SelectionModel model;
-
-	//TODO: have these update with change images, and get images from default file
 	private ImageView startImage = new ImageView(new Image("file:images/brick.png"));
 	private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
 	private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
 	private GridPane checkGrid;
-	private Label startLabel;
-	private Label endLabel;
-	private Label pathLabel;
+	private Label startLabel = new Label("start");
+	private Label endLabel = new Label("end");
+	private Label pathLabel = new Label("path");
 	private ArrayList<Point> pathCoords = new ArrayList<Point>();
 	private ArrayList<DraggableImage> draggableImagesOnScreen = new ArrayList<>();
-	private HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>(); //map (imagefileName, (row,col))
+	private HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>();
 	private ArrayList<Point> startPoints = new ArrayList<Point>();
 	private ArrayList<Point> endPoints = new ArrayList<Point>();
 	private ArrayList<Point> pathPoints = new ArrayList<Point>();
 	private DraggableImage myCurrentClicked;
+	private DraggableImage path;
 	private int startCount = 0;
+	private EventHandler<DragEvent> myOnDragDropped;
+	private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
+		public void handle(MouseEvent event) {
+		}
+	};
+	private boolean unDraggable;
 
 	public CreatePathGrid(AuthoringView view) {
 		super(view);
+		unDraggable = false;
 	}
 
 	/**
 	 * @return
 	 */
 	protected GridPane makePathGrid() {
-
 		grid = new GridPane();
 
 		checkGrid = new GridPane();
-		checkGrid.setMaxSize(1020.0, 625.0);
+		checkGrid.setMaxSize(1020.0, 650.0);
 		setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
-		grid.setMaxSize(1020.0, 625.0); 
+		grid.setMaxSize(1020.0, 650.0); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
-//		grid.setGridLinesVisible(true);
-
-//		System.out.println(getView().getImageCoordinates());
-//		gridImageCoordinates = getView().getImageCoordinates();
-
 
 		model = new SelectionModel();
 		new ShiftSelection(grid, model);
 
-		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
-		populateGrid();
 
+		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
+		populateGrid(grid);
+
+		System.out.println("HERE: " +getView().getObjectAttribute("Path", "", "myPathMap"));
+
+		if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) {
+			addImagesToGrid((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap"), (int) getView().getObjectAttribute("Path", "", "myPathSize"));
+			setGridConstraints(grid, (int) getView().getObjectAttribute("Path", "", "myPathSize"));
+			grid.setStyle("-fx-background-image: url(" + getView().getObjectAttribute("Path", "", "myBackgroundImage") + ")");
+		}
 		return grid;
 	}
 
-	//TODO: REFACTOR
+	//Given: path images and locations as defaults, change to populate with initial params
+	private void populateGrid(GridPane grid) { //grid, 
 
-	//Given: path images and locations as defaults, change to populate with initial params, 
-	private void populateGrid() {
-
-		for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
-			for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
+		for (int x = 0 ; x < grid.getColumnCount(); x++) {
+			for (int y = 0 ; y < grid.getRowCount(); y++) {
 				StackPane cell = new StackPane();
 
 				final int col = x;
 				final int row = y;
 
-				checkGrid.add(cell, x, y);
-
-				//This can be separate class (for drag over objects)
 				cell.setOnDragOver(new EventHandler <DragEvent>() {
 					public void handle(DragEvent event) {
 						if (event.getDragboard().hasImage()) {
@@ -128,25 +127,22 @@ public class CreatePathGrid extends AdjustScreen {
 						Dragboard db = event.getDragboard();
 						boolean success = false;
 						if (db.hasImage()) {
-							DraggableImage path = new DraggableImage(db.getImage());
-							path.setDraggable();
+							path = new DraggableImage(db.getImage());
+							path.setDraggable(checkGrid, rowIndex, colIndex);
 							path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 							path.getPathImage().fitHeightProperty().bind(cell.heightProperty());
 							draggableImagesOnScreen.add(path);
 							grid.add(path.getPathImage(), colIndex, rowIndex);
-							if (imageCompare(path.getPathImage().getImage(), startImage.getImage()) == true) {
+							if (((ImageView) event.getGestureSource()).getId() == "start") {
 								startCount++;
+								path.getPathImage().setId("start");
 								path.setPathName(startCount);
-								startPoints.add(new Point(colIndex, rowIndex));
-								startLabel = new Label("start");
 								checkGrid.add(startLabel, colIndex, rowIndex);
-							} else if (imageCompare(path.getPathImage().getImage(), endImage.getImage()) == true) {
-								endPoints.add(new Point(colIndex, rowIndex));
-								endLabel = new Label("end");
+							} else if (((ImageView) event.getGestureSource()).getId() == "end") {
+								path.getPathImage().setId("end");
 								checkGrid.add(endLabel, colIndex, rowIndex);
-							} else if (imageCompare(path.getPathImage().getImage(), pathImage.getImage()) == true) {
-								pathPoints.add(new Point(colIndex, rowIndex));
-								pathLabel = new Label("path");
+							} else if (((ImageView) event.getGestureSource()).getId() == "path") {
+								path.getPathImage().setId("path");
 								checkGrid.add(pathLabel, colIndex, rowIndex);
 							}
 							success = true;
@@ -160,18 +156,7 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	}
 
-	protected void addImagesToGrid(Map<String, List<Point>> imageCoordinates) {
-		if (imageCoordinates.size() != 0) {
-			for (String key: imageCoordinates.keySet()) { //goes through images
-				for (int i = 0; i < imageCoordinates.keySet().size(); i++) {
-					Point point = imageCoordinates.get(key).get(i);
-					grid.add(new DraggableImage(new Image(key)), (int) point.getX(), (int) point.getY());
-				}
-			}
-		}
-	}
-
-	protected void setGridConstraints(GridPane grid, double size) {
+	protected void setGridConstraints(GridPane grid, int size) {
 		grid.getColumnConstraints().clear();
 		grid.getRowConstraints().clear();
 		pathSize = size;
@@ -185,7 +170,35 @@ public class CreatePathGrid extends AdjustScreen {
 			rowConst.setPrefHeight(pathSize);
 			grid.getRowConstraints().add(rowConst);         
 		}
-		populateGrid();
+	}
+
+	public void addImagesToGrid(Map<String, List<Point>> map, int pathSize) {
+		int count = 0;
+		for (String key: map.keySet()) {
+			count++;
+			List<Point> pointList = map.get(key);
+			System.out.println("key: " +key);
+			System.out.println("points: " +pointList);
+			System.out.println(count);
+			for (int i = 0; i < pointList.size(); i++) {
+				Point point = pointList.get(i);
+				DraggableImage path = new DraggableImage(new Image(key));
+				path.setDraggable(checkGrid, (int)point.getY(), (int)point.getX());
+				path.getPathImage().setFitWidth(pathSize);
+				path.getPathImage().setFitHeight(pathSize);
+				//				TODO: Figure out how to get this to work with path checking
+				//				if (count == 1) {
+				//					checkGrid.add(startLabel, (int)point.getX(), (int)point.getY());
+				//				} else if (count == 2) {
+				//					checkGrid.add(pathLabel, (int)point.getX(), (int)point.getY());
+				//				} else if (count == 3) {
+				//					checkGrid.add(endLabel, (int)point.getX(), (int)point.getY());
+				//				}
+				//				GridPane.setFillWidth(path.getPathImage(), true);
+				//				GridPane.setFillHeight(path.getPathImage(), true);
+				grid.add(path.getPathImage(), (int)point.getX(), (int)point.getY());
+			}
+		}
 	}
 
 	protected boolean checkPathConnected(GridPane grid, int row, int col) {
@@ -196,7 +209,6 @@ public class CreatePathGrid extends AdjustScreen {
 				return true;
 			}
 		} else {
-
 			return false;
 		}
 
@@ -222,11 +234,12 @@ public class CreatePathGrid extends AdjustScreen {
 			addCoordinates(row - 1, col);
 			return true;
 		}
-
+		grid.add(new Label("path"), col, row);
 		return false;
 	}
 
 	protected void addCoordinates(int row, int col) {
+		//TODO: add Ids? for start/path/end
 		double x = getNode(grid, col, row).getBoundsInParent().getMinX();
 		double y = getNode(grid, col, row).getBoundsInParent().getMinY();
 		Point point = new Point((int) x, (int) y);
@@ -256,38 +269,50 @@ public class CreatePathGrid extends AdjustScreen {
 		} 
 	}
 
-	protected boolean imageCompare(Image image1, Image image2) {
-		for (int i = 0; i < image1.getWidth(); i++){
-			for (int j = 0; j < image1.getHeight(); j++){
-				if (image1.getPixelReader().getArgb(i, j) != image2.getPixelReader().getArgb(i, j)) {
-					return false;
-				}
-			}
-		}
-		return true;
+	protected void setUpForWaves(EventHandler<MouseEvent> action) {
+		makeUnDraggable(action);
 	}
 
-	protected void setUpForWaves(EventHandler<MouseEvent> action) {
-		makeUnDraggable();
-		for(DraggableImage image : draggableImagesOnScreen) {
-			image.getPathImage().setOnMouseClicked(e -> 
-			{
-				myCurrentClicked = image;
-				action.handle(e);
-			});
+	private void makeUnDraggable(EventHandler<MouseEvent> action) {
+		///System.out.println("trying to make undraggable");
+		for(Node newNode: grid.getChildren()){
+			newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
+			newNode.setOnDragDropped(e -> {});
+			myOnMouseClicked = new EventHandler <MouseEvent>() {
+				public void handle(MouseEvent event) {
+					myCurrentClicked = new DraggableImage(startImage.getImage()); //TODO
+					action.handle(event);
+				}
+			};
+			newNode.setOnMouseClicked(myOnMouseClicked);
 		}
 	}
-	private void makeUnDraggable() {
-		for(DraggableImage image : draggableImagesOnScreen) {
-			image.disableDraggable();
-		}
+
+	protected void setUpForPathCreation() {
+		//			for(Node newNode: grid.getChildren()){
+		//				if(newNode instanceof StackPane) {
+		//					System.out.println("seeing the node");
+		//					if(myOnMouseClicked!=null|| unDraggable) {
+		//						System.out.println("hellppp");
+		//					newNode.removeEventHandler(MouseEvent.MOUSE_CLICKED, myOnMouseClicked);
+		//					newNode.setOnDragDropped(myOnDragDropped);
+		//				}
+		//			}
 	}
+
 
 	protected DraggableImage getMostRecentlyClicked() {
 		return myCurrentClicked;
 	}
 
-	protected List<Point> getStartingPosition() {
+	protected List<Point> getStartingPosition() { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
+		for (int x = 0; x < checkGrid.getColumnCount(); x++) {
+			for (int y = 0; y < checkGrid.getRowCount(); y++) {
+				if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText().equals("start")) {
+					startPoints.add(new Point(x, y));
+				}
+			}
+		}
 		return startPoints;
 	}
 
@@ -303,7 +328,7 @@ public class CreatePathGrid extends AdjustScreen {
 		return checkGrid;
 	}
 
-	protected double getPathSize() {
+	protected int getPathSize() {
 		return pathSize;
 	}
 
@@ -311,17 +336,43 @@ public class CreatePathGrid extends AdjustScreen {
 		return pathCoords;
 	}
 
-	protected int isStartInGrid() {
-		return startCount;
-	}
-
 	protected HashMap<String, List<Point>> getGridImageCoordinates() {
-		gridImageCoordinates.put(startImage.getImage().impl_getUrl(), startPoints);
-		gridImageCoordinates.put(endImage.getImage().impl_getUrl(), endPoints);
-		gridImageCoordinates.put(pathImage.getImage().impl_getUrl(), pathPoints);
+		for (int x = 0; x < checkGrid.getColumnCount(); x++) {
+			for (int y = 0; y < checkGrid.getRowCount(); y++) {
+				if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "path") {
+					pathPoints.add(new Point(x, y));
+				} else if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "start") {
+					startPoints.add(new Point(x, y));
+				} else if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "end") {
+					endPoints.add(new Point(x, y));
+				}
+			}
+		}
+		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
+		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
+		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
 		return gridImageCoordinates;
 	}
-	
+
+	public void setStartImage(ImageView newImage) {
+		startImage = newImage;
+	}
+	public void setEndImage(ImageView newImage) {
+		endImage = newImage;
+	}
+
+	public void setPathImage(ImageView newImage) {
+		pathImage = newImage;
+	}
+
+	public int getColumnCount() {
+		return grid.getColumnCount();
+	}
+
+	public int getRowCount() {
+		return grid.getRowCount();
+	}
+
 
 	@Override
 	protected Parent populateScreenWithFields() {
@@ -331,7 +382,5 @@ public class CreatePathGrid extends AdjustScreen {
 
 	@Override
 	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
-
 	}
 }

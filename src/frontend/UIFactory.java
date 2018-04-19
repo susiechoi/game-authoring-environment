@@ -251,9 +251,7 @@ public class UIFactory {
 
 		    File file = fileChooser.showOpenDialog(new Stage());
 		    file.getAbsolutePath();
-		    System.out.println("here");
 		    File fileCopy = new File("images/" + imageName + extension);
-		    System.out.println("not here");
 		    try{
 
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -420,7 +418,6 @@ public class UIFactory {
      * @return Button desired
      */
     public Button setupBackButton(EventHandler<ActionEvent> action, String backText) {
-//	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
 	Button backButton = makeTextButton("backButton",backText);
 	backButton.setOnAction(e -> {action.handle(e);});
 	return backButton; 

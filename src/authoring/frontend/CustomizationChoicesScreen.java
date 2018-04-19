@@ -41,7 +41,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	public Parent makeScreenWithoutStyling(){
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
-		//System.out.println(myGameName+" SHOULD BE THE TITLE");
 		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
 		vbox.getChildren().add(heading);
 
@@ -57,6 +56,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		AuthoringModel currentModel = getView().getModel();
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
+			getView().writeToFile();
 			new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
 				currentModel).demoPlay(currentModel); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
 		});

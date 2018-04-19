@@ -6,11 +6,9 @@ import java.util.Map;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.*;
 import engine.sprites.towers.launcher.Launcher;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
@@ -19,7 +17,9 @@ import javafx.scene.image.ImageView;
  * @author Miles Todzo
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
-
+    
+    private final String ENEMIES_KILLED = "Enemies Killed";
+    
     private HealthProperty myHealth;
     private double myHealthValue;
     private double myHealthUpgradeCost; 
@@ -30,18 +30,12 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myProjectileDamage; 
     private double myProjectileSpeed;
     private double myProjectileSize;
-    //	private double myProjectileValue;  
-    //	private double myProjectileUgradeCost; 
-    //	private double myProjectileUpgradeValue; 
     private Launcher myLauncher; 
-    //	private double myLauncherValue; 
-    //	private double myLauncherUpgradeCost; 
-    //	private double myLauncherUgradeValue; 
     private double myLauncherRate;
     private double myLauncherRange; 
     private ValueProperty myValue;
     private double myTowerValue; 
-    private Map<String, Double> propertyStats;
+    private Map<String, Integer> propertyStats;
 
     /**
      * Constructor for a Tower object that accepts parameter properties.
@@ -54,12 +48,12 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
 	super(name, image, size, launcher);
 	myHealth = health;
-	propertyStats = new HashMap<String, Double>();
+	propertyStats = new HashMap<String, Integer>();
 
 
-	propertyStats.put(health.getName(), health.getProperty());
-	propertyStats.put(value.getName(), value.getProperty());
-	propertyStats.put(this.getDamageName(), this.getDamage());
+	propertyStats.put(health.getName(), (int) health.getProperty());
+	propertyStats.put(value.getName(), (int) value.getProperty());
+	propertyStats.put(this.getDamageName(), (int) this.getDamage());
 	myHealthValue = health.getProperty(); 
 	myHealthUpgradeCost = health.getCost();
 	myHealthUpgradeValue = health.getUpgradeValue(); 
@@ -92,10 +86,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty();
-	propertyStats = new HashMap<String, Double>();
-	propertyStats.put(myHealth.getName(), myHealth.getProperty());
-	propertyStats.put(myHealth.getName(), myHealth.getProperty());
-	propertyStats.put(this.getDamageName(), this.getDamage());
+	propertyStats = new HashMap<String, Integer>();
+	propertyStats.put(myHealth.getName(),(int) myHealth.getProperty());
+	propertyStats.put(myValue.getName(), (int) myValue.getProperty());
+	propertyStats.put(this.getDamageName(), (int) this.getDamage());
 	this.place(point.getX(), point.getY());
     }
 
@@ -111,8 +105,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     @Override
     public boolean handleCollision(Sprite collider) {
     	return true;
-//	myHealth.loseHealth(collider.getDamage());
-//	return myHealth.isAlive();
     }
 
     /**
@@ -184,12 +176,14 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return myHealth;
     }
 
-    public Map<String, Double> getTowerStats(){
+    public Map<String, Integer> getTowerStats(){
+	System.out.println("in map thing " + this.getDeadCount());
+	updateStatsMap(ENEMIES_KILLED, (int) this.getDeadCount());
 	return propertyStats;
     }
 
     private void updateStatsMap(String name, double value) {
-	propertyStats.put(name, value);
+	propertyStats.put(name, (int) value);
     }
 
     @Override
@@ -200,9 +194,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return (int) (myResources - myValue.getProperty());
     }
 
-    @Override
-    public int getPointValue() {
-	return 0;
-    }
+	@Override
+	public int getPointValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

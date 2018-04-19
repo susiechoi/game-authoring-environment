@@ -21,10 +21,12 @@ public class GameEngine {
     private PlayState myPlayState;
     private Mediator myMediator;
     private Timeline ANIMATION;
+    private double timeFactor;
 
     public GameEngine(Mediator mediator) {
 	myPlayState = null;
 	myMediator = mediator;
+	timeFactor = 1;
 
 	setSpeed(DEFAULT_RELATIVE_SPEED);
 	// attach "game loop" to time line to play it
@@ -33,6 +35,7 @@ public class GameEngine {
         ANIMATION = new Timeline();
         ANIMATION.setCycleCount(Timeline.INDEFINITE);
         ANIMATION.getKeyFrames().add(frame);
+	
     }
 
     public void setPlayState(PlayState p) {
@@ -49,7 +52,7 @@ public class GameEngine {
      * @param elapsedTime
      */
     public void loop(double elapsedTime) {
-	myPlayState.update(elapsedTime);
+	myPlayState.update(elapsedTime*timeFactor);
     }
 
 
@@ -67,7 +70,6 @@ public class GameEngine {
      */
     public void start() {
 	ANIMATION.play();
-
     }
 
     /**
@@ -77,12 +79,12 @@ public class GameEngine {
      * (relative speed of program, 1 being slowest, 5 being normal, 10 being fastest)
      */
     public void setSpeed(Integer relativeSpeed) {
-	Integer speed = MILLISECOND_DELAY*(relativeSpeed/DEFAULT_RELATIVE_SPEED);
-	//System.out.println("Incomplete setSpeed method, make sure to check this functionality!");
-	//TODO myTimer.schedule may need bugfixing for scaling speed
+	timeFactor = relativeSpeed;
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Saves current Game State to File
      */
     public void savePlay(String filename) {
@@ -91,12 +93,13 @@ public class GameEngine {
     }
 
     /**
+>>>>>>> a3c8e958bf0a4ac0cf7da5e419420543043c2a3b
      * Updates Game State to new Level as specified in XML File
      * 
      * @param l: integer denoting level to jump to
      */
     public void jumpLevel(int l) {
-
+	//TODO: 
     }
 
     /**

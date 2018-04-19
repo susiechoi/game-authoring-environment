@@ -52,6 +52,7 @@ public class TowerPanel extends Panel {
     private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
     private HBox towerPane;
 
+
     public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
 	GAME_SCREEN = gameScreen;
 	PROMPTS = promptReader;
@@ -105,8 +106,6 @@ public class TowerPanel extends Panel {
 	//  panelRoot.getChildren().addAll(buttons);
 	towersAndCurr.setId("towerPanel");
 	PANEL = towersAndCurr;
-	//PANEL = panelRoot; In y'all's panel class for Slogo you had a protected PANEL variable in the abstract panel class, but we
-	//can't do that with interfaces. How would you want to approach that?
     }
 
     private VBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
@@ -160,6 +159,7 @@ public class TowerPanel extends Panel {
 	    towerHolder.getChildren().add(voidButton);
 	    HBox.setHgrow(voidButton, Priority.ALWAYS);
 	}
+
 
 
 	fullTowerHold.setAlignment(Pos.CENTER);

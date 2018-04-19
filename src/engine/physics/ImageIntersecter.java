@@ -24,7 +24,7 @@ public class ImageIntersecter implements Intersecter {
      */
     @Override
     public boolean overlaps(Node thatNode) {
-	System.out.println("intersector returns " + currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal()));
+	//System.out.println("intersector returns " + currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal()));
 	return currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal());
     }
 
