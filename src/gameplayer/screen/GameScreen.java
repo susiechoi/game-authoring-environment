@@ -8,6 +8,7 @@ import engine.Settings;
 import gameplayer.panel.*;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -158,7 +159,21 @@ public class GameScreen extends Screen {
 
 	public void settingsTriggered(String setting) {
 		if (setting.equals("volumeToggle")) {
-			SOUND_FACTORY.
+			SOUND_FACTORY.mute();
+		}
+		else if (setting.equals("play")) {
+			try{
+				SOUND_FACTORY.setBackgroundMusic("src/sound/files/epic.mp3");
+			}
+			catch (FileNotFoundException e) {
+
+			}
+			SOUND_FACTORY.playBackgroundMusic();
+
+
+		}
+		else if (setting.equals("pause")) {
+			SOUND_FACTORY.pauseBackgroundMusic();
 		}
 		else if (setting.equals("instructions")) {
 
