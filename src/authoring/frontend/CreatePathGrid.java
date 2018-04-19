@@ -232,7 +232,7 @@ public class CreatePathGrid extends AdjustScreen {
 	}
 
 	protected void addCoordinates(int row, int col) {
-		Bounds nodeBounds =  getNode(grid, col, row).getBoundsInParent();
+		Bounds nodeBounds = getNode(grid, col, row).getBoundsInParent();
 		double x = (nodeBounds.getMinX() + nodeBounds.getWidth())/2;
 		double y = (nodeBounds.getMinY() + nodeBounds.getHeight())/2;
 		Point point = new Point((int) x, (int) y);
