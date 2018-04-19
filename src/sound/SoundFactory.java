@@ -60,10 +60,17 @@ public interface SoundFactory {
     public void mute();
     
     /**
-     * This method is used to generate a button which plays a specific sound when clicked
+     * This method is used to generate a button which plays a SoundFactory's background music when clicked
+     * The setBackgroundMusic method must be invoked on SoundFactory before this button is used
      * @return the PlaySoundButton which can be added to a screen and clicked
      */
-    public Button createPlayBackgroundMusicButton() throws FileNotFoundException;
+    public Button createPlayBackgroundMusicButton();
+    
+    /**
+     * This method is used to generate a button which pauses the SoundFactory's background music when clicked
+     * @return the PauseSoundButton which can be added to a screen and clicked
+     */
+    public Button createPauseBackgroundMusicButton();
     
     /**
      * This method is used to create a volume slider which can be used to set the volume of all sounds played from this SoundFactory

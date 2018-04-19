@@ -136,10 +136,23 @@ public class ITRTSoundFactory implements SoundFactory {
      * 
      */
     @Override
-    public Button createPlayBackgroundMusicButton() throws FileNotFoundException {
+    public Button createPlayBackgroundMusicButton() {
 	return new PlayBackgroundMusicButton(this);
     }
-
+    
+    /**
+     * Implements method of the same signature in SoundFactory.
+     * The usage of this method is described in interface documentation.
+     * Implementation details described below:
+     * 
+     * The button return is of type PauseBackgroundMusicButton
+     * 
+     */
+    @Override
+    public Button createPauseBackgroundMusicButton() {
+	return new PauseBackgroundMusicButton(this);
+    }
+    
     /**
      * Implements method of the same signature in SoundFactory.
      * The usage of this method is described in interface documentation.

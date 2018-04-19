@@ -12,9 +12,6 @@ public class VolumeSlider extends Slider {
 
     public VolumeSlider(SoundFactory soundFactory) {
 	super(MIN_VOLUME, MAX_VOLUME, DEFAULT_VOLUME);
-	//this.setShowTickMarks(true);
-	//this.setMajorTickUnit(25);
-	//this.setMinorTickCount(100);
 	mySoundFactory = soundFactory;
 	this.valueProperty().addListener(e -> setVolume());
     }
