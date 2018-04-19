@@ -64,6 +64,7 @@ public class PlayController {
      * @param model: the AuthoringModel object authored by the user
      */
     public void demoPlay(AuthoringModel model) {
+    	myScreenManager.setGameFilePath(model.getGameName());
 	List<Level> levels = model.allLevels();
 	PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
 	myScreenManager.loadGameScreenNew();

@@ -41,6 +41,7 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String DEFAULT_IMAGES_SUFFIX = "ImageNames.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
+	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
 	public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
@@ -126,6 +127,10 @@ public class AuthoringModel implements GameData {
 		}
 		myLevels.put(1, firstLevel);
 	}
+	
+	public void setObjectAttribute() {
+		
+	}
 
 	/**
 	 * Method through which information can be sent to instantiate or edit an enemy object
@@ -143,11 +148,15 @@ public class AuthoringModel implements GameData {
 		else if (!currentLevel.containsEnemy(name) && !newObject) {
 			throw new ObjectNotFoundException(name);
 		}
-		//		Image enemyImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image)).toURI().toString()), 50, 50, false, false);
 		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
 		currentLevel.addEnemy(name, newEnemy);
 	}
-
+	
+//	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
+//	double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
+//		makeTower(level, newObject, name, imagePath, health, healthUpgradeCost, healthUpgradeValue, DEFAULT_PROJECTILE_IMAGE, 0, 0, 0, 0, 0, 0, 0, 0, towerValue, towerUpgradeCost, towerUpgradeValue);
+//	}
+//	
 	/**
 	 * Method through which information can be sent to instantiate or edit a tower object
 	 * Wraps constructor in case of new object creation
@@ -167,14 +176,12 @@ public class AuthoringModel implements GameData {
 		else if (!currentLevel.containsTower(name) && !newObject) {
 			throw new ObjectNotFoundException(name);
 		}
-		//		Image projectileImage = new Image((new File(myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath)).toURI().toString()), 50, 50, false, false);
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
 				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
 				projectileUpgradeValue, projectileSize, projectileSpeed);
 		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
 				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
 				launcherValue, towerProjectile); 
-		//		Image image = new Image((new File(myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, imagePath)).toURI().toString()), 50, 50, false, false);
 		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, imagePath), 50, health,  // TODO put size SOMEWHERE
 				healthUpgradeValue, healthUpgradeCost, towerLauncher, towerValue, towerUpgradeCost, towerUpgradeValue);
 		currentLevel.addTower(name, newTower);

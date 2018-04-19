@@ -130,13 +130,6 @@ public class AuthoringController {
     }
 
     /**
-     * Instantiates the game engine to demo the authored game in its current state
-     */
-    public void demo() {
-
-    }
-
-    /**
      * Invokes a Model method that adds a new level to the authored game, 
      * based on the previous level that the user has created
      * (or the default level if the user has not customized any level) 
