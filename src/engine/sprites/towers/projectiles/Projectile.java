@@ -20,7 +20,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	private DamageProperty myDamage;
 	private double mySpeed;
 	private double mySize; 
-	private Sprite myTarget;
+	private ShootingSprites myTarget;
 	private List<Sprite> hitTargets;
 	private int myHits = 1;
 	
@@ -39,7 +39,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		hitTargets = new ArrayList<>();
 	}
 	
-	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
+	public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
 	    myTarget = target;
 	    mySpeed = myProjectile.getSpeed();
@@ -53,14 +53,17 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	 * Moves image in direction of it's orientation
 	 */
 	public void move(double elapsedTime) {
-	    	rotateImage();
-	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-		this.getImageView().setX(this.getX()+xMove);
-		this.getImageView().setY(this.getY()+yMove);
+		if (this.myTarget.isAlive()) {
+			rotateImage();
+		}
+			double totalDistanceToMove = this.mySpeed*elapsedTime;
+			double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+			double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+			this.getImageView().setX(this.getX()+xMove);
+			this.getImageView().setY(this.getY()+yMove);
+			System.out.println("PROJECTLIE " + this.getImageView().getX() + " " + this.getImageView().getY());
 	}
-	
+
 	/**
 	 * Rotates the image to face the target
 	 */
@@ -117,7 +120,14 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		return !(myHits > 0);
 	}
 
+	/**
+	 * This method prevents the same projectile from colliding with the same tower/enemy more than once
+	 * Important since projectiles will be able to hit multiple enemies/towers before being removed
+	 * @param target
+	 * @return
+	 */
 	public boolean hasHit(ShootingSprites target) {
 		return this.hitTargets.contains(target);
 	}
+	
 }
