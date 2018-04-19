@@ -85,7 +85,9 @@ public class PlayState implements GameData {
 			myMediator.addSpriteToScreen(enemy);
 		    }
 		    if(count % 10 == 0) {
-			myEnemyManager.moveEnemies();
+			List<Sprite> deadEnemies = myEnemyManager.moveEnemies();
+			myMediator.removeListOfSpritesFromScreen(deadEnemies); 
+			myEnemyManager.removeFromActiveList((ShootingSprites) deadEnemies);
 		    }
 		}
 	    } catch (Exception e) {
@@ -113,7 +115,8 @@ public class PlayState implements GameData {
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
-	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(),elapsedTime)) {
+
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
 	    updateScore(toBeRemoved);
