@@ -38,9 +38,11 @@ import frontend.PropertiesReader;
 
 public class AuthoringModel implements GameData {
 	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String DEFAULT_ENEMY_IMAGE = "Zombie";
 	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String DEFAULT_IMAGES_SUFFIX = "ImageNames.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
+	public static final String DEFAULT_TOWER_IMAGE = "Pisa";
 	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
 	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
@@ -96,65 +98,6 @@ public class AuthoringModel implements GameData {
 		firstLevel.addEnemy(myDefaultName, testEnemy);
 		firstLevel.addPath(myDefaultPath);
 		myLevels.put(1, firstLevel);
-	}
-
-	public void setObjectAttribute() {
-
-	}
-
-	/**
-	 * Method through which information can be sent to instantiate or edit an enemy object
-	 * Wraps constructor in case of new object creation
-	 * @throws MissingPropertiesException 
-	 * @throws NoDuplicateNamesException 
-	 * @throws ObjectNotFoundException 
-	 */
-	public void makeEnemy(int level, boolean newObject, String name, String image, double speed, double initialHealth, double healthImpact,
-			double killReward, double killUpgradeCost, double killUpgradeValue) throws MissingPropertiesException, NoDuplicateNamesException, ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		if (currentLevel.containsEnemy(name) && newObject) {
-			throw new NoDuplicateNamesException(name);
-		}
-		else if (!currentLevel.containsEnemy(name) && !newObject) {
-			throw new ObjectNotFoundException(name);
-		}
-		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, image), speed, initialHealth, healthImpact, killReward, killUpgradeCost, killUpgradeValue);
-		currentLevel.addEnemy(name, newEnemy);
-	}
-
-	//	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-	//	double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-	//		makeTower(level, newObject, name, imagePath, health, healthUpgradeCost, healthUpgradeValue, DEFAULT_PROJECTILE_IMAGE, 0, 0, 0, 0, 0, 0, 0, 0, towerValue, towerUpgradeCost, towerUpgradeValue);
-	//	}
-	//	
-	/**
-	 * Method through which information can be sent to instantiate or edit a tower object
-	 * Wraps constructor in case of new object creation
-	 * @throws NoDuplicateNamesException: if the user tries to make an already existing
-	 * tower, throw exception.
-	 * @throws MissingPropertiesException 
-	 * @throws ObjectNotFoundException 
-	 */
-	public void makeTower(int level, boolean newObject, String name, String imagePath, double health, double healthUpgradeCost, double healthUpgradeValue,
-			String projectileImagePath, double projectileDamage, double projectileUpgradeCost, double projectileUpgradeValue, double projectileSize, double projectileSpeed, 
-			double launcherValue, double launcherUpgradeCost, double launcherUpgradeValue, double launcherSpeed, double launcherRange,
-			double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		if (currentLevel.containsTower(name) && newObject) {
-			throw new NoDuplicateNamesException(name);
-		}
-		else if (!currentLevel.containsTower(name) && !newObject) {
-			throw new ObjectNotFoundException(name);
-		}
-		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, projectileImagePath), projectileDamage, projectileUpgradeCost, 
-				projectileUpgradeValue, projectileSize, projectileSpeed);
-		Launcher towerLauncher = new LauncherBuilder().construct(launcherSpeed,  
-				launcherUpgradeCost, launcherValue, launcherRange, launcherUpgradeCost, 
-				launcherValue, towerProjectile); 
-		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, imagePath), 50, health,  // TODO put size SOMEWHERE
-				healthUpgradeValue, healthUpgradeCost, towerLauncher, towerValue, towerUpgradeCost, towerUpgradeValue);
-		currentLevel.addTower(name, newTower);
 	}
 
 	/**
@@ -504,5 +447,51 @@ public class AuthoringModel implements GameData {
 		    	currentLevel.removeWave(name.split(" ")[1]);
 		}
 	}
+
+	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		Level currentLevel = myLevels.get(level);
+		if (currentLevel.containsTower(name)) {
+			throw new NoDuplicateNamesException(name);
+		}
+		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
+				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, DEFAULT_PROJECTILE_IMAGE), 0, 0, 
+				0, 0, 0);
+		Launcher towerLauncher = new LauncherBuilder().construct(0, 0, 0, 0, 0, 0, towerProjectile); 
+		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, DEFAULT_TOWER_IMAGE), 50, 0, 
+				0, 0, towerLauncher, 0, 0, 0);
+		currentLevel.addTower(name, newTower);
+	}
+	
+	public void makeEnemy(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+		Level currentLevel = myLevels.get(level);
+		if (currentLevel.containsEnemy(name)) {
+			throw new NoDuplicateNamesException(name);
+		}
+		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, DEFAULT_ENEMY_IMAGE), 0, 0, 0, 0, 0, 0);
+		currentLevel.addEnemy(name, newEnemy);
+		System.out.println(level+" "+name);
+	}
+	
+	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+		AttributeFinder attributeFinder = new AttributeFinder();
+		if (objectType.equals("Enemy")) {
+			Level currentLevel = levelCheck(level);
+			if (currentLevel.containsEnemy(name)) {
+				Enemy enemy = currentLevel.getEnemy(name);
+				attributeFinder.setFieldValue(attribute, enemy, attributeValue);
+			}
+		}
+		else if (objectType.equals("Tower")) {
+			Level currentLevel = levelCheck(level);
+			if (currentLevel.containsTower(name)) {
+				Tower tower = currentLevel.getTower(name);
+				attributeFinder.setFieldValue(attribute, tower, attributeValue);
+			}
+		}
+		else if (objectType.equals("Settings")) {
+			attributeFinder.setFieldValue(attribute, mySettings, attributeValue);
+		}
+	}
+	
 }
 
