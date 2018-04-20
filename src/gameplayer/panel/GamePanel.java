@@ -111,7 +111,7 @@ public class GamePanel extends Panel{
 	spriteAdd.setOnMouseExited(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT));
 	spriteAdd.setOnMouseMoved(null);
 	removeTowerRangeIndicator();
-	
+
     }
 
     /**
@@ -244,7 +244,7 @@ public class GamePanel extends Panel{
 	}
 	else if(!towerClick) {
 	    GAME_SCREEN.blankGamePanelClick();
-	    spriteAdd.getChildren().remove(rangeIndicator);
+	    removeTowerRangeIndicator();
 	}
 	towerClick = false;
     }
