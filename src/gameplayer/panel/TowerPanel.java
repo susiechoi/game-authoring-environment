@@ -49,7 +49,6 @@ public class TowerPanel extends Panel {
 
     //private final FileIO FILE_READER;
 
-    private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
     private HBox towerPane;
 
 
@@ -83,6 +82,8 @@ public class TowerPanel extends Panel {
 
 
 	VBox currencyAndSwap = new VBox(currencyDisplay);
+	currencyAndSwap.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+
 	currencyAndSwap.setAlignment(Pos.CENTER);
 	try {
 	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
@@ -108,6 +109,11 @@ public class TowerPanel extends Panel {
 	towersAndCurr.setId("towerPanel");
 	PANEL = towersAndCurr;
     }
+
+    private void handleMouseInput(double x, double y) {
+	GAME_SCREEN.towerSelectedForPlacement(null);
+    }
+
 
     private VBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
 	VBox fullTowerHold = new VBox();
@@ -150,12 +156,17 @@ public class TowerPanel extends Panel {
 	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
 //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton("button", voidView);
+	    voidButton.setOnMouseClicked((arg0) ->{ 
+		GAME_SCREEN.towerSelectedForPlacement(null);
+		System.out.println("nullhit");
+		
+	    });
 	  
 	    voidButton.setGraphic(voidView);
 	    
 	    voidButton.setMaxWidth(Double.MAX_VALUE);
 	    voidButton.setMaxHeight(Double.MAX_VALUE);
-	    voidButton.setDisable(true);
+	   // voidButton.setDisable(true);
 
 	    towerHolder.getChildren().add(voidButton);
 	    HBox.setHgrow(voidButton, Priority.ALWAYS);
@@ -167,25 +178,8 @@ public class TowerPanel extends Panel {
 	//fullTowerHold.setMaxWidth(Double.MAX_VALUE);
 
 	return fullTowerHold;
-
-	//TODO pretty bad code that doesn't work, towers should be same height in columns
-	//	    if(alternator%2 == 1) {
-	//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
-	//		towerHolderRight.getChildren().add(voidButton);
-	//		VBox.setVgrow(voidButton, Priority.ALWAYS);
-	//		voidButton.setMaxWidth(Double.MAX_VALUE);
-	//		voidButton.setMaxHeight(Double.MAX_VALUE);
-	//		voidButton.setDisable(true);
-	//	    }
-
-	//something went wrong and we don't have the towers
-	//TODO something reasonable here 
-	//probably have default images that aren't the ones specified by authoring
     }
 
-    private void towerSelected(String towerPropName) {
-
-    }
 
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {

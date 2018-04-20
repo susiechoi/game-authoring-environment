@@ -91,7 +91,13 @@ public class GameScreen extends Screen {
 	}
 
 	public void towerSelectedForPlacement(FrontEndTower tower) {
+	    if(tower != null)
 		GAME_PANEL.towerSelected(tower);
+	    else {
+		blankGamePanelClick();
+		GAME_PANEL.towerSelected(null);
+	    }
+
 	}
 
 	public Integer getMoney() {
