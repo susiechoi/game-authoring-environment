@@ -46,12 +46,19 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		ImageView imageDisplay = new ImageView(); 
 		try {
 			enemyImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
-			myImageDropdown = enemyImageDropdown; 
-			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
+		myImageDropdown = enemyImageDropdown; 
+		try {
+			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
+		} catch (MissingPropertiesException e1) {
+			getView().loadErrorScreen("NoImageFile");
+		}
+		myImageDropdown.setOnAction(e -> {
+			getView().setObjectAttribute("Enemy", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
+		});
 		vb.getChildren().add(enemyImageSelect);
 
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  getMyMaxSpeed()); 
