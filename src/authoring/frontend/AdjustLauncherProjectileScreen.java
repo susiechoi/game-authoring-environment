@@ -25,7 +25,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
 	private String myObjectName; 
-	private ComboBox<String> myProjectileImage;
+	private ComboBox<String> myProjectileImageDropdown;
 	private ImageView myImageDisplay; 
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileSpeedSlider; 
@@ -69,11 +69,14 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		myImageDisplay = new ImageView(); 
 		try {
 			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
-			myProjectileImage = projectileImageDropdown; 
+			myProjectileImageDropdown = projectileImageDropdown; 
 			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, myImageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
+		myProjectileImageDropdown.setOnAction(e -> {
+			getView().setObjectAttribute("Tower", myObjectName, "myProjectileImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
+		});
 		vb.getChildren().add(projectileImageSelect);
 
 		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());

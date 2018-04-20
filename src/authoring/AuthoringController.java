@@ -279,6 +279,7 @@ public class AuthoringController {
     }
 
 	public void writeToFile() {
+		myModel.updateAllProperties(); 
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		writer.write(myModel, myModel.getGameName());
 	}

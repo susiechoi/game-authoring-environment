@@ -140,17 +140,12 @@ public class AuthoringModel implements GameData {
 					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
 					// TODO add projectile speed !!!!
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")),
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
 			Launcher towerLauncher = new LauncherBuilder().construct(
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), 
 					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherRange")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), towerProjectile);  
+					towerProjectile);  
 			double towerSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerSize"));
 			Tower newTower = new TowerBuilder().construct(
 					myDefaultName, 
@@ -451,9 +446,8 @@ public class AuthoringModel implements GameData {
 			throw new NoDuplicateNamesException(name);
 		}
 		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, DEFAULT_PROJECTILE_IMAGE), 0, 0, 
-				0, 0, 0);
-		Launcher towerLauncher = new LauncherBuilder().construct(0, 0, 0, 0, 0, 0, towerProjectile); 
+				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, DEFAULT_PROJECTILE_IMAGE), 0, 0, 0);
+		Launcher towerLauncher = new LauncherBuilder().construct(0, 0, towerProjectile); 
 		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, DEFAULT_TOWER_IMAGE), 50, 0, 
 				0, 0, towerLauncher, 0, 0, 0);
 		currentLevel.addTower(name, newTower);
@@ -487,6 +481,14 @@ public class AuthoringModel implements GameData {
 		}
 		else if (objectType.equals("Settings")) {
 			attributeFinder.setFieldValue(attribute, mySettings, attributeValue);
+		}
+	}
+
+	public void updateAllProperties() {
+		Level level;
+		for (Integer levelNumber : myLevels.keySet()) {
+			level = myLevels.get(levelNumber);
+			level.updateAllProperties(); 
 		}
 	}
 	
