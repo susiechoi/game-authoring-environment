@@ -31,7 +31,7 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, double size) {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true));
+	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	myImageView.setPreserveRatio(true);
 
     }
@@ -119,5 +119,12 @@ public class Sprite implements FrontEndSprite{
     public int getPointValue() {
 	return 0;
     }
+    
+//    protected void updateImage(String imagePath) {
+//    	myImageString = imagePath; 
+//    Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
+//    	myImageView = new ImageView(newImage);
+//    	myImageView.setPreserveRatio(true);
+//    }
 
 }
