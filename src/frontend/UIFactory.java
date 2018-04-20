@@ -327,7 +327,7 @@ public class UIFactory {
 	try {
 	    dropdown.setOnAction(e ->
 	    {try{
-		imageDisplay.setImage(new Image((new File(propertiesReader.findVal(propertiesFilepath, dropdown.getValue())).toURI().toString()), imageSize, imageSize, false, false));
+		imageDisplay.setImage(new Image("file:"+propertiesReader.findVal(propertiesFilepath, dropdown.getValue()), imageSize, imageSize, false, false));
 	    }
 	    catch(Exception e2) {
 		e2.printStackTrace();

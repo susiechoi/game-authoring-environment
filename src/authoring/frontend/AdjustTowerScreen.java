@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Tower";
-	public static final String TOWER_IMAGES = "src/images/TowerImageNames.properties";
+	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 
@@ -80,6 +80,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 			getView().loadErrorScreen("NoImageFile");
 		}
 		myImageDropdown = towerImageDropdown;  
+		myImageDropdown.setOnAction(e -> {
+			getView().setObjectAttribute("Tower", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
+		});
 		try {
 			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
 					getErrorCheckedPrompt("NewImageName"), towerImageDropdown, imageDisplay);
@@ -96,23 +99,6 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myTowerValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerValue", newValue);
 		});
-
-//		Slider towerUpgradeCostSlider = getUIFactory().setupSlider("TowerUpgradeCostSlider", getMyMaxPrice());
-//		myTowerUpgradeCostSlider = towerUpgradeCostSlider;
-//		HBox towerUpgradeCost = getUIFactory().setupSliderWithValue("TowerUpgradeCostSlider", towerUpgradeCostSlider, getErrorCheckedPrompt("TowerUpgradeCost"));
-//		vb.getChildren().add(towerUpgradeCost);
-//		myTowerUpgradeCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-//			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerUpgradeCost", newValue);
-//		});
-//
-//		Slider towerUpgradeValueSlider = getUIFactory().setupSlider("TowerUpgradeValueSlider", getMyMaxPrice());
-//		myTowerUpgradeValueSlider = towerUpgradeValueSlider; 
-//		HBox towerUpgradeValue = getUIFactory().setupSliderWithValue("TowerUpgradeValueSlider", towerUpgradeValueSlider, getErrorCheckedPrompt("TowerUpgradeValue"));
-//		myTowerUpgradeValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-//			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerUpgradeValue", newValue);
-//		});
-//		vb.getChildren().add(towerUpgradeValue);
-
 
 	}
 

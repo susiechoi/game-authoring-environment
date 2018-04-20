@@ -327,4 +327,26 @@ public class Level {
 		myWaves.add(wave);
 	}
 
+	public void updateAllProperties() {
+		updateTowerProperties(); 
+		updateEnemyProperties(); 
+	}
+
+	private void updateTowerProperties() {
+		Tower tower; 
+		for (String towerName : myTowers.keySet()) {
+			tower = myTowers.get(towerName);
+			tower.updateProperties();
+		}
+	}
+	
+	public void updateEnemyProperties() {
+		Enemy enemy; 
+		for (String enemyName : myEnemies.keySet()) {
+			enemy = myEnemies.get(enemyName);
+			enemy.updateProperties();
+		}
+	}
+	
+
 }
