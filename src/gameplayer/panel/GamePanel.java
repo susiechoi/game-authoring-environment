@@ -26,6 +26,10 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
+
+//note to andrew: delete if you see this not on his branch
+//need two seperate rangeIndicators, one for on click of placed tower, one for display when placing when cursor is changed
+//as is if you click on tower, the mouseonexit method will make range disappear if you leave panel
 public class GamePanel extends Panel{
 
 
@@ -47,6 +51,8 @@ public class GamePanel extends Panel{
 	GAME_SCREEN = gameScreen;
 	towersPlaced = new ArrayList<FrontEndTower>();
 	PROP_READ = new PropertiesReader();
+	//TODO probably a better way of doing this (thread canceling towerPlacement)
+	towerSelected =  null; //maybe make a new towerContructor which creates a null tower?
     }
 
     @Override
@@ -102,14 +108,41 @@ public class GamePanel extends Panel{
     private void resetCursor() {
 	GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
 	spriteAdd.setOnMouseEntered(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT));
+	spriteAdd.setOnMouseExited(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT));
+	spriteAdd.setOnMouseMoved(null);
+	removeTowerRangeIndicator();
+
     }
 
+    /**
+     * 
+     * @param tower will be null if tower placement is canceled
+     */
     public void towerSelected(FrontEndTower tower) {
-	towerSelected = tower;
-	towerPlaceMode = true;
-	ImageCursor cursor = new ImageCursor(tower.getImageView().getImage());
-	spriteAdd.setOnMouseEntered(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(cursor));
-	spriteAdd.setOnMouseExited(e -> GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT));
+
+	if(tower!= null && tower != towerSelected ) { //TODO (thread canceling towerPlacement)
+	    towerSelected = tower;
+	    ImageView towerImage = tower.getImageView();
+	    towerPlaceMode = true;
+	    ImageCursor cursor = new ImageCursor(tower.getImageView().getImage());
+
+	    spriteAdd.setOnMouseEntered(e -> {
+		GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(cursor);
+		addRangeIndicator(tower); });
+
+	    spriteAdd.setOnMouseExited(e -> {
+		GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
+		spriteAdd.getChildren().remove(rangeIndicator); });
+
+	    spriteAdd.setOnMouseMoved(e -> {
+		rangeIndicator.setCenterX(e.getX()+(towerImage.getImage().getWidth()/2));
+		rangeIndicator.setCenterY(e.getY()+(towerImage.getImage().getHeight()/2)); });
+	}
+	else { //TODO (thread canceling towerPlacement)
+	    //maybe make a new towerContructor which creates a null tower?
+	    resetCursor();
+	    towerPlaceMode = false;
+	}
     }
 
     private void addTowerImageViewAction(FrontEndTower tower) {
@@ -117,15 +150,23 @@ public class GamePanel extends Panel{
 	towerImage.setOnMouseClicked((args) ->{
 	    GAME_SCREEN.towerClickedOn(tower);
 	    highLightedImageVew = towerImage;
-	   // applySelectionGlow(towerImage);
+	    // applySelectionGlow(towerImage);
 	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
     }
 
+    private void removeTowerRangeIndicator() {
+	spriteAdd.getChildren().remove(rangeIndicator);
+	towerSelected = null;
+    }
+
     private void addRangeIndicator(FrontEndTower tower) {
+	spriteAdd.getChildren().remove(rangeIndicator);
 	ImageView towImage = tower.getImageView();
-	rangeIndicator = new Circle(towImage.getX(), towImage.getY(), tower.getTowerRange());
+	//TODO replace hardcoded constant with tower's range AA
+	rangeIndicator = new Circle(towImage.getX()+(towImage.getImage().getWidth()/2),
+		towImage.getY()+(towImage.getImage().getHeight()/2), 50);//tower.getTowerRange()
 	rangeIndicator.setStroke(Color.ORANGE);
 	try {
 	    String opacity = PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerRangeIndicatorOpacity");
@@ -140,6 +181,11 @@ public class GamePanel extends Panel{
 
     }
 
+    //TODO delete if not used in end
+    /**
+     * Makes the tower glow on click, looks kinda tacky
+     * @param towerImage
+     */
     private void applySelectionGlow(ImageView towerImage) {
 	try {
 	    String glowIntensity =PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerGlowOnSelection");
@@ -164,6 +210,7 @@ public class GamePanel extends Panel{
 
     public void removeTower(FrontEndTower tower) {
 	spriteAdd.getChildren().remove(tower.getImageView());
+	removeTowerRangeIndicator();
     }
 
     public void exitTowerPlace() {
@@ -178,10 +225,6 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
 
-		towerImage.setLayoutX(-towerImageActual.getWidth()/2);
-		towerImage.setLayoutY(-towerImageActual.getHeight()/2);
-
-
 		if(newTower!= null) {
 
 		    addTowerImageViewAction(newTower);
@@ -189,6 +232,7 @@ public class GamePanel extends Panel{
 		    spriteAdd.getChildren().add(towerImage);
 		    resetCursor();
 		    towerPlaceMode = false;
+		    //TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
 		}
 	    }
 	    catch(CannotAffordException e){
@@ -197,9 +241,7 @@ public class GamePanel extends Panel{
 	}
 	else if(!towerClick) {
 	    GAME_SCREEN.blankGamePanelClick();
-	    if(spriteAdd.getChildren().contains(rangeIndicator)) 
-		spriteAdd.getChildren().remove(rangeIndicator);
-
+	    removeTowerRangeIndicator();
 	}
 	towerClick = false;
     }
