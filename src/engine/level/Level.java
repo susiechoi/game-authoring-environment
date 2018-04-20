@@ -167,6 +167,9 @@ public class Level {
     	if (myEnemies.containsKey(name)) {
     		myEnemies.remove(name);
     	}
+    	for(Wave wave: myWaves) {
+    	    wave.removeEnemyType(name);
+    	}
     	throw new ObjectNotFoundException(name);
     }
 
@@ -259,6 +262,9 @@ public class Level {
 	}
 	public void removeWave() {
 	    myWaves.remove(0);
+	}
+	public void removeWave(String name) {
+	    myWaves.remove(Integer.parseInt(name)-1);
 	}
 	
 	/**
