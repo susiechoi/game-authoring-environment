@@ -35,7 +35,7 @@ import javafx.scene.layout.StackPane;
  */
 public class CreatePathGrid {
 
-    public static final int INITIAL_PATH_SIZE = 60;
+    public static final int INITIAL_PATH_SIZE = 60; 
     private int pathSize;
     private int colIndex;
     private int rowIndex;
@@ -64,6 +64,7 @@ public class CreatePathGrid {
     // private EventHandler<DragEvent> myOnDragOver;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
 	public void handle(MouseEvent event) {
+	//DO NOTHING - just an initialization of the eventHandler
 	}
     };
     public CreatePathGrid(AuthoringView view) {
