@@ -326,8 +326,9 @@ public class UIFactory {
 	VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 	try {
 	    dropdown.setOnAction(e ->
-	    {try{
-		imageDisplay.setImage(new Image("file:"+propertiesReader.findVal(propertiesFilepath, dropdown.getValue()), imageSize, imageSize, false, false));
+	    {
+	    	try{
+		imageDisplay.setImage(images.get(dropdown.getSelectionModel().getSelectedIndex()));
 	    }
 	    catch(Exception e2) {
 		e2.printStackTrace();
