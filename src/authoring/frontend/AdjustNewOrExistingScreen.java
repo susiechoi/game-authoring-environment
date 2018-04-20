@@ -41,6 +41,12 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		mySelectedObjectName = selectedObjectName; 
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
 	}
+	
+	protected AdjustNewOrExistingScreen(AuthoringView view) {
+	    	super(view);
+	    	setConstants();
+	    	setSaved();
+	}
 
 	private void setConstants() {
 		try {
@@ -138,5 +144,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected String getMySelectedObjectName() {
 		return mySelectedObjectName; 
 	}
+
 
 }

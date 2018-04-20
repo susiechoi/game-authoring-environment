@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,9 +33,9 @@ import javafx.scene.layout.StackPane;
  * @author Erik Riis
  *
  */
-public class CreatePathGrid extends AdjustScreen {
+public class CreatePathGrid {
 
-    public static final int INITIAL_PATH_SIZE = 60;
+    public static final int INITIAL_PATH_SIZE = 60; 
     private int pathSize;
     private int colIndex;
     private int rowIndex;
@@ -60,14 +59,19 @@ public class CreatePathGrid extends AdjustScreen {
     private DraggableImage myCurrentClicked;
     private DraggableImage path;
     private int startCount = 0;
+    private AuthoringView myView;
     // private EventHandler<DragEvent> myOnDragDropped;
     // private EventHandler<DragEvent> myOnDragOver;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
 	public void handle(MouseEvent event) {
+	//DO NOTHING - just an initialization of the eventHandler
 	}
     };
     public CreatePathGrid(AuthoringView view) {
-	super(view);
+	myView = view;
+    }
+    private AuthoringView getView() {
+	return myView;
     }
 
     /**
@@ -102,8 +106,8 @@ public class CreatePathGrid extends AdjustScreen {
     //Given: path images and locations as defaults, change to populate with initial params
     private void populateGrid(GridPane grid) { //grid, 
 
-	for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
-	    for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
+	for (int x = 0 ; x < grid.getColumnCount(); x++) {
+	    for (int y = 0 ; y < grid.getRowCount(); y++) {
 		StackPane cell = new StackPane();
 
 		final int col = x;
@@ -305,8 +309,8 @@ public class CreatePathGrid extends AdjustScreen {
     }
 
     protected List<Point> getStartingPosition() { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
-	for (int x = 0; x < checkGrid.impl_getColumnCount(); x++) {
-	    for (int y = 0; y < checkGrid.impl_getRowCount(); y++) {
+	for (int x = 0; x < checkGrid.getColumnCount(); x++) {
+	    for (int y = 0; y < checkGrid.getRowCount(); y++) {
 		if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText().equals("start")) {
 		    startPoints.add(new Point(x, y));
 		}
@@ -336,8 +340,8 @@ public class CreatePathGrid extends AdjustScreen {
     }
 
     protected HashMap<String, List<Point>> getGridImageCoordinates() {
-	for (int x = 0; x < checkGrid.impl_getColumnCount(); x++) {
-	    for (int y = 0; y < checkGrid.impl_getRowCount(); y++) {
+	for (int x = 0; x < checkGrid.getColumnCount(); x++) {
+	    for (int y = 0; y < checkGrid.getRowCount(); y++) {
 		if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "path") {
 		    pathPoints.add(new Point(x, y));
 		} else if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "start") {
@@ -347,9 +351,9 @@ public class CreatePathGrid extends AdjustScreen {
 		}
 	    }
 	}
-	gridImageCoordinates.put(startImage.getImage().impl_getUrl(), startPoints);
-	gridImageCoordinates.put(endImage.getImage().impl_getUrl(), endPoints);
-	gridImageCoordinates.put(pathImage.getImage().impl_getUrl(), pathPoints);
+	gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
+	gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
+	gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
 	return gridImageCoordinates;
     }
 
@@ -365,21 +369,11 @@ public class CreatePathGrid extends AdjustScreen {
     }
 
     public int getColumnCount() {
-	return grid.impl_getColumnCount();
+	return grid.getColumnCount();
     }
 
     public int getRowCount() {
-	return grid.impl_getRowCount();
+	return grid.getRowCount();
     }
 
-
-    @Override
-    protected Parent populateScreenWithFields() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    protected void populateFieldsWithData() {
-    }
 }

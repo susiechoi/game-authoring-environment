@@ -14,7 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class AdjustResourcesScreen extends AdjustScreen {
+public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
     	private TextField myGameNameEntry;
 	//private ComboBox<String> myCSSFilenameChooser; TODO: implement!
 	private Slider myStartingHealthSlider;

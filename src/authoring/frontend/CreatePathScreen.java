@@ -72,17 +72,6 @@ public class CreatePathScreen extends PathScreen {
 	}
 
 	@Override
-	protected Parent populateScreenWithFields() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public void initializeGridSettings(CreatePathGrid gridIn) {
 		setPathPanel(myPathPanel, myPathToolBar);
 		gridIn.setUpForPathCreation();

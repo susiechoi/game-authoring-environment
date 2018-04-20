@@ -52,6 +52,9 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
 	public static final String DEFAULT_PATH_END = "images/darkstone.png";
 	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
+	public static final String ENEMY_TYPENAME = "Enemy";
+	public static final String TOWER_TYPENAME = "Tower";
+	public static final String SETTINGS_TYPENAME = "Settings";
 	
 	private final String myDefaultName; 
 	private String myGameName; 
@@ -187,7 +190,7 @@ public class AuthoringModel implements GameData {
 			if (listToReturn.size() == 0) {
 				listToReturn.add(myDefaultEnemy.getName());
 			}
-		} else if (objectType.equals("Tower")) {
+		} else if (objectType.equals(TOWER_TYPENAME)) {
 			listToReturn = currentLevel.getAllTowers();
 			if (listToReturn.size() == 0) {
 				listToReturn.add(myDefaultTower.getName());
@@ -241,7 +244,7 @@ public class AuthoringModel implements GameData {
 				System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 			}
 		}
-		else if (objectType.equals("Tower")) {
+		else if (objectType.equals(TOWER_TYPENAME)) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
@@ -432,11 +435,14 @@ public class AuthoringModel implements GameData {
 
 	public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
 		Level currentLevel = levelCheck(level);
-		if (objectType.equals("Tower")) {
+		if (objectType.equals(TOWER_TYPENAME)) {
 			currentLevel.removeTower(name);
 		}
-		if (objectType.equals("Enemy")) {
+		if (objectType.equals(ENEMY_TYPENAME)) {
 			currentLevel.removeEnemy(name);
+		}
+		if (objectType.equals("Wave")) {
+		    	currentLevel.removeWave(name.split(" ")[1]);
 		}
 	}
 
@@ -465,24 +471,21 @@ public class AuthoringModel implements GameData {
 	
 	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 		AttributeFinder attributeFinder = new AttributeFinder();
-		System.out.println(name);
-		System.out.println(attribute);
-		System.out.println(attributeValue);
-		if (objectType.equals("Enemy")) {
+		if (objectType.equals(ENEMY_TYPENAME)) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeFinder.setFieldValue(attribute, enemy, attributeValue);
 			}
 		}
-		else if (objectType.equals("Tower")) {
+		else if (objectType.equals(TOWER_TYPENAME)) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
 				attributeFinder.setFieldValue(attribute, tower, attributeValue);
 			}
 		}
-		else if (objectType.equals("Settings")) {
+		else if (objectType.equals(SETTINGS_TYPENAME)) {
 			attributeFinder.setFieldValue(attribute, mySettings, attributeValue);
 		}
 	}
