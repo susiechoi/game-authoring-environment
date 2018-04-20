@@ -7,6 +7,7 @@ package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -49,16 +50,16 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
-		myImageDropdown = enemyImageDropdown; 
-		try {
-			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
-		} catch (MissingPropertiesException e1) {
-			getView().loadErrorScreen("NoImageFile");
-		}
-		myImageDropdown.setOnAction(e -> {
+		myImageDropdown = enemyImageDropdown;  
+		myImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
 			getView().setObjectAttribute("Enemy", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
+		try {
+			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		}
 		vb.getChildren().add(enemyImageSelect);
 
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  getMyMaxSpeed()); 

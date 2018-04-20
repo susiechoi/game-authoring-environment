@@ -8,6 +8,7 @@ package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -26,7 +27,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	private String myObjectName; 
 	private ComboBox<String> myProjectileImageDropdown;
-	private ImageView myImageDisplay; 
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherRateSlider;
@@ -64,19 +64,24 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	private void makeProjectileComponents(VBox vb) {
-		ComboBox<String> projectileImageDropdown;
-		HBox projectileImageSelect = new HBox(); 
-		myImageDisplay = new ImageView(); 
+		HBox projectileImageSelect = new HBox();
+		ComboBox<String> projectileImageDropdown = new ComboBox<String>();
+		ImageView imageDisplay = new ImageView(); 
 		try {
 			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
-			myProjectileImageDropdown = projectileImageDropdown; 
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, myImageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
-		myProjectileImageDropdown.setOnAction(e -> {
-			getView().setObjectAttribute("Tower", myObjectName, "myProjectileImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
+		myProjectileImageDropdown = projectileImageDropdown;  
+		myProjectileImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
+			getView().setObjectAttribute("Tower", myObjectName, "myImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
+		try {
+			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+					getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, imageDisplay);
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		}
 		vb.getChildren().add(projectileImageSelect);
 
 		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());

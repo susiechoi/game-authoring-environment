@@ -54,6 +54,7 @@ public class AuthoringModel implements GameData {
 	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
 	public static final String ENEMY_TYPENAME = "Enemy";
 	public static final String TOWER_TYPENAME = "Tower";
+	public static final String SETTINGS_TYPENAME = "Settings";
 	
 	private final String myDefaultName; 
 	private String myGameName; 
@@ -484,7 +485,7 @@ public class AuthoringModel implements GameData {
 				attributeFinder.setFieldValue(attribute, tower, attributeValue);
 			}
 		}
-		else if (objectType.equals("Settings")) {
+		else if (objectType.equals(SETTINGS_TYPENAME)) {
 			attributeFinder.setFieldValue(attribute, mySettings, attributeValue);
 		}
 	}
