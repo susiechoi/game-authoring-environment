@@ -8,6 +8,7 @@ package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -72,8 +73,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 			getView().loadErrorScreen("NoImageFile");
 		}
 		myProjectileImageDropdown = projectileImageDropdown;  
-		myProjectileImageDropdown.setOnAction(e -> {
-			getView().setObjectAttribute("Tower", myObjectName, "myProjectileImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
+		myProjectileImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
+			getView().setObjectAttribute("Tower", myObjectName, "myImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
 		try {
 			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),

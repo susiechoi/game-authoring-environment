@@ -7,6 +7,7 @@ package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -50,8 +51,8 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 			getView().loadErrorScreen("NoImageFile");
 		}
 		myImageDropdown = enemyImageDropdown;  
-		myImageDropdown.setOnAction(e -> {
-			getView().setObjectAttribute("Tower", myObjectName, "myenemyImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
+		myImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
+			getView().setObjectAttribute("Enemy", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
 		try {
 			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),

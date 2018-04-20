@@ -465,6 +465,9 @@ public class AuthoringModel implements GameData {
 	
 	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 		AttributeFinder attributeFinder = new AttributeFinder();
+		System.out.println(name);
+		System.out.println(attribute);
+		System.out.println(attributeValue);
 		if (objectType.equals("Enemy")) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
