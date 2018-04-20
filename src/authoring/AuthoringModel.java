@@ -202,13 +202,7 @@ public class AuthoringModel implements GameData {
 				listToReturn.add("Wave " + k.toString());
 			}
 		}
-		//		if(objectType.equals("Path")) {
-		//			listToReturn.add(currentLevel.getPath());
-		//			if (listToReturn.size() == 0) {
-		//				listToReturn.add(myDefaultPath.getName());
-		//			}
-		//		}
-		listToReturn.remove(myDefaultName);
+//		listToReturn.remove(myDefaultName);
 		return listToReturn; 
 	}
 
