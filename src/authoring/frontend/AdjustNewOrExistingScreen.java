@@ -41,11 +41,11 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		mySelectedObjectName = selectedObjectName; 
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
 	}
-	
+
 	protected AdjustNewOrExistingScreen(AuthoringView view) {
-	    	super(view);
-	    	setConstants();
-	    	setSaved();
+		super(view);
+		setConstants();
+		setSaved();
 	}
 
 	private void setConstants() {
@@ -97,7 +97,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			} catch (IllegalArgumentException | NullPointerException | IllegalAccessException e) {
 				getView().loadErrorScreen("ObjectAttributeDNE");
 			}
-
 		}
 	}
 

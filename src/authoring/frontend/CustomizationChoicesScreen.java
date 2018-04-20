@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import xml.AuthoringModelWriter;
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,

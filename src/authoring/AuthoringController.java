@@ -198,20 +198,6 @@ public class AuthoringController {
 	return enemyNameMap;   
     }
 
-
-    /**
-     * Returns a List of the enemies contained in the level 
-     * 
-     * @param level: the current level
-     * @return List<String>: a list of the unique String names for each enemy in the
-     * level.
-     * @throws ObjectNotFoundException: thrown if the level isn't found
-     */
-    public List<String> levelEnemies(int level) throws ObjectNotFoundException {
-	Level thisLevel = myModel.levelCheck(level);
-	return thisLevel.getAllEnemies();
-    }
-
     /**
      * Sets name of the game per user entry
      * @param gameName  is new game name
