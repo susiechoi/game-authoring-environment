@@ -167,6 +167,9 @@ public class Level {
     	if (myEnemies.containsKey(name)) {
     		myEnemies.remove(name);
     	}
+    	for(Wave wave: myWaves) {
+    	    wave.removeEnemyType(name);
+    	}
     	throw new ObjectNotFoundException(name);
     }
 
@@ -260,6 +263,9 @@ public class Level {
 	public void removeWave() {
 	    myWaves.remove(0);
 	}
+	public void removeWave(String name) {
+	    myWaves.remove(Integer.parseInt(name)-1);
+	}
 	
 	/**
 	 * @return Wave corresponding to @param waveNumber
@@ -320,5 +326,27 @@ public class Level {
 	public void addWave(Wave wave) {
 		myWaves.add(wave);
 	}
+
+	public void updateAllProperties() {
+		updateTowerProperties(); 
+		updateEnemyProperties(); 
+	}
+
+	private void updateTowerProperties() {
+		Tower tower; 
+		for (String towerName : myTowers.keySet()) {
+			tower = myTowers.get(towerName);
+			tower.updateProperties();
+		}
+	}
+	
+	public void updateEnemyProperties() {
+		Enemy enemy; 
+		for (String enemyName : myEnemies.keySet()) {
+			enemy = myEnemies.get(enemyName);
+			enemy.updateProperties();
+		}
+	}
+	
 
 }
