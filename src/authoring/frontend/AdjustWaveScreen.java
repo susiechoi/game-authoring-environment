@@ -1,5 +1,6 @@
 package authoring.frontend;
 
+import javafx.scene.Parent;
 
 /**
  * Class to create the Screen where a Wave is specified. Dependent on the Path classes (CreatePathGrid, 
@@ -37,6 +38,16 @@ public class AdjustWaveScreen extends PathScreen {
 	@Override
 	public void setSpecificUIComponents() {
 	    setGridUIComponents(myWaveDirectionsPanel, myWaveToolBar);
+	}
+	@Override
+	protected Parent populateScreenWithFields() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+	@Override
+	protected void populateFieldsWithData() {
+	    // TODO Auto-generated method stub
+	    
 	}
 }
 

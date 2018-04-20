@@ -192,4 +192,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public double getTowerRange() {
         return this.getLauncher().getRange();
     }
+
+    public void updateProperties() {
+	// TODO Auto-generated method stub
+	
+    }
 }
