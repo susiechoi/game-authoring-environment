@@ -230,10 +230,7 @@ public class GamePanel extends Panel{
 		    addTowerImageViewAction(newTower);
 		    towersPlaced.add(newTower);
 		    spriteAdd.getChildren().add(towerImage);
-		    spriteAdd.setOnMouseMoved(null);
-		    spriteAdd.getChildren().remove(rangeIndicator);
 		    resetCursor();
-		    towerSelected = null;
 		    towerPlaceMode = false;
 		    //TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
 		}
