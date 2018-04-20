@@ -202,9 +202,9 @@ public abstract class ShootingSprites extends Sprite{
 	return this.getLauncher().upgradeRange(balance);
     }
     
-//    protected void updateLauncher(Launcher launcher) {
-//    	myLauncher = launcher; 
-//    }
+    protected void updateLauncher(Launcher launcher) {
+    	myLauncher = launcher; 
+    }
 
 
 }

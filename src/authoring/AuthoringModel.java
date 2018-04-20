@@ -236,12 +236,11 @@ public class AuthoringModel implements GameData {
 		Object attributeValue = null;
 
 		AttributeFinder attributeFinder = new AttributeFinder(); 
-		if (objectType.equals("Enemy")) {
+		if (objectType.equals(ENEMY_TYPENAME)) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
-				System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 			}
 		}
 		else if (objectType.equals(TOWER_TYPENAME)) {
@@ -249,18 +248,16 @@ public class AuthoringModel implements GameData {
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
+				System.out.println("AUTOPOPING "+attribute+" "+attributeValue);
 			}
 		}
-		else if (objectType.equals("Settings")) {
+		else if (objectType.equals(SETTINGS_TYPENAME)) {
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, mySettings);
 		}
 		else if (objectType.equals("Path")) {
 			Level currentLevel = levelCheck(level);
-			//			if (currentLevel.containsTower(name)) {
 			Path path = currentLevel.getPath();
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
-			System.out.println("PATH INFO: " +attributeValue);
-			//			}
 		}
 
 		else if(objectType.equals("Wave")) {
@@ -466,11 +463,17 @@ public class AuthoringModel implements GameData {
 		}
 		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, DEFAULT_ENEMY_IMAGE), 0, 0, 0, 0, 0, 0);
 		currentLevel.addEnemy(name, newEnemy);
-		System.out.println(level+" "+name);
 	}
 	
 	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 		AttributeFinder attributeFinder = new AttributeFinder();
+		if (attribute.equals("myImage")) {
+			try {
+				attributeValue = myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, (String)attributeValue);
+			} catch (MissingPropertiesException e) {
+				// TODO do something
+			} 
+		}
 		if (objectType.equals(ENEMY_TYPENAME)) {
 			Level currentLevel = levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {

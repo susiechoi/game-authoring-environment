@@ -6,7 +6,6 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.exceptions.NoDuplicateNamesException;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;

@@ -53,8 +53,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myImage = image; 
 	myHealth = health;
 	propertyStats = new HashMap<String, Integer>();
-	System.out.println(myName);
-
 	setupStats(propertyStats, health.getName(), (int) health.getProperty());
 	setupStats(propertyStats, value.getName(), (int) value.getProperty());
 	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
@@ -218,8 +216,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     		myLauncher = new LauncherBuilder().construct(myLauncherRate, myLauncherRange, projectile);
     		myValue = new ValueProperty(myTowerValue);
     		
-//    		updateImage(myImage);
-//    		updateLauncher(myLauncher); 
+    		updateImage(myImage);
+    		updateLauncher(myLauncher); 
     		    		
     		setupStats(propertyStats, myHealth.getName(), (int) myHealth.getProperty());
     		setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());

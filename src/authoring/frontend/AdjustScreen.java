@@ -7,10 +7,6 @@
 
 package authoring.frontend;
 
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-
 abstract class AdjustScreen extends AuthoringScreen {
 		
 	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
