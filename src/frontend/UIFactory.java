@@ -7,6 +7,7 @@
 
 package frontend;
 
+import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -325,8 +326,9 @@ public class UIFactory {
 	VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 	try {
 	    dropdown.setOnAction(e ->
-	    {try{
-		imageDisplay.setImage(new Image((new File(propertiesReader.findVal(propertiesFilepath, dropdown.getValue())).toURI().toString()), imageSize, imageSize, false, false));
+	    {
+	    	try{
+		imageDisplay.setImage(images.get(dropdown.getSelectionModel().getSelectedIndex()));
 	    }
 	    catch(Exception e2) {
 		e2.printStackTrace();

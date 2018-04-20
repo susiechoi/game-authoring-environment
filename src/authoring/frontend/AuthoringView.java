@@ -33,7 +33,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import xml.AuthoringModelWriter;
 
 public class AuthoringView extends View {
 
@@ -194,7 +193,7 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
+	public void makePath(GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
 		myGrid = grid;
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathSize);
 	}
@@ -316,8 +315,12 @@ public class AuthoringView extends View {
 	}
 
 	protected void writeToFile() {
-		AuthoringModelWriter writer = new AuthoringModelWriter();
-		writer.write(myModel, myModel.getGameName());
+		try {
+		    myController.writeToFile();
+		} catch (ObjectNotFoundException e) {
+		    // TODO Auto-generated catch block
+		    loadErrorScreen("NoObject");
+		} 
 	}
 
 	protected void readFromFile(String name) throws MissingPropertiesException {

@@ -39,12 +39,10 @@ public class AdjustWaveScreen extends PathScreen {
 	public void setSpecificUIComponents() {
 	    setGridUIComponents(myWaveDirectionsPanel, myWaveToolBar);
 	}
-	@Override
 	protected Parent populateScreenWithFields() {
 	    // TODO Auto-generated method stub
 	    return null;
 	}
-	@Override
 	protected void populateFieldsWithData() {
 	    // TODO Auto-generated method stub
 	    

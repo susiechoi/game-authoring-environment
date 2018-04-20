@@ -42,6 +42,12 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
 	}
 
+	protected AdjustNewOrExistingScreen(AuthoringView view) {
+		super(view);
+		setConstants();
+		setSaved();
+	}
+
 	private void setConstants() {
 		try {
 			myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
@@ -70,10 +76,8 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return constructedScreen;
 	}
 
-	@Override
 	protected abstract Parent populateScreenWithFields();
 
-	@Override
 	protected void populateFieldsWithData() {
 		AttributeFinder attributeFinder = new AttributeFinder(); 
 
@@ -93,7 +97,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			} catch (IllegalArgumentException | NullPointerException | IllegalAccessException e) {
 				getView().loadErrorScreen("ObjectAttributeDNE");
 			}
-
 		}
 	}
 
@@ -140,5 +143,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected String getMySelectedObjectName() {
 		return mySelectedObjectName; 
 	}
+
 
 }

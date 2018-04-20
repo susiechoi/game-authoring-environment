@@ -7,6 +7,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,8 +24,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
 	private String myObjectName; 
-	private ComboBox<String> myProjectileImage;
-	private ImageView myImageDisplay; 
+	private ComboBox<String> myProjectileImageDropdown;
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherRateSlider;
@@ -62,13 +62,21 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	private void makeProjectileComponents(VBox vb) {
-		ComboBox<String> projectileImageDropdown;
-		HBox projectileImageSelect = new HBox(); 
-		myImageDisplay = new ImageView(); 
+		HBox projectileImageSelect = new HBox();
+		ComboBox<String> projectileImageDropdown = new ComboBox<String>();
+		ImageView imageDisplay = new ImageView(); 
 		try {
 			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
-			myProjectileImage = projectileImageDropdown; 
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, myImageDisplay);
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		}
+		myProjectileImageDropdown = projectileImageDropdown;  
+		myProjectileImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
+			getView().setObjectAttribute("Tower", myObjectName, "myImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
+		});
+		try {
+			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+					getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}

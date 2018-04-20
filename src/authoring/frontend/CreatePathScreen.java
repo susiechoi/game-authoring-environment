@@ -6,7 +6,6 @@ import java.util.List;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
@@ -69,17 +68,6 @@ public class CreatePathScreen extends PathScreen {
 				}
 			}
 		});
-	}
-
-	@Override
-	protected Parent populateScreenWithFields() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

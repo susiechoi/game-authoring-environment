@@ -6,6 +6,8 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -45,8 +47,15 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		ImageView imageDisplay = new ImageView(); 
 		try {
 			enemyImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
-			myImageDropdown = enemyImageDropdown; 
-			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		}
+		myImageDropdown = enemyImageDropdown;  
+		myImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
+			getView().setObjectAttribute("Enemy", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
+		});
+		try {
+			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
 					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");

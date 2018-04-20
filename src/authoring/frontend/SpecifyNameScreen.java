@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class SpecifyNameScreen extends AdjustScreen {
+abstract class SpecifyNameScreen extends AuthoringScreen {
 	
 	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 
@@ -39,7 +39,7 @@ abstract class SpecifyNameScreen extends AdjustScreen {
 	 * @return Parent/root to attach to Scene that will be set on the stage
 	 */
 	@Override
-	protected Parent populateScreenWithFields() {
+	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyObjectName")+myObjectDescription));
@@ -77,11 +77,6 @@ abstract class SpecifyNameScreen extends AdjustScreen {
 		return vb;
 	}
 
-	@Override
-	protected void populateFieldsWithData() {
-		//null method, since this type of screen only has buttons 
-	}
-	
 	protected boolean validNameField(TextField nameField) {
 		boolean valid = true; 
 		if (nameField.getText().length() == 0) {

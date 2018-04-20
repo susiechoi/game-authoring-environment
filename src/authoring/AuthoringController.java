@@ -26,6 +26,7 @@ import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelReader;
+import xml.AuthoringModelWriter;
 
 
 public class AuthoringController {
@@ -198,7 +199,6 @@ public class AuthoringController {
 	return enemyNameMap;   
     }
 
-
     /**
      * Returns a List of the enemies contained in the level 
      * 
@@ -278,4 +278,10 @@ public class AuthoringController {
 	Wave desiredWave = currentLevel.getWaves().get(waveNumber);
 	desiredWave.setWaveTime(time);
     }
+
+	public void writeToFile() throws ObjectNotFoundException {
+		myModel.updateAllProperties(); 
+		AuthoringModelWriter writer = new AuthoringModelWriter();
+		writer.write(myModel, myModel.getGameName());
+	}
 }

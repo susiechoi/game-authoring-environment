@@ -388,5 +388,14 @@ public class AuthoringModel implements GameData {
 	    attributeFinder.setFieldValue(attribute, myGame.getSettings(), attributeValue);
 	}
     }
+    
+    public void updateAllProperties() throws ObjectNotFoundException {
+	Level level;
+	for (String levelNumber : getLevels()) {
+	    	Integer numLevel = Integer.parseInt(levelNumber);
+		level = getLevel(numLevel);
+		level.updateAllProperties(); 
+	}
 }
 
+}

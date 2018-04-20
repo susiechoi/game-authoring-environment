@@ -20,7 +20,6 @@ import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 
-//TODO add in money to the game
 /**
  * Handles the current state of the game, including current score, money, and lists
  * of active towers and enemies
