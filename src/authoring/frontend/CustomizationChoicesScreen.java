@@ -58,7 +58,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		demoButton.setOnAction(e -> {
 		    	getView().writeToFile();
 		    	new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
-				currentModel).demoPlay(currentModel); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
+				currentModel).demoPlay(currentModel.getGame()); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
 		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setOnAction(e -> {

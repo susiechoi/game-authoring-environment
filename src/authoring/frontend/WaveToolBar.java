@@ -11,6 +11,7 @@ public class WaveToolBar extends PathToolBar {
     public WaveToolBar(AuthoringView view) {
  	super(view);
      }
+    @Override
     protected void makePanel() {
 	// null method for now //TODO!!
     }

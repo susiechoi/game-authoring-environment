@@ -6,6 +6,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;

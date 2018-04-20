@@ -76,6 +76,7 @@ public class PlayState implements GameData {
 	if(!isPaused) {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
+		    // TODO instert try catch block, if there are no waves the level ends!
 		    System.out.println("in for " + currentLevel.getWaves().get(0).getUnmodifiableEnemies().size());
 		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
 			System.out.println("in if");
@@ -123,7 +124,7 @@ public class PlayState implements GameData {
 	    myTowerManager.moveTowers();
 
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
-		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
+		myMediator.addSpriteToScreen(projectile);
 	    }
 	    updateScore(toBeRemoved);
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
@@ -180,7 +181,7 @@ public class PlayState implements GameData {
 	myTowerManager.upgrade(tower,"rando",myResources);
 	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
-	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
+	myMediator.removeSpriteFromScreen(tower);
     }
 
     /**

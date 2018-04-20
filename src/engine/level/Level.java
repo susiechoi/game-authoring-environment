@@ -157,23 +157,23 @@ public class Level {
 		listToReturn.addAll(myEnemies.keySet()); 
 		return listToReturn; 
 	}
-
-	public void removeTower(String name) throws ObjectNotFoundException {
-		if (myTowers.containsKey(name)) {
-			myTowers.remove(name);
-		}
-		throw new ObjectNotFoundException(name);
-	}
-
-	public void removeEnemy(String name) throws ObjectNotFoundException {
-		if (myEnemies.containsKey(name)) {
-			myEnemies.remove(name);
-		}
-		for(Wave wave: myWaves) {
-			wave.removeEnemyType(name);
-		}
-		throw new ObjectNotFoundException(name);
-	}
+	
+    public void removeTower(String name) throws ObjectNotFoundException {
+    	if (myTowers.containsKey(name)) {
+    		myTowers.remove(name);
+    	}
+    	throw new ObjectNotFoundException(name);
+    }
+    
+    public void removeEnemy(String name) throws ObjectNotFoundException {
+    	if (myEnemies.containsKey(name)) {
+    		myEnemies.remove(name);
+    	}
+    	for(Wave wave: myWaves) {
+    	    wave.removeEnemyType(name);
+    	}
+    	throw new ObjectNotFoundException(name);
+    }
 
 	/**
 	 * Adds a wave to the level
@@ -266,9 +266,9 @@ public class Level {
 		myWaves.remove(0);
 	}
 	public void removeWave(String name) {
-		myWaves.remove(Integer.parseInt(name)-1);
+	    myWaves.remove(Integer.parseInt(name)-1);
 	}
-
+	
 	/**
 	 * @return Wave corresponding to @param waveNumber
 	 */

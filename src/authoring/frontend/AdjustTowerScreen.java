@@ -6,6 +6,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -43,6 +44,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	 * fully specify a Tower object
 	 * @see authoring.frontend.AdjustNewOrExistingScreen#populateScreenWithFields()
 	 */
+	@Override
 	protected Parent populateScreenWithFields() {		
 		VBox vb = new VBox(); 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeTower")));

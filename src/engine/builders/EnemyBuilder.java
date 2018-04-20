@@ -8,7 +8,6 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
-import javafx.scene.image.Image;
 
 /**
  * 

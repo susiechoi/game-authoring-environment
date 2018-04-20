@@ -90,6 +90,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	 * 
 	 * @return : the amount of damage this Projectile does
 	 */
+	@Override
 	public double getDamage() {
 	    return myDamage.getProperty();
 	}

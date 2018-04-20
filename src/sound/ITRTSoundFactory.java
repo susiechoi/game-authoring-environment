@@ -7,7 +7,6 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import frontend.PropertiesReader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 

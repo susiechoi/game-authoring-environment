@@ -55,7 +55,7 @@ public class TowerManager extends ShootingSpriteManager {
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
-    		return (FrontEndTower) newTower;
+    		return newTower;
     }
 
     /**

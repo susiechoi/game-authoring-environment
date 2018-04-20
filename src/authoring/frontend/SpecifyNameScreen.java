@@ -1,6 +1,9 @@
 package authoring.frontend;
 
+import java.io.FileNotFoundException;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -49,10 +52,21 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		applyButton.setOnAction(e -> {
 			if (validNameField(myNameField)) {
 				if (this.getClass().getSimpleName().equals("SpecifyTowerNameScreen")) {
-				getView().makeTower(myNameField.getText());
+				try {
+				    getView().makeTower(myNameField.getText());
+				} catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
+				    // TODO Auto-generated catch block
+				    getView().loadErrorScreen("NoObject");
+				}
 				}
 				if (this.getClass().getSimpleName().equals("SpecifyEnemyNameScreen")) {
-					getView().makeEnemy(myNameField.getText());
+					try {
+					    getView().makeEnemy(myNameField.getText());
+					} catch (NumberFormatException | FileNotFoundException
+						| ObjectNotFoundException e1) {
+					    // TODO Auto-generated catch block
+					    getView().loadErrorScreen("NoObject");
+					}
 				}
 				getView().goForwardFrom(this.getClass().getSimpleName()+"Apply",myNameField.getText());
 			}
