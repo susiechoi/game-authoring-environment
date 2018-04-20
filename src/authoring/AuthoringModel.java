@@ -30,7 +30,7 @@ import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
 
-public class AuthoringModel implements GameData {
+public class AuthoringModel {
 
     private final GenericModel myGeneric = new GenericModel();
     private final String mySettingsFile = "default_objects/Settings.properties";

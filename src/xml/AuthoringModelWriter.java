@@ -42,7 +42,7 @@ public class AuthoringModelWriter implements XMLWriter {
     @Override
     public void write(GameData g, String filepath) throws BadGameDataException {
 	// check type
-	if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
+	if (!g.getClass().getSimpleName().equals("AuthoredGame")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
 	}
 //	file = new File("SavedModels/" + filepath + ".xml");

@@ -282,6 +282,6 @@ public class AuthoringController {
 	public void writeToFile() throws ObjectNotFoundException {
 		myModel.updateAllProperties(); 
 		AuthoringModelWriter writer = new AuthoringModelWriter();
-		writer.write(myModel, myModel.getGameName());
+		writer.write(myModel.getGame(), myModel.getGameName());
 	}
 }
