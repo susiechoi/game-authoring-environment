@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

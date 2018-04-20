@@ -45,6 +45,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view) {
 	    	super(view);
 	    	setConstants();
+	    	setSaved();
 	}
 
 	private void setConstants() {
