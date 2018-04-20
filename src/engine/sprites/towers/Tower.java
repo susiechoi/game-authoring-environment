@@ -33,7 +33,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myProjectileSpeed;
     private double myProjectileSize;
     private Launcher myLauncher; 
-    private double myLauncherRate;
+    private double myLauncherRate; 
     private double myLauncherRange; 
     private ValueProperty myValue;
     private double myTowerValue; 
@@ -71,7 +71,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myLauncherRange = launcher.getRange(); 
 	myValue = value;
 	myTowerValue = value.getProperty();
-	
+
     }
 
     private void setupStats(Map<String, Integer> propStats, String property, int value) {
@@ -210,7 +210,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     @Override
     public double getTowerRange() {
-        return myLauncherRange;
+        return this.getLauncher().getRange();
     }
     
 	public void updateProperties() {
