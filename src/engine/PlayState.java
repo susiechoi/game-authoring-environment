@@ -79,29 +79,20 @@ public class PlayState implements GameData {
 		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
 			Wave currentWave = currentLevel.getWaves().get(0);
 			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
-			enemy.move(path.initialPoint());
+			enemy.setInitialPoint(path.initialPoint());
 			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
 			myEnemyManager.addToActiveList(enemy);
 			myMediator.addSpriteToScreen(enemy);
 		    }
-		    if(count % 10 == 0) {
-			myEnemyManager.moveEnemies();
-		    }
+		    List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
+		    myMediator.removeListOfSpritesFromScreen(deadEnemies); 
+		    List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+		    activeEnemies.removeAll(deadEnemies);
 		}
+
 	    } catch (Exception e) {
-		// do nothing
+		e.printStackTrace();
 	    }
-
-
-	    //			Path path = currentLevel.getUnmodifiablePaths().get(0);
-	    //			Wave currentWave = currentLevel.getWaves(path).get(0);
-	    //			int currentTime = new Double(UNIVERSAL_TIME).intValue();
-	    //			if (UNIVERSAL_TIME == currentTime && !currentWave.isFinished()) {
-	    //				Enemy newEnemy = currentLevel.getNewEnemy(path);
-	    //				newEnemy.place(count*10, count*10);
-	    //				myEnemyManager.addEnemy(path, newEnemy);
-	    //				count++;
-	    //			}
 
 
 	    UNIVERSAL_TIME+=elapsedTime;
@@ -113,7 +104,8 @@ public class PlayState implements GameData {
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
-	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(),elapsedTime)) {
+
+	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
 	    updateScore(toBeRemoved);
@@ -168,6 +160,7 @@ public class PlayState implements GameData {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
+	myTowerManager.upgrade(tower,"rando",myResources);
 	myResources += myTowerManager.sell(tower);
 	myMediator.updateCurrency(myResources);
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
@@ -180,7 +173,7 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	myTowerManager.upgrade(tower,upgradeName);
+	myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
 
     }
 }

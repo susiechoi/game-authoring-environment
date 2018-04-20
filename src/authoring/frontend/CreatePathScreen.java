@@ -38,6 +38,7 @@ public class CreatePathScreen extends PathScreen {
 		myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+			    	setSaved();
 				List<Point> startCoords = grid.getStartingPosition();
 				if (startCoords.size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);

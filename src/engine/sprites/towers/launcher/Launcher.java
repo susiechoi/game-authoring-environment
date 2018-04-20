@@ -27,7 +27,6 @@ public class Launcher extends Manager<Projectile>{
 
     public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
 	myFireRate = fireRate;
-	System.out.println("fire rate is " + myFireRate.getProperty());
 	myProjectile = projectile;
 	myRange = range;
 	timeSinceLastShot = 0;
@@ -64,11 +63,27 @@ public class Launcher extends Manager<Projectile>{
     /**
      * Updates the tower's projectile fire rate
      * 
-     * @param rate: the new fire rate 
-     * @return double: the user's remaining balance
+     * @param balance : balance of the user
+     * @return : returns the new user balance
      */
     public double upgradeFireRate(double balance) {
 	return myFireRate.upgrade(balance);
+    }
+    /**
+     * Upgrades the damage done by the projectile
+     * @param balance : balance of the user
+     * @return : returns new balance
+     */
+    public double upgradeDamage(double balance) {
+	return myProjectile.upgradeDamage(balance);
+    }
+    /**
+     * Upgrades the range of the Launcher
+     * @param balance : balance of the user
+     * @return : returns new balance
+     */
+    public double upgradeRange(double balance) {
+	return myRange.upgrade(balance);
     }
 
 
@@ -78,6 +93,7 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+	timeSinceLastShot=0;
     	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
     	this.addToActiveList(launchedProjectile);
     	return launchedProjectile;
@@ -88,18 +104,14 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
-	System.out.println("elapsedTime is " + elapsedTime);
      	if(timeSinceLastShot >= myFireRate.getProperty()) {
-     		timeSinceLastShot=0;
      		return true;
      	}
      	timeSinceLastShot+=elapsedTime;
 	return false;
     }
 
-    public double upgradeDamage(double balance) {
-	return myProjectile.upgradeDamage(balance);
-    }
+
     
     public double getRange() {
     	return myRange.getProperty(); 

@@ -3,10 +3,14 @@ package sound;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
+import frontend.PropertiesReader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
 
 /**
  * This class represents IfTrueReturnTrue's implementation of the SoundFactory interface
@@ -27,9 +31,12 @@ import javafx.scene.media.MediaPlayer;
 public class ITRTSoundFactory implements SoundFactory {
     
     private static final double FULL_VOLUME = 1.0;
-
+    private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    
     MediaPlayer myMediaPlayer;
     Double myVolume;
+
+    
 
     /**
      * This public constructor initializes an ITRTSoundFactory
@@ -49,7 +56,13 @@ public class ITRTSoundFactory implements SoundFactory {
      * 
      */
     @Override
-    public void playSoundEffect(String fileName) throws FileNotFoundException { //THIS SHOULD EVENTUALLY BE soundName NOT FILENAME
+    public void playSoundEffect(String soundName) throws FileNotFoundException {
+	String fileName;
+	try {
+	    fileName = new PropertiesReader().findVal(PROPERTIES_FILE_PATH, soundName);
+	} catch (MissingPropertiesException e) {
+	    throw new FileNotFoundException();
+	}
 	File file = new File(fileName);
 	Media sound = new Media(file.toURI().toString());
 	MediaPlayer soundPlayer = new MediaPlayer(sound);
@@ -66,7 +79,13 @@ public class ITRTSoundFactory implements SoundFactory {
      * 
      */
     @Override
-    public void setBackgroundMusic(String fileName) throws FileNotFoundException { //THIS SHOULD EVENTUALLY BE soundName NOT FILENAME
+    public void setBackgroundMusic(String musicName) throws FileNotFoundException {
+	String fileName;
+	try {
+	    fileName = new PropertiesReader().findVal(PROPERTIES_FILE_PATH, musicName);
+	} catch (MissingPropertiesException e) {
+	    throw new FileNotFoundException();
+	}
 	File file = new File(fileName);
 	Media sound = new Media(file.toURI().toString());
 	this.myMediaPlayer = new MediaPlayer(sound);
@@ -110,6 +129,8 @@ public class ITRTSoundFactory implements SoundFactory {
     public void setVolume(Integer percentVolume) {
 	this.myVolume = percentVolume/100.0; //this hard-coded value exists because the parameter is on a percentage scale, 
 	//but is used as a value between 0 and 1. This value should never be changed
+	System.out.println(myVolume);
+	System.out.println("Media player is null:"+(myMediaPlayer==null));
 	this.myMediaPlayer.setVolume(myVolume);
     }
 
@@ -176,7 +197,7 @@ public class ITRTSoundFactory implements SoundFactory {
      */
     @Override
     public Button createMuteButton() {
-	return new MuteButton(this);
+	    return new MuteButton(this);
     }
 
 }

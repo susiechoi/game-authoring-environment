@@ -1,11 +1,15 @@
 .root {
-	-fx-background-image: url("../images/poly.png");
+	-fx-background-image: url("file:images/poly.png");
 	-fx-background-size: cover;
 }
 
 Text {
 	-fx-font-family: "Quicksand";
 	-fx-font-size: 14pt; 
+}
+
+TextField {
+	-fx-max-width: 200; 
 }
 
 .button:disabled, .button:disabled > * {
@@ -25,7 +29,7 @@ Text {
 
 
 VBox {
-	-fx-background-image: url("../images/poly.png");
+	-fx-background-image: url("file:images/poly.png");
 	-fx-background-size: cover;
 	-fx-padding: 5;
     -fx-spacing: 5;
