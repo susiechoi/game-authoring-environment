@@ -76,8 +76,9 @@ public class AuthoringModel {
 	String defaultGameName = myPropertiesReader.findVal(DEFAULT_PROMPTS, "NewGame");
 	int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
 	int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
+	String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
 	Settings newSettings = new SettingsBuilder().construct(defaultGameName, 
-		startingHealth, startingMoney);
+		startingHealth, startingMoney, startingCSS);
 	myGame.setSettings(newSettings);
     } 
 
@@ -118,8 +119,8 @@ public class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makeResources(String gameName, double startingHealth, double starting$) {
-	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css) {
+	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css);
 	myGame.setSettings(newSettings);
     }
 
