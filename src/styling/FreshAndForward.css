@@ -13,7 +13,7 @@ TextField {
 }
 
 .button:disabled, .button:disabled > * {
-	-fx-opacity: 0.7;
+	-fx-opacity: 0.5;
 }
 
 .combo-box .cell {
@@ -25,7 +25,6 @@ TextField {
   -fx-alignment: center;
   -fx-font-family: "Open Sans";
   -fx-font-size: 36pt;
-  -fx-text-fill: white;
 }
 
 
@@ -57,7 +56,6 @@ HBox {
 ComboBox {
 	-fx-font-family: "Open Sans";
 	-fx-background-color: #F0F8FF;
-	-fx-opacity: 0.5;
 	-fx-min-width: 200;
 	-fx-min-height: 50;
 }
@@ -68,7 +66,6 @@ ComboBox {
 }
 
 #selector {
-	-fx-background-color: #488286;
 	-fx-font-family: "Open Sans";
 	-fx-font-size: 14pt; 
 }
@@ -94,10 +91,7 @@ ComboBox {
 	-fx-spacing: 0;
 }
 
-#backButton {
-	-fx-text-fill: black; 
-}
-
-#applyButton {
+#backButton, #applyButton {
+	-fx-background-color: #F0F8FF;
 	-fx-text-fill: black; 
 }
