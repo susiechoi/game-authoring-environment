@@ -31,7 +31,7 @@ import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
 
 public class AuthoringModel {
-
+	
     private final GenericModel myGeneric = new GenericModel();
     private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
