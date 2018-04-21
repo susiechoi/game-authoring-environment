@@ -353,7 +353,7 @@ public class AuthoringModel {
     public int autogenerateLevel() {
 	List<Level> levels = myGame.unmodifiableLevels();
 	int newLevelNumber = levels.size()+1;
-	Level copiedLevel = levels.get(levels.size());
+	Level copiedLevel = levels.get(levels.size()-1);
 	myGame.addLevel(newLevelNumber, new Level(copiedLevel));
 	return newLevelNumber; 
     }
