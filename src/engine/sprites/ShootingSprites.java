@@ -200,6 +200,10 @@ public abstract class ShootingSprites extends Sprite{
     private double upgradeRange(double balance) {
 	return this.getLauncher().upgradeRange(balance);
     }
+    
+    protected void updateLauncher(Launcher launcher) {
+    	myLauncher = launcher; 
+    }
 
 
 }

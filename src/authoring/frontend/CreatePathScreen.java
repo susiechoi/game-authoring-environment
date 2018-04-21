@@ -6,7 +6,6 @@ import java.util.List;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
@@ -72,17 +71,6 @@ public class CreatePathScreen extends PathScreen {
 	}
 
 	@Override
-	protected Parent populateScreenWithFields() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public void initializeGridSettings(CreatePathGrid gridIn) {
 		setPathPanel(myPathPanel, myPathToolBar);
 		gridIn.setUpForPathCreation();
@@ -94,6 +82,7 @@ public class CreatePathScreen extends PathScreen {
 	    setGridUIComponents(myPathPanel, myPathToolBar);
 	    ImageView trashImage = myPathPanel.makeTrashImage();
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				if (event.getDragboard().hasImage()) {
 					event.acceptTransferModes(TransferMode.ANY);
@@ -102,6 +91,7 @@ public class CreatePathScreen extends PathScreen {
 		});
 
 		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				event.acceptTransferModes(TransferMode.ANY);
 				Dragboard db = event.getDragboard();
@@ -114,7 +104,7 @@ public class CreatePathScreen extends PathScreen {
 			}
 		});
 
-		Button backgroundButton = (Button) myPathToolBar.getBackgroundButton();
+		Button backgroundButton = myPathToolBar.getBackgroundButton();
 		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

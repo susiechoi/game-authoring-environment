@@ -6,15 +6,13 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.exceptions.NoDuplicateNamesException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,7 +21,7 @@ import javafx.scene.layout.VBox;
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Tower";
-	public static final String TOWER_IMAGES = "src/images/TowerImageNames.properties";
+	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 
@@ -38,7 +36,6 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName, TOWER_FIELDS, OBJECT_TYPE);
-		System.out.println(selectedObjectName);
 		myObjectName = selectedObjectName; 
 	}
 
@@ -47,6 +44,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	 * fully specify a Tower object
 	 * @see authoring.frontend.AdjustNewOrExistingScreen#populateScreenWithFields()
 	 */
+	@Override
 	protected Parent populateScreenWithFields() {		
 		VBox vb = new VBox(); 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeTower")));
@@ -80,6 +78,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 			getView().loadErrorScreen("NoImageFile");
 		}
 		myImageDropdown = towerImageDropdown;  
+		myImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
+			getView().setObjectAttribute("Tower", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
+		});
 		try {
 			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", TOWER_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
 					getErrorCheckedPrompt("NewImageName"), towerImageDropdown, imageDisplay);
@@ -96,23 +97,6 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myTowerValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerValue", newValue);
 		});
-
-//		Slider towerUpgradeCostSlider = getUIFactory().setupSlider("TowerUpgradeCostSlider", getMyMaxPrice());
-//		myTowerUpgradeCostSlider = towerUpgradeCostSlider;
-//		HBox towerUpgradeCost = getUIFactory().setupSliderWithValue("TowerUpgradeCostSlider", towerUpgradeCostSlider, getErrorCheckedPrompt("TowerUpgradeCost"));
-//		vb.getChildren().add(towerUpgradeCost);
-//		myTowerUpgradeCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-//			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerUpgradeCost", newValue);
-//		});
-//
-//		Slider towerUpgradeValueSlider = getUIFactory().setupSlider("TowerUpgradeValueSlider", getMyMaxPrice());
-//		myTowerUpgradeValueSlider = towerUpgradeValueSlider; 
-//		HBox towerUpgradeValue = getUIFactory().setupSliderWithValue("TowerUpgradeValueSlider", towerUpgradeValueSlider, getErrorCheckedPrompt("TowerUpgradeValue"));
-//		myTowerUpgradeValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-//			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerUpgradeValue", newValue);
-//		});
-//		vb.getChildren().add(towerUpgradeValue);
-
 
 	}
 

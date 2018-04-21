@@ -7,6 +7,7 @@
 
 package frontend;
 
+import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,7 +39,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class UIFactory {
 
@@ -326,8 +326,9 @@ public class UIFactory {
 	VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 	try {
 	    dropdown.setOnAction(e ->
-	    {try{
-		imageDisplay.setImage(new Image((new File(propertiesReader.findVal(propertiesFilepath, dropdown.getValue())).toURI().toString()), imageSize, imageSize, false, false));
+	    {
+	    	try{
+		imageDisplay.setImage(images.get(dropdown.getSelectionModel().getSelectedIndex()));
 	    }
 	    catch(Exception e2) {
 		e2.printStackTrace();
@@ -352,8 +353,9 @@ public class UIFactory {
      * @return HBox containing Slider/prompt/current value displaying
      */
     public HBox setupSliderWithValue(String id, Slider slider, String prompt) {
-	Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
+	Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 	slider.valueProperty().addListener(new ChangeListener<Number>() {
+	    @Override
 	    public void changed(ObservableValue<? extends Number> ov,
 		    Number old_val, Number new_val) {
 		sliderValue.setText(String.format("%03d", (int)(double)new_val));

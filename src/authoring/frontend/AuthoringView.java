@@ -8,6 +8,7 @@
 
 package authoring.frontend;
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import xml.AuthoringModelWriter;
 
 public class AuthoringView extends View {
 
@@ -193,7 +193,7 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
+	public void makePath(GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
 		myGrid = grid;
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathSize);
 	}
@@ -315,11 +315,15 @@ public class AuthoringView extends View {
 	}
 
 	protected void writeToFile() {
-		AuthoringModelWriter writer = new AuthoringModelWriter();
-		writer.write(myModel, myModel.getGameName());
+		try {
+		    myController.writeToFile();
+		} catch (ObjectNotFoundException e) {
+		    // TODO Auto-generated catch block
+		    loadErrorScreen("NoObject");
+		} 
 	}
 
-	protected void readFromFile(String name) {
+	protected void readFromFile(String name) throws MissingPropertiesException {
 	    myController.setModel(name);
 	}
 	
@@ -341,7 +345,7 @@ public class AuthoringView extends View {
 	}
 
 
-	public void makeTower(String name) {
+	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
@@ -351,7 +355,7 @@ public class AuthoringView extends View {
 		} 
 	}
 	
-	public void makeEnemy(String name) {
+	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {

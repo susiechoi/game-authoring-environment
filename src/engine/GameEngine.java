@@ -1,5 +1,6 @@
 package engine;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -30,7 +31,7 @@ public class GameEngine {
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> loop(SECOND_DELAY));
         ANIMATION = new Timeline();
-        ANIMATION.setCycleCount(Timeline.INDEFINITE);
+        ANIMATION.setCycleCount(Animation.INDEFINITE);
         ANIMATION.getKeyFrames().add(frame);
 	
     }

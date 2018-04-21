@@ -13,10 +13,12 @@ import engine.sprites.towers.FrontEndTower;
 import frontend.PropertiesReader;
 import gameplayer.screen.GameScreen;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 
