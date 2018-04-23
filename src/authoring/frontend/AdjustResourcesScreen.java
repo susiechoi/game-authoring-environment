@@ -83,6 +83,6 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "myGameName").toString());
 		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth").toString());
 		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney").toString());	
-		getUIFactory().setComboBoxToValue(myCSSFilenameChooser, getView().getObjectAttribute("Settings", "", "myCSS").toString());
+		getUIFactory().setComboBoxToValue(myCSSFilenameChooser, getView().getObjectAttribute("Settings", "", "myCSSTheme").toString());
 	}
 }
