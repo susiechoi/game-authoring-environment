@@ -20,7 +20,8 @@ import javafx.scene.layout.VBox;
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Enemy";
-	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String ENEMY_IMAGE_PREFIX = "images/ThemeSpecificImages/EnemyImages/";
+	public static final String ENEMY_IMAGE_SUFFIX = "EnemyImageNames.properties";
 	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
 	private String myObjectName; 
@@ -45,7 +46,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		ComboBox<String> enemyImageDropdown = new ComboBox<String>();
 		ImageView imageDisplay = new ImageView(); 
 		try {
-			enemyImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
+			enemyImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGE_PREFIX+getView().getTheme()+ENEMY_IMAGE_SUFFIX));
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
@@ -54,7 +55,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 			getView().setObjectAttribute("Enemy", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
 		try {
-			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGE_PREFIX+getView().getTheme()+ENEMY_IMAGE_SUFFIX, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
 					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");

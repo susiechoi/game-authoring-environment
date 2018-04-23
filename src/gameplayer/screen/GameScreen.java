@@ -144,6 +144,7 @@ public class GameScreen extends Screen {
 				e.printStackTrace();
 			}
 		else if (control.equals("edit")) { // Susie added this
+			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 		}
