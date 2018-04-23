@@ -1,5 +1,7 @@
 package engine.physics;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import javafx.scene.Node;
 
 /**
@@ -11,7 +13,8 @@ import javafx.scene.Node;
  */
 public class ImageIntersecter implements Intersecter {
 
-    private Node currentNode;
+    @XStreamOmitField
+    private transient Node currentNode;
     
     public ImageIntersecter(Node input) {
 	currentNode = input;

@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.util.*;
 
 import data.GameData;
+import engine.sprites.Sprite;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -35,6 +36,7 @@ public class TestWriter extends Application {
     
     public TestWriter() {
 	parser = new XStream(new StaxDriver());
+	parser.autodetectAnnotations(true);
 	try {
 	    d = XMLDocumentBuilder.initializeDoc();
 	} catch (ParserConfigurationException e) {
@@ -93,6 +95,9 @@ public class TestWriter extends Application {
 	ArrayList<String> y = (ArrayList<String>) x.read("TesterFile");
 	System.out.println(y.toString());
 	System.out.println("<?xml version=\"1.0\" ?>");
+	
+	Sprite sprite = new Sprite("test", "flow.png", 10);
+	System.out.println(parser.toXML(sprite));
 	//launch(args);
 	
     }

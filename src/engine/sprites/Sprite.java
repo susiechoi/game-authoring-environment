@@ -19,7 +19,7 @@ public class Sprite implements FrontEndSprite{
 
     private String myName;
     @XStreamOmitField
-    private ImageView myImageView;
+    private transient ImageView myImageView;
     private String myImageString;
 
 

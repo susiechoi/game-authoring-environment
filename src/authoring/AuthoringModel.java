@@ -60,8 +60,10 @@ public class AuthoringModel implements GameData {
 	private final PropertiesReader myPropertiesReader;
 	private Settings mySettings;
 	private Map<Integer, Level> myLevels;
-	private Tower myDefaultTower;
-	private Enemy myDefaultEnemy;
+	@XStreamOmitField
+	private transient Tower myDefaultTower;
+	@XStreamOmitField
+	private transient Enemy myDefaultEnemy;
 	//private Path myDefaultPath;
 	protected HashMap<String, List<Point>> myImageMap;
 

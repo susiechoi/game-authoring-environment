@@ -29,7 +29,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private String myImage; 
     private double mySize;
     @XStreamOmitField
-    private Image myProjectileImage;
+    private transient Image myProjectileImage;
     private double myProjectileDamage; 
     private double myProjectileSpeed;
     private double myProjectileSize;

@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
@@ -28,11 +26,8 @@ public class Level {
 
     private final int myNumber;
     private List<Path> myPaths;
-    @XStreamOmitField
     private Map<String, Tower> myTowers;
-    @XStreamOmitField
     private Map<Path, List<Wave>> myWaves;
-    @XStreamOmitField
     private Map<String, Enemy> myEnemies;
     
     
