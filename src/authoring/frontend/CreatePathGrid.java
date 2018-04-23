@@ -63,6 +63,7 @@ public class CreatePathGrid {
     // private EventHandler<DragEvent> myOnDragDropped;
     // private EventHandler<DragEvent> myOnDragOver;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
+	@Override
 	public void handle(MouseEvent event) {
 	//DO NOTHING - just an initialization of the eventHandler
 	}
@@ -106,14 +107,15 @@ public class CreatePathGrid {
     //Given: path images and locations as defaults, change to populate with initial params
     private void populateGrid(GridPane grid) { //grid, 
 
-	for (int x = 0 ; x < grid.getColumnCount(); x++) {
-	    for (int y = 0 ; y < grid.getRowCount(); y++) {
+	for (int x = 0 ; x < grid.impl_getColumnCount(); x++) {
+	    for (int y = 0 ; y < grid.impl_getRowCount(); y++) {
 		StackPane cell = new StackPane();
 
 		final int col = x;
 		final int row = y;
 
 		cell.setOnDragOver(new EventHandler <DragEvent>() {
+		    @Override
 		    public void handle(DragEvent event) {
 			if (event.getDragboard().hasImage()) {
 			    event.acceptTransferModes(TransferMode.ANY);
@@ -125,6 +127,7 @@ public class CreatePathGrid {
 		});
 
 		cell.setOnDragDropped(new EventHandler <DragEvent>() {
+		    @Override
 		    public void handle(DragEvent event) {
 			event.acceptTransferModes(TransferMode.ANY);
 			Dragboard db = event.getDragboard();
@@ -282,6 +285,7 @@ public class CreatePathGrid {
 	    //newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
 	    //newNode.setOnDragDropped(e -> {});
 	    myOnMouseClicked = new EventHandler <MouseEvent>() {
+		@Override
 		public void handle(MouseEvent event) {
 		    myCurrentClicked = new DraggableImage(startImage.getImage()); //TODO
 		    action.handle(event);
@@ -309,8 +313,8 @@ public class CreatePathGrid {
     }
 
     protected List<Point> getStartingPosition() { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
-	for (int x = 0; x < checkGrid.getColumnCount(); x++) {
-	    for (int y = 0; y < checkGrid.getRowCount(); y++) {
+	for (int x = 0; x < checkGrid.impl_getColumnCount(); x++) {
+	    for (int y = 0; y < checkGrid.impl_getRowCount(); y++) {
 		if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText().equals("start")) {
 		    startPoints.add(new Point(x, y));
 		}
@@ -340,8 +344,8 @@ public class CreatePathGrid {
     }
 
     protected HashMap<String, List<Point>> getGridImageCoordinates() {
-	for (int x = 0; x < checkGrid.getColumnCount(); x++) {
-	    for (int y = 0; y < checkGrid.getRowCount(); y++) {
+	for (int x = 0; x < checkGrid.impl_getColumnCount(); x++) {
+	    for (int y = 0; y < checkGrid.impl_getRowCount(); y++) {
 		if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "path") {
 		    pathPoints.add(new Point(x, y));
 		} else if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText() == "start") {
@@ -351,9 +355,9 @@ public class CreatePathGrid {
 		}
 	    }
 	}
-	gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
-	gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
-	gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
+	gridImageCoordinates.put(startImage.getImage().impl_getUrl(), startPoints);
+	gridImageCoordinates.put(endImage.getImage().impl_getUrl(), endPoints);
+	gridImageCoordinates.put(pathImage.getImage().impl_getUrl(), pathPoints);
 	return gridImageCoordinates;
     }
 
@@ -369,11 +373,11 @@ public class CreatePathGrid {
     }
 
     public int getColumnCount() {
-	return grid.getColumnCount();
+	return grid.impl_getColumnCount();
     }
 
     public int getRowCount() {
-	return grid.getRowCount();
+	return grid.impl_getRowCount();
     }
 
 }

@@ -1,12 +1,7 @@
 package frontend;
 import java.util.List;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Alert.AlertType;
 
 /**
  * @author transition to abstract class & error checking - Sarah Bland
@@ -68,6 +63,7 @@ public abstract class Screen {
 		if (myRoot != null) {
 			myRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 			myRoot.getStylesheets().add("https://fonts.googleapis.com/css?family=Quicksand");
+			myRoot.getStylesheets().add("https://fonts.googleapis.com/css?family=Open+Sans");
 		}
 	}
 

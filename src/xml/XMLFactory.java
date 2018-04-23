@@ -3,6 +3,7 @@ package xml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import authoring.AuthoredGame;
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 
@@ -87,11 +88,11 @@ public class XMLFactory {
 	
 	public static void main(String[] args) throws MissingPropertiesException {
 	    XMLFactory f = new XMLFactory();
-	    AuthoringModelWriter p = (AuthoringModelWriter) f.generateWriter("AuthoringModelWriter");
-	    AuthoringModel a = new AuthoringModel();
-	    p.write(a, "test1");
+	    AuthoringModelWriter p = (AuthoringModelWriter) XMLFactory.generateWriter("AuthoringModelWriter");
+	    //AuthoredGame a = new AuthoredGame();
+	    //p.write(a, "test1");
 	    AuthoringModelReader r = (AuthoringModelReader) XMLFactory.generateReader("AuthoringModelReader");
-	    AuthoringModel b = r.createModel("test1");
+	    AuthoredGame b = r.createModel("test1");
 //	    if (b!= null)
 //		System.out.println("not Null");
 	}

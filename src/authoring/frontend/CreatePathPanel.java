@@ -44,6 +44,7 @@ public class CreatePathPanel extends PathPanel {
 		return applyButton;
 	}
 
+	@Override
 	protected void makePanel() {
 
 		pathPanel = new VBox();
@@ -90,6 +91,7 @@ public class CreatePathPanel extends PathPanel {
 	protected ImageView makeTrashImage() {
 		trashImage.getStyleClass().add("img-view");
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				if (event.getDragboard().hasImage()) {
 					event.acceptTransferModes(TransferMode.ANY);
@@ -98,6 +100,7 @@ public class CreatePathPanel extends PathPanel {
 		});
 
 		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				event.acceptTransferModes(TransferMode.ANY);
 				Dragboard db = event.getDragboard();

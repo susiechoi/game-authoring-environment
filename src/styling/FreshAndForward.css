@@ -1,10 +1,10 @@
 .root {
-	-fx-background-image: url("file:images/poly.png");
+	-fx-background-image: url("file:images/mermaid.jpg");
 	-fx-background-size: cover;
 }
 
 Text {
-	-fx-font-family: "Quicksand";
+	-fx-font-family: "Open Sans";
 	-fx-font-size: 14pt; 
 }
 
@@ -13,17 +13,17 @@ TextField {
 }
 
 .button:disabled, .button:disabled > * {
-	-fx-opacity: 0.7;
+	-fx-opacity: 0.5;
 }
 
 .combo-box .cell {
-	-fx-font-family: "Quicksand";
+	-fx-font-family: "Open Sans";
 	-fx-font-size: 12pt; 
 }
 
 #screenTitle {
   -fx-alignment: center;
-  -fx-font-family: "Quicksand";
+  -fx-font-family: "Open Sans";
   -fx-font-size: 36pt;
 }
 
@@ -41,10 +41,11 @@ HBox {
 }
 
 .button {
-	-fx-font-family: "Quicksand";
+	-fx-font-family: "Open Sans";
+	-fx-text-fill: white; 
 	-fx-min-width: 200;		
 	-fx-min-height: 50;
-	-fx-background-color: #B7D5D4;
+	-fx-background-color: Transparent;
 }
 
 .button:hover{
@@ -53,8 +54,8 @@ HBox {
 }
 
 ComboBox {
-	-fx-font-family: "Quicksand";
-	-fx-background-color: #B7D5D4;
+	-fx-font-family: "Open Sans";
+	-fx-background-color: #F0F8FF;
 	-fx-min-width: 200;
 	-fx-min-height: 50;
 }
@@ -65,13 +66,12 @@ ComboBox {
 }
 
 #selector {
-	-fx-background-color: #488286;
-	-fx-font-family: "Quicksand";
+	-fx-font-family: "Open Sans";
 	-fx-font-size: 14pt; 
 }
 
 #selector .Text {
-	-fx-font-family: "Quicksand";
+	-fx-font-family: "Open Sans";
  	 -fx-font-size: 14pt;
 }
 
@@ -83,7 +83,7 @@ ComboBox {
 #selector .ComboBox {
 	-fx-padding: 10;
 	-fx-spacing: 10;
-	-fx-background-color: #B7D5D4;
+	-fx-background-color: #F0F8FF;
 }
 
 #towerHolders {
@@ -91,10 +91,7 @@ ComboBox {
 	-fx-spacing: 0;
 }
 
-#backButton {
-	-fx-background-color: #488286; 
-}
-
-#applyButton {
-	-fx-background-color: #488286; 
+#backButton, #applyButton {
+	-fx-background-color: #F0F8FF;
+	-fx-text-fill: black; 
 }

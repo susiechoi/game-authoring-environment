@@ -9,6 +9,7 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -18,7 +19,7 @@ import javafx.scene.text.Text;
  * elements correctly. Also dependent on View to correctly lead Screenflow and load the next
  * screen.
  * @author Sarahbland
- *
+ * @author susiechoi
  *
  */
 public class StartScreen extends AuthoringScreen {
@@ -53,9 +54,10 @@ public class StartScreen extends AuthoringScreen {
 	Text startHeading = new Text();
 	VBox vbox = new VBox();
 	startHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("StartScreenHeader"));
-	List<String> dummyGameNames = new ArrayList<>();
+	List<String> existingGames = new ArrayList<>();
 	String gameNamePrompt = getErrorCheckedPrompt("GameEditSelector");
-	dummyGameNames = getFileNames(DEFAULT_XML_FOLDER);
+	existingGames.add(gameNamePrompt);
+	existingGames.addAll(getFileNames(DEFAULT_XML_FOLDER));
 	Button newGameButton = new Button();
 	String newGameButtonPrompt = getErrorCheckedPrompt("NewGameButtonLabel");
 	newGameButton = getUIFactory().makeTextButton("editbutton", newGameButtonPrompt);
@@ -63,12 +65,21 @@ public class StartScreen extends AuthoringScreen {
 	    getView().goForwardFrom(this.getClass().getSimpleName()+"New", getErrorCheckedPrompt("NewGame"));
 	});
 	Button editButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel"));
-	ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", dummyGameNames, e -> {
+	ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", existingGames, e -> {
 	    editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, gameNamePrompt);
 	editButton.setDisable(true);
 	editButton.setOnAction(e -> {
-		getView().readFromFile(gameChooser.getValue());
+		try {
+		    getView().readFromFile(gameChooser.getValue());
+		} catch (MissingPropertiesException e1) {
+		    // TODO Auto-generated catch block
+		    getView().loadErrorScreen("NoObject");
+		}
 	});
+	HBox editExisting = new HBox();
+	editExisting.getChildren().add(gameChooser);
+	editExisting.getChildren().add(editButton);
+	
 	Button changeCSS = getUIFactory().makeTextButton("cssbutton", getErrorCheckedPrompt("ChangeStyling"));
 	changeCSS.setOnAction(e -> {
 		currCSSIndex++; 
@@ -82,8 +93,7 @@ public class StartScreen extends AuthoringScreen {
 	
 	vbox.getChildren().add(startHeading);
 	vbox.getChildren().add(newGameButton);
-	vbox.getChildren().add(gameChooser);
-	vbox.getChildren().add(editButton);
+	vbox.getChildren().add(editExisting);
 	vbox.getChildren().add(changeCSS);
 	vbox.getChildren().add(backButton);
 	return vbox;

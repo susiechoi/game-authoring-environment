@@ -32,6 +32,7 @@ public class AttributeFinder {
 	}
 
 	public void setFieldValue(String fieldName, Object objectWithFields, Object fieldValue) throws IllegalArgumentException, IllegalAccessException {
+		System.out.println(fieldName+" "+fieldValue);
 		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
 			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
 			if (fieldSimpleString.equals(fieldName)) {

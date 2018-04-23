@@ -8,6 +8,7 @@
 
 package authoring.frontend;
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -201,8 +202,8 @@ public class AuthoringView extends View {
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
 
-	public void makeResources(String gameName, double startingHealth, double starting$) {
-		myController.makeResources(gameName, startingHealth, starting$);
+	public void makeResources(String gameName, double startingHealth, double starting$, String css) {
+		myController.makeResources(gameName, startingHealth, starting$, css);
 	}
 
 	/**
@@ -314,10 +315,15 @@ public class AuthoringView extends View {
 	}
 
 	protected void writeToFile() {
-		myController.writeToFile(); 
+		try {
+		    myController.writeToFile();
+		} catch (ObjectNotFoundException e) {
+		    // TODO Auto-generated catch block
+		    loadErrorScreen("NoObject");
+		} 
 	}
 
-	protected void readFromFile(String name) {
+	protected void readFromFile(String name) throws MissingPropertiesException {
 	    myController.setModel(name);
 	}
 	
@@ -339,7 +345,7 @@ public class AuthoringView extends View {
 	}
 
 
-	public void makeTower(String name) {
+	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
@@ -349,7 +355,7 @@ public class AuthoringView extends View {
 		} 
 	}
 	
-	public void makeEnemy(String name) {
+	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {
