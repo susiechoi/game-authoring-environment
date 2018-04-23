@@ -234,5 +234,14 @@ public class Mediator {
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
 		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
 	}
+	
+	/**
+	 * Ends game loop in case that user wants to return to authoring/editing the game
+	 * @author susiechoi
+	 */
+	public void endLoop() {
+		myGameEngine.endLoop();
+	}
+	
 }
 
