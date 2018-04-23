@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import javax.swing.GroupLayout.Alignment;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class WaveDirectionsPanel extends PathPanel{
     private int myWaveNumber;
@@ -49,7 +52,7 @@ public class WaveDirectionsPanel extends PathPanel{
 	myRoot.setMaxSize(280, 900);
 	Label waveText = new Label(getErrorCheckedPrompt("WavescreenHeader") + (myWaveNumber+1));
 	VBox pseudoRoot = new VBox();
-	Label directions = new Label("Test directions"); //TODO
+	Text directions = new Text(getErrorCheckedPrompt("WaveDirections")); //TODO
 	HBox waveTimeSliderPrompted = new HBox();
 	try {
 	    myTimeSlider = getUIFactory().setupSlider("", Integer.parseInt(getPropertiesReader().findVal(AdjustNewOrExistingScreen.DEFAULT_CONSTANTS, "MaxWaveTime")));
