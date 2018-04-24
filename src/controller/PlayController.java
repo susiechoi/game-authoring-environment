@@ -53,7 +53,7 @@ public class PlayController {
 		AuthoredGame playModel = myReader.createModel(pathToXML);
 		List<Level> levels = playModel.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0,
-			playModel.startingMoney(), 0);
+			playModel.startingMoney(), playModel.startingHealth(), 0);
 		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize());
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
@@ -69,7 +69,7 @@ public class PlayController {
 		myScreenManager.setGameFilePath(model.getGameName());
 		List<Level> levels = model.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, 
-			model.startingMoney(), 0);
+			model.startingMoney(), model.startingHealth(), 0);
 		myScreenManager.loadGameScreenNew();
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();

@@ -206,10 +206,10 @@ public class Mediator {
 
     /**
      * to be called by the backend to tell the frontend the new health of the player
-     * @param newHealth
+     * @param myHealth
      */
-    public void updateHealth(Integer newHealth) {
-	myScreenManager.updateHealth(newHealth);
+    public void updateHealth(double myHealth) {
+	myScreenManager.updateHealth(myHealth);
     }
 
     /**

@@ -23,16 +23,16 @@ public class ScorePanel extends Panel {
 		SCORE = 0;
 		HEALTH = 100;
 		LEVEL = 1;
+		
+		//TODO Read words SCORE, LEVEL, and + from properties file
+		ScoreText = new Label("Score: " + SCORE);
+		LevelText = new Label("Level " + LEVEL);
+		HealthText = new Label("+" + HEALTH);
 	}
 
 
 	@Override
 	public void makePanel() {
-
-		//TODO Read words SCORE, LEVEL, and + from properties file
-		ScoreText = new Label("Score: " + SCORE);
-		LevelText = new Label("Level " + LEVEL);
-		HealthText = new Label("+" + HEALTH);
 
 
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
@@ -58,8 +58,8 @@ public class ScorePanel extends Panel {
 		ScoreText.setText("Score: " + newScore);
 	}
 
-	public void updateHealth(Integer newHealth) {
-		HealthText.setText("+" +newHealth);
+	public void updateHealth(double  myHealth) {
+		HealthText.setText("+" + Double.valueOf(Math.floor(myHealth)).intValue());
 	}
 
 	public void updateLevel(Integer newLevel) {
