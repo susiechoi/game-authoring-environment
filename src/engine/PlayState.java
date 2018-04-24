@@ -69,7 +69,7 @@ public class PlayState implements GameData {
 	System.out.println("Listing Towers: ");
 	for (FrontEndTower tower : availTowers) {
 	    System.out.println(tower.getName());
-	    System.out.println(tower.getImageView().getImage().impl_getUrl());
+	    System.out.println(tower.getImageView().getImage().getUrl());
 	}
 	System.out.println("Done listing towers in level");
 	myMediator.setAvailableTowers(availTowers);

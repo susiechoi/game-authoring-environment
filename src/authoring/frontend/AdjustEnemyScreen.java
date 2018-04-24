@@ -43,23 +43,24 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeEnemy")));
 
 		HBox enemyImageSelect = new HBox();
-		ComboBox<String> enemyImageDropdown = new ComboBox<String>();
+		myImageDropdown = new ComboBox<String>();
 		ImageView imageDisplay = new ImageView(); 
 		try {
-			enemyImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGE_PREFIX+getView().getTheme()+ENEMY_IMAGE_SUFFIX));
+			myImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGE_PREFIX+getView().getTheme()+ENEMY_IMAGE_SUFFIX));
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
-		myImageDropdown = enemyImageDropdown;  
+		//myImageDropdown = myImageDropdown;  
 		myImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
 			getView().setObjectAttribute("Enemy", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
 		try {
 			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGE_PREFIX+getView().getTheme()+ENEMY_IMAGE_SUFFIX, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
+					getErrorCheckedPrompt("NewImageName"), myImageDropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
+		myImageDropdown.getSelectionModel().select(((String)getView().getObjectAttribute("Enemy", myObjectName, "myImage")));
 		vb.getChildren().add(enemyImageSelect);
 
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  getMyMaxSpeed()); 

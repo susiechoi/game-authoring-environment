@@ -47,13 +47,13 @@ public class AuthoringModel {
 
     public AuthoringModel() throws MissingPropertiesException {
 	this(new AuthoredGame());
+	populateInstanceVariables();
+	setupDefaultSettings(); 
+	setupDefaultLevel();
     }
     
     public AuthoringModel(AuthoredGame game) throws MissingPropertiesException {
 	myGame = game;
-	populateInstanceVariables();
-	setupDefaultSettings(); 
-	setupDefaultLevel();
     }
 
     private void populateInstanceVariables() throws MissingPropertiesException {
