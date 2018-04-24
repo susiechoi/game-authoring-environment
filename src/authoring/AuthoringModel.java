@@ -476,6 +476,7 @@ public class AuthoringModel implements GameData {
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeFinder.setFieldValue(attribute, enemy, attributeValue);
+				System.out.println(attribute + " " + attributeValue + " TEST ");
 			}
 		}
 		else if (objectType.equals("Tower")) {
