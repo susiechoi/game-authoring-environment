@@ -50,7 +50,14 @@ public class AuthoredGame implements GameData {
 	return myGameName; 
     }
     
-    public Settings getSettings() {
+    /**
+     * @return double: the starting money the player starts with
+     */
+    public double startingMoney() {
+	return mySettings.startingMoney();
+    }
+    
+    protected Settings getSettings() {
 	return mySettings;
     }
     

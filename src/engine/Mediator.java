@@ -198,10 +198,10 @@ public class Mediator {
 
     /**
      * to be called by the backend to tell the frontend the new balance of $ the player has
-     * @param newBalance
+     * @param myResources
      */
-    public void updateCurrency(Integer newBalance) {
-	myScreenManager.updateCurrency(newBalance);
+    public void updateCurrency(double myResources) {
+	myScreenManager.updateCurrency(myResources);
     }
 
     /**

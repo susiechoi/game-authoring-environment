@@ -24,4 +24,8 @@ public class Settings {
 	    return myGameName;
 	}
 	
+	public double startingMoney() {
+	    return myStartingMoney;
+	}
+	
 }
