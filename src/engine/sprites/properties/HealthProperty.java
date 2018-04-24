@@ -49,4 +49,10 @@ public class HealthProperty extends UpgradeProperty {
     public double getUpgradeValue() {
     	return myValue; 
     }
+
+    @Override
+    public Property makeCopy() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

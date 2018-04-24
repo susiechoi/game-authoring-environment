@@ -31,12 +31,10 @@ public class Launcher extends Manager<Projectile>{
 	timeSinceLastShot = 0;
     }
     
-    
-
-    public Launcher(Launcher copiedLauncher) {
-	myFireRate = copiedLauncher.getFireRateProperty();
-	myProjectile = copiedLauncher.getProjectile();
-	myRange = copiedLauncher.getRangeProperty();
+    public Launcher(Launcher launcher) {
+	myFireRate = launcher.getFireRateProperty();
+	myProjectile = launcher.getProjectile();
+	myRange = launcher.getRangeProperty();
 	timeSinceLastShot = 0;
     }
 

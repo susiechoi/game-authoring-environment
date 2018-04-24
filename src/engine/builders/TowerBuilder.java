@@ -1,6 +1,10 @@
 package engine.builders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.properties.HealthProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
@@ -24,8 +28,9 @@ public class TowerBuilder {
      * @return Tower object
      */
     public Tower construct(String name, String imagepath, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) {
-	ValueProperty valueProperty = new ValueProperty(towerValue);
-    	HealthProperty healthProperty = new HealthProperty(healthCost, healthValue, health);
-	return new Tower(name, imagepath, size, launcher, healthProperty, valueProperty);
+    	List<Property> properties = new ArrayList<Property>();
+    	properties.add(new ValueProperty(towerValue));
+    	properties.add(new HealthProperty(healthCost, healthValue, health));
+	return new Tower(name, imagepath, size, launcher, properties);
     }
 }

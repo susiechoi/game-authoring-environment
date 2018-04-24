@@ -22,5 +22,11 @@ public class SpeedProperty extends UpgradeProperty {
 	super(cost, value, speed);
     }
 
+    @Override
+    public Property makeCopy() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 
 }

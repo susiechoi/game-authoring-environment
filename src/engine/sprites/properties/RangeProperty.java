@@ -22,4 +22,10 @@ public class RangeProperty extends UpgradeProperty {
 	super(cost, value, range);
     }
 
+    @Override
+    public Property makeCopy() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }

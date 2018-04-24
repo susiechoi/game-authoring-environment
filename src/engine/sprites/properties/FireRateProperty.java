@@ -21,4 +21,10 @@ public class FireRateProperty extends UpgradeProperty {
 	super(cost, value, fireRate);
     }
 
+    @Override
+    public Property makeCopy() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }

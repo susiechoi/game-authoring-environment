@@ -1,10 +1,11 @@
 package engine.sprites.towers;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import engine.builders.*;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.*;
@@ -18,26 +19,11 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
-
-    private final String ENEMIES_KILLED = "Enemies Killed";
-
-    private HealthProperty myHealth;
-    private String myName; 
     private String myImage; 
-    private double myHealthValue;
-    private double myHealthUpgradeCost; 
-    private double myHealthUpgradeValue; 
+    private Launcher myLauncher;
     private double mySize;
-    private String myProjectileImage;
-    private double myProjectileDamage; 
-    private double myProjectileSpeed;
-    private double myProjectileSize;
-    private Launcher myLauncher; 
-    private double myLauncherRate; 
-    private double myLauncherRange; 
     private ValueProperty myValue;
-    private double myTowerValue; 
-    private Map<String, Integer> propertyStats;
+    private List<Property> myProperties;
 
     /**
      * Constructor for a Tower object that accepts parameter properties.
@@ -47,61 +33,31 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param health: Initial health of the tower
      * @param value: Value of the tower for selling
      */
-    public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
+    public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher);
-	myName = name; 
-	myImage = image; 
-	myHealth = health;
-	propertyStats = new HashMap<String, Integer>();
-	setupStats(propertyStats, health.getName(), (int) health.getProperty());
-	setupStats(propertyStats, value.getName(), (int) value.getProperty());
-	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
-	
-	myHealthValue = health.getProperty(); 
-	myHealthUpgradeCost = health.getCost();
-	myHealthUpgradeValue = health.getUpgradeValue(); 
+	myImage = image;
 	myLauncher = launcher;
-	myProjectileImage = launcher.getProjectileImage(); 
-	myProjectileDamage = launcher.getProjectileDamage(); 
-	myProjectileSpeed = launcher.getProjectileSpeed();
-	myProjectileSize = launcher.getProjectileSize(); 
-	myLauncherRate = launcher.getFireRate(); 
-	myLauncherRange = launcher.getRange(); 
-	myValue = value;
-	myTowerValue = value.getProperty();
-
+	myProperties = properties;
+	myProperties.add(new KillProperty(0));
     }
 
-    private void setupStats(Map<String, Integer> propStats, String property, int value) {
-    	propStats.put(property, value);
-    }
-    
     /**
      * Copy constructor
      */
     public Tower(Tower copiedTower) {
-	super(copiedTower.getName(), copiedTower.getImageString(), 
-		copiedTower.mySize, copiedTower.getLauncher()); 
-	myHealth = copiedTower.getHealthProperty();
-	myValue = copiedTower.getValueProperty(); 
-	propertyStats = new HashMap<String, Integer>();
-	setupStats(propertyStats, myHealth.getName(), (int) myHealth.getProperty());
-	setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
-	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
+	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher()); 
+	myProperties = new ArrayList<Property>();
+	for(Property p : copiedTower.getProperties()) {
+	    myProperties.add(p.makeCopy());
+	}
+	myProperties.add(new KillProperty(0));
     }
 
     /**
      * Copy constructor
+     * @return 
      */
-    public Tower(Tower copiedTower, Point point) {
-	super(copiedTower.getName(), copiedTower.getImageString(), 
-		copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
-	myHealth = copiedTower.getHealthProperty();
-	myValue = copiedTower.getValueProperty();
-	propertyStats = new HashMap<String, Integer>();
-	setupStats(propertyStats, myHealth.getName(), (int) myHealth.getProperty());
-	setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
-	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
+    public void move(Point point) {
 	this.place(point.getX(), point.getY());
     }
 
@@ -132,35 +88,22 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     /**
      * Handles upgrading the health of a tower
      */
-    public double upgradeHealth(double balance) {
-	updateStatsMap(myHealth.getName(), myHealth.getProperty());
-	return myHealth.upgrade(balance);
-    }
-
-    /**
-     * Upgrades the rate of fire
-     */
-    public double upgradeRateOfFire(double balance) {
-	return this.getLauncher().upgradeFireRate(balance);
-    }
-
-    /**
-     * Upgrades the amount of damage a tower's projectiles exhibit
-     */
-    public double upgradeDamage(double balance) {
-	return this.getLauncher().upgradeDamage(balance);
+    public double upgradeProperty(String name, double balance) {
+	for(Property property : myProperties) {
+	    if(property.getName() == name) {
+		return ((UpgradeProperty) property).upgrade(balance);
+	    }
+	}
+	return balance;
     }
 
     /**
      * Upgrades all aspects of a tower
      */
     public double upgrade(double balance) {
-	balance -= upgradeHealth(balance);
-	balance -= upgradeRateOfFire(balance);
-	balance = upgradeDamage(balance);
-	updateStatsMap(myHealth.getName(), myHealth.getProperty());
-	updateStatsMap(this.getLauncher().getFireRateName(), this.getLauncher().getFireRate());
-	updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
+	for(Property property : myProperties) {
+	    balance -= ((UpgradeProperty) property).upgrade(balance);
+	}
 	return balance;
     }
 
@@ -168,28 +111,12 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return this.getLauncher().getDamageName();
     }
 
-    /**
-     * Returns ValueProperty
-     * @return
-     */
-    public ValueProperty getValueProperty() {
-	return myValue;
-    }
-
-    /**
-     * Returns the health property
-     */
-    public HealthProperty getHealthProperty() {
-	return myHealth;
-    }
-
     public Map<String, Integer> getTowerStats(){
-	updateStatsMap(ENEMIES_KILLED, (int) this.getDeadCount());
+	Map<String, Integer> propertyStats = new HashMap<String, Integer>();
+	for(Property p : myProperties) {
+	    propertyStats.put(p.getName(), (int) p.getProperty());
+	}
 	return propertyStats;
-    }
-
-    private void updateStatsMap(String name, double value) {
-	propertyStats.put(name, (int) value);
     }
 
     @Override
@@ -205,22 +132,23 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	// TODO Auto-generated method stub
 	return 0;
     }
-    
+
     public double getTowerRange() {
-        return this.getLauncher().getRange();
+	return this.getLauncher().getRange();
     }
-	public void updateProperties() {
-    		myHealth = new HealthProperty(myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
-    		Projectile projectile = new ProjectileBuilder().construct(myName, myProjectileImage, myProjectileDamage, myProjectileSize, myProjectileSpeed);
-    		myLauncher = new LauncherBuilder().construct(myLauncherRate, myLauncherRange, projectile);
-    		myValue = new ValueProperty(myTowerValue);
-    		
-    		updateImage(myImage);
-    		updateLauncher(myLauncher); 
-    		    		
-    		setupStats(propertyStats, myHealth.getName(), (int) myHealth.getProperty());
-    		setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
-    		setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
-    	}
-	
+
+    public void copyProperties() {
+	updateImage(myImage);
+	updateLauncher(myLauncher); 
+    }
+
+    public List<Property> getProperties(){
+	return myProperties;
+    }
+
+    public void updateProperties() {
+	updateImage(myImage);
+	updateLauncher(myLauncher); 
+    }
+
 }

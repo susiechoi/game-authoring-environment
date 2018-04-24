@@ -41,4 +41,6 @@ public abstract class Property {
     public String getName() {
     	return mySimpleName;
     }
+    
+    public abstract Property makeCopy();
 }

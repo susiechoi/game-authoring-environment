@@ -24,4 +24,10 @@ public class ValueProperty extends Property {
 	this.setProperty(newValue);
     }
 
+    @Override
+    public Property makeCopy() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }
