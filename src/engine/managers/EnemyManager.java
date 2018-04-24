@@ -52,15 +52,15 @@ public class EnemyManager extends ShootingSpriteManager {
 		    deadEnemies.add(enemy);
 		}
 		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
-		    System.out.println("curr is " + enemy.currentPosition().getY());
-		    System.out.println("tar is " + enemy.targetPosition().getY());
+		   // System.out.println("curr is " + enemy.currentPosition().getY());
+		  //  System.out.println("tar is " + enemy.targetPosition().getY());
 		    enemy.move(elapsedTime);
 		}
 		else {
-		    System.out.println("in else");
+		  //  System.out.println("in else");
 		    Point newPosition = path.nextPosition(enemy.currentPosition(), enemy.getIndex(),enemy.getAngle());
 //		    System.out.println("COUNT:" + count);
-		    System.out.println("NEW POS:" + newPosition);
+		  //  System.out.println("NEW POS:" + newPosition);
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
 //		    if(pathIndex != enemy.getIndex()) {
 //			double pathAngle = path.pathAngle(enemy.getIndex());

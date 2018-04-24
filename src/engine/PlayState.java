@@ -71,13 +71,13 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	System.out.println("in update");
+	//System.out.println("in update");
 	count++;
 	if(!isPaused) {
 	    try {
 		for (Path path : currentLevel.getUnmodifiablePaths()) {
 		    // TODO instert try catch block, if there are no waves the level ends!
-		    System.out.println("in for " + currentLevel.getWaves().get(0).getUnmodifiableEnemies().size());
+		   // System.out.println("in for " + currentLevel.getWaves().get(0).getUnmodifiableEnemies().size());
 		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
 			System.out.println("in if");
 			Wave currentWave = currentLevel.getWaves().get(0);
