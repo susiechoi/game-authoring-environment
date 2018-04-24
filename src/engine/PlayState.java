@@ -34,6 +34,7 @@ public class PlayState implements GameData {
     private int count;
     private int myScore;
     private double myResources;
+    private double myHealth; 
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
@@ -50,7 +51,7 @@ public class PlayState implements GameData {
      * @param resources
      * @param universalTime
      */
-    public PlayState(Mediator mediator, List<Level> levels, int score, double resources, double universalTime) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, double resources, double health, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -59,7 +60,9 @@ public class PlayState implements GameData {
 	isPaused = false;
 	myScore = score;
 	myResources = resources;
+	myHealth = health;
 	myMediator.updateCurrency(myResources);
+	myMediator.updateHealth(myHealth);
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
