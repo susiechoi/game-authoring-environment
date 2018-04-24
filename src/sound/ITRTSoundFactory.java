@@ -86,7 +86,9 @@ public class ITRTSoundFactory implements SoundFactory {
 	    throw new FileNotFoundException();
 	}
 	File file = new File(fileName);
+	System.out.println("file: "+file);
 	Media sound = new Media(file.toURI().toString());
+	System.out.println("Sound: "+sound);
 	this.myMediaPlayer = new MediaPlayer(sound);
     }
 
