@@ -25,6 +25,9 @@ import frontend.StageManager;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -65,6 +68,8 @@ public class GameScreen extends Screen {
 	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
 	SCORE_PANEL = new ScorePanel(this);
 	GAME_PANEL = new GamePanel(this);
+	
+	
 	//TODO the null argument on creation is terrible, needs to change once
 	//actual functionality of panels is changed
     }
@@ -187,17 +192,23 @@ public class GameScreen extends Screen {
 	}
     }
 
-    public void updateCurrency(Integer newBalence) {
-	TOWER_PANEL.updateCurrency(newBalence);
+    public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
+	ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
+	ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+	myCurrency.addListener(currencyListener);
+	myScore.addListener(scoreListener);
+	myLives.addListener(healthListener);
+	TOWER_PANEL.setInitalMoney(myCurrency.get());
+	SCORE_PANEL.setInitialScore(myScore.get());
+	SCORE_PANEL.setInitialLives(myLives.get());
+
+//	currencyListener.changed(myCurrency, 0, 0);
+//	scoreListener.changed(myScore, 0, 0);
+//	healthListener.changed(myLives, 0, 0);
+
     }
 
-    public void updateHealth(Integer newHealth) {
-	SCORE_PANEL.updateHealth(newHealth);
-    }
-
-    public void updateScore(Integer newScore) {
-	SCORE_PANEL.updateScore(newScore);
-    }
 
     public void updateLevel(Integer newLevel) {
 	SCORE_PANEL.updateLevel(newLevel);
