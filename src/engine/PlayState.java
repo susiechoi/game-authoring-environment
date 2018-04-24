@@ -19,6 +19,9 @@ import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 
 //TODO add in money to the game
 /**
@@ -33,8 +36,8 @@ public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
     private int count;
-    private int myScore;
-    private int myResources;
+    private IntegerProperty myScore;
+    private IntegerProperty myResources;
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
@@ -60,8 +63,10 @@ public class PlayState implements GameData {
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	isPaused = false;
-	myScore = score;
-	myResources = resources;
+	myScore = new SimpleIntegerProperty(score);
+	myResources = new SimpleIntegerProperty(resources);
+	myMediator.addIntegerProperties(myResources, myScore, new SimpleIntegerProperty(score));
+	
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
@@ -117,9 +122,8 @@ public class PlayState implements GameData {
 
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
-	    myScore+= sprite.getPointValue();
+	    myScore.set(myScore.get() + sprite.getPointValue());
 	}
-	myMediator.updateScore(myScore);
     }
 
     //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
@@ -160,9 +164,8 @@ public class PlayState implements GameData {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
-	myTowerManager.upgrade(tower,"rando",myResources);
-	myResources += myTowerManager.sell(tower);
-	myMediator.updateCurrency(myResources);
+	myTowerManager.upgrade(tower,"rando",myResources.get());
+	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
     }
 
@@ -173,8 +176,8 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
-
+	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
+
 }
 
