@@ -1,10 +1,8 @@
 package gameplayer.screen;
 
 import authoring.AuthoringModel;
-import authoring.frontend.FrontendLauncherForTesting;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
-import engine.Settings;
 import gameplayer.panel.*;
 
 import java.awt.Point;
@@ -13,15 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.AuthoringController;
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
-import frontend.StageManager;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
@@ -35,8 +30,7 @@ import sound.ITRTSoundFactory;
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private final String DEFAULT_SHARED_STYLESHEET = "styling/theme1.css";
-	private final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+	private final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
 
 	private final UIFactory UIFACTORY;
 	private final PromptReader PROMPTS;
@@ -89,7 +83,6 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
 
@@ -180,9 +173,10 @@ public class GameScreen extends Screen {
 			SOUND_FACTORY.pauseBackgroundMusic();
 		}
 		else if (setting.equals("instructions")) {
-
+		    //TODO make this work
 		}
 		else if (setting.equals("help")) {
+		    //TODO make this work
 
 		}
 	}
