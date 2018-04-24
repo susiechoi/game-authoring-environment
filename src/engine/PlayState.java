@@ -192,7 +192,6 @@ public class PlayState implements GameData {
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
 	 myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
-
     }
 }
 

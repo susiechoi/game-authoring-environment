@@ -50,7 +50,7 @@ public class AuthoredGame implements GameData {
 	return myGameName; 
     }
     
-    protected Settings getSettings() {
+    public Settings getSettings() {
 	return mySettings;
     }
     
