@@ -202,7 +202,7 @@ public class Mediator {
      * @param newBalance
      */
     public void updateCurrency(Integer newBalance) {
-	myScreenManager.updateCurrency(newBalance);
+	    myScreenManager.updateCurrency(newBalance);
     }
 
     /**
