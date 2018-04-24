@@ -103,6 +103,7 @@ public class ITRTSoundFactory implements SoundFactory {
      */
     @Override
     public void playBackgroundMusic() {
+	System.out.println("Status: "+this.myMediaPlayer.getStatus());
 	this.myMediaPlayer.play();
     }
 
