@@ -1,8 +1,5 @@
 package authoring.frontend;
 
-import java.util.List;
-import java.util.Map;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,10 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 public class WaveDirectionsPanel extends PathPanel{
     private int myWaveNumber;

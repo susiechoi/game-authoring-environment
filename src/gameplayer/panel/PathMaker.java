@@ -30,6 +30,7 @@ public class PathMaker {
 			List<Point> pointList = map.get(key);
 			for (int i = 0; i < pointList.size(); i++) {
 				Point point = pointList.get(i);
+				// TODO handle IllegalArgumentException where key is invalid
 				ImageView image = new ImageView(new Image(key));
 				image.setFitWidth(myPathSize);
 				image.setFitHeight(myPathSize);

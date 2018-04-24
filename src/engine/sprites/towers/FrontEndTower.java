@@ -25,6 +25,7 @@ public interface FrontEndTower extends FrontEndSprite{
      * 
      * @return The name (type) of the tower
      */
+    @Override
     public String getName();
 
     /**

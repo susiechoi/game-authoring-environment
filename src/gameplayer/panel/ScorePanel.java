@@ -2,7 +2,6 @@
 package gameplayer.panel;
 
 import gameplayer.screen.GameScreen;
-import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;

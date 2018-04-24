@@ -1,10 +1,8 @@
 package gameplayer.screen;
 
 import authoring.AuthoringModel;
-import authoring.frontend.FrontendLauncherForTesting;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
-import engine.Settings;
 import gameplayer.panel.*;
 
 import java.awt.Point;
@@ -13,15 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.AuthoringController;
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
-import frontend.StageManager;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
@@ -133,7 +128,7 @@ public class GameScreen extends Screen {
 	}
 
 	//TODO implement reflection//rest of controls
-	public void controlTriggered(String control) {
+	public void controlTriggered(String control) throws MissingPropertiesException {
 		if(control.equals("play"))
 			MEDIATOR.play();
 		else if(control.equals("pause"))
@@ -149,6 +144,7 @@ public class GameScreen extends Screen {
 				e.printStackTrace();
 			}
 		else if (control.equals("edit")) { // Susie added this
+			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 		}
