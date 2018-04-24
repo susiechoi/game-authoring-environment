@@ -46,14 +46,14 @@ public class AuthoringModel {
     protected List<Point> myPathCoordinates = new ArrayList<Point>();
 
     public AuthoringModel() throws MissingPropertiesException {
-	this(new AuthoredGame());
+	myGame = new AuthoredGame();
+	populateInstanceVariables();
+	setupDefaultSettings(); 
+	setupDefaultLevel();
     }
     
     public AuthoringModel(AuthoredGame game) throws MissingPropertiesException {
 	myGame = game;
-	populateInstanceVariables();
-	setupDefaultSettings(); 
-	setupDefaultLevel();
     }
 
     private void populateInstanceVariables() throws MissingPropertiesException {
