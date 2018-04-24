@@ -90,6 +90,7 @@ public class ITRTSoundFactory implements SoundFactory {
 	Media sound = new Media(file.toURI().toString());
 	System.out.println("Sound: "+sound);
 	this.myMediaPlayer = new MediaPlayer(sound);
+	System.out.println("MediaPlayer: "+myMediaPlayer);
     }
 
     /**
