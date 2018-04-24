@@ -56,7 +56,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	setupStats(propertyStats, health.getName(), (int) health.getProperty());
 	setupStats(propertyStats, value.getName(), (int) value.getProperty());
 	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
-	
+	mySize = size;
 	myHealthValue = health.getProperty(); 
 	myHealthUpgradeCost = health.getCost();
 	myHealthUpgradeValue = health.getUpgradeValue(); 

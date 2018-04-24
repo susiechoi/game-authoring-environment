@@ -51,6 +51,13 @@ public class AuthoredGame implements GameData {
     }
     
     /**
+     * @return double: the starting health the player starts with
+     */
+    public double startingHealth() {
+	return mySettings.startingHealth();
+    }
+    
+    /**
      * @return double: the starting money the player starts with
      */
     public double startingMoney() {

@@ -171,8 +171,8 @@ public class GameScreen extends Screen {
 		TOWER_PANEL.updateCurrency(myResources);
 	}
 
-	public void updateHealth(Integer newHealth) {
-		SCORE_PANEL.updateHealth(newHealth);
+	public void updateHealth(double myHealth) {
+		SCORE_PANEL.updateHealth(myHealth);
 	}
 
 	public void updateScore(Integer newScore) {
