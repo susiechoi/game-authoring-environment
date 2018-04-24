@@ -7,6 +7,7 @@ import engine.physics.ImageIntersecter;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
+import frontend.PropertiesReader;
 
 /**
  * This class is a more specific Sprite that applies to just shooting objects (Enemy and Tower).
@@ -18,6 +19,7 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public abstract class ShootingSprites extends Sprite{
 
+    private PropertiesReader PROP_READ;
     private Launcher myLauncher;
     private int hitCount;
     private int deadCount;
@@ -37,6 +39,7 @@ public abstract class ShootingSprites extends Sprite{
 	hitCount=0;
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
+
 	//	this.getImageView().setFitHeight(size);
 	//	this.getImageView().setFitWidth(size);
 	myLauncher = launcher;
@@ -161,17 +164,20 @@ public abstract class ShootingSprites extends Sprite{
      * Method that will upgrade the Sprite
      * @param upgradeName : Property to be upgraded
      */
+	//TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
-	if(upgradeName == "FireRate") {
+	System.out.println("gets here");
+	if(upgradeName.equals("test4")) {
+	    System.out.println("upgrade is working woo");
 	    return upgradeFireRate(balance);
 	}
-	if(upgradeName == "Health") {
+	if(upgradeName == "test3") {
 	    return upgradeHealth(balance);
 	}
-	if(upgradeName == "Damage") {
+	if(upgradeName == "test2") {
 	    return upgradeDamage(balance);
 	}
-	if(upgradeName == "Range") {
+	if(upgradeName == "test1") {
 	    return upgradeRange(balance);
 	}
 	return balance;

@@ -216,8 +216,8 @@ public class GameScreen extends Screen {
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
 
-    public void upgradeClickedOn(FrontEndTower tower) {
-	BUY_PANEL = new BuyPanel(this,PROMPTS, tower);
+    public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
+	BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
 	displayPane.getChildren().clear();
 	displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
@@ -269,6 +269,10 @@ public class GameScreen extends Screen {
 
     public ScreenManager getScreenManager() {
 	return SCREEN_MANAGER;
+    }
+    
+    public void upgradeBought(FrontEndTower tower, String upgradeName) {
+	MEDIATOR.upgradeTower(tower, upgradeName);
     }
 
 
