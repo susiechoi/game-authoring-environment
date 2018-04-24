@@ -32,7 +32,7 @@ public class TowerPanel extends Panel {
     private PromptReader PROMPTS;
     private GameScreen GAME_SCREEN;
     private PropertiesReader PROP_READ;
-    private Integer money;
+    private Double money;
     private final UIFactory UIFACTORY;
     private Panel bottomPanel;
     private Button currencyDisplay;
@@ -52,7 +52,7 @@ public class TowerPanel extends Panel {
 	PROMPTS = promptReader;
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-	money = GAME_SCREEN.getMoney();
+	money = 0.0; // Set to a default null value
 	makePanel();
     }
 
@@ -194,9 +194,9 @@ public class TowerPanel extends Panel {
 
     }
 
-    public void updateCurrency(Integer newBalence) {
-	money = newBalence;
-	currencyDisplay.setText("$" +money.toString());
+    public void updateCurrency(double myResources) {
+	money = myResources;
+	currencyDisplay.setText("$" + Double.valueOf(Math.floor(money)).intValue());
     }
 }
 

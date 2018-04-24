@@ -179,8 +179,8 @@ public class ScreenManager extends View {
 		GAME_SCREEN.setAvailbleTowers(availableTowers);
 	}
 
-	public void updateCurrency(Integer newBalence) {
-		GAME_SCREEN.updateCurrency(newBalence);
+	public void updateCurrency(double myResources) {
+		GAME_SCREEN.updateCurrency(myResources);
 	}
 
 
