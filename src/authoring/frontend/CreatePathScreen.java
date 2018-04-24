@@ -60,8 +60,8 @@ public class CreatePathScreen extends PathScreen {
 							// TODO Auto-generated catch block
 						}
 					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Path Cutomization Error");
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Path Customization Error");
 						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
 						alert.showAndWait();
 					}

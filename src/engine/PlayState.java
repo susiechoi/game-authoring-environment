@@ -69,7 +69,7 @@ public class PlayState implements GameData {
 	System.out.println("Listing Towers: ");
 	for (FrontEndTower tower : availTowers) {
 	    System.out.println(tower.getName());
-	    System.out.println(tower.getImageView().getImage().impl_getUrl());
+	    System.out.println(tower.getImageView().getImage().getUrl());
 	}
 	System.out.println("Done listing towers in level");
 	myMediator.setAvailableTowers(availTowers);
@@ -79,7 +79,6 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	System.out.println("in update");
 	count++;
 	UNIVERSAL_TIME+=elapsedTime;
 	if(!isPaused) {
