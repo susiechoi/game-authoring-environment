@@ -84,6 +84,7 @@ public class PlayState implements GameData {
 			myEnemyManager.addToActiveList(enemy);
 			myMediator.addSpriteToScreen(enemy);
 		    }
+		    //TODO: this deadEnemies is never filled because enemies are removed below in toBeRemoved
 		    List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
 		    myMediator.removeListOfSpritesFromScreen(deadEnemies); 
 		    List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
@@ -112,12 +113,16 @@ public class PlayState implements GameData {
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	}
     }
-
+    
 
 
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
 	    myScore+= sprite.getPointValue();
+	    if(sprite.getClass().getName().equals("Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		myResources+=enemy.getPointValue();
+	    }
 	}
 	myMediator.updateScore(myScore);
     }
