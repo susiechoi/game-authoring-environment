@@ -186,7 +186,6 @@ public class GameScreen extends Screen {
 	    SOUND_FACTORY.pauseBackgroundMusic();
 	}
 	else if (setting.equals("instructions")) {
-
 	}
 	else if (setting.equals("help")) {
 

@@ -19,7 +19,8 @@ import javafx.scene.layout.VBox;
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String OBJECT_TYPE = "Tower";
-	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
+	public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
+	public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
 	private String myObjectName; 
@@ -60,7 +61,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		ComboBox<String> projectileImageDropdown = new ComboBox<String>();
 		ImageView imageDisplay = new ImageView(); 
 		try {
-			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
+			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX));
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");
 		}
@@ -69,7 +70,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 			getView().setObjectAttribute("Tower", myObjectName, "myImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
 		try {
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
 					getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, imageDisplay);
 		} catch (MissingPropertiesException e) {
 			getView().loadErrorScreen("NoImageFile");

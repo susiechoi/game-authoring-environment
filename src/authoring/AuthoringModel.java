@@ -19,7 +19,6 @@ import java.util.Map;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
-import data.GameData;
 import engine.builders.PathBuilder;
 import engine.Settings;
 import engine.builders.SettingsBuilder;
@@ -77,8 +76,9 @@ public class AuthoringModel {
 	int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
 	int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
 	String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
+	String startingTheme = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingTheme");
 	Settings newSettings = new SettingsBuilder().construct(defaultGameName, 
-		startingHealth, startingMoney, startingCSS);
+		startingHealth, startingMoney, startingCSS, startingTheme);
 	myGame.setSettings(newSettings);
     } 
 
@@ -119,8 +119,8 @@ public class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css) {
-	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
+	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme);
 	myGame.setSettings(newSettings);
     }
 

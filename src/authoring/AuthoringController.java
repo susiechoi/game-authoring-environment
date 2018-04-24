@@ -68,8 +68,8 @@ public class AuthoringController {
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css) {
-	myModel.makeResources(gameName, startingHealth, starting$, css);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
+	myModel.makeResources(gameName, startingHealth, starting$, css, theme);
     }
 
     // TODO
