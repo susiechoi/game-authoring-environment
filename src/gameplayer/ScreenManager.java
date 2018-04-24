@@ -4,10 +4,7 @@ import frontend.MainScreen;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
@@ -18,9 +15,6 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
 /**

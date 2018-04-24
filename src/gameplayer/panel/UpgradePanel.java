@@ -3,7 +3,6 @@ package gameplayer.panel;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import java.util.Map;

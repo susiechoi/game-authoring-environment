@@ -1,4 +1,5 @@
 package sound;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -50,13 +51,14 @@ public class SoundTestDriver extends Application {
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> update(SECOND_DELAY));
         myAnimation = new Timeline();
-        myAnimation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation.setCycleCount(Animation.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
         primaryStage.show();
 	mySoundFactory = new ITRTSoundFactory();
         mySoundFactory.setBackgroundMusic("epic");
-        Button b = mySoundFactory.createPlayBackgroundMusicButton();
-        myRoot.getChildren().add(b);
+        mySoundFactory.playBackgroundMusic();
+        //Button b = mySoundFactory.createPlayBackgroundMusicButton();
+        //myRoot.getChildren().add(b);
         Slider v = mySoundFactory.createVolumeSlider();
         myRoot.getChildren().add(v);
        // mySoundFactory.playBackgroundMusic();

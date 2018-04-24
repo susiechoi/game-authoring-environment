@@ -1,14 +1,16 @@
 package authoring.frontend;
 
+import java.io.FileNotFoundException;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.exceptions.NoDuplicateNamesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-abstract class SpecifyNameScreen extends AdjustScreen {
+abstract class SpecifyNameScreen extends AuthoringScreen {
 	
 	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 
@@ -37,7 +39,7 @@ abstract class SpecifyNameScreen extends AdjustScreen {
 	 * @return Parent/root to attach to Scene that will be set on the stage
 	 */
 	@Override
-	protected Parent populateScreenWithFields() {
+	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyObjectName")+myObjectDescription));
@@ -50,10 +52,21 @@ abstract class SpecifyNameScreen extends AdjustScreen {
 		applyButton.setOnAction(e -> {
 			if (validNameField(myNameField)) {
 				if (this.getClass().getSimpleName().equals("SpecifyTowerNameScreen")) {
-				getView().makeTower(myNameField.getText());
+				try {
+				    getView().makeTower(myNameField.getText());
+				} catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
+				    // TODO Auto-generated catch block
+				    getView().loadErrorScreen("NoObject");
+				}
 				}
 				if (this.getClass().getSimpleName().equals("SpecifyEnemyNameScreen")) {
-					getView().makeEnemy(myNameField.getText());
+					try {
+					    getView().makeEnemy(myNameField.getText());
+					} catch (NumberFormatException | FileNotFoundException
+						| ObjectNotFoundException e1) {
+					    // TODO Auto-generated catch block
+					    getView().loadErrorScreen("NoObject");
+					}
 				}
 				getView().goForwardFrom(this.getClass().getSimpleName()+"Apply",myNameField.getText());
 			}
@@ -64,11 +77,6 @@ abstract class SpecifyNameScreen extends AdjustScreen {
 		return vb;
 	}
 
-	@Override
-	protected void populateFieldsWithData() {
-		//null method, since this type of screen only has buttons 
-	}
-	
 	protected boolean validNameField(TextField nameField) {
 		boolean valid = true; 
 		if (nameField.getText().length() == 0) {

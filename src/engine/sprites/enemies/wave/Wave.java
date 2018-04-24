@@ -143,6 +143,15 @@ public class Wave {
 	    }
 	return null;
     }
+    public void removeEnemyType(String enemyName) {
+	for(Path path : myWaveMap.keySet()) {
+	    for(Enemy waveEnemies : myWaveMap.get(path).keySet()) {
+		if(waveEnemies.getName().equals(enemyName)) {
+		    myWaveMap.get(path).remove(waveEnemies);
+		}
+	    }
+	}
+    }
 
     /**
      * Returns a boolean indicating whether the wave is finished or not. A wave is considered

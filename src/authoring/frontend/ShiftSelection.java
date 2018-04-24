@@ -14,6 +14,7 @@ public class ShiftSelection {
 		this.myGroup = group;
 
 		myGroup.setOnMouseClicked(new EventHandler <MouseEvent>() {
+			@Override
 			public void handle(MouseEvent event) {
 				Node node = (Node) event.getTarget();
 				if (event.isShiftDown()) {

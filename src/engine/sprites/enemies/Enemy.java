@@ -24,6 +24,7 @@ import engine.sprites.towers.launcher.Launcher;
 public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     private String myName; 
+    private String myImage; 
     private HealthProperty myHealth;
     private double myInitialHealth; 
     private DamageProperty myDamage;
@@ -33,15 +34,14 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double mySpeed;
     private double mySize;
     private double myKillReward;
-    private String myImage;  
     private int pathIndex;
     private double pathAngle;
     private Point targetPosition;
 
     public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
 	super(name, image, size, launcher);
-	myImage = image; 
 	myName = name; 
+	myImage = image; 
 	myHealth = health;
 	myInitialHealth = myHealth.getProperty();
 	myDamage = damage;
@@ -184,10 +184,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	return mySpeed; 
     }
 
-    private String getImage() {
-	return myImage; 
-    }
-
     public void setIndex(int i) {
 	pathIndex = i;
     } 
@@ -208,8 +204,11 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	pathAngle = a;
     }
 
-
-
+    public void updateProperties() {
+		myHealth = new HealthProperty(0, 0, myInitialHealth);
+		myDamage = new DamageProperty(0, 0, myHealthImpact); 
+		myValue = new ValueProperty(myKillReward);
+}
 
 
 }

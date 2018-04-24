@@ -57,7 +57,14 @@ public class ControlsPanel extends Panel{
 			int count = 0;
 			for(String control : controlsMap.keySet()) {
 				Button controlButton = UIFACTORY.makeImageButton("controlButton", controlsMap.get(control));
-				controlButton.setOnMouseClicked((arg0) -> GAME_SCREEN.controlTriggered(control));
+				controlButton.setOnMouseClicked((arg0) -> {
+				    try {
+					GAME_SCREEN.controlTriggered(control);
+				    } catch (MissingPropertiesException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Could not find property in ControlsPanel class");
+				    }
+				});
 				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control+"Tooltip")));
 				if(count <controlsSplit)
 					topControls.getChildren().add(controlButton);
