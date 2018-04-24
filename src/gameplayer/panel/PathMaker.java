@@ -31,7 +31,13 @@ public class PathMaker {
 			for (int i = 0; i < pointList.size(); i++) {
 				Point point = pointList.get(i);
 				// TODO handle IllegalArgumentException where key is invalid
-				ImageView image = new ImageView(new Image(key));
+				ImageView image = new ImageView();
+				try{
+				image = new ImageView(new Image(key));
+				}
+				catch(IllegalArgumentException e){
+				    image = new ImageView(); //TODO this should not be hardcoded
+				}
 				image.setFitWidth(myPathSize);
 				image.setFitHeight(myPathSize);
 				GridPane.setFillWidth(image, true);
