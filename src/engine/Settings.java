@@ -28,4 +28,8 @@ public class Settings {
 	    return myStartingMoney;
 	}
 	
+	public double startingHealth() {
+	    return myStartingHealth;
+	}
+	
 }
