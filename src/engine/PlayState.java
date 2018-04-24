@@ -26,22 +26,20 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  * @author Katherine Van Dyk
  * @author benauriemma 4/8
- * @date 4/6/18
+ * @author Ben Hodgson 
  */
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
     private int count;
     private int myScore;
-    private int myResources;
+    private double myResources;
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
     private boolean isPaused;
-    private Enemy fakeEnemy;
-    private Enemy fakeEnemy2;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -52,7 +50,7 @@ public class PlayState implements GameData {
      * @param resources
      * @param universalTime
      */
-    public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, double resources, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -61,6 +59,7 @@ public class PlayState implements GameData {
 	isPaused = false;
 	myScore = score;
 	myResources = resources;
+	myMediator.updateCurrency(myResources);
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
@@ -122,6 +121,7 @@ public class PlayState implements GameData {
 	    // Level is over
 	    if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
 		currentLevel = myLevels.get(currentLevel.myNumber());
+		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
 	    }
 	    else {

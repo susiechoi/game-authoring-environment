@@ -92,18 +92,6 @@ public class GameScreen extends Screen {
 		GAME_PANEL.towerSelected(tower);
 	}
 
-	public Integer getMoney() {
-		//TODO call ObserveHandler.triggerEvent(NeedMoney) to get money sent from playState
-		/**
-		 * also might implement money tracking by passing Integer object of
-		 * currency from playState in initialization of GameScreen/TowerPanel
-		 * 	-if this is the case this method isn't needed and an updateCurrency Method
-		 * 	should instead be called in towerPanel upon any action which would spend currency
-		 */
-		Integer money = 0; //placeholder
-		return money;
-	}
-
 
 	@Override
 	protected View getView() {
@@ -179,8 +167,8 @@ public class GameScreen extends Screen {
 		}
 	}
 
-	public void updateCurrency(Integer newBalence) {
-		TOWER_PANEL.updateCurrency(newBalence);
+	public void updateCurrency(double myResources) {
+		TOWER_PANEL.updateCurrency(myResources);
 	}
 
 	public void updateHealth(Integer newHealth) {
