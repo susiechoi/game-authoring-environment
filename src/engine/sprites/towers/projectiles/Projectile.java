@@ -61,7 +61,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 			double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 			this.getImageView().setX(this.getX()+xMove);
 			this.getImageView().setY(this.getY()+yMove);
-			System.out.println("PROJECTLIE " + this.getImageView().getX() + " " + this.getImageView().getY());
 	}
 
 	/**

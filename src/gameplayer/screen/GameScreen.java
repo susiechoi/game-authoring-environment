@@ -1,8 +1,10 @@
 package gameplayer.screen;
 
 import authoring.AuthoringModel;
+import authoring.frontend.FrontendLauncherForTesting;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
+import engine.Settings;
 import gameplayer.panel.*;
 
 import java.awt.Point;
@@ -11,12 +13,15 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
+import frontend.StageManager;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
@@ -89,7 +94,11 @@ public class GameScreen extends Screen {
 	}
 
 	public void towerSelectedForPlacement(FrontEndTower tower) {
+		if(tower == null)
+			blankGamePanelClick();
 		GAME_PANEL.towerSelected(tower);
+
+
 	}
 
 	public Integer getMoney() {
@@ -158,7 +167,7 @@ public class GameScreen extends Screen {
 		}
 		else if (setting.equals("play")) {
 			try{
-				SOUND_FACTORY.setBackgroundMusic("epic");
+				SOUND_FACTORY.setBackgroundMusic("src/sound/files/epic.mp3");
 			}
 			catch (FileNotFoundException e) {
 
@@ -178,8 +187,8 @@ public class GameScreen extends Screen {
 		}
 	}
 
-	public void updateCurrency(Integer newBalance) {
-		TOWER_PANEL.updateCurrency(newBalance);
+	public void updateCurrency(Integer newBalence) {
+		TOWER_PANEL.updateCurrency(newBalence);
 	}
 
 	public void updateHealth(Integer newHealth) {
@@ -260,10 +269,6 @@ public class GameScreen extends Screen {
 
 	public ScreenManager getScreenManager() {
 		return SCREEN_MANAGER;
-	}
-
-	public ITRTSoundFactory getSoundFactory() {
-		return SOUND_FACTORY;
 	}
 
 

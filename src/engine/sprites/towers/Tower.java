@@ -163,7 +163,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     public Map<String, Integer> getTowerStats(){
-	System.out.println("in map thing " + this.getDeadCount());
 	updateStatsMap(ENEMIES_KILLED, (int) this.getDeadCount());
 	return propertyStats;
     }
