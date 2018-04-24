@@ -62,6 +62,7 @@ public class AuthoringModel {
 	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(mySettingsFile, "ConstantFiles");
 	DEFAULT_PROMPTS = myPropertiesReader.findVal(mySettingsFile, "PromptsFile");
 	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(mySettingsFile, "ConstantFiles");
+	myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
 	try {
 	    myDefaultTower = myGeneric.generateGenericTower();
 	    myDefaultEnemy = myGeneric.generateGenericEnemy();
