@@ -52,7 +52,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		}
 		myImageDropdown = enemyImageDropdown;  
 		myImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
-			getView().setObjectAttribute("Enemy", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
+			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
 		});
 		try {
 			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGE_PREFIX+getView().getTheme()+ENEMY_IMAGE_SUFFIX, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),

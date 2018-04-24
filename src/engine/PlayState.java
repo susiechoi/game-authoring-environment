@@ -4,6 +4,7 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
 import java.awt.Point;
@@ -13,7 +14,6 @@ import engine.managers.TowerManager;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
-import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
@@ -33,6 +33,7 @@ public class PlayState implements GameData {
     private double UNIVERSAL_TIME;
     private int count;
     private int myScore;
+    private Settings mySettings; 
     private double myResources;
     private double myHealth; 
     private TowerManager myTowerManager;
@@ -51,7 +52,7 @@ public class PlayState implements GameData {
      * @param resources
      * @param universalTime
      */
-    public PlayState(Mediator mediator, List<Level> levels, int score, double resources, double health, double universalTime) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -59,8 +60,8 @@ public class PlayState implements GameData {
 	myEnemyManager = new EnemyManager();
 	isPaused = false;
 	myScore = score;
-	myResources = resources;
-	myHealth = health;
+	myResources = settings.startingMoney();
+	myHealth = settings.startingHealth();
 	myMediator.updateCurrency(myResources);
 	myMediator.updateHealth(myHealth);
 	UNIVERSAL_TIME = universalTime;
@@ -193,5 +194,11 @@ public class PlayState implements GameData {
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
 	myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
     }
+    
+    public String getStyling() throws MissingPropertiesException {
+    	System.out.println("HERE");
+    	return mySettings.getCSSTheme();
+    }
+       
 }
 

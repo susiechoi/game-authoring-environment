@@ -84,6 +84,7 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+		rootPane.getStylesheets().add(MEDIATOR.getStyling());
 		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
