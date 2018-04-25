@@ -15,14 +15,17 @@ import javafx.scene.media.MediaPlayer;
  * This class represents IfTrueReturnTrue's implementation of the SoundFactory interface
  * Sound is implemented using javafx.scene.media.Media and javafx.scene.media.MediaPlayer
  * This implementation is basic. It does not style any UI components
- * This class can be extended and its methods overridden if additional functionality is desired. For example:
+ * 
+ * This class can be extended and its methods overridden if additional functionality is desired
+ * 	For example:
  * 
  * 	@Override
  * 	public MuteButton createMuteButton() {
  * 		MuteButton mb = super();
- * 		mb.applyCss();
+ * 		mb.setGraphic(someImage);
  * 		return mb;
  * 	}
+ * 
  * 
  * @author benauriemma
  *
@@ -34,8 +37,6 @@ public class ITRTSoundFactory implements SoundFactory {
     
     MediaPlayer myMediaPlayer;
     Double myVolume;
-
-    
 
     /**
      * This public constructor initializes an ITRTSoundFactory
@@ -86,11 +87,8 @@ public class ITRTSoundFactory implements SoundFactory {
 	    throw new FileNotFoundException();
 	}
 	File file = new File(fileName);
-	System.out.println("file: "+file);
 	Media sound = new Media(file.toURI().toString());
-	System.out.println("Sound: "+sound);
 	this.myMediaPlayer = new MediaPlayer(sound);
-	System.out.println("MediaPlayer: "+myMediaPlayer);
     }
 
     /**
@@ -103,7 +101,6 @@ public class ITRTSoundFactory implements SoundFactory {
      */
     @Override
     public void playBackgroundMusic() {
-	System.out.println("Status: "+this.myMediaPlayer.getStatus());
 	this.myMediaPlayer.play();
     }
 
@@ -131,9 +128,7 @@ public class ITRTSoundFactory implements SoundFactory {
     @Override
     public void setVolume(Integer percentVolume) {
 	this.myVolume = percentVolume/100.0; //this hard-coded value exists because the parameter is on a percentage scale, 
-	//but is used as a value between 0 and 1. This value should never be changed
-	System.out.println(myVolume);
-	System.out.println("Media player is null:"+(myMediaPlayer==null));
+					     //but is used as a value between 0 and 1. This value should never be changed
 	this.myMediaPlayer.setVolume(myVolume);
     }
 
