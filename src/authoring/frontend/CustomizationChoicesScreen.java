@@ -12,14 +12,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import xml.AuthoringModelWriter;
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
  * settings, etc.) or save/demo a game. Dependent on the View to house/relay information from the Model
  * and on View screenflow methods to send the user to the correct next screen.
  * @author Sarahbland
- *
+ * @author susiechoi
  */
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
@@ -27,7 +26,8 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 
 
 	protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
-		super(view);
+	    	super(view);
+	    	setSaved();
 	}
 
 	
@@ -41,7 +41,8 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	public Parent makeScreenWithoutStyling(){
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
-		//System.out.println(myGameName+" SHOULD BE THE TITLE");
+		HBox newLevelHBox = new HBox();
+
 		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
 		vbox.getChildren().add(heading);
 
@@ -57,24 +58,22 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		AuthoringModel currentModel = getView().getModel();
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
-			new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
-				currentModel).demoPlay(currentModel); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
+		    	getView().writeToFile();
+		    	new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
+				currentModel).demoPlay(currentModel.getGame()); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
 		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setOnAction(e -> {
+		    	setSaved();
 			getView().writeToFile();
 		});
 		Button mainButton = setupBackButton();
 		String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
-		vbox.getChildren().add(demoButton);
-		vbox.getChildren().add(saveButton);
-		hbox.getChildren().add(newLevelButton);
 
 		List<String> currentLevels = new ArrayList<String>();
 		currentLevels.add(levelPrompt);
 		currentLevels.addAll(getView().getLevels()); 
 		if (currentLevels.size() > 0) {
-			VBox newLevelVBox = new VBox(); 
 			Button editButton = getUIFactory().makeTextButton("editbutton", levelPrompt);
 			ComboBox<String> levelChooser = getUIFactory().makeTextDropdownSelectAction("", currentLevels, e -> {
 				editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
@@ -88,11 +87,12 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 				getView().autogenerateLevel(); 
 				getView().goForwardFrom(this.getClass().getSimpleName()+"EditExistingLevel");
 			});
-			newLevelVBox.getChildren().add(levelChooser);
-			newLevelVBox.getChildren().add(editButton);
-			hbox.getChildren().add(newLevelVBox);
-			hbox.getChildren().add(autogenerateButton);
+			hbox.getChildren().add(levelChooser);
+			hbox.getChildren().add(editButton);
+			newLevelHBox.getChildren().add(newLevelButton);
+			newLevelHBox.getChildren().add(autogenerateButton);
 		}
+		
 		HBox songSelector = new HBox();
 		ComboBox<String> songDropdown = new ComboBox<>();
 		try {
@@ -111,8 +111,11 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		}
 		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
+		vbox.getChildren().add(newLevelHBox);
 		vbox.getChildren().add(hbox);
 		//vbox.getChildren().add(songPrompted); TODO: change to mp3 selector and readd
+		vbox.getChildren().add(demoButton);
+		vbox.getChildren().add(saveButton);
 		vbox.getChildren().add(mainButton);
 		return vbox;
 

@@ -1,23 +1,29 @@
 package engine.sprites.towers.projectiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.FrontEndSprite;
+import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
-import javafx.scene.image.Image;
 
 /**
  * Projectile class is a sprite that is launched from the tower
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
- * @author Miles Todzo
+ *
  */
-public class Projectile extends Sprite {
+public class Projectile extends Sprite implements FrontEndSprite{
 
 	private DamageProperty myDamage;
 	private double mySpeed;
 	private double mySize; 
-	private Sprite myTarget;
+	private String myImage; 
+	private ShootingSprites myTarget;
+	private List<Sprite> hitTargets;
+	private int myHits = 1;
 	
 	/**
 	 * Constructor that takes in a damage value and image, and creates a projectile
@@ -31,52 +37,43 @@ public class Projectile extends Sprite {
 		myDamage = damage;
 		mySpeed = speed;
 		mySize = size; 
+		myImage = image; 
+		hitTargets = new ArrayList<>();
 	}
 	
-	public Projectile(Projectile myProjectile, Sprite target, double shooterX, double shooterY) {
+	public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
 	    super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
-	    this.myDamage = myProjectile.myDamage;
 	    myTarget = target;
-	    mySpeed = 300;
-	  //  System.out.println("target x is " + myTarget.getX());
+	    mySpeed = myProjectile.getSpeed();
+	    myDamage = myProjectile.getDamageProperty();
 	    this.place(shooterX, shooterY);
-	  //  System.out.println("Xorig is :" + this.getX());
-	  // System.out.println("Yorig is : " + this.getY());
 	    this.rotateImage();
-	    
-	    //myTarget = target;
+	    hitTargets = new ArrayList<>();
 	}
 
 	/**
 	 * Moves image in direction of it's orientation
 	 */
 	public void move(double elapsedTime) {
-	    	//myTarget.place(0, 0);
-		//System.out.println(myTarget.getX() + " target x y "+ myTarget.getY());
-	    	rotateImage();
-	//    	System.out.println("speed is " + mySpeed);
-	    	double totalDistanceToMove = this.mySpeed*elapsedTime;
-	//    	System.out.println("total distance is " + totalDistanceToMove);
-	//    	System.out.println("rotation is " + this.getRotate());
-		double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-		double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-		
-		
-		this.getImageView().setX(this.getX()+xMove);
-		this.getImageView().setY(this.getY()+yMove);
-	//	System.out.println("new X is " + this.getX());
-	//	System.out.println("new Y is " + this.getY());
+		if (this.myTarget.isAlive()) {
+			rotateImage();
+		}
+			double totalDistanceToMove = this.mySpeed*elapsedTime;
+			double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+			double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+			this.getImageView().setX(this.getX()+xMove);
+			this.getImageView().setY(this.getY()+yMove);
 	}
-	
+
 	/**
 	 * Rotates the image to face the target
 	 */
 	private void rotateImage() {
+
 	    	double xDifference = myTarget.getX() - this.getX();
 	    	double yDifference = myTarget.getY() - this.getY();
-	    	double angleToRotateRads = Math.tan(xDifference/yDifference);
+	    	double angleToRotateRads = Math.atan2(xDifference,yDifference);
 	    	this.setRotate(Math.toDegrees(angleToRotateRads));
-	  //  	System.out.println("rotation in rotateImage is " + this.getRotate());
 	}
 	
 	/**
@@ -93,8 +90,13 @@ public class Projectile extends Sprite {
 	 * 
 	 * @return : the amount of damage this Projectile does
 	 */
-	public Double getDamage() {
+	@Override
+	public double getDamage() {
 	    return myDamage.getProperty();
+	}
+	
+	public DamageProperty getDamageProperty() {
+	    return myDamage;
 	}
 	
 	public double getSpeed() {
@@ -106,16 +108,32 @@ public class Projectile extends Sprite {
 		return myDamage.getName();
 	}
 	
+	public String getImage() {
+		return myImage; 
+	}
+	
 	public double getSize() {
 		return mySize; 
 	}
+	
 	/**
-	 * @return true if intersect
+	 * @return true if should be removed
 	 */
 	@Override
 	public boolean handleCollision(Sprite sprite) {
-		//System.out.println("collision with projectile and " + sprite);
-		return (this.getImageView().getBoundsInParent().intersects(sprite.getImageView().getBoundsInParent()));
-		//return false;
+		this.hitTargets.add(sprite);
+		this.myHits--;
+		return !(myHits > 0);
 	}
+
+	/**
+	 * This method prevents the same projectile from colliding with the same tower/enemy more than once
+	 * Important since projectiles will be able to hit multiple enemies/towers before being removed
+	 * @param target
+	 * @return
+	 */
+	public boolean hasHit(ShootingSprites target) {
+		return this.hitTargets.contains(target);
+	}
+	
 }

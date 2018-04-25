@@ -78,12 +78,8 @@ public class PropertiesReader {
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
 			String key = (String)e.nextElement();
 			String val = properties.getProperty(key);
-			try {
-				imageMap.put(key, new Image(new FileInputStream(val), imageLength, imageHeight, false, false));
-			
-			} catch (FileNotFoundException e1) {
-				throw new MissingPropertiesException(val);
-			}
+			Image imageVal =  new Image("file:"+val, imageLength, imageHeight, false, false);
+			imageMap.put(key, imageVal);
 		}
 		return imageMap; 
 	}
@@ -128,7 +124,6 @@ public class PropertiesReader {
 			String key = (String)e.nextElement();
 			String val = properties.getProperty(key);
 			vals.add(val);
-			System.out.println(val);
 		}
 		return vals; 
 	}

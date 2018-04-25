@@ -42,6 +42,12 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
 	}
 
+	protected AdjustNewOrExistingScreen(AuthoringView view) {
+		super(view);
+		setConstants();
+		setSaved();
+	}
+
 	private void setConstants() {
 		try {
 			myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
@@ -66,14 +72,11 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		Parent constructedScreen = populateScreenWithFields();
-		populateNameField(); 
 		populateFieldsWithData(); 
 		return constructedScreen;
 	}
 
 	protected abstract Parent populateScreenWithFields();
-
-	protected abstract void populateNameField();
 
 	protected void populateFieldsWithData() {
 		AttributeFinder attributeFinder = new AttributeFinder(); 
@@ -90,11 +93,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			Object myField = null; 
 			try {
 				myField = attributeFinder.retrieveFieldValue(key, this);
-				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)));
+				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
 			} catch (IllegalArgumentException | NullPointerException | IllegalAccessException e) {
 				getView().loadErrorScreen("ObjectAttributeDNE");
 			}
-
 		}
 	}
 
@@ -142,17 +144,5 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return mySelectedObjectName; 
 	}
 
-	protected boolean validNameField(TextField nameField) {
-		boolean valid = true; 
-		if (nameField.getText().length() == 0) {
-			getView().loadErrorAlert("PopulateName");
-			valid = false; 
-		}
-		else if (nameField.getText().equals(myDefaultObjectName)) {
-			getView().loadErrorAlert("NoDefaultName");
-			valid = false; 
-		}
-		return valid; 
-	}
 
 }

@@ -15,9 +15,9 @@ import engine.sprites.towers.projectiles.Projectile;
 public class LauncherBuilder {
     
     
-    public Launcher construct(double fireRate, double fireRateCost, double fireRateValue, double fireRange, double fireRangeCost, double fireRangeValue, Projectile projectile) {
-	FireRateProperty rate = new FireRateProperty(fireRateCost, fireRateValue, fireRate);
-	RangeProperty range = new RangeProperty(fireRangeCost, fireRangeValue, fireRange);
+    public Launcher construct(double fireRate, double fireRange, Projectile projectile) {
+	FireRateProperty rate = new FireRateProperty(0, 0, fireRate);
+	RangeProperty range = new RangeProperty(0, 0, fireRange);
 	return new Launcher(rate, projectile, range);
     }
 

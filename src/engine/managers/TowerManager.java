@@ -3,6 +3,8 @@ package engine.managers;
 import java.awt.Point;
 import java.util.Collection;
 import java.util.Map;
+
+import engine.sprites.ShootingSprites;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 
@@ -53,8 +55,7 @@ public class TowerManager extends ShootingSpriteManager {
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
-    		System.out.println("size is " + this.getListOfActive().size());
-    		return (FrontEndTower) newTower;
+    		return newTower;
     }
 
     /**
@@ -66,6 +67,20 @@ public class TowerManager extends ShootingSpriteManager {
 	    return tower.sell();
 	}
 	return 0;
+    }
+    
+    /**
+     * Called from PlayState, tower is to be upgraded by the type specified in upgradeName
+     * @param tower
+     * @param upgradeName
+     */
+    public double upgrade(FrontEndTower tower, String upgradeName, double balance) {
+	for(ShootingSprites realTower : this.getListOfActive()) {
+	    if(realTower.hashCode() == tower.hashCode()) {
+		 return realTower.upgrade(upgradeName, balance);
+	    }
+	}
+	return balance;
     }
 
 }

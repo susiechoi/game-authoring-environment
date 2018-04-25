@@ -4,20 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 ///Put this at the top of the file:
 import java.io.*;
-import java.util.*;
-
-import data.GameData;
 
 public class TestWriter {
     
@@ -82,7 +74,6 @@ public class TestWriter {
 	l.add("B");
 	x.write(l, "TesterFile");
 	ArrayList<String> y = (ArrayList<String>) x.read("TesterFile");
-	System.out.println(y.toString());
     }
 
 }

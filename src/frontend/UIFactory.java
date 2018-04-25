@@ -7,6 +7,7 @@
 
 package frontend;
 
+import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,24 +39,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
 
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
 public class UIFactory {
 
     public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
@@ -167,7 +151,8 @@ public class UIFactory {
      * @return Slider desired
      */
     public Slider setupSlider(String id, int sliderMax) {
-	Slider slider = new Slider(0, sliderMax, (0 + sliderMax) / 2);
+	Slider slider = new Slider();
+	slider.setMax(sliderMax);
 	Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 	slider.valueProperty().addListener(new ChangeListener<Number>() {
 	    @Override
@@ -251,11 +236,8 @@ public class UIFactory {
 
 		    File file = fileChooser.showOpenDialog(new Stage());
 		    file.getAbsolutePath();
-		    System.out.println("here");
 		    File fileCopy = new File("images/" + imageName + extension);
-		    System.out.println("not here");
 		    try{
-
 			Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		    }
 		    catch(IOException e2) {
@@ -344,8 +326,9 @@ public class UIFactory {
 	VBox selector = setupSelector(propertiesReader, description, propertiesFilepath, newImagePrompt, newImageNamePrompt,".png", dropdown);
 	try {
 	    dropdown.setOnAction(e ->
-	    {try{
-		imageDisplay.setImage(new Image((new File(propertiesReader.findVal(propertiesFilepath, dropdown.getValue())).toURI().toString()), imageSize, imageSize, false, false));
+	    {
+	    	try{
+		imageDisplay.setImage(images.get(dropdown.getSelectionModel().getSelectedIndex()));
 	    }
 	    catch(Exception e2) {
 		e2.printStackTrace();
@@ -370,8 +353,9 @@ public class UIFactory {
      * @return HBox containing Slider/prompt/current value displaying
      */
     public HBox setupSliderWithValue(String id, Slider slider, String prompt) {
-	Text sliderValue = new Text(String.format("%03d", (int)(double)slider.getValue()));
+	Text sliderValue = new Text(String.format("%03d", (int)slider.getValue()));
 	slider.valueProperty().addListener(new ChangeListener<Number>() {
+	    @Override
 	    public void changed(ObservableValue<? extends Number> ov,
 		    Number old_val, Number new_val) {
 		sliderValue.setText(String.format("%03d", (int)(double)new_val));
@@ -420,7 +404,6 @@ public class UIFactory {
      * @return Button desired
      */
     public Button setupBackButton(EventHandler<ActionEvent> action, String backText) {
-//	Image backbuttonImage = new Image((new File(DEFAULT_BACK_IMAGE)).toURI().toString(), 60, 40, true, false); // TODO move to css
 	Button backButton = makeTextButton("backButton",backText);
 	backButton.setOnAction(e -> {action.handle(e);});
 	return backButton; 
