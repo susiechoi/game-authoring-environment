@@ -4,7 +4,7 @@ import javafx.scene.control.Slider;
 
 /**
  * This class represents and place-able, slide-able slider
- * When adjusted, it will call the setVolume() method in the instance of SoundFactory it was created from
+ * When adjusted, it will set volume in the instance of SoundFactory it was created from
  * @author benauriemma
  *
  */
@@ -17,7 +17,7 @@ public class VolumeSlider extends Slider {
     private SoundFactory mySoundFactory;
 
     /**
-     * This method is called from SoundFactory.createVolumeSlider()
+     * This constructor is called from SoundFactory.createVolumeSlider()
      * @param soundFactory is the soundFactory which this button will affect the volume of
      */
     public VolumeSlider(SoundFactory soundFactory) {

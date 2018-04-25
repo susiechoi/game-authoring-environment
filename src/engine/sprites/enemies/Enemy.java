@@ -212,7 +212,12 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 		myHealth = new HealthProperty(0, 0, myInitialHealth);
 		myDamage = new DamageProperty(0, 0, myHealthImpact); 
 		myValue = new ValueProperty(myKillReward);
-    }
+		updateImage(myImage);
+}
+//    public void updateImage() {
+//	System.out.println("enemy image: " + myImage);
+//	updateImage(myImage);
+//    }
 
 
 }
