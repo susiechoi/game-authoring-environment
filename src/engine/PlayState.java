@@ -79,7 +79,6 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	System.out.println("in update");
 	count++;
 	UNIVERSAL_TIME+=elapsedTime;
 	if(!isPaused) {

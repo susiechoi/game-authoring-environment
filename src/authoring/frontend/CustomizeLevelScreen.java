@@ -12,6 +12,7 @@ public class CustomizeLevelScreen extends AuthoringScreen {
 
 	protected CustomizeLevelScreen(AuthoringView view) {
 		super(view);
+		setSaved();
 	}
 
 	@Override

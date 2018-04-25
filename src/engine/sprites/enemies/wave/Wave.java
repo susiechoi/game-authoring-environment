@@ -91,20 +91,7 @@ public class Wave {
     }
 
 
-    /**
-     * Decrements the number of a specified enemy remaining in the wave
-     * 
-     * @param enemy: the enemy object to decrement
-     */
-    @Deprecated
-    private void decrementEnemyCount(Enemy enemy) {
-	for(Path path : myWaveMap.keySet()) {
-	    if (myWaveMap.get(path).containsKey(enemy)){
-		decrementEnemyCount(enemy, path);
-		return;
-	    }
-	}
-    }
+
     /**
      * Decrements the number of a specified enemy remaining in the wave
      * 

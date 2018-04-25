@@ -62,7 +62,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myName = copiedEnemy.getName(); 
 	setImage(copiedEnemy.getImageView().getImage()); 
 	myIntersecter = copiedEnemy.getIntersecter(); 
-	myHealth = copiedEnemy.getHealth(); 
+	myHealth = new HealthProperty(copiedEnemy.getHealth()); 
 	myDamage = copiedEnemy.getDamageProperty();
 	myHealthImpact = myDamage.getProperty(); 
 	myValue = copiedEnemy.getValue();
@@ -110,7 +110,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	double xDifference = targetPosition.getX() - this.getX();
 	double yDifference = targetPosition.getY() - this.getY();
 	double angleToRotateRads = Math.atan2(xDifference,yDifference);
-
 	this.setRotate(Math.toDegrees(angleToRotateRads));
     }
 
