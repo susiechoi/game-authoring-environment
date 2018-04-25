@@ -19,7 +19,6 @@ import java.util.Map;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
-import data.GameData;
 import engine.builders.PathBuilder;
 import engine.Settings;
 import engine.builders.SettingsBuilder;
@@ -45,6 +44,7 @@ public class AuthoringModel {
     protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
     protected String myBackgroundImage = new String();
     protected List<Point> myPathCoordinates = new ArrayList<Point>();
+    private PropertiesMap spriteProperties = new PropertiesMap();
 
     public AuthoringModel() throws MissingPropertiesException {
 	this(new AuthoredGame());
@@ -196,13 +196,12 @@ public class AuthoringModel {
      */
     public Object getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 	Object attributeValue = null;
-
 	AttributeFinder attributeFinder = new AttributeFinder(); 
 	if (objectType.equals("Enemy")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
-		attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
+		attributeValue = spriteProperties.retrieveFieldValue(attribute, enemy);
 		System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 	    }
 	}
@@ -210,7 +209,7 @@ public class AuthoringModel {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
 		Tower tower = currentLevel.getTower(name);
-		attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
+		attributeValue = spriteProperties.retrieveFieldValue(attribute, tower);
 	    }
 	}
 	else if (objectType.equals("Settings")) {
@@ -374,14 +373,14 @@ public class AuthoringModel {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
-		attributeFinder.setFieldValue(attribute, enemy, attributeValue);
+		spriteProperties.setFieldValue(attribute, enemy, attributeValue);
 	    }
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
 		Tower tower = currentLevel.getTower(name);
-		attributeFinder.setFieldValue(attribute, tower, attributeValue);
+		spriteProperties.setFieldValue(attribute, tower, attributeValue);
 	    }
 	}
 	else if (objectType.equals("Settings")) {
