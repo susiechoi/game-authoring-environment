@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import xml.serialization.ImageWrapper;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -21,6 +22,7 @@ public class Sprite implements FrontEndSprite{
     @XStreamOmitField
     private transient ImageView myImageView;
     private String myImageString;
+    private ImageWrapper myWrapper;
 
 
     /**
@@ -36,6 +38,7 @@ public class Sprite implements FrontEndSprite{
 	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
 	myImageView.setPreserveRatio(true);
 	System.out.println("Created Sprite");
+	myWrapper = new ImageWrapper(image);
     }
     
     /**
@@ -58,6 +61,13 @@ public class Sprite implements FrontEndSprite{
     
     public void setImage(Image image) {
 	myImageView  = new ImageView(image);
+    }
+    
+    /**
+     * Method that allows the sprite to be updated based on its wrapper. To be used when deserializing.
+     */
+    public void updateImage() {
+	myImageView = myWrapper.toImageView();
     }
     
     public void place(double newX, double newY) {
