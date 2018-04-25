@@ -77,7 +77,11 @@ public class PlayState implements GameData {
 	count++;
 	UNIVERSAL_TIME+=elapsedTime;
 	if(!isPaused) {
-	    spawnEnemies();
+	    if (count % 120 == 0) {
+		System.out.println("Spawning enemy!");
+		spawnEnemies();
+	    }
+	    myEnemyManager.moveEnemies(elapsedTime);
 	}
 	handleCollisions(elapsedTime);
     }
