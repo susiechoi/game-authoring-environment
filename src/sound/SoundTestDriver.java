@@ -25,17 +25,10 @@ public class SoundTestDriver extends Application {
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int SIZE = 400;
     public static final Paint BACKGROUND = Color.AZURE;
-    //public static final int SLIDER_MIN = 1;
-    //public static final int SLIDER_MAX = 399;
     public static final int IMAGE_HEIGHT = 300;
     public static final int IMAGE_WIDTH = 300;
 
     private Timeline myAnimation;
-    //private ImageView myImage;
-    //private Slider mySlider;
-    //private Integer myPrincipleComponents;
-    private String myFileName;
-    //private Scene myScene;
     private SoundFactory mySoundFactory;
     private Group myRoot;
 
@@ -48,30 +41,19 @@ public class SoundTestDriver extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 	primaryStage.setScene(setupScene());
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                                      e -> update(SECOND_DELAY));
-        myAnimation = new Timeline();
-        myAnimation.setCycleCount(Animation.INDEFINITE);
-        myAnimation.getKeyFrames().add(frame);
+        //KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+        //                              e -> update(SECOND_DELAY));
+        //   myAnimation = new Timeline();
+        // myAnimation.setCycleCount(Animation.INDEFINITE);
+        //myAnimation.getKeyFrames().add(frame);
         primaryStage.show();
 	mySoundFactory = new ITRTSoundFactory();
         mySoundFactory.setBackgroundMusic("epic");
-        mySoundFactory.playBackgroundMusic();
-        //Button b = mySoundFactory.createPlayBackgroundMusicButton();
-        //myRoot.getChildren().add(b);
+        //mySoundFactory.playBackgroundMusic();
+        Button b = mySoundFactory.createPlayBackgroundMusicButton();
+        myRoot.getChildren().add(b);
         Slider v = mySoundFactory.createVolumeSlider();
         myRoot.getChildren().add(v);
-       // mySoundFactory.playBackgroundMusic();
-        /*
-        long start = System.currentTimeMillis();
-        while(System.currentTimeMillis()<start + 10000) {
-            
-        }
-        // THIS TESTING IS CURRENTLY INCOMPLETE
-        System.out.println("Out of loop");
-        mySoundFactory.setVolume(10);
-        */
-        //myAnimation.play();
     }
     
     private Scene setupScene () {
@@ -80,13 +62,15 @@ public class SoundTestDriver extends Application {
 	return scene;
 }
 
+    
     /**
      * Calls the update function every loop
      * @param elapsedTime
      */
-    public void update(double elapsedTime) {
-	
-    }
+    //public void update(double elapsedTime) {
+	// this method is intentionally empty
+   // }
+    
 
     /**
      * Start the program
