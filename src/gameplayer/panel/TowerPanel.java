@@ -96,7 +96,7 @@ public class TowerPanel extends Panel {
 	int alternator = 0;
 
 	for(FrontEndTower tower : availableTowers) {
-	    ImageView imageView = tower.getImageView();
+	    ImageView imageView = tower.getImageView(); // Currently creating null imageview
 	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
 	    imageView.setFitHeight(TOWER_IMAGE_SIZE);
 

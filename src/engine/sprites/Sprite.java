@@ -35,7 +35,7 @@ public class Sprite implements FrontEndSprite{
 	myImageString = image;
 	myImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(image), 50, 50, true, true));
 	myImageView.setPreserveRatio(true);
-
+	System.out.println("Created Sprite");
     }
     
     /**
