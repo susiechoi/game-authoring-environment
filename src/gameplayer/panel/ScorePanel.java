@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 
 public class ScorePanel extends Panel {
 
-
 	private final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
 	private final GameScreen GAME_SCREEN;

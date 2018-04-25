@@ -104,6 +104,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 				getView().loadErrorScreen("ObjectAttributeDNE");
 			}
 		}
+	
 	}
 
 	/**

@@ -55,12 +55,12 @@ public class InstructionScreen extends Screen {
 			SCREEN_MANAGER.toMain();
 		}, PROMPTS.resourceDisplayText("Cancel")); 
 
-		VBox center = new VBox(title, allGames, continueButt);
+		VBox center = new VBox(title, allGames, continueButt, backButton);
 		center.setAlignment(Pos.CENTER);
 		center.setMaxWidth(Double.MAX_VALUE);
 		VBox.setVgrow(center, Priority.ALWAYS);
 
-		rootBox.getChildren().addAll(center);
+		rootBox.getChildren().add(center);
 		return rootBox;
 	}
 
