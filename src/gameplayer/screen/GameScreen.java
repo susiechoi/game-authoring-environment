@@ -1,10 +1,8 @@
 package gameplayer.screen;
 
 import authoring.AuthoringModel;
-import authoring.frontend.FrontendLauncherForTesting;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
-import engine.Settings;
 import gameplayer.panel.*;
 
 import java.awt.Point;
@@ -13,18 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.AuthoringController;
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
-import frontend.StageManager;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -35,8 +33,7 @@ import sound.ITRTSoundFactory;
 public class GameScreen extends Screen {
 
     //TODO delete this and re-factor to abstract
-    private final String DEFAULT_SHARED_STYLESHEET = "styling/theme1.css";
-    private final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+    private final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
 
     private final UIFactory UIFACTORY;
     private final PromptReader PROMPTS;
@@ -89,7 +86,6 @@ public class GameScreen extends Screen {
 	setVertPanelsLeft();
 
 	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-	//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 	return rootPane;
     }
 
@@ -99,19 +95,9 @@ public class GameScreen extends Screen {
 	GAME_PANEL.towerSelected(tower);
 
 
+
     }
 
-    public Integer getMoney() {
-	//TODO call ObserveHandler.triggerEvent(NeedMoney) to get money sent from playState
-	/**
-	 * also might implement money tracking by passing Integer object of
-	 * currency from playState in initialization of GameScreen/TowerPanel
-	 * 	-if this is the case this method isn't needed and an updateCurrency Method
-	 * 	should instead be called in towerPanel upon any action which would spend currency
-	 */
-	Integer money = 0; //placeholder
-	return money;
-    }
 
 
     @Override
@@ -180,24 +166,33 @@ public class GameScreen extends Screen {
 	    SOUND_FACTORY.pauseBackgroundMusic();
 	}
 	else if (setting.equals("instructions")) {
-
+	    //TODO make this work
 	}
 	else if (setting.equals("help")) {
+	    //TODO make this work
 
 	}
     }
 
-    public void updateCurrency(Integer newBalence) {
-	TOWER_PANEL.updateCurrency(newBalence);
+
+
+    public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
+	ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
+	ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+	myCurrency.addListener(currencyListener);
+	myScore.addListener(scoreListener);
+	myLives.addListener(healthListener);
+	TOWER_PANEL.setInitalMoney(myCurrency.get());
+	SCORE_PANEL.setInitialScore(myScore.get());
+	SCORE_PANEL.setInitialLives(myLives.get());
+
+	//	currencyListener.changed(myCurrency, 0, 0);
+	//	scoreListener.changed(myScore, 0, 0);
+	//	healthListener.changed(myLives, 0, 0);
+
     }
 
-    public void updateHealth(Integer newHealth) {
-	SCORE_PANEL.updateHealth(newHealth);
-    }
-
-    public void updateScore(Integer newScore) {
-	SCORE_PANEL.updateScore(newScore);
-    }
 
     public void updateLevel(Integer newLevel) {
 	SCORE_PANEL.updateLevel(newLevel);
@@ -258,6 +253,8 @@ public class GameScreen extends Screen {
 	rootPane.setRight(displayPane);
     }
 
+ 
+
     public void swapVertPanel() {
 	if(rootPane.getRight() == null) {
 	    setVertPanelsRight();
@@ -275,5 +272,7 @@ public class GameScreen extends Screen {
 	MEDIATOR.upgradeTower(tower, upgradeName);
     }
 
-
+    public ITRTSoundFactory getSoundFactory() {
+	return SOUND_FACTORY;
+    }
 }
