@@ -47,13 +47,13 @@ public class AuthoringModel {
 
     public AuthoringModel() throws MissingPropertiesException {
 	this(new AuthoredGame());
+	populateInstanceVariables();
+	setupDefaultSettings(); 
+	setupDefaultLevel();
     }
     
     public AuthoringModel(AuthoredGame game) throws MissingPropertiesException {
 	myGame = game;
-	populateInstanceVariables();
-	setupDefaultSettings(); 
-	setupDefaultLevel();
     }
 
     private void populateInstanceVariables() throws MissingPropertiesException {
@@ -62,6 +62,7 @@ public class AuthoringModel {
 	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(mySettingsFile, "ConstantFiles");
 	DEFAULT_PROMPTS = myPropertiesReader.findVal(mySettingsFile, "PromptsFile");
 	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(mySettingsFile, "ConstantFiles");
+	myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
 	try {
 	    myDefaultTower = myGeneric.generateGenericTower();
 	    myDefaultEnemy = myGeneric.generateGenericEnemy();

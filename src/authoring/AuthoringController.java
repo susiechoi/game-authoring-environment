@@ -236,6 +236,7 @@ public class AuthoringController {
 	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = new AuthoringModel(reader.createModel(gameName));
+	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
 
@@ -247,6 +248,7 @@ public class AuthoringController {
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
+    
     /**
      * Method to retrieve the highest wave number found in a level (including all paths)
      * @param level is level desired
