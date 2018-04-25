@@ -26,6 +26,7 @@ public class Launcher extends Manager<Projectile>{
     private double timeSinceLastShot;
 
     public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
+	System.out.println("original rate is " + fireRate.getProperty());
 	myFireRate = fireRate;
 	myProjectile = projectile;
 	myRange = range;
@@ -104,6 +105,7 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
+	System.out.println("firerate is " + myFireRate.getProperty());
      	if(timeSinceLastShot >= 100/myFireRate.getProperty()) {
      		return true;
      	}

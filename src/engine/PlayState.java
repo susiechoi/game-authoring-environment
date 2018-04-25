@@ -110,7 +110,6 @@ public class PlayState implements GameData {
 	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	    myTowerManager.moveProjectiles(elapsedTime);
 	    myTowerManager.moveTowers();
-
 	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
 	    }
