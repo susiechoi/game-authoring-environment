@@ -1,14 +1,19 @@
 
 package gameplayer.panel;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import gameplayer.screen.GameScreen;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 public class ScorePanel extends Panel {
 
-	private final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+	public static final String DEFAULT_DATAPOINTS_FILENAME = "graphing/scoregraph";
+	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
 	private final GameScreen GAME_SCREEN;
 	private Integer SCORE;
@@ -18,27 +23,31 @@ public class ScorePanel extends Panel {
 	private Label LevelText;
 	private Label HealthText;
 
+	private PrintWriter myScoreWriter; 
+	private int myScoreXIncrement;
+
 	public ScorePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
 		SCORE = 0;
 		HEALTH = 100;
 		LEVEL = 1;
-		
+
 		//TODO Read words SCORE, LEVEL, and + from properties file
 		ScoreText = new Label("Score: " + SCORE);
 		LevelText = new Label("Level " + LEVEL);
 		HealthText = new Label("+" + HEALTH);
-	}
 
+		try {
+			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILENAME), true);
+		} catch (IOException e) {
+			GAME_SCREEN.loadErrorScreen("NoFile");
+		}
+	}
 
 	@Override
 	public void makePanel() {
-
-
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
-
 		LevelText.setMaxWidth(Double.MAX_VALUE);
-
 		HealthText.setMaxWidth(Double.MAX_VALUE);
 
 		HBox panelRoot = new HBox();
@@ -55,11 +64,16 @@ public class ScorePanel extends Panel {
 	}
 
 	public void updateScore(Integer newScore) {
+		myScoreXIncrement++; 
+
+		myScoreWriter.write(Integer.toString(myScoreXIncrement)+" ");
+		myScoreWriter.write(Integer.toString(newScore)+"\n");
+
 		ScoreText.setText("Score: " + newScore);
 	}
 
-	public void updateHealth(double  myHealth) {
-		HealthText.setText("+" + Double.valueOf(Math.floor(myHealth)).intValue());
+	public void updateHealth(double newHealth) {
+		HealthText.setText("+" + Double.valueOf(Math.floor(newHealth)).intValue());
 	}
 
 	public void updateLevel(Integer newLevel) {
