@@ -22,3 +22,11 @@ Text {
   -fx-font: bold 36pt "Helvetica";
 }
 
+.chart-title {
+	-fx-font-size: 14pt; 
+}
+
+.axis {
+	-fx-font-size: 10pt;
+}
+

@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
-
 import javafx.scene.Parent;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -21,6 +19,7 @@ public class VisualizationsScreen extends Screen {
 		NumberAxis y = new NumberAxis(); 
 		LineChart<Number, Number> graph = new LineChart<Number, Number>(x, y);
 		XYChart.Series series = new XYChart.Series<>(); 
+		graph.setTitle("Score Over Game Play Time");
 		graph.getData().add(series); 
 
 		BufferedReader br = null;
@@ -34,7 +33,9 @@ public class VisualizationsScreen extends Screen {
 		try {
 			while ((point = br.readLine()) != null) {
 				String[] xyCoors = point.split("\\s+");
-				series.getData().add(new XYChart.Data(Integer.parseInt(xyCoors[0]), Integer.parseInt(xyCoors[1])));
+				if (xyCoors.length == 2) {
+					series.getData().add(new XYChart.Data(Integer.parseInt(xyCoors[0]), Integer.parseInt(xyCoors[1])));
+				}
 			}
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
