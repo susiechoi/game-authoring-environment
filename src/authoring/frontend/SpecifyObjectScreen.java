@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-abstract class SpecifyObjectScreen extends AdjustScreen {
+abstract class SpecifyObjectScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
@@ -27,6 +27,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	private String myObjectDescription; 
 	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
+		setSaved();
 		myObjectDescription = objectDescription;
 		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
 		try {
@@ -41,7 +42,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	 * @return Parent/root to attach to Scene that will be set on the stage
 	 */
 	@Override
-	protected Parent populateScreenWithFields() {
+	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 		Text orText = new Text("or"); 
 
@@ -55,13 +56,20 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		Button backButton = setupBackButton();
+		Button deleteButton = getUIFactory().makeTextButton("deleteButton", getErrorCheckedPrompt("Delete"));
 
 		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction("objectOptions",dropdownOptions, 
-				e-> { applyButton.setDisable(false); }, 
-				e-> { applyButton.setDisable(true);}, editPrompt); 
+				e-> { applyButton.setDisable(false); deleteButton.setDisable(false); }, 
+				e-> { applyButton.setDisable(true); deleteButton.setDisable(true); }, editPrompt); 
 		applyButton.setDisable(true);
+		deleteButton.setDisable(true);
 		applyButton.setOnAction(e -> {
+		    	setSaved();
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
+		});
+		deleteButton.setOnAction(e -> {
+			getView().deleteObject(myObjectDescription, objectsDropdown.getValue());
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Delete");
 		});
 
 		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, editPrompt);
@@ -72,15 +80,11 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);
+		vb.getChildren().add(deleteButton);
 		vb.getChildren().add(backAndApplyButton);
-
 		return vb;
 	}
-	
-	@Override
-	protected void populateFieldsWithData() {
-		//null method, since this type of screen only has buttons TODO: make this not an abstract method??
-	}
+
 
 	/**
 	 * For creating a button option to make a new object

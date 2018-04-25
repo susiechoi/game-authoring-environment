@@ -1,43 +1,26 @@
 package engine;
 
 
-
-import engine.sprites.towers.Tower;
 import gameplayer.ScreenManager;
-import javafx.beans.property.IntegerProperty;
 import java.util.List;
 import java.util.Map;
-
-import authoring.AuthoringModel;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import java.awt.Point;
-
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableIntegerValue;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import xml.AuthoringModelReader;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
-import xml.PlayLoader;
 
 /**
  * This class serves as a bridge between the front end, back end, and file I/O of our game player
  * Each of these areas holds an instance of its corresponding class
- * 
+ *
  * Mediator has a method for every event that can occur in the game. These methods delegate tasks to other classes that are more specialized for handling
  * those behaviors.
- * 
+ *
  * @author benauriemma 4/5
  * @author andrewarnold
  * @author Brendan Cheng
@@ -46,18 +29,19 @@ import xml.PlayLoader;
  */
 public class Mediator {
 
+
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     private PlayController myPlayController;
 
-//    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
-//    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
-//    private ObservableValue<Integer> gameSpeed;
-//    private ObservableValue<Integer> level;
-//    private ObservableValue<Integer> difficulty;
-//    private ObservableValue<Tower> placeTower;
-//    private ObservableValue<Boolean> saveFileAvailable;
-//    private ObservableValue<Boolean> loadGameFromFile;
+    //    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
+    //    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
+    //    private ObservableValue<Integer> gameSpeed;
+    //    private ObservableValue<Integer> level;
+    //    private ObservableValue<Integer> difficulty;
+    //    private ObservableValue<Tower> placeTower;
+    //    private ObservableValue<Boolean> saveFileAvailable;
+    //    private ObservableValue<Boolean> loadGameFromFile;
 
     /**
      * Constructs Mediator object and sets all fields to null.
@@ -65,22 +49,22 @@ public class Mediator {
      */
     public Mediator(PlayController p) {
 	myPlayController = p;
-//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
-//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
+	//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
+	//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
     }
 
-    
+
     /************************************************ SETUP ********************************************/
-    
+
     /**
      * Sets ScreenManager
      * @param sm	ScreenManager to be set
      */
     public void setScreenManager(ScreenManager sm) {
 	myScreenManager = sm;
-	
+
     }
-    
+
     /**
      * Sets GameEngine
      * @param ge	GameEngine to be set
@@ -88,7 +72,7 @@ public class Mediator {
     public void setGameEngine(GameEngine ge) {
 	myGameEngine = ge;
     }
-    
+
     /**
      * Sets PlayController
      * @param pc	The PlayController to be set
@@ -96,9 +80,9 @@ public class Mediator {
     public void setPlayController(PlayController pc) {
 	myPlayController = pc;
     }
-    
+
     /************************************************ FILE I/O ********************************************/
-    
+
     /**
      * Starts a new play given a path to an AuthoringModel. To be called when a user chooses a file on the front end to start a new Play
      * @param filename	name of file
@@ -107,7 +91,7 @@ public class Mediator {
 	myPlayController.newPlay(filename);
 	//myPlayController.setAuthoring();
     }
-    
+
     /**
      * Saves current state of game in xml file
      * @param filename	String representing name of file. Path and ".xml" are handled by method in XML package.
@@ -116,7 +100,7 @@ public class Mediator {
 	PlaySaverWriter p = (PlaySaverWriter) XMLFactory.generateWriter("PlaySaverWriter");
 	p.write(myGameEngine.getPlayState(), filename);
     }
-    
+
     /**
      * Loads a saved Play from an xml file
      * @param filename	name of file where Play is saved
@@ -126,9 +110,9 @@ public class Mediator {
 	PlayLoader p = (PlayLoader) XMLFactory.generateReader("PlayLoader");
 	return p.createModel(filename);
     }
-    
+
     /************************************************ GAMEPLAY ********************************************/
-    
+
     /**
      * To be called by the backend any time a projectile or enemy should be added to the screen
      * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
@@ -136,7 +120,7 @@ public class Mediator {
     public void addSpriteToScreen(FrontEndSprite sprite) {
 	myScreenManager.display(sprite);
     }
-    
+
     /**
      * to be called by the backend any time a projectile or enemy should be removed to the screen
      * @param sprite is the projectile or enemy to be removed, cast as a FrontEndSprite
@@ -144,7 +128,7 @@ public class Mediator {
     public void removeSpriteFromScreen(FrontEndSprite sprite) {
 	myScreenManager.remove(sprite);
     }
-    
+
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {  
 	myScreenManager.setAvailableTowers(availableTowers);
     }
@@ -157,8 +141,9 @@ public class Mediator {
      * @throws CannotAffordException 
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
-        //TODO add in money (decrement when purchased)
-         return myGameEngine.getPlayState().placeTower(location, towerType);
+	//TODO add in money (decrement when purchased)
+    	System.out.println(myGameEngine.getPlayState());
+	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
 
     /**
@@ -167,22 +152,22 @@ public class Mediator {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
-        //TODO increase money when sold in sell method
-        myGameEngine.getPlayState().sellTower(tower);
+	//TODO increase money when sold in sell method
+	myGameEngine.getPlayState().sellTower(tower);
     }
 
     /**
      * to be called by the backend to play the simulation
      */
     public void play() {
-        myGameEngine.getPlayState().play();
+	myGameEngine.getPlayState().play();
     }
 
     /**
      * to be called by the backend to pause the simulation
      */
     public void pause() {
-        myGameEngine.getPlayState().pause();
+	myGameEngine.getPlayState().pause();
     }
 
     /**
@@ -191,25 +176,25 @@ public class Mediator {
      * @param sliderValue
      */
     public void fastForward(Integer sliderValue) {
-        myGameEngine.setSpeed(sliderValue);
+	myGameEngine.setSpeed(sliderValue);
     }
 
     //WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED
-//    /**
-//     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
-//     * @param tower
-//     * @param upgradeName
-//     */
-//    public void upgradeTower(FrontEndTower tower, String upgradeName) {
-//        myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
-//    }
+    /**
+     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
+     * @param tower
+     * @param upgradeName
+     */
+    public void upgradeTower(FrontEndTower tower, String upgradeName) {
+	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
+    }
 
     /**
      * to be called by the backend to tell the frontend the new score that has already be calculated
      * @param newScore
      */
     public void updateScore(Integer newScore) {
-        myScreenManager.updateScore(newScore);
+	myScreenManager.updateScore(newScore);
     }
 
     /**
@@ -217,7 +202,7 @@ public class Mediator {
      * @param newBalance
      */
     public void updateCurrency(Integer newBalance) {
-        myScreenManager.updateCurrency(newBalance);
+	myScreenManager.updateCurrency(newBalance);
     }
 
     /**
@@ -225,7 +210,7 @@ public class Mediator {
      * @param newHealth
      */
     public void updateHealth(Integer newHealth) {
-        myScreenManager.updateHealth(newHealth);
+	myScreenManager.updateHealth(newHealth);
     }
 
     /**
@@ -233,7 +218,7 @@ public class Mediator {
      * @param newLevel
      */
     public void updateLevel(Integer newLevel) {
-        myScreenManager.updateLevelCount(newLevel);
+	myScreenManager.updateLevelCount(newLevel);
     }
 
     /**
@@ -242,17 +227,21 @@ public class Mediator {
      */
     public void removeListOfSpritesFromScreen(List<Sprite> list) {
 	for(Sprite sprite : list) {
-	    this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
+	    this.removeSpriteFromScreen( sprite); 
+	}
+    }
+
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
+		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
 	}
 	
-    }
-    
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath) {
-    	System.out.println("Mediator: " +imageMap);
-		
-	myScreenManager.setPath(imageMap, backgroundImageFilePath);
-    }
-
-
+	/**
+	 * Ends game loop in case that user wants to return to authoring/editing the game
+	 * @author susiechoi
+	 */
+	public void endLoop() {
+		myGameEngine.endLoop();
+	}
+	
 }
 

@@ -47,11 +47,19 @@ VBox, HBox {
   -fx-font: bold 24pt "Helvetica";
 }
 
+
+@font-face {
+    src: url("vcr-sd-mono.ttf");
+}
+
 #currencyButton {
-	-fx-font-family: "Helvetica";
+	-fx-font-family: "VCR OSD Mono";
     -fx-font-size: 30;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+    -fx-background-color: green;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
     
 }
 #currencyButton{

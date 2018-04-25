@@ -7,12 +7,8 @@ import controller.PlayController;
 import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -60,8 +56,6 @@ public class MainScreen extends Screen {
 		.loadInstructionScreen();
 	    } catch (MissingPropertiesException e) {
 		// TODO Auto-generated catch block
-		System.out.println("Critical error, could not create PlayController "
-			+ "on line 49 in MainScreen.java");
 		e.printStackTrace();
 	    }
 	});
