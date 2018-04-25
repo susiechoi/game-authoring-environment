@@ -26,14 +26,15 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  * @author Katherine Van Dyk
  * @author benauriemma 4/8
- * @date 4/6/18
+ * @author Ben Hodgson 
  */
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
     private int count;
     private int myScore;
-    private int myResources;
+    private double myResources;
+    private double myHealth; 
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
@@ -50,7 +51,7 @@ public class PlayState implements GameData {
      * @param resources
      * @param universalTime
      */
-    public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, double resources, double health, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -59,9 +60,18 @@ public class PlayState implements GameData {
 	isPaused = true;
 	myScore = score;
 	myResources = resources;
+	myHealth = health;
+	myMediator.updateCurrency(myResources);
+	myMediator.updateHealth(myHealth);
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
+	System.out.println("Listing Towers: ");
+	for (FrontEndTower tower : availTowers) {
+	    System.out.println(tower.getName());
+	    System.out.println(tower.getImageView().getImage().getUrl());
+	}
+	System.out.println("Done listing towers in level");
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
@@ -69,54 +79,65 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
-	System.out.println("in update");
 	count++;
+	UNIVERSAL_TIME+=elapsedTime;
 	if(!isPaused) {
-	    try {
-		for (Path path : currentLevel.getUnmodifiablePaths()) {
-		    // TODO instert try catch block, if there are no waves the level ends!
-		    System.out.println("in for " + currentLevel.getWaves().get(0).getUnmodifiableEnemies().size());
-		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
-			System.out.println("in if");
-			Wave currentWave = currentLevel.getWaves().get(0);
-			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
-			System.out.println("initial point is ");
-			enemy.setInitialPoint(path.initialPoint());
-			//enemy.move(path.initialPoint(),elapsedTime);
-			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
-			myEnemyManager.addToActiveList(enemy);
-			myMediator.addSpriteToScreen(enemy);
-		    }
-		    //if(count % 10 == 0) {
-			List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-			myMediator.removeListOfSpritesFromScreen(deadEnemies); 
-			List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
-			activeEnemies.removeAll(deadEnemies);
-		    //}
+	    spawnEnemies();
+	}
+	handleCollisions(elapsedTime);
+    }
+
+    private void handleCollisions(double elapsedTime) {
+	List<Sprite> toBeRemoved = new ArrayList<>();
+	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+	activeEnemies.removeAll(toBeRemoved);
+	myEnemyManager.setActiveList(activeEnemies);
+	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	myTowerManager.moveProjectiles(elapsedTime);
+	myTowerManager.moveTowers();
+
+	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
+	    myMediator.addSpriteToScreen(projectile);
+	}
+	updateScore(toBeRemoved);
+	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
+    }
+
+    private void spawnEnemies() {
+	try {
+	    if (currentLevel.getWave(0).isFinished()) {
+		currentLevel.removeWave();   
+	    }
+	    Wave currentWave = currentLevel.getWave(0);
+	    for (Path currentPath : currentLevel.getPaths()) {
+		try {
+		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
+		    newEnemy.setInitialPoint(currentPath.initialPoint());
+		    //enemy.move(path.initialPoint(),elapsedTime);
+		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
+		    myEnemyManager.addToActiveList(newEnemy);
+		    myMediator.addSpriteToScreen(newEnemy);
+
 		}
-		
-	    } catch (Exception e) {
-		e.printStackTrace();
+		catch (Exception e) {
+		    // do nothing, path contains no enemies
+		}
 	    }
-
-	    UNIVERSAL_TIME+=elapsedTime;
-	    List<Sprite> toBeRemoved = new ArrayList<>();
-	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
-	    List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
-	    activeEnemies.removeAll(toBeRemoved);
-	    myEnemyManager.setActiveList(activeEnemies);
-	    myTowerManager.moveProjectiles(elapsedTime);
-	    myTowerManager.moveTowers();
-
-	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
-		myMediator.addSpriteToScreen(projectile);
+	}
+	catch (Exception e) {
+	    // Level is over
+	    if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
+		currentLevel = myLevels.get(currentLevel.myNumber());
+		myMediator.updateLevel(currentLevel.myNumber());
+		// TODO: call Mediator to trigger next level
 	    }
-	    updateScore(toBeRemoved);
-	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
+	    else {
+		// TODO: end game
+	    }
 	}
     }
-    
-    
+
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
 	    myScore+= sprite.getPointValue();
@@ -165,7 +186,7 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	 myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
+	myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
 
     }
 }

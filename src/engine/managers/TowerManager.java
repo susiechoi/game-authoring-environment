@@ -3,6 +3,7 @@ package engine.managers;
 import java.awt.Point;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.FrontEndTower;
@@ -48,10 +49,14 @@ public class TowerManager extends ShootingSpriteManager {
      */
     public void moveTowers() {
 	// TODO Auto-generated method stub
-	
     }
     
     public FrontEndTower place(Point location, String type) {
+	System.out.println(type);
+	for (Entry<String, Tower> entry : myTowerTypeToInstance.entrySet()) {
+	    System.out.println(entry.getKey());
+	    System.out.println(entry.getValue());
+	}
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type));
     		newTower.move(location);
     		this.addToActiveList(newTower);

@@ -116,8 +116,8 @@ public class ScreenManager extends View {
 
 	}
 
-	public void updateHealth(Integer newHealth) {
-		GAME_SCREEN.updateHealth(newHealth);
+	public void updateHealth(double myHealth) {
+		GAME_SCREEN.updateHealth(myHealth);
 	}
 
 	public void updateScore(Integer newScore) {
@@ -179,8 +179,8 @@ public class ScreenManager extends View {
 		GAME_SCREEN.setAvailbleTowers(availableTowers);
 	}
 
-	public void updateCurrency(Integer newBalence) {
-		GAME_SCREEN.updateCurrency(newBalence);
+	public void updateCurrency(double myResources) {
+		GAME_SCREEN.updateCurrency(myResources);
 	}
 
 

@@ -68,8 +68,8 @@ public class AuthoringController {
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(String gameName, double startingHealth, double starting$) {
-	myModel.makeResources(gameName, startingHealth, starting$);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
+	myModel.makeResources(gameName, startingHealth, starting$, css, theme);
     }
 
     // TODO
@@ -236,6 +236,7 @@ public class AuthoringController {
 	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = new AuthoringModel(reader.createModel(gameName));
+	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
 
@@ -247,6 +248,7 @@ public class AuthoringController {
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
+    
     /**
      * Method to retrieve the highest wave number found in a level (including all paths)
      * @param level is level desired

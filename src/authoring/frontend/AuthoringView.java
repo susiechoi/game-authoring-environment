@@ -41,6 +41,7 @@ public class AuthoringView extends View {
 	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
 	public static final String DEFAULT_LANGUAGE = "English";
+	
 	private StageManager myStageManager; 
 	private PromptReader myPromptReader;
 	private ErrorReader myErrorReader;
@@ -51,6 +52,7 @@ public class AuthoringView extends View {
 	private GridPane myGrid = new GridPane();
 	private AuthoringModel myModel;
 	private BooleanProperty myCSSChanged;
+	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager);
@@ -61,6 +63,7 @@ public class AuthoringView extends View {
 		myController = controller; 
 		myCurrentCSS = DEFAULT_AUTHORING_CSS;
 		myCSSChanged = new SimpleBooleanProperty(false);
+		
 	}
 
 
@@ -202,8 +205,8 @@ public class AuthoringView extends View {
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
 
-	public void makeResources(String gameName, double startingHealth, double starting$) {
-		myController.makeResources(gameName, startingHealth, starting$);
+	public void makeResources(String gameName, double startingHealth, double starting$, String css) {
+		myController.makeResources(gameName, startingHealth, starting$, css, getTheme());
 	}
 
 	/**
@@ -318,7 +321,6 @@ public class AuthoringView extends View {
 		try {
 		    myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
-		    // TODO Auto-generated catch block
 		    loadErrorScreen("NoObject");
 		} 
 	}
@@ -340,7 +342,7 @@ public class AuthoringView extends View {
 		try {
 			myModel.deleteObject(myLevel, objectType, objectName);
 		} catch (ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+			loadErrorAlert("NoObject");
 		}
 	}
 
@@ -349,9 +351,9 @@ public class AuthoringView extends View {
 		try {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorScreen("NoImageFile");
+			loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorScreen("NoDuplicateNames");
+			loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
@@ -359,9 +361,9 @@ public class AuthoringView extends View {
 		try {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorScreen("NoImageFile");
+			loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorScreen("NoDuplicateNames");
+			loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
@@ -371,6 +373,23 @@ public class AuthoringView extends View {
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			loadErrorScreen("NoObject");
 		}
+	}
+	
+	public void setTheme(String selectedTheme) {
+		myTheme = selectedTheme; 
+		setObjectAttribute("Settings", "", "myGameTheme", myTheme);
+	}
+	
+	public String getTheme() {
+		if (myTheme == null) {
+			try {
+				myTheme = (String) myController.getObjectAttribute(1, "Settings", "", "myGameTheme");
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+				loadErrorAlert("NoFile");
+			}
+		}
+		System.out.println(myTheme);
+		return myTheme; 
 	}
 
 }

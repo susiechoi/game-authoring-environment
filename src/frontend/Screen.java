@@ -63,6 +63,7 @@ public abstract class Screen {
 		if (myRoot != null) {
 			myRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 			myRoot.getStylesheets().add("https://fonts.googleapis.com/css?family=Quicksand");
+			myRoot.getStylesheets().add("https://fonts.googleapis.com/css?family=Open+Sans");
 		}
 	}
 

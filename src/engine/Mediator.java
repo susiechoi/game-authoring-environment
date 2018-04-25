@@ -199,18 +199,18 @@ public class Mediator {
 
     /**
      * to be called by the backend to tell the frontend the new balance of $ the player has
-     * @param newBalance
+     * @param myResources
      */
-    public void updateCurrency(Integer newBalance) {
-	myScreenManager.updateCurrency(newBalance);
+    public void updateCurrency(double myResources) {
+	myScreenManager.updateCurrency(myResources);
     }
 
     /**
      * to be called by the backend to tell the frontend the new health of the player
-     * @param newHealth
+     * @param myHealth
      */
-    public void updateHealth(Integer newHealth) {
-	myScreenManager.updateHealth(newHealth);
+    public void updateHealth(double myHealth) {
+	myScreenManager.updateHealth(myHealth);
     }
 
     /**
@@ -234,5 +234,14 @@ public class Mediator {
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
 		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
 	}
+	
+	/**
+	 * Ends game loop in case that user wants to return to authoring/editing the game
+	 * @author susiechoi
+	 */
+	public void endLoop() {
+		myGameEngine.endLoop();
+	}
+	
 }
 

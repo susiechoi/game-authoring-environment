@@ -50,6 +50,20 @@ public class AuthoredGame implements GameData {
 	return myGameName; 
     }
     
+    /**
+     * @return double: the starting health the player starts with
+     */
+    public double startingHealth() {
+	return mySettings.startingHealth();
+    }
+    
+    /**
+     * @return double: the starting money the player starts with
+     */
+    public double startingMoney() {
+	return mySettings.startingMoney();
+    }
+    
     protected Settings getSettings() {
 	return mySettings;
     }

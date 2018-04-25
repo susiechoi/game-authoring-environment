@@ -5,27 +5,31 @@ public class Settings {
 	private String myGameName; 
 	private double myStartingHealth;
 	private double myStartingMoney; 
-
-	public Settings(String gameName, double startingHealth, double starting$) {
+	private String myCSSTheme; // USE src/styling/CurrentCSS.properties TO FIND CSS FILEPATH CORRESPONDING WITH CSS THEME 
+	private String myGameTheme;
+	
+	public Settings(String gameName, double startingHealth, double starting$, String cssTheme, String gameTheme) {
 		myGameName = gameName; 
 		myStartingHealth = startingHealth;
 		myStartingMoney = starting$; 
+		myCSSTheme = cssTheme; 
+		myGameTheme = gameTheme;
 	}
 	
 	public void setGameName(String gameName) {
 		myGameName = gameName;
 	}
-	
-	public void setStartingHealth(double startingHealth) {
-		myStartingHealth = startingHealth;
-	}
-	
-	public void setStartingMoney(double startingMoney) {
-		myStartingMoney = startingMoney; 
-	}
-	
+
 	public String getGameName() {
 	    return myGameName;
+	}
+	
+	public double startingMoney() {
+	    return myStartingMoney;
+	}
+	
+	public double startingHealth() {
+	    return myStartingHealth;
 	}
 	
 }

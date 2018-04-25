@@ -35,7 +35,8 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 		super(view);
-		setConstants(); 
+		setConstants();
+		setSaved();
 		myFieldsPropertiesPath = fieldsPropertiesPath; 
 		myObjectDescription = objectDescription; 
 		mySelectedObjectName = selectedObjectName; 
