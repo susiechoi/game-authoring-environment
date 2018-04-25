@@ -113,6 +113,7 @@ public class PlayState implements GameData {
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
+		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
@@ -120,7 +121,7 @@ public class PlayState implements GameData {
 
 		}
 		catch (Exception e) {
-		    // do nothing, path contains no enemies
+		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
 		}
 	    }
 	}
