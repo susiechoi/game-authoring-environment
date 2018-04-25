@@ -33,7 +33,8 @@ import sound.ITRTSoundFactory;
 public class GameScreen extends Screen {
 
     //TODO delete this and re-factor to abstract
-    private final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
+    private final String DEFAULT_SHARED_STYLESHEET = "styling/theme1.css";
+    private final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
 
     private final UIFactory UIFACTORY;
     private final PromptReader PROMPTS;
@@ -86,19 +87,20 @@ public class GameScreen extends Screen {
 	setVertPanelsLeft();
 
 	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+	//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 	return rootPane;
     }
 
     public void towerSelectedForPlacement(FrontEndTower tower) {
-	if(tower == null)
-	    blankGamePanelClick();
 	GAME_PANEL.towerSelected(tower);
-
-
-
     }
 
-
+    //	public void setStyling() {
+    //		String style = MEDIATOR.getStyling();
+    //		if (style != null) {
+    //			rootPane.getStylesheets().add(style);
+    //		}
+    //	}
 
     @Override
     protected View getView() {
@@ -123,7 +125,7 @@ public class GameScreen extends Screen {
     }
 
     //TODO implement reflection//rest of controls
-    public void controlTriggered(String control) {
+    public void controlTriggered(String control) throws MissingPropertiesException {
 	if(control.equals("play"))
 	    MEDIATOR.play();
 	else if(control.equals("pause"))
@@ -139,6 +141,7 @@ public class GameScreen extends Screen {
 		e.printStackTrace();
 	    }
 	else if (control.equals("edit")) { // Susie added this
+	    MEDIATOR.endLoop();
 	    AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 	    authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 	}
@@ -153,7 +156,7 @@ public class GameScreen extends Screen {
 	}
 	else if (setting.equals("play")) {
 	    try{
-		SOUND_FACTORY.setBackgroundMusic("src/sound/files/epic.mp3");
+		SOUND_FACTORY.setBackgroundMusic("epic");
 	    }
 	    catch (FileNotFoundException e) {
 
@@ -166,13 +169,13 @@ public class GameScreen extends Screen {
 	    SOUND_FACTORY.pauseBackgroundMusic();
 	}
 	else if (setting.equals("instructions")) {
-	    //TODO make this work
+
 	}
 	else if (setting.equals("help")) {
-	    //TODO make this work
 
 	}
     }
+
 
 
 
@@ -211,8 +214,8 @@ public class GameScreen extends Screen {
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
 
-    public void upgradeClickedOn(FrontEndTower tower) {
-	BUY_PANEL = new BuyPanel(this,PROMPTS, tower);
+    public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
+	BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
 	displayPane.getChildren().clear();
 	displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
@@ -253,8 +256,6 @@ public class GameScreen extends Screen {
 	rootPane.setRight(displayPane);
     }
 
- 
-
     public void swapVertPanel() {
 	if(rootPane.getRight() == null) {
 	    setVertPanelsRight();
@@ -264,11 +265,20 @@ public class GameScreen extends Screen {
 	}
     }
 
+
+
+
     public ScreenManager getScreenManager() {
 	return SCREEN_MANAGER;
     }
+
+    public void upgradeBought(FrontEndTower tower, String upgradeName) {
+	MEDIATOR.upgradeTower(tower, upgradeName);
+    }
+
 
     public ITRTSoundFactory getSoundFactory() {
 	return SOUND_FACTORY;
     }
 }
+

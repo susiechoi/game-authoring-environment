@@ -6,7 +6,6 @@ import java.util.List;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
@@ -61,25 +60,14 @@ public class CreatePathScreen extends PathScreen {
 							// TODO Auto-generated catch block
 						}
 					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Path Cutomization Error");
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Path Customization Error");
 						alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
 						alert.showAndWait();
 					}
 				}
 			}
 		});
-	}
-
-	@Override
-	protected Parent populateScreenWithFields() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -94,6 +82,7 @@ public class CreatePathScreen extends PathScreen {
 	    setGridUIComponents(myPathPanel, myPathToolBar);
 	    ImageView trashImage = myPathPanel.makeTrashImage();
 		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				if (event.getDragboard().hasImage()) {
 					event.acceptTransferModes(TransferMode.ANY);
@@ -102,6 +91,7 @@ public class CreatePathScreen extends PathScreen {
 		});
 
 		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
 				event.acceptTransferModes(TransferMode.ANY);
 				Dragboard db = event.getDragboard();
@@ -114,7 +104,7 @@ public class CreatePathScreen extends PathScreen {
 			}
 		});
 
-		Button backgroundButton = (Button) myPathToolBar.getBackgroundButton();
+		Button backgroundButton = myPathToolBar.getBackgroundButton();
 		backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
