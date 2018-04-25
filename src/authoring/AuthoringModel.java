@@ -205,7 +205,7 @@ public class AuthoringModel {
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
 		attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
-		//System.out.println("attribute val: " + attributeValue);
+		System.out.println("attribute val: " + attributeValue);
 		//System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 	    }
 	}
