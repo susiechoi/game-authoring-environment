@@ -133,7 +133,7 @@ public class GenericModel {
 	    Projectile towerProjectile = generateGenericProjectile(name);
 	    Launcher towerLauncher = generateGenericLauncher(towerProjectile);
 	    Tower newTower = new TowerBuilder().construct(
-		    myDefaultName, 
+		    name, 
 		    myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage"), 
 		    towerSize, 
 		    Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealth")), 

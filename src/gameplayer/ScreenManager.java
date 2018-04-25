@@ -116,8 +116,8 @@ public class ScreenManager extends View {
 
 	}
 
-	public void updateHealth(Integer newHealth) {
-		GAME_SCREEN.updateHealth(newHealth);
+	public void updateHealth(double myHealth) {
+		GAME_SCREEN.updateHealth(myHealth);
 	}
 
 	public void updateScore(Integer newScore) {

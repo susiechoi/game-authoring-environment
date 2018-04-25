@@ -4,6 +4,7 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
 import java.awt.Point;
@@ -33,7 +34,9 @@ public class PlayState implements GameData {
     private double UNIVERSAL_TIME;
     private int count;
     private int myScore;
+    private Settings mySettings; 
     private double myResources;
+    private double myHealth; 
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
@@ -50,7 +53,7 @@ public class PlayState implements GameData {
      * @param resources
      * @param universalTime
      */
-    public PlayState(Mediator mediator, List<Level> levels, int score, double resources, double universalTime) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -58,8 +61,10 @@ public class PlayState implements GameData {
 	myEnemyManager = new EnemyManager();
 	isPaused = false;
 	myScore = score;
-	myResources = resources;
+	myResources = settings.startingMoney();
+	myHealth = settings.startingHealth();
 	myMediator.updateCurrency(myResources);
+	myMediator.updateHealth(myHealth);
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
@@ -110,6 +115,11 @@ public class PlayState implements GameData {
 	    updateScore(toBeRemoved);
 	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	    spawnEnemies();
+	    if (count % 120 == 0) {
+		System.out.println("Spawning enemy!");
+		spawnEnemies();
+	    }
+	    myEnemyManager.moveEnemies(elapsedTime);
 	}
 	handleCollisions(elapsedTime);
     }
@@ -225,7 +235,11 @@ public class PlayState implements GameData {
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
 	myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
-
     }
+    
+    public String getStyling() throws MissingPropertiesException {
+    	return mySettings.getCSSTheme();
+    }
+       
 }
 

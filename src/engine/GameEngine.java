@@ -41,6 +41,7 @@ public class GameEngine {
 
 	public void setPlayState(PlayState p) {
 		myPlayState = p;
+		
 	}
 
 	public PlayState getPlayState() {

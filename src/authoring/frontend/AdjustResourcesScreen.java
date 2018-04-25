@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,6 +23,7 @@ import javafx.scene.text.Text;
 public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String DEFAULT_CSS_STYLES = "src/styling/CurrentCSS.properties";
+	public static final String OBJECT_TYPE = "Settings";
 	
     	private TextField myGameNameEntry;
 	private Slider myStartingHealthSlider;
@@ -48,10 +50,16 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		HBox promptGameName = getUIFactory().addPromptAndSetupHBox("", myGameNameEntry, getErrorCheckedPrompt("GameName"));
 		vb.getChildren().add(promptGameName);	
 		myStartingHealthSlider = getUIFactory().setupSlider("startingHealth", 100);
+		myStartingHealthSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, "", "myStartingHealth", newValue);
+		});
 		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", myStartingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
 		vb.getChildren().add(startingHealth);
 
 		myStartingCurrencySlider = getUIFactory().setupSlider("startingCurrency", 999);
+		myStartingCurrencySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+			getView().setObjectAttribute(OBJECT_TYPE, "", "myStartingMoney", newValue);
+		});
 		HBox startingCurrency = getUIFactory().setupSliderWithValue("startingCurrency", myStartingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
 		vb.getChildren().add(startingCurrency);
 
@@ -63,13 +71,17 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		}
 		myCSSFilenameChooser = getUIFactory().makeTextDropdown("", cssOptions);
 		vb.getChildren().add(getUIFactory().addPromptAndSetupHBox("", myCSSFilenameChooser, getErrorCheckedPrompt("CSS")));
+		myCSSFilenameChooser.addEventHandler(ActionEvent.ACTION, e -> {
+			getView().setObjectAttribute(OBJECT_TYPE, "", "myCSSTheme", myCSSFilenameChooser.getSelectionModel().getSelectedItem()); 
+		});
 		
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 		    	setSaved();
-			getView().makeResources(myGameNameEntry.getText(), myStartingHealthSlider.getValue(), myStartingCurrencySlider.getValue(), myCSSFilenameChooser.getSelectionModel().getSelectedItem());
-			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
+		    	getView().setGameName(myGameNameEntry.getText());
+		    	getView().setObjectAttribute(OBJECT_TYPE, "", "myGameName", myGameNameEntry.getText());
+		    	getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		

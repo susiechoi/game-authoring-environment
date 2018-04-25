@@ -99,6 +99,9 @@ public class GamePanel extends Panel{
 	PathMaker pathMaker = new PathMaker();
 	GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize);
 	//	setGridConstraints(grid, imageMap);
+	if (spriteAdd == null) {
+	    makePanel();
+	}
 	spriteAdd.getChildren().add(grid);
     }
 
