@@ -3,7 +3,12 @@ package gameplayer.panel;
 
 import gameplayer.screen.GameScreen;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
+import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 
 public class ScorePanel extends Panel {
@@ -17,7 +22,13 @@ public class ScorePanel extends Panel {
 	private Label ScoreText;
 	private Label LevelText;
 	private Label HealthText;
-
+	
+	private NumberAxis myX; 
+	private NumberAxis myY;
+	private LineChart<Number, Number> myLineChart; 
+	private XYChart.Series mySeries; 
+	private int myXIncrement; 
+	
 	public ScorePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
 		SCORE = 0;
@@ -28,19 +39,29 @@ public class ScorePanel extends Panel {
 		ScoreText = new Label("Score: " + SCORE);
 		LevelText = new Label("Level " + LEVEL);
 		HealthText = new Label("+" + HEALTH);
+		
+		setupScoreGraphing();
+	}
+	
+	private void setupScoreGraphing() {
+		Stage graphingStage = new Stage(); 
+		myX = new NumberAxis();
+		myY = new NumberAxis(); 
+		myLineChart = new LineChart<Number, Number>(myX, myY);
+		mySeries = new XYChart.Series<>(); 
+		myLineChart.getData().add(mySeries); 
+		Scene graphingScene = new Scene(myLineChart, 800, 600);
+		graphingStage.setScene(graphingScene);
+		graphingStage.show();
 	}
 
 
 	@Override
 	public void makePanel() {
-
-
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
-
 		LevelText.setMaxWidth(Double.MAX_VALUE);
-
 		HealthText.setMaxWidth(Double.MAX_VALUE);
-
+		
 		HBox panelRoot = new HBox();
 
 		HBox.setHgrow(ScoreText, Priority.ALWAYS);
@@ -55,6 +76,8 @@ public class ScorePanel extends Panel {
 	}
 
 	public void updateScore(Integer newScore) {
+		myXIncrement++; 
+		mySeries.getData().add(new XYChart.Data(myXIncrement, newScore));
 		ScoreText.setText("Score: " + newScore);
 	}
 
