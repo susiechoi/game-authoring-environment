@@ -21,6 +21,7 @@ public class Driver extends Application {
      * 
      * @param stage: Primary stage to attach all scenes
      */
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 	primaryStage.setTitle(DEFAULT_WINDOW_TITLE);
