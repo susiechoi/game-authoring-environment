@@ -245,7 +245,7 @@ public class Mediator {
 	}
 
 	public String getStyling() {
-		String styling = ""; 
+		String styling = null; 
 		if (myGameEngine.getPlayState() != null) {
 			try {
 				styling = myGameEngine.getPlayState().getStyling();

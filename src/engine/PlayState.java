@@ -196,7 +196,6 @@ public class PlayState implements GameData {
     }
     
     public String getStyling() throws MissingPropertiesException {
-    	System.out.println("HERE");
     	return mySettings.getCSSTheme();
     }
        

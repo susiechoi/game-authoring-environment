@@ -84,7 +84,6 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-		rootPane.getStylesheets().add(MEDIATOR.getStyling());
 		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
@@ -93,6 +92,12 @@ public class GameScreen extends Screen {
 		GAME_PANEL.towerSelected(tower);
 	}
 
+//	public void setStyling() {
+//		String style = MEDIATOR.getStyling();
+//		if (style != null) {
+//			rootPane.getStylesheets().add(style);
+//		}
+//	}
 
 	@Override
 	protected View getView() {
@@ -127,7 +132,7 @@ public class GameScreen extends Screen {
 		else if(control.equals("quit")) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 			try {
 				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
-						.loadInstructionScreen();
+				.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
