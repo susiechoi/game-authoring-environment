@@ -18,7 +18,7 @@ public class FireRateProperty extends UpgradeProperty {
      * @param fireRate: Rate of fire
      */
     public FireRateProperty(double cost, double value, double fireRate) {
-	super(cost, 10, fireRate);
+	super(cost, value, fireRate);
     }
 
 }
