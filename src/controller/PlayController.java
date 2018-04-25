@@ -70,6 +70,7 @@ public class PlayController {
 		List<Level> levels = model.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, 
 			model.startingMoney(), model.startingHealth(), 0);
+		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize());
 		myScreenManager.loadGameScreenNew();
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
