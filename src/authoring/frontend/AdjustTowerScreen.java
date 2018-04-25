@@ -64,24 +64,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	private void makeTowerComponents(VBox vb) {
 
-		HBox towerImageSelect = new HBox();
-		ComboBox<String> towerImageDropdown = new ComboBox<String>();
-		ImageView imageDisplay = new ImageView(); 
-		try {
-			towerImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TOWER_IMAGE_PREFIX+getView().getTheme()+TOWER_IMAGE_SUFFIX));
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
-		myImageDropdown = towerImageDropdown;  
-		myImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
-			getView().setObjectAttribute("Tower", myObjectName, "myImage", myImageDropdown.getSelectionModel().getSelectedItem()); 
-		});
-		try {
-			towerImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", TOWER_IMAGE_PREFIX+getView().getTheme()+TOWER_IMAGE_SUFFIX, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), towerImageDropdown, imageDisplay);
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
+		HBox towerImageSelect = makeImageSelector("Tower", TOWER_IMAGE_PREFIX + getView().getTheme() + TOWER_IMAGE_SUFFIX);
 		vb.getChildren().add(towerImageSelect);
 
 
