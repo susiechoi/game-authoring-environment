@@ -8,6 +8,8 @@ import javafx.beans.value.ChangeListener;
 
 import java.util.List;
 import java.util.Map;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
@@ -226,5 +228,26 @@ public class Mediator {
     public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
 	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
+    
+	/**
+	 * Ends game loop in case that user wants to return to authoring/editing the game
+	 * @author susiechoi
+	 */
+	public void endLoop() {
+		myGameEngine.endLoop();
+	}
+
+	public String getStyling() {
+		String styling = null; 
+		if (myGameEngine.getPlayState() != null) {
+			try {
+				styling = myGameEngine.getPlayState().getStyling();
+			} catch (MissingPropertiesException e) {
+				myScreenManager.loadErrorAlertToStage("NoFile");
+			}
+		}
+		return styling; 
+	}
+
 }
 

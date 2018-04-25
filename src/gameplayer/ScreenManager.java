@@ -4,10 +4,7 @@ import frontend.MainScreen;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
@@ -124,8 +121,6 @@ public class ScreenManager extends View {
 
 	}
 
-	
-
 	public void updateLevelCount(Integer newLevelCount) {
 		GAME_SCREEN.updateLevel(newLevelCount);
 	}
@@ -180,7 +175,6 @@ public class ScreenManager extends View {
 	public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 		GAME_SCREEN.setAvailbleTowers(availableTowers);
 	}
-
 
 
 

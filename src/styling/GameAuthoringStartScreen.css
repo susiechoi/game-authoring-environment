@@ -29,8 +29,6 @@ TextField {
 
 
 VBox {
-	-fx-background-image: url("file:images/poly.png");
-	-fx-background-size: cover;
 	-fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;
