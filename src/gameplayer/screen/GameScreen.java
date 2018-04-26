@@ -30,9 +30,8 @@ import sound.ITRTSoundFactory;
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
+	private static final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
 
-	private final UIFactory UIFACTORY;
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
 	private TowerInfoPanel TOWER_INFO_PANEL;
@@ -51,7 +50,6 @@ public class GameScreen extends Screen {
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
-		UIFACTORY = new UIFactory();
 		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
@@ -131,13 +129,16 @@ public class GameScreen extends Screen {
 
 	//TODO implement reflection//rest of controls
 	public void controlTriggered(String control) {
-		if(control.equals("play"))
+		if(control.equals("play")) {
 			MEDIATOR.play();
-		else if(control.equals("pause"))
+		}
+		else if(control.equals("pause")) {
 			MEDIATOR.pause();
-		else if(control.equals("speedup"))
+		}
+		else if(control.equals("speedup")) {
 			MEDIATOR.fastForward(10);
-		else if(control.equals("quit")) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
+		}
+		else if(control.equals("quit")) {//WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 			try {
 				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
 						.loadInstructionScreen();
@@ -145,6 +146,7 @@ public class GameScreen extends Screen {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		else if (control.equals("edit")) { // Susie added this
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());

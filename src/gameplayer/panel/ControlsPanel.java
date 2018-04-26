@@ -24,7 +24,7 @@ public class ControlsPanel extends Panel{
 	private final PromptReader PROMPTS;
 	private final GameScreen GAME_SCREEN;
 	private final UIFactory UIFACTORY;
-	private final String CONTROL_BUTTON_FILEPATH = "images/ControlPanelImages/ControlButtonNames.properties";
+	private static final String CONTROL_BUTTON_FILEPATH = "images/ControlPanelImages/ControlButtonNames.properties";
 	private final PropertiesReader PROP_READ;
 
 	public ControlsPanel(GameScreen gameScreen, PromptReader promptReader) {
@@ -55,14 +55,18 @@ public class ControlsPanel extends Panel{
 			Map<String,Image> controlsMap = PROP_READ.keyToImageMap(CONTROL_BUTTON_FILEPATH, DEFAULT_CONTROL_BUTTON_SIZE, DEFAULT_CONTROL_BUTTON_SIZE);
 			int controlsSplit = controlsMap.keySet().size()/2;
 			int count = 0;
-			for(String control : controlsMap.keySet()) {
-				Button controlButton = UIFACTORY.makeImageButton("controlButton", controlsMap.get(control));
-				controlButton.setOnMouseClicked((arg0) -> GAME_SCREEN.controlTriggered(control));
-				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control+"Tooltip")));
-				if(count <controlsSplit)
+
+
+			for(Map.Entry<String,Image> control: controlsMap.entrySet()) {
+				Button controlButton = UIFACTORY.makeImageButton("controlButton", controlsMap.get(control.getKey()));
+				controlButton.setOnMouseClicked(arg0 -> GAME_SCREEN.controlTriggered(control.getKey()));
+				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control.getKey()+"Tooltip")));
+				if(count <controlsSplit) {
 					topControls.getChildren().add(controlButton);
-				else
+				}
+				else {
 					botControls.getChildren().add(controlButton);
+				}
 				count++;
 			}
 		} catch (MissingPropertiesException e) {
