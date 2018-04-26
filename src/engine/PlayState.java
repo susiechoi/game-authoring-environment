@@ -144,8 +144,10 @@ public class PlayState implements GameData {
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
 	    myScore.set(myScore.get() + sprite.getPointValue());
-	    if(sprite.getClass().getName().equals("Enemy")) {
+	    System.out.println("Class is " + sprite.getClass().getName());
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
 		Enemy enemy = (Enemy) sprite;
+		System.out.print("in here");
 		myResources.set(myResources.get() + enemy.getPointValue());;
 	    }
 	}
