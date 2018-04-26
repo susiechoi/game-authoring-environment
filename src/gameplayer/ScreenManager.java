@@ -61,7 +61,7 @@ public class ScreenManager extends View {
 	//private final FileIO FILE_READER;
 
 	public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
-		super(stageManager);
+		super(stageManager, language);
 		STAGE_MANAGER = stageManager;
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;
@@ -71,7 +71,7 @@ public class ScreenManager extends View {
 	}
 
 	public ScreenManager(StageManager stageManager, String language) {
-		super(stageManager);
+		super(stageManager, language);
 		STAGE_MANAGER = stageManager;
 		PROMPTS = new PromptReader(language, this);
 		findSettings();
@@ -107,7 +107,7 @@ public class ScreenManager extends View {
 	}
 
 	public void loadMainScreen() {
-		MainScreen mainScreen = new MainScreen(STAGE_MANAGER);
+		MainScreen mainScreen = new MainScreen(STAGE_MANAGER, this);
 	}
 
 	public void loadGameScreenContinuation() {
@@ -131,7 +131,7 @@ public class ScreenManager extends View {
 
 
 	public void toMain() {
-		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER).getScreen());
+		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER, this).getScreen());
 	}
 
 	public StageManager getStageManager() {
