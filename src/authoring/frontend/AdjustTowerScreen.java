@@ -65,7 +65,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	private void makeTowerComponents(VBox vb) {
 
-		HBox towerImageSelect = makeImageSelector("Tower", TOWER_IMAGE_PREFIX + getView().getTheme() + TOWER_IMAGE_SUFFIX);
+		HBox towerImageSelect = makeImageSelector("Tower","", TOWER_IMAGE_PREFIX + getView().getTheme() + TOWER_IMAGE_SUFFIX);
 		vb.getChildren().add(towerImageSelect);
 
 
