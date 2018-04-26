@@ -27,7 +27,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 
 	protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
 	    	super(view);
-	    	setSaved();
 	}
 
 	
@@ -63,8 +62,10 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 				currentModel).demoPlay(currentModel.getGame()); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
 		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
+		saveButton.setDisable(false);
 		saveButton.setOnAction(e -> {
 		    	setSaved();
+		    	saveButton.setDisable(true);
 			getView().writeToFile();
 		});
 		Button mainButton = setupBackButton();
