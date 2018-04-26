@@ -53,14 +53,14 @@ public class InstructionScreen extends Screen {
 		//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenContinuation());
 		Button backButton = UIFACTORY.setupBackButton(e->{
 			SCREEN_MANAGER.toMain();
-		}, PROMPTS.resourceDisplayText("Cancel")); 
+		}, PROMPTS.resourceDisplayText("Cancel"));
 
-		VBox center = new VBox(title, allGames, continueButt);
+		VBox center = new VBox(title, allGames, continueButt, backButton);
 		center.setAlignment(Pos.CENTER);
 		center.setMaxWidth(Double.MAX_VALUE);
 		VBox.setVgrow(center, Priority.ALWAYS);
 
-		rootBox.getChildren().addAll(center);
+		rootBox.getChildren().add(center);
 		return rootBox;
 	}
 

@@ -64,7 +64,7 @@ public class AuthoredGame implements GameData {
 	return mySettings.startingMoney();
     }
     
-    protected Settings getSettings() {
+    public Settings getSettings() {
 	return mySettings;
     }
     
