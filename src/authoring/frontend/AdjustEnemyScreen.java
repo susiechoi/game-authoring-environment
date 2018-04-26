@@ -41,7 +41,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	protected Parent populateScreenWithFields() {
 		VBox vb = new VBox(); 	
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeEnemy")));
-		HBox enemyImageSelect = makeImageSelector("Enemy", ENEMY_IMAGE_PREFIX + getView().getTheme() + ENEMY_IMAGE_SUFFIX);
+		HBox enemyImageSelect = makeImageSelector("Enemy", "", ENEMY_IMAGE_PREFIX + getView().getTheme() + ENEMY_IMAGE_SUFFIX);
 		vb.getChildren().add(enemyImageSelect);
 
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  getMyMaxSpeed()); 
