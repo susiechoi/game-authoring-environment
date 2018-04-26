@@ -183,7 +183,7 @@ public class ScreenManager extends View {
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
-		SimpleIntegerProperty myLives) {
+		IntegerProperty myLives) {
 	    GAME_SCREEN.attachListeners(myCurrency, myScore, myLives);	    
 	}
 }

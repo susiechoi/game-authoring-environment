@@ -225,7 +225,7 @@ public class Mediator {
      * @param myScore	integer property for score
      * @param simpleIntegerProperty	 integer property for health
      */
-    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
 	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
     

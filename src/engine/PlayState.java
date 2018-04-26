@@ -65,7 +65,7 @@ public class PlayState implements GameData {
 	myScore = new SimpleIntegerProperty(score);
 	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
 	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
-	myMediator.addIntegerProperties(myResources, myScore, new SimpleIntegerProperty(score));
+	myMediator.addIntegerProperties(myResources, myScore, myHealth);
 	mySettings=settings;
 
 	UNIVERSAL_TIME = universalTime;
@@ -86,7 +86,8 @@ public class PlayState implements GameData {
 		spawnEnemies();
 	    }
 	    List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-	    // TODO loop through dead Enemies list and deduct appropriate health from player
+	    System.out.println(deadEnemies.size());
+	    updateHealth(deadEnemies);
 	    myMediator.removeListOfSpritesFromScreen(deadEnemies);
 	}
 	handleCollisions(elapsedTime);
@@ -147,12 +148,21 @@ public class PlayState implements GameData {
 
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
-
 	    myScore.set(myScore.get() + sprite.getPointValue());
-        		if(sprite.getClass().getName().equals("Enemy")) {
-        		    Enemy enemy = (Enemy) sprite;
-        		    myResources.set(myResources.get() + enemy.getPointValue());;
-        		}
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		myResources.set(myResources.get() + enemy.getPointValue());
+	    }
+	}
+    }
+    
+    private void updateHealth(List<Sprite> toBeRemoved) {
+	for(Sprite sprite : toBeRemoved) {
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		myHealth.set(myHealth.get() 
+			- Double.valueOf(Math.round(enemy.getDamage())).intValue());
+	    }
 	}
     }
 

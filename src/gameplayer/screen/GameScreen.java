@@ -177,7 +177,7 @@ public class GameScreen extends Screen {
 
 
 
-	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
 		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
 		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
 		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
