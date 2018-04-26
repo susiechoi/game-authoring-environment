@@ -18,70 +18,73 @@ import javafx.scene.text.Text;
  *
  */
 public class MainScreen extends Screen {
-    //TODO re-factor style sheets to abstract
-    public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
-   // private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-//    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
-    private final String DEFAULT_LANGUAGE = "English";
+	//TODO re-factor style sheets to abstract
+	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
+	// private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+	//    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+	private final String DEFAULT_LANGUAGE = "English";
 
-    private final UIFactory UIFACTORY;
-    private final StageManager STAGE_MANAGER;
+	private final UIFactory UIFACTORY;
+	private final StageManager STAGE_MANAGER;
 
-    public MainScreen(StageManager stageManager) {
-	UIFACTORY = new UIFactory();
-	STAGE_MANAGER = stageManager;
-	setStyleSheet(DEFAULT_CSS);
-    }
+	public MainScreen(StageManager stageManager) {
+		UIFACTORY = new UIFactory();
+		STAGE_MANAGER = stageManager;
+		setStyleSheet(DEFAULT_CSS);
+	}
 
-    /**
-     * Creates all UI elements (buttons) for the screen to allow the user to choose an option.
-     * @see frontend.Screen#makeScreenWithoutStyling()
-     */
-    @Override
-    
-    //TODO all text should be read from language properties files
-    public Parent makeScreenWithoutStyling() {
-	VBox rootBox = new VBox();
-	Text title = getUIFactory().makeScreenTitleText("Welcome");
-	Button newAuthorButt = getUIFactory().makeTextButton("editbutton", "Author A Game");
-	newAuthorButt.setOnAction(click->{
-	    new AuthoringController(STAGE_MANAGER,DEFAULT_LANGUAGE);
-	});
-	newAuthorButt.setOnMouseClicked((argo0) -> new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE));
+	/**
+	 * Creates all UI elements (buttons) for the screen to allow the user to choose an option.
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
+	@Override
+	public Parent makeScreenWithoutStyling() {
+		VBox rootBox = new VBox();
+		Text title = getUIFactory().makeScreenTitleText("Welcome");
+		Button newAuthorButt = getUIFactory().makeTextButton("editbutton", "Author A Game");
+		newAuthorButt.setOnAction(click->{
+			new AuthoringController(STAGE_MANAGER,DEFAULT_LANGUAGE);
+		});
+		newAuthorButt.setOnMouseClicked((argo0) -> new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE));
 
-	Button newGameButt = getUIFactory().makeTextButton("editbutton", "Load/Play A Game");
-	newGameButt.setOnAction(click->{
-	    try {
-		new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE, new AuthoringModel())
-		.loadInstructionScreen();
-	    } catch (MissingPropertiesException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	});
+		Button newGameButt = getUIFactory().makeTextButton("editbutton", "Load/Play A Game");
+		newGameButt.setOnAction(click->{
+			try {
+				new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE, new AuthoringModel())
+				.loadInstructionScreen();
+			} catch (MissingPropertiesException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 
-//	HBox leftCenter = new HBox(newAuthorButt);
-//	leftCenter.setAlignment(Pos.CENTER);
-//	leftCenter.setMaxWidth(Double.MAX_VALUE);
-//	HBox rightCenter = new HBox(newGameButt);
-//	rightCenter.setAlignment(Pos.CENTER);
-//	rightCenter.setMaxWidth(Double.MAX_VALUE);
-//
-//	HBox buttonBox = new HBox(leftCenter,rightCenter);
-//	buttonBox.setAlignment(Pos.CENTER);
-//	HBox.setHgrow(leftCenter, Priority.ALWAYS);
-//	HBox.setHgrow(rightCenter, Priority.ALWAYS);
+		Button visualizations = getUIFactory().makeTextButton("", "Review Visualizations");
+		visualizations.setOnAction(click-> {
+			STAGE_MANAGER.switchScreen(new VisualizationsScreen().getScreen());
+		});
 
-	rootBox.getChildren().addAll(title, newAuthorButt, newGameButt);
+		//	HBox leftCenter = new HBox(newAuthorButt);
+		//	leftCenter.setAlignment(Pos.CENTER);
+		//	leftCenter.setMaxWidth(Double.MAX_VALUE);
+		//	HBox rightCenter = new HBox(newGameButt);
+		//	rightCenter.setAlignment(Pos.CENTER);
+		//	rightCenter.setMaxWidth(Double.MAX_VALUE);
+		//
+		//	HBox buttonBox = new HBox(leftCenter,rightCenter);
+		//	buttonBox.setAlignment(Pos.CENTER);
+		//	HBox.setHgrow(leftCenter, Priority.ALWAYS);
+		//	HBox.setHgrow(rightCenter, Priority.ALWAYS);
 
-	rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-//	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
-	return rootBox;
-    }
+		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt, visualizations);
 
-    @Override
-    protected View getView() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+		rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+		//	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
+		return rootBox;
+	}
+
+	@Override
+	protected View getView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

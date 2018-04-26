@@ -155,6 +155,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * Upgrades all aspects of a tower
      */
     public double upgrade(double balance) {
+	System.out.println("upgrade is called");
 	balance -= upgradeHealth(balance);
 	balance -= upgradeRateOfFire(balance);
 	balance = upgradeDamage(balance);

@@ -117,6 +117,7 @@ public class GameEngine {
 
 	}
 	
+
 	/**
 	 * Stops game loop for when user wants to return to editing/authoring the game
 	 * @author susiechoi
