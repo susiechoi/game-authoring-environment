@@ -64,10 +64,20 @@ public class PlayState implements GameData {
 		availTowers.addAll(currentLevel.getTowers().values());
 		//System.out.print("Available towers: ");
 		System.out.println(currentLevel.getTowers());
+		for (Level level: levels) {
+		    for (String enemyString:level.getAllEnemies()) {
+			Enemy myEnemy = level.getEnemies().get(enemyString);
+			myEnemy.updateImage();
+			
+		    }
+		    for (String towerString:level.getAllTowers()) {
+			Tower myTower = level.getTowers().get(towerString);
+			myTower.updateImage();
+		    }
+		}
 		myMediator.setAvailableTowers(availTowers);
 		myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 		myEnemyManager.addToActiveList(new Enemy("Ryan", "images/robot.png", 100));
-
 	}
 
 	public void update(double elapsedTime) {

@@ -1,5 +1,6 @@
 package xml.serialization;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ImageWrapper implements ImageViewSerializer {
@@ -26,9 +27,9 @@ public class ImageWrapper implements ImageViewSerializer {
 
     @Override
     public ImageView toImageView() {
-	ImageView image = new ImageView(myImagePath);
-	image.setFitHeight(height);
-	image.setFitWidth(width);
+	ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myImagePath), 50, 50, true, true));
+//	image.setFitHeight(height);
+//	image.setFitWidth(width);
 	image.setX(x);
 	image.setY(y);
 	image.setVisible(visible);

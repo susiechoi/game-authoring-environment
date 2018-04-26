@@ -13,9 +13,9 @@ import javafx.scene.image.ImageView;
 public interface ImageViewSerializer {
 
     /**
-     * Serializes an ImageView (i.e. image filepath, x/y coordinates, etc.) to fields that can be serialized by XStream
+     * Serializes a ImageView (i.e. image filepath, x/y coordinates, etc.) to fields that can be serialized by XStream
      * 
-     * @param image
+     * @param image the ImageView to be serialized
      */
     public void fromImageView(ImageView image);
     
