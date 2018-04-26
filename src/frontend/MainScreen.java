@@ -2,6 +2,7 @@ package frontend;
 
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
+import authoring.frontend.GraphMenuScreen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
 import frontend.Screen;
@@ -60,7 +61,7 @@ public class MainScreen extends Screen {
 
 		Button visualizations = getUIFactory().makeTextButton("", "Review Visualizations");
 		visualizations.setOnAction(click-> {
-			STAGE_MANAGER.switchScreen(new VisualizationsScreen().getScreen());
+			STAGE_MANAGER.switchScreen(new GraphMenuScreen().getScreen());
 		});
 
 		//	HBox leftCenter = new HBox(newAuthorButt);

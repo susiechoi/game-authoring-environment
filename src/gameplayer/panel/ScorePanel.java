@@ -4,6 +4,8 @@ package gameplayer.panel;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import gameplayer.screen.GameScreen;
 import javafx.scene.control.Label;
@@ -12,7 +14,7 @@ import javafx.scene.layout.Priority;
 
 public class ScorePanel extends Panel {
 
-	public static final String DEFAULT_DATAPOINTS_FILENAME = "graphing/scoregraph";
+	public static final String DEFAULT_DATAPOINTS_FILENAME = "graphing/scoregraph_";
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
 	private final GameScreen GAME_SCREEN;
@@ -36,9 +38,13 @@ public class ScorePanel extends Panel {
 		ScoreText = new Label("Score: " + SCORE);
 		LevelText = new Label("Level " + LEVEL);
 		HealthText = new Label("+" + HEALTH);
+		
+		Calendar c = Calendar.getInstance();
+	    SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy_hh:mm:ss");
+	    String formattedDate = df.format(c.getTime());
 
 		try {
-			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILENAME), true);
+			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILENAME+formattedDate), true);
 		} catch (IOException e) {
 			GAME_SCREEN.loadErrorScreen("NoFile");
 		}

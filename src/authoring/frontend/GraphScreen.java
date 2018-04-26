@@ -1,17 +1,24 @@
-package frontend;
+package authoring.frontend;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import frontend.Screen;
+import frontend.View;
 import javafx.scene.Parent;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
-public class VisualizationsScreen extends Screen {
+public class GraphScreen extends Screen {
 
-	public static final String DEFAULT_GRAPHS_FILEPATH = "graphing/scoregraph";
+	private String myGraphFilepath; 
+	
+	public GraphScreen(String filepath) {
+		myGraphFilepath = filepath; 
+	}
 
 	@Override
 	public Parent makeScreenWithoutStyling() {		
@@ -24,7 +31,7 @@ public class VisualizationsScreen extends Screen {
 
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(DEFAULT_GRAPHS_FILEPATH));
+			br = new BufferedReader(new FileReader(myGraphFilepath));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
