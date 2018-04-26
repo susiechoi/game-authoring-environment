@@ -3,7 +3,6 @@ package gameplayer.panel;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import gameplayer.screen.GameScreen;
-import frontend.PropertiesReader;
 import frontend.UIFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

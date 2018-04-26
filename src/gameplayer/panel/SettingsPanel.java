@@ -2,15 +2,12 @@ package gameplayer.panel;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.control.Button;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import sound.ITRTSoundFactory;
-import javafx.scene.image.ImageView;
-
 import java.util.Map;
 import java.util.Map.Entry;
 
