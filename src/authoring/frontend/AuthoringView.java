@@ -150,6 +150,10 @@ public class AuthoringView extends View {
 			    	AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name.get(0));
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
+			else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
+				Screen nextScreen = (Screen) constructor.newInstance(myStageManager, this);
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
 		}
 		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
 			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
@@ -159,10 +163,6 @@ public class AuthoringView extends View {
 			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
 			myStageManager.switchScreen(nextScreen.getScreen());
 		} 
-		else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
-			Screen nextScreen = (Screen) constructor.newInstance(myStageManager);
-			myStageManager.switchScreen(nextScreen.getScreen());
-		}
 		else {
 			throw new MissingPropertiesException("");
 		}
