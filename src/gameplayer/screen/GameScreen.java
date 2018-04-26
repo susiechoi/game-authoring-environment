@@ -219,7 +219,7 @@ public class GameScreen extends Screen {
 	}
 
 	private void settingsClickedOn() {
-		SETTINGS_PANEL = new SettingsPanel(this, PROMPTS);
+		SETTINGS_PANEL = new SettingsPanel(this);
 		displayPane.setBottom(SETTINGS_PANEL.getPanel());
 	}
 

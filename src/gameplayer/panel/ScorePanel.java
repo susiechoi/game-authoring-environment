@@ -1,7 +1,6 @@
 
 package gameplayer.panel;
 
-import gameplayer.screen.GameScreen;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Priority;

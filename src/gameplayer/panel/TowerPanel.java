@@ -4,7 +4,6 @@ package gameplayer.panel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.Button;
@@ -15,7 +14,6 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.Map;
 
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
