@@ -138,6 +138,11 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public String getName() {
 	return myName; 
     }
+    
+    public int getMoney() {
+	// TODO Auto-generated method stub
+	return 0;
+    }
 
     /**
      * Handles returning an enemy's damage after hitting a tower
@@ -203,7 +208,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public void setAngle(double a) {
 	pathAngle = a;
     }
-
     public void updateProperties() {
 		myHealth = new HealthProperty(0, 0, myInitialHealth);
 		myDamage = new DamageProperty(0, 0, myHealthImpact); 
