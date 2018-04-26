@@ -14,10 +14,12 @@ import javafx.scene.chart.XYChart;
 
 public class GraphScreen extends Screen {
 
+	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
 	private String myGraphFilepath; 
 	
 	public GraphScreen(String filepath) {
 		myGraphFilepath = filepath; 
+		setStyleSheet(DEFAULT_CSS);
 	}
 
 	@Override

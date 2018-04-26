@@ -58,12 +58,7 @@ public class MainScreen extends Screen {
 				e.printStackTrace();
 			}
 		});
-
-		Button visualizations = getUIFactory().makeTextButton("", "Review Visualizations");
-		visualizations.setOnAction(click-> {
-			STAGE_MANAGER.switchScreen(new GraphMenuScreen().getScreen());
-		});
-
+		
 		//	HBox leftCenter = new HBox(newAuthorButt);
 		//	leftCenter.setAlignment(Pos.CENTER);
 		//	leftCenter.setMaxWidth(Double.MAX_VALUE);
@@ -76,7 +71,7 @@ public class MainScreen extends Screen {
 		//	HBox.setHgrow(leftCenter, Priority.ALWAYS);
 		//	HBox.setHgrow(rightCenter, Priority.ALWAYS);
 
-		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt, visualizations);
+		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt);
 
 		rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		//	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);

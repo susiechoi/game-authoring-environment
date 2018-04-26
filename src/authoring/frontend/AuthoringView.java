@@ -184,6 +184,10 @@ public class AuthoringView extends View {
 				Screen nextScreen = (Screen) constructor.newInstance(myStageManager);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
+			else if (constructor.getParameterTypes().length == 1 && constructor.getParameterTypes()[0].equals(String.class)) { // graph menu screen
+				Screen nextScreen = (Screen) constructor.newInstance(name);
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
 			else {
 				throw new MissingPropertiesException("");
 			}
@@ -334,7 +338,7 @@ public class AuthoringView extends View {
 		return myCSSChanged; 
 	}
 
-	protected String getGameName() {
+	public String getGameName() {
 		return myModel.getGameName();
 	}
 

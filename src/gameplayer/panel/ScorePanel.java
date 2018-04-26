@@ -14,7 +14,7 @@ import javafx.scene.layout.Priority;
 
 public class ScorePanel extends Panel {
 
-	public static final String DEFAULT_DATAPOINTS_FILENAME = "graphing/scoregraph_";
+	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
 	private final GameScreen GAME_SCREEN;
@@ -42,9 +42,9 @@ public class ScorePanel extends Panel {
 		Calendar c = Calendar.getInstance();
 	    SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy_hh:mm:ss");
 	    String formattedDate = df.format(c.getTime());
-
+	   
 		try {
-			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILENAME+formattedDate), true);
+			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILEPATH+GAME_SCREEN.getGameName()+"_"+formattedDate), true);
 		} catch (IOException e) {
 			GAME_SCREEN.loadErrorScreen("NoFile");
 		}
@@ -74,7 +74,11 @@ public class ScorePanel extends Panel {
 
 		myScoreWriter.write(Integer.toString(myScoreXIncrement)+" ");
 		myScoreWriter.write(Integer.toString(newScore)+"\n");
-
+		
+		if (myScoreXIncrement % 1000 == 0) {
+			myScoreWriter.flush();
+		}
+		
 		ScoreText.setText("Score: " + newScore);
 	}
 

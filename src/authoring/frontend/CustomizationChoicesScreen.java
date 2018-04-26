@@ -111,12 +111,14 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		}
 		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
-		vbox.getChildren().add(newLevelHBox);
-		vbox.getChildren().add(hbox);
+
+		Button visualizations = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Graphs"));
+		visualizations.setOnAction(click-> {
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Graphs");
+		});
+		
+		vbox.getChildren().addAll(newLevelHBox, hbox, demoButton, saveButton, visualizations, mainButton);
 		//vbox.getChildren().add(songPrompted); TODO: change to mp3 selector and readd
-		vbox.getChildren().add(demoButton);
-		vbox.getChildren().add(saveButton);
-		vbox.getChildren().add(mainButton);
 		return vbox;
 
 	}
