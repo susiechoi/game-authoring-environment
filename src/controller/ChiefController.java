@@ -2,6 +2,7 @@ package controller;
 
 import frontend.MainScreen;
 import frontend.StageManager;
+import frontend.View;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
  * objects. 
  */
 public class ChiefController {
-    
+    public static final String DEFAULT_LANGUAGE = "English";
     private final StageManager STAGE_MANAGER;
  
     /**
@@ -32,7 +33,7 @@ public class ChiefController {
      * user input about the size of the screen.
      */
     public void start() {
-	MainScreen mainScreen  = new MainScreen(STAGE_MANAGER);
+	MainScreen mainScreen  = new MainScreen(STAGE_MANAGER, new View(STAGE_MANAGER, DEFAULT_LANGUAGE));
 	Scene scene = new Scene(mainScreen.getScreen());
 	STAGE_MANAGER.switchScene(scene);
     }

@@ -19,6 +19,9 @@ import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 
 /**
  * Handles the current state of the game, including current score, money, and lists
@@ -32,16 +35,16 @@ public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
     private int count;
-    private int myScore;
-    private Settings mySettings; 
-    private double myResources;
-    private double myHealth; 
+    private IntegerProperty myScore;
+    private IntegerProperty myResources;
+    private IntegerProperty myHealth;
+    private Settings mySettings;
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
-    private boolean isPaused;
+    private int currlvl;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -55,15 +58,17 @@ public class PlayState implements GameData {
     public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
+	currlvl = 0;
 	currentLevel = myLevels.get(0);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
-	isPaused = false;
-	myScore = score;
-	myResources = settings.startingMoney();
-	myHealth = settings.startingHealth();
-	myMediator.updateCurrency(myResources);
-	myMediator.updateHealth(myHealth);
+
+	myScore = new SimpleIntegerProperty(score);
+	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
+	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
+	myMediator.addIntegerProperties(myResources, myScore, new SimpleIntegerProperty(score));
+	mySettings=settings;
+
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
@@ -76,13 +81,10 @@ public class PlayState implements GameData {
     public void update(double elapsedTime) {
 	count++;
 	UNIVERSAL_TIME+=elapsedTime;
-	if(!isPaused) {
-	    if (count % 120 == 0) {
-		System.out.println("Spawning enemy!");
-		spawnEnemies();
-	    }
-	    myEnemyManager.moveEnemies(elapsedTime);
+	if (count % 120 == 0) {
+	    spawnEnemies();
 	}
+	myEnemyManager.moveEnemies(elapsedTime);
 	handleCollisions(elapsedTime);
     }
 
@@ -103,6 +105,7 @@ public class PlayState implements GameData {
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
     }
 
+
     private void spawnEnemies() {
 	try {
 	    if (currentLevel.getWave(0).isFinished()) {
@@ -113,6 +116,7 @@ public class PlayState implements GameData {
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
+		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
@@ -120,7 +124,7 @@ public class PlayState implements GameData {
 
 		}
 		catch (Exception e) {
-		    // do nothing, path contains no enemies
+		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
 		}
 	    }
 	}
@@ -139,14 +143,15 @@ public class PlayState implements GameData {
 
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
-	    myScore+= sprite.getPointValue();
+	    myScore.set(myScore.get() + sprite.getPointValue());
+	    System.out.println("Class is " + sprite.getClass().getName());
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		System.out.print("in here");
+		myResources.set(myResources.get() + enemy.getPointValue());;
+	    }
 	}
-	myMediator.updateScore(myScore);
     }
-
-    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-    //	myResources -= tower.upgrade(upgradeName);
-    //    }
 
     public void setLevel(int levelNumber) {
 	currentLevel = myLevels.get(levelNumber);
@@ -154,37 +159,42 @@ public class PlayState implements GameData {
 	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
     }
 
+    /**
+     * Restarts the level that you were currently on.
+     */
     public void restartLevel() {
-	// TODO Auto-generated method stub
+	clearLevel();
+	setLevel(currlvl);
     }
 
-    public void pause() {
-	isPaused = true;
+    private void clearLevel() {
+	List<Sprite> toBeRemoved = new ArrayList<>();
+	toBeRemoved.addAll(myTowerManager.getListOfActive());
+	toBeRemoved.addAll(myTowerManager.removeAllProjectiles());
+	toBeRemoved.addAll(myEnemyManager.getListOfActive());
+	myTowerManager.getListOfActive().clear();
+	myEnemyManager.getListOfActive().clear();
     }
 
-    public void play() {
-	isPaused = false;
-    }
-
+    /**
+     * Places a tower, adds to the necessary backend data structures
+     * @param location : The point on the map where the tower is added
+     * @param towerType : Type of tower
+     * @return : the front end tower
+     * @throws CannotAffordException : thrown if the user does not have enough money
+     */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	//	myResources = placedTower.purchase(myResources);
-	//	myMediator.updateCurrency(myResources);
+	myResources.set(placedTower.purchase(myResources.get()));
 	return placedTower;
     }
-
-    //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
-    //	myResources -= tower.upgrade(upgradeName);
-    //    }
-
     /**
      * Sells the tower, increments users currency, and removes it from collection and screen
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
-	myTowerManager.upgrade(tower,"rando",myResources);
-	myResources += myTowerManager.sell(tower);
-	myMediator.updateCurrency(myResources);
+	myTowerManager.upgrade(tower,"rando",myResources.get());
+	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
     }
 
@@ -195,12 +205,14 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
+	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
-    
+
+
+
     public String getStyling() throws MissingPropertiesException {
-    	return mySettings.getCSSTheme();
+	return mySettings.getCSSTheme();
     }
-       
+
 }
 
