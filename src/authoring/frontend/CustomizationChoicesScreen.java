@@ -27,7 +27,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 
 	protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
 	    	super(view);
-	    	setSaved();
 	}
 
 	
