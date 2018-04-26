@@ -62,10 +62,10 @@ public class GameEngine {
 	 * Pauses Game Loop animation so Game State stays constant
 	 * COMMENTED OUT BECAUSE THIS WOULD PAUSE THE ENTIRE GAMEENGINE NOT THE PLAYSTATE
 	 */
-	//    public void pause() {
-	//	ANIMATION.pause();
-	//
-	//    }
+	 public void pause() {
+	     ANIMATION.pause();
+	
+	 }
 
 	/**
 	 * Starts Game Loop animation, so Game State continuously loops
