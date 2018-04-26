@@ -70,9 +70,8 @@ public abstract class ShootingSprites extends Sprite{
     public List<Sprite> checkForCollision(ShootingSprites target) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
-	List<Projectile> projectiles = this.getProjectiles();
-	toBeRemoved.addAll(this.checkTowerEnemyCollision(target)); //TODO add any dead tower/enemy to toBeRemoved list
-	for (Projectile projectile: projectiles) {
+	toBeRemoved.addAll(this.checkTowerEnemyCollision(target));
+	for (Projectile projectile: this.getProjectiles()) {
 	    if(target.intersects(projectile) && !(projectile.hasHit(target))){
 		toBeRemoved.addAll(objectCollision(target, projectile)); //checks collisions between projectiles and enemy/tower
 		if (projectile.handleCollision(target)) {
@@ -103,9 +102,11 @@ public abstract class ShootingSprites extends Sprite{
      * @return
      */
     public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
+    	System.out.println("CHECK ENEMY TOWER COLLISION");
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	if (intersector.overlaps(shooter.getImageView())) { 
-	    this.handleCollision(shooter); //TODO - handle these
+		System.out.println("INTERSECTION btw tower and enemy");
+	    this.handleCollision(shooter);
 	    shooter.handleCollision(this);
 	}
 	return toBeRemoved;
@@ -205,5 +206,13 @@ public abstract class ShootingSprites extends Sprite{
     	myLauncher = launcher; 
     }
 
+    /**
+     * Returns true if this ShootingSprite is still alive
+     */
+    @Override
+    public boolean handleCollision(Sprite collider) {
+	this.myHealth.loseHealth(collider.getDamage());
+	return myHealth.isAlive();
+    }
 
 }
