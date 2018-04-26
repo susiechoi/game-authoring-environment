@@ -218,7 +218,7 @@ public class Level {
 		return waveEnemy;
 	}
 
-	protected int getNumber() {
+	public int getNumber() {
 		return myNumber; 
 	}
 

@@ -218,6 +218,10 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 //	System.out.println("enemy image: " + myImage);
 //	updateImage(myImage);
 //    }
+    @Override
+    public void loseHealth(double damage) {
+    	myHealth.loseHealth(damage);
+    }
 
 
 }
