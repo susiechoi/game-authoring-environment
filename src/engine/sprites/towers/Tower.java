@@ -225,6 +225,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     		setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
     		setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
     	}
-	
+	 @Override
+	    public void loseHealth(double damage) {
+	    	myHealth.loseHealth(damage);
+	    }
 }
 

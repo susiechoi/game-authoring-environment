@@ -5,6 +5,7 @@ import java.util.List;
 
 import engine.physics.ImageIntersecter;
 import engine.sprites.properties.HealthProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
@@ -102,12 +103,14 @@ public abstract class ShootingSprites extends Sprite{
      * @return
      */
     public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
-    	System.out.println("CHECK ENEMY TOWER COLLISION");
 	List<Sprite> toBeRemoved = new ArrayList<>();
-	if (intersector.overlaps(shooter.getImageView())) { 
-		System.out.println("INTERSECTION btw tower and enemy");
-	    this.handleCollision(shooter);
-	    shooter.handleCollision(this);
+	if (intersector.overlaps(shooter.getImageView())) {
+		if(this.handleCollision(shooter)) {
+			toBeRemoved.add(this);
+		}
+		if(shooter.handleCollision(this)) {
+			toBeRemoved.add(shooter);
+		}
 	}
 	return toBeRemoved;
     }
@@ -211,8 +214,13 @@ public abstract class ShootingSprites extends Sprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	this.myHealth.loseHealth(collider.getDamage());
-	return myHealth.isAlive();
+	this.loseHealth(collider.getDamage());
+	return this.isAlive();
     }
+
+	public void loseHealth(double damage) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
