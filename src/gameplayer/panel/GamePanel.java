@@ -166,7 +166,7 @@ public class GamePanel extends Panel{
 	ImageView towImage = tower.getImageView();
 	//TODO replace hardcoded constant with tower's range AA
 	rangeIndicator = new Circle(towImage.getX()+(towImage.getImage().getWidth()/2),
-		towImage.getY()+(towImage.getImage().getHeight()/2), 50);//tower.getTowerRange()
+		towImage.getY()+(towImage.getImage().getHeight()/2), tower.getTowerRange());
 	rangeIndicator.setStroke(Color.ORANGE);
 	try {
 	    String opacity = PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerRangeIndicatorOpacity");

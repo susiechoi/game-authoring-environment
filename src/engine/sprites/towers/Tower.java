@@ -196,7 +196,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     @Override
     public int purchase(int myResources) throws CannotAffordException {
 	if (myResources < myValue.getProperty()) {
-	    throw new CannotAffordException();
+	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
 	return (int) (myResources - myValue.getProperty());
     }
