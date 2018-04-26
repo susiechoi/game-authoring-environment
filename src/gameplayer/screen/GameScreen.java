@@ -206,9 +206,6 @@ public class GameScreen extends Screen {
 	}
 
 	public void towerClickedOn(FrontEndTower tower) {
-	    if(tower==null) {
-		System.out.println("TOWERNLL");
-	    }
 		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS, tower);
 		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());

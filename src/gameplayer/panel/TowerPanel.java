@@ -64,7 +64,6 @@ public class TowerPanel extends Panel {
 
 	towerPane = new HBox();
 	towerDisplay = new ScrollPane(towerPane);
-	towerDisplay.setStyle("-fx-background-color:green");
 
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 	towerDisplay.setFitToHeight(true); //remove this line if seen
@@ -91,7 +90,7 @@ public class TowerPanel extends Panel {
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
-	    System.out.println("missingswap");
+	    System.out.println("SwapButton Image Missing");
 	}
 
 
