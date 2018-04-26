@@ -4,9 +4,6 @@ package xml;
 import java.io.File;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

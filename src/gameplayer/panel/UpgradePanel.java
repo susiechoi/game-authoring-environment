@@ -3,7 +3,6 @@ package gameplayer.panel;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import java.util.Map;
@@ -64,7 +63,7 @@ public class UpgradePanel extends SpecificPanel {
 	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(UPGRADE_NAMES_FILE_PATH, UPGRADE_IMAGE_SIZE, UPGRADE_IMAGE_SIZE);
 	    for (String upgradeType: upgradeMap.keySet()) {
 			Button upgradeButton = UI_FACTORY.makeImageButton("button", upgradeMap.get(upgradeType));
-			upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.upgradeClickedOn(TOWER));
+			upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.upgradeClickedOn(TOWER, upgradeType));
 			upgrades.getChildren().add(upgradeButton);
 			HBox.setHgrow(upgradeButton, Priority.ALWAYS);
 			upgradeButton.setMaxWidth(Double.MAX_VALUE);

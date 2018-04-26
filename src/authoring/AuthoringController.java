@@ -10,6 +10,7 @@
 
 package authoring;
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import engine.sprites.enemies.wave.Wave;
 import frontend.StageManager;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelReader;
+import xml.AuthoringModelWriter;
 
 
 public class AuthoringController {
@@ -66,8 +68,8 @@ public class AuthoringController {
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(String gameName, double startingHealth, double starting$) {
-	myModel.makeResources(gameName, startingHealth, starting$);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
+	myModel.makeResources(gameName, startingHealth, starting$, css, theme);
     }
 
     // TODO
@@ -144,7 +146,7 @@ public class AuthoringController {
      */
     public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 	Path path = getPathFromName(Integer.parseInt(pathName), level);
-	Level thisLevel = myModel.levelCheck(level);
+	Level thisLevel = myModel.getLevel(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	Wave thisWave;
 	if(!thisLevel.containsWaveNumber(waveNumber)) {
@@ -169,7 +171,7 @@ public class AuthoringController {
      * @throws ObjectNotFoundException: thrown if the level isn't found
      */
     public int wavesNumber(int level, Path path) throws ObjectNotFoundException {
-	Level thisLevel = myModel.levelCheck(level);
+	Level thisLevel = myModel.getLevel(level);
 	List<Wave> levelWaves = thisLevel.getWaves();
 	return levelWaves.size();
     }
@@ -184,7 +186,7 @@ public class AuthoringController {
      * @throws ObjectNotFoundException
      */
     public Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) throws ObjectNotFoundException {
-	Level currentLevel = myModel.levelCheck(level);
+	Level currentLevel = myModel.getLevel(level);
 	//TODO: issue here - if there is no wave yet then need to make it first!
 	if(!currentLevel.containsWaveNumber(waveNumber) || currentLevel.getWaves().get(waveNumber).getUnmodifiableEnemies(path)==null) {
 	    return new HashMap<String, Integer>();
@@ -197,7 +199,6 @@ public class AuthoringController {
 	return enemyNameMap;   
     }
 
-
     /**
      * Returns a List of the enemies contained in the level 
      * 
@@ -207,7 +208,7 @@ public class AuthoringController {
      * @throws ObjectNotFoundException: thrown if the level isn't found
      */
     public List<String> levelEnemies(int level) throws ObjectNotFoundException {
-	Level thisLevel = myModel.levelCheck(level);
+	Level thisLevel = myModel.getLevel(level);
 	return thisLevel.getAllEnemies();
     }
 
@@ -229,11 +230,13 @@ public class AuthoringController {
     /**
      * Sets the current AuthoringModel being used based on an XML file
      * @param gameName is name of game/XML file being loaded in
+     * @throws MissingPropertiesException 
      */
-    public void setModel(String gameName) {
+    public void setModel(String gameName) throws MissingPropertiesException {
 	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
-	myModel = reader.createModel(gameName);
+	myModel = new AuthoringModel(reader.createModel(gameName));
+	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
 
@@ -245,6 +248,7 @@ public class AuthoringController {
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
+    
     /**
      * Method to retrieve the highest wave number found in a level (including all paths)
      * @param level is level desired
@@ -255,7 +259,7 @@ public class AuthoringController {
 	return myModel.getHighestWaveNumber(level);
     }
 
-	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		myModel.makeTower(level, name);
 	}
 	
@@ -263,17 +267,23 @@ public class AuthoringController {
 		myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
 	}
 
-	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException {
+	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		myModel.makeEnemy(myLevel, name);
 	}
 	
 
     public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
-	Level currentLevel = myModel.levelCheck(level);
+	Level currentLevel = myModel.getLevel(level);
 	if(!currentLevel.containsWaveNumber(waveNumber)) {
 	    currentLevel.addWave(waveNumber);
 	}
 	Wave desiredWave = currentLevel.getWaves().get(waveNumber);
 	desiredWave.setWaveTime(time);
     }
+
+	public void writeToFile() throws ObjectNotFoundException {
+		myModel.updateAllProperties(); 
+		AuthoringModelWriter writer = new AuthoringModelWriter();
+		writer.write(myModel.getGame(), myModel.getGameName());
+	}
 }

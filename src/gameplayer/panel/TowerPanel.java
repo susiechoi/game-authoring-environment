@@ -205,6 +205,7 @@ public class TowerPanel extends Panel {
 	    }
 	};
 	return changeListener;
+
     }
 }
 

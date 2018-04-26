@@ -2,7 +2,6 @@ package engine.sprites.towers.launcher;
 
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
@@ -26,6 +25,7 @@ public class Launcher extends Manager<Projectile>{
     private double timeSinceLastShot;
 
     public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
+	System.out.println("original rate is " + fireRate.getProperty());
 	myFireRate = fireRate;
 	myProjectile = projectile;
 	myRange = range;
@@ -104,7 +104,8 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
-     	if(timeSinceLastShot >= myFireRate.getProperty()) {
+	System.out.println("firerate is " + myFireRate.getProperty());
+     	if(timeSinceLastShot >= 100/myFireRate.getProperty()) {
      		return true;
      	}
      	timeSinceLastShot+=elapsedTime;
@@ -117,10 +118,10 @@ public class Launcher extends Manager<Projectile>{
     	return myRange.getProperty(); 
     }
 
-    public Image getProjectileImage() {
-    	return myProjectile.getImageView().getImage(); 
+    public String getProjectileImage() {
+    	return myProjectile.getImage(); 
     }
-    
+        
     public double getProjectileDamage() {
     	return myProjectile.getDamage(); 
     }

@@ -4,10 +4,7 @@ import frontend.MainScreen;
 import frontend.PromptReader;
 import frontend.StageManager;
 import frontend.View;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
@@ -64,7 +61,7 @@ public class ScreenManager extends View {
 	//private final FileIO FILE_READER;
 
 	public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
-		super(stageManager);
+		super(stageManager, language);
 		STAGE_MANAGER = stageManager;
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;
@@ -74,7 +71,7 @@ public class ScreenManager extends View {
 	}
 
 	public ScreenManager(StageManager stageManager, String language) {
-		super(stageManager);
+		super(stageManager, language);
 		STAGE_MANAGER = stageManager;
 		PROMPTS = new PromptReader(language, this);
 		findSettings();
@@ -110,7 +107,7 @@ public class ScreenManager extends View {
 	}
 
 	public void loadMainScreen() {
-		MainScreen mainScreen = new MainScreen(STAGE_MANAGER);
+		MainScreen mainScreen = new MainScreen(STAGE_MANAGER, this);
 	}
 
 	public void loadGameScreenContinuation() {
@@ -124,8 +121,6 @@ public class ScreenManager extends View {
 
 	}
 
-	
-
 	public void updateLevelCount(Integer newLevelCount) {
 		GAME_SCREEN.updateLevel(newLevelCount);
 	}
@@ -136,7 +131,7 @@ public class ScreenManager extends View {
 
 
 	public void toMain() {
-		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER).getScreen());
+		STAGE_MANAGER.switchScreen(new MainScreen(STAGE_MANAGER, this).getScreen());
 	}
 
 	public StageManager getStageManager() {
@@ -180,7 +175,6 @@ public class ScreenManager extends View {
 	public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 		GAME_SCREEN.setAvailbleTowers(availableTowers);
 	}
-
 
 
 

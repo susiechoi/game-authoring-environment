@@ -1,6 +1,10 @@
 
 package gameplayer.panel;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import gameplayer.screen.GameScreen;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,9 +12,10 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 public class ScorePanel extends Panel {
-
 
     private final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
@@ -98,4 +103,5 @@ public class ScorePanel extends Panel {
    	};
    	return changeListener;
        }
+
 }

@@ -5,6 +5,7 @@ import java.io.File;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
+import authoring.AuthoredGame;
 import authoring.AuthoringModel;
 
 /**
@@ -24,9 +25,9 @@ public class AuthoringModelReader implements XMLReader {
 	}
 	
 	@Override
-	public AuthoringModel createModel(String filename) {
+	public AuthoredGame createModel(String filename) {
 	    File f = new File("SavedModels/" + filename + ".xml");
-	    AuthoringModel g = (AuthoringModel) parser.fromXML(f);
+	    AuthoredGame g = (AuthoredGame) parser.fromXML(f);
 	    return g;
 	}
 
