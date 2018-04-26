@@ -46,7 +46,7 @@ public class AuthoringModel {
     protected String myBackgroundImage = new String();
     protected List<Point> myPathCoordinates = new ArrayList<Point>();
     private PropertyFactory propertyFactory = new PropertyFactory();
-    
+
     public AuthoringModel() throws MissingPropertiesException {
 	this(new AuthoredGame());
 	populateInstanceVariables();
@@ -207,15 +207,13 @@ public class AuthoringModel {
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
 		attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
-		System.out.println("attribute val: " + attributeValue);
-		//System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 	    }
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
 		Tower tower = currentLevel.getTower(name);
-		attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
+		return propertyFactory.retrieveProperty(name, attribute);
 	    }
 	}
 	else if (objectType.equals("Settings")) {
@@ -229,7 +227,6 @@ public class AuthoringModel {
 	    System.out.println("PATH INFO: " +attributeValue);
 	    //			}
 	}
-
 	else if(objectType.equals("Wave")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
@@ -244,6 +241,10 @@ public class AuthoringModel {
 	    return Double.toString((double) attributeValue); 
 	} 
 	else return attributeValue; 
+    }
+
+    public List<Object> getObjectProperty(int level, String objectType, String name, String attribute){
+	return propertyFactory.retrieveProperty(name, attribute);
     }
 
     public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException {
@@ -336,21 +337,6 @@ public class AuthoringModel {
 	return newLevelNumber; 
     }
 
-    //	/**
-    //	 * Auto generates a new level for the authored game and puts it in the
-    //	 * levels map. 
-    //	 * 
-    //	 * @return int: the number of the new, auto generated level
-    //	 */
-    //	public int autogenerateLevel() {
-    ////		System.out.println(newLevelNumber+" IS OUR NEW LEVEL NUMBER");
-    //		int newLevelNumber = myLevels.size();
-    //		Level copiedLevel = myLevels.get(myLevels.size()-1);
-    //		myLevels.put(newLevelNumber, new Level(copiedLevel));
-    //		//	return newLevelNumber; 
-    //		return newLevelNumber;
-    //	}
-
     /**
      * Autogenerates a new level based on the previous Level's settings (enemies, towers, etc.)
      * @return int corresponding to level number of level generated
@@ -378,22 +364,19 @@ public class AuthoringModel {
 	if (objectType.equals("Enemy")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
-		Enemy enemy = currentLevel.getEnemy(name);
-		attributeFinder.setFieldValue(attribute, enemy, attributeValue);
+		currentLevel.getEnemy(name).setImageString((String) attributeValue); 
 	    }
 	}
 	else if(objectType.equals("Projectile")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
-		Tower tower = currentLevel.getTower(name);
-		tower.setProjectileImage((String) attributeValue);
+		currentLevel.getTower(name).setProjectileImage((String) attributeValue);
 	    }
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
-		Tower tower = currentLevel.getTower(name);
-		attributeFinder.setFieldValue(attribute, tower, attributeValue);
+		currentLevel.getTower(name).setImageString((String) attributeValue); 
 	    }
 	}
 	else if (objectType.equals("Settings")) {
@@ -417,24 +400,21 @@ public class AuthoringModel {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
-		System.out.println("Property name in authoring model: " + propertyName);
-		tower.addProperty(propertyFactory.getProperty(propertyName, attributes));
+		tower.addProperty(propertyFactory.getProperty(objectName, propertyName, attributes));
 	    }
 	}
 	else if (objectType.equals("Projectile")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
-		System.out.println("Property name in authoring model: " + propertyName);
-		System.out.println(propertyFactory.getProperty(propertyName, attributes));
-		tower.addProjectileProperty(propertyFactory.getProperty(propertyName, attributes));
+		tower.addProjectileProperty(propertyFactory.getProperty(objectName, propertyName, attributes));
 	    }
 	}
 	else if (objectType.equals("Launcher")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
-		tower.addLauncherProperty(propertyFactory.getProperty(propertyName, attributes));
+		tower.addLauncherProperty(propertyFactory.getProperty(objectName, propertyName, attributes));
 	    }
 	}
 	else if (objectType.equals("Settings")) {

@@ -53,6 +53,11 @@ public class Sprite implements FrontEndSprite{
 	public ImageView getImageView() { 
 		return myImageView;
 	}
+	
+	public void setImageString(String image) {
+	    	myImageString = image;
+		myImageView  = new ImageView(new Image("file:"+image, 50, 50, true, true));
+	}
 
 	public void setImage(Image image) {
 		myImageView  = new ImageView(image);

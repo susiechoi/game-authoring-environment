@@ -1,5 +1,8 @@
 package engine.sprites.properties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A property describes any attribute held by an object that can be upgraded.
  * 
@@ -23,8 +26,6 @@ public abstract class UpgradeProperty extends Property {
     public UpgradeProperty(double cost, double value, double property) {
 	super(property);
 	upgradeCost = cost;
-	
-	//TODO: check this upgradeValue
 	upgradeValue = value;
     }
 
@@ -59,5 +60,13 @@ public abstract class UpgradeProperty extends Property {
 	return upgradeCost;
     }
 
+    @Override
+    public List<Object> getAttributes(){
+	List<Object> ret = new ArrayList<>();
+	ret.add(upgradeCost);
+	ret.add(upgradeValue);
+	ret.add(getProperty());
+	return ret;
+    }
 
 }

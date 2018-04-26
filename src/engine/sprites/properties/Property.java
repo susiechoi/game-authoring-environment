@@ -1,5 +1,8 @@
 package engine.sprites.properties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A property describes any attribute held by an object.
  * 
@@ -40,6 +43,12 @@ public abstract class Property {
      */
     public String getName() {
     	return mySimpleName;
+    }
+    
+    public List<Object> getAttributes(){
+	List<Object> ret = new ArrayList<Object>();
+	ret.add(myProperty);
+	return ret;
     }
     
     public abstract Property makeCopy();

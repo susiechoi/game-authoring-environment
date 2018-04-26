@@ -19,7 +19,6 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
-    private String myImage; 
     private Launcher myLauncher;
     private double mySize;
     private ValueProperty myValue;
@@ -35,7 +34,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher);
-	myImage = image;
 	myLauncher = launcher;
 	myProperties = properties;
 	myProperties.add(new KillProperty(0));
@@ -133,17 +131,12 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return this.getLauncher().getProperty("RangeProperty");
     }
 
-    public void copyProperties() {
-	updateImage(myImage);
-	updateLauncher(myLauncher); 
-    }
-
     public List<Property> getProperties(){
 	return myProperties;
     }
 
     public void updateProperties() {
-	updateImage(myImage);
+	updateImage(getImageString());
 	updateLauncher(myLauncher); 
     }
 

@@ -1,4 +1,5 @@
 /**
+ * @author Katherine Van Dyk
  * @author susiechoi
  * Object that returns the value of a field with a specified name from an object
  * Useful in populating sliders, dropdowns, and textboxes with user input that is currently held in objects
@@ -6,7 +7,9 @@
 
 package authoring;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import engine.sprites.properties.Property;
@@ -19,11 +22,16 @@ import engine.sprites.properties.UpgradeProperty;
  */
 public class PropertyFactory {
     
-
+    private Map<String, Property> currentProperties;
     protected final ResourceBundle PROPERTIES = ResourceBundle.getBundle("authoring/resources/properties");
     private final String PACKAGE = "engine.sprites.properties.";
-
-    public Property getProperty(String propertyName, List<Object> attributes) {
+    
+    public PropertyFactory() {
+	currentProperties = new HashMap<String, Property>();
+    }
+    
+    public Property getProperty(String objectName, String propertyName, List<Object> attributes) {
+	Property ret;
 	String className = PACKAGE + propertyName;
 	String type = null;
 	for(String key : PROPERTIES.keySet()) {
@@ -35,12 +43,16 @@ public class PropertyFactory {
 	    return null;
 	}
 	else if(type.equals("UpgradeProperty")) {
-	    return createUpgradeProperty(className, type, attributes);
+	    ret = createUpgradeProperty(className, type, attributes);
 	}
 	else if(type.equals("Property")) {
-	    return createProperty(className, type, attributes.get(0));
+	    ret = createProperty(className, type, attributes.get(0));
 	}
-	else return null;
+	else {
+	    return null;
+	}
+	currentProperties.put(objectName, ret);
+	return ret;
     }
     
     private Property createUpgradeProperty(String className, String type, List<Object> attributes) {
@@ -55,6 +67,15 @@ public class PropertyFactory {
 	Reflection reflection = new Reflection();
 	return (Property) reflection.createInstance(className, (double) attribute);
     }
-
+    
+    public List<Object> retrieveProperty(String objectName, String propertyName) {
+	for(String object : currentProperties.keySet()) {
+	    if(object.equals(objectName)) {
+		return currentProperties.get(object).getAttributes();
+	    }
+	}
+	return null;
+    }
+   
 }
 

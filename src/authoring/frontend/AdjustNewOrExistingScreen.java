@@ -96,9 +96,13 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		}
 
 		for (String key : fieldsToAttributes.keySet()) {
+		    	System.out.println("FIELD: " + key);
 			Object myField = null; 
 			try {
 				myField = attributeFinder.retrieveFieldValue(key, this);
+				System.out.println("myObjectDescription: " + myObjectDescription);
+				System.out.println("getMySelectedObjectName(): " + getMySelectedObjectName());
+				System.out.println("fieldsToAttributes.get(key)).toString(): " + fieldsToAttributes.get(key));
 				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
 			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
 				getView().loadErrorScreen("ObjectAttributeDNE");
