@@ -11,32 +11,42 @@ import javafx.scene.Parent;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
-public class GraphScreen extends Screen {
+public class GraphScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
 	private String myGraphFilepath; 
 	
-	public GraphScreen(String filepath) {
+	protected GraphScreen(AuthoringView view, String filepath) {
+		super(view);
 		myGraphFilepath = filepath; 
-		setStyleSheet(DEFAULT_CSS);
+		setSaved(); 
 	}
 
 	@Override
-	public Parent makeScreenWithoutStyling() {		
+	public Parent makeScreenWithoutStyling() {	
+		VBox vb = new VBox();
+		
+		Text graphTitle = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("GraphTitle"));
+		
 		NumberAxis x = new NumberAxis();
+		x.setLabel(getErrorCheckedPrompt("Time"));
+		x.setTickLabelsVisible(false);
 		NumberAxis y = new NumberAxis(); 
+		y.setLabel(getErrorCheckedPrompt("Score"));
 		LineChart<Number, Number> graph = new LineChart<Number, Number>(x, y);
-		XYChart.Series series = new XYChart.Series<>(); 
-		graph.setTitle("Score Over Game Play Time");
+		Series series = new XYChart.Series<>(); 
 		graph.getData().add(series); 
+		graph.setLegendVisible(false);
 
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(myGraphFilepath));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			getView().loadErrorScreen("NoGraph");
 		}
 		String point = null;
 		try {
@@ -47,16 +57,12 @@ public class GraphScreen extends Screen {
 				}
 			}
 		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			getView().loadErrorAlert("InvalidValues");
 		}
-		return graph;
-	}
-
-	@Override
-	protected View getView() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		vb.getChildren().addAll(graphTitle, graph, setupBackButton());
+		
+		return vb;
 	}
 
 }

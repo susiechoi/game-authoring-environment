@@ -8,6 +8,21 @@ Text {
 	-fx-font-size: 14pt; 
 }
 
+.default-color0.chart-series-line {
+    -fx-stroke: #488286;
+    -fx-stroke-width: 2px; 
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #488286;
+    -fx-background-radius: 0;
+    	-fx-padding: 1px;
+}
+
+.axis-label {
+	-fx-font-family: "Quicksand";
+}
+
 TextField {
 	-fx-max-width: 200; 
 }

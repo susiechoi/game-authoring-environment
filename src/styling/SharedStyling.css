@@ -22,11 +22,24 @@ Text {
   -fx-font: bold 36pt "Helvetica";
 }
 
-.chart-title {
-	-fx-font-size: 14pt; 
+.chart {
+	-fx-padding: 20px;
+	-fx-pref-height: 1000px; 
 }
 
-.axis {
-	-fx-font-size: 10pt;
+.chart-plot-background {
+	-fx-background-color: white; 
+}
+
+.chart-vertical-grid-lines {
+	-fx-stroke: transparent;
+}
+
+.chart-horizontal-grid-lines {
+	-fx-stroke: transparent;
+}
+
+.axis-label {
+	-fx-font-size: 18px;
 }
 
