@@ -31,15 +31,11 @@ public class TowerPanel extends Panel {
 
 
     private Integer money;
-    private BorderPane PANE;
-    private PromptReader PROMPTS;
     private GameScreen GAME_SCREEN;
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
-    private Panel bottomPanel;
     private Button currencyDisplay;
-    private ScrollPane towerDisplay;
-    private final String ASSORTED_BUTTON_FILEPATH = "src/images/GamePlayerAssorted/GamePlayerAssorted.properties";
+    private static final String ASSORTED_BUTTON_FILEPATH = "src/images/GamePlayerAssorted/GamePlayerAssorted.properties";
 
     //TODO change to only use availibleTowers
 
@@ -48,9 +44,8 @@ public class TowerPanel extends Panel {
     private HBox towerPane;
 
 
-    public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
+    public TowerPanel( GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
-	PROMPTS = promptReader;
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	makePanel();
@@ -63,10 +58,11 @@ public class TowerPanel extends Panel {
 	//TODO need to check if this static stuff is okay
 
 	towerPane = new HBox();
-	towerDisplay = new ScrollPane(towerPane);
+	ScrollPane towerDisplay = new ScrollPane(towerPane);
 
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 	towerDisplay.setFitToHeight(true); //remove this line if seen
+	//towerDisplay.setMaxHeight(Double.MAX_VALUE);
 
 
 
@@ -84,7 +80,7 @@ public class TowerPanel extends Panel {
 	try {
 	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
 	    Button swapButton = UIFACTORY.makeImageButton("swapButton", buttonMap.get("swap"));
-	    swapButton.setOnMouseClicked((arg0) -> GAME_SCREEN.swapVertPanel());
+	    swapButton.setOnMouseClicked(arg0 -> GAME_SCREEN.swapVertPanel());
 	    HBox swapWrap = new HBox(swapButton);
 	    swapWrap.setId("swapWrap");
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
@@ -129,7 +125,7 @@ public class TowerPanel extends Panel {
 
 	    towerButton.setMaxWidth(Double.MAX_VALUE);
 	    towerButton.setMaxHeight(Double.MAX_VALUE);
-	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower));
+	    towerButton.setOnMouseClicked(arg0 -> GAME_SCREEN.towerSelectedForPlacement(tower));
 	    if(alternator%2 == 0) {
 		towerHolder = new HBox();
 		towerHolder.setFillHeight(true);
@@ -155,7 +151,7 @@ public class TowerPanel extends Panel {
 	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
 	    //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton("button", voidView);
-	    voidButton.setOnMouseClicked((arg0) ->{ 
+	    voidButton.setOnMouseClicked(arg0 ->{ 
 		GAME_SCREEN.towerSelectedForPlacement(null);
 		System.out.println("nullhit");
 
@@ -198,13 +194,12 @@ public class TowerPanel extends Panel {
     }
 
     public ChangeListener createCurrencyListener() {
-	ChangeListener changeListener = new ChangeListener() {
+	return new ChangeListener() {
 	    @Override
 	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
 		updateCurrency((Integer)observableValue.getValue());
 	    }
 	};
-	return changeListener;
     }
 }
 
