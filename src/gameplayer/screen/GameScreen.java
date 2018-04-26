@@ -56,9 +56,9 @@ public class GameScreen extends Screen {
 		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
-		TOWER_PANEL = new TowerPanel(this, PROMPTS);
+		TOWER_PANEL = new TowerPanel(this);
 		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
-		SCORE_PANEL = new ScorePanel(this);
+		SCORE_PANEL = new ScorePanel();
 		GAME_PANEL = new GamePanel(this);
 		//TODO the null argument on creation is terrible, needs to change once
 		//actual functionality of panels is changed
