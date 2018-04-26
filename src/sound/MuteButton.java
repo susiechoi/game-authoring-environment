@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 
 /**
  * This class represents and place-able, click-able button
- * When pressed, it will call the mute() method in the instance of SoundFactory it was created from
+ * When pressed, it will mute the instance of SoundFactory it was created from
  * @author benauriemma
  *
  */
@@ -12,7 +12,7 @@ public class MuteButton extends Button {
     SoundFactory mySoundFactory;
     
     /**
-     * This method is called from SoundFactory.createMuteButton()
+     * This constructor is called from SoundFactory.createMuteButton()
      * @param soundFactory is the soundFactory which this button will mute
      */
     protected MuteButton(SoundFactory soundFactory) {
