@@ -1,13 +1,17 @@
 package engine.managers;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
+import engine.sprites.towers.projectiles.Projectile;
 
 
 /**
@@ -86,6 +90,19 @@ public class TowerManager extends ShootingSpriteManager {
 	    }
 	}
 	return balance;
+    }
+
+    /**
+     * Removes all of the projectiles from the tower manager
+     * @return
+     */
+    public Collection<Projectile> removeAllProjectiles() {
+	List<Projectile> toBeRemoved = new ArrayList<>();
+	for(ShootingSprites tower : this.getListOfActive()) {
+	    toBeRemoved.addAll(tower.getLauncher().getListOfActive());
+	    tower.getLauncher().getListOfActive().clear();
+	}
+	return toBeRemoved;
     }
 
 }

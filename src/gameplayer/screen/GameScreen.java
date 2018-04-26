@@ -202,8 +202,15 @@ public class GameScreen extends Screen {
     }
 
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-	FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-	return placedTower;
+	try {
+	    FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
+	    return placedTower;
+	}
+	catch(CannotAffordException e) {
+	    //TODO : make an error screen for when the exception is caught
+	    System.out.println("can't afford");
+	}
+	return null;
     }
 
     public void towerClickedOn(FrontEndTower tower) {
