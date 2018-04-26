@@ -1,6 +1,7 @@
 package engine.managers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
@@ -44,10 +45,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	List<Projectile> newProjectiles = new ArrayList<>();
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
-		System.out.println("reloaded");
 		for (ShootingSprites passedSprite: passedSprites) {	//all the enemies
-		    System.out.println("enemies");
-
 		    if (shootingSprite.hasReloaded(elapsedTime) && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {
 			Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			if (newProjectile != null) {
@@ -70,6 +68,20 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	    }
 	}
     }
+    
+    /**
+     * Removes all of the projectiles from the tower manager
+     * @return
+     */
+    public Collection<Projectile> removeAllProjectiles() {
+	List<Projectile> toBeRemoved = new ArrayList<>();
+	for(ShootingSprites tower : this.getListOfActive()) {
+	    toBeRemoved.addAll(tower.getLauncher().getListOfActive());
+	    tower.getLauncher().getListOfActive().clear();
+	}
+	return toBeRemoved;
+    }
+    
     public int getRoundScore() {
 	return myRoundScore;
     }

@@ -112,6 +112,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     @Override
     public boolean handleCollision(Sprite collider) {
+    this.myHealth.loseHealth(collider.getDamage());
 	return true;
     }
 
@@ -196,7 +197,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     @Override
     public int purchase(int myResources) throws CannotAffordException {
 	if (myResources < myValue.getProperty()) {
-	    throw new CannotAffordException();
+	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
 	return (int) (myResources - myValue.getProperty());
     }
@@ -216,7 +217,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     		Projectile projectile = new ProjectileBuilder().construct(myName, myProjectileImage, myProjectileDamage, myProjectileSize, myProjectileSpeed);
     		myLauncher = new LauncherBuilder().construct(myLauncherRate, myLauncherRange, projectile);
     		myValue = new ValueProperty(myTowerValue);
-    		
     		updateImage(myImage);
     		updateLauncher(myLauncher); 
     		    		
@@ -224,6 +224,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     		setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
     		setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
     	}
-	
+	 @Override
+	    public void loseHealth(double damage) {
+	    	myHealth.loseHealth(damage);
+	    }
 }
 

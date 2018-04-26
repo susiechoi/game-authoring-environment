@@ -20,9 +20,10 @@ import javafx.scene.layout.VBox;
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Tower";
+	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String TOWER_IMAGE_PREFIX = "images/ThemeSpecificImages/TowerImages/";
 	public static final String TOWER_IMAGE_SUFFIX = "TowerImageNames.properties";
-	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
+	static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 
 	private String myObjectName; 
@@ -64,7 +65,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	private void makeTowerComponents(VBox vb) {
 
-		HBox towerImageSelect = makeImageSelector("Tower", TOWER_IMAGE_PREFIX + getView().getTheme() + TOWER_IMAGE_SUFFIX);
+		HBox towerImageSelect = makeImageSelector("Tower","", TOWER_IMAGE_PREFIX + getView().getTheme() + TOWER_IMAGE_SUFFIX);
 		vb.getChildren().add(towerImageSelect);
 
 

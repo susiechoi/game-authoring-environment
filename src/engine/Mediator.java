@@ -165,14 +165,14 @@ public class Mediator {
      * to be called by the backend to play the simulation
      */
     public void play() {
-	myGameEngine.getPlayState().play();
+	myGameEngine.start();
     }
 
     /**
      * to be called by the backend to pause the simulation
      */
     public void pause() {
-	myGameEngine.getPlayState().pause();
+	myGameEngine.pause();
     }
 
     /**
@@ -227,26 +227,29 @@ public class Mediator {
     public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
 	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
-    
-	/**
-	 * Ends game loop in case that user wants to return to authoring/editing the game
-	 * @author susiechoi
-	 */
-	public void endLoop() {
-		myGameEngine.endLoop();
-	}
 
-	public String getStyling() {
-		String styling = null; 
-		if (myGameEngine.getPlayState() != null) {
-			try {
-				styling = myGameEngine.getPlayState().getStyling();
-			} catch (MissingPropertiesException e) {
-				myScreenManager.loadErrorAlertToStage("NoFile");
-			}
-		}
-		return styling; 
-	}
+    /**
+     * Ends game loop in case that user wants to return to authoring/editing the game
+     * @author susiechoi
+     */
+    public void endLoop() {
+	myGameEngine.endLoop();
+    }
 
+    public String getStyling() {
+	String styling = null; 
+	if (myGameEngine.getPlayState() != null) {
+	    try {
+		styling = myGameEngine.getPlayState().getStyling();
+	    } catch (MissingPropertiesException e) {
+		myScreenManager.loadErrorAlert("NoFile");
+	    }
+	}
+	return styling; 
+    }
+	
 }
+    
+
+
 

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
-import frontend.PropertiesReader;
 import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;
