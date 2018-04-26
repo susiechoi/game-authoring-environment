@@ -1,6 +1,9 @@
 
 package gameplayer.panel;
 
+import java.util.Map;
+import gameplayer.screen.GameScreen;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Priority;
@@ -9,29 +12,30 @@ import javafx.scene.control.Label;
 
 public class ScorePanel extends Panel {
 
-    private static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+    private final GameScreen GAME_SCREEN;
+    private Map<String,String> GAMEPLAYER_PROPERTIES;
 
-    private Integer SCORE;
-    private Integer HEALTH;
-    private Integer LEVEL;
     private Label ScoreText;
     private Label LevelText;
     private Label HealthText;
+    private Integer SCORE;
+    private Integer HEALTH;
+    private Integer LEVEL;
 
-    public ScorePanel() {
-	SCORE = 0;
-	HEALTH = 100;
-	LEVEL = 1;
-    }
+    public ScorePanel(GameScreen gameScreen) {
+		GAME_SCREEN = gameScreen;
+		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+	}
+
 
 
     @Override
     public void makePanel() {
 
 	//TODO Read words SCORE, LEVEL, and + from properties file
-	ScoreText = new Label("Score: " + SCORE);
-	LevelText = new Label("Level " + LEVEL);
-	HealthText = new Label("+" + HEALTH);
+	ScoreText = new Label();
+	LevelText = new Label();
+	HealthText = new Label();
 
 
 	ScoreText.setMaxWidth(Double.MAX_VALUE);
@@ -49,29 +53,32 @@ public class ScorePanel extends Panel {
 
 	panelRoot.setMaxWidth(Double.MAX_VALUE);
 	panelRoot.setMaxHeight(Double.MAX_VALUE);
-	panelRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 	PANEL = panelRoot;
     }
 
     private void updateScore(Integer newScore) {
-	ScoreText.setText("Score: " + newScore);
+	ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
     }
 
     private void updateHealth(Integer newHealth) {
-	HealthText.setText("+" +newHealth);
+	HealthText.setText(GAMEPLAYER_PROPERTIES.get("healthText")+ newHealth);
     }
 
     public void updateLevel(Integer newLevel) {
-	LevelText.setText("Level: " + newLevel);
+	LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
     }
-    
+
     public void setInitialScore(Integer score) {
 	SCORE = score;
     }
-    
+
     public void setInitialLives(Integer lives) {
 	HEALTH = lives;
     }
+
+    public void setInitialLevel(Integer level) {
+    	LEVEL = level;
+	}
     
 
     public ChangeListener createScoreListener() {
