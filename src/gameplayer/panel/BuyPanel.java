@@ -3,7 +3,6 @@ package gameplayer.panel;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import gameplayer.screen.GameScreen;
-import frontend.PropertiesReader;
 import frontend.UIFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -35,8 +34,9 @@ public class BuyPanel extends SpecificPanel {
 
         Label TowerInfo = new Label("THIS IS FILLER TEXT WE NEED INFO ON UPGRADES");
         TowerInfo.setWrapText(true);
-        Button buyUpgrade = UI_FACTORY.makeTextButton(GAMEPLAYER_PROPERTIES.get("buttonID"), PROMPTS.resourceDisplayText("BuyTowerUpgrade"));
-        buyUpgrade.setOnMouseClicked((arg0) -> GAME_SCREEN.upgradeBought(TOWER, UPGRADE_TYPE));
+
+        Button buyUpgrade = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("BuyTowerUpgrade"));
+        buyUpgrade.setOnMouseClicked(arg0 -> GAME_SCREEN.upgradeBought(TOWER, UPGRADE_TYPE));
 
         VBox panelRoot = new VBox(TowerInfo, buyUpgrade);
         VBox.setVgrow(TowerInfo, Priority.ALWAYS);

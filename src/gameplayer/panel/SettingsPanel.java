@@ -2,16 +2,14 @@ package gameplayer.panel;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.control.Button;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import sound.ITRTSoundFactory;
-import javafx.scene.image.ImageView;
-
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class SettingsPanel extends Panel {
 
@@ -22,6 +20,7 @@ public class SettingsPanel extends Panel {
     private final UIFactory UIFACTORY;
     private ITRTSoundFactory SOUND_FACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
+
 
 
     public SettingsPanel(GameScreen gameScreen) {
@@ -48,15 +47,16 @@ public class SettingsPanel extends Panel {
 
         settingsBox.getChildren().add(SOUND_FACTORY.createVolumeSlider());
         try {
+
             Map<String,Image> settingsMap = PROP_READ.keyToImageMap(SETTINGS_BUTTON_FILEPATH, DEFAULT_SETTINGS_BUTTON_SIZE, DEFAULT_SETTINGS_BUTTON_SIZE);
-            for (String setting: settingsMap.keySet()) {
-                Button settingButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("settingsButtonID"), settingsMap.get(setting));
-                settingButton.setOnMouseClicked((arg0) -> GAME_SCREEN.settingsTriggered(setting));
+            for (Entry<String, Image> entry : settingsMap.entrySet()) {
+                Button settingButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("settingsButtonID"), entry.getValue());
+                settingButton.setOnMouseClicked(arg0 -> GAME_SCREEN.settingsTriggered(entry.getKey()));
                 settingsBox.getChildren().add(settingButton);
             }
         }
         catch (MissingPropertiesException e) {
-
+            System.out.println("Settings button images missing");
         }
     }
 

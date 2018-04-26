@@ -45,7 +45,7 @@ public class GameScreen extends Screen {
 	private ScreenManager SCREEN_MANAGER;
 	private BuyPanel BUY_PANEL;
 	private SettingsPanel SETTINGS_PANEL;
-	private VBox displayPane;
+	private BorderPane displayPane;
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
 	private BorderPane rootPane;
@@ -58,7 +58,7 @@ public class GameScreen extends Screen {
 		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
-		TOWER_PANEL = new TowerPanel(this, PROMPTS);
+		TOWER_PANEL = new TowerPanel(this);
 		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
 		SCORE_PANEL = new ScorePanel(this);
 		GAME_PANEL = new GamePanel(this);
@@ -71,7 +71,9 @@ public class GameScreen extends Screen {
 	public Parent makeScreenWithoutStyling() {
 		rootPane = new BorderPane();
 
-		displayPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+		displayPane = new BorderPane();
+		displayPane.setCenter(TOWER_PANEL.getPanel());
+		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 		VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
 		gamePane = new BorderPane();
@@ -98,8 +100,7 @@ public class GameScreen extends Screen {
 
 	@Override
 	protected View getView() {
-		// TODO Auto-generated method stub
-		return null;
+		return SCREEN_MANAGER;
 	}
 
 	public void displaySprite(FrontEndSprite sprite) {
@@ -203,28 +204,25 @@ public class GameScreen extends Screen {
 	public void towerClickedOn(FrontEndTower tower) {
 		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 		UPGRADE_PANEL = new UpgradePanel(this, tower);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
+		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
 		BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
+		displayPane.setBottom(BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	private void settingsClickedOn() {
 		SETTINGS_PANEL = new SettingsPanel(this);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), SETTINGS_PANEL.getPanel());
+
+		displayPane.setBottom(SETTINGS_PANEL.getPanel());
 	}
 
 	public void blankGamePanelClick() {
 		gamePane.setBottom(null);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 	}
 
 	public void sellTower(FrontEndTower tower) {

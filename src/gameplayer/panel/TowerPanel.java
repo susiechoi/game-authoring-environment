@@ -5,7 +5,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.Button;
@@ -16,7 +15,6 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.Map;
 
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -32,15 +30,11 @@ public class TowerPanel extends Panel {
 
 
     private Integer money;
-    private BorderPane PANE;
-    private PromptReader PROMPTS;
     private GameScreen GAME_SCREEN;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
-    private Panel bottomPanel;
     private Button currencyDisplay;
-    private ScrollPane towerDisplay;
     private String ASSORTED_BUTTON_FILEPATH;
 
     //TODO change to only use availibleTowers
@@ -50,10 +44,9 @@ public class TowerPanel extends Panel {
     private HBox towerPane;
 
 
-    public TowerPanel( GameScreen gameScreen, PromptReader promptReader) {
+    public TowerPanel( GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-	PROMPTS = promptReader;
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	makePanel();
@@ -68,9 +61,11 @@ public class TowerPanel extends Panel {
 	ASSORTED_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
 
 	towerPane = new HBox();
-	towerDisplay = new ScrollPane(towerPane);
+	ScrollPane towerDisplay = new ScrollPane(towerPane);
+
 	towerDisplay.setFitToWidth(true); //makes hbox take full width of scrollpane
 	towerDisplay.setFitToHeight(true); //remove this line if seen
+	//towerDisplay.setMaxHeight(Double.MAX_VALUE);
 
 	currencyDisplay = new Button();
 	currencyDisplay.setId(GAMEPLAYER_PROPERTIES.get("currencyButton"));
@@ -94,7 +89,7 @@ public class TowerPanel extends Panel {
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
-	    //SWAPBUTTONIMAGEMISSING
+	    System.out.println("SwapButton Image Missing");
 	}
 
 
@@ -104,7 +99,6 @@ public class TowerPanel extends Panel {
 	towersAndCurr.setAlignment(Pos.CENTER);
 
 	//might want to remove this as control implementation changes but we'll see
-
 	//  panelRoot.getChildren().addAll(buttons);
 	towersAndCurr.setId(GAMEPLAYER_PROPERTIES.get("towerPanelID"));
 	PANEL = towersAndCurr;
@@ -134,7 +128,7 @@ public class TowerPanel extends Panel {
 
 	    towerButton.setMaxWidth(Double.MAX_VALUE);
 	    towerButton.setMaxHeight(Double.MAX_VALUE);
-	    towerButton.setOnMouseClicked((arg0) -> GAME_SCREEN.towerSelectedForPlacement(tower));
+	    towerButton.setOnMouseClicked(arg0 -> GAME_SCREEN.towerSelectedForPlacement(tower));
 	    if(alternator%2 == 0) {
 		towerHolder = new HBox();
 		towerHolder.setFillHeight(true);
@@ -161,6 +155,7 @@ public class TowerPanel extends Panel {
 	    //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton(GAMEPLAYER_PROPERTIES.get("buttonID"), voidView);
 	    voidButton.setOnMouseClicked((arg0) ->{ 
+
 		GAME_SCREEN.towerSelectedForPlacement(null);
 		System.out.println("nullhit");
 
@@ -203,14 +198,12 @@ public class TowerPanel extends Panel {
     }
 
     public ChangeListener createCurrencyListener() {
-	ChangeListener changeListener = new ChangeListener() {
+	return new ChangeListener() {
 	    @Override
 	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
 		updateCurrency((Integer)observableValue.getValue());
 	    }
 	};
-	return changeListener;
-
     }
 }
 

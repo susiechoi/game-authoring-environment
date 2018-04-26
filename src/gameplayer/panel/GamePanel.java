@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
@@ -35,10 +36,8 @@ public class GamePanel extends Panel{
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
-    private List<FrontEndTower> towersPlaced;
     private Pane spriteAdd;
     private Boolean towerClick = false;
-    private ImageView highLightedImageVew;
     private Circle rangeIndicator;
 
     //TODO changes this to be passed from mediator ******************************************************************************
@@ -48,7 +47,6 @@ public class GamePanel extends Panel{
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-	towersPlaced = new ArrayList<FrontEndTower>();
 	PROP_READ = new PropertiesReader();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
 	towerSelected =  null; //maybe make a new towerContructor which creates a null tower?
@@ -83,10 +81,11 @@ public class GamePanel extends Panel{
 	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
 	    int random = rand.nextInt(backgroundMap.size());
 	    int count = 0;
-	    for(String s:  backgroundMap.keySet()) {
-		if(s.equals(GAMEPLAYER_PROPERTIES.get("general"))) {
+
+	    for(Entry<String, Image> entry : backgroundMap.entrySet()) {
+		if(entry.getKey().equals(GAMEPLAYER_PROPERTIES.get("general"))) {
 		    ImageView imageView = new ImageView();
-		    imageView.setImage(backgroundMap.get(s));
+		    imageView.setImage(entry.getValue());
 		    gamePane.getChildren().add(imageView);
 		}
 	    }
@@ -148,9 +147,8 @@ public class GamePanel extends Panel{
 
     private void addTowerImageViewAction(FrontEndTower tower) {
 	ImageView towerImage = tower.getImageView();
-	towerImage.setOnMouseClicked((args) ->{
+	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    highLightedImageVew = towerImage;
 	    // applySelectionGlow(towerImage);
 	    addRangeIndicator(tower);
 	    towerClick = true;
@@ -167,7 +165,7 @@ public class GamePanel extends Panel{
 	ImageView towImage = tower.getImageView();
 	//TODO replace hardcoded constant with tower's range AA
 	rangeIndicator = new Circle(towImage.getX()+(towImage.getImage().getWidth()/2),
-		towImage.getY()+(towImage.getImage().getHeight()/2), 50);//tower.getTowerRange()
+		towImage.getY()+(towImage.getImage().getHeight()/2), tower.getTowerRange());
 	rangeIndicator.setStroke(Color.ORANGE);
 	try {
 	    String opacity = PROP_READ.findVal(CONSTANTS_FILE_PATH, "TowerRangeIndicatorOpacity");
@@ -226,15 +224,21 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
 
-		if(newTower!= null) {
+		addTowerImageViewAction(newTower);
+		spriteAdd.getChildren().add(towerImage);
+		resetCursor();
+		towerPlaceMode = false;
+		//TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
 
-		    addTowerImageViewAction(newTower);
-		    towersPlaced.add(newTower);
-		    spriteAdd.getChildren().add(towerImage);
-		    resetCursor();
-		    towerPlaceMode = false;
-		    //TODO (thread canceling towerPlacement) maybe make a new towerConstructor which creates a null tower?
-		}
+
+		addTowerImageViewAction(newTower);
+		spriteAdd.getChildren().add(towerImage);
+		resetCursor();
+		towerPlaceMode = false;
+		//TODO (thread canceling towerPlacement) maybe make a new towerConstructor which creates a null tower?
+
+
+
 	    }
 	    catch(CannotAffordException e){
 		//GameScreen popup for cannot afford

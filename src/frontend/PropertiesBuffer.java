@@ -64,7 +64,7 @@ public abstract class PropertiesBuffer {
 	    try {
 		myLanguageProperty = PROP_READER.loadProperties(makeFilepath(DEFAULT_LANGUAGE));
 	    } catch (MissingPropertiesException e1) {
-		SCREEN_MANAGER.loadErrorScreenToStage(DEFAULT_NO_FILE_MESSAGE);
+		SCREEN_MANAGER.loadErrorScreen(DEFAULT_NO_FILE_MESSAGE);
 	    }
 	}
 	myLanguageMap = PROP_READER.read(myLanguageProperty);
