@@ -18,14 +18,13 @@ public class TowerInfoPanel extends SpecificPanel {
 
 	private final GameScreen GAME_SCREEN;
 	private final UIFactory UI_FACTORY;
-	private PropertiesReader PROP_READ;
 	private PromptReader PROMPTS;
+
 	public TowerInfoPanel(GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
 		super(tower);
-	    	GAME_SCREEN = gameScreen;
+		GAME_SCREEN = gameScreen;
 		PROMPTS = promptReader;	
 		UI_FACTORY = new UIFactory();
-		PROP_READ = new PropertiesReader();
 	}
 
 	@Override
@@ -34,7 +33,7 @@ public class TowerInfoPanel extends SpecificPanel {
 		Map<String,Integer> towerStats = TOWER.getTowerStats();
 		Label TowerInfo = new Label(prepareStats(towerStats));
 		Button sellTower = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("SellTowerButton"));
-		sellTower.setOnMouseClicked((arg0) -> GAME_SCREEN.sellTower(TOWER));
+		sellTower.setOnMouseClicked(arg0 -> GAME_SCREEN.sellTower(TOWER));
 
 		VBox panelRoot = new VBox(TowerInfo, sellTower);
 		VBox.setVgrow(sellTower, Priority.ALWAYS);
@@ -44,11 +43,11 @@ public class TowerInfoPanel extends SpecificPanel {
 	}
 
 	private String prepareStats(Map<String,Integer> towerStats) {
-		String fullString  = "";
-		for(String key: towerStats.keySet()) {
-			fullString = fullString + key + ": " + towerStats.get(key) + "\n";
+		StringBuilder sb = new StringBuilder();
+		for (Map.Entry<String,Integer> key: towerStats.entrySet()) {
+			sb.append(key.getKey() + ":" + towerStats.get(key.getKey()) + "\n");
 		}
-		return fullString;
+		return sb.toString();
 	}
 
 	public String getTowerInfoOnClick() {

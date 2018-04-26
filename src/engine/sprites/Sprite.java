@@ -123,7 +123,7 @@ public class Sprite implements FrontEndSprite{
 	protected void updateImage(String imagePath) {
 		myImageString = imagePath; 
 		Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
-		myImageView = new ImageView(newImage);
+		myImageView.setImage(newImage);
 		myImageView.setPreserveRatio(true);
 	}
 

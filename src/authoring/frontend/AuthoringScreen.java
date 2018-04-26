@@ -41,15 +41,15 @@ public abstract class AuthoringScreen extends Screen {
     }
     
     protected Button setupBackButton() {
-	return getUIFactory().setupBackButton(e -> {
-	    if(!myIsSaved) {
-		getView().loadErrorAlert("NotSaved");
-		myIsSaved = true;
-	    }
-	    else {
-		getView().goBackFrom(this.getClass().getSimpleName());
-	    }
-	},myView.getErrorCheckedPrompt("Cancel"));
+		return getUIFactory().setupBackButton(e -> {
+			if(!myIsSaved) {
+				getView().loadErrorAlert("NotSaved");
+				myIsSaved = true;
+			}
+			else {
+				getView().goBackFrom(this.getClass().getSimpleName());
+			}
+		},myView.getErrorCheckedPrompt("Cancel"));
 	    
     }
     protected Button setupBackButtonSuperclass() {

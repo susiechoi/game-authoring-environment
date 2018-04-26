@@ -1,7 +1,12 @@
 package engine;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
+import frontend.PropertiesReader;
+
 public class Settings {
 
+	public static final String DEFAULT_CSS_THEME_PROPS = "src/styling/CurrentCSS.properties";
+	
 	private String myGameName; 
 	private double myStartingHealth;
 	private double myStartingMoney; 
@@ -30,6 +35,12 @@ public class Settings {
 	
 	public double startingHealth() {
 	    return myStartingHealth;
+	}
+	
+	public String getCSSTheme() throws MissingPropertiesException {
+		System.out.println("RIGHT HERE");
+		PropertiesReader pr = new PropertiesReader();
+		return pr.findVal(DEFAULT_CSS_THEME_PROPS, myCSSTheme);
 	}
 	
 }

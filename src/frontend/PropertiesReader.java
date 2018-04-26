@@ -2,7 +2,6 @@ package frontend;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ import javafx.scene.image.Image;
  */
 public class PropertiesReader {
 	
-	protected String findKey(String filepath, String targetVal) throws MissingPropertiesException {
+	public String findKey(String filepath, String targetVal) throws MissingPropertiesException {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
 		for (String key : readInProperties.keySet()) {

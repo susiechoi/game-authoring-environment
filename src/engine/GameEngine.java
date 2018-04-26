@@ -41,6 +41,7 @@ public class GameEngine {
 
 	public void setPlayState(PlayState p) {
 		myPlayState = p;
+		
 	}
 
 	public PlayState getPlayState() {
@@ -116,6 +117,7 @@ public class GameEngine {
 
 	}
 	
+
 	/**
 	 * Stops game loop for when user wants to return to editing/authoring the game
 	 * @author susiechoi

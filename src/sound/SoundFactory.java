@@ -7,7 +7,7 @@ import javafx.scene.control.Slider;
 
 /**
  * This serves as the API for our Sound Factory utility
- * Currently, it proves basic functionality such as playing mp3 files, setting volume, and generating basic buttons
+ * Currently, it provides basic functionality such as playing mp3 files, setting volume, and generating basic buttons
  * @author benauriemma
  *
  */
@@ -18,8 +18,9 @@ public interface SoundFactory {
      * The sound will be played to completion and cannot be paused
      * The volume of the sound effect will be the volume that the SoundFactory was set to at the time of this method call
      * 
-     * @param soundName is the name of the sound, which should map to a file path in a properties file at /sound/resources/mp3Files.properties
-     * @throws FileNotFoundException if soundName is not found in mp3Files.properties
+     * @param soundEffectName is the name of the sound, which should map to a file path in the properties file
+     * 			      specified within the implementation of this interface
+     * @throws FileNotFoundException if soundEffectName is not found in the properties file
      */
     public void playSoundEffect(String soundEffectName) throws FileNotFoundException;
     
@@ -29,10 +30,11 @@ public interface SoundFactory {
      * playBackgroundMusic()
      * pauseBackgroundMusic()
      * muteBackgroundMusic()
-     * setVolume()
+     * setVolume(Integer)
      * 
-     * @param musicName is the name of the song, which should map to a file path in a properties file at /sound/resources/mp3Files.properties
-     * @throws FileNotFoundException if musicName is not found in mp3Files.properties
+     * @param musicName is the name of the sound, which should map to a file path in the properties file
+     * 			specified within the implementation of this interface
+     * @throws FileNotFoundException if musicName is not found in the properties file
      */
     public void setBackgroundMusic(String musicName) throws FileNotFoundException;
     
@@ -48,14 +50,16 @@ public interface SoundFactory {
     
     /**
      * This method can be used to set the volume of background music being played currently and all sounds played in the future
-     * Note, this only affects sounds played through this instance of SoundFactory.  As stated in documentation, it is recommended to create only one instance of SoundFactory
-     * @param volume is an integer between 0 and 100. 0 is muted, and 100 is full volume
+     * Note, this only affects sounds played through this instance of SoundFactory
+     * As stated in the README, it is recommended to create only one instance of SoundFactory for the above reason
+     * @param percentVolume is an integer between 0 and 100. 0 is muted, and 100 is full volume
      */
     public void setVolume(Integer percentVolume);
     
     /**
      * This method sets volume to 0
-     * Note, this only affects sounds played through this instance of SoundFactory.  As stated in documentation, it is recommended to create only one instance of SoundFactory
+     * Note, this only affects sounds played through this instance of SoundFactory
+     * As stated in the README, it is recommended to create only one instance of SoundFactory for the above reason
      */
     public void mute();
     
