@@ -8,7 +8,7 @@ import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
+import voogasalad.util.soundfactory.*;
 import javafx.scene.image.ImageView;
 
 import java.util.Map;
