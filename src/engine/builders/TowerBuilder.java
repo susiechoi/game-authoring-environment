@@ -28,7 +28,10 @@ public class TowerBuilder {
      * @return Tower object
      */
     public Tower construct(String name, String imagepath, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) {
-    	List<Property> properties = new ArrayList<Property>();
+    	System.out.println("IN BUILDER");
+    	System.out.println(name);
+    	System.out.println(imagepath);
+	List<Property> properties = new ArrayList<Property>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));
 	return new Tower(name, imagepath, size, launcher, properties);

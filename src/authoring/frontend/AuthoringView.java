@@ -375,6 +375,14 @@ public class AuthoringView extends View {
 		}
 	}
 	
+	public void setObjectAttributes(String objectType, String name, List<Object> attributes) {
+		try {
+			myController.setObjectAttributes(myLevel, objectType, name, attributes);
+		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+	}
+	
 	public void setTheme(String selectedTheme) {
 		myTheme = selectedTheme; 
 		setObjectAttribute("Settings", "", "myGameTheme", myTheme);

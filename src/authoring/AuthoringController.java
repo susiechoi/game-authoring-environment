@@ -266,6 +266,10 @@ public class AuthoringController {
 	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 		myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
 	}
+	
+	public void setObjectAttributes(int level, String objectType, String name, List<Object> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+		myModel.setObjectAttributes(level, objectType, name, attributes);
+	}
 
 	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		myModel.makeEnemy(myLevel, name);

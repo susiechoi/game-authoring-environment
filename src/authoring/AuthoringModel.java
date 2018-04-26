@@ -2,6 +2,7 @@
  * 
  * @author susiechoi 
  * @author Ben Hodgson 4/8/18
+ * @author Katie Van Dyk 4/24/18
  * 
  * Represents the Model component of the Authoring environment's MVC. 
  * Receives input from Controller to determine what object to create/adjust
@@ -30,7 +31,7 @@ import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
 
 public class AuthoringModel {
-	
+
     private final GenericModel myGeneric = new GenericModel();
     private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
@@ -44,15 +45,15 @@ public class AuthoringModel {
     protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
     protected String myBackgroundImage = new String();
     protected List<Point> myPathCoordinates = new ArrayList<Point>();
-    private PropertiesMap spriteProperties = new PropertiesMap();
-
+    private PropertyFactory propertyFactory = new PropertyFactory();
+    
     public AuthoringModel() throws MissingPropertiesException {
 	this(new AuthoredGame());
 	populateInstanceVariables();
 	setupDefaultSettings(); 
 	setupDefaultLevel();
     }
-    
+
     public AuthoringModel(AuthoredGame game) throws MissingPropertiesException {
 	myGame = game;
     }
@@ -132,6 +133,7 @@ public class AuthoringModel {
 	    throw new NoDuplicateNamesException(name);
 	}
 	Tower newTower = myGeneric.generateGenericTower(name);
+	System.out.println("Adding new tower with name " + name + " and image " + newTower.getImageString());
 	currentLevel.addTower(name, newTower);
     }
 
@@ -204,7 +206,7 @@ public class AuthoringModel {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
-		attributeValue = spriteProperties.retrieveFieldValue(attribute, enemy);
+		attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
 		System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 	    }
 	}
@@ -212,7 +214,7 @@ public class AuthoringModel {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
 		Tower tower = currentLevel.getTower(name);
-		attributeValue = spriteProperties.retrieveFieldValue(attribute, tower);
+		attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
 	    }
 	}
 	else if (objectType.equals("Settings")) {
@@ -257,7 +259,7 @@ public class AuthoringModel {
 	System.out.println("IS MAP NULL: " +myImageMap);
 	return myImageMap;
     }
-    
+
     /**
      * 
      * @return AuthoredGame: return the AuthoredGame object created with this model
@@ -273,7 +275,7 @@ public class AuthoringModel {
     public String getGameName() {
 	return myGame.getGameName();
     }
-    
+
     public void setGameName(String name) {
 	myGame.setGameName(name);
     }
@@ -376,28 +378,41 @@ public class AuthoringModel {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
-		spriteProperties.setFieldValue(attribute, enemy, attributeValue);
+		attributeFinder.setFieldValue(attribute, enemy, attributeValue);
 	    }
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
 		Tower tower = currentLevel.getTower(name);
-		spriteProperties.setFieldValue(attribute, tower, attributeValue);
+		attributeFinder.setFieldValue(attribute, tower, attributeValue);
 	    }
 	}
 	else if (objectType.equals("Settings")) {
 	    attributeFinder.setFieldValue(attribute, myGame.getSettings(), attributeValue);
 	}
     }
-    
+
     public void updateAllProperties() throws ObjectNotFoundException {
 	Level level;
 	for (String levelNumber : getLevels()) {
-	    	Integer numLevel = Integer.parseInt(levelNumber);
-		level = getLevel(numLevel);
-		level.updateAllProperties(); 
+	    Integer numLevel = Integer.parseInt(levelNumber);
+	    level = getLevel(numLevel);
+	    level.updateAllProperties(); 
 	}
-}
+    }
 
+    public void setObjectAttributes(int level, String objectType, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
+	if (objectType.equals("Enemy")) {
+	}
+	else if (objectType.equals("Tower")) {
+	    Level currentLevel = myGame.levelCheck(level);
+	    if (currentLevel.containsTower(propertyName)) {
+		Tower tower = currentLevel.getTower(propertyName);
+		tower.addProperty(propertyFactory.getProperty(propertyName, attributes));
+	    }
+	}
+	else if (objectType.equals("Settings")) {
+	}
+    }
 }

@@ -151,5 +151,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	updateLauncher(myLauncher); 
     }
 
+    public void addProperty(Property property) {
+	myProperties.add(property);
+    }
+
 }
 
