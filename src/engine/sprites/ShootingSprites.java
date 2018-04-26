@@ -108,9 +108,6 @@ public abstract class ShootingSprites extends Sprite{
 		if(this.handleCollision(shooter)) {
 			toBeRemoved.add(this);
 		}
-		if(shooter.handleCollision(this)) {
-			toBeRemoved.add(shooter);
-		}
 	}
 	return toBeRemoved;
     }
