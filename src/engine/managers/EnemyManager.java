@@ -49,6 +49,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	for (Path path : myEnemies.keySet()) {
 	    for (Enemy enemy : myEnemies.get(path)) {
 		if(path.checkKill(enemy.currentPosition())) {
+		    System.out.println("Check kill true!");
 		    deadEnemies.add(enemy);
 		}
 		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {

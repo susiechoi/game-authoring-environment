@@ -85,7 +85,9 @@ public class PlayState implements GameData {
 		System.out.println("Spawning enemy!");
 		spawnEnemies();
 	    }
-	    myEnemyManager.moveEnemies(elapsedTime);
+	    List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
+	    // TODO loop through dead Enemies list and deduct appropriate health from player
+	    myMediator.removeListOfSpritesFromScreen(deadEnemies);
 	}
 	handleCollisions(elapsedTime);
     }
@@ -126,7 +128,7 @@ public class PlayState implements GameData {
 
 		}
 		catch (Exception e) {
-		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
+		    // do nothing, path contains no enemies
 		}
 	    }
 	}

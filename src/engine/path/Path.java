@@ -11,7 +11,7 @@ import java.awt.Point;
  * @author Katherine Van Dyk 4/8/18
  */
 public class Path {
-    private final double THRESHOLD = 61;
+    private final double THRESHOLD = 5;
     private final double OFFSET = 30;
     private List<Point> myCoordinates;
     private String myBackgroundImage;
