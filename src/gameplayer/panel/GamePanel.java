@@ -42,14 +42,15 @@ public class GamePanel extends Panel{
 
     //TODO changes this to be passed from mediator ******************************************************************************
     private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
-    private final String CONSTANTS_FILE_PATH = "src/frontend/Constants.properties";
+    private String CONSTANTS_FILE_PATH;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 	PROP_READ = new PropertiesReader();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
-	towerSelected =  null; //maybe make a new towerContructor which creates a null tower?
+	towerSelected =  null;
+	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
     }
 
     @Override
