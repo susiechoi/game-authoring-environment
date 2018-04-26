@@ -10,7 +10,6 @@
 package authoring;
 
 import java.awt.Point;
-import java.lang.Double; 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;

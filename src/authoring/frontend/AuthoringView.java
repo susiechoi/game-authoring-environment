@@ -99,7 +99,7 @@ public class AuthoringView extends View {
 	 * cannot recover (such as choosing a language with no prompts and not having English
 	 * prompts to default to).
 	 * @param error is key to the Error the user has committed
-	 * @see frontend.View#loadErrorScreen(java.lang.String)
+	 * @see frontend.View#loadErrorScreen
 	 */
 	@Override
 	public void loadErrorScreen(String error) {
