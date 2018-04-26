@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
@@ -34,10 +35,8 @@ public class GamePanel extends Panel{
     private FrontEndTower towerSelected;
     private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
-    private List<FrontEndTower> towersPlaced;
     private Pane spriteAdd;
     private Boolean towerClick = false;
-    private ImageView highLightedImageVew;
     private Circle rangeIndicator;
 
     //TODO changes this to be passed from mediator
@@ -46,7 +45,6 @@ public class GamePanel extends Panel{
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
-	towersPlaced = new ArrayList<FrontEndTower>();
 	PROP_READ = new PropertiesReader();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
 	towerSelected =  null; //maybe make a new towerContructor which creates a null tower?
@@ -80,10 +78,10 @@ public class GamePanel extends Panel{
 	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
 	    int random = rand.nextInt(backgroundMap.size());
 	    int count = 0;
-	    for(String s:  backgroundMap.keySet()) {
-		if(s.equals("general")) {
+	    for(Entry<String, Image> entry : backgroundMap.entrySet()) {
+		if(entry.getKey().equals("general")) {
 		    ImageView imageView = new ImageView();
-		    imageView.setImage(backgroundMap.get(s));
+		    imageView.setImage(entry.getValue());
 		    gamePane.getChildren().add(imageView);
 		}
 	    }
@@ -147,9 +145,8 @@ public class GamePanel extends Panel{
 
     private void addTowerImageViewAction(FrontEndTower tower) {
 	ImageView towerImage = tower.getImageView();
-	towerImage.setOnMouseClicked((args) ->{
+	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    highLightedImageVew = towerImage;
 	    // applySelectionGlow(towerImage);
 	    addRangeIndicator(tower);
 	    towerClick = true;
@@ -225,15 +222,12 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
 
-		if(newTower!= null) {
+		addTowerImageViewAction(newTower);
+		spriteAdd.getChildren().add(towerImage);
+		resetCursor();
+		towerPlaceMode = false;
+		//TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
 
-		    addTowerImageViewAction(newTower);
-		    towersPlaced.add(newTower);
-		    spriteAdd.getChildren().add(towerImage);
-		    resetCursor();
-		    towerPlaceMode = false;
-		    //TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
-		}
 	    }
 	    catch(CannotAffordException e){
 		//GameScreen popup for cannot afford
