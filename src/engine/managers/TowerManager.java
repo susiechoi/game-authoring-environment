@@ -1,10 +1,17 @@
 package engine.managers;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
+import engine.sprites.towers.projectiles.Projectile;
 
 
 /**
@@ -46,14 +53,18 @@ public class TowerManager extends ShootingSpriteManager {
      */
     public void moveTowers() {
 	// TODO Auto-generated method stub
-	
     }
     
     public FrontEndTower place(Point location, String type) {
+	System.out.println(type);
+	for (Entry<String, Tower> entry : myTowerTypeToInstance.entrySet()) {
+	    System.out.println(entry.getKey());
+	    System.out.println(entry.getValue());
+	}
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
-    		return (FrontEndTower) newTower;
+    		return newTower;
     }
 
     /**
@@ -72,8 +83,26 @@ public class TowerManager extends ShootingSpriteManager {
      * @param tower
      * @param upgradeName
      */
-    public void upgrade(FrontEndTower tower, String upgradeName) {
-	
+    public double upgrade(FrontEndTower tower, String upgradeName, double balance) {
+	for(ShootingSprites realTower : this.getListOfActive()) {
+	    if(realTower.hashCode() == tower.hashCode()) {
+		 return realTower.upgrade(upgradeName, balance);
+	    }
+	}
+	return balance;
+    }
+
+    /**
+     * Removes all of the projectiles from the tower manager
+     * @return
+     */
+    public Collection<Projectile> removeAllProjectiles() {
+	List<Projectile> toBeRemoved = new ArrayList<>();
+	for(ShootingSprites tower : this.getListOfActive()) {
+	    toBeRemoved.addAll(tower.getLauncher().getListOfActive());
+	    tower.getLauncher().getListOfActive().clear();
+	}
+	return toBeRemoved;
     }
 
 }

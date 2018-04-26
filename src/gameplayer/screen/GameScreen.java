@@ -1,10 +1,8 @@
 package gameplayer.screen;
 
 import authoring.AuthoringModel;
-import authoring.frontend.FrontendLauncherForTesting;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
-import engine.Settings;
 import gameplayer.panel.*;
 
 import java.awt.Point;
@@ -13,18 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.AuthoringController;
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
-import frontend.StageManager;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -35,10 +33,8 @@ import sound.ITRTSoundFactory;
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private final String DEFAULT_SHARED_STYLESHEET = "styling/theme1.css";
-	private final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+	private static final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
 
-	private final UIFactory UIFACTORY;
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
 	private TowerInfoPanel TOWER_INFO_PANEL;
@@ -57,7 +53,6 @@ public class GameScreen extends Screen {
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
-		UIFACTORY = new UIFactory();
 		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
@@ -68,6 +63,7 @@ public class GameScreen extends Screen {
 		//TODO the null argument on creation is terrible, needs to change once
 		//actual functionality of panels is changed
 	}
+
 
 	@Override
 	public Parent makeScreenWithoutStyling() {
@@ -97,18 +93,12 @@ public class GameScreen extends Screen {
 		GAME_PANEL.towerSelected(tower);
 	}
 
-	public Integer getMoney() {
-		//TODO call ObserveHandler.triggerEvent(NeedMoney) to get money sent from playState
-		/**
-		 * also might implement money tracking by passing Integer object of
-		 * currency from playState in initialization of GameScreen/TowerPanel
-		 * 	-if this is the case this method isn't needed and an updateCurrency Method
-		 * 	should instead be called in towerPanel upon any action which would spend currency
-		 */
-		Integer money = 0; //placeholder
-		return money;
-	}
-
+	//	public void setStyling() {
+	//		String style = MEDIATOR.getStyling();
+	//		if (style != null) {
+	//			rootPane.getStylesheets().add(style);
+	//		}
+	//	}
 
 	@Override
 	protected View getView() {
@@ -133,7 +123,7 @@ public class GameScreen extends Screen {
 	}
 
 	//TODO implement reflection//rest of controls
-	public void controlTriggered(String control) {
+	public void controlTriggered(String control) throws MissingPropertiesException {
 		if(control.equals("play"))
 			MEDIATOR.play();
 		else if(control.equals("pause"))
@@ -149,6 +139,7 @@ public class GameScreen extends Screen {
 				e.printStackTrace();
 			}
 		else if (control.equals("edit")) { // Susie added this
+			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 		}
@@ -163,7 +154,7 @@ public class GameScreen extends Screen {
 		}
 		else if (setting.equals("play")) {
 			try{
-				SOUND_FACTORY.setBackgroundMusic("src/sound/files/epic.mp3");
+				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
 
@@ -183,17 +174,26 @@ public class GameScreen extends Screen {
 		}
 	}
 
-	public void updateCurrency(Integer newBalence) {
-		TOWER_PANEL.updateCurrency(newBalence);
+
+
+
+	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
+		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
+		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
+		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+		myCurrency.addListener(currencyListener);
+		myScore.addListener(scoreListener);
+		myLives.addListener(healthListener);
+		TOWER_PANEL.setInitalMoney(myCurrency.get());
+		SCORE_PANEL.setInitialScore(myScore.get());
+		SCORE_PANEL.setInitialLives(myLives.get());
+
+		//	currencyListener.changed(myCurrency, 0, 0);
+		//	scoreListener.changed(myScore, 0, 0);
+		//	healthListener.changed(myLives, 0, 0);
+
 	}
 
-	public void updateHealth(Integer newHealth) {
-		SCORE_PANEL.updateHealth(newHealth);
-	}
-
-	public void updateScore(Integer newScore) {
-		SCORE_PANEL.updateScore(newScore);
-	}
 
 	public void updateLevel(Integer newLevel) {
 		SCORE_PANEL.updateLevel(newLevel);
@@ -212,8 +212,8 @@ public class GameScreen extends Screen {
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
-	public void upgradeClickedOn(FrontEndTower tower) {
-		BUY_PANEL = new BuyPanel(this,PROMPTS, tower);
+	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
+		BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
 		displayPane.getChildren().clear();
 		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
@@ -267,5 +267,12 @@ public class GameScreen extends Screen {
 		return SCREEN_MANAGER;
 	}
 
+	public void upgradeBought(FrontEndTower tower, String upgradeName) {
+		MEDIATOR.upgradeTower(tower, upgradeName);
+	}
 
+
+	public ITRTSoundFactory getSoundFactory() {
+		return SOUND_FACTORY;
+	}
 }

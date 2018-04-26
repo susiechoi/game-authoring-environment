@@ -7,10 +7,11 @@ import java.awt.Point;
 /**
  * Class for constructing path and determining next coordinates
  * 
+ * @author Ryan Pond
  * @author Katherine Van Dyk 4/8/18
  */
 public class Path {
-    private final double THRESHOLD = 61;
+    private final double THRESHOLD = 5;
     private final double OFFSET = 30;
     private List<Point> myCoordinates;
     private String myBackgroundImage;
@@ -24,24 +25,12 @@ public class Path {
     }
 
     /**
-     * Returns the next position of the object according to its speed
-     * 
-     * @param mySpeed
+     * Returns the next position along the Path
+     * @param pathIndex : current index of the path it is on (block index)
+     * @return : returns the next point along the path index
      */
-    public Point nextPosition(Point currentPos, int pathIndex, double pathAngle) {
-	if(checkBounds(currentPos, pathIndex)) {
-	    currentPos = myCoordinates.get(pathIndex+1);
-	    return currentPos;
-	}
-	else {
-	    System.out.println("here");
-	    // 	System.out.println("CURRENT XPOS: " + currentPos.getX());
-	    // 	System.out.println("CURRENT YPOS: " + currentPos.getY());
-	    double newX = currentPos.getX() + OFFSET - Math.cos(pathAngle) * 3;
-	    double newY = currentPos.getY() + OFFSET + Math.sin(pathAngle) * 3;
-	    currentPos.setLocation(newX, newY);
-	    return currentPos; 
-	}
+    public Point nextPosition(int pathIndex) {
+	return myCoordinates.get(pathIndex+1);
     }
 
     /**
@@ -52,7 +41,6 @@ public class Path {
     private boolean checkBounds(Point currentPos, int pathIndex) {
 	double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX()  - currentPos.getX(), 2);
 	double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPos.getY(), 2); 
-	System.out.println(Math.sqrt(xDistance + yDistance));
 	return Math.sqrt(xDistance + yDistance) < THRESHOLD;
     }
 
@@ -67,7 +55,6 @@ public class Path {
 	double deltaY = point2.getY() - point1.getY();
 	double deltaX = point2.getX() - point1.getX();
 	double angle = Math.atan2(deltaX,deltaY);
-	//System.out.println(angle);
 	return angle;
     }
 

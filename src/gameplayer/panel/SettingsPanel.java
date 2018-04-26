@@ -6,19 +6,11 @@ import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
-import javafx.geometry.Pos;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.Label;
-import gameplayer.screen.GameScreen;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import sound.ITRTSoundFactory;
-import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 
-import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class SettingsPanel extends Panel {
@@ -42,7 +34,7 @@ public class SettingsPanel extends Panel {
         PROMPTS =  promptReader;
         PROP_READ = new PropertiesReader();
         UIFACTORY = new UIFactory();
-        SOUND_FACTORY = new ITRTSoundFactory();
+        SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
     }
 
     private Button createHelp() {

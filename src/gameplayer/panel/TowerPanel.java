@@ -1,6 +1,8 @@
 
 package gameplayer.panel;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -28,11 +30,11 @@ public class TowerPanel extends Panel {
     private final int SWAP_BUTTON_SIZE = 25;
 
 
+    private Integer money;
     private BorderPane PANE;
     private PromptReader PROMPTS;
     private GameScreen GAME_SCREEN;
     private PropertiesReader PROP_READ;
-    private Integer money;
     private final UIFactory UIFACTORY;
     private Panel bottomPanel;
     private Button currencyDisplay;
@@ -43,7 +45,6 @@ public class TowerPanel extends Panel {
 
     //private final FileIO FILE_READER;
 
-    private final String[] Button_IDS = {}; //How should we create the buttons for selecting towers since there are so many?
     private HBox towerPane;
 
 
@@ -52,7 +53,6 @@ public class TowerPanel extends Panel {
 	PROMPTS = promptReader;
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-	money = GAME_SCREEN.getMoney();
 	makePanel();
     }
 
@@ -71,12 +71,14 @@ public class TowerPanel extends Panel {
 
 	currencyDisplay = new Button();
 	currencyDisplay.setId("currencyButton");
-	currencyDisplay.setText("$" +money.toString());
+	currencyDisplay.setText("$" + money);
 	currencyDisplay.setDisable(true);
 	//currencyDisplay.setMaxWidth(Double.MAX_VALUE);
 
 
 	VBox currencyAndSwap = new VBox(currencyDisplay);
+	currencyAndSwap.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+
 	currencyAndSwap.setAlignment(Pos.CENTER);
 	try {
 	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
@@ -102,6 +104,15 @@ public class TowerPanel extends Panel {
 	towersAndCurr.setId("towerPanel");
 	PANEL = towersAndCurr;
     }
+    
+    public void setInitalMoney(Integer moneyIn) {
+	updateCurrency(moneyIn);
+    }
+
+    private void handleMouseInput(double x, double y) {
+	GAME_SCREEN.towerSelectedForPlacement(null);
+    }
+
 
     private VBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
 	VBox fullTowerHold = new VBox();
@@ -112,8 +123,8 @@ public class TowerPanel extends Panel {
 	for(FrontEndTower tower : availableTowers) {
 	    ImageView imageView = tower.getImageView();
 	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
-	//    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
-	//    imageView.setPreserveRatio(false);
+	    //    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
+	    //    imageView.setPreserveRatio(false);
 	    Button towerButton = UIFACTORY.makeImageViewButton("button",imageView);
 
 	    towerButton.setMaxWidth(Double.MAX_VALUE);
@@ -125,16 +136,16 @@ public class TowerPanel extends Panel {
 
 		fullTowerHold.getChildren().add(towerHolder);
 		VBox.setVgrow(towerHolder, Priority.ALWAYS);
-		
+
 		prevTowerButton = towerButton;
 	    }
 	    else {
 		towerButton.setPrefWidth(towerHolder.getPrefWidth());
 		prevTowerButton.setPrefWidth(towerHolder.getPrefWidth());
 	    }
-	    
+
 	    towerHolder.getChildren().add(towerButton);
-	    
+
 	    HBox.setHgrow(towerButton, Priority.ALWAYS);
 
 	    alternator++;
@@ -142,14 +153,19 @@ public class TowerPanel extends Panel {
 	if(alternator%2 ==1) {
 	    ImageView voidView = new ImageView();
 	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
-//	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
+	    //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton("button", voidView);
-	  
+	    voidButton.setOnMouseClicked((arg0) ->{ 
+		GAME_SCREEN.towerSelectedForPlacement(null);
+		System.out.println("nullhit");
+
+	    });
+
 	    voidButton.setGraphic(voidView);
-	    
+
 	    voidButton.setMaxWidth(Double.MAX_VALUE);
 	    voidButton.setMaxHeight(Double.MAX_VALUE);
-	    voidButton.setDisable(true);
+	    // voidButton.setDisable(true);
 
 	    towerHolder.getChildren().add(voidButton);
 	    HBox.setHgrow(voidButton, Priority.ALWAYS);
@@ -161,25 +177,8 @@ public class TowerPanel extends Panel {
 	//fullTowerHold.setMaxWidth(Double.MAX_VALUE);
 
 	return fullTowerHold;
-
-	//TODO pretty bad code that doesn't work, towers should be same height in columns
-	//	    if(alternator%2 == 1) {
-	//		Button voidButton = UIFACTORY.makeTextButton("voidButton", "");
-	//		towerHolderRight.getChildren().add(voidButton);
-	//		VBox.setVgrow(voidButton, Priority.ALWAYS);
-	//		voidButton.setMaxWidth(Double.MAX_VALUE);
-	//		voidButton.setMaxHeight(Double.MAX_VALUE);
-	//		voidButton.setDisable(true);
-	//	    }
-
-	//something went wrong and we don't have the towers
-	//TODO something reasonable here 
-	//probably have default images that aren't the ones specified by authoring
     }
 
-    private void towerSelected(String towerPropName) {
-
-    }
 
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
@@ -194,9 +193,19 @@ public class TowerPanel extends Panel {
 
     }
 
-    public void updateCurrency(Integer newBalence) {
-	money = newBalence;
-	currencyDisplay.setText("$" +money.toString());
+    private void updateCurrency(Integer newValue) {
+	currencyDisplay.setText("$" +newValue);
+    }
+
+    public ChangeListener createCurrencyListener() {
+	ChangeListener changeListener = new ChangeListener() {
+	    @Override
+	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+		updateCurrency((Integer)observableValue.getValue());
+	    }
+	};
+	return changeListener;
+
     }
 }
 

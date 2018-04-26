@@ -1,7 +1,6 @@
 package gameplayer.panel;
 
 import engine.sprites.towers.FrontEndTower;
-import javafx.scene.Parent;
 
 /**
  * class for panels which display/use information from a specific placed tower

@@ -30,6 +30,18 @@ public class Wave {
 	myTime = DEFAULT_WAVE_TIME;
     }
     
+    public Wave getCopy() {
+	Wave copy = new Wave();
+	copy.setWaveTime(myTime);
+	for(Path path : myWaveMap.keySet()) {
+	    for(Enemy enemy : myWaveMap.get(path).keySet()) {
+		copy.addEnemy(new Enemy(enemy), path, myWaveMap.get(path).get(enemy));
+	    }
+	}
+	return copy;
+	
+    }
+    
     
 
     /**
@@ -91,20 +103,7 @@ public class Wave {
     }
 
 
-    /**
-     * Decrements the number of a specified enemy remaining in the wave
-     * 
-     * @param enemy: the enemy object to decrement
-     */
-    @Deprecated
-    private void decrementEnemyCount(Enemy enemy) {
-	for(Path path : myWaveMap.keySet()) {
-	    if (myWaveMap.get(path).containsKey(enemy)){
-		decrementEnemyCount(enemy, path);
-		return;
-	    }
-	}
-    }
+
     /**
      * Decrements the number of a specified enemy remaining in the wave
      * 
@@ -142,6 +141,15 @@ public class Wave {
 		}
 	    }
 	return null;
+    }
+    public void removeEnemyType(String enemyName) {
+	for(Path path : myWaveMap.keySet()) {
+	    for(Enemy waveEnemies : myWaveMap.get(path).keySet()) {
+		if(waveEnemies.getName().equals(enemyName)) {
+		    myWaveMap.get(path).remove(waveEnemies);
+		}
+	    }
+	}
     }
 
     /**
