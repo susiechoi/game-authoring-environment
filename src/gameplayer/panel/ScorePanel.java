@@ -1,25 +1,16 @@
 
 package gameplayer.panel;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import gameplayer.screen.GameScreen;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 
 public class ScorePanel extends Panel {
 
-    private final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+    private static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
-    private final GameScreen GAME_SCREEN;
     private Integer SCORE;
     private Integer HEALTH;
     private Integer LEVEL;
@@ -27,8 +18,7 @@ public class ScorePanel extends Panel {
     private Label LevelText;
     private Label HealthText;
 
-    public ScorePanel(GameScreen gameScreen) {
-	GAME_SCREEN = gameScreen;
+    public ScorePanel() {
 	SCORE = 0;
 	HEALTH = 100;
 	LEVEL = 1;
@@ -85,23 +75,21 @@ public class ScorePanel extends Panel {
     
 
     public ChangeListener createScoreListener() {
-	ChangeListener changeListener = new ChangeListener() {
+	return new ChangeListener() {
 	    @Override
 	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
 		updateScore((Integer)observableValue.getValue());
 	    }
 	};
-	return changeListener;
     }
     
     public ChangeListener createHealthListener() {
-   	ChangeListener changeListener = new ChangeListener() {
+   	return new ChangeListener() {
    	    @Override
    	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
    		updateHealth((Integer)observableValue.getValue());
    	    }
    	};
-   	return changeListener;
        }
 
 }

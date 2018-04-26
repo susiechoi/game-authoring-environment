@@ -15,7 +15,6 @@ public class BuyPanel extends SpecificPanel {
 
     private final GameScreen GAME_SCREEN;
     private final UIFactory UI_FACTORY;
-    private PropertiesReader PROP_READ;
     private PromptReader PROMPTS;
     private final String UPGRADE_TYPE;
  
@@ -25,7 +24,6 @@ public class BuyPanel extends SpecificPanel {
 	GAME_SCREEN = gameScreen;
         PROMPTS = promptReader;
         UI_FACTORY = new UIFactory();
-        PROP_READ = new PropertiesReader();
         UPGRADE_TYPE= upgradeName;
     }
 
@@ -35,7 +33,7 @@ public class BuyPanel extends SpecificPanel {
         Label TowerInfo = new Label("return value from getUpgradeInfoFromClick method");
         TowerInfo.setWrapText(true);
         Button buyUpgrade = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("BuyTowerUpgrade"));
-        buyUpgrade.setOnMouseClicked((arg0) -> GAME_SCREEN.upgradeBought(TOWER, UPGRADE_TYPE));
+        buyUpgrade.setOnMouseClicked(arg0 -> GAME_SCREEN.upgradeBought(TOWER, UPGRADE_TYPE));
 
         VBox panelRoot = new VBox(TowerInfo, buyUpgrade);
         VBox.setVgrow(TowerInfo, Priority.ALWAYS);
