@@ -109,13 +109,6 @@ public class GameEngine {
 	public void setLevel(PlayState newLevel) {
 
 	}
-
-	/**
-	 * Restarts the current level
-	 */
-	public void restartLevel() {
-
-	}
 	
 
 	/**
