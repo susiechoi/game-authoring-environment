@@ -52,7 +52,9 @@ public class GameScreen extends Screen {
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
+		System.out.println("Sound factory is null: "+(SOUND_FACTORY==null));
 		SOUND_FACTORY = new ITRTSoundFactory();
+		System.out.println("Sound factory is null: "+(SOUND_FACTORY==null));
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this, PROMPTS);
@@ -157,7 +159,7 @@ public class GameScreen extends Screen {
 				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
-
+			    e.printStackTrace();
 			}
 			SOUND_FACTORY.playBackgroundMusic();
 
