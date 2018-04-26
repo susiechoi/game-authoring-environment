@@ -150,7 +150,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected String getMySelectedObjectName() {
 		return mySelectedObjectName; 
 	}
-	protected HBox makeImageSelector(String objectType, String propertiesFilepath){
+	protected HBox makeImageSelector(String objectType, String imageName, String propertiesFilepath){
 	    	HBox imageSelect = new HBox();
 	    	ComboBox<String> imageDropdown = new ComboBox<String>();
 		ImageView imageDisplay = new ImageView(); 
@@ -162,7 +162,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		ComboBox<String> imageDropdownCopy = imageDropdown;
 		imageDropdown.addEventHandler(ActionEvent.ACTION,e -> {
 		    	try {
-			getView().setObjectAttribute(objectType, mySelectedObjectName, "myImage", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
+			getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
 		    	}
 		    	catch(MissingPropertiesException e2) {
 		    	    getView().loadErrorScreen("NoImageFile");
