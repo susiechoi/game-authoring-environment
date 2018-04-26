@@ -1,5 +1,6 @@
 package engine.builders;
 
+import engine.sprites.properties.ConstantSpeedProperty;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -12,9 +13,8 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class ProjectileBuilder {
 
-    public Projectile construct(String name, String imagepath, double damage, double size, double speed) {
-	DamageProperty damageProperty = new DamageProperty(0, 0, damage);
-	return new Projectile(name, damageProperty, speed, imagepath, speed);
+    public Projectile construct(String name, String imagepath, DamageProperty damage, double size, ConstantSpeedProperty constantSpeedProperty) {
+	return new Projectile(name, damage, size, imagepath, constantSpeedProperty);
     }
 
 

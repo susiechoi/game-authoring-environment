@@ -18,12 +18,13 @@ import engine.sprites.properties.UpgradeProperty;
  *
  */
 public class PropertyFactory {
+    
 
     protected final ResourceBundle PROPERTIES = ResourceBundle.getBundle("authoring/resources/properties");
+    private final String PACKAGE = "engine.sprites.properties.";
 
     public Property getProperty(String propertyName, List<Object> attributes) {
-	//TODO : if upgrade property
-	String className = propertyName + "Property";
+	String className = PACKAGE + propertyName;
 	String type = null;
 	for(String key : PROPERTIES.keySet()) {
 	    if(propertyName.equals(key)) {
@@ -52,7 +53,7 @@ public class PropertyFactory {
 
     private Property createProperty(String className, String type, Object attribute) {
 	Reflection reflection = new Reflection();
-	return (UpgradeProperty) reflection.createInstance(className, (double) attribute);
+	return (Property) reflection.createInstance(className, (double) attribute);
     }
 
 }

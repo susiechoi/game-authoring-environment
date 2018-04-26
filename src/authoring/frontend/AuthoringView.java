@@ -375,9 +375,9 @@ public class AuthoringView extends View {
 		}
 	}
 	
-	public void setObjectAttributes(String objectType, String name, List<Object> attributes) {
+	public void setObjectAttributes(String objectType, String name, String propertyName, List<Object> attributes) {
 		try {
-			myController.setObjectAttributes(myLevel, objectType, name, attributes);
+			myController.setObjectAttributes(myLevel, objectType, name, propertyName, attributes);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			loadErrorScreen("NoObject");
 		}

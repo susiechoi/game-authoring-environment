@@ -16,8 +16,8 @@ public class LauncherBuilder {
     
     
     public Launcher construct(double fireRate, double fireRange, Projectile projectile) {
-	FireRateProperty rate = new FireRateProperty(0, 0, fireRate);
-	RangeProperty range = new RangeProperty(0, 0, fireRange);
+	FireRateProperty rate = new FireRateProperty(fireRate);
+	RangeProperty range = new RangeProperty(fireRange);
 	return new Launcher(rate, projectile, range);
     }
 

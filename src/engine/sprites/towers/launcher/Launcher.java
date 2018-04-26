@@ -1,11 +1,15 @@
 package engine.sprites.towers.launcher;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.FireRateProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.properties.RangeProperty;
+import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.scene.image.Image;
 
 /**
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to
@@ -19,23 +23,23 @@ import javafx.scene.image.Image;
  */
 public class Launcher extends Manager<Projectile>{
 
-    private RangeProperty myRange;
-    private FireRateProperty myFireRate;
+    private final String fireRate = "FireRateProperty";
     private Projectile myProjectile;
     private double timeSinceLastShot;
+    private List<Property> myProperties;
 
-    public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
-	System.out.println("original rate is " + fireRate.getProperty());
-	myFireRate = fireRate;
+    public Launcher(FireRateProperty rate, Projectile projectile, RangeProperty range) {
 	myProjectile = projectile;
-	myRange = range;
+	myProperties = new ArrayList<Property>();
 	timeSinceLastShot = 0;
     }
     
     public Launcher(Launcher launcher) {
-	myFireRate = launcher.getFireRateProperty();
+	myProperties = new ArrayList<Property>();
+	for(Property p : launcher.getProperties()) {
+	    myProperties.add(p.makeCopy());
+	}
 	myProjectile = launcher.getProjectile();
-	myRange = launcher.getRangeProperty();
 	timeSinceLastShot = 0;
     }
 
@@ -64,26 +68,14 @@ public class Launcher extends Manager<Projectile>{
      * @param balance : balance of the user
      * @return : returns the new user balance
      */
-    public double upgradeFireRate(double balance) {
-	return myFireRate.upgrade(balance);
+    public double upgradeProperty(String name, double balance) {
+	for(Property property : myProperties) {
+	    if(property.getName().equals(name)) {
+		balance -= ((UpgradeProperty) property).upgrade(balance);
+	    }
+	}
+	return balance;
     }
-    /**
-     * Upgrades the damage done by the projectile
-     * @param balance : balance of the user
-     * @return : returns new balance
-     */
-    public double upgradeDamage(double balance) {
-	return myProjectile.upgradeDamage(balance);
-    }
-    /**
-     * Upgrades the range of the Launcher
-     * @param balance : balance of the user
-     * @return : returns new balance
-     */
-    public double upgradeRange(double balance) {
-	return myRange.upgrade(balance);
-    }
-
 
     /**
      * Launch method will make sure that enough time has passed since last shot and then fire a new projectile
@@ -102,18 +94,21 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
-	System.out.println("firerate is " + myFireRate.getProperty());
-     	if(timeSinceLastShot >= 100/myFireRate.getProperty()) {
+	System.out.println("firerate is " + getProperty(fireRate));
+     	if(timeSinceLastShot >= 100/getProperty(fireRate)) {
      		return true;
      	}
      	timeSinceLastShot+=elapsedTime;
 	return false;
     }
 
-
-    
-    public double getRange() {
-    	return myRange.getProperty(); 
+    public double getProperty(String name) {
+    	for(Property property : myProperties) {
+    	    if(property.getName().equals(name)) {
+    		return property.getProperty();
+    	    }
+    	}
+    	return -1;
     }
 
     public String getProjectileImage() {
@@ -124,32 +119,39 @@ public class Launcher extends Manager<Projectile>{
     	return myProjectile.getDamage(); 
     }
     
-    public double getProjectileSpeed() {
-    	return myProjectile.getSpeed(); 
-    }
-    
     public double getProjectileSize() {
     	return myProjectile.getSize(); 
-    }
-
-    public String getDamageName() {
-    	return myProjectile.getDamageName();
-    }
-    public FireRateProperty getFireRateProperty() {
-    	return myFireRate;
-    }
-    public RangeProperty getRangeProperty() {
-    	return myRange;
     }
     
     public double getDamage() {
     	return myProjectile.getDamage();
     }
-    public double getFireRate() {
-    	return myFireRate.getProperty();
-    }
+    
+    public double upgradeDamage(double balance) {
+    	return myProjectile.upgradeProperty("DamageProperty", balance);
+    } 
 
-    public String getFireRateName() {
-    	return myFireRate.getName();
+    public void addProperty(Property property) {
+	Property toRemove = null;
+	for(Property p : myProperties) {
+	    if(property.getName().equals(p.getName())) {
+		toRemove = p;
+	    }
+	}
+	myProperties.remove(toRemove);
+	myProperties.add(property);
+    }
+    
+    public void addProjectileProperty(Property property) {
+    	myProjectile.addProperty(property);
+    }
+    
+    public List<Property> getProperties(){
+	return myProperties;
+    }
+    
+    public void setProjectileImage(String image){
+	myProjectile.setImage(image);
     }
 }
+

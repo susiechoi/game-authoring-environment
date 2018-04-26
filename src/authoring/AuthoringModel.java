@@ -382,6 +382,13 @@ public class AuthoringModel {
 		attributeFinder.setFieldValue(attribute, enemy, attributeValue);
 	    }
 	}
+	else if(objectType.equals("Projectile")) {
+	    Level currentLevel = myGame.levelCheck(level);
+	    if (currentLevel.containsTower(name)) {
+		Tower tower = currentLevel.getTower(name);
+		tower.setProjectileImage((String) attributeValue);
+	    }
+	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
@@ -403,14 +410,31 @@ public class AuthoringModel {
 	}
     }
 
-    public void setObjectAttributes(int level, String objectType, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
+    public void setObjectAttributes(int level, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
 	if (objectType.equals("Enemy")) {
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
-	    if (currentLevel.containsTower(propertyName)) {
-		Tower tower = currentLevel.getTower(propertyName);
+	    if (currentLevel.containsTower(objectName)) {
+		Tower tower = currentLevel.getTower(objectName);
+		System.out.println("Property name in authoring model: " + propertyName);
 		tower.addProperty(propertyFactory.getProperty(propertyName, attributes));
+	    }
+	}
+	else if (objectType.equals("Projectile")) {
+	    Level currentLevel = myGame.levelCheck(level);
+	    if (currentLevel.containsTower(objectName)) {
+		Tower tower = currentLevel.getTower(objectName);
+		System.out.println("Property name in authoring model: " + propertyName);
+		System.out.println(propertyFactory.getProperty(propertyName, attributes));
+		tower.addProjectileProperty(propertyFactory.getProperty(propertyName, attributes));
+	    }
+	}
+	else if (objectType.equals("Launcher")) {
+	    Level currentLevel = myGame.levelCheck(level);
+	    if (currentLevel.containsTower(objectName)) {
+		Tower tower = currentLevel.getTower(objectName);
+		tower.addLauncherProperty(propertyFactory.getProperty(propertyName, attributes));
 	    }
 	}
 	else if (objectType.equals("Settings")) {

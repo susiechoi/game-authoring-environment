@@ -7,7 +7,6 @@ import engine.physics.ImageIntersecter;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
-import frontend.PropertiesReader;
 
 /**
  * This class is a more specific Sprite that applies to just shooting objects (Enemy and Tower).
@@ -19,7 +18,6 @@ import frontend.PropertiesReader;
  */
 public abstract class ShootingSprites extends Sprite{
 
-    private PropertiesReader PROP_READ;
     private Launcher myLauncher;
     private int hitCount;
     private int deadCount;
@@ -113,7 +111,7 @@ public abstract class ShootingSprites extends Sprite{
 
     public boolean hasInRange(ShootingSprites passedSprite) {
 	double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
-	return (distanceBetween <= myLauncher.getRange());
+	return (distanceBetween <= myLauncher.getProperty("RangeProperty"));
     }
 
     public boolean hasReloaded(double elapsedTime) {
@@ -184,7 +182,7 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     private double upgradeFireRate(double balance) {
-	return this.getLauncher().upgradeFireRate(balance);
+	return this.getLauncher().upgradeProperty("FireProperty", balance);
     }
 
     private double upgradeHealth(double balance) {
@@ -197,7 +195,7 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     private double upgradeRange(double balance) {
-	return this.getLauncher().upgradeRange(balance);
+	return this.getLauncher().upgradeProperty("RangeProperty", balance);
     }
     
     protected void updateLauncher(Launcher launcher) {

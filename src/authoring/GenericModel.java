@@ -14,6 +14,8 @@ import engine.builders.ProjectileBuilder;
 import engine.builders.TowerBuilder;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.properties.ConstantSpeedProperty;
+import engine.sprites.properties.DamageProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -181,9 +183,9 @@ public class GenericModel {
 		name,  
 		myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
 		// TODO add projectile speed !!!!
-		Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
+		new DamageProperty(0, 0, Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage"))), 
 		Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
-		Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
+		new ConstantSpeedProperty(Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed"))));
     }
 
     private void populateInstanceVariables() throws MissingPropertiesException {

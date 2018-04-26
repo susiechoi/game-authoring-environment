@@ -107,10 +107,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return balance;
     }
 
-    public String getDamageName() {
-	return this.getLauncher().getDamageName();
-    }
-
     public Map<String, Integer> getTowerStats(){
 	Map<String, Integer> propertyStats = new HashMap<String, Integer>();
 	for(Property p : myProperties) {
@@ -134,7 +130,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     public double getTowerRange() {
-	return this.getLauncher().getRange();
+	return this.getLauncher().getProperty("RangeProperty");
     }
 
     public void copyProperties() {
@@ -152,7 +148,28 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     public void addProperty(Property property) {
+	System.out.println("Property: " + property);
+	System.out.println("Property Name: " + property.getName());
+	Property toRemove = null;
+	for(Property p : myProperties) {
+	    if(property.getName().equals(p.getName())) {
+		toRemove = p;
+	    }
+	}
+	if(toRemove != null) myProperties.remove(toRemove);
 	myProperties.add(property);
+    }
+    
+    public void addLauncherProperty(Property property) {
+	myLauncher.addProperty(property);
+    }
+    
+    public void addProjectileProperty(Property property) {
+	myLauncher.addProjectileProperty(property);
+    }
+    
+    public void setProjectileImage(String image) {
+	myLauncher.setProjectileImage(image);
     }
 
 }

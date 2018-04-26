@@ -8,7 +8,7 @@ package engine.sprites.properties;
  * @date 4/5/18
  *
  */
-public class FireRateProperty extends UpgradeProperty {
+public class FireRateProperty extends Property {
     
     /**
      * Constructor that takes in cost, value and rate of fire
@@ -17,8 +17,8 @@ public class FireRateProperty extends UpgradeProperty {
      * @param value: How much the fire rate is incremented per upgrade
      * @param fireRate: Rate of fire
      */
-    public FireRateProperty(double cost, double value, double fireRate) {
-	super(cost, value, fireRate);
+    public FireRateProperty(double firerate) {
+	super(firerate);
     }
 
     @Override

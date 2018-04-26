@@ -8,7 +8,7 @@ package engine.sprites.properties;
  * @date 4/7/18
  *
  */
-public class SpeedProperty extends UpgradeProperty {
+public class ConstantSpeedProperty extends Property {
     
     /**
      * Constructor that takes in cost of range property, upgrade value, and 
@@ -18,8 +18,8 @@ public class SpeedProperty extends UpgradeProperty {
      * @param value
      * @param speed
      */
-    public SpeedProperty(double cost, double value, double speed) {
-	super(cost, value, speed);
+    public ConstantSpeedProperty(double speed) {
+	super(speed);
     }
     
     public void setProperty(double newSpeed) {

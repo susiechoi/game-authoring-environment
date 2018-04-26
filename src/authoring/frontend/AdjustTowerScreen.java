@@ -49,8 +49,8 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	Button goToProjectileLauncherButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 	vb.getChildren().add(goToProjectileLauncherButton);
 	goToProjectileLauncherButton.setOnAction(e -> {
-	    setProperty(myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
-	    setProperty(myTowerValue);
+	    setProperty("HealthProperty", myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
+	    setProperty("ValueProperty", myTowerValue);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", myObjectName);
 	});
 	Button backButton = setupBackButton(); 
@@ -100,9 +100,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	});
     }
 
-    private void setProperty(Object ...args) {
+    private void setProperty(String propertyName, Object ...args) {
 	List<Object> attributes = makeList(args);
-	getView().setObjectAttributes(OBJECT_TYPE, myObjectName, attributes);
+	getView().setObjectAttributes(OBJECT_TYPE, myObjectName, propertyName, attributes);
     }
 
     private List<Object> makeList(Object ...attributes) {
