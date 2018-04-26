@@ -19,23 +19,19 @@ import javafx.scene.layout.VBox;
 public class UpgradePanel extends SpecificPanel {
 
     //TODO don't have this be a static value
-    private final int UPGRADE_IMAGE_SIZE = 70;
 
     private final GameScreen GAME_SCREEN;
     private final UIFactory UI_FACTORY;
     private PropertiesReader PROP_READ;
-    private PromptReader PROMPTS;
-
-    //TODO use available tower upgrades
-    private final String UPGRADE_NAMES_FILE_PATH = "images/UpgradeImageNames.properties";
+	private Map<String,String> GAMEPLAYER_PROPERTIES;
 
 
-    public UpgradePanel (GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
+    public UpgradePanel (GameScreen gameScreen, FrontEndTower tower) {
 	super(tower);
 	GAME_SCREEN = gameScreen;
+	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 	UI_FACTORY = new UIFactory();
 	PROP_READ = new PropertiesReader();
-	PROMPTS = promptReader;
     }
 
 
@@ -53,16 +49,18 @@ public class UpgradePanel extends SpecificPanel {
 	VBox panelRoot = new VBox(upgradeDisplay);
 	VBox.setVgrow(upgradeDisplay, Priority.ALWAYS);
 	panelRoot.setAlignment(Pos.CENTER);
-	panelRoot.setId("upgradePanel");
+	panelRoot.setId(GAMEPLAYER_PROPERTIES.get("upgradePanelID"));
 	PANEL = panelRoot;
     }
 
     private void fillUpgrades(HBox availUpgrades) {
 	HBox upgrades = availUpgrades;
+	Integer UPGRADE_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("upgradeImageSize"));
+	String UPGRADE_NAMES_FILE_PATH = GAMEPLAYER_PROPERTIES.get("upgradeNamesFilePath");
 	try {
 	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(UPGRADE_NAMES_FILE_PATH, UPGRADE_IMAGE_SIZE, UPGRADE_IMAGE_SIZE);
 	    for (String upgradeType: upgradeMap.keySet()) {
-			Button upgradeButton = UI_FACTORY.makeImageButton("button", upgradeMap.get(upgradeType));
+			Button upgradeButton = UI_FACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("buttonID"), upgradeMap.get(upgradeType));
 			upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.upgradeClickedOn(TOWER, upgradeType));
 			upgrades.getChildren().add(upgradeButton);
 			HBox.setHgrow(upgradeButton, Priority.ALWAYS);

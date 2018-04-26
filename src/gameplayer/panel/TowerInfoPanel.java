@@ -19,10 +19,12 @@ public class TowerInfoPanel extends SpecificPanel {
 	private final GameScreen GAME_SCREEN;
 	private final UIFactory UI_FACTORY;
 	private PromptReader PROMPTS;
+	private Map<String,String> GAMEPLAYER_PROPERTIES;
 
 	public TowerInfoPanel(GameScreen gameScreen, PromptReader promptReader, FrontEndTower tower) {
 		super(tower);
 		GAME_SCREEN = gameScreen;
+		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 		PROMPTS = promptReader;	
 		UI_FACTORY = new UIFactory();
 	}
@@ -32,13 +34,13 @@ public class TowerInfoPanel extends SpecificPanel {
 		//TODO add SellTower info pri
 		Map<String,Integer> towerStats = TOWER.getTowerStats();
 		Label TowerInfo = new Label(prepareStats(towerStats));
-		Button sellTower = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("SellTowerButton"));
+		Button sellTower = UI_FACTORY.makeTextButton(GAMEPLAYER_PROPERTIES.get("buttonID"), PROMPTS.resourceDisplayText("SellTowerButton"));
 		sellTower.setOnMouseClicked(arg0 -> GAME_SCREEN.sellTower(TOWER));
 
 		VBox panelRoot = new VBox(TowerInfo, sellTower);
 		VBox.setVgrow(sellTower, Priority.ALWAYS);
 		panelRoot.setAlignment(Pos.CENTER);
-		panelRoot.setId("sellTowerPanel");
+		panelRoot.setId(GAMEPLAYER_PROPERTIES.get("sellTowerPanelID"));
 		PANEL = panelRoot;
 	}
 

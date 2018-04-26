@@ -16,42 +16,22 @@ import java.util.Map;
 public class SettingsPanel extends Panel {
 
 
-    private final int DEFAULT_SETTINGS_BUTTON_SIZE = 50;
-    private final int DEFAULT_SETTINGS_BUTTON_WIDTH = 50;
 
-    private final String UPGRADE_BUTTON_FILEPATH = "images/settingsPanelImages/SettingsButtonNames.properties";
     private final GameScreen GAME_SCREEN;
     private final PropertiesReader PROP_READ;
-    private final PromptReader PROMPTS;
     private final UIFactory UIFACTORY;
     private ITRTSoundFactory SOUND_FACTORY;
-    private Button helpButton;
-    private Button instrButton;
+    private Map<String,String> GAMEPLAYER_PROPERTIES;
 
 
-    public SettingsPanel(GameScreen gameScreen, PromptReader promptReader) {
+    public SettingsPanel(GameScreen gameScreen) {
         GAME_SCREEN = gameScreen;
-        PROMPTS =  promptReader;
+        GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
         PROP_READ = new PropertiesReader();
         UIFACTORY = new UIFactory();
         SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
     }
 
-    private Button createHelp() {
-        Image helpImage = new Image(getClass().getResourceAsStream("images/settingsPanelImages/help.png"));
-        helpButton = new Button();
-        helpButton.setGraphic(new ImageView(helpImage));
-        //helpButton.setOnMouseClicked((args) -> );
-        return helpButton;
-    }
-
-    private Button createInstrButton() {
-        Image instrImage = new Image(getClass().getResourceAsStream("images/settingsPanelImages/instructions.png"));
-        instrButton = new Button();
-        instrButton.setGraphic(new ImageView(instrImage));
-        //instrButton.setOnMouseClicked((args) -> );
-        return instrButton;
-    }
     @Override
     public void makePanel() {
 
@@ -62,11 +42,15 @@ public class SettingsPanel extends Panel {
 
 
     private void makeSettingsButtons(VBox settingsBox) {
+
+        String SETTINGS_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("settingsButtonFilepath");
+        Integer DEFAULT_SETTINGS_BUTTON_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("settingsButtonSize"));
+
         settingsBox.getChildren().add(SOUND_FACTORY.createVolumeSlider());
         try {
-            Map<String,Image> settingsMap = PROP_READ.keyToImageMap(UPGRADE_BUTTON_FILEPATH, DEFAULT_SETTINGS_BUTTON_SIZE, DEFAULT_SETTINGS_BUTTON_SIZE);
+            Map<String,Image> settingsMap = PROP_READ.keyToImageMap(SETTINGS_BUTTON_FILEPATH, DEFAULT_SETTINGS_BUTTON_SIZE, DEFAULT_SETTINGS_BUTTON_SIZE);
             for (String setting: settingsMap.keySet()) {
-                Button settingButton = UIFACTORY.makeImageButton("settingButton", settingsMap.get(setting));
+                Button settingButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("settingsButtonID"), settingsMap.get(setting));
                 settingButton.setOnMouseClicked((arg0) -> GAME_SCREEN.settingsTriggered(setting));
                 settingsBox.getChildren().add(settingButton);
             }
