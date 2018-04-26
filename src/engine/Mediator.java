@@ -243,11 +243,10 @@ public class Mediator {
 			try {
 				styling = myGameEngine.getPlayState().getStyling();
 			} catch (MissingPropertiesException e) {
-				myScreenManager.loadErrorAlertToStage("NoFile");
+				myScreenManager.loadErrorAlert("NoFile");
 			}
 		}
 		return styling; 
 	}
 
 }
-
