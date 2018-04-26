@@ -53,10 +53,10 @@ public class Level {
 	 */
 	public Level(Level copiedLevel) {
 		myNumber = copiedLevel.getNumber() + 1; 
-		myWaves = copiedLevel.getWaves(); 
+		myWaves = copiedLevel.getWaveCopies(); 
 		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getTowers();
-		myEnemies = copiedLevel.getEnemies();
+		myTowers = copiedLevel.getCopiedTowers();
+		myEnemies = copiedLevel.getCopiedEnemies();
 	}
 
 	/**
@@ -229,9 +229,23 @@ public class Level {
 	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
-
+	public Map<String, Tower> getCopiedTowers(){
+	    Map<String, Tower> copy = new HashMap<>();
+	    for(String key : myTowers.keySet()) {
+		copy.put(key, new Tower(myTowers.get(key)));
+	    }
+	    return copy;
+	}
 	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
+	}
+	
+	public Map<String, Enemy> getCopiedEnemies(){
+	    Map<String, Enemy> copy = new HashMap<>();
+	    for(String key : myEnemies.keySet()) {
+		copy.put(key, new Enemy(myEnemies.get(key)));
+	    }
+	    return copy;
 	}
 
 	public int getHighestWaveNumber() {
@@ -251,6 +265,14 @@ public class Level {
 
 	public List<Wave> getWaves() {
 		return myWaves;
+	}
+	
+	protected List<Wave> getWaveCopies(){
+	    List<Wave> copy = new ArrayList<>();
+	    for(Wave wave : myWaves) {
+		copy.add(wave.getCopy());
+	    }
+	    return copy;
 	}
 
 	/**
