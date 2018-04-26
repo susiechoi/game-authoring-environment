@@ -40,7 +40,7 @@ public class ScorePanel extends Panel {
 		HealthText = new Label("+" + HEALTH);
 		
 		Calendar c = Calendar.getInstance();
-	    SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy_hh:mm:ss");
+	    SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
 	    String formattedDate = df.format(c.getTime());
 	   
 		try {

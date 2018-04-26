@@ -35,12 +35,14 @@ public class GraphMenuScreen extends AuthoringScreen {
 		List<String> availableGraphs = getFileNames(DEFAULT_GRAPHS_FOLDER);
 
 		for (String graphName : availableGraphs) {
-			if (graphName.indexOf(getView().getGameName()) > -1) {
-				Button relevantGraph = getUIFactory().makeTextButton("", graphName); 
-				relevantGraph.setOnAction(e -> {
+			String currGameName = getView().getGameName();
+			if (graphName.indexOf(currGameName) > -1) {
+				String abbrevGraphName = graphName.substring(graphName.indexOf(currGameName)+currGameName.length()); 
+				Button relevantGraphButt = getUIFactory().makeTextButton("", abbrevGraphName); 
+				relevantGraphButt.setOnAction(e -> {
 					getView().goForwardFrom(this.getClass().getSimpleName()+"Graph", DEFAULT_GRAPHS_FOLDER+"/"+graphName);
 				});
-				vb.getChildren().add(relevantGraph);
+				vb.getChildren().add(relevantGraphButt);
 			}
 		}
 		
