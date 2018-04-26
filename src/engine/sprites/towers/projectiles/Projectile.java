@@ -20,6 +20,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	private DamageProperty myDamage;
 	private double mySpeed;
 	private double mySize; 
+	private String myImage; 
 	private ShootingSprites myTarget;
 	private List<Sprite> hitTargets;
 	private int myHits = 1;
@@ -36,6 +37,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 		myDamage = damage;
 		mySpeed = speed;
 		mySize = size; 
+		myImage = image; 
 		hitTargets = new ArrayList<>();
 	}
 	
@@ -88,6 +90,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	 * 
 	 * @return : the amount of damage this Projectile does
 	 */
+	@Override
 	public double getDamage() {
 	    return myDamage.getProperty();
 	}
@@ -103,6 +106,10 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	
 	public String getDamageName() {
 		return myDamage.getName();
+	}
+	
+	public String getImage() {
+		return myImage; 
 	}
 	
 	public double getSize() {

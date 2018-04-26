@@ -32,6 +32,7 @@ public class WavePanel extends PathPanel{
 	private TextField myNumberTextField;
 	private Integer myEnemyNumber;
 	private Integer myWaveNumber;
+	private WavePanel mySelf;
 	public WavePanel(AuthoringView view, DraggableImage grid, String waveNumber) {
 		super(view);
 //		if (grid == null) {
@@ -41,11 +42,17 @@ public class WavePanel extends PathPanel{
 		    myWaveNumber = getView().getHighestWaveNumber(getView().getLevel());
 		}
 		else {
-		    myWaveNumber = Integer.parseInt(waveNumber.split(" ")[1]) - 1;
+		    String[] splitUpWave = waveNumber.split(" ");
+		    if(splitUpWave.length>1) {
+			myWaveNumber = Integer.parseInt(splitUpWave[1]) - 1; //Coming from combobox
+		    }
+		    else {
+			myWaveNumber = Integer.parseInt(splitUpWave[0]);  //coming from wavepanel
+		    }
 		}
-		System.out.println("highest wave number panel: " + getView().getHighestWaveNumber(getView().getLevel()));
+		//System.out.println("highest wave number panel: " + getView().getHighestWaveNumber(getView().getLevel()));
 		myPathNumber = 1; //TODO!!
-		
+		mySelf = this;
 		setUpPanel();
 	}
 
@@ -86,6 +93,7 @@ public class WavePanel extends PathPanel{
 				//System.out.println("myWaveNumber" + myWaveNumber);
 				getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), myWaveNumber, 
 						myEnemyDropdown.getValue(), myEnemyNumber);
+				getView().goForwardFrom(mySelf.getClass().getSimpleName()+"Apply", myWaveNumber.toString());
 				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
 			}
 

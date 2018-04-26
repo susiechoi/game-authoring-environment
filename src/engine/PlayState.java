@@ -4,6 +4,7 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
 import java.awt.Point;
@@ -13,36 +14,37 @@ import engine.managers.TowerManager;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
-import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 
-//TODO add in money to the game
 /**
  * Handles the current state of the game, including current score, money, and lists
  * of active towers and enemies
  * @author Miles Todzo
  * @author Katherine Van Dyk
  * @author benauriemma 4/8
- * @date 4/6/18
+ * @author Ben Hodgson 
  */
 public class PlayState implements GameData {
 
     private double UNIVERSAL_TIME;
     private int count;
-    private int myScore;
-    private int myResources;
+    private IntegerProperty myScore;
+    private IntegerProperty myResources;
+    private IntegerProperty myHealth;
+    private Settings mySettings;
     private TowerManager myTowerManager;
     private EnemyManager myEnemyManager;
     private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
     private boolean isPaused;
-    private Enemy fakeEnemy;
-    private Enemy fakeEnemy2;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -53,15 +55,19 @@ public class PlayState implements GameData {
      * @param resources
      * @param universalTime
      */
-    public PlayState(Mediator mediator, List<Level> levels, int score, int resources, double universalTime) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	isPaused = false;
-	myScore = score;
-	myResources = resources;
+	myScore = new SimpleIntegerProperty(score);
+	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
+	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
+	myMediator.addIntegerProperties(myResources, myScore, new SimpleIntegerProperty(score));
+	mySettings=settings;
+
 	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
@@ -73,53 +79,79 @@ public class PlayState implements GameData {
 
     public void update(double elapsedTime) {
 	count++;
+	UNIVERSAL_TIME+=elapsedTime;
 	if(!isPaused) {
-	    try {
-		for (Path path : currentLevel.getUnmodifiablePaths()) {
-		    if (!currentLevel.getWaves().get(0).isFinished() && count % 40 == 0) {
-			Wave currentWave = currentLevel.getWaves().get(0);
-			Enemy enemy = currentWave.getEnemySpecificPath(currentLevel.getPaths().get(0));
-			enemy.setInitialPoint(path.initialPoint());
-			myEnemyManager.addEnemy(currentLevel.getPaths().get(0), enemy);
-			myEnemyManager.addToActiveList(enemy);
-			myMediator.addSpriteToScreen(enemy);
-		    }
-		    List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-		    myMediator.removeListOfSpritesFromScreen(deadEnemies); 
-		    List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
-		    activeEnemies.removeAll(deadEnemies);
-		}
-
-	    } catch (Exception e) {
-		e.printStackTrace();
+	    if (count % 120 == 0) {
+		System.out.println("Spawning enemy!");
+		spawnEnemies();
 	    }
-
-
-	    UNIVERSAL_TIME+=elapsedTime;
-	    List<Sprite> toBeRemoved = new ArrayList<>();
-	    toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
-	    List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
-	    activeEnemies.removeAll(toBeRemoved);
-	    myEnemyManager.setActiveList(activeEnemies);
-	    //toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	    myTowerManager.moveProjectiles(elapsedTime);
-	    myTowerManager.moveTowers();
-
-	    for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
-		myMediator.addSpriteToScreen((FrontEndSprite)projectile);
-	    }
-	    updateScore(toBeRemoved);
-	    myMediator.removeListOfSpritesFromScreen(toBeRemoved);
+	    myEnemyManager.moveEnemies(elapsedTime);
 	}
+	handleCollisions(elapsedTime);
+    }
+
+    private void handleCollisions(double elapsedTime) {
+	List<Sprite> toBeRemoved = new ArrayList<>();
+	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+	activeEnemies.removeAll(toBeRemoved);
+	myEnemyManager.setActiveList(activeEnemies);
+	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	myTowerManager.moveProjectiles(elapsedTime);
+	myTowerManager.moveTowers();
+
+	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
+	    myMediator.addSpriteToScreen(projectile);
+	}
+	updateScore(toBeRemoved);
+	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
     }
 
 
+    private void spawnEnemies() {
+	try {
+	    if (currentLevel.getWave(0).isFinished()) {
+		currentLevel.removeWave();   
+	    }
+	    Wave currentWave = currentLevel.getWave(0);
+	    for (Path currentPath : currentLevel.getPaths()) {
+		try {
+		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
+		    newEnemy.setInitialPoint(currentPath.initialPoint());
+		    //newEnemy.updateImage();
+		    //enemy.move(path.initialPoint(),elapsedTime);
+		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
+		    myEnemyManager.addToActiveList(newEnemy);
+		    myMediator.addSpriteToScreen(newEnemy);
+
+		}
+		catch (Exception e) {
+		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
+		}
+	    }
+	}
+	catch (Exception e) {
+	    // Level is over
+	    if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
+		currentLevel = myLevels.get(currentLevel.myNumber());
+		myMediator.updateLevel(currentLevel.myNumber());
+		// TODO: call Mediator to trigger next level
+	    }
+	    else {
+		// TODO: end game
+	    }
+	}
+    }
 
     private void updateScore(List<Sprite> toBeRemoved) {
 	for(Sprite sprite : toBeRemoved) {
-	    myScore+= sprite.getPointValue();
+
+	    myScore.set(myScore.get() + sprite.getPointValue());
+        		if(sprite.getClass().getName().equals("Enemy")) {
+        		    Enemy enemy = (Enemy) sprite;
+        		    myResources.set(myResources.get() + enemy.getPointValue());;
+        		}
 	}
-	myMediator.updateScore(myScore);
     }
 
     //    public void upgradeTower(FrontEndTower tower, String upgradeName) throws CannotAffordException {
@@ -160,10 +192,10 @@ public class PlayState implements GameData {
      * @param tower
      */
     public void sellTower(FrontEndTower tower) {
-	myTowerManager.upgrade(tower,"rando",myResources);
-	myResources += myTowerManager.sell(tower);
-	myMediator.updateCurrency(myResources);
-	myMediator.removeSpriteFromScreen((FrontEndSprite)tower);
+	myTowerManager.upgrade(tower,"rando",myResources.get());
+	myResources.set(myResources.get()+myTowerManager.sell(tower));
+	myMediator.removeSpriteFromScreen(tower);
+
     }
 
     /**
@@ -173,8 +205,14 @@ public class PlayState implements GameData {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	myResources = (int) myTowerManager.upgrade(tower,upgradeName,myResources);
-
+	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
+
+
+    
+    public String getStyling() throws MissingPropertiesException {
+    	return mySettings.getCSSTheme();
+    }
+
 }
 

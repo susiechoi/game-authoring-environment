@@ -2,8 +2,14 @@ package engine;
 
 
 import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+
 import java.util.List;
 import java.util.Map;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
@@ -142,7 +148,7 @@ public class Mediator {
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	//TODO add in money (decrement when purchased)
-    	System.out.println(myGameEngine.getPlayState());
+	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
 
@@ -186,31 +192,8 @@ public class Mediator {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
+	System.out.println("upgrade is called OF TYPE " + upgradeName);
 	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
-    }
-
-    /**
-     * to be called by the backend to tell the frontend the new score that has already be calculated
-     * @param newScore
-     */
-    public void updateScore(Integer newScore) {
-	myScreenManager.updateScore(newScore);
-    }
-
-    /**
-     * to be called by the backend to tell the frontend the new balance of $ the player has
-     * @param newBalance
-     */
-    public void updateCurrency(Integer newBalance) {
-	    myScreenManager.updateCurrency(newBalance);
-    }
-
-    /**
-     * to be called by the backend to tell the frontend the new health of the player
-     * @param newHealth
-     */
-    public void updateHealth(Integer newHealth) {
-	myScreenManager.updateHealth(newHealth);
     }
 
     /**
@@ -231,8 +214,40 @@ public class Mediator {
 	}
     }
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
+	myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
+    }
+
+    /**
+     * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
+     * lives. 
+     * @param myResources integer property for currency
+     * @param myScore	integer property for score
+     * @param simpleIntegerProperty	 integer property for health
+     */
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	myScreenManager.attachListeners(myCurrency, myScore, myLives);
+    }
+    
+	/**
+	 * Ends game loop in case that user wants to return to authoring/editing the game
+	 * @author susiechoi
+	 */
+	public void endLoop() {
+		myGameEngine.endLoop();
 	}
+
+	public String getStyling() {
+		String styling = null; 
+		if (myGameEngine.getPlayState() != null) {
+			try {
+				styling = myGameEngine.getPlayState().getStyling();
+			} catch (MissingPropertiesException e) {
+				myScreenManager.loadErrorAlertToStage("NoFile");
+			}
+		}
+		return styling; 
+	}
+
 }
 

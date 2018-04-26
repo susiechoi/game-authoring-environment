@@ -60,7 +60,7 @@ public class InstructionScreen extends Screen {
 		center.setMaxWidth(Double.MAX_VALUE);
 		VBox.setVgrow(center, Priority.ALWAYS);
 
-		rootBox.getChildren().addAll(center);
+		rootBox.getChildren().add(center);
 		return rootBox;
 	}
 

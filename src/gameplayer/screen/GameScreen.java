@@ -20,6 +20,9 @@ import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -61,6 +64,7 @@ public class GameScreen extends Screen {
 		//actual functionality of panels is changed
 	}
 
+
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		rootPane = new BorderPane();
@@ -81,29 +85,20 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
 
 	public void towerSelectedForPlacement(FrontEndTower tower) {
-		if(tower == null)
-			blankGamePanelClick();
 		GAME_PANEL.towerSelected(tower);
-
-
 	}
 
-	public Integer getMoney() {
-		//TODO call ObserveHandler.triggerEvent(NeedMoney) to get money sent from playState
-		/**
-		 * also might implement money tracking by passing Integer object of
-		 * currency from playState in initialization of GameScreen/TowerPanel
-		 * 	-if this is the case this method isn't needed and an updateCurrency Method
-		 * 	should instead be called in towerPanel upon any action which would spend currency
-		 */
-		Integer money = 0; //placeholder
-		return money;
-	}
-
+	//	public void setStyling() {
+	//		String style = MEDIATOR.getStyling();
+	//		if (style != null) {
+	//			rootPane.getStylesheets().add(style);
+	//		}
+	//	}
 
 	@Override
 	protected View getView() {
@@ -128,17 +123,14 @@ public class GameScreen extends Screen {
 	}
 
 	//TODO implement reflection//rest of controls
-	public void controlTriggered(String control) {
-		if(control.equals("play")) {
+	public void controlTriggered(String control) throws MissingPropertiesException {
+		if(control.equals("play"))
 			MEDIATOR.play();
-		}
-		else if(control.equals("pause")) {
+		else if(control.equals("pause"))
 			MEDIATOR.pause();
-		}
-		else if(control.equals("speedup")) {
+		else if(control.equals("speedup"))
 			MEDIATOR.fastForward(10);
-		}
-		else if(control.equals("quit")) {//WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
+		else if(control.equals("quit")) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 			try {
 				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
 						.loadInstructionScreen();
@@ -146,8 +138,8 @@ public class GameScreen extends Screen {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
 		else if (control.equals("edit")) { // Susie added this
+			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 		}
@@ -162,7 +154,7 @@ public class GameScreen extends Screen {
 		}
 		else if (setting.equals("play")) {
 			try{
-				SOUND_FACTORY.setBackgroundMusic("src/sound/files/epic.mp3");
+				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
 
@@ -175,25 +167,33 @@ public class GameScreen extends Screen {
 			SOUND_FACTORY.pauseBackgroundMusic();
 		}
 		else if (setting.equals("instructions")) {
-		    //TODO make this work
+
 		}
 		else if (setting.equals("help")) {
-		    //TODO make this work
 
 		}
 	}
 
-	public void updateCurrency(Integer newBalence) {
-		TOWER_PANEL.updateCurrency(newBalence);
+
+
+
+	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
+		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
+		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+		myCurrency.addListener(currencyListener);
+		myScore.addListener(scoreListener);
+		myLives.addListener(healthListener);
+		TOWER_PANEL.setInitalMoney(myCurrency.get());
+		SCORE_PANEL.setInitialScore(myScore.get());
+		SCORE_PANEL.setInitialLives(myLives.get());
+
+		//	currencyListener.changed(myCurrency, 0, 0);
+		//	scoreListener.changed(myScore, 0, 0);
+		//	healthListener.changed(myLives, 0, 0);
+
 	}
 
-	public void updateHealth(Integer newHealth) {
-		SCORE_PANEL.updateHealth(newHealth);
-	}
-
-	public void updateScore(Integer newScore) {
-		SCORE_PANEL.updateScore(newScore);
-	}
 
 	public void updateLevel(Integer newLevel) {
 		SCORE_PANEL.updateLevel(newLevel);
@@ -212,8 +212,8 @@ public class GameScreen extends Screen {
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
-	public void upgradeClickedOn(FrontEndTower tower) {
-		BUY_PANEL = new BuyPanel(this,PROMPTS, tower);
+	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
+		BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
 		displayPane.getChildren().clear();
 		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
@@ -266,6 +266,11 @@ public class GameScreen extends Screen {
 	public ScreenManager getScreenManager() {
 		return SCREEN_MANAGER;
 	}
+
+	public void upgradeBought(FrontEndTower tower, String upgradeName) {
+		MEDIATOR.upgradeTower(tower, upgradeName);
+	}
+
 
 	public ITRTSoundFactory getSoundFactory() {
 		return SOUND_FACTORY;
