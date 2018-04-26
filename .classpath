@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="SavedModels"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
+	<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>

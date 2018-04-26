@@ -23,6 +23,8 @@ public abstract class UpgradeProperty extends Property {
     public UpgradeProperty(double cost, double value, double property) {
 	super(property);
 	upgradeCost = cost;
+	
+	//TODO: check this upgradeValue
 	upgradeValue = value;
     }
 

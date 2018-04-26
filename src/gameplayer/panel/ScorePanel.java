@@ -8,6 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import gameplayer.screen.GameScreen;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -89,4 +94,25 @@ public class ScorePanel extends Panel {
 	public void updateLevel(Integer newLevel) {
 		LevelText.setText("Level: " + newLevel);
 	}
+
+    public ChangeListener createScoreListener() {
+	ChangeListener changeListener = new ChangeListener() {
+	    @Override
+	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+		updateScore((Integer)observableValue.getValue());
+	    }
+	};
+	return changeListener;
+    }
+    
+    public ChangeListener createHealthListener() {
+   	ChangeListener changeListener = new ChangeListener() {
+   	    @Override
+   	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+   		updateHealth((Integer)observableValue.getValue());
+   	    }
+   	};
+   	return changeListener;
+       }
+
 }

@@ -332,8 +332,13 @@ public class UIFactory {
 		imageDisplay.setImage(images.get(dropdown.getSelectionModel().getSelectedIndex()));
 	    }
 	    catch(Exception e2) {
-		e2.printStackTrace();
-		throw new MissingPropertiesError("");
+		try {
+		    imageDisplay.setImage(images.get(0));
+		}
+		catch(Exception e3) {
+		    throw new MissingPropertiesError("");
+		}
+		
 	    };
 	    });
 	}

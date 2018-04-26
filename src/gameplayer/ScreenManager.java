@@ -15,6 +15,11 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
 /**
@@ -115,14 +120,6 @@ public class ScreenManager extends View {
 
 	}
 
-	public void updateHealth(double myHealth) {
-		GAME_SCREEN.updateHealth(myHealth);
-	}
-
-	public void updateScore(Integer newScore) {
-		GAME_SCREEN.updateScore(newScore);
-	}
-
 	public void updateLevelCount(Integer newLevelCount) {
 		GAME_SCREEN.updateLevel(newLevelCount);
 	}
@@ -178,12 +175,14 @@ public class ScreenManager extends View {
 		GAME_SCREEN.setAvailbleTowers(availableTowers);
 	}
 
-	public void updateCurrency(double myResources) {
-		GAME_SCREEN.updateCurrency(myResources);
-	}
 
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
 		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize);;
+	}
+
+	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
+		SimpleIntegerProperty myLives) {
+	    GAME_SCREEN.attachListeners(myCurrency, myScore, myLives);	    
 	}
 }
