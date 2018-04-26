@@ -19,6 +19,17 @@ Text {
     	-fx-padding: 1px;
 }
 
+.default-color1.chart-series-line {
+    -fx-stroke: #B7D5D4;
+    -fx-stroke-width: 2px; 
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #B7D5D4;
+    -fx-background-radius: 0;
+    	-fx-padding: 1px;
+}
+
 .axis-label {
 	-fx-font-family: "Quicksand";
 }

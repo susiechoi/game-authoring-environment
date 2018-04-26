@@ -8,8 +8,10 @@ import java.util.List;
 import authoring.AuthoringModel;
 import frontend.Screen;
 import frontend.View;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -40,12 +42,34 @@ public class GraphMenuScreen extends AuthoringScreen {
 				String abbrevGraphName = graphName.substring(graphName.indexOf(currGameName)+currGameName.length()); 
 				Button relevantGraphButt = getUIFactory().makeTextButton("", abbrevGraphName); 
 				relevantGraphButt.setOnAction(e -> {
-					getView().goForwardFrom(this.getClass().getSimpleName()+"Graph", DEFAULT_GRAPHS_FOLDER+"/"+graphName);
+//					getView().goForwardFrom(this.getClass().getSimpleName()+"Graph", DEFAULT_GRAPHS_FOLDER+"/"+graphName);
+					String fullFilepath  = DEFAULT_GRAPHS_FOLDER+"/"+graphName; 
+					getView().getStageManager().switchScreen(new SingleGraphScreen(getView(), fullFilepath).getScreen());
 				});
 				vb.getChildren().add(relevantGraphButt);
 			}
 		}
 		
+		vb.getChildren().add(new Text(getErrorCheckedPrompt("or")));
+		
+		Button compareButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CompareGames"));
+		String choosePrompt = getView().getErrorCheckedPrompt("ChooseGame");
+		List<String> dropdownOptions = new ArrayList<String>();
+		dropdownOptions.add(choosePrompt);
+		dropdownOptions.addAll(availableGraphs);
+		ComboBox<String> game1Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, e -> {
+			;}, e -> {compareButton.setDisable(true);}, choosePrompt);
+		ComboBox<String> game2Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, e -> {
+			compareButton.setDisable(false);}, e -> {compareButton.setDisable(true);}, choosePrompt);
+		compareButton.setDisable(true);
+		compareButton.setOnAction(e -> {
+//			getView().goForwardFrom(this.getClass().getSimpleName()+"Graph", DEFAULT_GRAPHS_FOLDER+"/"+game1Chooser.getSelectionModel().getSelectedItem(), DEFAULT_GRAPHS_FOLDER+"/"+game2Chooser.getSelectionModel().getSelectedItem());
+			String game1Path = DEFAULT_GRAPHS_FOLDER+"/"+game1Chooser.getSelectionModel().getSelectedItem(); 
+			String game2Path = DEFAULT_GRAPHS_FOLDER+"/"+game2Chooser.getSelectionModel().getSelectedItem(); 
+			getView().getStageManager().switchScreen(new DoubleGraphScreen(getView(), game1Path, game2Path).getScreen());
+		});
+
+		vb.getChildren().addAll(game1Chooser, game2Chooser, compareButton);
 		vb.getChildren().add(setupBackButton());
 
 		return vb; 
