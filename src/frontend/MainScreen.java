@@ -29,6 +29,7 @@ public class MainScreen extends Screen {
 	private View myView;
 
 	public MainScreen(StageManager stageManager, View view) {
+	    	super();
 		myUIFactory = new UIFactory();
 		myStageManager = stageManager;
 		myView = view;
@@ -41,6 +42,7 @@ public class MainScreen extends Screen {
 	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
+	    	System.out.println("makin a mainscreen");
 		VBox rootBox = new VBox();
 		Text title = getUIFactory().makeScreenTitleText(myView.getErrorCheckedPrompt("Welcome"));
 		Button newAuthorButt = getUIFactory().makeTextButton("editbutton", myView.getErrorCheckedPrompt("Author"));
