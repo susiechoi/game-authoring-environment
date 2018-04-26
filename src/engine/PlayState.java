@@ -21,7 +21,6 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 
 /**
  * Handles the current state of the game, including current score, money, and lists
@@ -33,7 +32,6 @@ import javafx.beans.value.ChangeListener;
  */
 public class PlayState implements GameData {
 
-    private double UNIVERSAL_TIME;
     private int count;
     private IntegerProperty myScore;
     private IntegerProperty myResources;
@@ -69,7 +67,6 @@ public class PlayState implements GameData {
 	myMediator.addIntegerProperties(myResources, myScore, new SimpleIntegerProperty(score));
 	mySettings=settings;
 
-	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
@@ -80,7 +77,6 @@ public class PlayState implements GameData {
 
     public void update(double elapsedTime) {
 	count++;
-	UNIVERSAL_TIME+=elapsedTime;
 	if (count % 120 == 0) {
 	    spawnEnemies();
 	}
@@ -183,8 +179,14 @@ public class PlayState implements GameData {
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	myResources.set(placedTower.purchase(myResources.get()));
-	return placedTower;
+	try {
+	    myResources.set(placedTower.purchase(myResources.get()));
+	    return placedTower;
+	}
+	catch(CannotAffordException e) {
+	    myTowerManager.sell(placedTower);
+	    throw new CannotAffordException(e.getMessage());
+	}
     }
     /**
      * Sells the tower, increments users currency, and removes it from collection and screen
