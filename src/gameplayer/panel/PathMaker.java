@@ -29,7 +29,7 @@ public class PathMaker {
 			List<Point> pointList = map.get(key);
 			for (int i = 0; i < pointList.size(); i++) {
 				Point point = pointList.get(i);
-				ImageView image = new ImageView(new Image(key));
+				ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(key), 50, 50, true, true));
 				image.setFitWidth(40);
 				image.setFitHeight(40);
 				GridPane.setFillWidth(image, true);
