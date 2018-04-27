@@ -56,7 +56,6 @@ public class ScorePanel extends Panel {
 		updateScore(0);
 		LevelText = new Label();
 		HealthText = new Label();
-		updateHealth(50);
 
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
 
