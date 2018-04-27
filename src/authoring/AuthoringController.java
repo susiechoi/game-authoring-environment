@@ -35,7 +35,6 @@ public class AuthoringController {
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
 
-
     /**
      * Creates a new AuthoringController
      * @param stageManager contains Stage game is being authored on

@@ -124,3 +124,8 @@ ComboBox {
 #applyButton {
 	-fx-background-color: #488286; 
 }
+
+.chart-title {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 18pt; 
+}

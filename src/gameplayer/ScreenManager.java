@@ -1,24 +1,22 @@
 package gameplayer;
 
-import authoring.frontend.exceptions.MissingPropertiesException;
-import frontend.*;
-
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.awt.Point;
 
-
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
+import frontend.MainScreen;
+import frontend.PromptReader;
+import frontend.PropertiesReader;
+import frontend.StageManager;
+import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
 /**
@@ -34,8 +32,6 @@ public class ScreenManager extends View {
 	public static final String FILE_ERROR_KEY = "FileErrorPrompt";
 	public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
 	public static final String DEFAULT_OWN_CSS = "styling/EngineFrontend.css";
-	private static final String STARTING_LANGUAGE = "English";
-
 
 	/**
 	 * not sure where we're getting these values to display on the panels and stuff
