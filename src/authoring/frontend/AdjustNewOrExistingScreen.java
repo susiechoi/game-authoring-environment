@@ -10,9 +10,6 @@ package authoring.frontend;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
 import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;

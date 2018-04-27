@@ -14,6 +14,7 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.towers.FrontEndTower;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import jdk.internal.jline.internal.Log;
 
 
 public class UpgradePanel extends SpecificPanel {
@@ -69,7 +70,8 @@ public class UpgradePanel extends SpecificPanel {
 	    }
 	}
 	catch (MissingPropertiesException e) {
-	    System.out.println("upgrade image load fail");
+	    Log.error(e);
+	    System.out.println("upgrade image load fail"); //TODO!!!
 	}
     }
 }

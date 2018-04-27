@@ -14,6 +14,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import jdk.internal.jline.internal.Log;
 
 public class WaveDirectionsPanel extends PathPanel{
     private int myWaveNumber;
@@ -30,6 +31,7 @@ public class WaveDirectionsPanel extends PathPanel{
 		//System.out.println("highest wave number directions: " + getView().getHighestWaveNumber(getView().getLevel()));
 	    }
 	    catch(MissingPropertiesException e) {
+		 Log.error(e);
 		getView().loadErrorScreen("NoFile");
 	    }
 	}
@@ -69,6 +71,7 @@ public class WaveDirectionsPanel extends PathPanel{
 	    });
 	}
 	catch(MissingPropertiesException e) {
+	    Log.error(e);
 	    getView().loadErrorScreen("NoFile");
 	}
 	myApplyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));

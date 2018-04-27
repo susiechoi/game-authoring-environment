@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import jdk.internal.jline.internal.Log;
 
 /**
  * Class to create the original screen users see when entering the Game Authoring environment. 
@@ -39,6 +40,7 @@ public class StartScreen extends AuthoringScreen {
 		try {
 			css = myView.getPropertiesReader().findVals(DEFAULT_STYLINGS);
 		} catch (MissingPropertiesException e) {
+		    Log.error(e);
 			myView.loadErrorScreen("NoCSS");
 		} 
 		myCSSFiles = css; 
@@ -84,6 +86,7 @@ public class StartScreen extends AuthoringScreen {
 		try {
 			existingThemes.addAll(getPropertiesReader().findVals(DEFAULT_THEMES));
 		} catch (MissingPropertiesException e1) {
+		    Log.error(e1);
 			getView().loadErrorScreen("NoFile");
 		}
 
@@ -118,6 +121,7 @@ public class StartScreen extends AuthoringScreen {
 			try {
 				getView().readFromFile(gameChooser.getValue());
 			} catch (MissingPropertiesException e1) {
+			    Log.error(e);
 				getView().loadErrorScreen("NoObject");
 			}
 		});
@@ -143,6 +147,7 @@ public class StartScreen extends AuthoringScreen {
 			return Collections.unmodifiableList(fileNames);
 		}
 		catch (Exception e) {
+		    Log.error(e);
 			getView().loadErrorScreen("NoFile");
 		}
 		return Collections.unmodifiableList(new ArrayList<String>());
