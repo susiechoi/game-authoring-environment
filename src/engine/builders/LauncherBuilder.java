@@ -1,6 +1,10 @@
 package engine.builders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.properties.FireRateProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -18,7 +22,10 @@ public class LauncherBuilder {
     public Launcher construct(double fireRate, double fireRange, Projectile projectile) {
 	FireRateProperty rate = new FireRateProperty(0, 0, fireRate);
 	RangeProperty range = new RangeProperty(0, 0, fireRange);
-	return new Launcher(rate, projectile, range);
+	List<Property> launcherProps = new ArrayList<>();
+	launcherProps.add(rate);
+	launcherProps.add(range);
+	return new Launcher(projectile, launcherProps);
     }
 
 }

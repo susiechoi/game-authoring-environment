@@ -142,7 +142,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * Upgrades the rate of fire
      */
     public double upgradeRateOfFire(double balance) {
-	return this.getLauncher().upgradeFireRate(balance);
+	return this.upgradeLauncherProperty(balance, "FireRateProperty");
     }
 
     /**
