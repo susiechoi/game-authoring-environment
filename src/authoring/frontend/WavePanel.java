@@ -27,6 +27,7 @@ public class WavePanel extends PathPanel{
 
 
 	private int myPathNumber;
+	private Button myApplyButton;
 	private VBox myRoot;
 	private ComboBox<String> myEnemyDropdown;
 	private TextField myNumberTextField;
@@ -53,10 +54,11 @@ public class WavePanel extends PathPanel{
 		//System.out.println("highest wave number panel: " + getView().getHighestWaveNumber(getView().getLevel()));
 		myPathNumber = 1; //TODO!!
 		mySelf = this;
-		setUpPanel();
+		makePanel();
 	}
-
-	private void setUpPanel() {
+	
+	@Override
+	public void makePanel() {
 		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPathNumber, myWaveNumber);
 		myRoot = new VBox();
 		myRoot.setMaxSize(280, 900);
@@ -84,9 +86,9 @@ public class WavePanel extends PathPanel{
 		Text textFieldPrompt = new Text(getView().getErrorCheckedPrompt("ChooseEnemyNumber"));
 		//HBox textFieldPrompted = getUIFactory().addPromptAndSetupHBox("", myNumberTextField, "ChooseEnemyNumber");
 		Button backButton = setupBackButton();
-		Button applyButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Apply"));
-		applyButton.setOnAction(e -> {
-		    	setSaved();
+		Button myApplyButton = getUIFactory().makeTextButton("", getView().getErrorCheckedPrompt("Apply"));
+		myApplyButton.setOnAction(e -> {
+		    setSaved();
 			if(errorcheckResponses()) {
 				//System.out.println("addin a wave");
 				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));
@@ -98,7 +100,7 @@ public class WavePanel extends PathPanel{
 			}
 
 		});
-		pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField, backButton, applyButton);
+		pseudoRoot.getChildren().addAll(waveText, enemyDropdownText, myEnemyDropdown, textFieldPrompt, myNumberTextField, backButton, myApplyButton);
 		myRoot.getChildren().add(pseudoRoot);
 		myRoot.getStyleClass().add("rootPanel");
 	}
@@ -120,14 +122,8 @@ public class WavePanel extends PathPanel{
 	}
 
 	@Override
-	protected void makePanel() {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
 	protected Button getApplyButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return myApplyButton;
 	}
 	@Override
 	protected Node getPanel() {
@@ -135,7 +131,7 @@ public class WavePanel extends PathPanel{
 	}
 	@Override
 	protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
-		// TODO Auto-generated method stub
+		myApplyButton.setOnAction(event -> {e.handle(event);});
 
 	}
 

@@ -10,6 +10,8 @@ package authoring.frontend;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -63,8 +65,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			myMaxPrice = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxPrice"));
 			myMaxUpgradeIncrement = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxUpgradeIncrement"));
 		} catch (NumberFormatException e) {
+		    	getLogger().info(e.getMessage());
 			getView().loadErrorScreen("BadConstants");
 		} catch (MissingPropertiesException e) {
+		    	getLogger().info(e.getMessage());
 			getView().loadErrorScreen("NoConstants");
 		}
 
@@ -92,6 +96,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		try {
 			fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
 		} catch (MissingPropertiesException e) {
+		    	getLogger().info(e.getMessage());
 			getView().loadErrorScreen("ObjectAttributeDNE");
 		}
 
@@ -158,6 +163,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		try {
 			imageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(propertiesFilepath));
 		} catch (MissingPropertiesException e) {
+		    	getLogger().info(e.getMessage());
 			getView().loadErrorScreen("NoImageFile");
 		} 
 		ComboBox<String> imageDropdownCopy = imageDropdown;
@@ -183,6 +189,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			    imageDropdown.fireEvent(fakeSelection);
 			}
 		} catch (MissingPropertiesException e) {
+		    	getLogger().info(e.getMessage());
 			getView().loadErrorScreen("NoImageFile");
 		}
 		return imageSelect;
