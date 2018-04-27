@@ -59,7 +59,6 @@ public class ScorePanel extends Panel {
 		LevelText = new Label();
 		HealthText = new Label();
 
-
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
 
 		LevelText.setMaxWidth(Double.MAX_VALUE);
@@ -78,15 +77,15 @@ public class ScorePanel extends Panel {
 		PANEL = panelRoot;
 	}
 
-	private void updateScore(Integer newScore) {
+	private void updateScore(Integer newScore) {		
 		myScoreXIncrement++; 
-
 		myScoreWriter.write(Integer.toString(myScoreXIncrement)+" ");
 		myScoreWriter.write(Integer.toString(newScore)+"\n");
 
-		if (myScoreXIncrement % 1000 == 0) {
+		if (myScoreXIncrement % 5 == 0) {
 			myScoreWriter.flush();
 		}
+
 		ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
 	}
 
@@ -110,20 +109,22 @@ public class ScorePanel extends Panel {
 		LEVEL = level;
 	}
 
-	public ChangeListener createScoreListener() {
-		return new ChangeListener() {
+	public ChangeListener<Number> createScoreListener() {
+		return new ChangeListener<Number>() {
+
 			@Override
-			public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-				updateScore((Integer)observableValue.getValue());
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				updateScore((Integer)arg0.getValue());
 			}
 		};
 	}
 
-	public ChangeListener createHealthListener() {
-		return new ChangeListener() {
+	public ChangeListener<Number> createHealthListener() {
+		return new ChangeListener<Number>() {
+
 			@Override
-			public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-				updateHealth((Integer)observableValue.getValue());
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				updateHealth((Integer)arg0.getValue());
 			}
 		};
 	}
