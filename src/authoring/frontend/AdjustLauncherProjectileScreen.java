@@ -6,13 +6,11 @@
 
 package authoring.frontend;
 
-import authoring.frontend.exceptions.MissingPropertiesException;
-import javafx.event.ActionEvent;
+
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -24,7 +22,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
 	private String myObjectName; 
-	private ComboBox<String> myProjectileImageDropdown;
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherRateSlider;
@@ -57,7 +54,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	private void makeProjectileComponents(VBox vb) {
-		HBox projectileImageSelect = makeImageSelector("Tower", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
+		HBox projectileImageSelect = makeImageSelector("Tower", "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 		vb.getChildren().add(projectileImageSelect);
 
 		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());

@@ -166,14 +166,14 @@ public class Mediator {
      * to be called by the backend to play the simulation
      */
     public void play() {
-	myGameEngine.getPlayState().play();
+	myGameEngine.start();
     }
 
     /**
      * to be called by the backend to pause the simulation
      */
     public void pause() {
-	myGameEngine.getPlayState().pause();
+	myGameEngine.pause();
     }
 
     /**
@@ -202,6 +202,17 @@ public class Mediator {
      */
     public void updateLevel(Integer newLevel) {
 	myScreenManager.updateLevelCount(newLevel);
+    }
+
+    /**
+     * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
+     * lives. 
+     * @param myResources integer property for currency
+     * @param myScore	integer property for score
+     * @param IntegerProperty	 integer property for health
+     */
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
 
     /**

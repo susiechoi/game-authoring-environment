@@ -45,18 +45,20 @@ public class GameScreen extends Screen {
 	private ScreenManager SCREEN_MANAGER;
 	private BuyPanel BUY_PANEL;
 	private SettingsPanel SETTINGS_PANEL;
-	private VBox displayPane;
+	private BorderPane displayPane;
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
 	private BorderPane rootPane;
 	private ITRTSoundFactory SOUND_FACTORY;
+	private Map<String,String> GAMEPLAYER_PROPERTIES;
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
+		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
 		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
-		TOWER_PANEL = new TowerPanel(this, PROMPTS);
+		TOWER_PANEL = new TowerPanel(this);
 		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
 		SCORE_PANEL = new ScorePanel(this);
 		GAME_PANEL = new GamePanel(this);
@@ -69,7 +71,9 @@ public class GameScreen extends Screen {
 	public Parent makeScreenWithoutStyling() {
 		rootPane = new BorderPane();
 
-		displayPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+		displayPane = new BorderPane();
+		displayPane.setCenter(TOWER_PANEL.getPanel());
+		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 		VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
 		gamePane = new BorderPane();
@@ -80,7 +84,7 @@ public class GameScreen extends Screen {
 		gamePane.setTop(SCORE_PANEL.getPanel());
 		gamePane.setCenter(GAME_PANEL.getPanel());
 
-		rootPane.setId("gameScreenRoot"); //Where is this set up / where does it get the gameScreenRoot from?
+		rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
 		rootPane.setCenter(gamePane);
 		setVertPanelsLeft();
 
@@ -102,8 +106,7 @@ public class GameScreen extends Screen {
 
 	@Override
 	protected View getView() {
-		// TODO Auto-generated method stub
-		return null;
+		return SCREEN_MANAGER;
 	}
 
 	public void displaySprite(FrontEndSprite sprite) {
@@ -124,35 +127,35 @@ public class GameScreen extends Screen {
 
 	//TODO implement reflection//rest of controls
 	public void controlTriggered(String control) throws MissingPropertiesException {
-		if(control.equals("play"))
+		if(control.equals(GAMEPLAYER_PROPERTIES.get("play")))
 			MEDIATOR.play();
-		else if(control.equals("pause"))
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause")))
 			MEDIATOR.pause();
-		else if(control.equals("speedup"))
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup")))
 			MEDIATOR.fastForward(10);
-		else if(control.equals("quit")) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 			try {
-				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
+				new PlayController(SCREEN_MANAGER.getStageManager(), getView().getLanguage(), new AuthoringModel())
 						.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		else if (control.equals("edit")) { // Susie added this
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 		}
-		else if (control.equals("settings")) {
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("settings"))) {
 			settingsClickedOn();
 		}
 	}
 
 	public void settingsTriggered(String setting) {
-		if (setting.equals("volumeToggle")) {
+		if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
 			SOUND_FACTORY.mute();
 		}
-		else if (setting.equals("play")) {
+		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
 			try{
 				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
@@ -163,21 +166,19 @@ public class GameScreen extends Screen {
 
 
 		}
-		else if (setting.equals("pause")) {
+		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
 			SOUND_FACTORY.pauseBackgroundMusic();
 		}
-		else if (setting.equals("instructions")) {
+		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
 
 		}
-		else if (setting.equals("help")) {
+		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
 
 		}
 	}
 
-
-
-
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
+
 		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
 		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
 		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
@@ -206,29 +207,26 @@ public class GameScreen extends Screen {
 
 	public void towerClickedOn(FrontEndTower tower) {
 		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
-		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS, tower);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
+		UPGRADE_PANEL = new UpgradePanel(this, tower);
+		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
 		BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
+		displayPane.setBottom(BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	private void settingsClickedOn() {
-		SETTINGS_PANEL = new SettingsPanel(this, PROMPTS);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), SETTINGS_PANEL.getPanel());
+		SETTINGS_PANEL = new SettingsPanel(this);
+
+		displayPane.setBottom(SETTINGS_PANEL.getPanel());
 	}
 
 	public void blankGamePanelClick() {
 		gamePane.setBottom(null);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 	}
 
 	public void sellTower(FrontEndTower tower) {
@@ -274,5 +272,9 @@ public class GameScreen extends Screen {
 
 	public ITRTSoundFactory getSoundFactory() {
 		return SOUND_FACTORY;
+	}
+
+	public Map<String,String> getGameplayerProperties() {
+		return GAMEPLAYER_PROPERTIES;
 	}
 }

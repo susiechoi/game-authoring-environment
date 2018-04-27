@@ -14,17 +14,28 @@ import javafx.scene.text.Text;
  * @author Sarahbland
  *
  */
+
 public class View {
     StageManager myManager;
     PromptReader myPromptReader;
     ErrorReader myErrorReader;
     PropertiesReader myPropertiesReader;
+    String myLanguage;
     
     public View(StageManager manager, String languageIn) {
 	myPromptReader = new PromptReader(languageIn, this);
 	myErrorReader = new ErrorReader(languageIn, this);
 	myPropertiesReader = new PropertiesReader();
 	myManager = manager;
+	myLanguage = languageIn;
+    }
+    
+    /**
+     * Returns current language being used by screen
+     * @return String specifying language
+     */
+    public String getLanguage() {
+	return myLanguage;
     }
 
 	/**

@@ -1,9 +1,8 @@
 package gameplayer;
 
-import frontend.MainScreen;
-import frontend.PromptReader;
-import frontend.StageManager;
-import frontend.View;
+import authoring.frontend.exceptions.MissingPropertiesException;
+import frontend.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,40 +41,47 @@ public class ScreenManager extends View {
 	 * not sure where we're getting these values to display on the panels and stuff
 	 * TALK TO ANDREW ABOUT
 	 */
-	private Integer score;
-	private Integer level;
-	private Integer health;
-	private Integer currency;
 
 	private String myLanguage;
 	private String myGameFilePath;
 	private Mediator MEDIATOR;
 	private final StageManager STAGE_MANAGER;
 	private GameScreen GAME_SCREEN;
-	private String GAME_TITLE;
 	private final PromptReader PROMPTS;
-	private double DEFAULT_HEIGHT;
-	private double DEFAULT_WIDTH;
+	private PropertiesReader PROP_READ = new PropertiesReader();
 	private List<Integer> controlVars;
+	private Map<String, String> GAMEPLAYER_PROPERTIES;
 
 	//private final FileIO FILE_READER;
 
 	public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
 		super(stageManager, language);
 		STAGE_MANAGER = stageManager;
+		try {
+			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
+		}
+		catch (MissingPropertiesException e) {
+		}
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;
 		MEDIATOR = mediator;
 		findSettings();
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+		System.out.println(GAMEPLAYER_PROPERTIES);
 	}
 
 	public ScreenManager(StageManager stageManager, String language) {
 		super(stageManager, language);
 		STAGE_MANAGER = stageManager;
+		try {
+			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
+		}
+		catch (MissingPropertiesException e) {
+		}
 		PROMPTS = new PromptReader(language, this);
 		findSettings();
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+		System.out.println(GAMEPLAYER_PROPERTIES);
 	}
 
 	public List<Integer> getMediatorInts(){
@@ -97,7 +103,6 @@ public class ScreenManager extends View {
 		setGameFilePath(filepath);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
-		System.out.println("loadGameScreenNew in screen manager");
 		MEDIATOR.startPlay(filepath);
 	}
 
@@ -116,9 +121,8 @@ public class ScreenManager extends View {
 
 	//TODO read these in from properties file
 	private void findSettings() {
-		DEFAULT_HEIGHT = 650;
-		DEFAULT_WIDTH = 900;
-
+		Double DEFAULT_HEIGHT = Double.parseDouble(GAMEPLAYER_PROPERTIES.get("DefaultHeight"));
+		Double DEFAULT_WIDTH = Double.parseDouble(GAMEPLAYER_PROPERTIES.get("DefaultWidth"));
 	}
 
 	public void updateLevelCount(Integer newLevelCount) {
@@ -185,5 +189,10 @@ public class ScreenManager extends View {
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
 		IntegerProperty myLives) {
 	    GAME_SCREEN.attachListeners(myCurrency, myScore, myLives);	    
+	}
+
+
+	public Map<String,String> getGameplayerProperties() {
+		return GAMEPLAYER_PROPERTIES;
 	}
 }

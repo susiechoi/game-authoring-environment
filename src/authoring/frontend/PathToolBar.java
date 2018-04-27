@@ -2,6 +2,8 @@ package authoring.frontend;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -29,7 +31,12 @@ public abstract class PathToolBar extends AuthoringScreen {
 	
 	protected void setUpSizing() {
 		myPathToolBar = new HBox();
-		myPathToolBar.setMaxSize(1021, 101);
+		try {
+		myPathToolBar.setMaxSize(Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarHeight")), Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarWidth")));
+		}
+		catch(MissingPropertiesException e) {
+		    getView().loadErrorScreen("NoFile");
+		}
 		myPathToolBar.getStylesheets();
 		myPathToolBar.getChildren().add(makeSizingButtons());
 	}
@@ -45,18 +52,26 @@ public abstract class PathToolBar extends AuthoringScreen {
 	protected abstract void makePanel();
 	
 	protected HBox makeSizingButtons() {
-		HBox hb = new HBox();
-		Image plusImg = new Image(DEFAULT_PLUS_IMAGE, 60, 40, true, false);
+	    try {
+	    	int buttonWidth = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonWidth"));
+		int buttonHeight = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonHeight"));
+	    	HBox hb = new HBox();
+		Image plusImg = new Image(DEFAULT_PLUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myPlusButton = getUIFactory().makeImageButton("", plusImg);
 		myPlusButton.getStyleClass().add("button-pathsize");
 		mySizingButtons.add(myPlusButton);
 
-		Image minusImg = new Image(DEFAULT_MINUS_IMAGE, 60, 40, true, false);
+		Image minusImg = new Image(DEFAULT_MINUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myMinusButton = getUIFactory().makeImageButton("", minusImg);
 		myMinusButton.getStyleClass().add("button-pathsize");
 		mySizingButtons.add(myMinusButton);
 		hb.getChildren().addAll(mySizingButtons);
 		return hb;
+	    }
+	    catch(MissingPropertiesException e) {
+		getView().loadErrorScreen("NoConstants");
+		return null;
+	    }
 	}
 	
 	protected Button getPlusButton() {

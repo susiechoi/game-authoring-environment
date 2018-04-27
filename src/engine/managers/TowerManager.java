@@ -91,18 +91,4 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return balance;
     }
-
-    /**
-     * Removes all of the projectiles from the tower manager
-     * @return
-     */
-    public Collection<Projectile> removeAllProjectiles() {
-	List<Projectile> toBeRemoved = new ArrayList<>();
-	for(ShootingSprites tower : this.getListOfActive()) {
-	    toBeRemoved.addAll(tower.getLauncher().getListOfActive());
-	    tower.getLauncher().getListOfActive().clear();
-	}
-	return toBeRemoved;
-    }
-
 }
