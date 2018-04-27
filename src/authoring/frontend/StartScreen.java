@@ -133,7 +133,7 @@ public class StartScreen extends AuthoringScreen {
 		try {
 			File file = new File(currentDir + File.separator + folderName);
 			File[] fileArray = file.listFiles();
-			List<String> fileNames = new ArrayList<String>();
+			List<String> fileNames = new ArrayList<>();
 			for (File aFile : fileArray) {
 				String colorName = aFile.getName();
 				String[] nameSplit = colorName.split("\\.");

@@ -4,16 +4,11 @@
  */
 
 package authoring.frontend;
-
-import authoring.frontend.exceptions.MissingPropertiesException;
-
-import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -26,7 +21,6 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	private String myObjectName; 
 	private TextField myNameField; 
-	private ComboBox<String> myImageDropdown;
 	private Slider mySpeedSlider;
 	private Slider myInitialHealthSlider; 
 	private Slider myHealthImpactSlider; 

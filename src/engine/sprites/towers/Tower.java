@@ -4,10 +4,12 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.builders.*;
+import engine.builders.LauncherBuilder;
+import engine.builders.ProjectileBuilder;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.properties.*;
+import engine.sprites.properties.HealthProperty;
+import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -19,7 +21,9 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
 
-    private final String ENEMIES_KILLED = "Enemies Killed";
+    private final static String ENEMIES_KILLED = "Enemies Killed";
+    private final static int FAKE_X = 100000;
+    private final static int FAKE_Y = 100000;
 
     private HealthProperty myHealth;
     private String myName; 
@@ -52,7 +56,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myName = name; 
 	myImage = image; 
 	myHealth = health;
-	propertyStats = new HashMap<String, Integer>();
+	propertyStats = new HashMap<>();
 	setupStats(propertyStats, health.getName(), (int) health.getProperty());
 	setupStats(propertyStats, value.getName(), (int) value.getProperty());
 	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
@@ -84,7 +88,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		copiedTower.mySize, copiedTower.getLauncher()); 
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty(); 
-	propertyStats = new HashMap<String, Integer>();
+	propertyStats = new HashMap<>();
 	setupStats(propertyStats, myHealth.getName(), (int) myHealth.getProperty());
 	setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
 	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
@@ -98,7 +102,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
 	myHealth = copiedTower.getHealthProperty();
 	myValue = copiedTower.getValueProperty();
-	propertyStats = new HashMap<String, Integer>();
+	propertyStats = new HashMap<>();
 	setupStats(propertyStats, myHealth.getName(), (int) myHealth.getProperty());
 	setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
 	setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
@@ -112,6 +116,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     @Override
     public boolean handleCollision(Sprite collider) {
+    this.myHealth.loseHealth(collider.getDamage());
 	return true;
     }
 
@@ -125,7 +130,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     private void removeAllProjectiles() {
 	for(Projectile projectile : this.getProjectiles()) {
-	    projectile.place(-100000, -100000);
+	    projectile.place(FAKE_X, FAKE_Y);
 	}
     }
 
@@ -223,6 +228,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     		setupStats(propertyStats, myValue.getName(), (int) myValue.getProperty());
     		setupStats(propertyStats, this.getDamageName(), (int) this.getDamage());
     	}
-	
+	 @Override
+	    public void loseHealth(double damage) {
+	    	myHealth.loseHealth(damage);
+	    }
 }
 
