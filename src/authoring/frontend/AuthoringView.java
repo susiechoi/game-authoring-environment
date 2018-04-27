@@ -60,7 +60,6 @@ public class AuthoringView extends View {
 		myController = controller; 
 		myCurrentCSS = DEFAULT_AUTHORING_CSS;
 		myCSSChanged = new SimpleBooleanProperty(false);
-		
 	}
 
 
@@ -156,7 +155,6 @@ public class AuthoringView extends View {
 			}
 		}
 		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-		    	System.out.println(clazz.getSimpleName());
 			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 			myStageManager.switchScreen(nextScreen.getScreen());
 		}
@@ -183,7 +181,6 @@ public class AuthoringView extends View {
 	}
 	
 	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
-		System.out.println("Image coordinates: " +imageCoordinates);
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
 	}
 

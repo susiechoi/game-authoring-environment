@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,8 +41,8 @@ public class CreatePathScreen extends PathScreen {
 		myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-			    	setSaved();
-				List<Point> startCoords = grid.getStartingPosition();
+				setSaved();
+				List<Point> startCoords = grid.getStartingPosition(grid.getCheckGrid());
 				if (startCoords.size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Path Cutomization Error");
@@ -51,18 +52,23 @@ public class CreatePathScreen extends PathScreen {
 				for (Point point: startCoords) {
 					gridCheck = false;
 					grid.getAbsoluteCoordinates().clear();
-					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX()) == true) {
+					if (grid.checkPathConnected(grid.copyGrid(grid.getCheckGrid()), (int) point.getY(), (int) point.getX()) == true) {
 						gridCheck = true;
 						List<Point> coords = new ArrayList<Point>(grid.getAbsoluteCoordinates());
 						myCoords.add(coords);
+					} else {
+						gridCheck = false;
 					}
 				}
-				//TODO: PATHS ARE NOT GETTING CORRECTLY PASSED FOR EDITTING!!!
+
 				if (gridCheck == true) {
 					try {
-						getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid()), myBackgroundImage, 
-								myPathPanel.getPanelPathImage().getPathImage().getImage().getUrl(), myPathPanel.getPanelStartImage().getPathImage().getImage().getUrl(), 
-								myPathPanel.getPanelEndImage().getPathImage().getImage().getUrl(), grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
+						String startImage = myPathPanel.getPanelStartImage().getPathImage().getImage().getUrl();
+						String pathImage = myPathPanel.getPanelPathImage().getPathImage().getImage().getUrl();
+						String endImage = myPathPanel.getPanelEndImage().getPathImage().getImage().getUrl();
+						grid.getStartingPosition(grid.getCheckGrid());
+						getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid(), startImage, pathImage, endImage), myBackgroundImage, 
+								pathImage, startImage, endImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
 						getView().getObjectAttribute("Path", "", "myPathMap");
 						getView().getObjectAttribute("Path", "", "myBackgroundImage");
 						getView().getObjectAttribute("Path", "", "myPathSize");
@@ -156,29 +162,39 @@ public class CreatePathScreen extends PathScreen {
 				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 				File file = fileChooser.showOpenDialog(new Stage());
 				image.setNewImage(new Image(file.toURI().toString()));
-//				changeGridImages(file.toURI().toString());
+				changeGridImages(file.toURI().toString());
 			}
 		});
 	}
-	
-	//TODO: CHANGE ALL IMAGES IN GRID ON IMAGE CHANGE!!
-//	private void changeGridImages(String imageFilePath) {
-//		for (int i = 0; i < myGrid.getColumnCount(); i++) {
-//			for (int j = 0; j < myGrid.getRowCount(); j++) {
-//				
-//				if (myGrid.getNode(myGrid.getCheckGrid(), i, j) != null) {
-//					DraggableImage image = (DraggableImage) myGrid.getNode(myGrid.getCheckGrid(), i, j);
-//					myGrid.removeNode(myGrid.getGrid(), i, j);
-//					Label checkLabel = (Label) myGrid.getNode(myGrid.getCheckGrid(), i, j);
-//					if (imageFilePath == myPathPanel.getPanelStartImage().getPathImage().getImage().getUrl().toString()) {
-//						System.out.println("HERE");
-//						image.setNewImage(new Image(imageFilePath));
-//						DraggableImage path = new DraggableImage(new Image(imageFilePath));
-//						path.setDraggable(myGrid.getCheckGrid(), j, i);
+
+	private void changeGridImages(String imageFilePath) {
+		for (int i = 0; i < myGrid.getColumnCount(); i++) {
+			for (int j = 0; j < myGrid.getRowCount(); j++) {
+				if (myGrid.getNode(myGrid.getCheckGrid(), i, j) != null) {
+					Label checkLabel = (Label) myGrid.getNode(myGrid.getCheckGrid(), i, j);
+					DraggableImage path = new DraggableImage(new Image(imageFilePath));
+					if (checkLabel.getText() == "start") {
+						myGrid.removeNode(myGrid.getGrid(), i, j);
+						path.getPathImage().setFitHeight(myGrid.getPathSize());
+						path.getPathImage().setFitWidth(myGrid.getPathSize());
+						myGrid.getGrid().add(path.getPathImage(), i, j);
+						path.setDraggable(myGrid.getCheckGrid(), j, i);	
+//					} else if (checkLabel.getText() == "path" ) {
+//						myGrid.removeNode(myGrid.getGrid(), i, j);
+//						path.getPathImage().setFitHeight(myGrid.getPathSize());
+//						path.getPathImage().setFitWidth(myGrid.getPathSize());
 //						myGrid.getGrid().add(path.getPathImage(), i, j);
-//					}
-//				}
-//			}
-//		}
-//	}
+//						path.setDraggable(myGrid.getCheckGrid(), j, i);
+//					} else if (checkLabel.getText() == "end") {
+//						myGrid.removeNode(myGrid.getGrid(), i, j);
+//						path.getPathImage().setFitHeight(myGrid.getPathSize());
+//						path.getPathImage().setFitWidth(myGrid.getPathSize());
+//						myGrid.getGrid().add(path.getPathImage(), i, j);
+//						path.setDraggable(myGrid.getCheckGrid(), j, i);
+					}
+				}
+			}
+		}
+	}
+
 }

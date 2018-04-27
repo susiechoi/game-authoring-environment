@@ -237,11 +237,9 @@ public class AuthoringModel {
 		}
 		else if (objectType.equals("Path")) {
 			Level currentLevel = myGame.levelCheck(level);
-			//			if (currentLevel.containsTower(name)) {
 			Path path = currentLevel.getPath();
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
-			System.out.println("PATH INFO: " +attributeValue);
-			//			}
+//			System.out.println("PATH INFO: " +attributeValue);
 		}
 
 		else if(objectType.equals("Wave")) {
@@ -271,7 +269,6 @@ public class AuthoringModel {
 	 * @return Map of image names to Point lists
 	 */
 	public Map<String, List<Point>> getImageMap() {
-		System.out.println("IS MAP NULL: " +myImageMap);
 		return myImageMap;
 	}
 

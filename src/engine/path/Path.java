@@ -103,6 +103,7 @@ public class Path {
 	}
 
 	public Map<String, List<Point>> getPathMap() {
+		
 		return myPathMap;
 	}
 

@@ -50,10 +50,6 @@ public class CreatePathGrid {
 	private Label endLabel = new Label("end");
 	private Label pathLabel = new Label("path");
 	private ArrayList<Point> pathCoords = new ArrayList<Point>();
-	//private ArrayList<DraggableImage> draggableImagesOnScreen;
-
-
-	private HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>(); //map (imagefileName, (row,col))
 	private ArrayList<Point> startPoints = new ArrayList<Point>();
 	private ArrayList<Point> endPoints = new ArrayList<Point>();
 	private ArrayList<Point> pathPoints = new ArrayList<Point>();
@@ -61,8 +57,6 @@ public class CreatePathGrid {
 	private DraggableImage path;
 	private int startCount = 0;
 	private AuthoringView myView;
-	// private EventHandler<DragEvent> myOnDragDropped;
-	// private EventHandler<DragEvent> myOnDragOver;
 	private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
 		@Override
 		public void handle(MouseEvent event) {
@@ -87,10 +81,6 @@ public class CreatePathGrid {
 		checkGrid.setMaxSize(1020.0, 650.0);
 		setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
-		//		copyGrid = new GridPane();
-		//		copyGrid.setMaxSize(1020.0, 650.0);
-		//		setGridConstraints(copyGrid, INITIAL_PATH_SIZE);
-
 		grid.setMaxSize(1020.0, 650.0); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
 
@@ -99,12 +89,11 @@ public class CreatePathGrid {
 
 		grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
 		populateGrid(grid);
-
+	
 		if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) { //TODO: better way to check if not default
-			addImagesToGrid((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap"), (int) getView().getObjectAttribute("Path", "", "myPathSize"));
 			setGridConstraints(grid, (int) getView().getObjectAttribute("Path", "", "myPathSize"));
 			grid.setStyle("-fx-background-image: url("+getView().getObjectAttribute("Path", "", "myBackgroundImage")+")");
-			System.out.println("IMAGEMAP: " +getView().getObjectAttribute("Path", "", "myPathMap"));
+			addImagesToGrid((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap"), (int) getView().getObjectAttribute("Path", "", "myPathSize"));
 		}
 		return grid;
 	}
@@ -144,15 +133,12 @@ public class CreatePathGrid {
 							if (((ImageView) event.getGestureSource()).getId() == "start") {	
 								path.getPathImage().setId("start");
 								checkGrid.add(new Label("start"), colIndex, rowIndex);
-								//								copyGrid.add(new Label("start"), colIndex, rowIndex);
 							} else if (((ImageView) event.getGestureSource()).getId() == "end") {
 								path.getPathImage().setId("end");
 								checkGrid.add(new Label("end"), colIndex, rowIndex);
-								//								copyGrid.add(new Label("end"), colIndex, rowIndex);
 							} else if (((ImageView) event.getGestureSource()).getId() == "path") {
 								path.getPathImage().setId("path");
 								checkGrid.add(new Label("path"), colIndex, rowIndex);
-								//								copyGrid.add(new Label("path"), colIndex, rowIndex);
 							}
 							success = true;
 						}
@@ -183,6 +169,7 @@ public class CreatePathGrid {
 
 	//Very similar to populate grid (duplicate code)
 	public void addImagesToGrid(Map<String, List<Point>> map, int pathSize) {
+		checkGrid.getChildren().clear();
 		for (String key: map.keySet()) {
 			List<Point> pointList = map.get(key);
 			for (int i = 0; i < pointList.size(); i++) {
@@ -191,13 +178,13 @@ public class CreatePathGrid {
 				path.setDraggable(checkGrid, (int)point.getY(), (int)point.getX());
 				path.getPathImage().setFitWidth(pathSize);
 				path.getPathImage().setFitHeight(pathSize);
-				if (key == getView().getObjectAttribute("Path", "", "myStartImage")) {
+				if (key.equals(getView().getObjectAttribute("Path", "", "myStartImage"))) {
 					checkGrid.add(new Label("start"), (int)point.getX(), (int)point.getY());
 					setPathImage(new ImageView(new Image(key)));
-				} else if (key == getView().getObjectAttribute("Path", "", "myPathImage")) {
+				} else if (key.equals(getView().getObjectAttribute("Path", "", "myPathImage"))) {
 					checkGrid.add(new Label("path"), (int)point.getX(), (int)point.getY());
 					setPathImage(new ImageView(new Image(key)));
-				} else if (key == getView().getObjectAttribute("Path", "", "myEndImage")) {
+				} else if (key.equals(getView().getObjectAttribute("Path", "", "myEndImage"))) {
 					checkGrid.add(new Label("end"), (int)point.getX(), (int)point.getY());
 					setEndImage(new ImageView(new Image(key)));
 				}
@@ -208,7 +195,6 @@ public class CreatePathGrid {
 		}
 	}
 
-	//replaces start label with path label, do on duplicated grid?
 	protected boolean checkPathConnected(GridPane grid, int row, int col) {
 		Label checkLabel = (Label) getNode(grid, col, row);
 		if (getNode(grid, col, row) != null) {
@@ -249,7 +235,6 @@ public class CreatePathGrid {
 		pathCoords.add(point);
 	}
 
-
 	protected Node getNode(GridPane gridPane, int col, int row) {
 		Node result = null;
 		for (Node node : gridPane.getChildren()) {
@@ -279,6 +264,7 @@ public class CreatePathGrid {
 	}
 
 	private void makeUnDraggable(EventHandler<MouseEvent> action) {
+		
 		///System.out.println("trying to make undraggable");
 		for(Node newNode: grid.getChildren()){
 			//newNode.removeEventHandler(DragEvent.DRAG_DROPPED, myOnDragDropped);
@@ -310,16 +296,20 @@ public class CreatePathGrid {
 		return myCurrentClicked;
 	}
 
-	protected List<Point> getStartingPosition() { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
-		for (int x = 0; x < checkGrid.getColumnCount(); x++) {
-			for (int y = 0; y < checkGrid.getRowCount(); y++) {
-				if (getNode(checkGrid, x, y) != null && ((Label) getNode(checkGrid, x, y)).getText().equals("start")) {
+	protected List<Point> getStartingPosition(GridPane grid) { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
+		startPoints.clear();
+		for (int x = 0; x < grid.getColumnCount(); x++) {
+			for (int y = 0; y < grid.getRowCount(); y++) {
+				if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals("start")) {
+//					Point newStart = new Point(x, y);
 					startPoints.add(new Point(x, y));
 				}
 			}
 		}
 		return startPoints;
 	}
+	
+	//getStartPointNames
 
 	protected void setBackgroundImage(String backGroundFileName) {
 		grid.setStyle("-fx-background-image: url(" + backGroundFileName + ")");
@@ -333,10 +323,6 @@ public class CreatePathGrid {
 		return checkGrid;
 	}
 
-	//				protected GridPane getCopyGrid() {
-	//					return copyGrid;
-	//				}
-
 	protected int getPathSize() {
 		return pathSize;
 	}
@@ -345,22 +331,24 @@ public class CreatePathGrid {
 		return pathCoords;
 	}
 
-	protected HashMap<String, List<Point>> getGridImageCoordinates(GridPane grid) {
-		System.out.println(grid.getChildren());
+	protected HashMap<String, List<Point>> getGridImageCoordinates(GridPane grid, String startImage, String pathImage, String endImage) {
+		pathPoints.clear();
+		endPoints.clear();
+		
+		HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>();
+		
 		for (int x = 0; x < grid.getColumnCount(); x++) {
 			for (int y = 0; y < grid.getRowCount(); y++) {
-				if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == "start") {
-					startPoints.add(new Point(x, y));
-				} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == "path") {
+				 if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals("path")) {
 					pathPoints.add(new Point(x, y));
-				} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == "end") {
+				} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals("end")) {
 					endPoints.add(new Point(x, y));
 				}
 			}
 		}
-		gridImageCoordinates.put(startImage.getImage().getUrl(), startPoints);
-		gridImageCoordinates.put(endImage.getImage().getUrl(), endPoints);
-		gridImageCoordinates.put(pathImage.getImage().getUrl(), pathPoints);
+		gridImageCoordinates.put(startImage, startPoints);
+		gridImageCoordinates.put(endImage, endPoints);
+		gridImageCoordinates.put(pathImage, pathPoints);
 		return gridImageCoordinates;
 	}
 
@@ -381,7 +369,7 @@ public class CreatePathGrid {
 	public void setStartImage(ImageView newImage) {
 		startImage = newImage;
 	}
-	
+
 	public void setEndImage(ImageView newImage) {
 		endImage = newImage;
 	}
@@ -397,5 +385,21 @@ public class CreatePathGrid {
 	public int getRowCount() {
 		return grid.getRowCount();
 	}
+	
+	public GridPane copyGrid(GridPane grid) {
+		GridPane copiedGrid = new GridPane();
+		for (int x = 0; x < grid.getColumnCount(); x++) {
+			for (int y = 0; y < grid.getRowCount(); y++) {
+				if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == "start") {
+					copiedGrid.add(new Label("start"), x, y);
+				} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == "path") {
+					copiedGrid.add(new Label("path"), x, y);
+				} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == "end") {
+					copiedGrid.add(new Label("end"), x, y);
+				}
+			}
+		}
+		return copiedGrid;
+	}
+	
 }
-
