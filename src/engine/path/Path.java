@@ -21,11 +21,17 @@ public class Path {
 	private int myRows;
 	private Map<String, List<Point>> myPathMap;
 	private String myBackgroundImage;
+	private String myPathImage;
+	private String myStartImage;
+	private String myEndImage;
 
-	public Path(List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize, int col, int row) {
+	public Path(List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) {
 		myCoordinates = null;
 		newCoordinates = coordinates;
 		myBackgroundImage = backgroundImage;
+		myPathImage = pathImage;
+		myStartImage = startImage;
+		myEndImage = endImage;
 		myPathSize = pathSize;
 		myCols = col;
 		myRows = row;
@@ -124,5 +130,16 @@ public class Path {
 	public int getRowCount() {
 		return myRows;
 	}
-
+	
+	public String getPathImage( ) {
+		return myPathImage;
+	}
+	
+	public String getStartImage( ) {
+		return myStartImage;
+	}
+	
+	public String getEndImage( ) {
+		return myEndImage;
+	}
 }

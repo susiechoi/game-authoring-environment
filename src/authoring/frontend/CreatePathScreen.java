@@ -26,7 +26,7 @@ public class CreatePathScreen extends PathScreen {
 	private String myBackgroundImage = "Images/generalbackground.jpg";
 	private CreatePathGrid myGrid;
 	private List<List<Point>> myCoords = new ArrayList<List<Point>>();
-	private boolean checkGrid = false;
+	private boolean gridCheck = false;
 	private CreatePathScreen me;
 
 	public CreatePathScreen(AuthoringView view) {
@@ -50,21 +50,26 @@ public class CreatePathScreen extends PathScreen {
 					alert.showAndWait();
 				}
 				for (Point point: startCoords) {
-					checkGrid = false;
+					gridCheck = false;
 					grid.getAbsoluteCoordinates().clear();
-					if (grid.checkPathConnected(grid.getCheckGrid(), (int) point.getY(), (int) point.getX()) == true) {
-						checkGrid = true;
+					if (grid.checkPathConnected(grid.getCopyGrid(), (int) point.getY(), (int) point.getX()) == true) {
+						gridCheck = true;
 						List<Point> coords = new ArrayList<Point>(grid.getAbsoluteCoordinates());
 						myCoords.add(coords);
 					}
 				}
-				System.out.println("COORDS: " +myCoords);
-				if (checkGrid == true) {
+				//TODO: PATHS ARE NOT GETTING CORRECTLY PASSED FOR EDITTING!!!
+				if (gridCheck == true) {
 					try {
-						getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(), myBackgroundImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
+						getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid()), myBackgroundImage, 
+								myPathPanel.getPanelPathImage().getPathImage().getImage().getUrl(), myPathPanel.getPanelStartImage().getPathImage().getImage().getUrl(), 
+								myPathPanel.getPanelEndImage().getPathImage().getImage().getUrl(), grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
 						getView().getObjectAttribute("Path", "", "myPathMap");
 						getView().getObjectAttribute("Path", "", "myBackgroundImage");
 						getView().getObjectAttribute("Path", "", "myPathSize");
+						getView().getObjectAttribute("Path", "", "myPathImage");
+						getView().getObjectAttribute("Path", "", "myStartImage");
+						getView().getObjectAttribute("Path", "", "myEndImage");
 						getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 					} catch (ObjectNotFoundException e1) {
 						// TODO Auto-generated catch block
@@ -135,9 +140,7 @@ public class CreatePathScreen extends PathScreen {
 				getGrid().setBackgroundImage(myBackgroundImage);
 			}
 		});
-
 		setImageOnButtonPressed(myPathToolBar.getPathImageButton(), myPathPanel.getPanelPathImage());
-
 		setImageOnButtonPressed(myPathToolBar.getStartImageButton(), myPathPanel.getPanelStartImage());
 		setImageOnButtonPressed(myPathToolBar.getEndImageButton(), myPathPanel.getPanelEndImage());
 	}
@@ -162,7 +165,29 @@ public class CreatePathScreen extends PathScreen {
 				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 				File file = fileChooser.showOpenDialog(new Stage());
 				image.setNewImage(new Image(file.toURI().toString()));
+//				changeGridImages(file.toURI().toString());
 			}
 		});
 	}
+	
+	//TODO: CHANGE ALL IMAGES IN GRID ON IMAGE CHANGE!!
+//	private void changeGridImages(String imageFilePath) {
+//		for (int i = 0; i < myGrid.getColumnCount(); i++) {
+//			for (int j = 0; j < myGrid.getRowCount(); j++) {
+//				
+//				if (myGrid.getNode(myGrid.getCheckGrid(), i, j) != null) {
+//					DraggableImage image = (DraggableImage) myGrid.getNode(myGrid.getCheckGrid(), i, j);
+//					myGrid.removeNode(myGrid.getGrid(), i, j);
+//					Label checkLabel = (Label) myGrid.getNode(myGrid.getCheckGrid(), i, j);
+//					if (imageFilePath == myPathPanel.getPanelStartImage().getPathImage().getImage().getUrl().toString()) {
+//						System.out.println("HERE");
+//						image.setNewImage(new Image(imageFilePath));
+//						DraggableImage path = new DraggableImage(new Image(imageFilePath));
+//						path.setDraggable(myGrid.getCheckGrid(), j, i);
+//						myGrid.getGrid().add(path.getPathImage(), i, j);
+//					}
+//				}
+//			}
+//		}
+//	}
 }
