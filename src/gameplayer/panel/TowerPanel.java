@@ -7,7 +7,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,7 +25,6 @@ public class TowerPanel extends ListenerPanel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private int TOWER_IMAGE_SIZE;
-    private int SWAP_BUTTON_SIZE;
 
 
     private GameScreen GAME_SCREEN;
@@ -34,8 +32,7 @@ public class TowerPanel extends ListenerPanel {
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
-    private int initialCurrency;
-    private String ASSORTED_BUTTON_FILEPATH;
+    private Integer initialCurrency;
 
     //TODO change to only use availibleTowers
 
@@ -58,8 +55,8 @@ public class TowerPanel extends ListenerPanel {
     public void makePanel() {
 
 	TOWER_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("TowerImageSize"));
-	SWAP_BUTTON_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("SwapButtonSize"));
-	ASSORTED_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
+	int swapButtonSize = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("SwapButtonSize"));
+	String assortedButtonFilePath = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
 
 	towerPane = new HBox();
 	ScrollPane towerDisplay = new ScrollPane(towerPane);
@@ -81,7 +78,7 @@ public class TowerPanel extends ListenerPanel {
 	currencyAndSwap.setAlignment(Pos.CENTER);
 	try {
 
-	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
+	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(assortedButtonFilePath, swapButtonSize, swapButtonSize);
 	    Button swapButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("swapButtonID"), buttonMap.get(GAMEPLAYER_PROPERTIES.get("swapButton")));
 	    swapButton.setOnMouseClicked(arg0 -> GAME_SCREEN.swapVertPanel());
 	    swapButton.setTooltip(new Tooltip(GAMEPLAYER_PROPERTIES.get("swapTooltip"))); //TODO make properties file
@@ -152,7 +149,7 @@ public class TowerPanel extends ListenerPanel {
 	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
 	    //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton(GAMEPLAYER_PROPERTIES.get("buttonID"), voidView);
-	    voidButton.setOnMouseClicked((arg0) ->{ 
+	    voidButton.setOnMouseClicked(arg0 ->{ 
 
 		GAME_SCREEN.towerSelectedForPlacement(null);
 		System.out.println("nullhit");
