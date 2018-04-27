@@ -25,7 +25,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	public static final String TEST_PROPERTIES = "images/TestProperties.properties";
 
 
-	protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
+	protected CustomizationChoicesScreen(AuthoringView view) {
 	    	super(view);
 	}
 

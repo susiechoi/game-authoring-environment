@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.frontend.AuthoringView;
+import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
@@ -241,6 +242,10 @@ public class AuthoringController implements MVController{
 	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
+    
+    public void setModel(AuthoringModel model) {
+	myModel = model;
+    }
 
     /**
      * Returns a map of String image names to a list of Point coordinates where those 
@@ -293,8 +298,16 @@ public class AuthoringController implements MVController{
 	    new PlayController(manager, language,
 			myModel).demoPlay(myModel.getGame());
 	}
-	public void playControllerInstructions(StageManager manager, String language) {
-	    new PlayController(manager, language, myModel).loadInstructionScreen();
+	public void deleteObject(int level, String objectType, String objectName) {
+	    try {
+	    myModel.deleteObject(level, objectType, objectName);
+	    }
+	    catch(ObjectNotFoundException e) {
+		myView.loadErrorScreen("NoObject");
+	    }
+	    catch(DeleteDefaultException e2) {
+		myView.loadErrorAlert("NoDeleteDefault");
+	    }
 	}
 }
 
