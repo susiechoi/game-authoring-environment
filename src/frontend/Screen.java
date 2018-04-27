@@ -14,7 +14,7 @@ public abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	public static final String DEFAULT_FILE_ERRORMESSAGE = "Missing specified language property files.";
-	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_CONSTANTS_FILEPATH = "src/frontend/Constants.properties";
 	public static final String DEFAULT_PROMPT = "";
 	//private AuthoringView myView; 
 	private String myStylesheet; 
