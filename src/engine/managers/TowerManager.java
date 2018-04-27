@@ -57,10 +57,10 @@ public class TowerManager extends ShootingSpriteManager {
     }
     
     public FrontEndTower place(Point location, String type) {
-	System.out.println("TYPE " + type);
+//	System.out.println("TYPE " + type);
 	for (Entry<String, Tower> entry : myTowerTypeToInstance.entrySet()) {
-	    System.out.println(entry.getKey());
-	    System.out.println(entry.getValue());
+//	    System.out.println(entry.getKey());
+//	    System.out.println(entry.getValue());
 	}
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type));
     		newTower.move(location);

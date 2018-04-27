@@ -400,7 +400,7 @@ public class AuthoringModel {
     public void setObjectAttributes(int level, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
 	Level currentLevel = myGame.levelCheck(level);
 	if (objectType.equals("Enemy")) {
-	    if (currentLevel.containsTower(objectName)) {
+	    if (currentLevel.containsEnemy(objectName)) {
 		Enemy enemy = currentLevel.getEnemy(objectName);
 		enemy.addProperty(propertyFactory.getProperty(objectName, propertyName, attributes));
 	    }

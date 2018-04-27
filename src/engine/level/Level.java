@@ -356,7 +356,7 @@ public class Level {
 			myTowers.remove(DEFAULT_OBJ_NAME);
 		}
 		updateTowerProperties(); 
-		updateEnemyProperties(); 
+		//updateEnemyProperties(); 
 	}
 
 	private void updateTowerProperties() {
@@ -367,13 +367,13 @@ public class Level {
 		}
 	}
 
-	public void updateEnemyProperties() {
-		Enemy enemy; 
-		for (String enemyName : myEnemies.keySet()) {
-			enemy = myEnemies.get(enemyName);
-			enemy.updateProperties();
-		}
-	}
+//	public void updateEnemyProperties() {
+//		Enemy enemy; 
+//		for (String enemyName : myEnemies.keySet()) {
+//			enemy = myEnemies.get(enemyName);
+//			enemy.updateProperties();
+//		}
+//	}
 
 
 }
