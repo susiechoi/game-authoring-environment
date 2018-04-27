@@ -52,18 +52,26 @@ public abstract class PathToolBar extends AuthoringScreen {
 	protected abstract void makePanel();
 	
 	protected HBox makeSizingButtons() {
-		HBox hb = new HBox();
-		Image plusImg = new Image(DEFAULT_PLUS_IMAGE, 60, 40, true, false);
+	    try {
+	    	int buttonWidth = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonWidth"));
+		int buttonHeight = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonHeight"));
+	    	HBox hb = new HBox();
+		Image plusImg = new Image(DEFAULT_PLUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myPlusButton = getUIFactory().makeImageButton("", plusImg);
 		myPlusButton.getStyleClass().add("button-pathsize");
 		mySizingButtons.add(myPlusButton);
 
-		Image minusImg = new Image(DEFAULT_MINUS_IMAGE, 60, 40, true, false);
+		Image minusImg = new Image(DEFAULT_MINUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myMinusButton = getUIFactory().makeImageButton("", minusImg);
 		myMinusButton.getStyleClass().add("button-pathsize");
 		mySizingButtons.add(myMinusButton);
 		hb.getChildren().addAll(mySizingButtons);
 		return hb;
+	    }
+	    catch(MissingPropertiesException e) {
+		getView().loadErrorScreen("NoConstants");
+		return null;
+	    }
 	}
 	
 	protected Button getPlusButton() {
