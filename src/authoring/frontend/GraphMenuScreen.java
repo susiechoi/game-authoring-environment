@@ -38,6 +38,7 @@ public class GraphMenuScreen extends AuthoringScreen {
 		List<String> relevantGraphs = new ArrayList<String>(); 
 
 		for (String graphName : availableGraphs) {
+			System.out.println(graphName);
 			String currGameName = getView().getGameName();
 			if (graphName.indexOf(currGameName) > -1) {
 				relevantGraphs.add(graphName);

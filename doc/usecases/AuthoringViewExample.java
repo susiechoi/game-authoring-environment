@@ -7,7 +7,7 @@
  * 
  */
 
-package usecases; 
+package doc.usecases; 
 
 import java.util.List;
 

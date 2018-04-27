@@ -1,4 +1,4 @@
-package api;
+package doc.api;
 
 /**
  * This class is held in the Tower and possibly Enemy classes (Composition). 
