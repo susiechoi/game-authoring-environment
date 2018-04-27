@@ -11,7 +11,7 @@ public abstract class ListenerPanel extends Panel {
 	 * @param setNonInitalLabelTo	what label will be set to on creation
 	 * @return	if label has been created
 	 */
-	protected boolean setInitalProperty(Object display, int initialValue, int setNonInitalLabelTo ) {
+	protected boolean setInitalProperty(Object display, int initialValue, Integer setNonInitalLabelTo ) {
 	    if(display == null) {
 		setNonInitalLabelTo = initialValue;
 		return false;

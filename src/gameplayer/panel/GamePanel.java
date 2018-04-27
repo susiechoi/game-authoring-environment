@@ -41,12 +41,13 @@ public class GamePanel extends Panel{
     private Circle rangeIndicator;
 
     //TODO changes this to be passed from mediator ******************************************************************************
-    private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
+    private final String BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+	BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("backgroundFilePath");
 	PROP_READ = new PropertiesReader();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
 	towerSelected =  null;

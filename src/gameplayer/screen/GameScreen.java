@@ -34,7 +34,7 @@ import sound.ITRTSoundFactory;
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private static final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
+	private final String DEFAULT_SHARED_STYLESHEET;
 
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
@@ -53,6 +53,7 @@ public class GameScreen extends Screen {
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
 		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
+		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
 		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;

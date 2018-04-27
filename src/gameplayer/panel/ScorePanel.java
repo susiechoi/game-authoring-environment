@@ -30,8 +30,8 @@ public class ScorePanel extends ListenerPanel {
 	private Label ScoreText;
 	private Label LevelText;
 	private Label HealthText;
-	private int initialScore;
-	private int initialHealth;
+	private Integer initialScore;
+	private Integer initialHealth;
 
 
 	public ScorePanel(GameScreen gameScreen) {
