@@ -98,7 +98,7 @@ public class AuthoringView extends View {
 	 */
 	@Override
 	public void loadErrorScreen(String error) {
-		loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
+		loadErrorScreen(myErrorReader.resourceDisplayText(error));
 	}
 	/**
 	 * Loads an error alert when the user needs to be notified, but the program can
@@ -106,7 +106,7 @@ public class AuthoringView extends View {
 	 * @param error is error key for error User has committed
 	 */
 	public void loadErrorAlert(String error) {
-		loadErrorAlertToStage(myErrorReader.resourceDisplayText(error));
+		loadErrorAlert(myErrorReader.resourceDisplayText(error));
 	}
 
 	protected void loadScreen(Screen screen) {
