@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 
 public class StartBlock {
 
-
 	private String myFilePath;
 	private int myPathSize;
 

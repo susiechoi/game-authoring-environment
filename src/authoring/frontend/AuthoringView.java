@@ -22,16 +22,13 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
-import controller.PlayController;
 import engine.path.Path;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
-import gameplayer.ScreenManager;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
@@ -47,18 +44,18 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private GridPane myGrid = new GridPane();
+	private GridPane myGrid;
 	private BooleanProperty myCSSChanged;
 	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
 		super(stageManager, languageIn, controller);
+		myGrid = new GridPane(); 
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
 		myCurrentCSS = DEFAULT_AUTHORING_CSS;
 		myCSSChanged = new SimpleBooleanProperty(false);
-		
 	}
 
 

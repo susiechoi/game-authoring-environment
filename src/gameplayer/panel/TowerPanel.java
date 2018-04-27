@@ -7,6 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,19 +22,19 @@ import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 
 
-public class TowerPanel extends Panel {
+public class TowerPanel extends ListenerPanel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private int TOWER_IMAGE_SIZE;
     private int SWAP_BUTTON_SIZE;
 
 
-    private Integer money;
     private GameScreen GAME_SCREEN;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
+    private int initialCurrency;
     private String ASSORTED_BUTTON_FILEPATH;
 
     //TODO change to only use availibleTowers
@@ -46,9 +47,10 @@ public class TowerPanel extends Panel {
     public TowerPanel( GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+	//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-	makePanel();
+	initialCurrency = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("initalCurrency"));
     }
 
 
@@ -68,7 +70,7 @@ public class TowerPanel extends Panel {
 
 	currencyDisplay = new Button();
 	currencyDisplay.setId(GAMEPLAYER_PROPERTIES.get("currencyButton"));
-	currencyDisplay.setText("$" + money);
+	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +initialCurrency);
 	currencyDisplay.setDisable(true);
 	//currencyDisplay.setMaxWidth(Double.MAX_VALUE);
 
@@ -102,10 +104,7 @@ public class TowerPanel extends Panel {
 	towersAndCurr.setId(GAMEPLAYER_PROPERTIES.get("towerPanelID"));
 	PANEL = towersAndCurr;
     }
-    
-    public void setInitalMoney(Integer moneyIn) {
-	updateCurrency(moneyIn);
-    }
+
 
     private void handleMouseInput(double x, double y) {
 	GAME_SCREEN.towerSelectedForPlacement(null);
@@ -193,17 +192,27 @@ public class TowerPanel extends Panel {
     }
 
     private void updateCurrency(Integer newValue) {
-	currencyDisplay.setText("$" +newValue);
+	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
     }
 
-    public ChangeListener<Number> createCurrencyListener() {
-	return new ChangeListener<Number>() {
+    /**
+     * Wrapper method on score to reduce order of call dependencies
+     * @param score	initial health of the level
+     */
+    private void setInitialCurrency(int currency) {
+	if(setInitalProperty(currencyDisplay, currency, initialCurrency)) {
+	    updateCurrency(currency);
+	}
+    }
 
-		@Override
-		public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-			updateCurrency((Integer)arg0.getValue());
-			
-		}
+
+    public ChangeListener<Number> createCurrencyListener(int startCurrency) {
+	setInitialCurrency(startCurrency);
+	return new ChangeListener<Number>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+		updateCurrency((Integer)arg0.getValue());	
+	    }
 	};
     }
 }
