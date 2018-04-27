@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import authoring.AuthoringModel;
-import frontend.Screen;
-import frontend.View;
-import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,8 +16,6 @@ public class GraphMenuScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_GRAPHS_FOLDER = "graphing";
 	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
-
-	private AuthoringView myView; 
 	
 	protected GraphMenuScreen(AuthoringView view, AuthoringModel model) {
 		super(view);
