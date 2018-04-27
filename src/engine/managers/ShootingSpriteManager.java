@@ -10,6 +10,7 @@ import engine.sprites.towers.projectiles.Projectile;
 /**
  * 
  * @author Miles Todzo
+ * @author Ryan Pond
  *
  */
 

@@ -30,6 +30,7 @@ import xml.XMLFactory;
  * @author andrewarnold
  * @author Brendan Cheng
  * @author Alexi Kontos
+ * @author Ryan Pond
  *
  */
 public class Mediator {

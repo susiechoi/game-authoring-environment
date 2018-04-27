@@ -17,6 +17,7 @@ import engine.sprites.enemies.Enemy;
  * active Enemy objects in the game loop.
  * 
  * @author Miles Todzo
+ * @author Ryan POnd
  */
 public class EnemyManager extends ShootingSpriteManager {
 
