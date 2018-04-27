@@ -98,6 +98,12 @@ public class GameScreen extends Screen {
 		GAME_PANEL.towerSelected(tower);
 	}
 
+	//	public void setStyling() {
+	//		String style = MEDIATOR.getStyling();
+	//		if (style != null) {
+	//			rootPane.getStylesheets().add(style);
+	//		}
+	//	}
 
 	@Override
 	protected View getView() {
@@ -166,13 +172,10 @@ public class GameScreen extends Screen {
 		}
 	}
 
-
-
-
-	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
-		ChangeListener<Number> currencyListener = TOWER_PANEL.createCurrencyListener();
-		ChangeListener<Number> scoreListener = SCORE_PANEL.createScoreListener();
-		ChangeListener<Number> healthListener = SCORE_PANEL.createHealthListener();
+	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
+		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
+		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
+		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
 		myCurrency.addListener(currencyListener);
 		myScore.addListener(scoreListener);
 		myLives.addListener(healthListener);

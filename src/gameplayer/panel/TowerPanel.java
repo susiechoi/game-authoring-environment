@@ -1,4 +1,3 @@
-
 package gameplayer.panel;
 
 import javafx.beans.value.ChangeListener;
@@ -208,4 +207,3 @@ public class TowerPanel extends Panel {
 	};
     }
 }
-

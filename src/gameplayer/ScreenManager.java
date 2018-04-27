@@ -121,7 +121,6 @@ public class ScreenManager extends View {
 	private void findSettings() {
 		Double DEFAULT_HEIGHT = Double.parseDouble(GAMEPLAYER_PROPERTIES.get("DefaultHeight"));
 		Double DEFAULT_WIDTH = Double.parseDouble(GAMEPLAYER_PROPERTIES.get("DefaultWidth"));
-
 	}
 
 	public void updateLevelCount(Integer newLevelCount) {
@@ -186,9 +185,10 @@ public class ScreenManager extends View {
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
-		SimpleIntegerProperty myLives) {
+		IntegerProperty myLives) {
 	    GAME_SCREEN.attachListeners(myCurrency, myScore, myLives);	    
 	}
+
 
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;

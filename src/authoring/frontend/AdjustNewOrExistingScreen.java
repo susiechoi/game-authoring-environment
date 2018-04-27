@@ -150,6 +150,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected String getMySelectedObjectName() {
 		return mySelectedObjectName; 
 	}
+	
 	protected HBox makeImageSelector(String objectType, String imageName, String propertiesFilepath){
 	    	HBox imageSelect = new HBox();
 	    	ComboBox<String> imageDropdown = new ComboBox<String>();

@@ -1,4 +1,3 @@
-
 package gameplayer.panel;
 
 import java.io.FileWriter;

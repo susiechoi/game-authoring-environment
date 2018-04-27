@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
  * @author Sarahbland
  *
  */
+
 public class View {
     StageManager myManager;
     PromptReader myPromptReader;
