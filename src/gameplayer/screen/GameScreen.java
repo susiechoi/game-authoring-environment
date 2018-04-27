@@ -129,13 +129,7 @@ public class GameScreen extends Screen {
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup")))
 			MEDIATOR.fastForward(10);
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
-			try {
-				new PlayController(SCREEN_MANAGER.getStageManager(), getView().getLanguage(), new AuthoringModel())
-						.loadInstructionScreen();
-			} catch (MissingPropertiesException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    getView().playControllerInstructions(new AuthoringModel());
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
