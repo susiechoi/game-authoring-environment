@@ -129,7 +129,7 @@ public class GameScreen extends Screen {
 			MEDIATOR.fastForward(10);
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 			try {
-				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
+				new PlayController(SCREEN_MANAGER.getStageManager(), getView().getLanguage(), new AuthoringModel())
 						.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
