@@ -137,7 +137,7 @@ public class GameScreen extends Screen {
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 		    getView().playControllerInstructions();
 		}
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("edit"))) { // Susie added this
 
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
