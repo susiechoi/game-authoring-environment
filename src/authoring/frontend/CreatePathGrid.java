@@ -21,8 +21,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
 /* 
- * IMPORTANT TODO: Correctly pass background image, fix image checking, integrate styling 
- * TONIGHT: PASS Row and column counts (make methods to get rid of get column count...?), make laod to edit work
+ * IMPORTANT TODO: fix image checking, Path (enemies go backwards/ not getting to last point)
  * 
  * Right click to be able to get specialty paths
  * Apply goes back one screen
@@ -199,6 +198,7 @@ public class CreatePathGrid {
 		Label checkLabel = (Label) getNode(grid, col, row);
 		if (getNode(grid, col, row) != null) {
 			if (checkLabel.getText() == "end") {
+				addCoordinates(row, col);
 				return true;
 			} 
 		} else {

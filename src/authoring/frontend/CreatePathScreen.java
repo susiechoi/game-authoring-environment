@@ -67,6 +67,7 @@ public class CreatePathScreen extends PathScreen {
 						String pathImage = myPathPanel.getPanelPathImage().getPathImage().getImage().getUrl();
 						String endImage = myPathPanel.getPanelEndImage().getPathImage().getImage().getUrl();
 						grid.getStartingPosition(grid.getCheckGrid());
+						System.out.println("Absolute Coords: " +myCoords);
 						getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid(), startImage, pathImage, endImage), myBackgroundImage, 
 								pathImage, startImage, endImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
 						getView().getObjectAttribute("Path", "", "myPathMap");
