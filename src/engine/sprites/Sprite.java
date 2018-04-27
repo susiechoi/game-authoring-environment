@@ -49,6 +49,7 @@ public class Sprite implements FrontEndSprite{
 		}
 		return null;
 	}
+	
 
 	/**
 	 * Return the String name of the sprite.
