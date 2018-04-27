@@ -4,7 +4,6 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
-import javafx.scene.image.Image;
 
 /**
  * @author Katherine Van Dyk 4/7/18

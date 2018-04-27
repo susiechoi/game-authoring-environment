@@ -6,8 +6,6 @@
 
 package authoring.frontend;
 
-import javafx.scene.Node;
-import javafx.scene.control.Cell;
 
 class SpecifyEnemyScreen extends SpecifyObjectScreen {
 	

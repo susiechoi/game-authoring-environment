@@ -1,39 +1,26 @@
 package authoring.frontend;
 
-import java.io.File;
-
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-/**
- * Abstract class representing Screens that need to display the Path in some form (i.e. path
- * editing or Wave selecting). Dependent on CreatePathGrid to make the grid portion of the
- * path and on PathPanels/PathToolBars to correctly create the elemnts that make up the screen.
- * @author Sarahbland
- *
- */
 public abstract class PathScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
+
 	private StackPane pathRoot;
-	private GridPane pathGrid;
-	private CreatePathGrid grid;
+	protected GridPane pathGrid;
+	protected CreatePathGrid grid;
 
 	protected PathScreen(AuthoringView view) {	
 		super(view);
+//		setStyleSheet(view.getCurrentCSS());
 		grid = new CreatePathGrid(view);
 	}
 	
@@ -59,20 +46,27 @@ public abstract class PathScreen extends AdjustScreen {
 		return pathRoot; 	
 	}
 
-	protected abstract void initializeGridSettings(CreatePathGrid grid);
-	protected abstract void setSpecificUIComponents();
+	public abstract void initializeGridSettings(CreatePathGrid grid);
+	public abstract void setSpecificUIComponents();
 	protected CreatePathGrid getGrid() {
 	    return grid;
 	}
 
 	protected void setGridUIComponents(PathPanel panel, PathToolBar toolbar) {
 		Button pathSizePlusButton = toolbar.getPlusButton();
+		
 		pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (grid.getPathSize() < 100) {
-					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() + 10);
+			    	try {
+			    	int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+				if (grid.getPathSize() < Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MaxGridSize"))) {
+					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() + gridResize);
 				}
+			    	}
+			    	catch(MissingPropertiesException e) {
+			    	    getView().loadErrorScreen("NoFile");
+			    	}
 			}
 		});
 
@@ -80,25 +74,18 @@ public abstract class PathScreen extends AdjustScreen {
 		pathSizeMinusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (grid.getPathSize() > 30) {
-					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - 10);
-
+			    try {
+				int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+				if (grid.getPathSize() > Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MinGridSize"))) {
+					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - gridResize);
 				}
+			    }
+			    catch(MissingPropertiesException e) {
+				getView().loadErrorScreen("NoFile");
+			    }
 			}
 		});
-
-		
 	}
 
-	@Override
-	protected Parent populateScreenWithFields() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	protected void populateFieldsWithData() {
-		// TODO Auto-generated method stub
-
-	}
 }

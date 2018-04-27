@@ -1,64 +1,48 @@
 package engine.path;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
-import java.awt.geom.Point2D;
-
 
 /**
  * Class for constructing path and determining next coordinates
  * 
+ * @author Ryan Pond
  * @author Katherine Van Dyk 4/8/18
  */
 public class Path {
-	private final double THRESHOLD = 5;
-	private List<Point> myCoordinates;
-	private Point currentPosition;
-	private double myAngle;
-	private int pathIndex;
-	private Map<String, List<Point>> myPathMap;
+    private final double THRESHOLD = 61;
+    private final double OFFSET = 30;
+    private List<Point> myCoordinates;
+    private String myBackgroundImage;
+    private int myPathSize;
+    private Map<String, List<Point>> myPathMap;
+    public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) {
+	myCoordinates = coordinates;
+	myPathMap = imageCoordinates;
+	myBackgroundImage = backgroundImage;
+	myPathSize = pathSize;
+    }
 
-	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
-		System.out.println("Path: " +imageCoordinates);
-		myCoordinates = coordinates;
-		pathIndex = 0;
-		currentPosition = myCoordinates.get(pathIndex);
-		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
-		myPathMap = imageCoordinates;
-	}
+    /**
+     * Returns the next position along the Path
+     * @param pathIndex : current index of the path it is on (block index)
+     * @return : returns the next point along the path index
+     */
+    public Point nextPosition(int pathIndex) {
+	return myCoordinates.get(pathIndex+1);
+    }
 
-
-	/**
-	 * Returns the next position of the object according to its speed
-	 * 
-	 * @param mySpeed
-	 */
-	public Point2D nextPosition(double speed) {
-		if(checkBounds()) {
-			currentPosition = myCoordinates.get(pathIndex++);
-			myAngle = getAngle(currentPosition, myCoordinates.get(pathIndex + 1));
-			return currentPosition;
-		}
-		else {
-			double newX = currentPosition.getX() + Math.cos(myAngle) * speed;
-			double newY = currentPosition.getY() + Math.sin(myAngle) * speed;
-			return new Point2D.Double(newX, newY); 
-		}
-	}
-
-	/**
-	 * Checks if current position is within the bounds of the next path turn
-	 * 
-	 * @return boolean: True if within range of next path coordinate, false otherwise
-	 */
-	private boolean checkBounds() {
-		double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX() - currentPosition.getX(), 2);
-		double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPosition.getY(), 2); 
-		return Math.sqrt(xDistance + yDistance) < THRESHOLD;
-	}
-
+    /**
+     * Checks if current position is within the bounds of the next path turn
+     * 
+     * @return boolean: True if within range of next path coordinate, false otherwise
+     */
+    private boolean checkBounds(Point currentPos, int pathIndex) {
+	double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX()  - currentPos.getX(), 2);
+	double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPos.getY(), 2); 
+	return Math.sqrt(xDistance + yDistance) < THRESHOLD;
+    }
 
     /**
      * Returns a new angle for the image
@@ -70,11 +54,43 @@ public class Path {
     private double getAngle(Point point1, Point point2) {
 	double deltaY = point2.getY() - point1.getY();
 	double deltaX = point2.getX() - point1.getX();
-	return Math.atan(deltaY/deltaX);
+	double angle = Math.atan2(deltaX,deltaY);
+	return angle;
     }
-    
+
+    public double pathAngle(int currIndex) {
+	return getAngle(myCoordinates.get(currIndex),myCoordinates.get(currIndex++));
+    }
+
     public Map<String, List<Point>> getPathMap() {
-    		return myPathMap;
+	return myPathMap;
     }
+
+    public Point initialPoint() {
+	return myCoordinates.get(0);
+    }
+
+    public int getIndex(Point currentPos, int pathIndex) {
+	if(checkBounds(currentPos, pathIndex)) {
+	    return pathIndex + 1;
+	}
+	return pathIndex;
+    }
+
+    public boolean checkKill(Point currentPos) {
+	double xDistance = Math.pow(myCoordinates.get(myCoordinates.size()-1).getX() - currentPos.getX(), 2);
+	double yDistance = Math.pow(myCoordinates.get(myCoordinates.size()-1).getY() - currentPos.getY(), 2); 
+	return Math.sqrt(xDistance + yDistance) < 1+THRESHOLD;
+    }
+
+    public int getPathSize() {
+	return myPathSize;
+    }
+
+    public String getBackgroundImage() {
+	return myBackgroundImage;
+    }
+
+
 
 }

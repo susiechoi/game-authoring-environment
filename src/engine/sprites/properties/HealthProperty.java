@@ -23,6 +23,12 @@ public class HealthProperty extends UpgradeProperty {
 	myValue = value; 
     }
     
+    public HealthProperty(HealthProperty health) {
+	super(health.myCost,health.myValue,health.getProperty());
+	myCost = health.myCost;
+	myValue = health.myValue;
+    }
+
     /**
      * Called when health is lost
      * @param healthLost : how much health is lost
@@ -41,6 +47,7 @@ public class HealthProperty extends UpgradeProperty {
 	return this.getProperty() > 0;
     }
     
+    @Override
     public double getCost() {
     	return myCost; 
     }

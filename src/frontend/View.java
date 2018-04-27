@@ -14,17 +14,41 @@ import javafx.scene.text.Text;
  * @author Sarahbland
  *
  */
-public abstract class View {
+/**
+ * @author Sarahbland
+ *
+ */
+public class View {
     StageManager myManager;
-    public View(StageManager manager) {
+    PromptReader myPromptReader;
+    ErrorReader myErrorReader;
+    PropertiesReader myPropertiesReader;
+    String myLanguage;
+    
+    public View(StageManager manager, String languageIn) {
+	myPromptReader = new PromptReader(languageIn, this);
+	myErrorReader = new ErrorReader(languageIn, this);
+	myPropertiesReader = new PropertiesReader();
 	myManager = manager;
+	myLanguage = languageIn;
     }
     
     /**
-     * Loadst the stage with a given ErrorMessage
-     * @param errorMessage is message to be displayed
+     * Returns current language being used by screen
+     * @return String specifying language
      */
-    public void loadErrorScreenToStage(String errorMessage) {
+    public String getLanguage() {
+	return myLanguage;
+    }
+
+	/**
+	 * Loads an error screen when a user has done something so problematic that the program
+	 * cannot recover (such as choosing a language with no prompts and not having English
+	 * prompts to default to).
+	 * @param error is key to the Error the user has committed
+	 */
+    public void loadErrorScreen(String errorMessage) {
+	errorMessage = myErrorReader.resourceDisplayText(errorMessage);
 	VBox vb = new VBox();
 	Text errorScreenMessage = new Text(errorMessage);
 	vb.setAlignment(Pos.CENTER);
@@ -32,22 +56,31 @@ public abstract class View {
 	vb.getChildren().add(errorScreenMessage);
 	myManager.switchScreen(vb);
     }
-    
-    /**
-     * Loads an error alert (does not stop program) to notify user of a problem
-     * @param errorMessage is message to be displayed
-     */
-    public void loadErrorAlertToStage(String errorMessage) {
-		    Alert alert = new Alert(AlertType.ERROR);
-		    alert.setContentText(errorMessage);
-		    alert.showAndWait();
+
+	/**
+	 * Loads an error alert when the user needs to be notified, but the program can
+	 * recover.
+	 * @param error is error key for error User has committed
+	 */
+    public void loadErrorAlert(String errorMessage) {
+	errorMessage = myErrorReader.resourceDisplayText(errorMessage);
+	Alert alert = new Alert(AlertType.ERROR);
+	alert.setContentText(errorMessage);
+	alert.showAndWait();
     }
-   
+
+    /**
+     * @param prompt is key used in properties file to retrieve desired prompt
+     * @return prompt after error checking
+     */
+    public String getErrorCheckedPrompt(String prompt) {
+	return myPromptReader.resourceDisplayText(prompt);
+    }
     
     /**
-     * Loads error Message and takes action specific to the View when an error occurs
-     * @param errorMessage is message needed to be displayed
+     * @return PropertiesReader used to read from properties files
      */
-    public abstract void loadErrorScreen(String errorMessage);
-    
+    public PropertiesReader getPropertiesReader() {
+	return myPropertiesReader; 
+    }
 }

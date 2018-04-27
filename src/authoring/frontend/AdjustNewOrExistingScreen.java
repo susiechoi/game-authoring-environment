@@ -13,9 +13,14 @@ import java.util.Map;
 
 import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
@@ -35,11 +40,18 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 		super(view);
-		setConstants(); 
+		setConstants();
+		setSaved();
 		myFieldsPropertiesPath = fieldsPropertiesPath; 
 		myObjectDescription = objectDescription; 
 		mySelectedObjectName = selectedObjectName; 
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
+	}
+
+	protected AdjustNewOrExistingScreen(AuthoringView view) {
+		super(view);
+		setConstants();
+		setSaved();
 	}
 
 	private void setConstants() {
@@ -66,14 +78,11 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		Parent constructedScreen = populateScreenWithFields();
-		populateNameField(); 
 		populateFieldsWithData(); 
 		return constructedScreen;
 	}
 
 	protected abstract Parent populateScreenWithFields();
-
-	protected abstract void populateNameField();
 
 	protected void populateFieldsWithData() {
 		AttributeFinder attributeFinder = new AttributeFinder(); 
@@ -90,12 +99,12 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			Object myField = null; 
 			try {
 				myField = attributeFinder.retrieveFieldValue(key, this);
-				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)));
-			} catch (IllegalArgumentException | NullPointerException | IllegalAccessException e) {
+				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
+			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
 				getView().loadErrorScreen("ObjectAttributeDNE");
 			}
-
 		}
+	
 	}
 
 	/**
@@ -141,18 +150,42 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected String getMySelectedObjectName() {
 		return mySelectedObjectName; 
 	}
-
-	protected boolean validNameField(TextField nameField) {
-		boolean valid = true; 
-		if (nameField.getText().length() == 0) {
-			getView().loadErrorAlert("PopulateName");
-			valid = false; 
+	protected HBox makeImageSelector(String objectType, String imageName, String propertiesFilepath){
+	    	HBox imageSelect = new HBox();
+	    	ComboBox<String> imageDropdown = new ComboBox<String>();
+		ImageView imageDisplay = new ImageView(); 
+		try {
+			imageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(propertiesFilepath));
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
+		} 
+		ComboBox<String> imageDropdownCopy = imageDropdown;
+		imageDropdown.addEventHandler(ActionEvent.ACTION,e -> {
+		    	try {
+			getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
+		    	}
+		    	catch(MissingPropertiesException e2) {
+		    	    getView().loadErrorScreen("NoImageFile");
+		    	}
+		    	});
+		
+		try {
+			imageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", propertiesFilepath, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+					getErrorCheckedPrompt("NewImageName"),imageDropdown, imageDisplay);
+			String key = getPropertiesReader().findKey(propertiesFilepath, (String)getView().getObjectAttribute(objectType, mySelectedObjectName, "myImage"));
+			ActionEvent fakeSelection = new ActionEvent();
+			if(key.equals("")) {
+			    imageDropdown.getSelectionModel().select(0);
+			}
+			else {
+			    imageDropdown.getSelectionModel().select(key);
+			    imageDropdown.fireEvent(fakeSelection);
+			}
+		} catch (MissingPropertiesException e) {
+			getView().loadErrorScreen("NoImageFile");
 		}
-		else if (nameField.getText().equals(myDefaultObjectName)) {
-			getView().loadErrorAlert("NoDefaultName");
-			valid = false; 
-		}
-		return valid; 
+		return imageSelect;
 	}
+
 
 }

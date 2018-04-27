@@ -2,8 +2,8 @@ package controller;
 
 import frontend.MainScreen;
 import frontend.StageManager;
+import frontend.View;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -15,8 +15,7 @@ import javafx.stage.Stage;
  * objects. 
  */
 public class ChiefController {
-  //test
-    
+    public static final String DEFAULT_LANGUAGE = "English";
     private final StageManager STAGE_MANAGER;
  
     /**
@@ -26,7 +25,6 @@ public class ChiefController {
      * @param stage: Application stage passed by Driver
      */
     public ChiefController(Stage stage) {
-
 	STAGE_MANAGER = new StageManager(stage);
     }
     
@@ -35,7 +33,7 @@ public class ChiefController {
      * user input about the size of the screen.
      */
     public void start() {
-	MainScreen mainScreen  = new MainScreen(STAGE_MANAGER);
+	MainScreen mainScreen  = new MainScreen(STAGE_MANAGER, new View(STAGE_MANAGER, DEFAULT_LANGUAGE));
 	Scene scene = new Scene(mainScreen.getScreen());
 	STAGE_MANAGER.switchScene(scene);
     }
