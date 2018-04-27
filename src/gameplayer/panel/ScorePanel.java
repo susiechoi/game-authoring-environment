@@ -16,7 +16,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
-public class ScorePanel extends Panel {
+public class ScorePanel extends ListenerPanel {
 
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
@@ -29,14 +29,15 @@ public class ScorePanel extends Panel {
 	private Label ScoreText;
 	private Label LevelText;
 	private Label HealthText;
-	private Integer SCORE;
-	private Integer HEALTH;
-	private Integer LEVEL;
+	private int initialScore;
+	private int initialHealth;
+
 
 	public ScorePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
 		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-
+		initialScore = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultScore"));
+		initialHealth = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultHealth"));
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy_hh-mm-ss");
 		String formattedDate = df.format(c.getTime());
@@ -50,18 +51,17 @@ public class ScorePanel extends Panel {
 
 	@Override
 	public void makePanel() {
-
 		//TODO Read words SCORE, LEVEL, and + from properties file
-		ScoreText = new Label();
-		updateScore(0);
+		ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText") + initialScore);
 		LevelText = new Label();
-		HealthText = new Label();
+		HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText") + initialHealth);
 
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
 
+		ScoreText.setMaxWidth(Double.MAX_VALUE);
 		LevelText.setMaxWidth(Double.MAX_VALUE);
-
 		HealthText.setMaxWidth(Double.MAX_VALUE);
+
 
 		HBox panelRoot = new HBox();
 
@@ -89,23 +89,35 @@ public class ScorePanel extends Panel {
 		HealthText.setText(GAMEPLAYER_PROPERTIES.get("healthText")+ newHealth);
 	}
 
+
 	public void updateLevel(Integer newLevel) {
 		LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
 	}
-
-	public void setInitialScore(Integer score) {
-		SCORE = score;
+	
+	/**
+	 * Wrapper method on score to reduce order of call dependencies
+	 * @param score	initial score of the level
+	 */
+	private void setInitalScore(int score) {
+	    if(setInitalProperty(ScoreText, score, initialScore)) {
+		updateScore(score);
+	    }
+	}
+	
+	/**
+	 * Wrapper method on score to reduce order of call dependencies
+	 * @param score	initial health of the level
+	 */
+	private void setInitialHealth(int health) {
+	    if(setInitalProperty(HealthText, health, initialHealth)) {
+		updateHealth(health);
+	    }
 	}
 
-	public void setInitialLives(Integer lives) {
-		HEALTH = lives;
-	}
 
-	public void setInitialLevel(Integer level) {
-		LEVEL = level;
-	}
 
-	public ChangeListener<Number> createScoreListener() {
+	public ChangeListener<Number> createScoreListener(int startScore) {
+	    	setInitalScore(startScore);
 		return new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
@@ -114,7 +126,8 @@ public class ScorePanel extends Panel {
 		};
 	}
 
-	public ChangeListener<Number> createHealthListener() {
+	public ChangeListener<Number> createHealthListener(int startHealth) {
+	    	setInitialHealth(startHealth);
 		return new ChangeListener<Number>() {
 
 			@Override
@@ -123,5 +136,4 @@ public class ScorePanel extends Panel {
 			}
 		};
 	}
-
 }

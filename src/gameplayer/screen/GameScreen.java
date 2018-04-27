@@ -1,11 +1,11 @@
 package gameplayer.screen;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 import authoring.AuthoringController;
-import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -23,7 +23,6 @@ import gameplayer.panel.TowerInfoPanel;
 import gameplayer.panel.TowerPanel;
 import gameplayer.panel.UpgradePanel;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -38,14 +37,11 @@ public class GameScreen extends Screen {
 
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
-	private TowerInfoPanel TOWER_INFO_PANEL;
 	private GamePanel GAME_PANEL;
 	private ScorePanel SCORE_PANEL;
 	private ControlsPanel CONTROLS_PANEL;
 	private UpgradePanel UPGRADE_PANEL;
 	private ScreenManager SCREEN_MANAGER;
-	private BuyPanel BUY_PANEL;
-	private SettingsPanel SETTINGS_PANEL;
 	private BorderPane displayPane;
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
@@ -131,17 +127,17 @@ public class GameScreen extends Screen {
 	public void controlTriggered(String control) throws MissingPropertiesException {
 		if(control.equals(GAMEPLAYER_PROPERTIES.get("play"))) {
 			MEDIATOR.play();
-		}			
+		}
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause"))) {
-		    MEDIATOR.pause();
+			MEDIATOR.pause();
 		}
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup"))) {
-		    MEDIATOR.fastForward(10);
+			MEDIATOR.fastForward(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("fastForwardSize")));
 		}
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 		    getView().playControllerInstructions();
-		}
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
+
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
@@ -177,21 +173,17 @@ public class GameScreen extends Screen {
 		}
 	}
 
+	/**
+	 * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
+	 * Additionally synchronizes the initial display value of each to the passed values
+	 * @param myCurrency	Engine's currency object
+	 * @param myScore	Engine's score object
+	 * @param myLives	Engine's lives object
+	 */
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
-		ChangeListener<Number> currencyListener = TOWER_PANEL.createCurrencyListener();
-		ChangeListener<Number> scoreListener = SCORE_PANEL.createScoreListener();
-		ChangeListener<Number> healthListener = SCORE_PANEL.createHealthListener();
-		myCurrency.addListener(currencyListener);
-		myScore.addListener(scoreListener);
-		myLives.addListener(healthListener);
-		TOWER_PANEL.setInitalMoney(myCurrency.get());
-		SCORE_PANEL.setInitialScore(myScore.get());
-		SCORE_PANEL.setInitialLives(myLives.get());
-
-		//	currencyListener.changed(myCurrency, 0, 0);
-		//	scoreListener.changed(myScore, 0, 0);
-		//	healthListener.changed(myLives, 0, 0);
-
+		myCurrency.addListener(TOWER_PANEL.createCurrencyListener(myCurrency.get()));
+		myScore.addListener(SCORE_PANEL.createScoreListener(myScore.get()));
+		myLives.addListener(SCORE_PANEL.createHealthListener(myLives.get()));
 	}
 
 
@@ -200,25 +192,24 @@ public class GameScreen extends Screen {
 	}
 
 	public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-		FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-		return placedTower;
+		return MEDIATOR.placeTower(position, tower.getName());
 	}
 
 	public void towerClickedOn(FrontEndTower tower) {
-		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
+		TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 		UPGRADE_PANEL = new UpgradePanel(this, tower);
 		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
-		BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
+		BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
 		displayPane.setBottom(BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	private void settingsClickedOn() {
-		SETTINGS_PANEL = new SettingsPanel(this);
+		SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
 
 		displayPane.setBottom(SETTINGS_PANEL.getPanel());
 	}
