@@ -35,14 +35,15 @@ public class GraphMenuScreen extends AuthoringScreen {
 		vb.getChildren().add(screenTitle);
 		
 		List<String> availableGraphs = getFileNames(DEFAULT_GRAPHS_FOLDER);
+		List<String> relevantGraphs = new ArrayList<String>(); 
 
 		for (String graphName : availableGraphs) {
 			String currGameName = getView().getGameName();
 			if (graphName.indexOf(currGameName) > -1) {
+				relevantGraphs.add(graphName);
 				String abbrevGraphName = graphName.substring(graphName.indexOf(currGameName)+currGameName.length()); 
 				Button relevantGraphButt = getUIFactory().makeTextButton("", abbrevGraphName); 
 				relevantGraphButt.setOnAction(e -> {
-//					getView().goForwardFrom(this.getClass().getSimpleName()+"Graph", DEFAULT_GRAPHS_FOLDER+"/"+graphName);
 					String fullFilepath  = DEFAULT_GRAPHS_FOLDER+"/"+graphName; 
 					getView().getStageManager().switchScreen(new SingleGraphScreen(getView(), fullFilepath).getScreen());
 				});
@@ -56,14 +57,13 @@ public class GraphMenuScreen extends AuthoringScreen {
 		String choosePrompt = getView().getErrorCheckedPrompt("ChooseGame");
 		List<String> dropdownOptions = new ArrayList<String>();
 		dropdownOptions.add(choosePrompt);
-		dropdownOptions.addAll(availableGraphs);
+		dropdownOptions.addAll(relevantGraphs);
 		ComboBox<String> game1Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, e -> {
 			;}, e -> {compareButton.setDisable(true);}, choosePrompt);
 		ComboBox<String> game2Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, e -> {
 			compareButton.setDisable(false);}, e -> {compareButton.setDisable(true);}, choosePrompt);
 		compareButton.setDisable(true);
 		compareButton.setOnAction(e -> {
-//			getView().goForwardFrom(this.getClass().getSimpleName()+"Graph", DEFAULT_GRAPHS_FOLDER+"/"+game1Chooser.getSelectionModel().getSelectedItem(), DEFAULT_GRAPHS_FOLDER+"/"+game2Chooser.getSelectionModel().getSelectedItem());
 			String game1Path = DEFAULT_GRAPHS_FOLDER+"/"+game1Chooser.getSelectionModel().getSelectedItem(); 
 			String game2Path = DEFAULT_GRAPHS_FOLDER+"/"+game2Chooser.getSelectionModel().getSelectedItem(); 
 			getView().getStageManager().switchScreen(new DoubleGraphScreen(getView(), game1Path, game2Path).getScreen());
