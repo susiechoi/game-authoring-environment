@@ -16,7 +16,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
-public class ScorePanel extends Panel {
+public class ScorePanel extends ListenerPanel {
 
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
@@ -29,13 +29,15 @@ public class ScorePanel extends Panel {
 	private Label ScoreText;
 	private Label LevelText;
 	private Label HealthText;
+	private int initialScore;
+	private int initialHealth;
 
 
 	public ScorePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
 		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-		makePanel();
-
+		initialScore = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultScore"));
+		initialHealth = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultHealth"));
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy_hh-mm-ss");
 		String formattedDate = df.format(c.getTime());
@@ -49,12 +51,10 @@ public class ScorePanel extends Panel {
 
 	@Override
 	public void makePanel() {
-
 		//TODO Read words SCORE, LEVEL, and + from properties file
-		ScoreText = new Label();
-		updateScore(0);
+		ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText") + initialScore);
 		LevelText = new Label();
-		HealthText = new Label();
+		HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText") + initialHealth);
 
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
 
@@ -93,10 +93,31 @@ public class ScorePanel extends Panel {
 	public void updateLevel(Integer newLevel) {
 		LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
 	}
+	
+	/**
+	 * Wrapper method on score to reduce order of call dependencies
+	 * @param score	initial score of the level
+	 */
+	private void setInitalScore(int score) {
+	    if(setInitalProperty(ScoreText, score, initialScore)) {
+		updateScore(score);
+	    }
+	}
+	
+	/**
+	 * Wrapper method on score to reduce order of call dependencies
+	 * @param score	initial health of the level
+	 */
+	private void setInitialHealth(int health) {
+	    if(setInitalProperty(HealthText, health, initialHealth)) {
+		updateHealth(health);
+	    }
+	}
+
 
 
 	public ChangeListener<Number> createScoreListener(int startScore) {
-		updateScore(startScore);
+	    	setInitalScore(startScore);
 		return new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
@@ -106,7 +127,7 @@ public class ScorePanel extends Panel {
 	}
 
 	public ChangeListener<Number> createHealthListener(int startHealth) {
-		updateHealth(startHealth);
+	    	setInitialHealth(startHealth);
 		return new ChangeListener<Number>() {
 
 			@Override
