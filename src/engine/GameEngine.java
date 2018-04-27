@@ -81,6 +81,7 @@ public class GameEngine {
 	 * (relative speed of program, 1 being slowest, 5 being normal, 10 being fastest)
 	 */
 	public void setSpeed(Integer relativeSpeed) {
+	    	timeFactor = 1;
 		timeFactor = relativeSpeed;
 	}
 
