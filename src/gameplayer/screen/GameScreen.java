@@ -1,27 +1,28 @@
 package gameplayer.screen;
 
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
-import controller.PlayController;
-import gameplayer.panel.*;
-
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
-
 import authoring.AuthoringController;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
-import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
+import gameplayer.panel.BuyPanel;
+import gameplayer.panel.ControlsPanel;
+import gameplayer.panel.GamePanel;
+import gameplayer.panel.ScorePanel;
+import gameplayer.panel.SettingsPanel;
+import gameplayer.panel.TowerInfoPanel;
+import gameplayer.panel.TowerPanel;
+import gameplayer.panel.UpgradePanel;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -128,15 +129,19 @@ public class GameScreen extends Screen {
 
 	//TODO implement reflection//rest of controls
 	public void controlTriggered(String control) throws MissingPropertiesException {
-		if(control.equals(GAMEPLAYER_PROPERTIES.get("play")))
+		if(control.equals(GAMEPLAYER_PROPERTIES.get("play"))) {
 			MEDIATOR.play();
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause")))
-			MEDIATOR.pause();
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup")))
-			MEDIATOR.fastForward(10);
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
-		    getView().playControllerInstructions(new AuthoringModel());
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
+		}			
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause"))) {
+		    MEDIATOR.pause();
+		}
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup"))) {
+		    MEDIATOR.fastForward(10);
+		}
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
+		    getView().playControllerInstructions();
+		}
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
@@ -173,9 +178,9 @@ public class GameScreen extends Screen {
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
-		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
-		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
-		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+		ChangeListener<Number> currencyListener = TOWER_PANEL.createCurrencyListener();
+		ChangeListener<Number> scoreListener = SCORE_PANEL.createScoreListener();
+		ChangeListener<Number> healthListener = SCORE_PANEL.createHealthListener();
 		myCurrency.addListener(currencyListener);
 		myScore.addListener(scoreListener);
 		myLives.addListener(healthListener);

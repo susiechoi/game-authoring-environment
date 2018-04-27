@@ -23,12 +23,14 @@ public class CreatePathScreen extends PathScreen {
 	private CreatePathToolBar myPathToolBar;
 	private String myBackgroundImage = "Images/generalbackground.jpg";
 	private CreatePathGrid myGrid;
+	private CreatePathScreen mySelf;
 	
 
 	public CreatePathScreen(AuthoringView view) {
 		super(view);
 		myPathPanel = new CreatePathPanel(view);
 		myPathToolBar = new CreatePathToolBar(view);
+		mySelf = this;
 	}
 	
 	
@@ -54,10 +56,9 @@ public class CreatePathScreen extends PathScreen {
 					
 							getView().getObjectAttribute("Path", "", "myPathMap");
 							getView().getObjectAttribute("Path", "", "myBackgroundImage");
-							getView().getObjectAttribute("Path", "", "myPathSize");
-//							getView().goForwardFrom(this.getClass().getSimpleName()+"Apply"); //TODO: Not Getting the class name
+							getView().goForwardFrom(mySelf.getClass().getSimpleName()+"Apply"); //TODO: Not Getting the class name
 						} catch (ObjectNotFoundException e1) {
-							// TODO Auto-generated catch block
+							getView().loadErrorScreen("NoScreenFlow");
 						}
 					} else {
 						Alert alert = new Alert(AlertType.ERROR);
