@@ -24,7 +24,7 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class Launcher extends Manager<Projectile>{
 
-    private final String fireRate = "FireRateProperty";
+    private String fireRate = "FireRateProperty";
     private Projectile myProjectile;
     private double timeSinceLastShot;
     private List<Property> myProperties;
@@ -96,7 +96,7 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
-	System.out.println("firerate is " + getProperty(fireRate));
+//	System.out.println("firerate is " + getProperty(fireRate));
 	if(timeSinceLastShot >= 200/getProperty(fireRate)) {
 	    return true;
 	}

@@ -23,7 +23,7 @@ import engine.sprites.properties.UpgradeProperty;
 public class PropertyFactory {
     
     private Map<String, Property> currentProperties;
-    protected final ResourceBundle PROPERTIES = ResourceBundle.getBundle("authoring/resources/properties");
+    protected ResourceBundle PROPERTIES = ResourceBundle.getBundle("authoring/resources/properties");
     private final String PACKAGE = "engine.sprites.properties.";
     
     public PropertyFactory() {

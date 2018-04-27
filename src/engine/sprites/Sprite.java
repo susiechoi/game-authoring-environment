@@ -20,7 +20,7 @@ public class Sprite implements FrontEndSprite{
     private String myName;
     private ImageView myImageView;
     private String myImageString;
-    private PropertyBuilder myPropertyFactory;
+    private PropertyBuilder myPropertyBuilder;
 
 
     /**
@@ -36,7 +36,7 @@ public class Sprite implements FrontEndSprite{
 	myImageString = image;
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	myImageView.setPreserveRatio(true);
-	myPropertyFactory = new PropertyBuilder();
+	myPropertyBuilder = new PropertyBuilder();
     }
 
     /**
@@ -136,6 +136,6 @@ public class Sprite implements FrontEndSprite{
     }
 
     protected Property makeProperty(Property p) {
-	return myPropertyFactory.getProperty(p);
+	return myPropertyBuilder.getProperty(p);
     }
 }

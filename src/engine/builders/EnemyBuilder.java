@@ -10,6 +10,7 @@ import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.RangeProperty;
+import engine.sprites.properties.SpeedProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 
@@ -26,7 +27,8 @@ public class EnemyBuilder {
 	properties.add(new HealthProperty(0, 0, initialHealth));
 	properties.add(new DamageProperty(0 , 0 , healthImpact));
 	properties.add(new ValueProperty(killReward));
-	Enemy newEnemy = new Enemy(name, image, speed, 50, new Launcher(new FireRateProperty(0), null, new RangeProperty(0)), properties);
+	properties.add(new SpeedProperty(0, 0, speed));
+	Enemy newEnemy = new Enemy(name, image, 50, new Launcher(new FireRateProperty(0), null, new RangeProperty(0)), properties);
 	return newEnemy;
     }
 

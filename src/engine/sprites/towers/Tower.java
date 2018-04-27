@@ -25,13 +25,12 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
 
-    private final static int FAKE_X = 100000;
-    private final static int FAKE_Y = 100000;
+    private int FAKE_X = 100000;
+    private int FAKE_Y = 100000;
  
     private Launcher myLauncher;
     private HealthProperty myHealth;
     private double mySize;
-    private ValueProperty myValue;
     private List<Property> myProperties;
 
     /**
@@ -58,6 +57,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myProperties = new ArrayList<Property>();
 	for(Property p : copiedTower.getProperties()) {
 	    myProperties.add(makeProperty(p));
+	//    System.out.println("Make property" + makeProperty(p));
 	}
 	myProperties.add(new KillProperty(0));
     }
@@ -86,7 +86,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public int sell() {
 	removeAllProjectiles();
-	return (int) myValue.getProperty();
+	return (int) getProperty("ValueProperty");
     }
 
     private void removeAllProjectiles() {
@@ -130,7 +130,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	if (myResources < getProperty("ValueProperty")) {
 	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
-	return (int) (myResources - myValue.getProperty());
+	return (int) (myResources - getProperty("ValueProperty") );
     }
 
     @Override
@@ -161,7 +161,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 		toRemove = p;
 	    }
 	}
-	if(toRemove != null) myProperties.remove(toRemove);
+	myProperties.remove(toRemove);
 	myProperties.add(property);
     }
     
@@ -178,10 +178,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
     
     public double getProperty(String ID) {
-	//System.out.println(ID);
+	System.out.println(ID);
 	for(Property property : myProperties) {
-	   // System.out.println("PROPERTY NAME:" + property.getName());
-	    if(property.getName().equals(ID)) {
+	    System.out.println("PROPERTY: " + property);
+	    System.out.println("PROPERTY NAME:" + property.getName());
+	    if(property != null && property.getName().equals(ID)) {
 		return property.getProperty();
 	    }
 	}
