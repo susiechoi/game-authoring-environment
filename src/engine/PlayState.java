@@ -78,14 +78,11 @@ public class PlayState implements GameData {
 	count++;
 	checkLoss();
 	if (count % 120 == 0) {
-	    System.out.println("Spawning enemy!");
 	    spawnEnemies();
 	}
 	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-	System.out.println(deadEnemies.size());
 	updateHealth(deadEnemies);
 	myMediator.removeListOfSpritesFromScreen(deadEnemies);
-	myEnemyManager.moveEnemies(elapsedTime);
 	handleCollisions(elapsedTime);
     }
 
@@ -93,7 +90,9 @@ public class PlayState implements GameData {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
+	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	myTowerManager.moveProjectiles(elapsedTime);

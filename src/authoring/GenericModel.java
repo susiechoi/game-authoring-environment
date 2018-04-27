@@ -180,7 +180,6 @@ public class GenericModel {
 	return new ProjectileBuilder().construct(
 		name,  
 		myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
-		// TODO add projectile speed !!!!
 		Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
 		Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
 		Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
