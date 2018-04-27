@@ -26,6 +26,7 @@ abstract class GraphScreen extends AuthoringScreen {
 	protected LineChart<Number, Number> makeGraph(boolean legendVisible) {
 		NumberAxis x = new NumberAxis();
 		x.setLabel(getErrorCheckedPrompt("Time"));
+		x.isAutoRanging(); 
 		x.setTickLabelsVisible(false);
 		NumberAxis y = new NumberAxis(); 
 		y.setLabel(getErrorCheckedPrompt("Score"));
