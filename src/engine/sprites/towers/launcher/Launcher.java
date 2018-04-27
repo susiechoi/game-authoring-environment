@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.builders.PropertyBuilder;
+import java.util.List;
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.FireRateProperty;
@@ -24,7 +25,6 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class Launcher extends Manager<Projectile>{
 
-    private final String fireRate = "FireRateProperty";
     private Projectile myProjectile;
     private double timeSinceLastShot;
     private List<Property> myProperties;
@@ -38,30 +38,12 @@ public class Launcher extends Manager<Projectile>{
 
     public Launcher(Launcher launcher) {
 	myProperties = new ArrayList<Property>();
+	//TODO do we have to do this
 	for(Property p : launcher.getProperties()) {
 	    myProperties.add(makeProperty(p));
 	}
 	myProjectile = launcher.getProjectile();
 	timeSinceLastShot = 0;
-    }
-
-
-
-    /**
-     * Returns the projectile object associated with the Launcher
-     * @return
-     */
-    public Projectile getProjectile() {
-	return myProjectile;
-    }
-
-
-
-    /**
-     * Sets the current projectile type managed by the ProjectileManager
-     */
-    public void setProjectile(Projectile projectile) {
-	myProjectile = projectile;
     }
 
     /**
@@ -91,42 +73,13 @@ public class Launcher extends Manager<Projectile>{
 	return launchedProjectile;
     }
 
-    /**
-     * Checks to see if the rate of fire is less than the time elapsed since the last shot
-     * @return 
-     */
-    public boolean hasReloaded(double elapsedTime) {
-	System.out.println("firerate is " + getProperty(fireRate));
-	if(timeSinceLastShot >= 200/getProperty(fireRate)) {
-	    return true;
-	}
-	timeSinceLastShot+=elapsedTime;
-	return false;
-    }
-
-    public double getProperty(String name) {
+    public double getPropertyValue(String name) {
 	for(Property property : myProperties) {
 	    if(property.getName().equals(name)) {
 		return property.getProperty();
 	    }
 	}
 	return -1;
-    }
-
-    public String getProjectileImage() {
-	return myProjectile.getImage(); 
-    }
-
-    public double getProjectileDamage() {
-	return myProjectile.getDamage(); 
-    }
-
-    public double getProjectileSize() {
-	return myProjectile.getSize(); 
-    }
-
-    public double getDamage() {
-	return myProjectile.getDamage();
     }
 
     public double upgradeDamage(double balance) {
@@ -161,5 +114,60 @@ public class Launcher extends Manager<Projectile>{
 	return myPropertyFactory.getProperty(p);
     }
 
+    /**
+     * Returns the projectile object associated with the Launcher
+     * @return
+     */
+    public Projectile getProjectile() {
+	return myProjectile;
+    }
+
+    /**
+     * Sets the current projectile type managed by the ProjectileManager
+     */
+    public void setProjectile(Projectile projectile) {
+	myProjectile = projectile;
+    }
+
+    /**
+     * Checks to see if the rate of fire is less than the time elapsed since the last shot
+     * @return 
+     */
+    public boolean hasReloaded(double elapsedTime) {
+	boolean hasReloaded = (boolean) this.getProperty("FireRateProperty").execute(timeSinceLastShot);
+	timeSinceLastShot+=elapsedTime;
+	return hasReloaded;
+    }
+
+    public Property getProperty(String propertyName) {
+	for (Property p: this.myProperties) {
+	    if (p.getName().equals(propertyName)) {
+		return p;
+	    }
+	}
+	return null;
+    }
+
+    public double upgradeProperty(double balance, String propertyName) {
+	UpgradeProperty propToUpgrade = (UpgradeProperty)this.getProperty(propertyName);
+	return propToUpgrade.upgrade(balance);
+    }
+
+    public String getProjectileImage() {
+	return myProjectile.getImage(); 
+    }
+
+    public double getProjectileDamage() {
+	return myProjectile.getDamage(); 
+    }
+
+    public double getProjectileSize() {
+	return myProjectile.getSize(); 
+    }
+
+
+    public double getDamage() {
+	return myProjectile.getDamage();
+    }
 }
 

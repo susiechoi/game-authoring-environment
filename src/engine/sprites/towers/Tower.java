@@ -96,18 +96,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     /**
-     * Handles upgrading the health of a tower
-     */
-    public double upgradeProperty(String name, double balance) {
-	for(Property property : myProperties) {
-	    if(property.getName() == name) {
-		return ((UpgradeProperty) property).upgrade(balance);
-	    }
-	}
-	return balance;
-    }
-
-    /**
      * Upgrades all aspects of a tower
      */
     public double upgrade(double balance) {
@@ -127,7 +115,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     @Override
     public int purchase(int myResources) throws CannotAffordException {
-	if (myResources < getProperty("ValueProperty")) {
+	if (myResources < getValue("ValueProperty")) {
 	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
 	return (int) (myResources - myValue.getProperty());
@@ -140,7 +128,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     public double getTowerRange() {
-	return this.getLauncher().getProperty("RangeProperty");
+	return this.getLauncher().getPropertyValue("RangeProperty");
     }
 
     public List<Property> getProperties(){
@@ -175,17 +163,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     
     public void setProjectileImage(String image) {
 	myLauncher.setProjectileImage(image);
-    }
-    
-    public double getProperty(String ID) {
-	//System.out.println(ID);
-	for(Property property : myProperties) {
-	   // System.out.println("PROPERTY NAME:" + property.getName());
-	    if(property.getName().equals(ID)) {
-		return property.getProperty();
-	    }
-	}
-	return 0;
     }
 
 }
