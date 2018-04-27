@@ -23,12 +23,13 @@ abstract class GraphScreen extends AuthoringScreen {
 
 	public GraphScreen(AuthoringView view) {
 		super(view);
+		setSaved(); 
 	}
 
 	protected LineChart<Number, Number> makeGraph(boolean legendVisible) {
 		myX = new NumberAxis();
 		myX.setLabel(getErrorCheckedPrompt("Time"));
-		myX.setTickLabelsVisible(false);
+//		myX.setTickLabelsVisible(false);
 		myX.setForceZeroInRange(false);
 		myY = new NumberAxis(); 
 		myY.setLabel(getErrorCheckedPrompt("Score"));
@@ -57,11 +58,16 @@ abstract class GraphScreen extends AuthoringScreen {
 					if (xyCoors.length == 2) {
 						series.getData().add(new XYChart.Data(Integer.parseInt(xyCoors[0]), Integer.parseInt(xyCoors[1])));
 						if (min) {
-							System.out.println("THIS IS MY LOW BOUND "+xyCoors[0]);
-							myX.setLowerBound(Integer.parseInt(xyCoors[0]));
+							if (myX.getLowerBound() == 0 ||  (myX.getLowerBound() > Integer.parseInt(xyCoors[0]))) {
+								//System.out.println("MY MIN IS "+Integer.parseInt(xyCoors[0]));
+								myX.setLowerBound(Integer.parseInt(xyCoors[0]));
+							}
 							min = false; 
 						}
-						myX.setUpperBound(Integer.parseInt(xyCoors[0]));
+						if (myX.getUpperBound() < Integer.parseInt(xyCoors[0])) {
+						//	System.out.println("mY MAX IS "+Integer.parseInt(xyCoors[0]));
+							myX.setUpperBound(Integer.parseInt(xyCoors[0]));
+						}
 					}
 				}
 			} catch (NumberFormatException | IOException e) {
