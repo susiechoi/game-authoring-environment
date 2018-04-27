@@ -2,6 +2,8 @@ package authoring.frontend;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -29,7 +31,12 @@ public abstract class PathToolBar extends AuthoringScreen {
 	
 	protected void setUpSizing() {
 		myPathToolBar = new HBox();
-		myPathToolBar.setMaxSize(1021, 101);
+		try {
+		myPathToolBar.setMaxSize(Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarHeight")), Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarWidth")));
+		}
+		catch(MissingPropertiesException e) {
+		    getView().loadErrorScreen("NoFile");
+		}
 		myPathToolBar.getStylesheets();
 		myPathToolBar.getChildren().add(makeSizingButtons());
 	}

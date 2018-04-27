@@ -1,5 +1,6 @@
 package authoring.frontend;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,6 +12,7 @@ import javafx.scene.layout.StackPane;
 public abstract class PathScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
+
 
 	private StackPane pathRoot;
 	protected GridPane pathGrid;
@@ -52,12 +54,19 @@ public abstract class PathScreen extends AdjustScreen {
 
 	protected void setGridUIComponents(PathPanel panel, PathToolBar toolbar) {
 		Button pathSizePlusButton = toolbar.getPlusButton();
+		
 		pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (grid.getPathSize() < 100) {
-					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() + 10);
+			    	try {
+			    	int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+				if (grid.getPathSize() < Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MaxGridSize"))) {
+					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() + gridResize);
 				}
+			    	}
+			    	catch(MissingPropertiesException e) {
+			    	    getView().loadErrorScreen("NoFile");
+			    	}
 			}
 		});
 
@@ -65,10 +74,15 @@ public abstract class PathScreen extends AdjustScreen {
 		pathSizeMinusButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (grid.getPathSize() > 30) {
-					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - 10);
-
+			    try {
+				int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+				if (grid.getPathSize() > Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MinGridSize"))) {
+					grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - gridResize);
 				}
+			    }
+			    catch(MissingPropertiesException e) {
+				getView().loadErrorScreen("NoFile");
+			    }
 			}
 		});
 	}
