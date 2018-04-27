@@ -121,15 +121,19 @@ public class GameScreen extends Screen {
 
 	//TODO implement reflection//rest of controls
 	public void controlTriggered(String control) throws MissingPropertiesException {
-		if(control.equals(GAMEPLAYER_PROPERTIES.get("play")))
+		if(control.equals(GAMEPLAYER_PROPERTIES.get("play"))) {
 			MEDIATOR.play();
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause")))
-			MEDIATOR.pause();
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup")))
-			MEDIATOR.fastForward(10);
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
+		}			
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause"))) {
+		    MEDIATOR.pause();
+		}
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup"))) {
+		    MEDIATOR.fastForward(10);
+		}
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
 		    getView().playControllerInstructions(new AuthoringModel());
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
+		}
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
