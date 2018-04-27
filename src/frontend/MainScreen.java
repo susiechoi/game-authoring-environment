@@ -23,7 +23,7 @@ public class MainScreen extends Screen {
 	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
 	// private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	//    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
-	private final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_LANGUAGE = "English";
 
 	private final UIFactory myUIFactory;
 	private final StageManager myStageManager;

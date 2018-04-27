@@ -1,4 +1,5 @@
 /**
+ /**
  * @author Sarah Bland
  * @author susiechoi
  * 
@@ -87,26 +88,6 @@ public class AuthoringView extends View {
 	 */
 	public void loadInitialScreen() {
 		myStageManager.switchScreen((new StartScreen(this)).getScreen());
-	}
-
-	/**
-	 * Loads an error screen when a user has done something so problematic that the program
-	 * cannot recover (such as choosing a language with no prompts and not having English
-	 * prompts to default to).
-	 * @param error is key to the Error the user has committed
-	 * @see frontend.View#loadErrorScreen
-	 */
-	@Override
-	public void loadErrorScreen(String error) {
-		loadErrorScreen(myErrorReader.resourceDisplayText(error));
-	}
-	/**
-	 * Loads an error alert when the user needs to be notified, but the program can
-	 * recover.
-	 * @param error is error key for error User has committed
-	 */
-	public void loadErrorAlert(String error) {
-		loadErrorAlert(myErrorReader.resourceDisplayText(error));
 	}
 
 	protected void loadScreen(Screen screen) {
@@ -321,7 +302,7 @@ public class AuthoringView extends View {
 		return myCSSChanged; 
 	}
 
-	public String getGameName() {
+	protected String getGameName() {
 		return myModel.getGameName();
 	}
 
