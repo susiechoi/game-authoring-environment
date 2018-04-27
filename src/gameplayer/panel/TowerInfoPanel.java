@@ -1,4 +1,3 @@
-
 package gameplayer.panel;
 
 import java.util.Map;
@@ -58,4 +57,3 @@ public class TowerInfoPanel extends SpecificPanel {
 	}
 
 }
-

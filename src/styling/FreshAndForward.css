@@ -12,6 +12,26 @@ TextField {
 	-fx-max-width: 200; 
 }
 
+.default-color0.chart-series-line {
+    -fx-stroke: black;
+    -fx-stroke-width: 2px; 
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: black;
+    -fx-background-radius: 0;
+    	-fx-padding: 1px;
+}
+
+.axis {
+	-fx-tick-label-fill: white; 
+}
+
+.axis-label {
+	-fx-font-family: "Open Sans";
+	-fx-text-fill: white; 
+}
+
 .button:disabled, .button:disabled > * {
 	-fx-opacity: 0.5;
 }

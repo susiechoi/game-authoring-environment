@@ -1,4 +1,3 @@
-
 package gameplayer.panel;
 
 import javafx.beans.value.ChangeListener;
@@ -29,7 +28,6 @@ public class TowerPanel extends Panel {
     private int SWAP_BUTTON_SIZE;
 
 
-    private Integer money;
     private GameScreen GAME_SCREEN;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
@@ -47,7 +45,7 @@ public class TowerPanel extends Panel {
     public TowerPanel( GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
+//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	makePanel();
@@ -70,7 +68,7 @@ public class TowerPanel extends Panel {
 
 	currencyDisplay = new Button();
 	currencyDisplay.setId(GAMEPLAYER_PROPERTIES.get("currencyButton"));
-	currencyDisplay.setText("$" + money);
+	currencyDisplay.setText("$");
 	currencyDisplay.setDisable(true);
 	//currencyDisplay.setMaxWidth(Double.MAX_VALUE);
 
@@ -195,14 +193,14 @@ public class TowerPanel extends Panel {
 	currencyDisplay.setText("$" +newValue);
     }
 
-    public ChangeListener createCurrencyListener(int startCurrency) {
+
+    public ChangeListener<Number> createCurrencyListener(int startCurrency) {
 	updateCurrency(startCurrency);
-	return new ChangeListener() {
-	    @Override
-	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-		updateCurrency((Integer)observableValue.getValue());
-	    }
+	return new ChangeListener<Number>() {
+		@Override
+		public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+			updateCurrency((Integer)arg0.getValue());	
+		}
 	};
     }
 }
-

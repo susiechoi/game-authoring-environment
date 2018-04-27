@@ -229,6 +229,7 @@ public class GamePanel extends Panel{
 		resetCursor();
 		towerPlaceMode = false;
 		//TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
+
 	    }
 	    catch(CannotAffordException e){
 		//GameScreen popup for cannot afford

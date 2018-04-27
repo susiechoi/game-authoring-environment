@@ -210,6 +210,4 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public void loseHealth(double damage) {
     	myHealth.loseHealth(damage);
     }
-
-
 }

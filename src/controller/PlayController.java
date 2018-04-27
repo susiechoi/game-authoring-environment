@@ -49,6 +49,8 @@ public class PlayController {
 	 * @param pathToXML: Path to game XML file
 	 */
 	public void newPlay(String pathToXML) {
+		System.out.println("path to xml "+pathToXML);
+		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
 		AuthoredGame playModel = myReader.createModel(pathToXML);
 		List<Level> levels = playModel.unmodifiableLevels();

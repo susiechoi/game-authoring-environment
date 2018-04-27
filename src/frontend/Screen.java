@@ -73,14 +73,6 @@ public abstract class Screen {
 		}
 	}
 
-	private void applyStyles(List<String> stylesheets) {
-		if (myRoot != null) {
-			for (String s : stylesheets) {
-				myRoot.getStylesheets().add(s);
-			}		
-		}
-	}
-
 	/**
 	 * Returns the Scene object to be loaded on the screen
 	 */
