@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import jdk.internal.jline.internal.Log;
 
 public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 	
@@ -53,6 +54,7 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		    maxStartingCurrency = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "StartingMoney"));
 		}
 		catch(MissingPropertiesException e) {
+		    Log.error(e);
 		    getView().loadErrorScreen("NoConstants");
 		}
 		HBox promptGameName = getUIFactory().addPromptAndSetupHBox("", myGameNameEntry, getErrorCheckedPrompt("GameName"));
@@ -75,6 +77,7 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		try {
 			cssOptions = getPropertiesReader().allKeys(DEFAULT_CSS_STYLES);
 		} catch (MissingPropertiesException e1) {
+		    	Log.error(e1);
 			getView().loadErrorAlert("NoFile");
 		}
 		myCSSFilenameChooser = getUIFactory().makeTextDropdown("", cssOptions);

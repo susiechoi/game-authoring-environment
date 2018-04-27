@@ -1,4 +1,5 @@
 package frontend;
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -26,7 +27,7 @@ public abstract class Screen {
 	protected Screen() {
 		myUIFactory = new UIFactory();
 		myPropertiesReader = new PropertiesReader();
-		myLogger = Logger.getLogger(this.getClass().getSimpleName());
+		//myLogger = Logger.getLogger(this.getClass().getSimpleName());
 	}
 	protected Logger getLogger() {
 	    return myLogger;

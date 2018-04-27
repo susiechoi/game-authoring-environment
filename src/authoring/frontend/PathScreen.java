@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import jdk.internal.jline.internal.Log;
 
 public abstract class PathScreen extends AdjustScreen {
 
@@ -65,6 +66,7 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			    	}
 			    	catch(MissingPropertiesException e) {
+			    	 Log.error(e);
 			    	    getView().loadErrorScreen("NoFile");
 			    	}
 			}
@@ -81,6 +83,7 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			    }
 			    catch(MissingPropertiesException e) {
+				 Log.error(e);
 				getView().loadErrorScreen("NoFile");
 			    }
 			}
