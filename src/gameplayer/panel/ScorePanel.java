@@ -48,15 +48,15 @@ public class ScorePanel extends Panel {
 		}
 	}
 
-
-
 	@Override
 	public void makePanel() {
 
 		//TODO Read words SCORE, LEVEL, and + from properties file
 		ScoreText = new Label();
+		updateScore(0);
 		LevelText = new Label();
 		HealthText = new Label();
+		updateHealth(50);
 
 		ScoreText.setMaxWidth(Double.MAX_VALUE);
 
