@@ -7,6 +7,7 @@ import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import jdk.internal.jline.internal.Log;
 import sound.ITRTSoundFactory;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -56,7 +57,8 @@ public class SettingsPanel extends Panel {
             }
         }
         catch (MissingPropertiesException e) {
-            System.out.println("Settings button images missing");
+            Log.error(e); 
+            System.out.println("Settings button images missing"); //TODO!!!
         }
     }
 

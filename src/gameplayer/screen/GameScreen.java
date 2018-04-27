@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import jdk.internal.jline.internal.Log;
 import sound.ITRTSoundFactory;
 
 
@@ -157,7 +158,7 @@ public class GameScreen extends Screen {
 				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
-
+			    Log.error(e); //TODO!!!
 			}
 			SOUND_FACTORY.playBackgroundMusic();
 

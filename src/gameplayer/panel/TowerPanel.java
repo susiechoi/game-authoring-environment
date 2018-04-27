@@ -12,6 +12,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import jdk.internal.jline.internal.Log;
+
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +92,8 @@ public class TowerPanel extends ListenerPanel {
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
-	    System.out.println("SwapButton Image Missing");
+	    Log.error(e);
+	    System.out.println("SwapButton Image Missing"); //TODO!!!
 	}
 
 
