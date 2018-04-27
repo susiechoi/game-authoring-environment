@@ -9,12 +9,16 @@ import javafx.beans.value.ChangeListener;
 import java.util.List;
 import java.util.Map;
 
+import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.MVController;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
+import frontend.StageManager;
+
 import java.awt.Point;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
@@ -34,7 +38,7 @@ import xml.XMLFactory;
  * @author Ryan Pond
  *
  */
-public class Mediator {
+public class Mediator implements MVController{
 
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
@@ -258,6 +262,12 @@ public class Mediator {
 			}
 		}
 		return styling; 
+	}
+
+
+	@Override
+	public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{
+	    myPlayController.demoPlay(new AuthoringModel().getGame());
 	}
 
 }
