@@ -18,6 +18,7 @@ import engine.sprites.towers.projectiles.Projectile;
  * 
  * @author Katherine Van Dyk
  * @author Miles Todzo
+ * @author Ryan Pond
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
 

@@ -20,6 +20,7 @@ import engine.sprites.towers.projectiles.Projectile;
  *
  * @author Miles Todzo
  * @author Katie Van Dyk
+ * @author Ryan Pond
 */
 
 
