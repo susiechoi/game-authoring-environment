@@ -28,6 +28,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Katherine Van Dyk
  * @author benauriemma 4/8
  * @author Ben Hodgson 
+ * @author Ryan Pond
  */
 public class PlayState implements GameData {
 
