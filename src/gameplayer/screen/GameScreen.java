@@ -134,8 +134,9 @@ public class GameScreen extends Screen {
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup"))) {
 			MEDIATOR.fastForward(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("fastForwardSize")));
 		}
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 		    getView().playControllerInstructions();
+		}
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
 
 			MEDIATOR.endLoop();
