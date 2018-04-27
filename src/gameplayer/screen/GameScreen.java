@@ -138,7 +138,7 @@ public class GameScreen extends Screen {
 		    MEDIATOR.fastForward(10);
 		}
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
-		    getView().playControllerInstructions(new AuthoringModel());
+		    getView().playControllerInstructions();
 		}
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
 			MEDIATOR.endLoop();

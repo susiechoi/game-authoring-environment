@@ -57,7 +57,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
 		    	getView().writeToFile();
-		    	getView().playControllerDemo(getView().getModel());
+		    	getView().playControllerDemo();
 		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setDisable(false);

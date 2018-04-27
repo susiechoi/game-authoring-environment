@@ -19,6 +19,8 @@ import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import controller.MVController;
+import controller.PlayController;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
@@ -29,7 +31,7 @@ import xml.AuthoringModelReader;
 import xml.AuthoringModelWriter;
 
 
-public class AuthoringController {
+public class AuthoringController implements MVController{
 
     private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
@@ -286,4 +288,13 @@ public class AuthoringController {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		writer.write(myModel.getGame(), myModel.getGameName());
 	}
+	@Override
+	public void playControllerDemo(StageManager manager, String language) {
+	    new PlayController(manager, language,
+			myModel).demoPlay(myModel.getGame());
+	}
+	public void playControllerInstructions(StageManager manager, String language) {
+	    new PlayController(manager, language, myModel).loadInstructionScreen();
+	}
 }
+

@@ -53,8 +53,7 @@ public class AuthoringView extends View {
 	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
-		super(stageManager, languageIn);
-
+		super(stageManager, languageIn, controller);
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
@@ -160,10 +159,10 @@ public class AuthoringView extends View {
 			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 			myStageManager.switchScreen(nextScreen.getScreen());
 		}
-		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
-			myStageManager.switchScreen(nextScreen.getScreen());
-		} 
+//		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+//			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+//			myStageManager.switchScreen(nextScreen.getScreen());
+//		} 
 		else {
 			throw new MissingPropertiesException("");
 		}

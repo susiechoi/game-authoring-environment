@@ -55,7 +55,7 @@ public class ScreenManager extends View {
 	//private final FileIO FILE_READER;
 
 	public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
-		super(stageManager, language);
+		super(stageManager, language, mediator);
 		STAGE_MANAGER = stageManager;
 		try {
 			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
@@ -68,17 +68,17 @@ public class ScreenManager extends View {
 		findSettings();
 	}
 
-	public ScreenManager(StageManager stageManager, String language) {
-		super(stageManager, language);
-		STAGE_MANAGER = stageManager;
-		try {
-			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
-		}
-		catch (MissingPropertiesException e) {
-		}
-		PROMPTS = new PromptReader(language, this);
-		findSettings();
-	}
+//	public ScreenManager(StageManager stageManager, String language) {
+//	    	
+//		STAGE_MANAGER = stageManager;
+//		try {
+//			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
+//		}
+//		catch (MissingPropertiesException e) {
+//		}
+//		PROMPTS = new PromptReader(language, this);
+//		findSettings();
+//	}
 
 	public List<Integer> getMediatorInts(){
 		controlVars = new ArrayList<Integer>();
