@@ -24,27 +24,27 @@ import engine.sprites.towers.launcher.Launcher;
  */
 public class Enemy extends ShootingSprites implements FrontEndSprite{
 
-    private String myName; 
-    private String myImage; 
-    private double myInitialHealth; 
-    private double myHealthImpact; 
     private ImageIntersecter myIntersecter;
     private double mySize;
-    private double myKillReward;
     private int pathIndex;
     private double pathAngle;
     private Point targetPosition;
     private List<Property> myProperties;
+    private double myInitialHealth;
+    private double myHealthImpact;
+    private double mySpeed;
+    private double myKillReward;
 
     public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher);
 	myProperties = properties;
-	myInitialHealth = getValue("HealthProperty");
-	myHealthImpact = getValue("DamageProperty");
 	myIntersecter = new ImageIntersecter(this); 
-	myKillReward = getValue("ValueProperty");
 	pathIndex = 0;
 	pathAngle = 0;
+	myInitialHealth = getValue("HealthProperty");
+	myHealthImpact = getValue("DamageProperty");
+	mySpeed = getValue("SpeedProperty");
+	myKillReward = getValue("ValueProperty");
     }
 
     /**
@@ -57,7 +57,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	for(Property p : copiedEnemy.getProperties()) {
 	    myProperties.add(makeProperty(p));
 	}
-	myHealthImpact = getValue("DamageProperty"); 
     }
 
     /**
@@ -115,10 +114,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	targetPosition = newPosition;
     }
 
-    public String getName() {
-	return myName; 
-    }
-
     public int getMoney() {
 	// TODO Auto-generated method stub
 	return 0;
@@ -141,15 +136,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public boolean handleCollision(Sprite collider) {
 	loseHealth(collider.getDamage());
 	return ((HealthProperty) getProperty("HealthProperty")).isAlive();
-    }
-
-    public Property getProperty(String ID) {
-	for(Property p : myProperties) {
-	    if(p.getName().equals(ID)){
-		return p;
-	    }
-	}
-	return null;
     }
 
     private ImageIntersecter getIntersecter() {
@@ -191,35 +177,4 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public void loseHealth(double damage) {
 	((HealthProperty) getProperty("HealthProperty")).loseHealth(damage);
     }
-
-
-    public List<Property> getProperties(){
-	return myProperties;
-    }
-
-    public void addProperty(Property property) {
-	System.out.println("Property: " + property);
-	System.out.println("Property Name: " + property.getName());
-	System.out.println("Property value: " + property.getProperty());
-	Property toRemove = null;
-	for(Property p : myProperties) {
-	    if(property.getName().equals(p.getName())) {
-		toRemove = p;
-	    }
-	}
-	if(toRemove != null) myProperties.remove(toRemove);
-	myProperties.add(property);
-    }
-
-    public double getValue(String ID) {
-	//System.out.println(ID);
-	for(Property property : myProperties) {
-	    // System.out.println("PROPERTY NAME:" + property.getName());
-	    if(property.getName().equals(ID)) {
-		return property.getProperty();
-	    }
-	}
-	return 0;
-    }
-
 }

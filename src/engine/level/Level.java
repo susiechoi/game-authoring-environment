@@ -355,17 +355,17 @@ public class Level {
 		if (myTowers.size() > 1) {
 			myTowers.remove(DEFAULT_OBJ_NAME);
 		}
-		updateTowerProperties(); 
+		//updateTowerProperties(); 
 		//updateEnemyProperties(); 
 	}
 
-	private void updateTowerProperties() {
-		Tower tower; 
-		for (String towerName : myTowers.keySet()) {
-			tower = myTowers.get(towerName);
-			tower.updateProperties();
-		}
-	}
+//	private void updateTowerProperties() {
+//		Tower tower; 
+//		for (String towerName : myTowers.keySet()) {
+//			tower = myTowers.get(towerName);
+//			tower.updateProperties();
+//		}
+//	}
 
 //	public void updateEnemyProperties() {
 //		Enemy enemy; 

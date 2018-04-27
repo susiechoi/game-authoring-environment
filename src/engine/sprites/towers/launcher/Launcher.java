@@ -39,7 +39,7 @@ public class Launcher extends Manager<Projectile>{
     public Launcher(Launcher launcher) {
 	myProperties = new ArrayList<Property>();
 	for(Property p : launcher.getProperties()) {
-	    myProperties.add(makeProperty(p));
+	    myProperties.add(myPropertyFactory.getProperty(p));
 	}
 	myProjectile = launcher.getProjectile();
 	timeSinceLastShot = 0;
@@ -96,7 +96,6 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
-//	System.out.println("firerate is " + getProperty(fireRate));
 	if(timeSinceLastShot >= 200/getProperty(fireRate)) {
 	    return true;
 	}
@@ -133,17 +132,6 @@ public class Launcher extends Manager<Projectile>{
 	return myProjectile.upgradeProperty("DamageProperty", balance);
     } 
 
-    public void addProperty(Property property) {
-	Property toRemove = null;
-	for(Property p : myProperties) {
-	    if(property.getName().equals(p.getName())) {
-		toRemove = p;
-	    }
-	}
-	myProperties.remove(toRemove);
-	myProperties.add(property);
-    }
-
     public void addProjectileProperty(Property property) {
 	myProjectile.addProperty(property);
     }
@@ -155,11 +143,11 @@ public class Launcher extends Manager<Projectile>{
     public void setProjectileImage(String image){
 	myProjectile.setImage(image);
     }
-
-
-    protected Property makeProperty(Property p) {
-	return myPropertyFactory.getProperty(p);
+    
+    public void addProperty(Property p){
+	myProperties.add(p);
     }
+
 
 }
 

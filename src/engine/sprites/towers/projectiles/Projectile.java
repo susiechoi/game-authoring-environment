@@ -63,7 +63,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	if (this.myTarget.isAlive()) {
 	    rotateImage();
 	}
-	double totalDistanceToMove = getProperty("ConstantSpeedProperty")*elapsedTime;
+	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	this.getImageView().setX(this.getX()+xMove);
@@ -87,7 +87,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
      */
     @Override
     public double getDamage() {
-	return getProperty("DamageProperty");
+	return getValue("DamageProperty");
     }
 
     public String getImage() {
@@ -136,19 +136,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	super.updateImage(image);
     }
 
-    public double getProperty(String name) {
-    	for(Property property : myProperties) {
-    	    if(property.getName().equals(name)) {
-    		return property.getProperty();
-    	    }
-    	}
-    	return -1;
-    }
-   
-    public List<Property> getProperties(){
-	return myProperties;
-    }
-    
     /**
      * Handles upgrading the health of a tower
      */

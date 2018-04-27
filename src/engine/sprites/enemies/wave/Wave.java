@@ -66,7 +66,6 @@ public class Wave {
     }
 
     public void addEnemy(Enemy enemy, Path path, int number) {
-	System.out.println("HEEEEEERE");
 	if(myWaveMap.containsKey(path)) {
 	    Map<Enemy, Integer> currentEnemies = myWaveMap.get(path);
 	    currentEnemies.put(enemy, number);
@@ -77,8 +76,6 @@ public class Wave {
 	    myWaveMap.put(path, newEnemies);
 	}
     }
-
-
 
     /**
      * Returns a map that an Enemy type key to an Integer value representing the number

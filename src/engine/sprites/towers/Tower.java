@@ -1,7 +1,6 @@
 package engine.sprites.towers;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.KillProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
-import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -31,7 +29,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private Launcher myLauncher;
     private HealthProperty myHealth;
     private double mySize;
-    private List<Property> myProperties;
 
     /**
      * Constructor for a Tower object that accepts parameter properties.
@@ -45,8 +42,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	super(name, image, size, launcher);
 	mySize = size;
 	myLauncher = launcher;
-	myProperties = properties;
-	myProperties.add(new KillProperty(0));
+	addProperty(new KillProperty(0));
     }
 
     /**
@@ -54,12 +50,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(Tower copiedTower) {
 	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher()); 
-	myProperties = new ArrayList<Property>();
 	for(Property p : copiedTower.getProperties()) {
-	    myProperties.add(makeProperty(p));
-	//    System.out.println("Make property" + makeProperty(p));
+	    addProperty(makeProperty(p));
 	}
-	myProperties.add(new KillProperty(0));
     }
 
     /**
@@ -86,7 +79,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public int sell() {
 	removeAllProjectiles();
-	return (int) getProperty("ValueProperty");
+	return (int) getValue("ValueProperty");
     }
 
     private void removeAllProjectiles() {
@@ -96,22 +89,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     /**
-     * Handles upgrading the health of a tower
-     */
-    public double upgradeProperty(String name, double balance) {
-	for(Property property : myProperties) {
-	    if(property.getName() == name) {
-		return ((UpgradeProperty) property).upgrade(balance);
-	    }
-	}
-	return balance;
-    }
-
-    /**
      * Upgrades all aspects of a tower
      */
     public double upgrade(double balance) {
-	for(Property property : myProperties) {
+	for(Property property : getProperties()) {
 	    balance -= ((UpgradeProperty) property).upgrade(balance);
 	}
 	return balance;
@@ -119,7 +100,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     public Map<String, Integer> getTowerStats(){
 	Map<String, Integer> propertyStats = new HashMap<String, Integer>();
-	for(Property p : myProperties) {
+	for(Property p : getProperties()) {
 	    propertyStats.put(p.getName(), (int) p.getProperty());
 	}
 	return propertyStats;
@@ -127,10 +108,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     @Override
     public int purchase(int myResources) throws CannotAffordException {
-	if (myResources < getProperty("ValueProperty")) {
+	if (myResources < getValue("ValueProperty")) {
 	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
-	return (int) (myResources - getProperty("ValueProperty") );
+	return (int) (myResources - getValue("ValueProperty") );
     }
 
     @Override
@@ -143,28 +124,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return this.getLauncher().getProperty("RangeProperty");
     }
 
-    public List<Property> getProperties(){
-	return myProperties;
-    }
-
-    public void updateProperties() {
-	updateImage(getImageString());
-	updateLauncher(myLauncher); 
-    }
-
-    public void addProperty(Property property) {
-	//System.out.println("Property: " + property);
-	//System.out.println("Property Name: " + property.getName());
-	Property toRemove = null;
-	for(Property p : myProperties) {
-	    if(property.getName().equals(p.getName())) {
-		toRemove = p;
-	    }
-	}
-	myProperties.remove(toRemove);
-	myProperties.add(property);
-    }
-    
     public void addLauncherProperty(Property property) {
 	myLauncher.addProperty(property);
     }
@@ -177,17 +136,5 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myLauncher.setProjectileImage(image);
     }
     
-    public double getProperty(String ID) {
-	System.out.println(ID);
-	for(Property property : myProperties) {
-	    System.out.println("PROPERTY: " + property);
-	    System.out.println("PROPERTY NAME:" + property.getName());
-	    if(property != null && property.getName().equals(ID)) {
-		return property.getProperty();
-	    }
-	}
-	return 0;
-    }
-
 }
 

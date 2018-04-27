@@ -1,7 +1,11 @@
 package engine.sprites;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.builders.PropertyBuilder;
 import engine.sprites.properties.Property;
+import engine.sprites.properties.UpgradeProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -21,6 +25,7 @@ public class Sprite implements FrontEndSprite{
     private ImageView myImageView;
     private String myImageString;
     private PropertyBuilder myPropertyBuilder;
+    private List<Property> myProperties;
 
 
     /**
@@ -36,6 +41,7 @@ public class Sprite implements FrontEndSprite{
 	myImageString = image;
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	myImageView.setPreserveRatio(true);
+	myProperties = new ArrayList<>();
 	myPropertyBuilder = new PropertyBuilder();
     }
 
@@ -138,4 +144,52 @@ public class Sprite implements FrontEndSprite{
     protected Property makeProperty(Property p) {
 	return myPropertyBuilder.getProperty(p);
     }
+    
+    public Property getProperty(String ID) {
+	System.out.println(ID);
+	for(Property property : myProperties) {
+	    if(property != null && property.getName().equals(ID)) {
+		return property;
+	    }
+	}
+	return null;
+    }
+    
+
+    /**
+     * Handles upgrading the health of a tower
+     */
+    public double upgradeProperty(String name, double balance) {
+	for(Property property : myProperties) {
+	    if(property.getName() == name) {
+		return ((UpgradeProperty) property).upgrade(balance);
+	    }
+	}
+	return balance;
+    }
+    
+    public List<Property> getProperties(){
+	return myProperties;
+    }
+    
+    public void addProperty(Property property) {
+	Property toRemove = null;
+	for(Property p : myProperties) {
+	    if(property.getName().equals(p.getName())) {
+		toRemove = p;
+	    }
+	}
+	myProperties.remove(toRemove);
+	myProperties.add(property);
+    }
+    
+    public double getValue(String ID) {
+	for(Property property : myProperties) {
+	    if(property.getName().equals(ID)) {
+		return property.getProperty();
+	    }
+	}
+	return 0;
+    }
+
 }
