@@ -76,6 +76,7 @@ public class PlayState implements GameData {
 
     public void update(double elapsedTime) {
 	count++;
+	checkLoss();
 	if (count % 120 == 0) {
 	    System.out.println("Spawning enemy!");
 	    spawnEnemies();
@@ -136,8 +137,16 @@ public class PlayState implements GameData {
 		// TODO: call Mediator to trigger next level
 	    }
 	    else {
-		// TODO: end game
+		// TODO: end game, player won
 	    }
+	}
+    }
+    
+    private void checkLoss() {
+	if (myHealth.getValue() <= 0) {
+	    System.out.println("Lost game!");
+	    myMediator.pause();
+	    myMediator.endLoop();
 	}
     }
 
