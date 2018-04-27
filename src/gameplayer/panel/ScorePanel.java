@@ -21,7 +21,7 @@ public class ScorePanel extends Panel {
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	private PrintWriter myScoreWriter; 
-	private int myScoreXIncrement;
+	private long myScoreXIncrement;
 
 	private final GameScreen GAME_SCREEN;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
@@ -38,7 +38,7 @@ public class ScorePanel extends Panel {
 		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy_hh-mm-ss");
 		String formattedDate = df.format(c.getTime());
 
 		try {
@@ -77,13 +77,11 @@ public class ScorePanel extends Panel {
 	}
 
 	private void updateScore(Integer newScore) {		
-		myScoreXIncrement++; 
-		myScoreWriter.write(Integer.toString(myScoreXIncrement)+" ");
+		myScoreXIncrement = System.currentTimeMillis() / 1000; 
+		myScoreWriter.write(Long.toString(myScoreXIncrement)+" ");
 		myScoreWriter.write(Integer.toString(newScore)+"\n");
 
-		if (myScoreXIncrement % 5 == 0) {
-			myScoreWriter.flush();
-		}
+		myScoreWriter.flush();
 
 		ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
 	}
@@ -110,7 +108,6 @@ public class ScorePanel extends Panel {
 
 	public ChangeListener<Number> createScoreListener() {
 		return new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 				updateScore((Integer)arg0.getValue());
