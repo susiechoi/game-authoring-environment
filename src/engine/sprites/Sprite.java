@@ -1,5 +1,8 @@
 package engine.sprites;
 
+import java.util.List;
+
+import engine.sprites.properties.Property;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -18,6 +21,8 @@ public class Sprite implements FrontEndSprite{
 	private String myName;
 	private ImageView myImageView;
 	private String myImageString;
+	
+	private List<Property> myProperties;
 
 
 	/**
@@ -34,6 +39,15 @@ public class Sprite implements FrontEndSprite{
 		myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 		myImageView.setPreserveRatio(true);
 
+	}
+	
+	public Property getProperty(String propertyName) {
+		for (Property p: this.myProperties) {
+			if (p.getName().equals(propertyName)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	/**

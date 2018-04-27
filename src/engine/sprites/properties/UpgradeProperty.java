@@ -7,7 +7,7 @@ package engine.sprites.properties;
  * @date 4/7/18
  *
  */
-public abstract class UpgradeProperty extends Property {
+public abstract class UpgradeProperty<T> extends Property<Object> {
 
     private double upgradeCost;
     private double upgradeValue;

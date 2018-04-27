@@ -25,7 +25,6 @@ public class Launcher extends Manager<Projectile>{
     private double timeSinceLastShot;
 
     public Launcher(FireRateProperty fireRate, Projectile projectile, RangeProperty range) {
-	System.out.println("original rate is " + fireRate.getProperty());
 	myFireRate = fireRate;
 	myProjectile = projectile;
 	myRange = range;
