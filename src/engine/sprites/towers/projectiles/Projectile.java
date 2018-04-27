@@ -16,6 +16,7 @@ import engine.sprites.properties.UpgradeProperty;
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
+ * @author Ryan Pond
  *
  */
 public class Projectile extends Sprite implements FrontEndSprite{
@@ -159,5 +160,4 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	}
 	return balance;
     }
-
 }

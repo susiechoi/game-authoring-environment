@@ -1,6 +1,7 @@
 package engine.managers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
@@ -9,6 +10,7 @@ import engine.sprites.towers.projectiles.Projectile;
 /**
  * 
  * @author Miles Todzo
+ * @author Ryan Pond
  *
  */
 
@@ -70,6 +72,20 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	    }
 	}
     }
+    
+    /**
+     * Removes all of the projectiles from the tower manager
+     * @return
+     */
+    public Collection<Projectile> removeAllProjectiles() {
+	List<Projectile> toBeRemoved = new ArrayList<>();
+	for(ShootingSprites tower : this.getListOfActive()) {
+	    toBeRemoved.addAll(tower.getLauncher().getListOfActive());
+	    tower.getLauncher().getListOfActive().clear();
+	}
+	return toBeRemoved;
+    }
+    
     public int getRoundScore() {
 	return myRoundScore;
     }

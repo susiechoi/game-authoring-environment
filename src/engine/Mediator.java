@@ -30,10 +30,10 @@ import xml.XMLFactory;
  * @author andrewarnold
  * @author Brendan Cheng
  * @author Alexi Kontos
+ * @author Ryan Pond
  *
  */
 public class Mediator {
-
 
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
@@ -165,14 +165,14 @@ public class Mediator {
      * to be called by the backend to play the simulation
      */
     public void play() {
-	myGameEngine.getPlayState().play();
+	myGameEngine.start();
     }
 
     /**
      * to be called by the backend to pause the simulation
      */
     public void pause() {
-	myGameEngine.getPlayState().pause();
+	myGameEngine.pause();
     }
 
     /**
@@ -204,6 +204,17 @@ public class Mediator {
     }
 
     /**
+     * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
+     * lives. 
+     * @param myResources integer property for currency
+     * @param myScore	integer property for score
+     * @param IntegerProperty	 integer property for health
+     */
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	myScreenManager.attachListeners(myCurrency, myScore, myLives);
+    }
+
+    /**
      * Takes a list of sprites that are to be removed from PlayState, removes them
      * @param list
      */
@@ -224,7 +235,7 @@ public class Mediator {
      * @param myScore	integer property for score
      * @param simpleIntegerProperty	 integer property for health
      */
-    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
 	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
     
@@ -242,11 +253,10 @@ public class Mediator {
 			try {
 				styling = myGameEngine.getPlayState().getStyling();
 			} catch (MissingPropertiesException e) {
-				myScreenManager.loadErrorAlertToStage("NoFile");
+				myScreenManager.loadErrorAlert("NoFile");
 			}
 		}
 		return styling; 
 	}
 
 }
-

@@ -11,7 +11,6 @@
 package authoring;
 
 import java.awt.Point;
-import java.lang.Double; 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -387,7 +386,7 @@ public class AuthoringModel {
 	    attributeFinder.setFieldValue(attribute, myGame.getSettings(), attributeValue);
 	}
     }
-
+    
     public void updateAllProperties() throws ObjectNotFoundException {
 	Level level;
 	for (String levelNumber : getLevels()) {

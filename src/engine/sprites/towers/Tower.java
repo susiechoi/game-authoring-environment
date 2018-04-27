@@ -6,9 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import engine.builders.LauncherBuilder;
+import engine.builders.ProjectileBuilder;
+>>>>>>> 9faee1913162cc7bde4f91624e495e4a100e25e4
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.properties.*;
+import engine.sprites.properties.HealthProperty;
+import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -17,9 +23,20 @@ import engine.sprites.towers.projectiles.Projectile;
  * 
  * @author Katherine Van Dyk
  * @author Miles Todzo
+ * @author Ryan Pond
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
-    private Launcher myLauncher;
+
+    private final static String ENEMIES_KILLED = "Enemies Killed";
+    private final static int FAKE_X = 100000;
+    private final static int FAKE_Y = 100000;
+
+    private HealthProperty myHealth;
+    private String myName; 
+    private String myImage; 
+    private double myHealthValue;
+    private double myHealthUpgradeCost; 
+    private double myHealthUpgradeValue; 
     private double mySize;
     private ValueProperty myValue;
     private List<Property> myProperties;
@@ -34,6 +51,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher);
+	myName = name; 
+	myImage = image; 
+	myHealth = health;
+	mySize = size;
 	myLauncher = launcher;
 	myProperties = properties;
 	myProperties.add(new KillProperty(0));
@@ -66,6 +87,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     @Override
     public boolean handleCollision(Sprite collider) {
+    this.myHealth.loseHealth(collider.getDamage());
 	return true;
     }
 
@@ -79,7 +101,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     private void removeAllProjectiles() {
 	for(Projectile projectile : this.getProjectiles()) {
-	    projectile.place(-100000, -100000);
+	    projectile.place(FAKE_X, FAKE_Y);
 	}
     }
 
@@ -116,7 +138,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     @Override
     public int purchase(int myResources) throws CannotAffordException {
 	if (myResources < myValue.getProperty()) {
-	    throw new CannotAffordException();
+	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
 	return (int) (myResources - myValue.getProperty());
     }

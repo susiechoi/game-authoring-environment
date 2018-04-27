@@ -39,6 +39,7 @@ public class AttributeFinder {
 			if (fieldSimpleString.equals(fieldName)) {
 				aField.setAccessible(true);
 				aField.set(objectWithFields, fieldValue);
+				System.out.println("in attribute finder : " + fieldValue + " ***");
 				return; 
 			}
 		}

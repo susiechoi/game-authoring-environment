@@ -1,13 +1,17 @@
 package engine.managers;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
+import engine.sprites.towers.projectiles.Projectile;
 
 
 /**
@@ -16,6 +20,7 @@ import engine.sprites.towers.Tower;
  *
  * @author Miles Todzo
  * @author Katie Van Dyk
+ * @author Ryan Pond
 */
 
 
@@ -88,5 +93,4 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return balance;
     }
-
 }

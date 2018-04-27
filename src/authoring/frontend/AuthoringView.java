@@ -1,4 +1,5 @@
 /**
+ /**
  * @author Sarah Bland
  * @author susiechoi
  * 
@@ -21,9 +22,8 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import controller.PlayController;
 import engine.path.Path;
-import frontend.ErrorReader;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
@@ -43,8 +43,6 @@ public class AuthoringView extends View {
 	public static final String DEFAULT_LANGUAGE = "English";
 	
 	private StageManager myStageManager; 
-	private PromptReader myPromptReader;
-	private ErrorReader myErrorReader;
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
 	private String myCurrentCSS;
@@ -55,9 +53,8 @@ public class AuthoringView extends View {
 	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
-		super(stageManager);
-		myPromptReader = new PromptReader(languageIn, this);
-		myErrorReader = new ErrorReader(languageIn, this);
+		super(stageManager, languageIn);
+
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
@@ -94,25 +91,6 @@ public class AuthoringView extends View {
 		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
 
-	/**
-	 * Loads an error screen when a user has done something so problematic that the program
-	 * cannot recover (such as choosing a language with no prompts and not having English
-	 * prompts to default to).
-	 * @param error is key to the Error the user has committed
-	 * @see frontend.View#loadErrorScreen(java.lang.String)
-	 */
-	@Override
-	public void loadErrorScreen(String error) {
-		loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
-	}
-	/**
-	 * Loads an error alert when the user needs to be notified, but the program can
-	 * recover.
-	 * @param error is error key for error User has committed
-	 */
-	public void loadErrorAlert(String error) {
-		loadErrorAlertToStage(myErrorReader.resourceDisplayText(error));
-	}
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
 	}
@@ -149,51 +127,59 @@ public class AuthoringView extends View {
 		goForwardFrom(id+"Back");
 	}
 	
-	protected void goFowardFrom(Screen screen, String id) {
-		goForwardFrom(screen.getClass().getSimpleName()+id); 
-	}
-	
+
 	protected void goForwardFrom(String id) {
 		goForwardFrom(id, "");
 	}
 	
-	public void goForwardFrom(String id, String name) {
-		try {
-			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
-			Class<?> clazz = Class.forName(nextScreenClass);
-			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
-			if(constructor.getParameterTypes().length == 2) {
-				if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
-					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-				else {
-					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-			}
-			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+	public void goForwardFrom(String id, List<String> name) {
+	    try {
+		String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
+		Class<?> clazz = Class.forName(nextScreenClass);
+		Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
+		if(constructor.getParameterTypes().length == 2) {
+			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
+				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
-			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+			else if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
+				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 				myStageManager.switchScreen(nextScreen.getScreen());
-			} 
+			}
+			else if(constructor.getParameterTypes()[1].equals(String.class)) {
+			    	AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name.get(0));
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
 			else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
-				Screen nextScreen = (Screen) constructor.newInstance(myStageManager);
+				Screen nextScreen = (Screen) constructor.newInstance(myStageManager, this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
-			else {
-				throw new MissingPropertiesException("");
-			}
+		}
+		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+		    	System.out.println(clazz.getSimpleName());
+			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+			myStageManager.switchScreen(nextScreen.getScreen());
+		}
+		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+			myStageManager.switchScreen(nextScreen.getScreen());
+		} 
+		else {
+			throw new MissingPropertiesException("");
+		}
 
-		}
-		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
-				| IllegalAccessException | InstantiationException e) {
-			e.printStackTrace();
-			loadErrorScreen("NoScreenFlow");
-		}
+	}
+	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
+			| IllegalAccessException | InstantiationException e) {
+		e.printStackTrace();
+		loadErrorScreen("NoScreenFlow");
+	}
+	}
+	
+	public void goForwardFrom(String id, String name) {
+	    	ArrayList<String> parameterList= new ArrayList<>();
+	    	parameterList.add(name);
+		goForwardFrom(id,  parameterList);
 	}
 
 	public void makePath(GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
@@ -213,7 +199,7 @@ public class AuthoringView extends View {
 	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
 	 */
 	public List<String> getCurrentObjectOptions(String objectType) {
-		List<String> availableObjectOptions = new ArrayList<String>(); 
+		List<String> availableObjectOptions = new ArrayList<>(); 
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
@@ -244,10 +230,6 @@ public class AuthoringView extends View {
 	protected void setLevel(int level) {
 		myLevel = level; 
 	}
-
-	protected Scene getScene() {
-		return myStageManager.getScene();
-	}
 	
 	/**
 	 * Returns the StageManager object used by the game to switch the Screens
@@ -257,10 +239,6 @@ public class AuthoringView extends View {
 	 */
 	public StageManager getStageManager() {
 	    return myStageManager;
-	}
-
-	protected String getErrorCheckedPrompt(String prompt) {
-		return myPromptReader.resourceDisplayText(prompt);
 	}
 
 	protected void addNewLevel() {
@@ -281,10 +259,6 @@ public class AuthoringView extends View {
 		return myLevel; 
 	}
 
-	protected PropertiesReader getPropertiesReader() {
-		return myPropertiesReader; 
-	}
-
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
@@ -298,7 +272,7 @@ public class AuthoringView extends View {
 		    	e.printStackTrace();
 			loadErrorAlert("NoObject");
 		}
-		return new HashMap<String, Integer>();
+		return new HashMap<>();
 
 	}
 	
@@ -311,10 +285,6 @@ public class AuthoringView extends View {
 		loadErrorScreen("NoObject");
 	    }
 	    return 1;
-	}
-	
-	public GridPane getPathGrid() {
-		return myGrid;
 	}
 
 	protected void writeToFile() {

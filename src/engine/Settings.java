@@ -38,7 +38,6 @@ public class Settings {
 	}
 	
 	public String getCSSTheme() throws MissingPropertiesException {
-		System.out.println("RIGHT HERE");
 		PropertiesReader pr = new PropertiesReader();
 		return pr.findVal(DEFAULT_CSS_THEME_PROPS, myCSSTheme);
 	}

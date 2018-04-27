@@ -2,6 +2,7 @@ package frontend;
 
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
+import authoring.frontend.GraphMenuScreen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
 import frontend.Screen;
@@ -22,14 +23,17 @@ public class MainScreen extends Screen {
 	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
 	// private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	//    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
-	private final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_LANGUAGE = "English";
 
-	private final UIFactory UIFACTORY;
-	private final StageManager STAGE_MANAGER;
+	private final UIFactory myUIFactory;
+	private final StageManager myStageManager;
+	private View myView;
 
-	public MainScreen(StageManager stageManager) {
-		UIFACTORY = new UIFactory();
-		STAGE_MANAGER = stageManager;
+	public MainScreen(StageManager stageManager, View view) {
+	    	super();
+		myUIFactory = new UIFactory();
+		myStageManager = stageManager;
+		myView = view;
 		setStyleSheet(DEFAULT_CSS);
 	}
 
@@ -39,28 +43,24 @@ public class MainScreen extends Screen {
 	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
+	    	System.out.println("makin a mainscreen");
 		VBox rootBox = new VBox();
-		Text title = getUIFactory().makeScreenTitleText("Welcome");
-		Button newAuthorButt = getUIFactory().makeTextButton("editbutton", "Author A Game");
+		Text title = getUIFactory().makeScreenTitleText(myView.getErrorCheckedPrompt("Welcome"));
+		Button newAuthorButt = getUIFactory().makeTextButton("editbutton", myView.getErrorCheckedPrompt("Author"));
 		newAuthorButt.setOnAction(click->{
-			new AuthoringController(STAGE_MANAGER,DEFAULT_LANGUAGE);
+			new AuthoringController(myStageManager,DEFAULT_LANGUAGE);
 		});
-		newAuthorButt.setOnMouseClicked((argo0) -> new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE));
+		newAuthorButt.setOnMouseClicked((argo0) -> new AuthoringController(myStageManager, DEFAULT_LANGUAGE));
 
-		Button newGameButt = getUIFactory().makeTextButton("editbutton", "Load/Play A Game");
+		Button newGameButt = getUIFactory().makeTextButton("editbutton", myView.getErrorCheckedPrompt("Load"));
 		newGameButt.setOnAction(click->{
 			try {
-				new PlayController(STAGE_MANAGER, DEFAULT_LANGUAGE, new AuthoringModel())
+				new PlayController(myStageManager, DEFAULT_LANGUAGE, new AuthoringModel())
 				.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		});
-
-		Button visualizations = getUIFactory().makeTextButton("", "Review Visualizations");
-		visualizations.setOnAction(click-> {
-			STAGE_MANAGER.switchScreen(new VisualizationsScreen().getScreen());
 		});
 
 		//	HBox leftCenter = new HBox(newAuthorButt);
@@ -75,7 +75,7 @@ public class MainScreen extends Screen {
 		//	HBox.setHgrow(leftCenter, Priority.ALWAYS);
 		//	HBox.setHgrow(rightCenter, Priority.ALWAYS);
 
-		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt, visualizations);
+		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt);
 
 		rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		//	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);

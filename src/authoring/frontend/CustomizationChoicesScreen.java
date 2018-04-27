@@ -27,7 +27,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 
 	protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
 	    	super(view);
-	    	setSaved();
 	}
 
 	
@@ -55,16 +54,16 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			getView().addNewLevel();
 			getView().goForwardFrom(this.getClass().getSimpleName()+"EditNewLevel");
 		});
-		AuthoringModel currentModel = getView().getModel();
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
 		    	getView().writeToFile();
-		    	new PlayController(getView().getStageManager(), DEFAULT_LANGUAGE,
-				currentModel).demoPlay(currentModel.getGame()); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
+		    	getView().playControllerDemo(getView().getModel());
 		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
+		saveButton.setDisable(false);
 		saveButton.setOnAction(e -> {
 		    	setSaved();
+		    	saveButton.setDisable(true);
 			getView().writeToFile();
 		});
 		Button mainButton = setupBackButton();
@@ -111,12 +110,14 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		}
 		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
-		vbox.getChildren().add(newLevelHBox);
-		vbox.getChildren().add(hbox);
+
+		Button visualizations = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Graphs"));
+		visualizations.setOnAction(click-> {
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Graphs");
+		});
+		
+		vbox.getChildren().addAll(newLevelHBox, hbox, demoButton, saveButton, visualizations, mainButton);
 		//vbox.getChildren().add(songPrompted); TODO: change to mp3 selector and readd
-		vbox.getChildren().add(demoButton);
-		vbox.getChildren().add(saveButton);
-		vbox.getChildren().add(mainButton);
 		return vbox;
 
 	}

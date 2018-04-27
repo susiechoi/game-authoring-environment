@@ -50,7 +50,7 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 		String editPrompt = getErrorCheckedPrompt("EditExisting")+myObjectDescription;
 		String selectPrompt = getErrorCheckedPrompt("SelectExisting")+myObjectDescription;
 
-		List<String> dropdownOptions = new ArrayList<String>(); 
+		List<String> dropdownOptions = new ArrayList<>(); 
 		dropdownOptions.add(selectPrompt);
 		dropdownOptions.addAll(myObjectOptions);
 		
@@ -93,7 +93,7 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 	 */
 	protected Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
-		newObjectButton.setOnAction((event) -> {
+		newObjectButton.setOnAction(event -> {
 			getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton", myDefaultName);
 		});
 		return newObjectButton;
