@@ -1,4 +1,5 @@
 /**
+ /**
  * @author Sarah Bland
  * @author susiechoi
  * 
@@ -21,6 +22,7 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import controller.PlayController;
 import engine.path.Path;
 import frontend.PropertiesReader;
 import frontend.Screen;
