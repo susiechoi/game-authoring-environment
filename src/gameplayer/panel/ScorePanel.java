@@ -8,6 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import gameplayer.screen.GameScreen;
+import java.util.Map;
+import gameplayer.screen.GameScreen;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Priority;
@@ -18,28 +21,22 @@ public class ScorePanel extends Panel {
 
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
-
-	private final GameScreen GAME_SCREEN;
-	private Integer SCORE;
-	private Integer HEALTH;
-	private Integer LEVEL;
-	private Label ScoreText;
-	private Label LevelText;
-	private Label HealthText;
-
 	private PrintWriter myScoreWriter; 
 	private int myScoreXIncrement;
+	
+    private final GameScreen GAME_SCREEN;
+    private Map<String,String> GAMEPLAYER_PROPERTIES;
 
-	public ScorePanel(GameScreen gameScreen) {
+    private Label ScoreText;
+    private Label LevelText;
+    private Label HealthText;
+    private Integer SCORE;
+    private Integer HEALTH;
+    private Integer LEVEL;
+
+    public ScorePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
-		SCORE = 0;
-		HEALTH = 100;
-		LEVEL = 1;
-
-		//TODO Read words SCORE, LEVEL, and + from properties file
-		ScoreText = new Label("Score: " + SCORE);
-		LevelText = new Label("Level " + LEVEL);
-		HealthText = new Label("+" + HEALTH);
+		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 		
 		Calendar c = Calendar.getInstance();
 	    SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
@@ -52,27 +49,37 @@ public class ScorePanel extends Panel {
 		}
 	}
 
-	@Override
-	public void makePanel() {
-		ScoreText.setMaxWidth(Double.MAX_VALUE);
-		LevelText.setMaxWidth(Double.MAX_VALUE);
-		HealthText.setMaxWidth(Double.MAX_VALUE);
 
-		HBox panelRoot = new HBox();
 
-		HBox.setHgrow(ScoreText, Priority.ALWAYS);
-		HBox.setHgrow(LevelText, Priority.ALWAYS);
-		HBox.setHgrow(HealthText, Priority.ALWAYS);
-		panelRoot.getChildren().addAll(ScoreText, LevelText, HealthText);
+    @Override
+    public void makePanel() {
 
-		panelRoot.setMaxWidth(Double.MAX_VALUE);
-		panelRoot.setMaxHeight(Double.MAX_VALUE);
-		panelRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-		PANEL = panelRoot;
-	}
+	//TODO Read words SCORE, LEVEL, and + from properties file
+	ScoreText = new Label();
+	LevelText = new Label();
+	HealthText = new Label();
 
-	public void updateScore(Integer newScore) {
-		myScoreXIncrement++; 
+
+	ScoreText.setMaxWidth(Double.MAX_VALUE);
+
+	LevelText.setMaxWidth(Double.MAX_VALUE);
+
+	HealthText.setMaxWidth(Double.MAX_VALUE);
+
+	HBox panelRoot = new HBox();
+
+	HBox.setHgrow(ScoreText, Priority.ALWAYS);
+	HBox.setHgrow(LevelText, Priority.ALWAYS);
+	HBox.setHgrow(HealthText, Priority.ALWAYS);
+	panelRoot.getChildren().addAll(ScoreText, LevelText, HealthText);
+
+	panelRoot.setMaxWidth(Double.MAX_VALUE);
+	panelRoot.setMaxHeight(Double.MAX_VALUE);
+	PANEL = panelRoot;
+    }
+
+    private void updateScore(Integer newScore) {
+    	myScoreXIncrement++; 
 
 		myScoreWriter.write(Integer.toString(myScoreXIncrement)+" ");
 		myScoreWriter.write(Integer.toString(newScore)+"\n");
@@ -80,18 +87,29 @@ public class ScorePanel extends Panel {
 		if (myScoreXIncrement % 1000 == 0) {
 			myScoreWriter.flush();
 		}
-		
-		ScoreText.setText("Score: " + newScore);
-	}
+	ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
+    }
 
-	public void updateHealth(double newHealth) {
-		HealthText.setText("+" + Double.valueOf(Math.floor(newHealth)).intValue());
-	}
+    private void updateHealth(Integer newHealth) {
+	HealthText.setText(GAMEPLAYER_PROPERTIES.get("healthText")+ newHealth);
+    }
 
-	public void updateLevel(Integer newLevel) {
-		LevelText.setText("Level: " + newLevel);
-	}
+    public void updateLevel(Integer newLevel) {
+	LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
+    }
 
+    public void setInitialScore(Integer score) {
+	SCORE = score;
+    }
+
+    public void setInitialLives(Integer lives) {
+	HEALTH = lives;
+    }
+
+    public void setInitialLevel(Integer level) {
+    	LEVEL = level;
+	}
+    
     public ChangeListener createScoreListener() {
 	return new ChangeListener() {
 	    @Override
