@@ -1,6 +1,7 @@
 package authoring.frontend;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -57,8 +58,8 @@ public class WaveDirectionsPanel extends PathPanel{
 	try {
 	    myTimeSlider = getUIFactory().setupSlider("", Integer.parseInt(getPropertiesReader().findVal(AdjustNewOrExistingScreen.DEFAULT_CONSTANTS, "MaxWaveTime")));
 	    waveTimeSliderPrompted = getUIFactory().setupSliderWithValue("", myTimeSlider, getErrorCheckedPrompt("WaveTime"));
-	    myTimeSlider.setValue(Double.parseDouble(getPropertiesReader().findVal(AdjustNewOrExistingScreen.DEFAULT_CONSTANTS, "DefaultWaveTime")));
-
+	    String time = getView().getObjectAttribute("Wave", ((Integer) myWaveNumber).toString(), "myTime").toString();
+	    myTimeSlider.setValue(Double.parseDouble(time));
 	    myTimeSlider.valueProperty().addListener(new ChangeListener<Number>() {
 		@Override
 		public void changed(ObservableValue<? extends Number> ov,
@@ -84,13 +85,9 @@ public class WaveDirectionsPanel extends PathPanel{
 	myRoot.getChildren().add(pseudoRoot);
     }
     @Override
-    protected Node getPanel() {
-	return myRoot;
-    }
-    @Override
     protected void makePanel() {
 	// TODO Auto-generated method stub
-
+	
     }
     @Override
     protected Button getApplyButton() {
@@ -98,14 +95,20 @@ public class WaveDirectionsPanel extends PathPanel{
 	return null;
     }
     @Override
+    protected Node getPanel() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+    @Override
     protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
 	// TODO Auto-generated method stub
-
+	
     }
     @Override
     public Parent makeScreenWithoutStyling() {
 	// TODO Auto-generated method stub
 	return null;
     }
+
 
 }
