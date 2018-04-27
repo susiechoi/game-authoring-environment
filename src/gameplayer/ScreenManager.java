@@ -1,24 +1,22 @@
 package gameplayer;
 
-import authoring.frontend.exceptions.MissingPropertiesException;
-import frontend.*;
-
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.awt.Point;
 
-
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
+import frontend.MainScreen;
+import frontend.PromptReader;
+import frontend.PropertiesReader;
+import frontend.StageManager;
+import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
 /**
@@ -34,8 +32,6 @@ public class ScreenManager extends View {
 	public static final String FILE_ERROR_KEY = "FileErrorPrompt";
 	public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
 	public static final String DEFAULT_OWN_CSS = "styling/EngineFrontend.css";
-	private static final String STARTING_LANGUAGE = "English";
-
 
 	/**
 	 * not sure where we're getting these values to display on the panels and stuff
@@ -55,7 +51,7 @@ public class ScreenManager extends View {
 	//private final FileIO FILE_READER;
 
 	public ScreenManager(StageManager stageManager, String language, Mediator mediator) {
-		super(stageManager, language);
+		super(stageManager, language, mediator);
 		STAGE_MANAGER = stageManager;
 		try {
 			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
@@ -67,16 +63,18 @@ public class ScreenManager extends View {
 		MEDIATOR = mediator;
 	}
 
-	public ScreenManager(StageManager stageManager, String language) {
-		super(stageManager, language);
-		STAGE_MANAGER = stageManager;
-		try {
-			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
-		}
-		catch (MissingPropertiesException e) {
-		}
-		PROMPTS = new PromptReader(language, this);
-	}
+
+//	public ScreenManager(StageManager stageManager, String language) {
+//	    	
+//		STAGE_MANAGER = stageManager;
+//		try {
+//			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
+//		}
+//		catch (MissingPropertiesException e) {
+//		}
+//		PROMPTS = new PromptReader(language, this);
+//		findSettings();
+//	}
 
 	public List<Integer> getMediatorInts(){
 		controlVars = new ArrayList<Integer>();
@@ -103,6 +101,7 @@ public class ScreenManager extends View {
 
 	public void loadGameScreenNew() {
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+		 System.out.println("trying to make a playcontroller!!");
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
 	}

@@ -8,7 +8,6 @@ package authoring.frontend;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,7 +24,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherRateSlider;
 	private Slider myLauncherRangeSlider;
-	private Slider myProjectileSizeSlider; 
+//	private Slider myProjectileSizeSlider; 
 
 	protected AdjustLauncherProjectileScreen(AuthoringView view, String selectedObjectName) {
 		super(view, selectedObjectName, PROJECTILE_FIELDS, OBJECT_TYPE);
@@ -64,11 +63,11 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileDamage", newValue);
 		});
 		
-		Slider projectileSizeSlider = getUIFactory().setupSlider("ProjectileSize", getMyMaxUpgradeIncrement());
-		myProjectileSizeSlider = projectileSizeSlider; 
+//		Slider projectileSizeSlider = getUIFactory().setupSlider("ProjectileSize", getMyMaxUpgradeIncrement());
+//		myProjectileSizeSlider = projectileSizeSlider; 
 		Slider projectileSpeedSlider = getUIFactory().setupSlider("ProjectileSpeed", getMyMaxUpgradeIncrement());
 		myProjectileSpeedSlider = projectileSpeedSlider; 
-		HBox projectileSpeed = getUIFactory().setupSliderWithValue("ProjectileSpeed", myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
+		HBox projectileSpeed = getUIFactory().setupSliderWithValue("ProjectileSpeed", myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileSpeed"));
 		vb.getChildren().add(projectileSpeed);
 		myProjectileSpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileSpeed", newValue);

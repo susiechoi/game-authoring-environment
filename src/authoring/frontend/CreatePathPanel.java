@@ -80,7 +80,6 @@ public class CreatePathPanel extends PathPanel {
 		endImage.getPathImage().getStyleClass().add("img-view");
 
 		applyButton = getUIFactory().makeTextButton("", "Apply");
-
 		backButton = setupBackButton();
 		
 		trashImage = new ImageView(new Image("file:images/trash.png", 120, 120, true, false));

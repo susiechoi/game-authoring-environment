@@ -1,8 +1,6 @@
 package gameplayer.screen;
 
-import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
-import controller.PlayController;
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -25,8 +23,6 @@ import gameplayer.panel.TowerInfoPanel;
 import gameplayer.panel.TowerPanel;
 import gameplayer.panel.UpgradePanel;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -139,8 +135,9 @@ public class GameScreen extends Screen {
 			MEDIATOR.fastForward(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("fastForwardSize")));
 		}
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
-		    getView().playControllerInstructions(new AuthoringModel());
+		    getView().playControllerInstructions();
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
+
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
@@ -176,7 +173,13 @@ public class GameScreen extends Screen {
 		}
 	}
 
-
+	/**
+	 * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
+	 * Additionally synchronizes the initial display value of each to the passed values
+	 * @param myCurrency	Engine's currency object
+	 * @param myScore	Engine's score object
+	 * @param myLives	Engine's lives object
+	 */
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
 		myCurrency.addListener(TOWER_PANEL.createCurrencyListener(myCurrency.get()));
 		myScore.addListener(SCORE_PANEL.createScoreListener(myScore.get()));

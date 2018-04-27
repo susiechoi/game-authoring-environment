@@ -22,16 +22,13 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
-import controller.PlayController;
 import engine.path.Path;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
-import gameplayer.ScreenManager;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
@@ -47,20 +44,18 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private GridPane myGrid = new GridPane();
-	private AuthoringModel myModel;
+	private GridPane myGrid;
 	private BooleanProperty myCSSChanged;
 	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
-		super(stageManager, languageIn);
-
+		super(stageManager, languageIn, controller);
+		myGrid = new GridPane(); 
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
 		myCurrentCSS = DEFAULT_AUTHORING_CSS;
 		myCSSChanged = new SimpleBooleanProperty(false);
-		
 	}
 
 
@@ -69,19 +64,19 @@ public class AuthoringView extends View {
 	 * @param model is new Model used
 	 */
 	public void setModel(AuthoringModel model) {
-		myModel = model;
+		myController.setModel(model);
 	}
 	
-	/**
-	 * Returns the AuthoringModel object the user uses to author a game. 
-	 * Should never return null because the model and view are both created
-	 * in the AuthoringController class and the view's method setModel is called.
-	 * 
-	 * @return AuthoringModel: the model authored by the user
-	 */
-	public AuthoringModel getModel() {
-	    return myModel;
-	}
+//	/**
+//	 * Returns the AuthoringModel object the user uses to author a game. 
+//	 * Should never return null because the model and view are both created
+//	 * in the AuthoringController class and the view's method setModel is called.
+//	 * 
+//	 * @return AuthoringModel: the model authored by the user
+//	 */
+//	public AuthoringModel getModel() {
+//	    return myModel;
+//	}
 
 	/**
 	 * Loads the first authoring screen shown to user (currently StartScreen) from which ScreenFlow
@@ -138,11 +133,11 @@ public class AuthoringView extends View {
 		Class<?> clazz = Class.forName(nextScreenClass);
 		Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 		if(constructor.getParameterTypes().length == 2) {
-			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
-				myStageManager.switchScreen(nextScreen.getScreen());
-			}
-			else if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
+//			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
+//				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
+//				myStageManager.switchScreen(nextScreen.getScreen());
+//			}
+			if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
@@ -160,10 +155,10 @@ public class AuthoringView extends View {
 			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 			myStageManager.switchScreen(nextScreen.getScreen());
 		}
-		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
-			myStageManager.switchScreen(nextScreen.getScreen());
-		} 
+//		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+//			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+//			myStageManager.switchScreen(nextScreen.getScreen());
+//		} 
 		else {
 			throw new MissingPropertiesException("");
 		}
@@ -305,15 +300,11 @@ public class AuthoringView extends View {
 	}
 
 	protected String getGameName() {
-		return myModel.getGameName();
+		return myController.getGameName();
 	}
 
 	protected void deleteObject(String objectType, String objectName) {
-		try {
-			myModel.deleteObject(myLevel, objectType, objectName);
-		} catch (ObjectNotFoundException e) {
-			loadErrorAlert("NoObject");
-		}
+	    	myController.deleteObject(myLevel, objectType, objectName);
 	}
 
 

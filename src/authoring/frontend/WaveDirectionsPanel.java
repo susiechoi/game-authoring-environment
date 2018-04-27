@@ -48,6 +48,8 @@ public class WaveDirectionsPanel extends PathPanel{
     private void setUpPanel() {
 	myRoot = new VBox();
 	myRoot.setMaxSize(280, 900);
+	Button backButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Cancel"));
+	backButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"Back", "Wave");});
 	Label waveText = new Label(getErrorCheckedPrompt("WavescreenHeader") + (myWaveNumber+1));
 	VBox pseudoRoot = new VBox();
 	Text directions = new Text(getErrorCheckedPrompt("WaveDirections")); //TODO
@@ -78,6 +80,7 @@ public class WaveDirectionsPanel extends PathPanel{
 	pseudoRoot.getChildren().add(directions);
 	pseudoRoot.getChildren().add(waveTimeSliderPrompted);
 	pseudoRoot.getChildren().add(myApplyButton);
+	pseudoRoot.getChildren().add(backButton);
 	myRoot.getChildren().add(pseudoRoot);
     }
     @Override
