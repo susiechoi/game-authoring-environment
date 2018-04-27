@@ -45,7 +45,6 @@ public class ScreenManager extends View {
 	private GameScreen GAME_SCREEN;
 	private final PromptReader PROMPTS;
 	private PropertiesReader PROP_READ = new PropertiesReader();
-	private List<Integer> controlVars;
 	private Map<String, String> GAMEPLAYER_PROPERTIES;
 
 	//private final FileIO FILE_READER;
@@ -76,13 +75,7 @@ public class ScreenManager extends View {
 //		findSettings();
 //	}
 
-	public List<Integer> getMediatorInts(){
-		controlVars = new ArrayList<Integer>();
-		for(int i = 0; i < 3; i++) {
-			controlVars.add(Integer.valueOf(0));
-		}
-		return controlVars;
-	}
+
 
 	//TODO set Style sheets
 	public void loadInstructionScreen() {
@@ -110,9 +103,10 @@ public class ScreenManager extends View {
 		MainScreen mainScreen = new MainScreen(STAGE_MANAGER, this);
 	}
 
-	public void loadGameScreenContinuation() {
-
-	}
+	//DO WE NEED THIS METHOD????
+//	public void loadGameScreenContinuation() {
+//
+//	}
 
 
 	public void updateLevelCount(Integer newLevelCount) {
