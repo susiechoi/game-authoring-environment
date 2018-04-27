@@ -201,19 +201,22 @@ public class AuthoringModel {
      */
     public Object getObjectAttribute(int level, String objectType, String name, String attribute) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 	Object attributeValue = null;
+
 	AttributeFinder attributeFinder = new AttributeFinder(); 
 	if (objectType.equals("Enemy")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
 		attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
+		System.out.println("attribute val: " + attributeValue);
+		//System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 	    }
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
 		Tower tower = currentLevel.getTower(name);
-		return propertyFactory.retrieveProperty(name, attribute);
+		attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
 	    }
 	}
 	else if (objectType.equals("Settings")) {
@@ -227,6 +230,7 @@ public class AuthoringModel {
 	    System.out.println("PATH INFO: " +attributeValue);
 	    //			}
 	}
+
 	else if(objectType.equals("Wave")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
