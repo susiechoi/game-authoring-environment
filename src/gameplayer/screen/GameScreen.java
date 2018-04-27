@@ -20,20 +20,20 @@ import frontend.Screen;
 import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
-
+import voogasalad.util.soundfactory.*;
 
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private final String DEFAULT_SHARED_STYLESHEET = "styling/theme1.css";
-	private final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
+	private static final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
 
-	private final UIFactory UIFACTORY;
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
 	private TowerInfoPanel TOWER_INFO_PANEL;
@@ -44,7 +44,7 @@ public class GameScreen extends Screen {
 	private ScreenManager SCREEN_MANAGER;
 	private BuyPanel BUY_PANEL;
 	private SettingsPanel SETTINGS_PANEL;
-	private VBox displayPane;
+	private BorderPane displayPane;
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
 	private BorderPane rootPane;
@@ -52,8 +52,9 @@ public class GameScreen extends Screen {
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
-		UIFACTORY = new UIFactory();
+		//System.out.println("Sound factory is null: "+(SOUND_FACTORY==null));
 		SOUND_FACTORY = new ITRTSoundFactory();
+		//System.out.println("Sound factory is null: "+(SOUND_FACTORY==null));
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this, PROMPTS);
@@ -64,11 +65,14 @@ public class GameScreen extends Screen {
 		//actual functionality of panels is changed
 	}
 
+
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		rootPane = new BorderPane();
 
-		displayPane = new VBox(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+		displayPane = new BorderPane();
+		displayPane.setCenter(TOWER_PANEL.getPanel());
+		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 		VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
 		gamePane = new BorderPane();
@@ -92,17 +96,16 @@ public class GameScreen extends Screen {
 		GAME_PANEL.towerSelected(tower);
 	}
 
-//	public void setStyling() {
-//		String style = MEDIATOR.getStyling();
-//		if (style != null) {
-//			rootPane.getStylesheets().add(style);
-//		}
-//	}
+	//	public void setStyling() {
+	//		String style = MEDIATOR.getStyling();
+	//		if (style != null) {
+	//			rootPane.getStylesheets().add(style);
+	//		}
+	//	}
 
 	@Override
 	protected View getView() {
-		// TODO Auto-generated method stub
-		return null;
+		return SCREEN_MANAGER;
 	}
 
 	public void displaySprite(FrontEndSprite sprite) {
@@ -132,7 +135,7 @@ public class GameScreen extends Screen {
 		else if(control.equals("quit")) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 			try {
 				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
-				.loadInstructionScreen();
+						.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -156,7 +159,7 @@ public class GameScreen extends Screen {
 				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
-
+			    e.printStackTrace();
 			}
 			SOUND_FACTORY.playBackgroundMusic();
 
@@ -173,17 +176,26 @@ public class GameScreen extends Screen {
 		}
 	}
 
-	public void updateCurrency(double myResources) {
-		TOWER_PANEL.updateCurrency(myResources);
+
+
+
+	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
+		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
+		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+		myCurrency.addListener(currencyListener);
+		myScore.addListener(scoreListener);
+		myLives.addListener(healthListener);
+		TOWER_PANEL.setInitalMoney(myCurrency.get());
+		SCORE_PANEL.setInitialScore(myScore.get());
+		SCORE_PANEL.setInitialLives(myLives.get());
+
+		//	currencyListener.changed(myCurrency, 0, 0);
+		//	scoreListener.changed(myScore, 0, 0);
+		//	healthListener.changed(myLives, 0, 0);
+
 	}
 
-	public void updateHealth(double myHealth) {
-		SCORE_PANEL.updateHealth(myHealth);
-	}
-
-	public void updateScore(Integer newScore) {
-		SCORE_PANEL.updateScore(newScore);
-	}
 
 	public void updateLevel(Integer newLevel) {
 		SCORE_PANEL.updateLevel(newLevel);
@@ -197,28 +209,24 @@ public class GameScreen extends Screen {
 	public void towerClickedOn(FrontEndTower tower) {
 		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 		UPGRADE_PANEL = new UpgradePanel(this, PROMPTS, tower);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), TOWER_INFO_PANEL.getPanel());
+		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
-	public void upgradeClickedOn(FrontEndTower tower) {
-		BUY_PANEL = new BuyPanel(this,PROMPTS, tower);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), BUY_PANEL.getPanel());
+	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
+		BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
+		displayPane.setBottom(BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	private void settingsClickedOn() {
 		SETTINGS_PANEL = new SettingsPanel(this, PROMPTS);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), SETTINGS_PANEL.getPanel());
+		displayPane.setBottom(SETTINGS_PANEL.getPanel());
 	}
 
 	public void blankGamePanelClick() {
 		gamePane.setBottom(null);
-		displayPane.getChildren().clear();
-		displayPane.getChildren().addAll(TOWER_PANEL.getPanel(), CONTROLS_PANEL.getPanel());
+		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 	}
 
 	public void sellTower(FrontEndTower tower) {
@@ -257,6 +265,12 @@ public class GameScreen extends Screen {
 		return SCREEN_MANAGER;
 	}
 
+	public void upgradeBought(FrontEndTower tower, String upgradeName) {
+		MEDIATOR.upgradeTower(tower, upgradeName);
+	}
 
+
+	public ITRTSoundFactory getSoundFactory() {
+		return SOUND_FACTORY;
+	}
 }
-

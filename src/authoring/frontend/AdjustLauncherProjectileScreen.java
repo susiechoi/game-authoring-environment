@@ -57,24 +57,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}
 	
 	private void makeProjectileComponents(VBox vb) {
-		HBox projectileImageSelect = new HBox();
-		ComboBox<String> projectileImageDropdown = new ComboBox<String>();
-		ImageView imageDisplay = new ImageView(); 
-		try {
-			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX));
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
-		myProjectileImageDropdown = projectileImageDropdown;  
-		myProjectileImageDropdown.addEventHandler(ActionEvent.ACTION, e -> {
-			getView().setObjectAttribute("Tower", myObjectName, "myImage", myProjectileImageDropdown.getSelectionModel().getSelectedItem()); 
-		});
-		try {
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, imageDisplay);
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
+		HBox projectileImageSelect = makeImageSelector("Tower", "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 		vb.getChildren().add(projectileImageSelect);
 
 		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());

@@ -282,7 +282,7 @@ public class Level {
 	 * @return boolean: true if the level is finished, false otherwise
 	 */
 	public boolean isFinished() {
-		return myWaves.size()>0; 
+		return myWaves.size()==0; 
 	}
 	@Deprecated
 	public boolean containsWave(Path path, int waveNumber) {

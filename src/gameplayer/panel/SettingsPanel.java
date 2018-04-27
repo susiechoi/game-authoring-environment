@@ -8,7 +8,7 @@ import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
+import voogasalad.util.soundfactory.*;
 import javafx.scene.image.ImageView;
 
 import java.util.Map;
@@ -34,7 +34,7 @@ public class SettingsPanel extends Panel {
         PROMPTS =  promptReader;
         PROP_READ = new PropertiesReader();
         UIFACTORY = new UIFactory();
-        SOUND_FACTORY = new ITRTSoundFactory();
+        SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
     }
 
     private Button createHelp() {

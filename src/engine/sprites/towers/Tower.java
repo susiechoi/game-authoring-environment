@@ -155,6 +155,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * Upgrades all aspects of a tower
      */
     public double upgrade(double balance) {
+	System.out.println("upgrade is called");
 	balance -= upgradeHealth(balance);
 	balance -= upgradeRateOfFire(balance);
 	balance = upgradeDamage(balance);
@@ -195,7 +196,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     @Override
     public int purchase(int myResources) throws CannotAffordException {
 	if (myResources < myValue.getProperty()) {
-	    throw new CannotAffordException();
+	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
 	return (int) (myResources - myValue.getProperty());
     }
@@ -215,7 +216,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     		Projectile projectile = new ProjectileBuilder().construct(myName, myProjectileImage, myProjectileDamage, myProjectileSize, myProjectileSpeed);
     		myLauncher = new LauncherBuilder().construct(myLauncherRate, myLauncherRange, projectile);
     		myValue = new ValueProperty(myTowerValue);
-    		
     		updateImage(myImage);
     		updateLauncher(myLauncher); 
     		    		

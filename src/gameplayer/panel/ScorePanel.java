@@ -6,77 +6,102 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import gameplayer.screen.GameScreen;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 public class ScorePanel extends Panel {
 
-	public static final String DEFAULT_DATAPOINTS_FILENAME = "graphing/scoregraph";
-	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+    private final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
-	private final GameScreen GAME_SCREEN;
-	private Integer SCORE;
-	private Integer HEALTH;
-	private Integer LEVEL;
-	private Label ScoreText;
-	private Label LevelText;
-	private Label HealthText;
+    private final GameScreen GAME_SCREEN;
+    private Integer SCORE;
+    private Integer HEALTH;
+    private Integer LEVEL;
+    private Label ScoreText;
+    private Label LevelText;
+    private Label HealthText;
 
-	private PrintWriter myScoreWriter; 
-	private int myScoreXIncrement;
+    public ScorePanel(GameScreen gameScreen) {
+	GAME_SCREEN = gameScreen;
+	SCORE = 0;
+	HEALTH = 100;
+	LEVEL = 1;
+    }
 
-	public ScorePanel(GameScreen gameScreen) {
-		GAME_SCREEN = gameScreen;
-		SCORE = 0;
-		HEALTH = 100;
-		LEVEL = 1;
 
-		//TODO Read words SCORE, LEVEL, and + from properties file
-		ScoreText = new Label("Score: " + SCORE);
-		LevelText = new Label("Level " + LEVEL);
-		HealthText = new Label("+" + HEALTH);
+    @Override
+    public void makePanel() {
 
-		try {
-			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILENAME), true);
-		} catch (IOException e) {
-			GAME_SCREEN.loadErrorScreen("NoFile");
-		}
-	}
+	//TODO Read words SCORE, LEVEL, and + from properties file
+	ScoreText = new Label("Score: " + SCORE);
+	LevelText = new Label("Level " + LEVEL);
+	HealthText = new Label("+" + HEALTH);
 
-	@Override
-	public void makePanel() {
-		ScoreText.setMaxWidth(Double.MAX_VALUE);
-		LevelText.setMaxWidth(Double.MAX_VALUE);
-		HealthText.setMaxWidth(Double.MAX_VALUE);
 
-		HBox panelRoot = new HBox();
+	ScoreText.setMaxWidth(Double.MAX_VALUE);
 
-		HBox.setHgrow(ScoreText, Priority.ALWAYS);
-		HBox.setHgrow(LevelText, Priority.ALWAYS);
-		HBox.setHgrow(HealthText, Priority.ALWAYS);
-		panelRoot.getChildren().addAll(ScoreText, LevelText, HealthText);
+	LevelText.setMaxWidth(Double.MAX_VALUE);
 
-		panelRoot.setMaxWidth(Double.MAX_VALUE);
-		panelRoot.setMaxHeight(Double.MAX_VALUE);
-		panelRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-		PANEL = panelRoot;
-	}
+	HealthText.setMaxWidth(Double.MAX_VALUE);
 
-	public void updateScore(Integer newScore) {
-		myScoreXIncrement++; 
+	HBox panelRoot = new HBox();
 
-		myScoreWriter.write(Integer.toString(myScoreXIncrement)+" ");
-		myScoreWriter.write(Integer.toString(newScore)+"\n");
+	HBox.setHgrow(ScoreText, Priority.ALWAYS);
+	HBox.setHgrow(LevelText, Priority.ALWAYS);
+	HBox.setHgrow(HealthText, Priority.ALWAYS);
+	panelRoot.getChildren().addAll(ScoreText, LevelText, HealthText);
 
-		ScoreText.setText("Score: " + newScore);
-	}
+	panelRoot.setMaxWidth(Double.MAX_VALUE);
+	panelRoot.setMaxHeight(Double.MAX_VALUE);
+	panelRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+	PANEL = panelRoot;
+    }
 
-	public void updateHealth(double newHealth) {
-		HealthText.setText("+" + Double.valueOf(Math.floor(newHealth)).intValue());
-	}
+    private void updateScore(Integer newScore) {
+	ScoreText.setText("Score: " + newScore);
+    }
 
-	public void updateLevel(Integer newLevel) {
-		LevelText.setText("Level: " + newLevel);
-	}
+    private void updateHealth(Integer newHealth) {
+	HealthText.setText("+" +newHealth);
+    }
+
+    public void updateLevel(Integer newLevel) {
+	LevelText.setText("Level: " + newLevel);
+    }
+    
+    public void setInitialScore(Integer score) {
+	SCORE = score;
+    }
+    
+    public void setInitialLives(Integer lives) {
+	HEALTH = lives;
+    }
+    
+
+    public ChangeListener createScoreListener() {
+	ChangeListener changeListener = new ChangeListener() {
+	    @Override
+	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+		updateScore((Integer)observableValue.getValue());
+	    }
+	};
+	return changeListener;
+    }
+    
+    public ChangeListener createHealthListener() {
+   	ChangeListener changeListener = new ChangeListener() {
+   	    @Override
+   	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+   		updateHealth((Integer)observableValue.getValue());
+   	    }
+   	};
+   	return changeListener;
+       }
+
 }
