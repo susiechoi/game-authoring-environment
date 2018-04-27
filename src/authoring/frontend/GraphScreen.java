@@ -17,20 +17,22 @@ import javafx.scene.text.Text;
 
 abstract class GraphScreen extends AuthoringScreen {
 
-	LineChart<Number, Number> myGraph; 
+	protected NumberAxis myX; 
+	protected NumberAxis myY;
+	protected LineChart<Number, Number> myGraph; 
 
 	public GraphScreen(AuthoringView view) {
 		super(view);
 	}
 
 	protected LineChart<Number, Number> makeGraph(boolean legendVisible) {
-		NumberAxis x = new NumberAxis();
-		x.setLabel(getErrorCheckedPrompt("Time"));
-		x.isAutoRanging(); 
-		x.setTickLabelsVisible(false);
-		NumberAxis y = new NumberAxis(); 
-		y.setLabel(getErrorCheckedPrompt("Score"));
-		myGraph = new LineChart<Number, Number>(x, y);
+		myX = new NumberAxis();
+		myX.setLabel(getErrorCheckedPrompt("Time"));
+		myX.setTickLabelsVisible(false);
+		myX.setForceZeroInRange(false);
+		myY = new NumberAxis(); 
+		myY.setLabel(getErrorCheckedPrompt("Score"));
+		myGraph = new LineChart<Number, Number>(myX, myY);
 		myGraph.setLegendVisible(legendVisible);
 		return myGraph; 
 	}
@@ -47,11 +49,19 @@ abstract class GraphScreen extends AuthoringScreen {
 				getView().loadErrorScreen("NoGraph");
 			}
 			String point = null;
+
+			boolean min = true; 
 			try {
 				while ((point = br.readLine()) != null) {
 					String[] xyCoors = point.split("\\s+");
 					if (xyCoors.length == 2) {
 						series.getData().add(new XYChart.Data(Integer.parseInt(xyCoors[0]), Integer.parseInt(xyCoors[1])));
+						if (min) {
+							System.out.println("THIS IS MY LOW BOUND "+xyCoors[0]);
+							myX.setLowerBound(Integer.parseInt(xyCoors[0]));
+							min = false; 
+						}
+						myX.setUpperBound(Integer.parseInt(xyCoors[0]));
 					}
 				}
 			} catch (NumberFormatException | IOException e) {

@@ -22,7 +22,7 @@ public class ScorePanel extends Panel {
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	private PrintWriter myScoreWriter; 
-	private double myScoreXIncrement;
+	private long myScoreXIncrement;
 
 	private final GameScreen GAME_SCREEN;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
@@ -78,8 +78,8 @@ public class ScorePanel extends Panel {
 	}
 
 	private void updateScore(Integer newScore) {		
-		myScoreXIncrement = System.currentTimeMillis(); 
-		myScoreWriter.write(Double.toString(myScoreXIncrement)+" ");
+		myScoreXIncrement = System.currentTimeMillis() / 1000; 
+		myScoreWriter.write(Long.toString(myScoreXIncrement)+" ");
 		myScoreWriter.write(Integer.toString(newScore)+"\n");
 
 		myScoreWriter.flush();
@@ -109,7 +109,6 @@ public class ScorePanel extends Panel {
 
 	public ChangeListener<Number> createScoreListener() {
 		return new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 				updateScore((Integer)arg0.getValue());
