@@ -18,13 +18,12 @@ public class ScorePanel extends Panel {
     private Label ScoreText;
     private Label LevelText;
     private Label HealthText;
-    private Integer SCORE;
-    private Integer HEALTH;
-    private Integer LEVEL;
+
 
     public ScorePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
 		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+		makePanel();
 	}
 
 
@@ -38,10 +37,9 @@ public class ScorePanel extends Panel {
 	HealthText = new Label();
 
 
+
 	ScoreText.setMaxWidth(Double.MAX_VALUE);
-
 	LevelText.setMaxWidth(Double.MAX_VALUE);
-
 	HealthText.setMaxWidth(Double.MAX_VALUE);
 
 	HBox panelRoot = new HBox();
@@ -68,20 +66,10 @@ public class ScorePanel extends Panel {
 	LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
     }
 
-    public void setInitialScore(Integer score) {
-	SCORE = score;
-    }
 
-    public void setInitialLives(Integer lives) {
-	HEALTH = lives;
-    }
-
-    public void setInitialLevel(Integer level) {
-    	LEVEL = level;
-	}
-    
-
-    public ChangeListener createScoreListener() {
+   
+    public ChangeListener createScoreListener(Integer startScore) {
+	updateScore(startScore);
 	return new ChangeListener() {
 	    @Override
 	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
@@ -90,7 +78,8 @@ public class ScorePanel extends Panel {
 	};
     }
     
-    public ChangeListener createHealthListener() {
+    public ChangeListener createHealthListener(Integer startHealth) {
+	updateHealth(startHealth);
    	return new ChangeListener() {
    	    @Override
    	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {

@@ -47,6 +47,7 @@ public class TowerPanel extends Panel {
     public TowerPanel( GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	makePanel();
@@ -104,9 +105,6 @@ public class TowerPanel extends Panel {
 	PANEL = towersAndCurr;
     }
     
-    public void setInitalMoney(Integer moneyIn) {
-	updateCurrency(moneyIn);
-    }
 
     private void handleMouseInput(double x, double y) {
 	GAME_SCREEN.towerSelectedForPlacement(null);
@@ -197,7 +195,8 @@ public class TowerPanel extends Panel {
 	currencyDisplay.setText("$" +newValue);
     }
 
-    public ChangeListener createCurrencyListener() {
+    public ChangeListener createCurrencyListener(int startCurrency) {
+	updateCurrency(startCurrency);
 	return new ChangeListener() {
 	    @Override
 	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
