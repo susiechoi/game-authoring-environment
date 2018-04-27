@@ -23,6 +23,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import jdk.internal.jline.internal.Log;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
@@ -65,10 +66,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			myMaxPrice = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxPrice"));
 			myMaxUpgradeIncrement = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxUpgradeIncrement"));
 		} catch (NumberFormatException e) {
-		    	getLogger().info(e.getMessage());
+		    Log.error(e);
 			getView().loadErrorScreen("BadConstants");
 		} catch (MissingPropertiesException e) {
-		    	getLogger().info(e.getMessage());
+		    Log.error(e);
 			getView().loadErrorScreen("NoConstants");
 		}
 
@@ -96,7 +97,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		try {
 			fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
 		} catch (MissingPropertiesException e) {
-		    	getLogger().info(e.getMessage());
+		    Log.error(e);
 			getView().loadErrorScreen("ObjectAttributeDNE");
 		}
 
@@ -106,7 +107,8 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 				myField = attributeFinder.retrieveFieldValue(key, this);
 				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
 			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
-				getView().loadErrorScreen("ObjectAttributeDNE");
+			    Log.error(e);	
+			    getView().loadErrorScreen("ObjectAttributeDNE");
 			}
 		}
 	
@@ -163,7 +165,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		try {
 			imageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(propertiesFilepath));
 		} catch (MissingPropertiesException e) {
-		    	getLogger().info(e.getMessage());
+		    	Log.error(e);
 			getView().loadErrorScreen("NoImageFile");
 		} 
 		ComboBox<String> imageDropdownCopy = imageDropdown;
@@ -172,6 +174,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
 		    	}
 		    	catch(MissingPropertiesException e2) {
+		    	Log.error(e);
 		    	    getView().loadErrorScreen("NoImageFile");
 		    	}
 		    	});
@@ -189,7 +192,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			    imageDropdown.fireEvent(fakeSelection);
 			}
 		} catch (MissingPropertiesException e) {
-		    	getLogger().info(e.getMessage());
+		    Log.error(e);
 			getView().loadErrorScreen("NoImageFile");
 		}
 		return imageSelect;
