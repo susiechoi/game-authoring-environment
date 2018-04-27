@@ -231,15 +231,6 @@ public class GamePanel extends Panel{
 		towerPlaceMode = false;
 		//TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
 
-
-		addTowerImageViewAction(newTower);
-		spriteAdd.getChildren().add(towerImage);
-		resetCursor();
-		towerPlaceMode = false;
-		//TODO (thread canceling towerPlacement) maybe make a new towerConstructor which creates a null tower?
-
-
-
 	    }
 	    catch(CannotAffordException e){
 		//GameScreen popup for cannot afford

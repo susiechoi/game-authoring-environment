@@ -89,6 +89,7 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+//		rootPane.getStylesheets().add(MEDIATOR.getStyling());
 		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
@@ -169,9 +170,9 @@ public class GameScreen extends Screen {
 
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
-		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
-		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
-		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+		ChangeListener<Number> currencyListener = TOWER_PANEL.createCurrencyListener();
+		ChangeListener<Number> scoreListener = SCORE_PANEL.createScoreListener();
+		ChangeListener<Number> healthListener = SCORE_PANEL.createHealthListener();
 		myCurrency.addListener(currencyListener);
 		myScore.addListener(scoreListener);
 		myLives.addListener(healthListener);
@@ -251,6 +252,10 @@ public class GameScreen extends Screen {
 		}
 	}
 
+	public String getGameName() {
+		return SCREEN_MANAGER.getGameFilePath();
+	}
+	
 	public ScreenManager getScreenManager() {
 		return SCREEN_MANAGER;
 	}

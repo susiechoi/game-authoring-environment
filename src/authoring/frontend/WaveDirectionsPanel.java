@@ -1,7 +1,5 @@
 package authoring.frontend;
 
-import javax.swing.GroupLayout.Alignment;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
