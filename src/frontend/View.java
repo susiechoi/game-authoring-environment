@@ -1,6 +1,8 @@
 package frontend;
 
 import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.MVController;
 import controller.PlayController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -23,22 +25,17 @@ public class View {
     protected ErrorReader myErrorReader;
     PropertiesReader myPropertiesReader;
     String myLanguage;
+    MVController myController;
     
-    public View(StageManager manager, String languageIn) {
+    public View(StageManager manager, String languageIn, MVController controller) {
 	myPromptReader = new PromptReader(languageIn, this);
 	myErrorReader = new ErrorReader(languageIn, this);
 	myPropertiesReader = new PropertiesReader();
 	myManager = manager;
 	myLanguage = languageIn;
+	myController = controller;
     }
 
-    public void playControllerDemo(AuthoringModel model) {
-	new PlayController(myManager, myLanguage,
-		model).demoPlay(model.getGame());
-    }
-    public void playControllerInstructions(AuthoringModel model) {
-	new PlayController(myManager, myLanguage, model).loadInstructionScreen();
-    }
     
     
     
@@ -84,4 +81,21 @@ public class View {
     public PropertiesReader getPropertiesReader() {
 	return myPropertiesReader; 
     }
+    public void playControllerDemo() {
+	try {
+ 	myController.playControllerDemo(myManager, myLanguage);
+	}
+	catch(MissingPropertiesException e) {
+	    loadErrorScreen("NoFile");
+	}
+     }
+    public void playControllerInstructions() {
+	try {
+	    new PlayController(myManager, myLanguage, new AuthoringModel()).loadInstructionScreen();
+	}
+ 	catch(MissingPropertiesException e) {
+ 	    loadErrorScreen("NoFile");
+ 	}
+     }
+
 }

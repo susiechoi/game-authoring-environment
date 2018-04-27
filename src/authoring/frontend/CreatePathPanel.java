@@ -1,11 +1,17 @@
 package authoring.frontend;
 
+import java.awt.Point;
+import java.util.List;
+
+import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -80,7 +86,6 @@ public class CreatePathPanel extends PathPanel {
 		endImage.getPathImage().getStyleClass().add("img-view");
 
 		applyButton = getUIFactory().makeTextButton("", "Apply");
-
 		backButton = setupBackButton();
 		
 		trashImage = new ImageView(new Image("file:images/trash.png", 120, 120, true, false));
