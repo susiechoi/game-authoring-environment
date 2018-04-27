@@ -11,10 +11,9 @@ public class DamageProperty extends UpgradeProperty {
 	public DamageProperty(double cost, double value, double damage) {
 	    	super(cost, value, damage);
 	}
-
-	@Override
-	public Property makeCopy() {
-	    // TODO Auto-generated method stub
-	    return null;
+	
+	public DamageProperty(UpgradeProperty p) {
+	    	super(p);
 	}
+
 }

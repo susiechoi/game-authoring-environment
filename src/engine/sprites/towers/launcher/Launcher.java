@@ -3,6 +3,7 @@ package engine.sprites.towers.launcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import engine.builders.PropertyBuilder;
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.FireRateProperty;
@@ -27,17 +28,18 @@ public class Launcher extends Manager<Projectile>{
     private Projectile myProjectile;
     private double timeSinceLastShot;
     private List<Property> myProperties;
+    private PropertyBuilder myPropertyFactory;
 
     public Launcher(FireRateProperty rate, Projectile projectile, RangeProperty range) {
 	myProjectile = projectile;
 	myProperties = new ArrayList<Property>();
 	timeSinceLastShot = 0;
     }
-    
+
     public Launcher(Launcher launcher) {
 	myProperties = new ArrayList<Property>();
 	for(Property p : launcher.getProperties()) {
-	    myProperties.add(p.makeCopy());
+	    myProperties.add(makeProperty(p));
 	}
 	myProjectile = launcher.getProjectile();
 	timeSinceLastShot = 0;
@@ -84,51 +86,51 @@ public class Launcher extends Manager<Projectile>{
     //TODO implement to shoot at where enemy is going
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
 	timeSinceLastShot=0;
-    	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
-    	this.addToActiveList(launchedProjectile);
-    	return launchedProjectile;
+	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
+	this.addToActiveList(launchedProjectile);
+	return launchedProjectile;
     }
-    
+
     /**
      * Checks to see if the rate of fire is less than the time elapsed since the last shot
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
 	System.out.println("firerate is " + getProperty(fireRate));
-     	if(timeSinceLastShot >= 200/getProperty(fireRate)) {
-     		return true;
-     	}
-     	timeSinceLastShot+=elapsedTime;
+	if(timeSinceLastShot >= 200/getProperty(fireRate)) {
+	    return true;
+	}
+	timeSinceLastShot+=elapsedTime;
 	return false;
     }
 
     public double getProperty(String name) {
-    	for(Property property : myProperties) {
-    	    if(property.getName().equals(name)) {
-    		return property.getProperty();
-    	    }
-    	}
-    	return -1;
+	for(Property property : myProperties) {
+	    if(property.getName().equals(name)) {
+		return property.getProperty();
+	    }
+	}
+	return -1;
     }
 
     public String getProjectileImage() {
-    	return myProjectile.getImage(); 
+	return myProjectile.getImage(); 
     }
-        
+
     public double getProjectileDamage() {
-    	return myProjectile.getDamage(); 
+	return myProjectile.getDamage(); 
     }
-    
+
     public double getProjectileSize() {
-    	return myProjectile.getSize(); 
+	return myProjectile.getSize(); 
     }
-    
+
     public double getDamage() {
-    	return myProjectile.getDamage();
+	return myProjectile.getDamage();
     }
-    
+
     public double upgradeDamage(double balance) {
-    	return myProjectile.upgradeProperty("DamageProperty", balance);
+	return myProjectile.upgradeProperty("DamageProperty", balance);
     } 
 
     public void addProperty(Property property) {
@@ -141,17 +143,23 @@ public class Launcher extends Manager<Projectile>{
 	myProperties.remove(toRemove);
 	myProperties.add(property);
     }
-    
+
     public void addProjectileProperty(Property property) {
-    	myProjectile.addProperty(property);
+	myProjectile.addProperty(property);
     }
-    
+
     public List<Property> getProperties(){
 	return myProperties;
     }
-    
+
     public void setProjectileImage(String image){
 	myProjectile.setImage(image);
     }
+
+
+    protected Property makeProperty(Property p) {
+	return myPropertyFactory.getProperty(p);
+    }
+
 }
 

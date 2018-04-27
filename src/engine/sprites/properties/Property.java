@@ -24,6 +24,11 @@ public abstract class Property {
 	mySimpleName = this.getClass().getSimpleName();
     }
     
+    public Property(Property property) {
+	myProperty = property.getProperty();
+	mySimpleName = this.getClass().getSimpleName();
+    }
+    
     /**
      * @return current value of property
      */
@@ -51,5 +56,4 @@ public abstract class Property {
 	return ret;
     }
     
-    public abstract Property makeCopy();
 }

@@ -49,7 +49,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	myTarget = target;
 	myProperties = new ArrayList<Property>();
 	for(Property p : myProjectile.getProperties()) {
-	    myProperties.add(p.makeCopy());
+	    myProperties.add(makeProperty(p));
 	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();

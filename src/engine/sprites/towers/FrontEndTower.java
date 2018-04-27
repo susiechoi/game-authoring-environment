@@ -42,6 +42,8 @@ public interface FrontEndTower extends FrontEndSprite{
      */
     public int purchase(int myResources) throws CannotAffordException;
 
+    public double getTowerRange();
+
 
     /**
      * Method to get list of available upgrades, map key would be upgrade type so we can assign

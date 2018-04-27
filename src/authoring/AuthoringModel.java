@@ -28,6 +28,7 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
+import engine.sprites.properties.*;
 
 public class AuthoringModel {
 
@@ -397,24 +398,26 @@ public class AuthoringModel {
     }
 
     public void setObjectAttributes(int level, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
+	Level currentLevel = myGame.levelCheck(level);
 	if (objectType.equals("Enemy")) {
+	    if (currentLevel.containsTower(objectName)) {
+		Enemy enemy = currentLevel.getEnemy(objectName);
+		enemy.addProperty(propertyFactory.getProperty(objectName, propertyName, attributes));
+	    }
 	}
 	else if (objectType.equals("Tower")) {
-	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
 		tower.addProperty(propertyFactory.getProperty(objectName, propertyName, attributes));
 	    }
 	}
 	else if (objectType.equals("Projectile")) {
-	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
 		tower.addProjectileProperty(propertyFactory.getProperty(objectName, propertyName, attributes));
 	    }
 	}
 	else if (objectType.equals("Launcher")) {
-	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
 		tower.addLauncherProperty(propertyFactory.getProperty(objectName, propertyName, attributes));

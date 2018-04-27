@@ -22,15 +22,12 @@ public class ConstantSpeedProperty extends Property {
 	super(speed);
     }
     
+    public ConstantSpeedProperty(Property p) {
+	super(p);
+    }
+    
     public void setProperty(double newSpeed) {
 	this.setProperty(newSpeed);
     }
-
-    @Override
-    public Property makeCopy() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
 
 }

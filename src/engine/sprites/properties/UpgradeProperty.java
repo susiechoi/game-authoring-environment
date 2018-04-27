@@ -28,6 +28,12 @@ public abstract class UpgradeProperty extends Property {
 	upgradeCost = cost;
 	upgradeValue = value;
     }
+    
+    public UpgradeProperty(UpgradeProperty property) {
+	super(property.getProperty());
+	upgradeCost = property.getCost();
+	upgradeValue = property.getValue();
+    }
 
     /**
      * Abstract method to upgrade an object and @return user's remaining balance
@@ -58,6 +64,15 @@ public abstract class UpgradeProperty extends Property {
      */
     public double getCost() {
 	return upgradeCost;
+    }
+    
+    /**
+     * Method to return the value (object's worth)
+     * 
+     * @return double: representing cost of upgrade
+     */
+    public double getValue() {
+	return upgradeValue;
     }
 
     @Override

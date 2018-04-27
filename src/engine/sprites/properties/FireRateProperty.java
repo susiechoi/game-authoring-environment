@@ -21,10 +21,7 @@ public class FireRateProperty extends Property {
 	super(firerate);
     }
 
-    @Override
-    public Property makeCopy() {
-	// TODO Auto-generated method stub
-	return null;
+    public FireRateProperty(Property p) {
+	super(p);
     }
-
 }

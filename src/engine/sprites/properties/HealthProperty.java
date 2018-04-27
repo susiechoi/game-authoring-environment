@@ -23,10 +23,8 @@ public class HealthProperty extends UpgradeProperty {
 	myValue = value; 
     }
     
-    public HealthProperty(HealthProperty health) {
-	super(health.myCost,health.myValue,health.getProperty());
-	myCost = health.myCost;
-	myValue = health.myValue;
+    public HealthProperty(UpgradeProperty p) {
+	super(p);
     }
 
     /**
@@ -56,9 +54,4 @@ public class HealthProperty extends UpgradeProperty {
     	return myValue; 
     }
 
-    @Override
-    public Property makeCopy() {
-	// TODO Auto-generated method stub
-	return null;
-    }
 }

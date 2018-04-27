@@ -22,15 +22,12 @@ public class SpeedProperty extends UpgradeProperty {
 	super(cost, value, speed);
     }
     
+    public SpeedProperty(UpgradeProperty p) {
+	super(p);
+    }
+    
     public void setProperty(double newSpeed) {
 	this.setProperty(newSpeed);
     }
-
-    @Override
-    public Property makeCopy() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
 
 }

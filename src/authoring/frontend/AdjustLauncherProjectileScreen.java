@@ -6,6 +6,9 @@
 
 package authoring.frontend;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -16,6 +19,8 @@ import javafx.scene.layout.VBox;
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 
     public static final String OBJECT_TYPE = "Tower";
+    public static final String PROJECTILE_TYPE = "Projectile";
+    public static final String LAUNCHER_TYPE = "Launcher";
     public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
     public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
     public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
@@ -26,7 +31,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private Slider myLauncherRateSlider;
     private Slider myLauncherRangeSlider;
     private Slider myProjectileSizeSlider; 
-    private String myObjectName; 
     private Object myProjectileDamage;
     private Object myProjectileSpeed;
     private Object myLauncherRate;
@@ -108,7 +112,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     }
 
     private List<Object> makeList(Object ...attributes) {
-	List<Object> list = new ArrayList<Object>();
+	List<Object> list = new ArrayList<>();
 	for(Object attribute : attributes) {
 	    list.add(attribute);
 	}
