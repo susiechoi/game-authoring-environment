@@ -1,4 +1,5 @@
 /**
+ /**
  * @author Sarah Bland
  * @author susiechoi
  * 
@@ -8,6 +9,7 @@
 
 package authoring.frontend;
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -20,9 +22,8 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import controller.PlayController;
 import engine.path.Path;
-import frontend.ErrorReader;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
@@ -32,7 +33,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import xml.AuthoringModelWriter;
 
 public class AuthoringView extends View {
 
@@ -41,9 +41,8 @@ public class AuthoringView extends View {
 	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
 	public static final String DEFAULT_LANGUAGE = "English";
+	
 	private StageManager myStageManager; 
-	private PromptReader myPromptReader;
-	private ErrorReader myErrorReader;
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
 	private String myCurrentCSS;
@@ -51,16 +50,17 @@ public class AuthoringView extends View {
 	private GridPane myGrid = new GridPane();
 	private AuthoringModel myModel;
 	private BooleanProperty myCSSChanged;
+	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
-		super(stageManager);
-		myPromptReader = new PromptReader(languageIn, this);
-		myErrorReader = new ErrorReader(languageIn, this);
+		super(stageManager, languageIn);
+
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
 		myCurrentCSS = DEFAULT_AUTHORING_CSS;
 		myCSSChanged = new SimpleBooleanProperty(false);
+		
 	}
 
 
@@ -91,25 +91,6 @@ public class AuthoringView extends View {
 		myStageManager.switchScreen((new StartScreen(this)).getScreen());
 	}
 
-	/**
-	 * Loads an error screen when a user has done something so problematic that the program
-	 * cannot recover (such as choosing a language with no prompts and not having English
-	 * prompts to default to).
-	 * @param error is key to the Error the user has committed
-	 * @see frontend.View#loadErrorScreen(java.lang.String)
-	 */
-	@Override
-	public void loadErrorScreen(String error) {
-		loadErrorScreenToStage(myErrorReader.resourceDisplayText(error));
-	}
-	/**
-	 * Loads an error alert when the user needs to be notified, but the program can
-	 * recover.
-	 * @param error is error key for error User has committed
-	 */
-	public void loadErrorAlert(String error) {
-		loadErrorAlertToStage(myErrorReader.resourceDisplayText(error));
-	}
 	protected void loadScreen(Screen screen) {
 		myStageManager.switchScreen(screen.getScreen());
 	}
@@ -146,54 +127,61 @@ public class AuthoringView extends View {
 		goForwardFrom(id+"Back");
 	}
 	
-	protected void goFowardFrom(Screen screen, String id) {
-		goForwardFrom(screen.getClass().getSimpleName()+id); 
-	}
-	
+
 	protected void goForwardFrom(String id) {
 		goForwardFrom(id, "");
 	}
 	
-	public void goForwardFrom(String id, String name) {
-		try {
-			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
-			Class<?> clazz = Class.forName(nextScreenClass);
-			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
-			if(constructor.getParameterTypes().length == 2) {
-				if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
-					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-				else {
-					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-			}
-			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+	public void goForwardFrom(String id, List<String> name) {
+	    try {
+		String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
+		Class<?> clazz = Class.forName(nextScreenClass);
+		Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
+		if(constructor.getParameterTypes().length == 2) {
+			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
+				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
-			else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-				Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+			else if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
+				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 				myStageManager.switchScreen(nextScreen.getScreen());
-			} 
+			}
+			else if(constructor.getParameterTypes()[1].equals(String.class)) {
+			    	AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name.get(0));
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
 			else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
-				Screen nextScreen = (Screen) constructor.newInstance(myStageManager);
+				Screen nextScreen = (Screen) constructor.newInstance(myStageManager, this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
-			else {
-				throw new MissingPropertiesException("");
-			}
+		}
+		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+		    	System.out.println(clazz.getSimpleName());
+			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+			myStageManager.switchScreen(nextScreen.getScreen());
+		}
+		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+			myStageManager.switchScreen(nextScreen.getScreen());
+		} 
+		else {
+			throw new MissingPropertiesException("");
+		}
 
-		}
-		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
-				| IllegalAccessException | InstantiationException e) {
-			e.printStackTrace();
-			loadErrorScreen("NoScreenFlow");
-		}
 	}
-
-
+	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
+			| IllegalAccessException | InstantiationException e) {
+		e.printStackTrace();
+		loadErrorScreen("NoScreenFlow");
+	}
+	}
+	
+	public void goForwardFrom(String id, String name) {
+	    	ArrayList<String> parameterList= new ArrayList<>();
+	    	parameterList.add(name);
+		goForwardFrom(id,  parameterList);
+	}
+	
 	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
 		System.out.println("Image coordinates: " +imageCoordinates);
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
@@ -203,15 +191,15 @@ public class AuthoringView extends View {
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
 
-	public void makeResources(String gameName, double startingHealth, double starting$) {
-		myController.makeResources(gameName, startingHealth, starting$);
+	public void makeResources(String gameName, double startingHealth, double starting$, String css) {
+		myController.makeResources(gameName, startingHealth, starting$, css, getTheme());
 	}
 
 	/**
 	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
 	 */
 	public List<String> getCurrentObjectOptions(String objectType) {
-		List<String> availableObjectOptions = new ArrayList<String>(); 
+		List<String> availableObjectOptions = new ArrayList<>(); 
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
@@ -242,10 +230,6 @@ public class AuthoringView extends View {
 	protected void setLevel(int level) {
 		myLevel = level; 
 	}
-
-	protected Scene getScene() {
-		return myStageManager.getScene();
-	}
 	
 	/**
 	 * Returns the StageManager object used by the game to switch the Screens
@@ -255,10 +239,6 @@ public class AuthoringView extends View {
 	 */
 	public StageManager getStageManager() {
 	    return myStageManager;
-	}
-
-	protected String getErrorCheckedPrompt(String prompt) {
-		return myPromptReader.resourceDisplayText(prompt);
 	}
 
 	protected void addNewLevel() {
@@ -279,10 +259,6 @@ public class AuthoringView extends View {
 		return myLevel; 
 	}
 
-	protected PropertiesReader getPropertiesReader() {
-		return myPropertiesReader; 
-	}
-
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
@@ -296,7 +272,7 @@ public class AuthoringView extends View {
 		    	e.printStackTrace();
 			loadErrorAlert("NoObject");
 		}
-		return new HashMap<String, Integer>();
+		return new HashMap<>();
 
 	}
 	
@@ -310,17 +286,16 @@ public class AuthoringView extends View {
 	    }
 	    return 1;
 	}
-	
-	public GridPane getPathGrid() {
-		return myGrid;
-	}
 
 	protected void writeToFile() {
-		AuthoringModelWriter writer = new AuthoringModelWriter();
-		writer.write(myModel, myModel.getGameName());
+		try {
+		    myController.writeToFile();
+		} catch (ObjectNotFoundException e) {
+		    loadErrorScreen("NoObject");
+		} 
 	}
 
-	protected void readFromFile(String name) {
+	protected void readFromFile(String name) throws MissingPropertiesException {
 	    myController.setModel(name);
 	}
 	
@@ -337,28 +312,28 @@ public class AuthoringView extends View {
 		try {
 			myModel.deleteObject(myLevel, objectType, objectName);
 		} catch (ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+			loadErrorAlert("NoObject");
 		}
 	}
 
 
-	public void makeTower(String name) {
+	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorScreen("NoImageFile");
+			loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorScreen("NoDuplicateNames");
+			loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
-	public void makeEnemy(String name) {
+	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorScreen("NoImageFile");
+			loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorScreen("NoDuplicateNames");
+			loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
@@ -368,5 +343,23 @@ public class AuthoringView extends View {
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			loadErrorScreen("NoObject");
 		}
+	}
+
+	
+	public void setTheme(String selectedTheme) {
+		myTheme = selectedTheme; 
+		setObjectAttribute("Settings", "", "myGameTheme", myTheme);
+	}
+	
+	public String getTheme() {
+		if (myTheme == null) {
+			try {
+				myTheme = (String) myController.getObjectAttribute(1, "Settings", "", "myGameTheme");
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+				loadErrorAlert("NoFile");
+			}
+		}
+		System.out.println(myTheme);
+		return myTheme; 
 	}
 }

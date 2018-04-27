@@ -8,14 +8,15 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class CustomizeLevelScreen extends AdjustScreen {
+public class CustomizeLevelScreen extends AuthoringScreen {
 
 	protected CustomizeLevelScreen(AuthoringView view) {
 		super(view);
+		setSaved();
 	}
 
 	@Override
-	protected Parent populateScreenWithFields() {
+	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeLevel")+" "+getView().getLevel()));
@@ -41,9 +42,5 @@ public class CustomizeLevelScreen extends AdjustScreen {
 		return vb;
 	}
 
-	@Override
-	protected void populateFieldsWithData() {
-		// DO NOTHING 
-	}
 
 }

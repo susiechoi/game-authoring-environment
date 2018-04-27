@@ -17,12 +17,13 @@ import engine.sprites.enemies.Enemy;
  * active Enemy objects in the game loop.
  * 
  * @author Miles Todzo
+ * @author Ryan POnd
  */
 public class EnemyManager extends ShootingSpriteManager {
 
     int count = 0;
 
-    private final Map<Path, List<Enemy>> myEnemies;
+    private Map<Path, List<Enemy>> myEnemies;
 
 
     /**
@@ -46,36 +47,34 @@ public class EnemyManager extends ShootingSpriteManager {
      */
     public List<Sprite> moveEnemies(double elapsedTime) {
 	List<Sprite> deadEnemies = new ArrayList<>();
+	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
+	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
 		if(path.checkKill(enemy.currentPosition())) {
 		    deadEnemies.add(enemy);
 		}
 		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
-		    System.out.println("curr is " + enemy.currentPosition().getY());
-		    System.out.println("tar is " + enemy.targetPosition().getY());
 		    enemy.move(elapsedTime);
+		    List<Enemy> newList = newEnemies.get(path);
+		    newList.add(enemy);
+		    newEnemies.put(path, newList);
 		}
 		else {
-		    System.out.println("in else");
-//		    Point newPosition = path.nextPosition(enemy.currentPosition(), enemy.getIndex(),enemy.getAngle());
-//		    System.out.println("COUNT:" + count);
-//		    System.out.println("NEW POS:" + newPosition);
+
+		    Point newPosition = path.nextPosition(enemy.getIndex());
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
-//		    if(pathIndex != enemy.getIndex()) {
-//			double pathAngle = path.pathAngle(enemy.getIndex());
-//			enemy.setAngle(pathAngle);
-//		    }
-//		    enemy.setNewPosition(newPosition);
+		    enemy.setNewPosition(newPosition);
 		    enemy.move(elapsedTime);
 		    enemy.setIndex(pathIndex);
+		    List<Enemy> newList = newEnemies.get(path);
+		    newList.add(enemy);
+		    newEnemies.put(path, newList);
 		}
-		//	System.out.println("NEW X:" + enemy.getX());
-		//	System.out.println("NEW Y:" + enemy.getY());
 	    }
 	}
+	myEnemies = newEnemies;
 	return deadEnemies;
-
     }
     
     private boolean isInRange(Point curr, Point target) {

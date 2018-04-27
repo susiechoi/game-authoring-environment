@@ -2,15 +2,14 @@
  * 
  * @author susiechoi 
  * @author Ben Hodgson 4/8/18
+ * 
  * Represents the Model component of the Authoring environment's MVC. 
  * Receives input from Controller to determine what object to create/adjust
- * 
  */
 
 package authoring;
 
 import java.awt.Point;
-import java.lang.Double; 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,77 +18,71 @@ import java.util.Map;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
-import data.GameData;
-import engine.builders.LauncherBuilder;
 import engine.builders.PathBuilder;
-import engine.Settings;
-import engine.builders.EnemyBuilder;
 import engine.builders.ProjectileBuilder;
+import engine.Settings;
 import engine.builders.SettingsBuilder;
-import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
-import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
 
-public class AuthoringModel implements GameData {
-	public static final String DEFAULT_ENEMY_IMAGES = "images/EnemyImageNames.properties";
-	public static final String DEFAULT_ENEMY_IMAGE = "Zombie";
-	public static final String DEFAULT_TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final String DEFAULT_IMAGES_SUFFIX = "ImageNames.properties";
-	public static final String DEFAULT_PROJECTILE_IMAGES = "images/ProjectileImageNames.properties";
-	public static final String DEFAULT_TOWER_IMAGE = "Pisa";
-	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
-	public static final String DEFAULT_TOWER_FILEPATH = "default_objects/GenericTower.properties";
-	public static final String DEFAULT_ENEMY_FILEPATH = "default_objects/GenericEnemy.properties";
-	public static final String DEFAULT_PROMPTS = "languages/English/Prompts.properties";
-	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
-	public static final String DEFAULT_PATH_START = "images/brick.png";
-	public static final String DEFAULT_PATH_MIDDLE = "images/cobblestone.png";
-	public static final String DEFAULT_PATH_END = "images/darkstone.png";
-	public static final String DEFAULT_BACKGROUND_IMAGE = "images/generalbackground.jpg";
-	private final String myDefaultName; 
+public class AuthoringModel {
 
-	private String myGameName; 
-	private final PropertiesReader myPropertiesReader;
-	private Settings mySettings; 
-	private Map<Integer, Level> myLevels;
+	private final GenericModel myGeneric = new GenericModel();
+	private final String mySettingsFile = "default_objects/Settings.properties";
+	private final AuthoredGame myGame;
+	private String DEFAULT_PROMPTS;
+	private String DEFAULT_CONSTANT_FILEPATH;
+	private PropertiesReader myPropertiesReader;
+	private String myDefaultName; 
 	private Tower myDefaultTower;
 	private Enemy myDefaultEnemy;
 	private Path myDefaultPath;
-	//	private Path myPath;
 	protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
 	protected String myBackgroundImage = new String();
 	protected List<Point> myPathCoordinates = new ArrayList<Point>();
 
-
 	public AuthoringModel() throws MissingPropertiesException {
-		myLevels = new HashMap<Integer, Level>();
-		myPropertiesReader = new PropertiesReader();
-		myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
+		this(new AuthoredGame());
+		populateInstanceVariables();
 		setupDefaultSettings(); 
-		try {
-			myDefaultTower = generateGenericTower();
-			myDefaultEnemy = generateGenericEnemy();
-			myDefaultPath = generateGenericPath();
-		} catch (NumberFormatException | FileNotFoundException e) {
-			throw new MissingPropertiesException(myDefaultName);
-		}
 		setupDefaultLevel();
 	}
 
+	public AuthoringModel(AuthoredGame game) throws MissingPropertiesException {
+		myGame = game;
+	}
+
+	private void populateInstanceVariables() throws MissingPropertiesException {
+		myPropertiesReader = new PropertiesReader();
+		DEFAULT_PROMPTS = myPropertiesReader.findVal(mySettingsFile, "PromptsFile");
+		DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(mySettingsFile, "ConstantFiles");
+		DEFAULT_PROMPTS = myPropertiesReader.findVal(mySettingsFile, "PromptsFile");
+		DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(mySettingsFile, "ConstantFiles");
+		myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
+		try {
+			myDefaultTower = myGeneric.generateGenericTower();
+			myDefaultEnemy = myGeneric.generateGenericEnemy();
+			myDefaultPath = myGeneric.generateGenericPath();
+		} catch (NumberFormatException | FileNotFoundException e) {
+			throw new MissingPropertiesException(myDefaultName);
+		}
+	}
 
 	private void setupDefaultSettings() throws MissingPropertiesException {
 		String defaultGameName = myPropertiesReader.findVal(DEFAULT_PROMPTS, "NewGame");
 		int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
 		int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
-		myGameName = defaultGameName; 
-		mySettings = new SettingsBuilder().construct(defaultGameName, startingHealth, startingMoney);
-	}
+		String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
+		String startingTheme = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingTheme");
+		Settings newSettings = new SettingsBuilder().construct(defaultGameName, 
+				startingHealth, startingMoney, startingCSS, startingTheme);
+		myGame.setSettings(newSettings);
+	} 
 
 	private void setupDefaultLevel() {
 		Level firstLevel = new Level(1);
@@ -97,7 +90,7 @@ public class AuthoringModel implements GameData {
 		Enemy testEnemy = new Enemy(myDefaultEnemy);
 		firstLevel.addEnemy(myDefaultName, testEnemy);
 		firstLevel.addPath(myDefaultPath);
-		myLevels.put(1, firstLevel);
+		myGame.addLevel(1, firstLevel);
 	}
 
 	/**
@@ -105,11 +98,10 @@ public class AuthoringModel implements GameData {
 	 * @throws ObjectNotFoundException 
 	 */
 	public void makeWave(int level, Wave wave) throws ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
+		Level currentLevel = myGame.levelCheck(level);
 		currentLevel.addWave(wave);
 	}
 
-	// TODO 
 	/**
 	 * Method through which information can be sent to instantiate or edit a path object
 	 * Wraps constructor in case of new object creation
@@ -118,62 +110,40 @@ public class AuthoringModel implements GameData {
 
 	public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
 		myImageMap = imageCoordinates;
-		Level currentLevel = levelCheck(level);
+		myBackgroundImage = backgroundImage;
+		//				myPathCoordinates = coordinates;
+		Level currentLevel = myGame.levelCheck(level);
 		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
 		currentLevel.addPath(newPath);
 	}
 
-
 	/**
-	 * Reads information from GenericTower.properties file to create a default
-	 * Tower object to be used to populate user input fields.
-	 * 
-	 * @return Tower: a generic tower with attribute read in from .properties file
+	 * Method through which information can be sent to instantiate or edit a path object
+	 * Wraps constructor in case of new object creation
 	 */
-	private Tower generateGenericTower() throws NumberFormatException, FileNotFoundException {
-		try {
-			//			double projectileSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize"));
-			Projectile towerProjectile = new ProjectileBuilder().construct(
-					myDefaultName,  
-					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileImage"), 
-					// TODO add projectile speed !!!!
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileUpgradeValue")),
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
-			Launcher towerLauncher = new LauncherBuilder().construct(
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherSpeed")),  
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherRange")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "launcherValue")), towerProjectile);  
-			double towerSize = Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerSize"));
-			Tower newTower = new TowerBuilder().construct(
-					myDefaultName, 
-					myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerImage"), 
-					towerSize, 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealth")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeValue")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerHealthUpgradeCost")), 
-					towerLauncher,
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerValue")),
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeCost")),
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "towerUpgradeValue"))); 
-			return newTower;
-		} 
-		catch (MissingPropertiesException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Could not load GenericTower object!");
+	public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
+		Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme);
+		myGame.setSettings(newSettings);
+	}
+
+	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+		Level currentLevel = myGame.levelCheck(level);
+		if (currentLevel.containsTower(name)) {
+			throw new NoDuplicateNamesException(name);
 		}
-		return null;
+		Tower newTower = myGeneric.generateGenericTower(name);
+		currentLevel.addTower(name, newTower);
 	}
 
-	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
-		return levelCheck(levelNum).getPaths().get(name-1);
+	public void makeEnemy(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+		Level currentLevel = myGame.levelCheck(level);
+		if (currentLevel.containsEnemy(name)) {
+			throw new NoDuplicateNamesException(name);
+		}
+		Enemy newEnemy = myGeneric.generateGenericEnemy(name);
+		currentLevel.addEnemy(name, newEnemy);
+		System.out.println(level+" "+name);
 	}
-
 
 	/**
 	 * Method through which SpecifyScreens can get information about existing objects that designers may have the option of editing
@@ -184,7 +154,7 @@ public class AuthoringModel implements GameData {
 	 */
 	public List<String> getCurrentObjectOptions(int level, String objectType) throws ObjectNotFoundException {
 		List<String> listToReturn = new ArrayList<String>(); 
-		Level currentLevel = levelCheck(level);
+		Level currentLevel = myGame.levelCheck(level);
 		if (objectType.equals("Enemy")) {
 			listToReturn = currentLevel.getAllEnemies();  
 			if (listToReturn.size() == 0) {
@@ -212,11 +182,22 @@ public class AuthoringModel implements GameData {
 		return listToReturn; 
 	}
 
-	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
-		return currentLevel.getHighestWaveNumber();
-	}
-
+	//	private Path generateGenericPath() throws NumberFormatException, FileNotFoundException {
+	//		List<Point> dummyPathPoints = new ArrayList<>();
+	//		dummyPathPoints.add(new Point(2, 2));
+	//		dummyPathPoints.add(new Point(2, 3));
+	//		List<List<Point>> dummyCoordinates = new ArrayList<>();
+	//		dummyCoordinates.add(dummyPathPoints);
+	//		HashMap<String, List<Point>> pathImages = new HashMap<>();
+	//		List<Point> dummyPathStartPoints = new ArrayList<>();
+	//		dummyPathStartPoints.add(new Point(2, 2));
+	//		List<Point> dummyPathEndPoints = new ArrayList<>();
+	//		dummyPathEndPoints.add(new Point(2, 3));
+	//		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
+	//		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
+	//		Path newPath = new PathBuilder().construct(dummyCoordinates, pathImages, DEFAULT_BACKGROUND_IMAGE, DEFAULT_PATH_MIDDLE, DEFAULT_PATH_START, DEFAULT_PATH_END, 60, 1020/60, 650/60);
+	//		return newPath;
+	//	}
 	// TODO once maps have been made 
 	/**
 	 * Used in the case that the user wants to edit an existing object:
@@ -237,32 +218,34 @@ public class AuthoringModel implements GameData {
 
 		AttributeFinder attributeFinder = new AttributeFinder(); 
 		if (objectType.equals("Enemy")) {
-			Level currentLevel = levelCheck(level);
+			Level currentLevel = myGame.levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
+				System.out.println("attribute val: " + attributeValue);
+				//System.out.println("GETTING ENEMY INFO AFTER SAVE?");
 			}
-		}
-		else if (objectType.equals("Tower")) {
-			Level currentLevel = levelCheck(level);
+		} else if (objectType.equals("Tower")) {
+			Level currentLevel = myGame.levelCheck(level);
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
 			}
 		}
 		else if (objectType.equals("Settings")) {
-			attributeValue = attributeFinder.retrieveFieldValue(attribute, mySettings);
+			attributeValue = attributeFinder.retrieveFieldValue(attribute, myGame.getSettings());
 		}
 		else if (objectType.equals("Path")) {
-			Level currentLevel = levelCheck(level);
+			Level currentLevel = myGame.levelCheck(level);
 			//			if (currentLevel.containsTower(name)) {
 			Path path = currentLevel.getPath();
 			attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
+			System.out.println("PATH INFO: " +attributeValue);
 			//			}
 		}
 
 		else if(objectType.equals("Wave")) {
-			Level currentLevel = levelCheck(level);
+			Level currentLevel = myGame.levelCheck(level);
 			if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
 				Wave wave = currentLevel.getWaves().get(Integer.parseInt(name));
 				attributeValue = attributeFinder.retrieveFieldValue(attribute, wave);
@@ -277,84 +260,83 @@ public class AuthoringModel implements GameData {
 		else return attributeValue; 
 	}
 
+	public Integer getHighestWaveNumber(int level) throws ObjectNotFoundException {
+		Level currentLevel = myGame.levelCheck(level);
+		return currentLevel.getHighestWaveNumber();
+	}
+
 	/**
-	 * Returns Level object corresponding to an integer level number
+	 * Returns a Map of String image names to Lists of points where those images should
+	 * be found in the path
+	 * @return Map of image names to Point lists
+	 */
+	public Map<String, List<Point>> getImageMap() {
+		System.out.println("IS MAP NULL: " +myImageMap);
+		return myImageMap;
+	}
+
+	/**
+	 * 
+	 * @return AuthoredGame: return the AuthoredGame object created with this model
+	 */
+	public AuthoredGame getGame() {
+		return myGame;
+	}
+
+	/**
+	 * 
+	 * @return String: the name field in the AuthoredGame object
+	 */
+	public String getGameName() {
+		return myGame.getGameName();
+	}
+
+	public void setGameName(String name) {
+		myGame.setGameName(name);
+	}
+
+	/**
+	 * Returns a Path object from the AuthoredGame object from the specified level with 
+	 * the specified name.
+	 * 
+	 * @param name: path name
+	 * @param levelNum: level number
+	 * @return Path: the path with the specified name in the specified level
+	 * @throws ObjectNotFoundException
+	 */
+	public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
+		return myGame.levelCheck(levelNum).getPaths().get(name-1);
+	}
+
+	/**
+	 * Returns a list of level numbers as strings currently stored in the 
+	 * AuthoredGame object
+	 * 
+	 * Useful in displaying the levels available for edit by the user
+	 * @return List<String>: A list of unmodifiable level numbers as strings
+	 */
+	public List<String> getLevels() {
+		return myGame.unmodifiableLevelNums();
+	}
+
+	/**
+	 * Returns Level object corresponding to an integer level number from the 
+	 * AuthoredGame object
+	 * 
 	 * @param level is number of level desired
 	 * @return Level object of that number
 	 * @throws ObjectNotFoundException
 	 */
-	public Level levelCheck(int level) throws ObjectNotFoundException {
-		Level currentLevel = myLevels.get(level);
-		if (currentLevel == null) {
-			throw new ObjectNotFoundException("Level "+level);
-		}
-		return currentLevel;
+	public Level getLevel(int level) throws ObjectNotFoundException {
+		return myGame.levelCheck(level);
 	}
 
 	/**
-	 * Returns a list of Level objects corresponding to all Levels that have been previously made
-	 * @return a list of all Levels currently made in this game
+	 * 
+	 * @return List<Level>: an unmodifiable list of Level objects in the AuthoredGame object
 	 */
 	public List<Level> allLevels() {
-		List<Level> ret = new ArrayList<Level>();
-		for(Level level : myLevels.values()) {
-			ret.add(level);
-		}
-		return ret;
-	}
-
-	/**
-	 * Method through which information can be sent to instantiate or edit a path object
-	 * Wraps constructor in case of new object creation
-	 */
-	public void makeResources(String gameName, double startingHealth, double starting$) {
-		mySettings = new SettingsBuilder().construct(gameName, startingHealth, starting$);
-		myGameName = mySettings.getGameName();
-	}
-
-	/**
-	 * Reads information from GenericEnemy.properties file to create a default
-	 * Enemy object to be used to populate user input fields.
-	 * 
-	 * @return Enemy: a generic enemy with attribute read in from .properties file
-	 * @throws FileNotFoundException 
-	 * @throws NumberFormatException 
-	 */
-	private Enemy generateGenericEnemy() throws NumberFormatException, FileNotFoundException {
-		try {
-			Enemy newEnemy = new EnemyBuilder().construct(
-					myDefaultName, 
-					myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH, "enemyImage"), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemySpeed")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealth")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyHealthImpact")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillReward")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillUpgradeCost")), 
-					Double.parseDouble(myPropertiesReader.findVal(DEFAULT_ENEMY_FILEPATH,"enemyKillUpgradeValue")));
-			return newEnemy;
-
-		} catch (MissingPropertiesException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Could not load GenericTower object!");
-		}
-		return null;
-	}
-
-	private Path generateGenericPath() throws NumberFormatException, FileNotFoundException {
-		List<Point> dummyPathPoints = new ArrayList<>();
-		dummyPathPoints.add(new Point(2, 2));
-		dummyPathPoints.add(new Point(2, 3));
-		List<List<Point>> dummyCoordinates = new ArrayList<>();
-		dummyCoordinates.add(dummyPathPoints);
-		HashMap<String, List<Point>> pathImages = new HashMap<>();
-		List<Point> dummyPathStartPoints = new ArrayList<>();
-		dummyPathStartPoints.add(new Point(2, 2));
-		List<Point> dummyPathEndPoints = new ArrayList<>();
-		dummyPathEndPoints.add(new Point(2, 3));
-		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
-		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
-		Path newPath = new PathBuilder().construct(dummyCoordinates, pathImages, DEFAULT_BACKGROUND_IMAGE, DEFAULT_PATH_MIDDLE, DEFAULT_PATH_START, DEFAULT_PATH_END, 60, 1020/60, 650/60);
-		return newPath;
+		return myGame.unmodifiableLevels();
 	}
 
 	/**
@@ -366,19 +348,6 @@ public class AuthoringModel implements GameData {
 		//		int newLevelNumber = myLevels.size()+1; 
 		//		myLevels.put(newLevelNumber, new Level(newLevelNumber));
 		return newLevelNumber; 
-	}
-
-	/**
-	 * Returns a list of level numbers as strings currently in the authored game
-	 * Useful in displaying the levels available for edit by the user
-	 * @return List<String>: A list of level numbers as strings
-	 */
-	public List<String> getLevels() {
-		List<String> listToReturn = new ArrayList<String>(); 
-		for (Integer level : myLevels.keySet()) {
-			listToReturn.add(Integer.toString(level));
-		}
-		return listToReturn; 
 	}
 
 	//	/**
@@ -401,91 +370,51 @@ public class AuthoringModel implements GameData {
 	 * @return int corresponding to level number of level generated
 	 */
 	public int autogenerateLevel() {
-		int newLevelNumber = myLevels.size()+1;
-		Level copiedLevel = myLevels.get(myLevels.size());
-		myLevels.put(newLevelNumber, new Level(copiedLevel));
+		List<Level> levels = myGame.unmodifiableLevels();
+		int newLevelNumber = levels.size()+1;
+		Level copiedLevel = levels.get(levels.size()-1);
+		myGame.addLevel(newLevelNumber, new Level(copiedLevel));
 		return newLevelNumber; 
 	}
 
-	/**
-	 * Sets the game name of this game so it can be saved/loaded correctly
-	 * @param gameName is new name of this game
-	 */
-	public void setGameName(String gameName) {
-		myGameName = gameName; 
-		mySettings.setGameName(myGameName);
-	}
-
-	/**
-	 * @return String name of this game
-	 */
-	public String getGameName() {
-		return myGameName; 
-	}
-
-	/**
-	 * Returns a Map of String image names to Lists of points where those images should
-	 * be found in the path
-	 * @return Map of image names to Point lists
-	 */
-	public Map<String, List<Point>> getImageMap() {
-		return myImageMap;
-	}
-
 	public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
-		Level currentLevel = levelCheck(level);
+		Level currentLevel = myGame.levelCheck(level);
 		if (objectType.equals("Tower")) {
 			currentLevel.removeTower(name);
 		}
 		if (objectType.equals("Enemy")) {
 			currentLevel.removeEnemy(name);
+
 		}
 	}
 
-	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
-		Level currentLevel = myLevels.get(level);
-		if (currentLevel.containsTower(name)) {
-			throw new NoDuplicateNamesException(name);
-		}
-		Projectile towerProjectile = new ProjectileBuilder().construct(name, 
-				myPropertiesReader.findVal(DEFAULT_PROJECTILE_IMAGES, DEFAULT_PROJECTILE_IMAGE), 0, 0, 
-				0, 0, 0);
-		Launcher towerLauncher = new LauncherBuilder().construct(0, 0, 0, 0, 0, 0, towerProjectile); 
-		Tower newTower = new TowerBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_TOWER_IMAGES, DEFAULT_TOWER_IMAGE), 50, 0, 
-				0, 0, towerLauncher, 0, 0, 0);
-		currentLevel.addTower(name, newTower);
-	}
-	
-	public void makeEnemy(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException {
-		Level currentLevel = myLevels.get(level);
-		if (currentLevel.containsEnemy(name)) {
-			throw new NoDuplicateNamesException(name);
-		}
-		Enemy newEnemy = new EnemyBuilder().construct(name, myPropertiesReader.findVal(DEFAULT_ENEMY_IMAGES, DEFAULT_ENEMY_IMAGE), 0, 0, 0, 0, 0, 0);
-		currentLevel.addEnemy(name, newEnemy);
-		System.out.println(level+" "+name);
-	}
-	
 	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 		AttributeFinder attributeFinder = new AttributeFinder();
 		if (objectType.equals("Enemy")) {
-			Level currentLevel = levelCheck(level);
+			Level currentLevel = myGame.levelCheck(level);
 			if (currentLevel.containsEnemy(name)) {
 				Enemy enemy = currentLevel.getEnemy(name);
 				attributeFinder.setFieldValue(attribute, enemy, attributeValue);
 			}
 		}
 		else if (objectType.equals("Tower")) {
-			Level currentLevel = levelCheck(level);
+			Level currentLevel = myGame.levelCheck(level);
 			if (currentLevel.containsTower(name)) {
 				Tower tower = currentLevel.getTower(name);
 				attributeFinder.setFieldValue(attribute, tower, attributeValue);
 			}
 		}
 		else if (objectType.equals("Settings")) {
-			attributeFinder.setFieldValue(attribute, mySettings, attributeValue);
+			attributeFinder.setFieldValue(attribute, myGame.getSettings(), attributeValue);
 		}
 	}
-	
-}
+	public void updateAllProperties() throws ObjectNotFoundException {
+		Level level;
+		for (String levelNumber : getLevels()) {
+			Integer numLevel = Integer.parseInt(levelNumber);
+			level = getLevel(numLevel);
+			level.updateAllProperties(); 
+		}
+	}
 
+}

@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import authoring.AuthoredGame;
 import authoring.AuthoringModel;
 import engine.GameEngine;
 import engine.Mediator;
@@ -48,10 +49,13 @@ public class PlayController {
 	 * @param pathToXML: Path to game XML file
 	 */
 	public void newPlay(String pathToXML) {
+		System.out.println("path to xml "+pathToXML);
+		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
-		AuthoringModel playModel = myReader.createModel(pathToXML);
-		List<Level> levels = playModel.allLevels();
-		PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+
+		AuthoredGame playModel = myReader.createModel(pathToXML);
+		List<Level> levels = playModel.unmodifiableLevels();
+		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);
 		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getColumnCount(), levels.get(0).getRowCount());
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
@@ -63,10 +67,11 @@ public class PlayController {
 	 * 
 	 * @param model: the AuthoringModel object authored by the user
 	 */
-	public void demoPlay(AuthoringModel model) {
+	public void demoPlay(AuthoredGame model) {
 		myScreenManager.setGameFilePath(model.getGameName());
-		List<Level> levels = model.allLevels();
-		PlayState play = new PlayState(myMediator, levels, 0, 0, 0);
+		List<Level> levels = model.unmodifiableLevels();
+		PlayState play = new PlayState(myMediator, levels, 0, model.getSettings(), 0);
+		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getColumnCount(), levels.get(0).getRowCount());
 		myScreenManager.loadGameScreenNew();
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();

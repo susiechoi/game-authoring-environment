@@ -40,6 +40,7 @@ public class DraggableImage extends Parent {
 
 	public ImageView setCopyDraggable() {
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
+			@Override
 			public void handle(MouseEvent event){
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.COPY);
 				ClipboardContent content = new ClipboardContent();
@@ -50,6 +51,7 @@ public class DraggableImage extends Parent {
 		});
 
 		pathImage.setOnDragDone(new EventHandler <DragEvent>() {
+			@Override
 			public void handle(DragEvent event){
 				if (event.getTransferMode() == TransferMode.MOVE){
 					pathImage.setImage(null);
@@ -62,6 +64,7 @@ public class DraggableImage extends Parent {
 
 	public void setDraggable(GridPane grid, int row, int col) {
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
+			@Override
 			public void handle(MouseEvent event){
 				removeNode(grid, row, col);
 				Dragboard db = pathImage.startDragAndDrop(TransferMode.MOVE);
@@ -73,6 +76,7 @@ public class DraggableImage extends Parent {
 		});
 		
 		pathImage.setOnDragDone(new EventHandler<DragEvent>() {
+			@Override
 			public void handle(DragEvent e){
 				if (e.getTransferMode() == TransferMode.MOVE){
 					((ImageView) e.getSource()).setImage(null);

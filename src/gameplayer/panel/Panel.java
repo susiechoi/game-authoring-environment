@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import frontend.Screen;
 import javafx.scene.Parent;
 
 /**
@@ -11,9 +12,10 @@ import javafx.scene.Parent;
  * Panel.
  */
 
-public abstract class Panel {
+public abstract class Panel{
 
     protected Parent PANEL;
+    
     /**
      * Returns the panel object to be loaded on the screen
      */

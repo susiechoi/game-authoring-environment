@@ -25,6 +25,7 @@ public interface FrontEndTower extends FrontEndSprite{
      * 
      * @return The name (type) of the tower
      */
+    @Override
     public String getName();
 
     /**
@@ -48,23 +49,25 @@ public interface FrontEndTower extends FrontEndSprite{
      * standardized between this and getTowerStats but not required] and the map value would be the cost
      * @return Map of the available upgrades
      */
-    //    public Map<String,Double> getUpgrades();
-    //    
-    //    /**
-    //     * Method to request information/statistics on a specific upgrade for population of UpgradePanel
-    //     *  $$Return doesn't need to be a string, I'm happy to parse out whatever you give me if the info is there$$
-    //     * @param upgradeName the type of upgrade, will be the value given as a key from getUpgrades()
-    //     * @return upgrade specifics
-    //     */
-    //    public String getSpecificUpgradeInfo(String upgradeName);
-    //    
-    //    /**
-    //     * Triggers the actual update
-    //     * @param upgradeName	which upgrade to trigger, will be the value given as a key 
-    //     * 				from getUpgrades()
-    //     * @return if upgrade was successful (did user have enough money)
-    //     */
-    //    public boolean upgrade(String upgradeName);
+//    public Map<String,Double> getUpgrades();
+//    
+//    /**
+//     * Method to request information/statistics on a specific upgrade for population of UpgradePanel
+//     *  $$Return doesn't need to be a string, I'm happy to parse out whatever you give me if the info is there$$
+//     * @param upgradeName the type of upgrade, will be the value given as a key from getUpgrades()
+//     * @return upgrade specifics
+//     */
+//    public String getSpecificUpgradeInfo(String upgradeName);
+//    
+//    /**
+//     * Triggers the actual update
+//     * @param upgradeName	which upgrade to trigger, will be the value given as a key 
+//     * 				from getUpgrades()
+//     * @return if upgrade was successful (did user have enough money)
+//     */
+//    public boolean upgrade(String upgradeName);
 
+    public double getTowerRange();
+   
 
 }

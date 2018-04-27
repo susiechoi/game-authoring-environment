@@ -1,11 +1,37 @@
 .root {
-	-fx-background-image: url("../images/poly.png");
+	-fx-background-image: url("file:images/poly.png");
 	-fx-background-size: cover;
 }
 
 Text {
 	-fx-font-family: "Quicksand";
 	-fx-font-size: 14pt; 
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #488286;
+    -fx-stroke-width: 2px; 
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #488286;
+    -fx-background-radius: 0;
+    	-fx-padding: 1px;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #B7D5D4;
+    -fx-stroke-width: 2px; 
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #B7D5D4;
+    -fx-background-radius: 0;
+    	-fx-padding: 1px;
+}
+
+.axis-label {
+	-fx-font-family: "Quicksand";
 }
 
 TextField {
@@ -29,8 +55,6 @@ TextField {
 
 
 VBox {
-	-fx-background-image: url("../images/poly.png");
-	-fx-background-size: cover;
 	-fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;

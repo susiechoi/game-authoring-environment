@@ -4,28 +4,23 @@
  */
 
 package authoring.frontend;
-
-import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.exceptions.NoDuplicateNamesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Enemy";
-	public static final String ENEMY_IMAGES = "images/EnemyImageNames.properties";
+	public static final String ENEMY_IMAGE_PREFIX = "images/ThemeSpecificImages/EnemyImages/";
+	public static final String ENEMY_IMAGE_SUFFIX = "EnemyImageNames.properties";
 	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
 	private String myObjectName; 
 	private TextField myNameField; 
-	private ComboBox<String> myImageDropdown;
 	private Slider mySpeedSlider;
 	private Slider myInitialHealthSlider; 
 	private Slider myHealthImpactSlider; 
@@ -40,18 +35,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	protected Parent populateScreenWithFields() {
 		VBox vb = new VBox(); 	
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("CustomizeEnemy")));
-
-		HBox enemyImageSelect = new HBox();
-		ComboBox<String> enemyImageDropdown = new ComboBox<String>();
-		ImageView imageDisplay = new ImageView(); 
-		try {
-			enemyImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(ENEMY_IMAGES));
-			myImageDropdown = enemyImageDropdown; 
-			enemyImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", ENEMY_IMAGES, 75, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-					getErrorCheckedPrompt("NewImageName"), enemyImageDropdown, imageDisplay);
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
+		HBox enemyImageSelect = makeImageSelector("Enemy", "", ENEMY_IMAGE_PREFIX + getView().getTheme() + ENEMY_IMAGE_SUFFIX);
 		vb.getChildren().add(enemyImageSelect);
 
 		Slider enemySpeedSlider = getUIFactory().setupSlider("enemySpeedSlider",  getMyMaxSpeed()); 
@@ -96,10 +80,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
 
-		ScrollPane sp = new ScrollPane(vb);
-		sp.setFitToWidth(true);
-		sp.setFitToHeight(true);
-		return sp;
+		return vb;
 	}
 
 	protected TextField getNameField() {

@@ -1,12 +1,7 @@
 package frontend;
 import java.util.List;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Alert.AlertType;
 
 /**
  * @author transition to abstract class & error checking - Sarah Bland
@@ -19,7 +14,7 @@ public abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	public static final String DEFAULT_FILE_ERRORMESSAGE = "Missing specified language property files.";
-	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_CONSTANTS_FILEPATH = "src/frontend/Constants.properties";
 	public static final String DEFAULT_PROMPT = "";
 	//private AuthoringView myView; 
 	private String myStylesheet; 
@@ -68,20 +63,13 @@ public abstract class Screen {
 		if (myRoot != null) {
 			myRoot.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 			myRoot.getStylesheets().add("https://fonts.googleapis.com/css?family=Quicksand");
+			myRoot.getStylesheets().add("https://fonts.googleapis.com/css?family=Open+Sans");
 		}
 	}
 
 	private void applyStyle(String stylesheet) {
 		if (myRoot != null && stylesheet != null) {
 			myRoot.getStylesheets().add(stylesheet);
-		}
-	}
-
-	private void applyStyles(List<String> stylesheets) {
-		if (myRoot != null) {
-			for (String s : stylesheets) {
-				myRoot.getStylesheets().add(s);
-			}		
 		}
 	}
 

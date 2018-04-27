@@ -8,6 +8,8 @@ package authoring;
 
 import java.lang.reflect.Field;
 
+import authoring.frontend.exceptions.ObjectNotFoundException;
+
 public class AttributeFinder {
 
 	/**
@@ -18,7 +20,7 @@ public class AttributeFinder {
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	public Object retrieveFieldValue(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, NullPointerException {
+	public Object retrieveFieldValue(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException{
 		Object fieldValue = null; 
 		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
 			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
@@ -28,19 +30,20 @@ public class AttributeFinder {
 				return fieldValue; 
 			}
 		}
-		throw new NullPointerException();
+		throw new ObjectNotFoundException(fieldName);
 	}
 
-	public void setFieldValue(String fieldName, Object objectWithFields, Object fieldValue) throws IllegalArgumentException, IllegalAccessException {
+	public void setFieldValue(String fieldName, Object objectWithFields, Object fieldValue) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
 			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
 			if (fieldSimpleString.equals(fieldName)) {
 				aField.setAccessible(true);
 				aField.set(objectWithFields, fieldValue);
+				System.out.println("in attribute finder : " + fieldValue + " ***");
 				return; 
 			}
 		}
-		throw new NullPointerException();
+		throw new ObjectNotFoundException(fieldName);
 	}
 
 }

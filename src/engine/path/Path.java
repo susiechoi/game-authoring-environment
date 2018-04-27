@@ -7,6 +7,7 @@ import java.awt.Point;
 /**
  * Class for constructing path and determining next coordinates
  * 
+ * @author Ryan Pond
  * @author Katherine Van Dyk 4/8/18
  */
 public class Path {
@@ -41,6 +42,40 @@ public class Path {
 	}
 
 
+    /**
+     * Returns the next position along the Path
+     * @param pathIndex : current index of the path it is on (block index)
+     * @return : returns the next point along the path index
+     */
+    public Point nextPosition(int pathIndex) {
+	return myCoordinates.get(pathIndex+1);
+    }
+
+    /**
+     * Checks if current position is within the bounds of the next path turn
+     * 
+     * @return boolean: True if within range of next path coordinate, false otherwise
+     */
+    private boolean checkBounds(Point currentPos, int pathIndex) {
+	double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX()  - currentPos.getX(), 2);
+	double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPos.getY(), 2); 
+	return Math.sqrt(xDistance + yDistance) < THRESHOLD;
+    }
+
+    /**
+     * Returns a new angle for the image
+     * 
+     * @param point1: initial point
+     * @param point2: next point
+     * @return double representing angle
+     */
+    private double getAngle(Point point1, Point point2) {
+	double deltaY = point2.getY() - point1.getY();
+	double deltaX = point2.getX() - point1.getX();
+	double angle = Math.atan2(deltaX,deltaY);
+	return angle;
+    }
+
 	/**
 	 * Returns the next position of the object according to its speed
 	 * 
@@ -61,33 +96,6 @@ public class Path {
 		//	    return currentPos; 
 		//	}
 		return myCoordinates.get(pathIndex+1);
-	}
-
-	/**
-	 * Checks if current position is within the bounds of the next path turn
-	 * 
-	 * @return boolean: True if within range of next path coordinate, false otherwise
-	 */
-	private boolean checkBounds(Point currentPos, int pathIndex) {
-		double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX()  - currentPos.getX(), 2);
-		double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPos.getY(), 2); 
-		System.out.println(Math.sqrt(xDistance + yDistance));
-		return Math.sqrt(xDistance + yDistance) < THRESHOLD;
-	}
-
-	/**
-	 * Returns a new angle for the image
-	 * 
-	 * @param point1: initial point
-	 * @param point2: next point
-	 * @return double representing angle
-	 */
-	private double getAngle(Point point1, Point point2) {
-		double deltaY = point2.getY() - point1.getY();
-		double deltaX = point2.getX() - point1.getX();
-		double angle = Math.atan2(deltaX,deltaY);
-		//System.out.println(angle);
-		return angle;
 	}
 
 	public double pathAngle(int currIndex) {

@@ -25,6 +25,8 @@ import engine.path.Path;
 
 public class Level {
 
+	public static final String DEFAULT_OBJ_NAME = "Default";
+	
 	private final int myNumber;
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
@@ -51,10 +53,10 @@ public class Level {
 	 */
 	public Level(Level copiedLevel) {
 		myNumber = copiedLevel.getNumber() + 1; 
-		myWaves = copiedLevel.getWaves(); 
+		myWaves = copiedLevel.getWaveCopies(); 
 		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getTowers();
-		myEnemies = copiedLevel.getEnemies();
+		myTowers = copiedLevel.getCopiedTowers();
+		myEnemies = copiedLevel.getCopiedEnemies();
 	}
 
 	/**
@@ -87,7 +89,7 @@ public class Level {
 	 * @param tower: The tower object to be added
 	 */
 	public void addTower(String name, Tower tower) {
-	//	System.out.println(tower.getImageView().getFitWidth() + " level tower width");
+		//	System.out.println(tower.getImageView().getFitWidth() + " level tower width");
 		myTowers.put(name, tower);
 	}
 
@@ -167,6 +169,9 @@ public class Level {
     	if (myEnemies.containsKey(name)) {
     		myEnemies.remove(name);
     	}
+    	for(Wave wave: myWaves) {
+    	    wave.removeEnemyType(name);
+    	}
     	throw new ObjectNotFoundException(name);
     }
 
@@ -177,25 +182,25 @@ public class Level {
 	 */
 	@Deprecated
 	public void addWave(Path path, Wave wave) {
-	    	if(!myWaves.contains(wave)) {
-	    	    myWaves.add(wave);
-	    	}
-//		if(myWaves.containsKey(path)) {
-//			List<Wave> waves = myWaves.get(path);
-//			waves.add(wave);
-//		}
-//		else {
-//			ArrayList<Wave> waveList = new ArrayList<>();
-//			waveList.add(wave);
-//			myWaves.put(path,waveList);
-//		}
+		if(!myWaves.contains(wave)) {
+			myWaves.add(wave);
+		}
+		//		if(myWaves.containsKey(path)) {
+		//			List<Wave> waves = myWaves.get(path);
+		//			waves.add(wave);
+		//		}
+		//		else {
+		//			ArrayList<Wave> waveList = new ArrayList<>();
+		//			waveList.add(wave);
+		//			myWaves.put(path,waveList);
+		//		}
 
 	}
-	
+
 	public void addWave(int waveNumber) {
-	    if(!containsWaveNumber(waveNumber)) {
-		myWaves.add(new Wave());
-	    }
+		if(!containsWaveNumber(waveNumber)) {
+			myWaves.add(new Wave());
+		}
 	}
 	public boolean containsWaveNumber(int num) {
 		return(myWaves.size()>(num));
@@ -213,7 +218,7 @@ public class Level {
 		return waveEnemy;
 	}
 
-	protected int getNumber() {
+	public int getNumber() {
 		return myNumber; 
 	}
 
@@ -224,9 +229,23 @@ public class Level {
 	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
-
+	public Map<String, Tower> getCopiedTowers(){
+	    Map<String, Tower> copy = new HashMap<>();
+	    for(String key : myTowers.keySet()) {
+		copy.put(key, new Tower(myTowers.get(key)));
+	    }
+	    return copy;
+	}
 	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
+	}
+	
+	public Map<String, Enemy> getCopiedEnemies(){
+	    Map<String, Enemy> copy = new HashMap<>();
+	    for(String key : myEnemies.keySet()) {
+		copy.put(key, new Enemy(myEnemies.get(key)));
+	    }
+	    return copy;
 	}
 
 	public int getHighestWaveNumber() {
@@ -247,6 +266,14 @@ public class Level {
 	public List<Wave> getWaves() {
 		return myWaves;
 	}
+	
+	protected List<Wave> getWaveCopies(){
+	    List<Wave> copy = new ArrayList<>();
+	    for(Wave wave : myWaves) {
+		copy.add(wave.getCopy());
+	    }
+	    return copy;
+	}
 
 	/**
 	 * Removes the first wave from the level 
@@ -258,7 +285,10 @@ public class Level {
 		removeWave();
 	}
 	public void removeWave() {
-	    myWaves.remove(0);
+		myWaves.remove(0);
+	}
+	public void removeWave(String name) {
+	    myWaves.remove(Integer.parseInt(name)-1);
 	}
 	
 	/**
@@ -274,21 +304,21 @@ public class Level {
 	 * @return boolean: true if the level is finished, false otherwise
 	 */
 	public boolean isFinished() {
-		return myWaves.size()>0; 
+		return myWaves.size()==0; 
 	}
 	@Deprecated
 	public boolean containsWave(Path path, int waveNumber) {
 		return containsWaveNumber(waveNumber);
 	}
 	public boolean containsWave(int waveNumber) {
-	    return myWaves.size()>waveNumber;
+		return myWaves.size()>waveNumber;
 	}
 
-	
+
 	public Path getPath() {
 		return myPaths.get(myPaths.size() - 1);
 	}
-	
+
 	public Map<String, List<Point>> getLevelPathMap(){
 		//		Map<String, List<Point>> pathMap = myPaths.get(0).getPathMap();
 		//		for (int x=1; x<myPaths.size(); x++) {
@@ -302,11 +332,11 @@ public class Level {
 		}
 		return null;
 	}
-	
+
 	public String getBackGroundImage() {
 		return myPaths.get(0).getBackgroundImage();
 	}
-	
+
 	public int getPathSize() {
 		return myPaths.get(0).getPathSize();
 	}
@@ -330,7 +360,7 @@ public class Level {
 	public String getEndImage() {
 		return myPaths.get(0).getEndImage();
 	}
-	
+
 	/**
 	 * Adds a wave to the level
 	 * 
@@ -340,5 +370,30 @@ public class Level {
 	public void addWave(Wave wave) {
 		myWaves.add(wave);
 	}
+
+	public void updateAllProperties() {
+		if (myTowers.size() > 1) {
+			myTowers.remove(DEFAULT_OBJ_NAME);
+		}
+		updateTowerProperties(); 
+		updateEnemyProperties(); 
+	}
+
+	private void updateTowerProperties() {
+		Tower tower; 
+		for (String towerName : myTowers.keySet()) {
+			tower = myTowers.get(towerName);
+			tower.updateProperties();
+		}
+	}
+
+	public void updateEnemyProperties() {
+		Enemy enemy; 
+		for (String enemyName : myEnemies.keySet()) {
+			enemy = myEnemies.get(enemyName);
+			enemy.updateProperties();
+		}
+	}
+
 
 }

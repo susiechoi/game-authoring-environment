@@ -25,6 +25,7 @@ public class CreatePathToolBar extends PathToolBar {
 	}
 
 
+	@Override
 	public void makePanel() {
 		myImageButtons = new ArrayList<>();
 		backgroundButton = getUIFactory().makeTextButton("", "Choose Background Image");

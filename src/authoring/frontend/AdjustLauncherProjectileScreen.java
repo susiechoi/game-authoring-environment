@@ -6,27 +6,22 @@
 
 package authoring.frontend;
 
-import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.exceptions.NoDuplicateNamesException;
+
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String OBJECT_TYPE = "Tower";
-	public static final String PROJECTILE_IMAGES = "images/ProjectileImageNames.properties"; 
+	public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
+	public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
 	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
 	
 	private String myObjectName; 
-	private ComboBox<String> myProjectileImage;
-	private ImageView myImageDisplay; 
 	private Slider myProjectileDamageSlider;
 	private Slider myProjectileSpeedSlider; 
 	private Slider myLauncherRateSlider;
@@ -55,25 +50,11 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 		vb.getChildren().add(backAndApplyButton);
-				
-		ScrollPane sp = new ScrollPane(vb);
-		sp.setFitToWidth(true);
-		sp.setFitToHeight(true);
-		
-		return sp;
+		return vb;
 	}
 	
 	private void makeProjectileComponents(VBox vb) {
-		ComboBox<String> projectileImageDropdown;
-		HBox projectileImageSelect = new HBox(); 
-		myImageDisplay = new ImageView(); 
-		try {
-			projectileImageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(PROJECTILE_IMAGES));
-			myProjectileImage = projectileImageDropdown; 
-			projectileImageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), getErrorCheckedPrompt("Projectile") + " " , PROJECTILE_IMAGES, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),getErrorCheckedPrompt("NewImageName"), projectileImageDropdown, myImageDisplay);
-		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoImageFile");
-		}
+		HBox projectileImageSelect = makeImageSelector("Tower", "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 		vb.getChildren().add(projectileImageSelect);
 
 		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());

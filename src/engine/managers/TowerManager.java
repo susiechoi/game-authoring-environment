@@ -1,12 +1,17 @@
 package engine.managers;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
+import engine.sprites.towers.projectiles.Projectile;
 
 
 /**
@@ -15,6 +20,7 @@ import engine.sprites.towers.Tower;
  *
  * @author Miles Todzo
  * @author Katie Van Dyk
+ * @author Ryan Pond
 */
 
 
@@ -48,14 +54,18 @@ public class TowerManager extends ShootingSpriteManager {
      */
     public void moveTowers() {
 	// TODO Auto-generated method stub
-	
     }
     
     public FrontEndTower place(Point location, String type) {
+	System.out.println(type);
+	for (Entry<String, Tower> entry : myTowerTypeToInstance.entrySet()) {
+	    System.out.println(entry.getKey());
+	    System.out.println(entry.getValue());
+	}
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
-    		return (FrontEndTower) newTower;
+    		return newTower;
     }
 
     /**
@@ -82,5 +92,4 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return balance;
     }
-
 }
