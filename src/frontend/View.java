@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 public class View {
     StageManager myManager;
     PromptReader myPromptReader;
-    ErrorReader myErrorReader;
+    protected ErrorReader myErrorReader;
     PropertiesReader myPropertiesReader;
     
     public View(StageManager manager, String languageIn) {
