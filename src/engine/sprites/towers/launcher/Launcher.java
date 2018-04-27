@@ -30,9 +30,9 @@ public class Launcher extends Manager<Projectile>{
     private List<Property> myProperties;
     private PropertyBuilder myPropertyFactory;
 
-    public Launcher(FireRateProperty rate, Projectile projectile, RangeProperty range) {
+    public Launcher(Projectile projectile, List<Property> properties) {
 	myProjectile = projectile;
-	myProperties = new ArrayList<Property>();
+	myProperties = properties;
 	timeSinceLastShot = 0;
     }
 
