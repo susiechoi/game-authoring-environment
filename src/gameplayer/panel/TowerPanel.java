@@ -1,4 +1,3 @@
-
 package gameplayer.panel;
 
 import javafx.beans.value.ChangeListener;
@@ -197,13 +196,14 @@ public class TowerPanel extends Panel {
 	currencyDisplay.setText("$" +newValue);
     }
 
-    public ChangeListener createCurrencyListener() {
-	return new ChangeListener() {
-	    @Override
-	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-		updateCurrency((Integer)observableValue.getValue());
-	    }
+    public ChangeListener<Number> createCurrencyListener() {
+	return new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+			updateCurrency((Integer)arg0.getValue());
+			
+		}
 	};
     }
 }
-

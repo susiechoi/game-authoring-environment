@@ -20,6 +20,7 @@ import engine.sprites.towers.projectiles.Projectile;
  *
  * @author Miles Todzo
  * @author Katie Van Dyk
+ * @author Ryan Pond
 */
 
 
@@ -91,6 +92,4 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return balance;
     }
-
-
 }

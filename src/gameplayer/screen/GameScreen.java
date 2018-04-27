@@ -89,6 +89,7 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+//		rootPane.getStylesheets().add(MEDIATOR.getStyling());
 		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
@@ -97,6 +98,12 @@ public class GameScreen extends Screen {
 		GAME_PANEL.towerSelected(tower);
 	}
 
+	//	public void setStyling() {
+	//		String style = MEDIATOR.getStyling();
+	//		if (style != null) {
+	//			rootPane.getStylesheets().add(style);
+	//		}
+	//	}
 
 	@Override
 	protected View getView() {
@@ -169,10 +176,7 @@ public class GameScreen extends Screen {
 		}
 	}
 
-
-
-
-	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
 		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
 		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
 		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
@@ -255,6 +259,10 @@ public class GameScreen extends Screen {
 		}
 	}
 
+	public String getGameName() {
+		return SCREEN_MANAGER.getGameFilePath();
+	}
+	
 	public ScreenManager getScreenManager() {
 		return SCREEN_MANAGER;
 	}
