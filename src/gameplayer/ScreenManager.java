@@ -66,8 +66,6 @@ public class ScreenManager extends View {
 		myLanguage = language;
 		MEDIATOR = mediator;
 		findSettings();
-		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
-		System.out.println(GAMEPLAYER_PROPERTIES);
 	}
 
 	public ScreenManager(StageManager stageManager, String language) {
@@ -80,8 +78,6 @@ public class ScreenManager extends View {
 		}
 		PROMPTS = new PromptReader(language, this);
 		findSettings();
-		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
-		System.out.println(GAMEPLAYER_PROPERTIES);
 	}
 
 	public List<Integer> getMediatorInts(){
@@ -101,12 +97,14 @@ public class ScreenManager extends View {
 
 	public void loadGameScreenNew(String filepath) {
 		setGameFilePath(filepath);
+		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
 		MEDIATOR.startPlay(filepath);
 	}
 
 	public void loadGameScreenNew() {
+		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
 	}

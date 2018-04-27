@@ -89,6 +89,7 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+//		rootPane.getStylesheets().add(MEDIATOR.getStyling());
 		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
@@ -134,13 +135,7 @@ public class GameScreen extends Screen {
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup")))
 			MEDIATOR.fastForward(10);
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
-			try {
-				new PlayController(SCREEN_MANAGER.getStageManager(), getView().getLanguage(), new AuthoringModel())
-						.loadInstructionScreen();
-			} catch (MissingPropertiesException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    getView().playControllerInstructions(new AuthoringModel());
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
@@ -178,7 +173,6 @@ public class GameScreen extends Screen {
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
-
 		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
 		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
 		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
@@ -261,6 +255,10 @@ public class GameScreen extends Screen {
 		}
 	}
 
+	public String getGameName() {
+		return SCREEN_MANAGER.getGameFilePath();
+	}
+	
 	public ScreenManager getScreenManager() {
 		return SCREEN_MANAGER;
 	}

@@ -35,7 +35,6 @@ import xml.XMLFactory;
  */
 public class Mediator {
 
-
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
     private PlayController myPlayController;
