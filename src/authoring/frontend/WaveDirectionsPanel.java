@@ -85,13 +85,9 @@ public class WaveDirectionsPanel extends PathPanel{
 	myRoot.getChildren().add(pseudoRoot);
     }
     @Override
-    protected Node getPanel() {
-	return myRoot;
-    }
-    @Override
     protected void makePanel() {
 	// TODO Auto-generated method stub
-
+	
     }
     @Override
     protected Button getApplyButton() {
@@ -99,14 +95,20 @@ public class WaveDirectionsPanel extends PathPanel{
 	return null;
     }
     @Override
+    protected Node getPanel() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+    @Override
     protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
 	// TODO Auto-generated method stub
-
+	
     }
     @Override
     public Parent makeScreenWithoutStyling() {
 	// TODO Auto-generated method stub
 	return null;
     }
+
 
 }
