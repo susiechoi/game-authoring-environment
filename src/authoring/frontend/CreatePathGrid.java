@@ -133,9 +133,8 @@ public class CreatePathGrid {
 							//							draggableImagesOnScreen.add(path);
 							removeNode(grid, colIndex, rowIndex);
 							grid.add(path.getPathImage(), colIndex, rowIndex);
-							if (((ImageView) event.getGestureSource()).getId().length() >= 5 && ((ImageView) event.getGestureSource()).getId().substring(0, 5) == "start") {	
-								path.getPathImage().setId("start"+getStartingPosition(checkGrid).size()+1);
-								path.setStartNumber(getStartingPosition(checkGrid).size()+1);
+							if (((ImageView) event.getGestureSource()).getId() == "start") {	
+								path.getPathImage().setId("start");
 								checkGrid.add(new Label("start"), colIndex, rowIndex);
 							} else if (((ImageView) event.getGestureSource()).getId() == "end") {
 								path.getPathImage().setId("end");
