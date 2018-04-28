@@ -226,6 +226,7 @@ public class Mediator implements MVController{
 	 */
 	public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
 		myScreenManager.attachListeners(myCurrency, myScore, myLives);
+		System.out.println("Properties Sent\nC: " + myCurrency.get() + "S: " + myScore.get() + "L: " + myLives.get());
 	}
 
 	/**
