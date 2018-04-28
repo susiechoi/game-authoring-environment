@@ -69,6 +69,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		myTowerValueSlider = towerValueSlider; 
 		HBox towerValue = getUIFactory().setupSliderWithValue("TowerValueSlider", towerValueSlider, getErrorCheckedPrompt("TowerValue"));
 		vb.getChildren().add(towerValue);
+
 		myTowerValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerValue", newValue);
 		});

@@ -99,16 +99,16 @@ public class GamePanel extends Panel{
 	}
     }
 
-
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-	PathMaker pathMaker = new PathMaker();
-	GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize);
-	//	setGridConstraints(grid, imageMap);
-	if (spriteAdd == null) {
-	    makePanel();
-	}
-	spriteAdd.getChildren().add(grid);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+		PathMaker pathMaker = new PathMaker();
+		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, col, row);
+		//	setGridConstraints(grid, imageMap);
+		if (spriteAdd == null) {
+		    makePanel();
+		}
+		spriteAdd.getChildren().add(grid);
     }
+
 
     private void resetCursor() {
 	GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
@@ -142,8 +142,7 @@ public class GamePanel extends Panel{
 	    spriteAdd.setOnMouseMoved(e -> {
 		rangeIndicator.setCenterX(e.getX()+(towerImage.getImage().getWidth()/2));
 		rangeIndicator.setCenterY(e.getY()+(towerImage.getImage().getHeight()/2)); });
-	}
-	else { //TODO (thread canceling towerPlacement)
+	} else { //TODO (thread canceling towerPlacement)
 	    //maybe make a new towerContructor which creates a null tower?
 	    resetCursor();
 	    towerPlaceMode = false;

@@ -54,10 +54,13 @@ public class GenericModel {
 		}
 	}
 
-	public Path generateGenericPath() throws NumberFormatException, FileNotFoundException {
-		List<Point> dummyPathPoints = new ArrayList<>();
+
+    public Path generateGenericPath() throws NumberFormatException, FileNotFoundException {
+    	List<Point> dummyPathPoints = new ArrayList<>();
 		dummyPathPoints.add(new Point(2, 2));
 		dummyPathPoints.add(new Point(2, 3));
+		List<List<Point>> dummyCoordinates = new ArrayList<>();
+		dummyCoordinates.add(dummyPathPoints);
 		HashMap<String, List<Point>> pathImages = new HashMap<>();
 		List<Point> dummyPathStartPoints = new ArrayList<>();
 		dummyPathStartPoints.add(new Point(2, 2));
@@ -65,9 +68,10 @@ public class GenericModel {
 		dummyPathEndPoints.add(new Point(2, 3));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
 		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
-		Path newPath = new PathBuilder().construct(dummyPathPoints, pathImages, DEFAULT_BACKGROUND_IMAGE, 60);
+		Path newPath = new PathBuilder().construct(dummyCoordinates, pathImages, DEFAULT_BACKGROUND_IMAGE, DEFAULT_PATH_MIDDLE, DEFAULT_PATH_START, DEFAULT_PATH_END, 60, 1020/60, 650/60);
 		return newPath;
-	}
+    }
+
 
 	/**
 	 * Reads information from GenericEnemy.properties file to create a default
