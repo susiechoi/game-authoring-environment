@@ -1,7 +1,10 @@
 package engine.sprites;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import xml.serialization.ImageWrapper;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -15,32 +18,35 @@ import javafx.scene.image.ImageView;
  */
 public class Sprite implements FrontEndSprite{
 
-	private String myName;
-	private ImageView myImageView;
-	private String myImageString;
+    private String myName;
+    @XStreamOmitField
+    private transient ImageView myImageView;
+    private String myImageString;
+    private ImageWrapper myWrapper;
 
 
-	/**
-	 * Constructor that takes in a sprite's image
-	 * Source for the image path fix: https://stackoverflow.com/questions/16099427/cannot-load-image-in-javafx @author susiechoi
-	 * Source for resizing image: https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
-	 * 
-	 * @param image: tower's initial image
-	 * @param size: size of tower's image
-	 */
-	public Sprite(String name, String image, double size) {
-		myName = name;
-		myImageString = image;
-		myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
-		myImageView.setPreserveRatio(true);
-
-	}
+    /**
+     * Constructor that takes in a sprite's image
+     * Source for resizing image: https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
+     * 
+     * @param image: tower's initial image
+     * @param size: size of tower's image
+     */
+    public Sprite(String name, String image, double size) {
+	myName = name;
+	myImageString = image;
+	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); //TODO Replace w non-magic values or getresourcestream
+	myImageView.setPreserveRatio(true);
+	System.out.println("Created Sprite");
+	myWrapper = new ImageWrapper(image);
+    }
 
 	/**
 	 * Return the String name of the sprite.
 	 * 
 	 * @return String: the name of the Sprite
 	 */
+	@Override
 	public String getName() {
 		return myName;
 	}
@@ -50,12 +56,20 @@ public class Sprite implements FrontEndSprite{
 	 * 
 	 * @return ImageView representing game object's image
 	 */
+	@Override
 	public ImageView getImageView() { 
 		return myImageView;
 	}
 
 	public void setImage(Image image) {
 		myImageView  = new ImageView(image);
+	}
+	
+	/**
+	 * Method that allows the sprite to be updated based on its wrapper. To be used when deserializing.
+	 */
+	public void updateImage() {
+	    myImageView = myWrapper.toImageView();
 	}
 
 	public void place(double newX, double newY) {

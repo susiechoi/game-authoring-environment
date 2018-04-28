@@ -15,7 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 
 abstract class SpecifyObjectScreen extends AuthoringScreen {
 
@@ -34,7 +34,7 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 		try {
 			myDefaultName = getView().getPropertiesReader().findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
 		} catch (MissingPropertiesException e) {
-		    Log.error(e);
+//		    Log.error(e);
 		    getView().loadErrorScreen("NoConstants");
 		}
 	}

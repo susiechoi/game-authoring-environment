@@ -18,7 +18,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import engine.path.Path;
-import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
@@ -51,6 +50,10 @@ public class EnemyManager extends ShootingSpriteManager {
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
+		if(!enemy.isAlive()) {
+		    myEnemies.get(path).remove(enemy);
+		    break;
+		}
 		newEnemies.get(path).add(enemy);
 		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 		    deadEnemies.add(enemy);
@@ -95,10 +98,28 @@ public class EnemyManager extends ShootingSpriteManager {
 	    myEnemies.put(path, pathEnemies);
 	}
 	else {
-	    List<Enemy> pathEnemies = new ArrayList<Enemy>();
+	    List<Enemy> pathEnemies = new ArrayList<>();
 	    pathEnemies.add(enemy);
 	    myEnemies.put(path, pathEnemies);
 	}
+    }
+    
+    /**
+     * Clears all the current enemies in the map
+     */
+    public void clearEnemiesMap() {
+	myEnemies.clear();
+    }
+
+    /**
+     * Method to remove enemies from the current enemies map
+     * @param toBeRemoved
+     */
+    public void removeFromMap(List<Sprite> toBeRemoved) {
+	for(Sprite s : toBeRemoved) {
+	    myEnemies.remove(s);
+	}
+	
     }
 
 }
