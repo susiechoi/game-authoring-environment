@@ -3,11 +3,12 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import jdk.internal.jline.internal.Log;
 
 /**
  * Abstract class representing the bottom toolbar portion of screens displaying a Path.
@@ -36,7 +37,7 @@ public abstract class PathToolBar extends AuthoringScreen {
 		myPathToolBar.setMaxSize(Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarHeight")), Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarWidth")));
 		}
 		catch(MissingPropertiesException e) {
-		    Log.error(e);
+		    Log.debug(e);
 		    getView().loadErrorScreen("NoFile");
 		}
 		myPathToolBar.getStylesheets();
@@ -71,7 +72,7 @@ public abstract class PathToolBar extends AuthoringScreen {
 		return hb;
 	    }
 	    catch(MissingPropertiesException e) {
-		 Log.error(e);
+		 Log.debug(e);
 		getView().loadErrorScreen("NoConstants");
 		return null;
 	    }

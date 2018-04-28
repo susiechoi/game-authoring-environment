@@ -5,15 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.sun.javafx.tools.packager.Log;
+
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import jdk.internal.jline.internal.Log;
 
 abstract class GraphScreen extends AuthoringScreen {
 	
-	public static final String DEFAULT_TITLE = "Play from ";
 	
 	public GraphScreen(AuthoringView view) {
 		super(view);
@@ -22,7 +22,7 @@ abstract class GraphScreen extends AuthoringScreen {
 	
 	protected String parseTitle(String title) {
 		String gameName = getView().getGameName(); 
-		return DEFAULT_TITLE+title.substring(title.indexOf(gameName)+gameName.length()+1);
+		return title.substring(title.indexOf(gameName)+gameName.length()+1);
 	}
 
 	protected LineChart<Number, Number> makeGraph(String title) {
@@ -49,7 +49,7 @@ abstract class GraphScreen extends AuthoringScreen {
 			try {
 				br = new BufferedReader(new FileReader(filepath));
 			} catch (FileNotFoundException e) {
-			    Log.error(e);	
+			    Log.debug(e);	
 			    getView().loadErrorScreen("NoGraph");
 			}
 			String point = null;
@@ -74,7 +74,7 @@ abstract class GraphScreen extends AuthoringScreen {
 					}
 				}
 			} catch (NumberFormatException | IOException e) {
-			    Log.error(e);	
+			    Log.debug(e);	
 			    getView().loadErrorAlert("InvalidValues");
 			}
 		}
