@@ -9,6 +9,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+//THIS SOULDNT EXIST IT SHOULD BE DELETED ITS JUST HERE FOR MERGE REASONS SRY
 public class VisualizationsScreen extends Screen {
 
 	public static final String DEFAULT_GRAPHS_FILEPATH = "graphing/scoregraph";
