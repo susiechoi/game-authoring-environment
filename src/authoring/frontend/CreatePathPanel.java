@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -50,6 +51,7 @@ public class CreatePathPanel extends PathPanel {
 		pathPanel = new VBox();
 		pathPanel.setMaxSize(260, 900);
 		pathPanel.getStylesheets();
+		
 
 		Label panelTitle = new Label("Drag and Drop Paths");
 		
@@ -64,19 +66,19 @@ public class CreatePathPanel extends PathPanel {
 		pathImage = new DraggableImage(pathImg);
 		pathImage.setCopyDraggable();
 		pathImage.getPathImage().setId("path");
-		pathImage.getPathImage().getStyleClass().add("img-view");
+//		pathImage.getPathImage().getStyleClass().add("img-view");
 
 		Image startImg = new Image(DEFAULT_START_IMAGE);
 		startImage = new DraggableImage(startImg);
 		startImage.setCopyDraggable();
 		startImage.getPathImage().setId("start");
-		startImage.getPathImage().getStyleClass().add("img-view");
+//		startImage.getPathImage().getStyleClass().add("img-view");
 
 		Image endImg = new Image(DEFAULT_END_IMAGE);
 		endImage = new DraggableImage(endImg);
 		endImage.setCopyDraggable();
 		endImage.getPathImage().setId("end");
-		endImage.getPathImage().getStyleClass().add("img-view");
+//		endImage.getPathImage().getStyleClass().add("img-view");
 
 		applyButton = getUIFactory().makeTextButton("", "Apply");
 
@@ -88,16 +90,6 @@ public class CreatePathPanel extends PathPanel {
 	}
 	
 	protected ImageView makeTrashImage() {
-		trashImage.getStyleClass().add("img-view");
-		trashImage.setOnDragOver(new EventHandler <DragEvent>() {
-			@Override
-			public void handle(DragEvent event) {
-				if (event.getDragboard().hasImage()) {
-					event.acceptTransferModes(TransferMode.ANY);
-				}
-			}
-		});
-
 		trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
 			@Override
 			public void handle(DragEvent event) {
