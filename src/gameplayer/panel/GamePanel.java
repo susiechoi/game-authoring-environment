@@ -40,6 +40,7 @@ public class GamePanel extends Panel{
     private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
     private Pane spriteAdd;
+    private StackPane spriteAndPath;
     private final UIFactory UIFACTORY;
     private Boolean towerClick = false;
     private Circle rangeIndicator;
@@ -63,12 +64,12 @@ public class GamePanel extends Panel{
     public void makePanel() {
 
 	//TODO potentially fix needed?
-
 	Pane gamePane = new Pane();
-	ScrollPane panelRoot = new ScrollPane(gamePane);
+	spriteAndPath = new StackPane(gamePane);
+	ScrollPane panelRoot = new ScrollPane(spriteAndPath);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
-	panelRoot.setFitToHeight(true);
-	panelRoot.setFitToWidth(true);
+//	panelRoot.setFitToHeight(true);
+//	panelRoot.setFitToWidth(true);
 
 //	gamePane.setMaxWidth(Double.MAX_VALUE);
 //	gamePane.setMaxHeight(Double.MAX_VALUE);
@@ -86,7 +87,7 @@ public class GamePanel extends Panel{
 
 	try {
 	    //TODO fix this hardcoding, should just expand to fill space given(don't care about scaling ************************************
-	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
+	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 1020.0);
 	    int random = rand.nextInt(backgroundMap.size());
 	    int count = 0;
 
@@ -112,7 +113,7 @@ public class GamePanel extends Panel{
 		if (spriteAdd == null) {
 		    makePanel();
 		}
-		spriteAdd.getChildren().add(grid);
+		spriteAndPath.getChildren().add(grid);
     }
 
 

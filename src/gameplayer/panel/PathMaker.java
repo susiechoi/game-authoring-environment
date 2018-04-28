@@ -17,8 +17,10 @@ import javafx.scene.layout.RowConstraints;
 
 public class PathMaker {
 
+    	private static final double ONE_HUNDRED = 100.0;
 	private GridPane grid;
 	private int myPathSize;
+	
 
 	public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int col, int row, Pane gamePane) {
 		grid = new GridPane();
@@ -26,8 +28,10 @@ public class PathMaker {
 		grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
 		grid.prefHeightProperty().bind(gamePane.heightProperty());
 		grid.prefWidthProperty().bind(gamePane.widthProperty());
+		
 		grid.maxHeightProperty().bind(gamePane.heightProperty());
 		grid.maxWidthProperty().bind(gamePane.widthProperty());
+		
 		grid.minHeightProperty().bind(gamePane.heightProperty());
 		grid.minWidthProperty().bind(gamePane.widthProperty());
 		return grid; 
@@ -63,12 +67,12 @@ public class PathMaker {
 	private void setGridConstraints(GridPane grid, int numRow, int numCol) {
 		for (int i = 0; i < numCol; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
-			colConst.setPercentWidth(100.0/numCol);
+			colConst.setPercentWidth(ONE_HUNDRED/numCol);
 			grid.getColumnConstraints().add(colConst);
 		}
 		for (int i = 0; i < numRow; i++) {
 			RowConstraints rowConst = new RowConstraints();
-			rowConst.setPercentHeight(100.0/numRow);
+			rowConst.setPercentHeight(ONE_HUNDRED/numRow);
 			grid.getRowConstraints().add(rowConst);         
 		}
 	}
