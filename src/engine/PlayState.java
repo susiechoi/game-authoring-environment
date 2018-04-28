@@ -119,6 +119,7 @@ public class PlayState implements GameData {
     public void setLevel(int levelNumber) {
 	clearLevel();
 	currentLevel = myLevels.get(levelNumber);
+	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
     }
 
@@ -164,7 +165,10 @@ public class PlayState implements GameData {
     private void checkWin() {
 	// Level is over
 	if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
+	    myLevels.remove(currentLevel.getNumber()-1);
+	    myLevels.add(currentLevel.getNumber() - 1, currentLevelCopy);
 	    currentLevel = myLevels.get(currentLevel.myNumber());
+	    currentLevelCopy = new Level(currentLevel);
 	    myMediator.updateLevel(currentLevel.myNumber());
 	    // TODO: call Mediator to trigger next level
 	    myMediator.nextLevel();
