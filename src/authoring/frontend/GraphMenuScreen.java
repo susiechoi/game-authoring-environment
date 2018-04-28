@@ -1,10 +1,8 @@
-package authoring.frontend.graphing;
+package authoring.frontend;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import authoring.frontend.AuthoringScreen;
-import authoring.frontend.AuthoringView;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -36,9 +34,6 @@ public class GraphMenuScreen extends AuthoringScreen {
 		vb.getChildren().add(screenTitle);
 		
 		List<String> availableGraphs = getUIFactory().getFileNames(DEFAULT_GRAPHS_FOLDER+myGraphType);
-		for (String s : availableGraphs) {
-		    System.out.println(s);
-		}
 		List<String> relevantGraphs = new ArrayList<String>(); 
 
 		for (String graphName : availableGraphs) {
@@ -58,8 +53,12 @@ public class GraphMenuScreen extends AuthoringScreen {
 				e -> {singleButton.setDisable(true);}, choosePrompt);
 		singleButton.setDisable(true);
 		singleButton.setOnAction(e -> {
+//			ArrayList<String> args = new ArrayList<>(); 
 			String fullFilepath  = makeFullFilepath(singleChooser.getSelectionModel().getSelectedItem()); 
+//			args.add(fullFilepath);
+//			args.add(myGraphType);
 			getView().getStageManager().switchScreen(new SingleGraphScreen(getView(), fullFilepath, myGraphType).getScreen());
+//			getView().goForwardFrom(this.getClass().getSimpleName()+"Single", args);
 		});
 		
 		vb.getChildren().addAll(singleChooser, singleButton);
@@ -77,9 +76,14 @@ public class GraphMenuScreen extends AuthoringScreen {
 			e -> {compareButton.setDisable(true);}, choosePrompt);
 		compareButton.setDisable(true);
 		compareButton.setOnAction(e -> {
+//			ArrayList<String> args = new ArrayList<>(); 
 			String game1Path = makeFullFilepath(game1Chooser.getSelectionModel().getSelectedItem()); 
 			String game2Path = makeFullFilepath(game2Chooser.getSelectionModel().getSelectedItem()); 
+//			args.add(game1Path);
+//			args.add(game2Path);
+//			args.add(myGraphType);
 			getView().getStageManager().switchScreen(new DoubleGraphScreen(getView(), game1Path, game2Path, myGraphType).getScreen());
+//			getView().goForwardFrom(this.getClass().getSimpleName()+"Double", args);
 		});
 
 		vb.getChildren().addAll(game1Chooser, game2Chooser, compareButton);

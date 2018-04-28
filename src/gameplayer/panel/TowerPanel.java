@@ -37,13 +37,11 @@ public class TowerPanel extends ListenerPanel {
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
-    private Integer initialCurrency;
 
     private DataPointWriter myCurrencyWriter; 
     
     //TODO change to only use availibleTowers
     //private final FileIO FILE_READER;
-
     private HBox towerPane;
 
 
@@ -53,7 +51,7 @@ public class TowerPanel extends ListenerPanel {
 	//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-	initialCurrency = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("initalCurrency"));
+
 	setupWriters(); 
     }
     
@@ -68,7 +66,6 @@ public class TowerPanel extends ListenerPanel {
 
     @Override
     public void makePanel() {
-
 	TOWER_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("TowerImageSize"));
 	int swapButtonSize = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("SwapButtonSize"));
 	String assortedButtonFilePath = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
@@ -82,7 +79,7 @@ public class TowerPanel extends ListenerPanel {
 
 	currencyDisplay = new Button();
 	currencyDisplay.setId(GAMEPLAYER_PROPERTIES.get("currencyButton"));
-	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +initialCurrency);
+	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText"));
 	currencyDisplay.setDisable(true);
 	//currencyDisplay.setMaxWidth(Double.MAX_VALUE);
 
@@ -214,10 +211,8 @@ public class TowerPanel extends ListenerPanel {
      * @param score	initial health of the level
      */
     private void setInitialCurrency(int currency) {
-	initialCurrency= setInitalProperty(currencyDisplay, currency);
-	if(initialCurrency == -1) {
-	    updateCurrency(currency);
-	}
+	checkForPanelCreation(currencyDisplay);
+	updateCurrency(currency);
     }
 
 
