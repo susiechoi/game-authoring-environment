@@ -76,15 +76,13 @@ public class PlayState implements GameData {
 
     public void update(double elapsedTime) {
 	count++;
+	checkLoss();
 	if (count % 120 == 0) {
-//	    System.out.println("Spawning enemy!");
 	    spawnEnemies();
 	}
 	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-//	System.out.println(deadEnemies.size());
 	updateHealth(deadEnemies);
 	myMediator.removeListOfSpritesFromScreen(deadEnemies);
-	myEnemyManager.moveEnemies(elapsedTime);
 	handleCollisions(elapsedTime);
     }
 
@@ -96,12 +94,12 @@ public class PlayState implements GameData {
 	activeEnemies.removeAll(toBeRemoved);
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
-	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	myTowerManager.moveProjectiles(elapsedTime);
+	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
-	    System.out.println("adding " + projectile + " to screen");
 	    myMediator.addSpriteToScreen(projectile);
 	}
 	updateScore(toBeRemoved);
@@ -119,13 +117,11 @@ public class PlayState implements GameData {
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
-		    System.out.println("MADE NEW ENEMY " + newEnemy);
 		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
-
 		}
 		catch (Exception e) {
 		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
@@ -138,10 +134,21 @@ public class PlayState implements GameData {
 		currentLevel = myLevels.get(currentLevel.myNumber());
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
+	//	myMediator.nextLevel();
 	    }
 	    else {
-		// TODO: end game
+		// TODO: end game, player won
+		//	myMediator.gameWon();
 	    }
+	}
+    }
+    
+    private void checkLoss() {
+	if (myHealth.getValue() <= 0) {
+	    System.out.println("Lost game!");
+	    myMediator.pause();
+	    myMediator.endLoop();
+	  //  myMediator.gameLost();
 	}
     }
 
@@ -206,7 +213,6 @@ public class PlayState implements GameData {
 	    throw new CannotAffordException(e.getMessage());
 	}
     }
-
     /**
      * Sells the tower, increments users currency, and removes it from collection and screen
      * @param tower
@@ -232,4 +238,3 @@ public class PlayState implements GameData {
     	return mySettings.getCSSTheme();
     }
 }
-

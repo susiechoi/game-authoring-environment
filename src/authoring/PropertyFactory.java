@@ -56,9 +56,9 @@ public class PropertyFactory {
     }
     
     private Property createUpgradeProperty(String className, String type, List<Object> attributes) {
-	double cost = (double) attributes.get(0);
-	double value =  (double) attributes.get(1);
-	double property = (double) attributes.get(2);
+	double cost = ((Double)attributes.get(0)).doubleValue();
+	double value =  ((Double)attributes.get(1)).doubleValue();
+	double property = ((Double)attributes.get(2)).doubleValue();
 	Reflection reflection = new Reflection();
 	return (UpgradeProperty) reflection.createInstance(className, cost, value, property );
     }

@@ -43,6 +43,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      * @return Projectiles to add to the front end view
      */
     public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
+	System.out.println("SHOOTING");
 	List<Projectile> newProjectiles = new ArrayList<>();
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
