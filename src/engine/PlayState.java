@@ -112,13 +112,26 @@ public class PlayState implements GameData {
 	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
 
+    /**
+     * Returns the styling theme currently used in the level in the form of a .css file path
+     * 
+     * @return String: the string file path to the .css file currently used to style the game
+     * @throws MissingPropertiesException: thrown if the .css file can't be found
+     */
     public String getStyling() throws MissingPropertiesException {
 	return mySettings.getCSSTheme();
     }
 
-    public void setLevel(int levelNumber) {
+    /**
+     * Sets currentLevel instance variable to the level contained in the list of levels
+     * at the index levelNumber - 1
+     * 
+     * @param levelNumber: the desired level number to load into the game
+     * @throws IndexOutOfBoundsException: thrown if no level exists for a given levelNumber
+     */
+    public void setLevel(int levelNumber) throws IndexOutOfBoundsException {
 	clearLevel();
-	currentLevel = myLevels.get(levelNumber);
+	currentLevel = myLevels.get(levelNumber - 1);
 	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
     }
@@ -133,6 +146,11 @@ public class PlayState implements GameData {
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
     }
 
+    /**
+     * Updates the properties of the PlayState to animate necessary game interactions
+     * 
+     * @param elapsedTime: time elapsed since the last update loop was executed
+     */
     public void update(double elapsedTime) {
 	count++;
 	checkLoss();
