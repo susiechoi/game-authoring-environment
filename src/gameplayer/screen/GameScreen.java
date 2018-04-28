@@ -1,25 +1,30 @@
 package gameplayer.screen;
 
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
-import controller.PlayController;
-import gameplayer.panel.*;
-
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.PlayController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import frontend.Screen;
-import frontend.UIFactory;
 import frontend.View;
 import gameplayer.ScreenManager;
+import gameplayer.panel.BuyPanel;
+import gameplayer.panel.ControlsPanel;
+import gameplayer.panel.GamePanel;
+import gameplayer.panel.ScorePanel;
+import gameplayer.panel.SettingsPanel;
+import gameplayer.panel.TowerInfoPanel;
+import gameplayer.panel.TowerPanel;
+import gameplayer.panel.UpgradePanel;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
@@ -27,12 +32,15 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import voogasalad.util.soundfactory.*;
+import src.voogasalad.util.soundfactory.ITRTSoundFactory;
+
+
 
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
 	private static final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
+	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
@@ -53,7 +61,7 @@ public class GameScreen extends Screen {
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
 		//System.out.println("Sound factory is null: "+(SOUND_FACTORY==null));
-		SOUND_FACTORY = new ITRTSoundFactory();
+		SOUND_FACTORY = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
 		//System.out.println("Sound factory is null: "+(SOUND_FACTORY==null));
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;

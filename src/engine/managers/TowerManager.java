@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;

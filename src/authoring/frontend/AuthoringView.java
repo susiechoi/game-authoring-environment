@@ -22,8 +22,6 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.path.Path;
-import frontend.ErrorReader;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;

@@ -5,7 +5,6 @@ import engine.sprites.ShootingSprites;
 import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.RangeProperty;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.scene.image.Image;
 
 /**
  * Class to manage different projectiles. Takes a defined range and trigger to determine when to

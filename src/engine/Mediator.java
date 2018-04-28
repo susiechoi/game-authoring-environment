@@ -4,8 +4,6 @@ package engine;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-
 import java.util.List;
 import java.util.Map;
 
@@ -210,7 +208,7 @@ public class Mediator {
      */
     public void removeListOfSpritesFromScreen(List<Sprite> list) {
 	for(Sprite sprite : list) {
-	    this.removeSpriteFromScreen( (FrontEndSprite) sprite); 
+	    this.removeSpriteFromScreen( sprite); 
 	}
     }
 
