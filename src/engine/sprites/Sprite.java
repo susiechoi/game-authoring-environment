@@ -25,7 +25,7 @@ public class Sprite implements FrontEndSprite{
     private ImageView myImageView;
     private String myImageString;
     private PropertyBuilder myPropertyBuilder;
-    private List<Property<Object>> myProperties;
+    private List<Property> myProperties;
 
 
     /**
@@ -35,7 +35,7 @@ public class Sprite implements FrontEndSprite{
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, String image, double size, List<Property<Object>> properties) {
+    public Sprite(String name, String image, double size, List<Property> properties) {
 	myName = name;
 	myImageString = image;
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
@@ -139,12 +139,12 @@ public class Sprite implements FrontEndSprite{
 	myImageView.setPreserveRatio(true);
     }
 
-    protected Property<Object> makeProperty(Property<Object> p) {
+    protected Property makeProperty(Property p) {
 	return myPropertyBuilder.getProperty(p);
     }
     
-    public Property<Object> getProperty(String ID) {
-	for(Property<Object> property : myProperties) {
+    public Property getProperty(String ID) {
+	for(Property property : myProperties) {
 	    if(property != null && property.getName().equals(ID)) {
 		return property;
 	    }
@@ -157,31 +157,36 @@ public class Sprite implements FrontEndSprite{
      * Handles upgrading the health of a tower
      */
     public double upgradeProperty(String name, double balance) {
-	for(Property<Object> property : myProperties) {
+	for(Property property : myProperties) {
 	    if(property.getName() == name) {
-		return ((UpgradeProperty<Object>) property).upgrade(balance);
+		return ((UpgradeProperty) property).upgrade(balance);
 	    }
 	}
 	return balance;
     }
     
-    public List<Property<Object>> getProperties(){
+    public List<Property> getProperties(){
 	return myProperties;
     }
     
-    public void addProperty(Property<Object> property) {
-	Property<Object> toRemove = null;
-	for(Property<Object> p : myProperties) {
-	    if(property.getName().equals(p.getName())) {
-		toRemove = p;
-	    }
+    public void addProperty(Property property) {
+	Property toRemove = null;
+	try {
+	    for(Property p : myProperties) {
+		    if(property.getName().equals(p.getName())) {
+			toRemove = p;
+		    }
+		}
+		myProperties.remove(toRemove);
+		myProperties.add(property);
+	}catch(NullPointerException e){
+	    return;
 	}
-	myProperties.remove(toRemove);
-	myProperties.add(property);
+	
     }
     
     public double getValue(String ID) {
-	for(Property<Object> property : myProperties) {
+	for(Property property : myProperties) {
 	    if(property.getName().equals(ID)) {
 		return property.getProperty();
 	    }

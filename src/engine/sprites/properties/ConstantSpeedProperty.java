@@ -30,10 +30,5 @@ public class ConstantSpeedProperty extends Property {
 	this.setProperty(newSpeed);
     }
 
-    @Override
-    public Object execute(Object... args) {
-	// TODO Auto-generated method stub
-	return null;
-    }
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.SpeedProperty;
 import engine.sprites.enemies.Enemy;
@@ -33,10 +34,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
      */
-    public Projectile(String name, double size, String image, List<Property<Object>> properties) {
+    public Projectile(String name, double size, String image, List<Property> properties) {
 	super(name, image, size, properties);
 	mySize = size; 
 	hitTargets = new ArrayList<>();
+	for (Property p: properties) {
+	    System.out.println(p.getName() + " in projectile property list");
+	}
     }
 
     /**
@@ -65,15 +69,27 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * Moves image in direction of it's orientation
      */
     public void move(double elapsedTime) {
-	if (this.myTarget.isAlive()) {
-	    rotateImage();
+	try {
+	    ((MovingProperty)this.getProperty("Boomerang")).move(this, elapsedTime);
+	}catch(NullPointerException e) {
+	    //this means there is not movement property defined for the projectile, so don't move them
+	    System.out.println("no movement property");
+	    return;
 	}
-	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
-	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-	this.getImageView().setX(this.getX()+xMove);
-	this.getImageView().setY(this.getY()+yMove);
+	
     }
+	
+	
+	
+//	if (this.myTarget.isAlive()) {
+//	    rotateImage();
+//	}
+//	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
+//	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+//	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+//	this.getImageView().setX(this.getX()+xMove);
+//	this.getImageView().setY(this.getY()+yMove);
+//    }
 
     /**
      * Rotates the image to face the target

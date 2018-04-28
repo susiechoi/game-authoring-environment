@@ -34,7 +34,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double mySpeed;
     private double myKillReward;
 
-    public Enemy(String name, String image, double size, Launcher launcher, List<Property<Object>> properties) {
+    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher, properties);
 	myIntersecter = new ImageIntersecter(this); 
 	pathIndex = 0;

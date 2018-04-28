@@ -22,7 +22,7 @@ public class LauncherBuilder {
     public Launcher construct(double fireRate, double fireRange, Projectile projectile) {
 	FireRateProperty rate = new FireRateProperty(0, 0, fireRate);
 	RangeProperty range = new RangeProperty(fireRange);
-	List<Property<Object>> launcherProps = new ArrayList<>();
+	List<Property> launcherProps = new ArrayList<>();
 	launcherProps.add(rate);
 	launcherProps.add(range);
 	return new Launcher(projectile, launcherProps);

@@ -55,8 +55,8 @@ public class EnemyManager extends ShootingSpriteManager {
 		if (!enemy.isAlive()) {
 		    newEnemies.get(path).remove(enemy);
 		}
-		newEnemies.get(path).add(enemy);
-		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
+		//newEnemies.get(path).add(enemy);
+		else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 		    deadEnemies.add(enemy);
 		    newEnemies.get(path).remove(enemy);
 		}
@@ -73,8 +73,10 @@ public class EnemyManager extends ShootingSpriteManager {
 		    enemy.setIndex(pathIndex);
 		    }
 		}
+	    myEnemies.get(path).removeAll(deadEnemies);
 	    }
-	myEnemies = newEnemies;
+	
+	
 	return deadEnemies;
     }
 
