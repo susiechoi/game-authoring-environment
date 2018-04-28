@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import jdk.internal.jline.internal.Log;
 
 public class PathMaker {
 
@@ -36,6 +37,7 @@ public class PathMaker {
 				image = new ImageView(new Image(key));
 				}
 				catch(IllegalArgumentException e){
+				    Log.error(e);
 				    image = new ImageView(); //TODO this should not be hardcoded
 				}
 				image.setFitWidth(myPathSize);

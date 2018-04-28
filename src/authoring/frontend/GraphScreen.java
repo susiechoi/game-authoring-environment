@@ -9,6 +9,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import jdk.internal.jline.internal.Log;
 
 abstract class GraphScreen extends AuthoringScreen {
 	
@@ -47,7 +48,8 @@ abstract class GraphScreen extends AuthoringScreen {
 			try {
 				br = new BufferedReader(new FileReader(filepath));
 			} catch (FileNotFoundException e) {
-				getView().loadErrorScreen("NoGraph");
+			    Log.error(e);	
+			    getView().loadErrorScreen("NoGraph");
 			}
 			String point = null;
 
@@ -71,7 +73,8 @@ abstract class GraphScreen extends AuthoringScreen {
 					}
 				}
 			} catch (NumberFormatException | IOException e) {
-				getView().loadErrorAlert("InvalidValues");
+			    Log.error(e);	
+			    getView().loadErrorAlert("InvalidValues");
 			}
 		}
 	}

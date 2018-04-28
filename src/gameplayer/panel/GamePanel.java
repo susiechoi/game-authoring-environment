@@ -1,7 +1,6 @@
 package gameplayer.panel;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -23,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
+import jdk.internal.jline.internal.Log;
 
 
 //note to andrew: delete if you see this not on his branch
@@ -41,12 +41,13 @@ public class GamePanel extends Panel{
     private Circle rangeIndicator;
 
     //TODO changes this to be passed from mediator ******************************************************************************
-    private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
+    private final String BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+	BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("backgroundFilePath");
 	PROP_READ = new PropertiesReader();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
 	towerSelected =  null;
@@ -91,6 +92,7 @@ public class GamePanel extends Panel{
 		}
 	    }
 	} catch (MissingPropertiesException e1) {
+	    Log.error(e1);
 		e1.printStackTrace();
 	}
     }
@@ -174,6 +176,8 @@ public class GamePanel extends Panel{
 	    spriteAdd.getChildren().add(rangeIndicator);
 	    towImage.toFront();
 	} catch (MissingPropertiesException e) {
+	    Log.error(e);
+	    //TODO let's not fail please!!
 	    System.out.println("Constants property file not found");
 	}
 
@@ -193,6 +197,7 @@ public class GamePanel extends Panel{
 
 	} catch (MissingPropertiesException e) {
 	    // TODO Auto-generated catch block
+	    Log.error(e);
 	    e.printStackTrace();
 	}
     }
@@ -233,6 +238,8 @@ public class GamePanel extends Panel{
 
 	    }
 	    catch(CannotAffordException e){
+		 Log.error(e);
+		 //TODO aaahhhhhhhhh
 		//GameScreen popup for cannot afford
 	    }
 	}

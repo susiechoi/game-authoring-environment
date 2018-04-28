@@ -11,6 +11,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import jdk.internal.jline.internal.Log;
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,20 +23,18 @@ import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 
 
-public class TowerPanel extends Panel {
+public class TowerPanel extends ListenerPanel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private int TOWER_IMAGE_SIZE;
-    private int SWAP_BUTTON_SIZE;
 
 
-    private Integer money;
     private GameScreen GAME_SCREEN;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
-    private String ASSORTED_BUTTON_FILEPATH;
+    private Integer initialCurrency;
 
     //TODO change to only use availibleTowers
 
@@ -46,9 +46,10 @@ public class TowerPanel extends Panel {
     public TowerPanel( GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+	//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-	makePanel();
+	initialCurrency = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("initalCurrency"));
     }
 
 
@@ -56,8 +57,8 @@ public class TowerPanel extends Panel {
     public void makePanel() {
 
 	TOWER_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("TowerImageSize"));
-	SWAP_BUTTON_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("SwapButtonSize"));
-	ASSORTED_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
+	int swapButtonSize = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("SwapButtonSize"));
+	String assortedButtonFilePath = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
 
 	towerPane = new HBox();
 	ScrollPane towerDisplay = new ScrollPane(towerPane);
@@ -68,7 +69,7 @@ public class TowerPanel extends Panel {
 
 	currencyDisplay = new Button();
 	currencyDisplay.setId(GAMEPLAYER_PROPERTIES.get("currencyButton"));
-	currencyDisplay.setText("$" + money);
+	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +initialCurrency);
 	currencyDisplay.setDisable(true);
 	//currencyDisplay.setMaxWidth(Double.MAX_VALUE);
 
@@ -79,7 +80,7 @@ public class TowerPanel extends Panel {
 	currencyAndSwap.setAlignment(Pos.CENTER);
 	try {
 
-	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(ASSORTED_BUTTON_FILEPATH, SWAP_BUTTON_SIZE, SWAP_BUTTON_SIZE);
+	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(assortedButtonFilePath, swapButtonSize, swapButtonSize);
 	    Button swapButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("swapButtonID"), buttonMap.get(GAMEPLAYER_PROPERTIES.get("swapButton")));
 	    swapButton.setOnMouseClicked(arg0 -> GAME_SCREEN.swapVertPanel());
 	    swapButton.setTooltip(new Tooltip(GAMEPLAYER_PROPERTIES.get("swapTooltip"))); //TODO make properties file
@@ -88,7 +89,8 @@ public class TowerPanel extends Panel {
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
-	    System.out.println("SwapButton Image Missing");
+	    Log.error(e);
+	    System.out.println("SwapButton Image Missing"); //TODO!!!
 	}
 
 
@@ -102,10 +104,7 @@ public class TowerPanel extends Panel {
 	towersAndCurr.setId(GAMEPLAYER_PROPERTIES.get("towerPanelID"));
 	PANEL = towersAndCurr;
     }
-    
-    public void setInitalMoney(Integer moneyIn) {
-	updateCurrency(moneyIn);
-    }
+
 
     private void handleMouseInput(double x, double y) {
 	GAME_SCREEN.towerSelectedForPlacement(null);
@@ -153,7 +152,7 @@ public class TowerPanel extends Panel {
 	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
 	    //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton(GAMEPLAYER_PROPERTIES.get("buttonID"), voidView);
-	    voidButton.setOnMouseClicked((arg0) ->{ 
+	    voidButton.setOnMouseClicked(arg0 ->{ 
 
 		GAME_SCREEN.towerSelectedForPlacement(null);
 		System.out.println("nullhit");
@@ -193,17 +192,27 @@ public class TowerPanel extends Panel {
     }
 
     private void updateCurrency(Integer newValue) {
-	currencyDisplay.setText("$" +newValue);
+	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
     }
 
-    public ChangeListener<Number> createCurrencyListener() {
-	return new ChangeListener<Number>() {
+    /**
+     * Wrapper method on score to reduce order of call dependencies
+     * @param score	initial health of the level
+     */
+    private void setInitialCurrency(int currency) {
+	if(setInitalProperty(currencyDisplay, currency, initialCurrency)) {
+	    updateCurrency(currency);
+	}
+    }
 
-		@Override
-		public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-			updateCurrency((Integer)arg0.getValue());
-			
-		}
+
+    public ChangeListener<Number> createCurrencyListener(int startCurrency) {
+	setInitialCurrency(startCurrency);
+	return new ChangeListener<Number>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+		updateCurrency((Integer)arg0.getValue());	
+	    }
 	};
     }
 }

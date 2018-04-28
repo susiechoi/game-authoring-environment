@@ -6,6 +6,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import javafx.scene.control.ScrollPane;
 import frontend.PromptReader;
 import frontend.PropertiesReader;
@@ -14,6 +16,7 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.towers.FrontEndTower;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import jdk.internal.jline.internal.Log;
 
 
 public class UpgradePanel extends SpecificPanel {
@@ -59,9 +62,9 @@ public class UpgradePanel extends SpecificPanel {
 	String UPGRADE_NAMES_FILE_PATH = GAMEPLAYER_PROPERTIES.get("upgradeNamesFilePath");
 	try {
 	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(UPGRADE_NAMES_FILE_PATH, UPGRADE_IMAGE_SIZE, UPGRADE_IMAGE_SIZE);
-	    for (String upgradeType: upgradeMap.keySet()) {
-			Button upgradeButton = UI_FACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("buttonID"), upgradeMap.get(upgradeType));
-			upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.upgradeClickedOn(TOWER, upgradeType));
+	    for (Entry<String, Image> entry: upgradeMap.entrySet()) {
+			Button upgradeButton = UI_FACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("buttonID"), upgradeMap.get(entry.getKey()));
+			upgradeButton.setOnMouseClicked(arg0 -> GAME_SCREEN.upgradeClickedOn(TOWER, entry.getKey()));
 			upgrades.getChildren().add(upgradeButton);
 			HBox.setHgrow(upgradeButton, Priority.ALWAYS);
 			upgradeButton.setMaxWidth(Double.MAX_VALUE);
@@ -69,7 +72,8 @@ public class UpgradePanel extends SpecificPanel {
 	    }
 	}
 	catch (MissingPropertiesException e) {
-	    System.out.println("upgrade image load fail");
+	    Log.error(e);
+	    System.out.println("upgrade image load fail"); //TODO!!!
 	}
     }
 }

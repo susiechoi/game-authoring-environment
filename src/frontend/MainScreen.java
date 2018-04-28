@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import jdk.internal.jline.internal.Log;
 
 /**
  * Screen that users initially see where they can choose between authoring a game and playing it.
@@ -59,7 +60,9 @@ public class MainScreen extends Screen {
 				.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
+			    	Log.error(e);
 				e.printStackTrace();
+				myView.loadErrorScreen("NoFile");
 			}
 		});
 

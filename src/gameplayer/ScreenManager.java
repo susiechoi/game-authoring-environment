@@ -1,7 +1,6 @@
 package gameplayer;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +44,6 @@ public class ScreenManager extends View {
 	private GameScreen GAME_SCREEN;
 	private final PromptReader PROMPTS;
 	private PropertiesReader PROP_READ = new PropertiesReader();
-	private List<Integer> controlVars;
 	private Map<String, String> GAMEPLAYER_PROPERTIES;
 
 	//private final FileIO FILE_READER;
@@ -61,8 +59,8 @@ public class ScreenManager extends View {
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;
 		MEDIATOR = mediator;
-		findSettings();
 	}
+
 
 //	public ScreenManager(StageManager stageManager, String language) {
 //	    	
@@ -76,13 +74,7 @@ public class ScreenManager extends View {
 //		findSettings();
 //	}
 
-	public List<Integer> getMediatorInts(){
-		controlVars = new ArrayList<Integer>();
-		for(int i = 0; i < 3; i++) {
-			controlVars.add(Integer.valueOf(0));
-		}
-		return controlVars;
-	}
+
 
 	//TODO set Style sheets
 	public void loadInstructionScreen() {
@@ -110,22 +102,20 @@ public class ScreenManager extends View {
 		MainScreen mainScreen = new MainScreen(STAGE_MANAGER, this);
 	}
 
-	public void loadGameScreenContinuation() {
+	//DO WE NEED THIS METHOD????
+//	public void loadGameScreenContinuation() {
+//
+//	}
 
-	}
-
-	//TODO read these in from properties file
-	private void findSettings() {
-		Double DEFAULT_HEIGHT = Double.parseDouble(GAMEPLAYER_PROPERTIES.get("DefaultHeight"));
-		Double DEFAULT_WIDTH = Double.parseDouble(GAMEPLAYER_PROPERTIES.get("DefaultWidth"));
-	}
 
 	public void updateLevelCount(Integer newLevelCount) {
-		GAME_SCREEN.updateLevel(newLevelCount);
+	    checkGameScreenInitialization();
+	    GAME_SCREEN.updateLevel(newLevelCount);
 	}
 
 	public void display(FrontEndSprite sprite) {
-		GAME_SCREEN.displaySprite(sprite);
+	    checkGameScreenInitialization();
+	    GAME_SCREEN.displaySprite(sprite);
 	}
 
 
@@ -168,26 +158,39 @@ public class ScreenManager extends View {
 	}
 
 	public void remove(FrontEndSprite sprite) {
-		GAME_SCREEN.remove(sprite);
+	    checkGameScreenInitialization();
+	    GAME_SCREEN.remove(sprite);
 	}
 
 	public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-		GAME_SCREEN.setAvailbleTowers(availableTowers);
+	    checkGameScreenInitialization();
+	    GAME_SCREEN.setAvailbleTowers(availableTowers);
 	}
 
 
 
 	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
+	    checkGameScreenInitialization();
 		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize);;
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
 		IntegerProperty myLives) {
+	    checkGameScreenInitialization();
 	    GAME_SCREEN.attachListeners(myCurrency, myScore, myLives);	    
 	}
 
 
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
+	}
+	
+	/**
+	 * Called before GameScreen is used to eliminate OrderOfCall dependencies
+	 */
+	private void checkGameScreenInitialization() {
+	    if(GAME_SCREEN == null) {
+		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+	    }
 	}
 }
