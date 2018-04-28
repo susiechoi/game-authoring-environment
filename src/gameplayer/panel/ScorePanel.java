@@ -7,7 +7,6 @@ import java.util.Map;
 import file.DataPointWriter;
 import com.sun.javafx.tools.packager.Log;
 
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Priority;
@@ -16,8 +15,11 @@ import javafx.scene.control.Label;
 
 public class ScorePanel extends ListenerPanel {
 
+	public static final int DEFAULT_FIRST_LEVEL_NUMBER = 1; 
     public static final String DEFAULT_SCORE_PATH = "Score/"; 
+	public static final String DEFAULT_FILENAME_SEPARATOR = "_";
     public static final String DEFAULT_HEALTH_PATH = "Health/"; 
+    public static final String DEFAULT_LEVEL_IDENTIFIER = "Level";
     public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
     private final GameScreen GAME_SCREEN;
@@ -26,8 +28,6 @@ public class ScorePanel extends ListenerPanel {
     private Label ScoreText;
     private Label LevelText;
     private Label HealthText;
-    private Integer initialScore;
-    private Integer initialHealth;
 
     private DataPointWriter myScoreWriter; 
     private DataPointWriter myHealthWriter;
@@ -35,43 +35,37 @@ public class ScorePanel extends ListenerPanel {
     public ScorePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-
-	setupWriters(); 
+	setupWriters(DEFAULT_FIRST_LEVEL_NUMBER); 
     }
 
-    private void setupWriters() {
-	initialScore = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultScore"));
-	initialHealth = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultHealth"));
-
+    private void setupWriters(int level) {
 	try {
-	    myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH); 
+	    myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR); 
 	} catch (IOException e) {
 	    //			Log.error(e);
 	    GAME_SCREEN.loadErrorScreen("NoFile");
 	}
 
 	try {
-	    myHealthWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_HEALTH_PATH); 
+	    myHealthWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_HEALTH_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR); 
 	} catch (IOException e) {
 	    Log.debug(e);
 	    GAME_SCREEN.loadErrorScreen("NoFile");
 	}
-
     }
 
     @Override
     public void makePanel() {
 	//TODO Read words SCORE, LEVEL, and + from properties file
-	ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText") + initialScore);
+	ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText"));
 	LevelText = new Label();
-	HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText") + initialHealth);
+	HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText"));
 
 	ScoreText.setMaxWidth(Double.MAX_VALUE);
 
 	ScoreText.setMaxWidth(Double.MAX_VALUE);
 	LevelText.setMaxWidth(Double.MAX_VALUE);
 	HealthText.setMaxWidth(Double.MAX_VALUE);
-
 
 	HBox panelRoot = new HBox();
 
@@ -97,6 +91,7 @@ public class ScorePanel extends ListenerPanel {
     }
 
     public void updateLevel(Integer newLevel) {
+    setupWriters(newLevel);
 	LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
     }
 
@@ -107,10 +102,8 @@ public class ScorePanel extends ListenerPanel {
      * @param score	initial score of the level
      */
     private void setInitalScore(int score) {
-	initialScore = setInitalProperty(ScoreText, score);
-	if(initialScore == -1) {
-	    updateScore(score);
-	}
+	checkForPanelCreation(ScoreText);
+	updateScore(score);
     }
 
     /**
@@ -118,11 +111,8 @@ public class ScorePanel extends ListenerPanel {
      * @param score	initial health of the level
      */
     private void setInitialHealth(int health) {
-	initialHealth= setInitalProperty(HealthText, health);
-	if(initialHealth == -1) {
-	    updateHealth(health);
-
-	}
+	checkForPanelCreation(HealthText);
+	updateHealth(health);
     }
 
 

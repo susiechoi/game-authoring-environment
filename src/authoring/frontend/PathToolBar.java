@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import com.sun.javafx.tools.packager.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
