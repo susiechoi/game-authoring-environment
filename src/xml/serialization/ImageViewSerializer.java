@@ -13,12 +13,11 @@ import javafx.scene.image.ImageView;
 public interface ImageViewSerializer {
 
     /**
-     * Serializes an ImageView (i.e. image filepath, x/y coordinates, etc.) to fields that can be serialized by XStream
+     * Serializes a ImageView (i.e. image filepath, x/y coordinates, etc.) to fields that can be serialized by XStream
      * 
-     * @param image
-     * @param imagePath
+     * @param image the ImageView to be serialized
      */
-    public void fromImageView(ImageView image, String imagePath);
+    public void fromImageView(ImageView image);
     
     /**
      * Uses local fields to create a new ImageView that exactly replicates original one that was saved
