@@ -9,6 +9,9 @@ import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.PlayController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -17,32 +20,28 @@ import frontend.PromptReader;
 import frontend.Screen;
 import frontend.View;
 import gameplayer.ScreenManager;
-import gameplayer.panel.BuyPanel;
-import gameplayer.panel.ControlsPanel;
-import gameplayer.panel.GamePanel;
-import gameplayer.panel.ScorePanel;
-import gameplayer.panel.SettingsPanel;
-import gameplayer.panel.TowerInfoPanel;
-import gameplayer.panel.TowerPanel;
-import gameplayer.panel.UpgradePanel;
+import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
+import voogasalad.util.soundfactory.*;
+
 
 
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
 	private final String DEFAULT_SHARED_STYLESHEET;
+	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
 	private GamePanel GAME_PANEL;
 	private ScorePanel SCORE_PANEL;
 	private ControlsPanel CONTROLS_PANEL;
+	private SplashPanel SPLASH_PANEL;
 	private UpgradePanel UPGRADE_PANEL;
 	private ScreenManager SCREEN_MANAGER;
 	private BorderPane displayPane;
@@ -51,12 +50,13 @@ public class GameScreen extends Screen {
 	private BorderPane rootPane;
 	private ITRTSoundFactory SOUND_FACTORY;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
+	private boolean GAME_WON; //false if lost
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
 		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
 		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
-		SOUND_FACTORY = new ITRTSoundFactory();
+		SOUND_FACTORY = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this);
@@ -231,8 +231,8 @@ public class GameScreen extends Screen {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize);
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
 	}
 
 	private void setVertPanelsLeft() {
@@ -276,4 +276,21 @@ public class GameScreen extends Screen {
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
 	}
+
+	public void gameWon() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+	}
+
+	public void gameLost() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+	}
+
+	public void nextLevel() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+	}
+
 }

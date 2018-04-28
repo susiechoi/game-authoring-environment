@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,13 +22,15 @@ import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.towers.FrontEndTower;
+import file.DataPointWriter;
 import gameplayer.screen.GameScreen;
 
 public class TowerPanel extends ListenerPanel {
-
+	
+	public static final String DEFAULT_SUBFOLDER_FILEPATH = "Currency/";
+	
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
     private int TOWER_IMAGE_SIZE;
-
 
     private GameScreen GAME_SCREEN;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
@@ -36,20 +39,30 @@ public class TowerPanel extends ListenerPanel {
     private Button currencyDisplay;
     private Integer initialCurrency;
 
+    private DataPointWriter myCurrencyWriter; 
+    
     //TODO change to only use availibleTowers
-
     //private final FileIO FILE_READER;
 
     private HBox towerPane;
 
 
-    public TowerPanel( GameScreen gameScreen) {
+    public TowerPanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 	//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	initialCurrency = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("initalCurrency"));
+	setupWriters(); 
+    }
+    
+    private void setupWriters() {
+    	try {
+			myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
+		} catch (FileNotFoundException e) {
+			GAME_SCREEN.loadErrorScreen("NoFile");
+		} 
     }
 
 
@@ -192,6 +205,7 @@ public class TowerPanel extends ListenerPanel {
     }
 
     private void updateCurrency(Integer newValue) {
+    	myCurrencyWriter.recordDataPoint(newValue);
 	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
     }
 
@@ -200,7 +214,8 @@ public class TowerPanel extends ListenerPanel {
      * @param score	initial health of the level
      */
     private void setInitialCurrency(int currency) {
-	if(setInitalProperty(currencyDisplay, currency, initialCurrency)) {
+	initialCurrency= setInitalProperty(currencyDisplay, currency);
+	if(initialCurrency == -1) {
 	    updateCurrency(currency);
 	}
     }

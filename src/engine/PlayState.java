@@ -20,7 +20,6 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 
 
 /**
@@ -133,9 +132,11 @@ public class PlayState implements GameData {
 		currentLevel = myLevels.get(currentLevel.myNumber());
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
+		myMediator.nextLevel();
 	    }
 	    else {
 		// TODO: end game, player won
+			myMediator.gameWon();
 	    }
 	}
     }
@@ -145,6 +146,7 @@ public class PlayState implements GameData {
 	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
+	    myMediator.gameLost();
 	}
     }
 

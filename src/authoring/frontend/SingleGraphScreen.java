@@ -7,12 +7,10 @@ import javafx.scene.text.Text;
 
 public class SingleGraphScreen extends GraphScreen {
 	
-	private String myGraphType; 
 	private String myGameFilepath;
 
 	protected SingleGraphScreen(AuthoringView view, String filepath, String graphType) {
-		super(view);
-		myGraphType = graphType; 
+		super(view, graphType);
 		myGameFilepath = filepath; 
 		setSaved(); 
 	}
