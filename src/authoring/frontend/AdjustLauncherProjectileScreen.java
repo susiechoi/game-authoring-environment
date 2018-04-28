@@ -53,10 +53,10 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}); 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
-	    setProperty(PROJECTILE_TYPE, "ConstantDamageProperty", myProjectileDamage);
+	    setProperty(PROJECTILE_TYPE, "DamageProperty", 0.0, 0.0, myProjectileDamage);
 	    setProperty(PROJECTILE_TYPE, "ConstantSpeedProperty", myProjectileSpeed);
 	    setProperty(LAUNCHER_TYPE, "RangeProperty", myLauncherRange);
-	    setProperty(LAUNCHER_TYPE, "FireRateProperty", myLauncherRate);
+	    setProperty(LAUNCHER_TYPE, "FireRateProperty", 0.0, 0.0, myLauncherRate);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 	});
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
