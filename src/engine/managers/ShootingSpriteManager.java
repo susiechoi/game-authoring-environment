@@ -10,6 +10,7 @@ import engine.sprites.towers.projectiles.Projectile;
 /**
  * 
  * @author Miles Todzo
+ * @author Ryan Pond
  *
  */
 
@@ -42,10 +43,14 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      * @return Projectiles to add to the front end view
      */
     public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
+	System.out.println("SHOOTING");
 	List<Projectile> newProjectiles = new ArrayList<>();
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
+	//	System.out.println("reloaded");
 		for (ShootingSprites passedSprite: passedSprites) {	//all the enemies
+	//	    System.out.println("enemies");
+
 		    if (shootingSprite.hasReloaded(elapsedTime) && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {
 			Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			if (newProjectile != null) {
@@ -61,12 +66,25 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     /**
      * Moves the projectiles. Goes through the Manager and gets the list of projectiles, and moves them
      */
-    public void moveProjectiles(double elapsedTime) {
+    public List<Sprite> moveProjectiles(double elapsedTime) {
+	System.out.println("IN MOVE METHOD !! *************************************************");
+	List<Sprite> removeAllProjectiles = new ArrayList<Sprite>();
 	for (ShootingSprites shootingSprite: this.getListOfActive()) {
+	    System.out.println("LOOPING THROUGH ACTIVE TOWERS");
+	    List<Projectile> removeSpritesProjectiles = new ArrayList<Projectile>();
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
+		System.out.println("LOOPING THROUGH PROJECTILES");
 		projectile.move(elapsedTime);
+		if (!shootingSprite.hasInRange(projectile)) {
+		    removeSpritesProjectiles.add(projectile);
+		}
+	    }
+	    for (Projectile spriteProjectile : removeSpritesProjectiles) {
+		shootingSprite.getLauncher().removeFromActiveList(spriteProjectile);
+		removeAllProjectiles.add(spriteProjectile);
 	    }
 	}
+	return removeAllProjectiles;
     }
     
     /**

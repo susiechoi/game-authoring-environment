@@ -8,7 +8,9 @@ import engine.sprites.towers.projectiles.Projectile;
  *
  */
 
-public abstract class MovingProperty {
-	
-	public abstract void move(Projectile projectile);
+public abstract class MovingProperty<T> extends Property<Object>{
+    
+    public MovingProperty(double range) {
+	super(range);
+      }
 }

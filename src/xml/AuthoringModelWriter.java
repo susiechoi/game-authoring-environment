@@ -1,4 +1,3 @@
-
 package xml;
 
 
@@ -64,4 +63,5 @@ public class AuthoringModelWriter implements XMLWriter {
 
     
 }
+
 

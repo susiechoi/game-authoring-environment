@@ -1,7 +1,10 @@
 package frontend;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
+import authoring.frontend.GraphMenuScreen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
 import frontend.Screen;
@@ -22,7 +25,7 @@ public class MainScreen extends Screen {
 	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
 	// private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	//    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
-	private final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_LANGUAGE = "English";
 
 	private final UIFactory myUIFactory;
 	private final StageManager myStageManager;
@@ -58,13 +61,10 @@ public class MainScreen extends Screen {
 				.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
+			    	Log.debug(e);
 				e.printStackTrace();
+				myView.loadErrorScreen("NoFile");
 			}
-		});
-
-		Button visualizations = getUIFactory().makeTextButton("", myView.getErrorCheckedPrompt("Visualizations"));
-		visualizations.setOnAction(click-> {
-			myStageManager.switchScreen(new VisualizationsScreen().getScreen());
 		});
 
 		//	HBox leftCenter = new HBox(newAuthorButt);
@@ -79,7 +79,7 @@ public class MainScreen extends Screen {
 		//	HBox.setHgrow(leftCenter, Priority.ALWAYS);
 		//	HBox.setHgrow(rightCenter, Priority.ALWAYS);
 
-		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt, visualizations);
+		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt);
 
 		rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		//	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);

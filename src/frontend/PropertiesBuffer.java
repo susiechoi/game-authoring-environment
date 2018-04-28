@@ -19,7 +19,7 @@ import authoring.frontend.exceptions.MissingPropertiesException;
  */
 public abstract class PropertiesBuffer {
     private final String DEFAULT_PROMPT_KEY = "PromptDNE";
-    private final String DEFAULT_LANGUAGE = "English";
+    public static final String DEFAULT_LANGUAGE = "English";
     public static final String DEFAULT_NO_FILE_MESSAGE = "No language files detected!";
     private String language = "English";
     private final PropertiesReader PROP_READER;

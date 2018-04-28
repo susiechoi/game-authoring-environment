@@ -20,7 +20,7 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
+
 
 /**
  * Handles the current state of the game, including current score, money, and lists
@@ -29,10 +29,10 @@ import javafx.beans.value.ChangeListener;
  * @author Katherine Van Dyk
  * @author benauriemma 4/8
  * @author Ben Hodgson 
+ * @author Ryan Pond
  */
 public class PlayState implements GameData {
 
-    private double UNIVERSAL_TIME;
     private int count;
     private IntegerProperty myScore;
     private IntegerProperty myResources;
@@ -61,29 +61,27 @@ public class PlayState implements GameData {
 	currentLevel = myLevels.get(0);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
-
 	myScore = new SimpleIntegerProperty(score);
 	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
 	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
-	myMediator.addIntegerProperties(myResources, myScore, new SimpleIntegerProperty(score));
+	myMediator.addIntegerProperties(myResources, myScore, myHealth);
 	mySettings=settings;
-
-	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
-
     }
 
     public void update(double elapsedTime) {
 	count++;
-	UNIVERSAL_TIME+=elapsedTime;
+	checkLoss();
 	if (count % 120 == 0) {
 	    spawnEnemies();
 	}
-	myEnemyManager.moveEnemies(elapsedTime);
+	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
+	updateHealth(deadEnemies);
+	myMediator.removeListOfSpritesFromScreen(deadEnemies);
 	handleCollisions(elapsedTime);
     }
 
@@ -95,8 +93,10 @@ public class PlayState implements GameData {
 	activeEnemies.removeAll(toBeRemoved);
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
-	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	myTowerManager.moveProjectiles(elapsedTime);
+	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	//myTowerManager.moveProjectiles(elapsedTime);
+	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
+	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
@@ -122,7 +122,6 @@ public class PlayState implements GameData {
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
-
 		}
 		catch (Exception e) {
 		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
@@ -135,10 +134,21 @@ public class PlayState implements GameData {
 		currentLevel = myLevels.get(currentLevel.myNumber());
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
+		myMediator.nextLevel();
 	    }
 	    else {
-		// TODO: end game
+		// TODO: end game, player won
+			myMediator.gameWon();
 	    }
+	}
+    }
+    
+    private void checkLoss() {
+	if (myHealth.getValue() <= 0) {
+	    System.out.println("Lost game!");
+	    myMediator.pause();
+	    myMediator.endLoop();
+	    myMediator.gameLost();
 	}
     }
 
@@ -147,7 +157,17 @@ public class PlayState implements GameData {
 	    myScore.set(myScore.get() + sprite.getPointValue());
 	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
 		Enemy enemy = (Enemy) sprite;
-		myResources.set(myResources.get() + enemy.getPointValue());;
+		myResources.set(myResources.get() + enemy.getPointValue());
+	    }
+	}
+    }
+    
+    private void updateHealth(List<Sprite> toBeRemoved) {
+	for(Sprite sprite : toBeRemoved) {
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		myHealth.set(myHealth.get() 
+			- Double.valueOf(Math.round(enemy.getDamage())).intValue());
 	    }
 	}
     }
@@ -184,8 +204,14 @@ public class PlayState implements GameData {
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	myResources.set(placedTower.purchase(myResources.get()));
-	return placedTower;
+	try {
+	    myResources.set(placedTower.purchase(myResources.get()));
+	    return placedTower;
+	}
+	catch(CannotAffordException e) {
+	    myTowerManager.sell(placedTower);
+	    throw new CannotAffordException(e.getMessage());
+	}
     }
     /**
      * Sells the tower, increments users currency, and removes it from collection and screen
@@ -195,6 +221,7 @@ public class PlayState implements GameData {
 	myTowerManager.upgrade(tower,"rando",myResources.get());
 	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
+
     }
 
     /**
@@ -206,12 +233,8 @@ public class PlayState implements GameData {
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
 	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
-
-
-
+    
     public String getStyling() throws MissingPropertiesException {
-	return mySettings.getCSSTheme();
+    	return mySettings.getCSSTheme();
     }
-
 }
-

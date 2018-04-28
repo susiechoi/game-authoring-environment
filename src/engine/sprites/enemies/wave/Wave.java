@@ -54,7 +54,7 @@ public class Wave {
     public void addEnemy(Enemy enemy, int number) {
 	Map<Enemy, Integer> enemyMap = new HashMap<>();
 	enemyMap.put(enemy, number);
-	myWaveMap.put(new Path(null, null, null, 0), enemyMap);
+	myWaveMap.put(new Path(null, null, null, null, null, null, 0, number, number), enemyMap);
     }
     
     public int getWaveTime() {
@@ -76,8 +76,6 @@ public class Wave {
 	    myWaveMap.put(path, newEnemies);
 	}
     }
-
-
 
     /**
      * Returns a map that an Enemy type key to an Integer value representing the number

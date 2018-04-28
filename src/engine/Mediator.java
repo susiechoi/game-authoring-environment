@@ -4,17 +4,20 @@ package engine;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 
 import java.util.List;
 import java.util.Map;
 
+import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.MVController;
 import controller.PlayController;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
+import frontend.StageManager;
+
 import java.awt.Point;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
@@ -31,10 +34,10 @@ import xml.XMLFactory;
  * @author andrewarnold
  * @author Brendan Cheng
  * @author Alexi Kontos
+ * @author Ryan Pond
  *
  */
-public class Mediator {
-
+public class Mediator implements MVController{
 
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
@@ -119,6 +122,20 @@ public class Mediator {
 
     /************************************************ GAMEPLAY ********************************************/
 
+
+    /**
+     * to be called by the frontend when a user drops a tower on the gamescreen.
+     * @param location, where the tower should be placed
+     * @param towerType, type of tower to be placed
+     * @return frontEndTower that can be used to refer to the tower in the future
+     * @throws CannotAffordException 
+     */
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
+	//TODO add in money (decrement when purchased)
+	//	System.out.println(myGameEngine.getPlayState());
+	return myGameEngine.getPlayState().placeTower(location, towerType);
+    }
+
     /**
      * To be called by the backend any time a projectile or enemy should be added to the screen
      * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
@@ -140,19 +157,6 @@ public class Mediator {
     }
 
     /**
-     * to be called by the frontend when a user drops a tower on the gamescreen.
-     * @param location, where the tower should be placed
-     * @param towerType, type of tower to be placed
-     * @return frontEndTower that can be used to refer to the tower in the future
-     * @throws CannotAffordException 
-     */
-    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
-	//TODO add in money (decrement when purchased)
-	System.out.println(myGameEngine.getPlayState());
-	return myGameEngine.getPlayState().placeTower(location, towerType);
-    }
-
-    /**
      * to be called when a user sells the tower. Frontend should not call
      * frontendtower.sell(), let mediator handle.
      * @param tower
@@ -160,6 +164,17 @@ public class Mediator {
     public void sellTower(FrontEndTower tower) {
 	//TODO increase money when sold in sell method
 	myGameEngine.getPlayState().sellTower(tower);
+    }
+
+    //WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED
+    /**
+     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
+     * @param tower
+     * @param upgradeName
+     */
+    public void upgradeTower(FrontEndTower tower, String upgradeName) {
+	//	System.out.println("upgrade is called OF TYPE " + upgradeName);
+	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
 
     /**
@@ -185,23 +200,24 @@ public class Mediator {
 	myGameEngine.setSpeed(sliderValue);
     }
 
-    //WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED
-    /**
-     * to be called by the frontend and pass upgradeName into the method and allow mediator to handle the call of upgrade.
-     * @param tower
-     * @param upgradeName
-     */
-    public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	System.out.println("upgrade is called OF TYPE " + upgradeName);
-	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
-    }
-
     /**
      * to be called by the backend to tell the frontend the new level number
      * @param newLevel
      */
     public void updateLevel(Integer newLevel) {
 	myScreenManager.updateLevelCount(newLevel);
+    }
+
+
+    /**
+     * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
+     * lives. 
+     * @param myResources integer property for currency
+     * @param myScore	integer property for score
+     * @param IntegerProperty	 integer property for health
+     */
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
 
     /**
@@ -214,8 +230,8 @@ public class Mediator {
 	}
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-	myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+	myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
     }
 
     /**
@@ -225,7 +241,7 @@ public class Mediator {
      * @param myScore	integer property for score
      * @param simpleIntegerProperty	 integer property for health
      */
-    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
 	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
 
@@ -248,9 +264,23 @@ public class Mediator {
 	}
 	return styling; 
     }
-	
+
+    public void gameWon() {
+	myScreenManager.getGameScreen().gameWon();
+    }
+
+    public void nextLevel() {
+	myScreenManager.getGameScreen().nextLevel();
+    }
+
+
+    @Override
+    public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{
+	myPlayController.demoPlay(new AuthoringModel().getGame());
+    }
+
+    public void gameLost() {
+	myScreenManager.getGameScreen().gameLost();
+    }
+
 }
-    
-
-
-
