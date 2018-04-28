@@ -17,6 +17,7 @@ import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -43,7 +44,7 @@ public class PlayState implements GameData {
     private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
-    private int currlvl;
+    private Level currentLevelCopy;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -57,8 +58,8 @@ public class PlayState implements GameData {
     public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
-	currlvl = 0;
 	currentLevel = myLevels.get(0);
+	currentLevelCopy = new Level(currentLevel);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	myScore = new SimpleIntegerProperty(score);
@@ -68,6 +69,17 @@ public class PlayState implements GameData {
 	mySettings=settings;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
+	for (Level level: levels) {
+	    for (String enemyString:level.getAllEnemies()) {
+		Enemy myEnemy = level.getEnemies().get(enemyString);
+	//	myEnemy.updateImage();
+		
+	    }
+	    for (String towerString:level.getAllTowers()) {
+		Tower myTower = level.getTowers().get(towerString);
+	//	myTower.updateImage();
+	    }
+	}
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
@@ -77,12 +89,14 @@ public class PlayState implements GameData {
 	count++;
 	checkLoss();
 	if (count % 120 == 0) {
+	    System.out.println("spawning enemy!");
 	    spawnEnemies();
 	}
 	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
 	updateHealth(deadEnemies);
 	myMediator.removeListOfSpritesFromScreen(deadEnemies);
 	handleCollisions(elapsedTime);
+
     }
 
     private void handleCollisions(double elapsedTime) {
@@ -91,6 +105,7 @@ public class PlayState implements GameData {
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
+	myEnemyManager.removeFromMap(toBeRemoved);
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
@@ -98,7 +113,6 @@ public class PlayState implements GameData {
 	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
-
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	}
@@ -145,7 +159,6 @@ public class PlayState implements GameData {
     
     private void checkLoss() {
 	if (myHealth.getValue() <= 0) {
-	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();
@@ -173,9 +186,9 @@ public class PlayState implements GameData {
     }
 
     public void setLevel(int levelNumber) {
+	clearLevel();
 	currentLevel = myLevels.get(levelNumber);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
-	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
     }
 
     /**
@@ -183,7 +196,8 @@ public class PlayState implements GameData {
      */
     public void restartLevel() {
 	clearLevel();
-	setLevel(currlvl);
+	currentLevel = currentLevelCopy;
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
     }
 
     private void clearLevel() {
@@ -191,8 +205,10 @@ public class PlayState implements GameData {
 	toBeRemoved.addAll(myTowerManager.getListOfActive());
 	toBeRemoved.addAll(myTowerManager.removeAllProjectiles());
 	toBeRemoved.addAll(myEnemyManager.getListOfActive());
+	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	myTowerManager.getListOfActive().clear();
 	myEnemyManager.getListOfActive().clear();
+	myEnemyManager.clearEnemiesMap();
     }
 
     /**

@@ -5,8 +5,11 @@ import java.util.List;
 import engine.builders.PropertyBuilder;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import xml.serialization.ImageWrapper;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -21,11 +24,12 @@ import javafx.scene.image.ImageView;
 public class Sprite implements FrontEndSprite{
 
     private String myName;
-    private ImageView myImageView;
+    @XStreamOmitField
+    private transient ImageView myImageView;
     private String myImageString;
-    private PropertyBuilder myPropertyBuilder;
+    private ImageWrapper myWrapper;
     private List<Property> myProperties;
-
+    private PropertyBuilder myPropertyBuilder;
 
     /**
      * Constructor that takes in a sprite's image
@@ -38,9 +42,9 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, double size, List<Property> properties) {
 	myName = name;
 	myImageString = image;
-	System.out.println("debugging");
+	//System.out.println("debugging");
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
-	System.out.println("test");
+	//System.out.println("test");
 	myImageView.setPreserveRatio(true);
 	myProperties = properties;
 	myPropertyBuilder = new PropertyBuilder();

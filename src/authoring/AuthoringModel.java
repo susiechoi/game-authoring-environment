@@ -20,10 +20,13 @@ import java.util.Map;
 import authoring.factory.AttributeFactory;
 import authoring.factory.PropertyFactory;
 import authoring.factory.SpriteFactory;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import data.GameData;
 import engine.builders.PathBuilder;
 import engine.Settings;
 import engine.builders.SettingsBuilder;
@@ -34,8 +37,8 @@ import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
 
-public class AuthoringModel {
-
+public class AuthoringModel implements GameData {
+	
     private final GenericModel myGeneric = new GenericModel();
     private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
@@ -43,8 +46,10 @@ public class AuthoringModel {
     private String DEFAULT_CONSTANT_FILEPATH;
     private PropertiesReader myPropertiesReader;
     private String myDefaultName; 
-    private Tower myDefaultTower;
-    private Enemy myDefaultEnemy;
+    @XStreamOmitField
+    private transient Tower myDefaultTower;
+    @XStreamOmitField
+    private transient Enemy myDefaultEnemy;
     private Path myDefaultPath;
     private SpriteFactory spriteFactory;
     protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
@@ -110,6 +115,10 @@ public class AuthoringModel {
 	currentLevel.addWave(wave);
     }
 
+    public Level levelCheck(int level) throws ObjectNotFoundException {
+    	return myGame.levelCheck(level);
+    }
+    
     /**
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
