@@ -94,9 +94,16 @@ public class Launcher extends Manager<Projectile>{
     public void setProjectileImage(String image){
 	myProjectile.setImage(image);
     }
-    
-    public void addProperty(Property p){
-	launcherProperties.add(p);
+
+    public void addProperty(Property property) {
+	Property toRemove = null;
+	for(Property p : launcherProperties) {
+	    if(property.getName().equals(p.getName())) {
+		toRemove = p;
+	    }
+	}
+	launcherProperties.remove(toRemove);
+	launcherProperties.add(property);
     }
 
     /**
