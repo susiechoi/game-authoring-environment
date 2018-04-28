@@ -149,8 +149,7 @@ public class Launcher extends Manager<Projectile>{
     public double getProjectileSize() {
 	return myProjectile.getSize(); 
     }
-
-
+    
     public double getDamage() {
 	return myProjectile.getDamage();
     }

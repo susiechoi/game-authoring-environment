@@ -1,6 +1,5 @@
 package engine.sprites;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import engine.builders.PropertyBuilder;
@@ -147,7 +146,6 @@ public class Sprite implements FrontEndSprite{
     }
     
     public Property getProperty(String ID) {
-	System.out.println(ID);
 	for(Property property : myProperties) {
 	    if(property != null && property.getName().equals(ID)) {
 		return property;

@@ -7,7 +7,6 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.Property;
-import engine.sprites.properties.UpgradeProperty;
 
 /**
  * Projectile class is a sprite that is launched from the tower
@@ -52,7 +51,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	if (this.myTarget.isAlive()) {
 	    rotateImage();
 	}
-	System.out.println("Constantspeedproperty"  + getValue("ConstantSpeedProperty"));
+	//System.out.println("Constantspeedproperty "  + getValue("ConstantSpeedProperty"));
+	//System.out.println("elapsedTime "  + elapsedTime);
 	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
@@ -64,7 +64,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * Rotates the image to face the target
      */
     private void rotateImage() {
-
 	double xDifference = myTarget.getX() - this.getX();
 	double yDifference = myTarget.getY() - this.getY();
 	double angleToRotateRads = Math.atan2(xDifference,yDifference);
