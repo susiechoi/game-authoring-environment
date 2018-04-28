@@ -1,5 +1,7 @@
 package frontend;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
 import authoring.frontend.GraphMenuScreen;
@@ -12,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.internal.jline.internal.Log;
 
 /**
  * Screen that users initially see where they can choose between authoring a game and playing it.
@@ -60,7 +61,7 @@ public class MainScreen extends Screen {
 				.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
-			    	Log.error(e);
+			    	Log.debug(e);
 				e.printStackTrace();
 				myView.loadErrorScreen("NoFile");
 			}

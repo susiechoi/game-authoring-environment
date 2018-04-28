@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -30,7 +32,6 @@ import frontend.View;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.GridPane;
-import jdk.internal.jline.internal.Log;
 
 public class AuthoringView extends View {
 
@@ -106,7 +107,7 @@ public class AuthoringView extends View {
 	    	myController.setWaveTime(getLevel(), waveNumber, time);
 	    }
 	    catch(ObjectNotFoundException e) {
-		 Log.error(e);
+		 Log.debug(e);
 		loadErrorScreen("NoObject");
 	    }
 	}
@@ -115,7 +116,7 @@ public class AuthoringView extends View {
 		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
-		    Log.error(e);
+		    Log.debug(e);
 		    e.printStackTrace();
 		    loadErrorScreen("NoObject");
 		}
@@ -169,7 +170,7 @@ public class AuthoringView extends View {
 	}
 	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 			| IllegalAccessException | InstantiationException e) {
-	    	Log.error(e);	
+	    	Log.debug(e);	
 	    	e.printStackTrace();
 		loadErrorScreen("NoScreenFlow");
 	}
@@ -202,7 +203,7 @@ public class AuthoringView extends View {
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    loadErrorScreen("NoObject");
 		}
 		return availableObjectOptions; 
@@ -217,7 +218,7 @@ public class AuthoringView extends View {
 		try {
 			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    loadErrorScreen("NoObject");
 		} 
 		return returnedObjectAttribute; 
@@ -270,7 +271,7 @@ public class AuthoringView extends View {
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
 		}
 		catch(ObjectNotFoundException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    e.printStackTrace();
 			loadErrorAlert("NoObject");
 		}
@@ -283,7 +284,7 @@ public class AuthoringView extends View {
 	    return myController.getHighestWaveNumber(level);
 	    }
 	    catch(ObjectNotFoundException e) {
-		 Log.error(e);
+		 Log.debug(e);
 		e.printStackTrace();
 		loadErrorScreen("NoObject");
 	    }
@@ -294,7 +295,7 @@ public class AuthoringView extends View {
 		try {
 		    myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
-		    Log.error(e);
+		    Log.debug(e);
 		    loadErrorScreen("NoObject");
 		} 
 	}
@@ -321,10 +322,10 @@ public class AuthoringView extends View {
 		try {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    loadErrorAlert("NoDuplicateNames");
 		} 
 	}
@@ -333,10 +334,10 @@ public class AuthoringView extends View {
 		try {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    loadErrorAlert("NoDuplicateNames");
 		} 
 	}
@@ -345,7 +346,7 @@ public class AuthoringView extends View {
 		try {
 			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-		    Log.error(e);	
+		    Log.debug(e);	
 		    loadErrorScreen("NoObject");
 		}
 	}
@@ -360,7 +361,7 @@ public class AuthoringView extends View {
 			try {
 				myTheme = (String) myController.getObjectAttribute(1, "Settings", "", "myGameTheme");
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-			    Log.error(e);	
+			    Log.debug(e);	
 			    loadErrorAlert("NoFile");
 			}
 		}
