@@ -54,6 +54,7 @@ public class PlayController {
 		myReader = new AuthoringModelReader();
 
 		AuthoredGame playModel = myReader.createModel(pathToXML);
+		playModel.reconstruct();
 		List<Level> levels = playModel.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);
 		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getColumnCount(), levels.get(0).getRowCount());

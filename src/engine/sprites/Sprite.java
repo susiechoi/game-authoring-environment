@@ -62,10 +62,6 @@ public class Sprite implements FrontEndSprite{
 	public void setImage(Image image) {
 		myImageView  = new ImageView(image);
 	}
-	
-//	public void updateImage() {
-//	    myImageView = myWrapper.toImageView();
-//	}
 
 	public void place(double newX, double newY) {
 		myImageView.setX(newX);
@@ -129,6 +125,10 @@ public class Sprite implements FrontEndSprite{
 		return 0;
 	}
 
+	/**
+	 * Updates the Imagepath and the ImageView given an input string
+	 * @param imagePath	String containing path to image
+	 */
 	protected void updateImage(String imagePath) {
 		myImageString = imagePath; 
 		myWrapper.updateImageString(imagePath);
@@ -137,6 +137,13 @@ public class Sprite implements FrontEndSprite{
 //		myImageView.setImage(newImage);
 		myImageView = myWrapper.toImageView();
 		myImageView.setPreserveRatio(true);
+	}
+	
+	/**
+	 * Sets ImageView upon loading a Sprite from XML
+	 */
+	public void loadImage() {
+	    myImageView = myWrapper.toImageView();
 	}
 
 }
