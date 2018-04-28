@@ -173,7 +173,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     }
 
 
-    private double getSpeed() {
+    public double getSpeed() {
 	return mySpeed; 
     }
 

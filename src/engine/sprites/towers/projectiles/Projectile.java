@@ -6,6 +6,7 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.DamageProperty;
 
 /**
@@ -45,7 +46,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
 	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
 	myTarget = target;
-	mySpeed = myProjectile.getSpeed();
+	if (target instanceof Enemy) {
+	    Enemy myEnemy = (Enemy) target;
+	    mySpeed = myEnemy.getSpeed()*1.5;
+	}
+	else {
+	    mySpeed = myProjectile.getSpeed();
+	}
 	myDamage = myProjectile.getDamageProperty();
 	this.place(shooterX, shooterY);
 	this.rotateImage();

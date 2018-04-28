@@ -5,6 +5,9 @@ import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
+
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -27,7 +30,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import jdk.internal.jline.internal.Log;
 import sound.ITRTSoundFactory;
 
 
@@ -159,7 +161,7 @@ public class GameScreen extends Screen {
 				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
-			    Log.error(e); //TODO!!!
+			    Log.debug(e); //TODO!!!
 			}
 			SOUND_FACTORY.playBackgroundMusic();
 
