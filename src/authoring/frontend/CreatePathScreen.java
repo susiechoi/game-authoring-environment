@@ -29,7 +29,6 @@ public class CreatePathScreen extends PathScreen {
 	private boolean gridCheck = false;
 	private CreatePathScreen me;
 
-
 	public CreatePathScreen(AuthoringView view) {
 		super(view);
 		myPathPanel = new CreatePathPanel(view);
@@ -164,23 +163,23 @@ public class CreatePathScreen extends PathScreen {
 				fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
 				File file = fileChooser.showOpenDialog(new Stage());
 				image.setNewImage(new Image(file.toURI().toString()));
-				changeGridImages(file.toURI().toString());
+//				changeGridImages(file.toURI().toString());
 			}
 		});
 	}
 
-	private void changeGridImages(String imageFilePath) {
-		for (int i = 0; i < myGrid.getColumnCount(); i++) {
-			for (int j = 0; j < myGrid.getRowCount(); j++) {
-				if (myGrid.getNode(myGrid.getCheckGrid(), i, j) != null) {
-					Label checkLabel = (Label) myGrid.getNode(myGrid.getCheckGrid(), i, j);
-					DraggableImage path = new DraggableImage(new Image(imageFilePath));
-					if (checkLabel.getText() == "start") {
-						myGrid.removeNode(myGrid.getGrid(), i, j);
-						path.getPathImage().setFitHeight(myGrid.getPathSize());
-						path.getPathImage().setFitWidth(myGrid.getPathSize());
-						myGrid.getGrid().add(path.getPathImage(), i, j);
-						path.setDraggable(myGrid.getCheckGrid(), j, i);	
+//	private void changeGridImages(String imageFilePath) {
+//		for (int i = 0; i < myGrid.getColumnCount(); i++) {
+//			for (int j = 0; j < myGrid.getRowCount(); j++) {
+//				if (myGrid.getNode(myGrid.getCheckGrid(), i, j) != null) {
+//					Label checkLabel = (Label) myGrid.getNode(myGrid.getCheckGrid(), i, j);
+//					DraggableImage path = new DraggableImage(new Image(imageFilePath));
+//					if (checkLabel.getText() == "start") {
+//						myGrid.removeNode(myGrid.getGrid(), i, j);
+//						path.getPathImage().setFitHeight(myGrid.getPathSize());
+//						path.getPathImage().setFitWidth(myGrid.getPathSize());
+//						myGrid.getGrid().add(path.getPathImage(), i, j);
+//						path.setDraggable(myGrid.getCheckGrid(), j, i);	
 //					} else if (checkLabel.getText() == "path" ) {
 //						myGrid.removeNode(myGrid.getGrid(), i, j);
 //						path.getPathImage().setFitHeight(myGrid.getPathSize());
@@ -193,10 +192,10 @@ public class CreatePathScreen extends PathScreen {
 //						path.getPathImage().setFitWidth(myGrid.getPathSize());
 //						myGrid.getGrid().add(path.getPathImage(), i, j);
 //						path.setDraggable(myGrid.getCheckGrid(), j, i);
-					}
-				}
-			}
-		}
-	}
+//					}
+//				}
+//			}
+//		}
+//	}
 
 }

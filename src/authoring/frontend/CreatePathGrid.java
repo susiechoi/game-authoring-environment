@@ -79,10 +79,10 @@ public class CreatePathGrid {
 		grid = new GridPane();
 
 		checkGrid = new GridPane();
-		checkGrid.setMaxSize(1020.0, 650.0);
+		checkGrid.setMaxSize(1020.0, 550.0);
 		setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
-		grid.setMaxSize(1020.0, 650.0); 
+		grid.setMaxSize(1020.0, 550.0); 
 		setGridConstraints(grid, INITIAL_PATH_SIZE);
 
 		model = new SelectionModel();
@@ -163,7 +163,7 @@ public class CreatePathGrid {
 			colConst.setPrefWidth(pathSize);
 			grid.getColumnConstraints().add(colConst);
 		}
-		for (int i = 0; i < 650.0/pathSize; i++) {
+		for (int i = 0; i < 550.0/pathSize; i++) {
 			RowConstraints rowConst = new RowConstraints();
 			rowConst.setPrefHeight(pathSize);
 			grid.getRowConstraints().add(rowConst);         
