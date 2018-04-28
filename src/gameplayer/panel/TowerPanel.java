@@ -201,7 +201,8 @@ public class TowerPanel extends ListenerPanel {
      * @param score	initial health of the level
      */
     private void setInitialCurrency(int currency) {
-	if(setInitalProperty(currencyDisplay, currency, initialCurrency)) {
+	initialCurrency= setInitalProperty(currencyDisplay, currency);
+	if(initialCurrency == -1) {
 	    updateCurrency(currency);
 	}
     }
