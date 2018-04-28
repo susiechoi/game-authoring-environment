@@ -13,8 +13,8 @@ public class PropertyBuilder {
     private String PROPERTIES = "authoring/resources/properties";
     //private ResourceBundle bundle;
 
-    public Property getProperty(Property p) {
-	Property ret;
+    public Property<Object> getProperty(Property<Object> p) {
+	Property<Object> ret;
 	System.out.println(p);
 	System.out.println(p.getName());
 	String propertyName = p.getName();

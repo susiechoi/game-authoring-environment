@@ -27,11 +27,12 @@ public class TowerBuilder {
      * @param healthCost: Cost to upgrade Health
      * @return Tower object
      */
+    @SuppressWarnings("unchecked")
     public Tower construct(String name, String imagepath, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) {
     	System.out.println("IN BUILDER");
     	System.out.println(name);
     	System.out.println(imagepath);
-	List<Property> properties = new ArrayList<Property>();
+	List<Property<Object>> properties = new ArrayList<>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));
 	return new Tower(name, imagepath, size, launcher, properties);
