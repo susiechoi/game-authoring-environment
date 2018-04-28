@@ -192,4 +192,8 @@ public class ScreenManager extends View {
 			GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 		}
 	}
+
+	public GameScreen getGameScreen() {
+		return GAME_SCREEN;
+	}
 }
