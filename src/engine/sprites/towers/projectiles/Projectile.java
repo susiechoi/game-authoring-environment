@@ -6,8 +6,6 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.properties.ConstantSpeedProperty;
-import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 
@@ -22,11 +20,9 @@ import engine.sprites.properties.UpgradeProperty;
 public class Projectile extends Sprite implements FrontEndSprite{
 
     private double mySize; 
-    private String myImage; 
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
     private int myHits = 1;
-    private List<Property> myProperties;
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -35,22 +31,15 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
      */
-    public Projectile(String name, DamageProperty damage, double size, String image, ConstantSpeedProperty speed) {
-	super(name, image, size);
+    public Projectile(String name, double size, String image, List<Property> properties) {
+	super(name, image, size, properties);
 	mySize = size; 
 	hitTargets = new ArrayList<>();
-	myProperties = new ArrayList<Property>();
-	myProperties.add(speed);
-	myProperties.add(damage);
     }
 
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
-	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	myTarget = target;
-	myProperties = new ArrayList<Property>();
-	for(Property p : myProjectile.getProperties()) {
-	    myProperties.add(makeProperty(p));
-	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
@@ -63,6 +52,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	if (this.myTarget.isAlive()) {
 	    rotateImage();
 	}
+	System.out.println("Constantspeedproperty"  + getValue("ConstantSpeedProperty"));
 	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
@@ -90,10 +80,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	return getValue("DamageProperty");
     }
 
-    public String getImage() {
-	return myImage; 
-    }
-
     public double getSize() {
 	return mySize; 
     }
@@ -117,38 +103,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public boolean hasHit(ShootingSprites target) {
 	return this.hitTargets.contains(target);
     }
-
-    public void addProperty(Property property) {
-//	System.out.println("Property: " + property);
-//	System.out.println("Property Name: " + property.getName());
-	Property toRemove = null;
-	for(Property p : myProperties) {
-	    if(property.getName().equals(p.getName())) {
-		toRemove = p;
-	    }
-	}
-	if(toRemove != null) myProperties.remove(toRemove);
-	myProperties.add(property);
-    }
-
-
+    
     public void setImage(String image) {
 	super.updateImage(image);
-    }
-    
-    public List<Property> getProperties(){
-	return myProperties;
-    }
-
-    /**
-     * Handles upgrading the health of a tower
-     */
-    public double upgradeProperty(String name, double balance) {
-	for(Property property : myProperties) {
-	    if(property.getName() == name) {
-		return ((UpgradeProperty) property).upgrade(balance);
-	    }
-	}
-	return balance;
     }
 }

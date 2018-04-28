@@ -36,14 +36,14 @@ public class Sprite implements FrontEndSprite{
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, String image, double size) {
+    public Sprite(String name, String image, double size, List<Property> properties) {
 	myName = name;
 	myImageString = image;
 	System.out.println("debugging");
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	System.out.println("test");
 	myImageView.setPreserveRatio(true);
-	myProperties = new ArrayList<>();
+	myProperties = properties;
 	myPropertyBuilder = new PropertyBuilder();
     }
 
@@ -71,6 +71,7 @@ public class Sprite implements FrontEndSprite{
     }
 
     public void setImage(Image image) {
+	System.out.println("IMAGE IS BEING SET TO " + image);
 	myImageView  = new ImageView(image);
     }
 

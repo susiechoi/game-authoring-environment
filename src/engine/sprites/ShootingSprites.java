@@ -34,8 +34,8 @@ public abstract class ShootingSprites extends Sprite{
      * @param size: Size parameter of the image
      * @param launcher: Launcher object specific to shooting sprite
      */
-    public ShootingSprites(String name, String image, double size, Launcher launcher) {
-	super(name, image, size);
+    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) {
+	super(name, image, size, properties);
 	hitCount=0;
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);

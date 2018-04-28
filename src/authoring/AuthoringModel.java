@@ -374,12 +374,14 @@ public class AuthoringModel {
 	else if(objectType.equals("Projectile")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
+		System.out.println("Projectile image " + attributeValue);
 		currentLevel.getTower(name).setProjectileImage((String) attributeValue);
 	    }
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = myGame.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
+		System.out.println("Tower image " + attributeValue);
 		currentLevel.getTower(name).setImageString((String) attributeValue); 
 	    }
 	}

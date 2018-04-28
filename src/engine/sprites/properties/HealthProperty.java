@@ -7,9 +7,9 @@ package engine.sprites.properties;
  */
 public class HealthProperty extends UpgradeProperty {
 
-	public double myCost;
-	public double myValue; 
-	
+    public double myCost;
+    public double myValue; 
+
     /**
      * Health property determines how much health a sprite has left
      * 
@@ -22,7 +22,7 @@ public class HealthProperty extends UpgradeProperty {
 	myCost = cost; 
 	myValue = value; 
     }
-    
+
     public HealthProperty(UpgradeProperty p) {
 	super(p);
     }
@@ -35,7 +35,7 @@ public class HealthProperty extends UpgradeProperty {
 	double newValue = this.getProperty() - healthLost;
 	this.setProperty(newValue);
     }
-    
+
     /**
      * Return whether or not character is alive
      * 
@@ -44,20 +44,20 @@ public class HealthProperty extends UpgradeProperty {
     public boolean isAlive() {
 	return this.getProperty() > 0;
     }
-    
+
     @Override
     public double getCost() {
-    	return myCost; 
-    }
-    
-    public double getUpgradeValue() {
-    	return myValue; 
+	return myCost; 
     }
 
-	@Override
-	public Object execute(Object... args) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public double getUpgradeValue() {
+	return myValue; 
+    }
+
+    @Override
+    public Object execute(Object... args) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
 }

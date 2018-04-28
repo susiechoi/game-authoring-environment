@@ -24,20 +24,20 @@ public class Launcher extends Manager<Projectile>{
 
     private Projectile myProjectile;
     private double timeSinceLastShot;
-    private List<Property> myProperties;
+    private List<Property> launcherProperties;
     private PropertyBuilder myPropertyFactory;
 
     public Launcher(Projectile projectile, List<Property> properties) {
 	myProjectile = projectile;
-	myProperties = properties;
+	launcherProperties = properties;
 	timeSinceLastShot = 0;
     }
 
     public Launcher(Launcher launcher) {
-	myProperties = new ArrayList<Property>();
+	launcherProperties = new ArrayList<Property>();
 	//TODO do we have to do this
 	for(Property p : launcher.getProperties()) {
-	    myProperties.add(myPropertyFactory.getProperty(p));
+	    launcherProperties.add(myPropertyFactory.getProperty(p));
 	}
 	myProjectile = launcher.getProjectile();
 	timeSinceLastShot = 0;
@@ -50,7 +50,7 @@ public class Launcher extends Manager<Projectile>{
      * @return : returns the new user balance
      */
     public double upgradeProperty(String name, double balance) {
-	for(Property property : myProperties) {
+	for(Property property : launcherProperties) {
 	    if(property.getName().equals(name)) {
 		balance -= ((UpgradeProperty) property).upgrade(balance);
 	    }
@@ -71,7 +71,7 @@ public class Launcher extends Manager<Projectile>{
     }
 
     public double getPropertyValue(String name) {
-	for(Property property : myProperties) {
+	for(Property property : launcherProperties) {
 	    if(property.getName().equals(name)) {
 		return property.getProperty();
 	    }
@@ -88,7 +88,7 @@ public class Launcher extends Manager<Projectile>{
     }
 
     public List<Property> getProperties(){
-	return myProperties;
+	return launcherProperties;
     }
 
     public void setProjectileImage(String image){
@@ -96,7 +96,7 @@ public class Launcher extends Manager<Projectile>{
     }
     
     public void addProperty(Property p){
-	myProperties.add(p);
+	launcherProperties.add(p);
     }
 
     /**
@@ -125,7 +125,7 @@ public class Launcher extends Manager<Projectile>{
     }
 
     public Property getProperty(String propertyName) {
-	for (Property p: this.myProperties) {
+	for (Property p: this.launcherProperties) {
 	    if (p.getName().equals(propertyName)) {
 		return p;
 	    }
@@ -139,7 +139,7 @@ public class Launcher extends Manager<Projectile>{
     }
 
     public String getProjectileImage() {
-	return myProjectile.getImage(); 
+	return myProjectile.getImageString(); 
     }
 
     public double getProjectileDamage() {

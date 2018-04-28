@@ -29,24 +29,13 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private int pathIndex;
     private double pathAngle;
     private Point targetPosition;
-    private List<Property> myProperties;
     private double myInitialHealth;
     private double myHealthImpact;
     private double mySpeed;
     private double myKillReward;
 
     public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
-	super(name, image, size, launcher);
-	for (Property prop: properties) {
-	//	if (prop.getName().equals("HealthProperty")) {
-			System.out.println(prop.getName()+ "****  ****");
-			if (prop.getName().equals("HealthProperty")) {
-				System.out.println(getProperty("HealthProperty"));
-			}
-	//	}
-	}
-	System.out.println("done looking");
-	myProperties = properties;
+	super(name, image, size, launcher, properties);
 	myIntersecter = new ImageIntersecter(this); 
 	pathIndex = 0;
 	pathAngle = 0;
@@ -62,12 +51,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher());
+	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
 	myIntersecter = copiedEnemy.getIntersecter(); 
-	myProperties = new ArrayList<Property>();
-	for(Property p : copiedEnemy.getProperties()) {
-	    myProperties.add(makeProperty(p));
-	}
     }
 
     /**
