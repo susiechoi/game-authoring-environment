@@ -410,6 +410,15 @@ public class Level {
 			enemy.updateProperties();
 		}
 	}
+	public void clearPaths() {
+	    List<Path> myPathCopy = new ArrayList<>();
+	    myPathCopy.addAll(myPaths);
+	    for(Path path : myPathCopy) {
+		if(!path.equals(myPaths.get(0))) {
+		    myPaths.remove(path);
+		}
+	    }
+	}
 
 
 }

@@ -48,6 +48,7 @@ public class CreatePathScreen extends PathScreen {
 			@Override
 			public void handle(ActionEvent e) {
 				setSaved();
+				getView().clearPaths();
 				List<Point> startCoords = grid.getStartingPosition(grid.getCheckGrid());
 				if (startCoords.size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -77,12 +78,12 @@ public class CreatePathScreen extends PathScreen {
 						System.out.println("Absolute Coords: " +myCoords);
 						getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid(), startImage, pathImage, endImage), myBackgroundImage, 
 								pathImage, startImage, endImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
-						getView().getObjectAttribute("Path", "", "myPathMap");
-						getView().getObjectAttribute("Path", "", "myBackgroundImage");
-						getView().getObjectAttribute("Path", "", "myPathSize");
-						getView().getObjectAttribute("Path", "", "myPathImage");
-						getView().getObjectAttribute("Path", "", "myStartImage");
-						getView().getObjectAttribute("Path", "", "myEndImage");
+//						getView().getObjectAttribute("Path", "", "myPathMap");
+//						getView().getObjectAttribute("Path", "", "myBackgroundImage");
+//						getView().getObjectAttribute("Path", "", "myPathSize");
+//						getView().getObjectAttribute("Path", "", "myPathImage");
+//						getView().getObjectAttribute("Path", "", "myStartImage");
+//						getView().getObjectAttribute("Path", "", "myEndImage");
 						getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 					} catch (ObjectNotFoundException e1) {
 						// TODO Auto-generated catch block

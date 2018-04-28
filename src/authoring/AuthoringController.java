@@ -311,6 +311,9 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 		myView.loadErrorAlert("NoDeleteDefault");
 	    }
 	}
+	public void clearPaths(int level) throws ObjectNotFoundException{
+	    myModel.getLevel(level).clearPaths();
+	}
 }
 
 

@@ -376,5 +376,15 @@ public class AuthoringView extends View {
 	    }
 	    return null;
 	}
+	protected void clearPaths() {
+	    try {
+		myController.clearPaths(myLevel);
+	    }
+	    catch(ObjectNotFoundException e) {
+		e.printStackTrace();
+		Log.debug(e);
+		loadErrorScreen("NoObject");
+	    }
+	}
 
 }
