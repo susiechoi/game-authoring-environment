@@ -1,7 +1,11 @@
 package engine.builders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.properties.ConstantSpeedProperty;
 import engine.sprites.properties.DamageProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -14,7 +18,10 @@ import engine.sprites.towers.projectiles.Projectile;
 public class ProjectileBuilder {
 
     public Projectile construct(String name, String imagepath, DamageProperty damage, double size, ConstantSpeedProperty constantSpeedProperty) {
-	return new Projectile(name, damage, size, imagepath, constantSpeedProperty);
+	List<Property> properties = new ArrayList<>();
+	properties.add(damage);
+	properties.add(constantSpeedProperty);
+	return new Projectile(name, size, imagepath, properties);
     }
 
 

@@ -25,4 +25,10 @@ public class RangeProperty extends Property {
     public RangeProperty(Property p) {
 	super(p);
     }
+
+    @Override
+    public Object execute(Object... args) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

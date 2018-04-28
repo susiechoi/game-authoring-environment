@@ -54,4 +54,10 @@ public class HealthProperty extends UpgradeProperty {
     	return myValue; 
     }
 
+    @Override
+    public Object execute(Object... args) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }

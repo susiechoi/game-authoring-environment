@@ -39,7 +39,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param value: Value of the tower for selling
      */
     public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
-	super(name, image, size, launcher);
+	super(name, image, size, launcher, properties);
 	mySize = size;
 	myLauncher = launcher;
 	addProperty(new KillProperty(0));
@@ -49,10 +49,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * Copy constructor
      */
     public Tower(Tower copiedTower) {
-	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher()); 
-	for(Property p : copiedTower.getProperties()) {
-	    addProperty(makeProperty(p));
-	}
+	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher(), copiedTower.getProperties()); 
     }
 
     /**
