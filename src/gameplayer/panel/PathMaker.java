@@ -65,12 +65,12 @@ public class PathMaker {
     }
 
     private void setGridConstraints(GridPane grid, int numRow, int numCol) {
-	for (int i = 0; i < 1020/myPathSize; i++) {
+	for (int i = 0; i < numCol; i++) {
 	    ColumnConstraints colConst = new ColumnConstraints();
 	    colConst.setPercentWidth(100.0/numCol);
 	    grid.getColumnConstraints().add(colConst);
 	}
-	for (int i = 0; i < 750/myPathSize; i++) {
+	for (int i = 0; i < numRow; i++) {
 	    RowConstraints rowConst = new RowConstraints();
 	    rowConst.setPercentHeight(100.0/numRow);
 	    grid.getRowConstraints().add(rowConst);         
