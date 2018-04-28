@@ -122,6 +122,7 @@ public class Mediator implements MVController{
 
 	/************************************************ GAMEPLAY ********************************************/
 
+
 	/**
 	 * To be called by the backend any time a projectile or enemy should be added to the screen
 	 * @param sprite is the projectile or enemy to be added, cast as a FrontEndSprite
@@ -186,6 +187,14 @@ public class Mediator implements MVController{
 	 */
 	public void fastForward(Integer sliderValue) {
 		myGameEngine.setSpeed(sliderValue);
+	}
+	
+	/**
+	 * Called by the frontend when the restart button is pressed.
+	 */
+	public void restartLevel() {
+	    System.out.println("in restart");
+	    myGameEngine.getPlayState().restartLevel();
 	}
 
 	//WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED

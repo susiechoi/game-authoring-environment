@@ -66,7 +66,6 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		});
 		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", myStartingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
 		vb.getChildren().add(startingHealth);
-
 		myStartingCurrencySlider = getUIFactory().setupSlider("startingCurrency", maxStartingCurrency);
 		myStartingCurrencySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, "", "myStartingMoney", newValue);

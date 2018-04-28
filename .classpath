@@ -3,6 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/bigma/OneDrive/Documents/Coding/XStream/xstream-1.4.10.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/voogasalad_util"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
