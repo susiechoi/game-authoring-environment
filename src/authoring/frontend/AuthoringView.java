@@ -17,21 +17,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
-import controller.PlayController;
 import engine.path.Path;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
 import frontend.View;
-import gameplayer.ScreenManager;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
@@ -47,14 +46,13 @@ public class AuthoringView extends View {
 	private AuthoringController myController; 
 	private String myCurrentCSS;
 	private int myLevel; 
-	private GridPane myGrid = new GridPane();
-	private AuthoringModel myModel;
+	private GridPane myGrid;
 	private BooleanProperty myCSSChanged;
 	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
-		super(stageManager, languageIn);
-
+		super(stageManager, languageIn, controller);
+		myGrid = new GridPane(); 
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
@@ -68,19 +66,19 @@ public class AuthoringView extends View {
 	 * @param model is new Model used
 	 */
 	public void setModel(AuthoringModel model) {
-		myModel = model;
+		myController.setModel(model);
 	}
 	
-	/**
-	 * Returns the AuthoringModel object the user uses to author a game. 
-	 * Should never return null because the model and view are both created
-	 * in the AuthoringController class and the view's method setModel is called.
-	 * 
-	 * @return AuthoringModel: the model authored by the user
-	 */
-	public AuthoringModel getModel() {
-	    return myModel;
-	}
+//	/**
+//	 * Returns the AuthoringModel object the user uses to author a game. 
+//	 * Should never return null because the model and view are both created
+//	 * in the AuthoringController class and the view's method setModel is called.
+//	 * 
+//	 * @return AuthoringModel: the model authored by the user
+//	 */
+//	public AuthoringModel getModel() {
+//	    return myModel;
+//	}
 
 	/**
 	 * Loads the first authoring screen shown to user (currently StartScreen) from which ScreenFlow
@@ -109,6 +107,7 @@ public class AuthoringView extends View {
 	    	myController.setWaveTime(getLevel(), waveNumber, time);
 	    }
 	    catch(ObjectNotFoundException e) {
+		 Log.debug(e);
 		loadErrorScreen("NoObject");
 	    }
 	}
@@ -117,6 +116,7 @@ public class AuthoringView extends View {
 		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
+		    Log.debug(e);
 		    e.printStackTrace();
 		    loadErrorScreen("NoObject");
 		}
@@ -137,11 +137,11 @@ public class AuthoringView extends View {
 		Class<?> clazz = Class.forName(nextScreenClass);
 		Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 		if(constructor.getParameterTypes().length == 2) {
-			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
-				myStageManager.switchScreen(nextScreen.getScreen());
-			}
-			else if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
+//			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
+//				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
+//				myStageManager.switchScreen(nextScreen.getScreen());
+//			}
+			if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
@@ -155,13 +155,14 @@ public class AuthoringView extends View {
 			}
 		}
 		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+		    	System.out.println(clazz.getSimpleName());
 			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 			myStageManager.switchScreen(nextScreen.getScreen());
 		}
-		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
-			myStageManager.switchScreen(nextScreen.getScreen());
-		} 
+//		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+//			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+//			myStageManager.switchScreen(nextScreen.getScreen());
+//		} 
 		else {
 			throw new MissingPropertiesException("");
 		}
@@ -169,7 +170,8 @@ public class AuthoringView extends View {
 	}
 	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 			| IllegalAccessException | InstantiationException e) {
-		e.printStackTrace();
+	    	Log.debug(e);	
+	    	e.printStackTrace();
 		loadErrorScreen("NoScreenFlow");
 	}
 	}
@@ -179,7 +181,7 @@ public class AuthoringView extends View {
 	    	parameterList.add(name);
 		goForwardFrom(id,  parameterList);
 	}
-	
+
 	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
 		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
 	}
@@ -200,7 +202,8 @@ public class AuthoringView extends View {
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
 		}
 		return availableObjectOptions; 
 	}
@@ -214,7 +217,8 @@ public class AuthoringView extends View {
 		try {
 			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
 		} 
 		return returnedObjectAttribute; 
 	}
@@ -266,7 +270,8 @@ public class AuthoringView extends View {
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
 		}
 		catch(ObjectNotFoundException e) {
-		    	e.printStackTrace();
+		    Log.debug(e);	
+		    e.printStackTrace();
 			loadErrorAlert("NoObject");
 		}
 		return new HashMap<>();
@@ -278,6 +283,7 @@ public class AuthoringView extends View {
 	    return myController.getHighestWaveNumber(level);
 	    }
 	    catch(ObjectNotFoundException e) {
+		 Log.debug(e);
 		e.printStackTrace();
 		loadErrorScreen("NoObject");
 	    }
@@ -288,6 +294,7 @@ public class AuthoringView extends View {
 		try {
 		    myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
+		    Log.debug(e);
 		    loadErrorScreen("NoObject");
 		} 
 	}
@@ -302,15 +309,11 @@ public class AuthoringView extends View {
 	}
 
 	protected String getGameName() {
-		return myModel.getGameName();
+		return myController.getGameName();
 	}
 
 	protected void deleteObject(String objectType, String objectName) {
-		try {
-			myModel.deleteObject(myLevel, objectType, objectName);
-		} catch (ObjectNotFoundException e) {
-			loadErrorAlert("NoObject");
-		}
+	    	myController.deleteObject(myLevel, objectType, objectName);
 	}
 
 
@@ -318,9 +321,11 @@ public class AuthoringView extends View {
 		try {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorAlert("NoImageFile");
+		    Log.debug(e);	
+		    loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorAlert("NoDuplicateNames");
+		    Log.debug(e);	
+		    loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
@@ -328,9 +333,11 @@ public class AuthoringView extends View {
 		try {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorAlert("NoImageFile");
+		    Log.debug(e);	
+		    loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorAlert("NoDuplicateNames");
+		    Log.debug(e);	
+		    loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
@@ -338,10 +345,10 @@ public class AuthoringView extends View {
 		try {
 			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
 		}
 	}
-
 	
 	public void setTheme(String selectedTheme) {
 		myTheme = selectedTheme; 
@@ -353,10 +360,12 @@ public class AuthoringView extends View {
 			try {
 				myTheme = (String) myController.getObjectAttribute(1, "Settings", "", "myGameTheme");
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-				loadErrorAlert("NoFile");
+			    Log.debug(e);	
+			    loadErrorAlert("NoFile");
 			}
 		}
 		System.out.println(myTheme);
 		return myTheme; 
 	}
+
 }

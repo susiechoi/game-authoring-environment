@@ -50,7 +50,6 @@ Text {
 =======
 .chart {
 	-fx-padding: 20px;
-	-fx-pref-height: 1000px; 
 }
 
 .chart-plot-background {
@@ -68,5 +67,8 @@ Text {
 .axis-label {
 	-fx-font-size: 18px;
 }
+<<<<<<< HEAD
 
 >>>>>>> 9faee1913162cc7bde4f91624e495e4a100e25e4
+=======
+>>>>>>> 2db4df9b9bddd365517a35a040a0cccb6e68f0ec

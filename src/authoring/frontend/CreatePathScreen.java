@@ -29,6 +29,7 @@ public class CreatePathScreen extends PathScreen {
 	private boolean gridCheck = false;
 	private CreatePathScreen me;
 
+
 	public CreatePathScreen(AuthoringView view) {
 		super(view);
 		myPathPanel = new CreatePathPanel(view);

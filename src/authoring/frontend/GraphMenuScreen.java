@@ -1,14 +1,8 @@
 package authoring.frontend;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import authoring.AuthoringModel;
-import frontend.Screen;
-import frontend.View;
-import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -17,14 +11,19 @@ import javafx.scene.text.Text;
 
 public class GraphMenuScreen extends AuthoringScreen {
 
-	public static final String DEFAULT_GRAPHS_FOLDER = "graphing";
+	public static final String DEFAULT_GRAPHS_FOLDER = "graphing/";
 	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
-
-	private AuthoringView myView; 
 	
-	protected GraphMenuScreen(AuthoringView view, AuthoringModel model) {
+	private String myGraphType; 
+	
+	protected GraphMenuScreen(AuthoringView view, String graphType) {
 		super(view);
+		myGraphType = graphType; 
 		setSaved();
+	}
+	
+	private String makeFullFilepath(String dropdownSelection) {
+		return DEFAULT_GRAPHS_FOLDER+myGraphType+"/"+dropdownSelection;
 	}
 
 	@Override
@@ -34,67 +33,55 @@ public class GraphMenuScreen extends AuthoringScreen {
 		Text screenTitle = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("GraphMenu"));
 		vb.getChildren().add(screenTitle);
 		
-		List<String> availableGraphs = getFileNames(DEFAULT_GRAPHS_FOLDER);
+		List<String> availableGraphs = getUIFactory().getFileNames(DEFAULT_GRAPHS_FOLDER+myGraphType);
+		for (String s : availableGraphs) System.out.println(s);
 		List<String> relevantGraphs = new ArrayList<String>(); 
 
 		for (String graphName : availableGraphs) {
 			String currGameName = getView().getGameName();
 			if (graphName.indexOf(currGameName) > -1) {
 				relevantGraphs.add(graphName);
-				String abbrevGraphName = graphName.substring(graphName.indexOf(currGameName)+currGameName.length()); 
-				Button relevantGraphButt = getUIFactory().makeTextButton("", abbrevGraphName); 
-				relevantGraphButt.setOnAction(e -> {
-					String fullFilepath  = DEFAULT_GRAPHS_FOLDER+"/"+graphName; 
-					getView().getStageManager().switchScreen(new SingleGraphScreen(getView(), fullFilepath).getScreen());
-				});
-				vb.getChildren().add(relevantGraphButt);
 			}
 		}
 		
+		Button singleButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SingleGame"));
+		String choosePrompt = getView().getErrorCheckedPrompt("ChooseGame");
+		List<String> singleDropdownOptions = new ArrayList<String>();
+		singleDropdownOptions.add(choosePrompt);
+		singleDropdownOptions.addAll(relevantGraphs);
+		ComboBox<String> singleChooser = getUIFactory().makeTextDropdownSelectAction("", singleDropdownOptions, 
+				e -> {singleButton.setDisable(false);}, 
+				e -> {singleButton.setDisable(true);}, choosePrompt);
+		singleButton.setDisable(true);
+		singleButton.setOnAction(e -> {
+			String fullFilepath  = makeFullFilepath(singleChooser.getSelectionModel().getSelectedItem()); 
+			getView().getStageManager().switchScreen(new SingleGraphScreen(getView(), fullFilepath, myGraphType).getScreen());
+		});
+		
+		vb.getChildren().addAll(singleChooser, singleButton);
 		vb.getChildren().add(new Text(getErrorCheckedPrompt("or")));
 		
 		Button compareButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CompareGames"));
-		String choosePrompt = getView().getErrorCheckedPrompt("ChooseGame");
 		List<String> dropdownOptions = new ArrayList<String>();
 		dropdownOptions.add(choosePrompt);
 		dropdownOptions.addAll(relevantGraphs);
-		ComboBox<String> game1Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, e -> {
-			;}, e -> {compareButton.setDisable(true);}, choosePrompt);
-		ComboBox<String> game2Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, e -> {
-			compareButton.setDisable(false);}, e -> {compareButton.setDisable(true);}, choosePrompt);
+		ComboBox<String> game1Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, 
+				e -> {;}, 
+				e -> {compareButton.setDisable(true);}, choosePrompt);
+		ComboBox<String> game2Chooser = getUIFactory().makeTextDropdownSelectAction("", dropdownOptions, 
+			e -> { compareButton.setDisable(false);}, 
+			e -> {compareButton.setDisable(true);}, choosePrompt);
 		compareButton.setDisable(true);
 		compareButton.setOnAction(e -> {
-			String game1Path = DEFAULT_GRAPHS_FOLDER+"/"+game1Chooser.getSelectionModel().getSelectedItem(); 
-			String game2Path = DEFAULT_GRAPHS_FOLDER+"/"+game2Chooser.getSelectionModel().getSelectedItem(); 
-			getView().getStageManager().switchScreen(new DoubleGraphScreen(getView(), game1Path, game2Path).getScreen());
+			String game1Path = makeFullFilepath(game1Chooser.getSelectionModel().getSelectedItem()); 
+			String game2Path = makeFullFilepath(game2Chooser.getSelectionModel().getSelectedItem()); 
+			getView().getStageManager().switchScreen(new DoubleGraphScreen(getView(), game1Path, game2Path, myGraphType).getScreen());
 		});
 
 		vb.getChildren().addAll(game1Chooser, game2Chooser, compareButton);
 		vb.getChildren().add(setupBackButton());
 
 		return vb; 
-	}
-
-
-	//Method by Ben Hodgson/Andrew Arnold!
-	private List<String> getFileNames(String folderName) {
-		String currentDir = System.getProperty("user.dir");
-		try {
-			File file = new File(currentDir + File.separator + folderName);
-			File[] fileArray = file.listFiles();
-			List<String> fileNames = new ArrayList<String>();
-			for (File aFile : fileArray) {
-				String colorName = aFile.getName();
-				String[] nameSplit = colorName.split("\\.");
-				String fileName = nameSplit[0];
-				fileNames.add(fileName);
-			}
-			return Collections.unmodifiableList(fileNames);
-		}
-		catch (Exception e) {
-			getView().loadErrorScreen("NoFile");
-		}
-		return Collections.unmodifiableList(new ArrayList<String>());
 	}
 
 

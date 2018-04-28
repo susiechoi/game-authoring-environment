@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
@@ -158,21 +159,31 @@ public class Level {
 		return listToReturn; 
 	}
 	
-    public void removeTower(String name) throws ObjectNotFoundException {
-    	if (myTowers.containsKey(name)) {
+    public void removeTower(String name) throws ObjectNotFoundException, DeleteDefaultException {
+    	if(name.equals("Default")) {
+    	    throw new DeleteDefaultException("");
+    	}
+    	if (myTowers.containsKey(name) && !name.equals("Default")) {
     		myTowers.remove(name);
     	}
-    	throw new ObjectNotFoundException(name);
+    	else {
+    	    throw new ObjectNotFoundException(name);
+    	}
     }
     
-    public void removeEnemy(String name) throws ObjectNotFoundException {
-    	if (myEnemies.containsKey(name)) {
+    public void removeEnemy(String name) throws ObjectNotFoundException, DeleteDefaultException {
+    	if(name.equals("Default")) {
+    	    throw new DeleteDefaultException("");
+    	}
+    	else if (myEnemies.containsKey(name) && !name.equals("Default")) {
     		myEnemies.remove(name);
+    	    	for(Wave wave: myWaves) {
+    	    	    wave.removeEnemyType(name);
+    	    	}
     	}
-    	for(Wave wave: myWaves) {
-    	    wave.removeEnemyType(name);
+    	else {
+    	    throw new ObjectNotFoundException(name);
     	}
-    	throw new ObjectNotFoundException(name);
     }
 
 	/**

@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -36,6 +38,7 @@ public class PathMaker {
 				image = new ImageView(new Image(key));
 				}
 				catch(IllegalArgumentException e){
+				    Log.debug(e);
 				    image = new ImageView(); //TODO this should not be hardcoded
 				}
 				image.setFitWidth(myPathSize);

@@ -3,6 +3,8 @@ package gameplayer.panel;
 
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -64,6 +66,7 @@ public class ControlsPanel extends Panel{
 						GAME_SCREEN.controlTriggered(control.getKey());
 					} catch (MissingPropertiesException e) {
 						// TODO Auto-generated catch block
+					    	Log.debug(e);
 						e.printStackTrace();
 					}
 				});
@@ -77,6 +80,7 @@ public class ControlsPanel extends Panel{
 				count++;
 			}
 		} catch (MissingPropertiesException e) {
+		    Log.debug(e);
 			//something went wrong and we don't have the control images
 			//TODO something reasonable here
 			//probably have default images that aren't the ones specified by authoring
