@@ -19,6 +19,7 @@ import engine.sprites.properties.DamageProperty;
  */
 public class Projectile extends Sprite implements FrontEndSprite{
 
+    private static final double mySpeedFactor = 1.5;
     private DamageProperty myDamage;
     private double mySpeed;
     private double mySize; 
@@ -48,7 +49,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	myTarget = target;
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
-	    mySpeed = myEnemy.getSpeed()*1.5;
+	    mySpeed = myEnemy.getSpeed()*mySpeedFactor;
 	}
 	else {
 	    mySpeed = myProjectile.getSpeed();
