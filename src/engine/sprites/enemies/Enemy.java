@@ -123,6 +123,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	targetPosition = newPosition;
     }
 
+    @Override
     public String getName() {
 	return myName; 
     }
@@ -173,7 +174,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     }
 
 
-    private double getSpeed() {
+    public double getSpeed() {
 	return mySpeed; 
     }
 

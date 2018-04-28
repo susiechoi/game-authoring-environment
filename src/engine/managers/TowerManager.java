@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
@@ -57,11 +56,6 @@ public class TowerManager extends ShootingSpriteManager {
     }
     
     public FrontEndTower place(Point location, String type) {
-	System.out.println(type);
-	for (Entry<String, Tower> entry : myTowerTypeToInstance.entrySet()) {
-	    System.out.println(entry.getKey());
-	    System.out.println(entry.getValue());
-	}
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());

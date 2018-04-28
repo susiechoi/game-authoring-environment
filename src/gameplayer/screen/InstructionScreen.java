@@ -18,9 +18,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class InstructionScreen extends Screen {
-	public String DEFAULT_SHARED_STYLESHEET;
+	private String DEFAULT_SHARED_STYLESHEET;
 	private final ScreenManager SCREEN_MANAGER;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private final PromptReader PROMPTS;

@@ -20,7 +20,6 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 
 
 /**
@@ -76,14 +75,13 @@ public class PlayState implements GameData {
 
     public void update(double elapsedTime) {
 	count++;
+	checkLoss();
 	if (count % 120 == 0) {
-	    System.out.println("Spawning enemy!");
 	    spawnEnemies();
 	}
 	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
 	updateHealth(deadEnemies);
 	myMediator.removeListOfSpritesFromScreen(deadEnemies);
-	myEnemyManager.moveEnemies(elapsedTime);
 	handleCollisions(elapsedTime);
     }
 
@@ -91,10 +89,12 @@ public class PlayState implements GameData {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
+	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	myTowerManager.moveProjectiles(elapsedTime);
+	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
@@ -119,7 +119,6 @@ public class PlayState implements GameData {
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
-
 		}
 		catch (Exception e) {
 		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
@@ -132,10 +131,21 @@ public class PlayState implements GameData {
 		currentLevel = myLevels.get(currentLevel.myNumber());
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
+		myMediator.nextLevel();
 	    }
 	    else {
-		// TODO: end game
+		// TODO: end game, player won
+			myMediator.gameWon();
 	    }
+	}
+    }
+    
+    private void checkLoss() {
+	if (myHealth.getValue() <= 0) {
+	    System.out.println("Lost game!");
+	    myMediator.pause();
+	    myMediator.endLoop();
+	    myMediator.gameLost();
 	}
     }
 

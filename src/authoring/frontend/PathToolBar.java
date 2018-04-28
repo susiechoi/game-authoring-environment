@@ -3,6 +3,8 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -35,6 +37,7 @@ public abstract class PathToolBar extends AuthoringScreen {
 		myPathToolBar.setMaxSize(Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarHeight")), Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarWidth")));
 		}
 		catch(MissingPropertiesException e) {
+		    Log.debug(e);
 		    getView().loadErrorScreen("NoFile");
 		}
 		myPathToolBar.getStylesheets();
@@ -58,17 +61,18 @@ public abstract class PathToolBar extends AuthoringScreen {
 	    	HBox hb = new HBox();
 		Image plusImg = new Image(DEFAULT_PLUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myPlusButton = getUIFactory().makeImageButton("", plusImg);
-		myPlusButton.getStyleClass().add("button-pathsize");
+		myPlusButton.setStyle("-fx-min-width: 50;");
 		mySizingButtons.add(myPlusButton);
 
 		Image minusImg = new Image(DEFAULT_MINUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myMinusButton = getUIFactory().makeImageButton("", minusImg);
-		myMinusButton.getStyleClass().add("button-pathsize");
+		myMinusButton.setStyle("-fx-min-width: 50;");
 		mySizingButtons.add(myMinusButton);
 		hb.getChildren().addAll(mySizingButtons);
 		return hb;
 	    }
 	    catch(MissingPropertiesException e) {
+		 Log.debug(e);
 		getView().loadErrorScreen("NoConstants");
 		return null;
 	    }

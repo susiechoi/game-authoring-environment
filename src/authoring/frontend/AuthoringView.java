@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -105,6 +107,7 @@ public class AuthoringView extends View {
 	    	myController.setWaveTime(getLevel(), waveNumber, time);
 	    }
 	    catch(ObjectNotFoundException e) {
+		 Log.debug(e);
 		loadErrorScreen("NoObject");
 	    }
 	}
@@ -113,6 +116,7 @@ public class AuthoringView extends View {
 		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
+		    Log.debug(e);
 		    e.printStackTrace();
 		    loadErrorScreen("NoObject");
 		}
@@ -166,7 +170,8 @@ public class AuthoringView extends View {
 	}
 	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 			| IllegalAccessException | InstantiationException e) {
-		e.printStackTrace();
+	    	Log.debug(e);	
+	    	e.printStackTrace();
 		loadErrorScreen("NoScreenFlow");
 	}
 	}
@@ -177,9 +182,8 @@ public class AuthoringView extends View {
 		goForwardFrom(id,  parameterList);
 	}
 
-	public void makePath(GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
-		myGrid = grid;
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathSize);
+	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
 	}
 
 	/**
@@ -198,7 +202,8 @@ public class AuthoringView extends View {
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
 		}
 		return availableObjectOptions; 
 	}
@@ -212,7 +217,8 @@ public class AuthoringView extends View {
 		try {
 			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
 		} 
 		return returnedObjectAttribute; 
 	}
@@ -264,7 +270,8 @@ public class AuthoringView extends View {
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
 		}
 		catch(ObjectNotFoundException e) {
-		    	e.printStackTrace();
+		    Log.debug(e);	
+		    e.printStackTrace();
 			loadErrorAlert("NoObject");
 		}
 		return new HashMap<>();
@@ -276,6 +283,7 @@ public class AuthoringView extends View {
 	    return myController.getHighestWaveNumber(level);
 	    }
 	    catch(ObjectNotFoundException e) {
+		 Log.debug(e);
 		e.printStackTrace();
 		loadErrorScreen("NoObject");
 	    }
@@ -286,6 +294,7 @@ public class AuthoringView extends View {
 		try {
 		    myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
+		    Log.debug(e);
 		    loadErrorScreen("NoObject");
 		} 
 	}
@@ -299,7 +308,7 @@ public class AuthoringView extends View {
 		return myCSSChanged; 
 	}
 
-	protected String getGameName() {
+	public String getGameName() {
 		return myController.getGameName();
 	}
 
@@ -312,9 +321,11 @@ public class AuthoringView extends View {
 		try {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorAlert("NoImageFile");
+		    Log.debug(e);	
+		    loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorAlert("NoDuplicateNames");
+		    Log.debug(e);	
+		    loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
@@ -322,9 +333,11 @@ public class AuthoringView extends View {
 		try {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {
-			loadErrorAlert("NoImageFile");
+		    Log.debug(e);	
+		    loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {
-			loadErrorAlert("NoDuplicateNames");
+		    Log.debug(e);	
+		    loadErrorAlert("NoDuplicateNames");
 		} 
 	}
 	
@@ -332,7 +345,8 @@ public class AuthoringView extends View {
 		try {
 			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-			loadErrorScreen("NoObject");
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
 		}
 	}
 	
@@ -346,7 +360,8 @@ public class AuthoringView extends View {
 			try {
 				myTheme = (String) myController.getObjectAttribute(1, "Settings", "", "myGameTheme");
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-				loadErrorAlert("NoFile");
+			    Log.debug(e);	
+			    loadErrorAlert("NoFile");
 			}
 		}
 		System.out.println(myTheme);

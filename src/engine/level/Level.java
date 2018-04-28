@@ -351,6 +351,26 @@ public class Level {
 	public int getPathSize() {
 		return myPaths.get(0).getPathSize();
 	}
+	
+	public int getColumnCount() {
+		return myPaths.get(0).getColumnCount();
+	}
+	
+	public int getRowCount() {
+		return myPaths.get(0).getRowCount();
+	}
+	
+	public String getPathImage() {
+		return myPaths.get(0).getPathImage();
+	}
+	
+	public String getStartImage() {
+		return myPaths.get(0).getStartImage();
+	}
+	
+	public String getEndImage() {
+		return myPaths.get(0).getEndImage();
+	}
 
 	/**
 	 * Adds a wave to the level

@@ -1,11 +1,17 @@
 package gameplayer.screen;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
+
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.PlayController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -14,49 +20,43 @@ import frontend.PromptReader;
 import frontend.Screen;
 import frontend.View;
 import gameplayer.ScreenManager;
-import gameplayer.panel.BuyPanel;
-import gameplayer.panel.ControlsPanel;
-import gameplayer.panel.GamePanel;
-import gameplayer.panel.ScorePanel;
-import gameplayer.panel.SettingsPanel;
-import gameplayer.panel.TowerInfoPanel;
-import gameplayer.panel.TowerPanel;
-import gameplayer.panel.UpgradePanel;
+import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
+import voogasalad.util.soundfactory.*;
+
 
 
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private static final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
+	private final String DEFAULT_SHARED_STYLESHEET;
+	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
-	private TowerInfoPanel TOWER_INFO_PANEL;
 	private GamePanel GAME_PANEL;
 	private ScorePanel SCORE_PANEL;
 	private ControlsPanel CONTROLS_PANEL;
+	private SplashPanel SPLASH_PANEL;
 	private UpgradePanel UPGRADE_PANEL;
 	private ScreenManager SCREEN_MANAGER;
-	private BuyPanel BUY_PANEL;
-	private SettingsPanel SETTINGS_PANEL;
 	private BorderPane displayPane;
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
 	private BorderPane rootPane;
 	private ITRTSoundFactory SOUND_FACTORY;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
+	private boolean GAME_WON; //false if lost
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
 		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
-		SOUND_FACTORY = new ITRTSoundFactory();
+		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
+		SOUND_FACTORY = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this);
@@ -131,17 +131,18 @@ public class GameScreen extends Screen {
 	public void controlTriggered(String control) throws MissingPropertiesException {
 		if(control.equals(GAMEPLAYER_PROPERTIES.get("play"))) {
 			MEDIATOR.play();
-		}			
+		}
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause"))) {
-		    MEDIATOR.pause();
+			MEDIATOR.pause();
 		}
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup"))) {
-		    MEDIATOR.fastForward(10);
+			MEDIATOR.fastForward(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("fastForwardSize")));
 		}
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
+		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
 		    getView().playControllerInstructions();
 		}
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) {
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("edit"))) { // Susie added this
+
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
@@ -160,7 +161,7 @@ public class GameScreen extends Screen {
 				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
-
+			    Log.debug(e); //TODO!!!
 			}
 			SOUND_FACTORY.playBackgroundMusic();
 
@@ -177,21 +178,17 @@ public class GameScreen extends Screen {
 		}
 	}
 
+	/**
+	 * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
+	 * Additionally synchronizes the initial display value of each to the passed values
+	 * @param myCurrency	Engine's currency object
+	 * @param myScore	Engine's score object
+	 * @param myLives	Engine's lives object
+	 */
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
-		ChangeListener<Number> currencyListener = TOWER_PANEL.createCurrencyListener();
-		ChangeListener<Number> scoreListener = SCORE_PANEL.createScoreListener();
-		ChangeListener<Number> healthListener = SCORE_PANEL.createHealthListener();
-		myCurrency.addListener(currencyListener);
-		myScore.addListener(scoreListener);
-		myLives.addListener(healthListener);
-		TOWER_PANEL.setInitalMoney(myCurrency.get());
-		SCORE_PANEL.setInitialScore(myScore.get());
-		SCORE_PANEL.setInitialLives(myLives.get());
-
-		//	currencyListener.changed(myCurrency, 0, 0);
-		//	scoreListener.changed(myScore, 0, 0);
-		//	healthListener.changed(myLives, 0, 0);
-
+		myCurrency.addListener(TOWER_PANEL.createCurrencyListener(myCurrency.get()));
+		myScore.addListener(SCORE_PANEL.createScoreListener(myScore.get()));
+		myLives.addListener(SCORE_PANEL.createHealthListener(myLives.get()));
 	}
 
 
@@ -200,25 +197,24 @@ public class GameScreen extends Screen {
 	}
 
 	public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-		FrontEndTower placedTower = MEDIATOR.placeTower(position, tower.getName());
-		return placedTower;
+		return MEDIATOR.placeTower(position, tower.getName());
 	}
 
 	public void towerClickedOn(FrontEndTower tower) {
-		TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
+		TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 		UPGRADE_PANEL = new UpgradePanel(this, tower);
 		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
-		BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
+		BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
 		displayPane.setBottom(BUY_PANEL.getPanel());
 		gamePane.setBottom(UPGRADE_PANEL.getPanel());
 	}
 
 	private void settingsClickedOn() {
-		SETTINGS_PANEL = new SettingsPanel(this);
+		SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
 
 		displayPane.setBottom(SETTINGS_PANEL.getPanel());
 	}
@@ -235,8 +231,8 @@ public class GameScreen extends Screen {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize);
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
 	}
 
 	private void setVertPanelsLeft() {
@@ -280,4 +276,21 @@ public class GameScreen extends Screen {
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
 	}
+
+	public void gameWon() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+	}
+
+	public void gameLost() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+	}
+
+	public void nextLevel() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+	}
+
 }

@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,16 +22,16 @@ public abstract class PathScreen extends AdjustScreen {
 
 	protected PathScreen(AuthoringView view) {	
 		super(view);
-//		setStyleSheet(view.getCurrentCSS());
+		setStyleSheet(view.getCurrentCSS());
 		grid = new CreatePathGrid(view);
 	}
 	
 	protected void setPathPanel(PathPanel panel, PathToolBar toolbar) {
 		pathRoot.getChildren().clear();
+		System.out.println(panel.getPanel());
 		pathRoot.getChildren().add(panel.getPanel());
 		pathRoot.getChildren().add(toolbar.getPanel());
 		pathRoot.getChildren().add(pathGrid);
-
 		StackPane.setAlignment(pathGrid, Pos.TOP_LEFT);
 		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
 		StackPane.setAlignment(toolbar.getPanel(), Pos.BOTTOM_LEFT);
@@ -38,13 +40,15 @@ public abstract class PathScreen extends AdjustScreen {
 
 	@Override
 	public Parent makeScreenWithoutStyling() {
-		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
+		makePanels();
 		initializeGridSettings(grid);
 		setSpecificUIComponents();
 		return pathRoot; 	
 	}
+	
+	public abstract void makePanels();
 
 	public abstract void initializeGridSettings(CreatePathGrid grid);
 	public abstract void setSpecificUIComponents();
@@ -65,6 +69,7 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			    	}
 			    	catch(MissingPropertiesException e) {
+			    	 Log.debug(e);
 			    	    getView().loadErrorScreen("NoFile");
 			    	}
 			}
@@ -81,6 +86,7 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			    }
 			    catch(MissingPropertiesException e) {
+				 Log.debug(e);
 				getView().loadErrorScreen("NoFile");
 			    }
 			}
