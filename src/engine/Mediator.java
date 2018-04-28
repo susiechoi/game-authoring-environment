@@ -5,6 +5,8 @@ import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
+import voogasalad.util.soundfactory.ITRTSoundFactory;
+import voogasalad.util.soundfactory.SoundFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -40,9 +42,12 @@ import xml.XMLFactory;
  */
 public class Mediator implements MVController{
 
+	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    
 	private ScreenManager myScreenManager;
 	private GameEngine myGameEngine;
 	private PlayController myPlayController;
+	private SoundFactory mySoundFactory;
 	
 	//    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
 	//    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
@@ -59,6 +64,7 @@ public class Mediator implements MVController{
 	 */
 	public Mediator(PlayController p) {
 		myPlayController = p;
+		mySoundFactory = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
 		//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
 		//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
 	}
@@ -281,5 +287,9 @@ public class Mediator implements MVController{
 	public void gameLost() {
 	    myScreenManager.getGameScreen().gameLost();
     }
+	
+	public SoundFactory getSoundFactory() {
+	    return mySoundFactory;
+	}
 
 }

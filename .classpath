@@ -12,6 +12,6 @@
 	<classpathentry kind="lib" path="lib/xstream-benchmark-1.4.10.jar"/>
 	<classpathentry kind="lib" path="lib/xstream-hibernate-1.4.10.jar"/>
 	<classpathentry kind="lib" path="lib/xstream-jmh-1.4.10.jar"/>
+	<classpathentry kind="src" path="/voogasalad_util"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
-
