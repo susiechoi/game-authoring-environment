@@ -56,7 +56,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    setProperty(PROJECTILE_TYPE, "ConstantDamageProperty", myProjectileDamage);
 	    setProperty(PROJECTILE_TYPE, "ConstantSpeedProperty", myProjectileSpeed);
 	    setProperty(LAUNCHER_TYPE, "RangeProperty", myLauncherRange);
-	    setProperty(LAUNCHER_TYPE, "FireRateProperty", myLauncherRate);
+	    setProperty(LAUNCHER_TYPE, "FireRateProperty", 0.0,0.0,myLauncherRate);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 	});
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);

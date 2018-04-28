@@ -37,6 +37,15 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher);
+	for (Property prop: properties) {
+	//	if (prop.getName().equals("HealthProperty")) {
+			System.out.println(prop.getName()+ "****  ****");
+			if (prop.getName().equals("HealthProperty")) {
+				System.out.println(getProperty("HealthProperty"));
+			}
+	//	}
+	}
+	System.out.println("done looking");
 	myProperties = properties;
 	myIntersecter = new ImageIntersecter(this); 
 	pathIndex = 0;
@@ -45,6 +54,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myHealthImpact = getValue("DamageProperty");
 	mySpeed = getValue("SpeedProperty");
 	myKillReward = getValue("ValueProperty");
+	System.out.println(getValue("HealthProperty"));
+	System.out.println(getProperty("HealthProperty").getName() + " is  the health prop");
     }
 
     /**
@@ -175,6 +186,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     @Override
     public void loseHealth(double damage) {
-	((HealthProperty) getProperty("HealthProperty")).loseHealth(damage);
+    	System.out.println(this.getProperty("HealthProperty") + " enemy lose health method");
+	((HealthProperty) this.getProperty("HealthProperty")).loseHealth(damage);
     }
 }

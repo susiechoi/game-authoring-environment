@@ -58,6 +58,7 @@ public class PlayController {
 		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize());
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
+		System.out.println("starting animation");
 	}
 
 	/**

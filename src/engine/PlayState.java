@@ -75,6 +75,7 @@ public class PlayState implements GameData {
     }
 
     public void update(double elapsedTime) {
+    	System.out.println("in playstate");
 	count++;
 	if (count % 120 == 0) {
 //	    System.out.println("Spawning enemy!");
@@ -90,6 +91,7 @@ public class PlayState implements GameData {
 
     private void handleCollisions(double elapsedTime) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
+	System.out.println("about to check collisions");
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
