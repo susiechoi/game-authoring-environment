@@ -22,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
@@ -66,10 +67,11 @@ public class GamePanel extends Panel{
 
 	Group gamePane = new Group();
 	ScrollPane panelRoot = new ScrollPane(gamePane);
+	Pane holdingPane = new Pane(panelRoot);
 	panelRoot.setMaxHeight(Double.MAX_VALUE);
 	panelRoot.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
-	
+
 	//used in old implementation, forces children to resize to fit view port
 	//panelRoot.setFitToHeight(true);	
 	//panelRoot.setFitToWidth(true);
@@ -77,43 +79,28 @@ public class GamePanel extends Panel{
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 
-	setBackgroundImage(gamePane);
 
 	spriteAdd = gamePane;
-	PANEL = panelRoot;
+	PANEL = holdingPane;
     }
 
-    private void setBackgroundImage(Group gamePane) {
-	PropertiesReader propReader = new PropertiesReader();
-	Random rand = new Random();
+    private void setBackgroundImage(String backgroundFilePath) {
+	//TODO fix this hardcoding, should just expand to fill space given(don't care about scaling ************************************
+	Bounds centerBounds = PANEL.getBoundsInLocal();
+	ImageView imageView = new ImageView(new Image(backgroundFilePath,centerBounds.getWidth(), centerBounds.getHeight(), false, false));
+	spriteAdd.getChildren().add(imageView);
 
-	try {
-	    //TODO fix this hardcoding, should just expand to fill space given(don't care about scaling ************************************
-	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
-	    int random = rand.nextInt(backgroundMap.size());
-	    int count = 0;
-
-	    for(Entry<String, Image> entry : backgroundMap.entrySet()) {
-		if(entry.getKey().equals(GAMEPLAYER_PROPERTIES.get("general"))) {
-		    ImageView imageView = new ImageView();
-		    imageView.setImage(entry.getValue());
-		    gamePane.getChildren().add(imageView);
-		}
-	    }
-	} catch (MissingPropertiesException e1) {
-	    Log.debug(e1);
-		e1.printStackTrace();
-	}
     }
 
     public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-		PathMaker pathMaker = new PathMaker();
-		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
-		//	setGridConstraints(grid, imageMap);
-		if (spriteAdd == null) {
-		    makePanel();
-		}
-		spriteAdd.getChildren().add(grid);
+	setBackgroundImage(backgroundImageFilePath);
+	PathMaker pathMaker = new PathMaker();
+	GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	//	setGridConstraints(grid, imageMap);
+	if (spriteAdd == null) {
+	    makePanel();
+	}
+	spriteAdd.getChildren().add(grid);
     }
 
 
@@ -189,6 +176,12 @@ public class GamePanel extends Panel{
     }
 
     public void addSprite(FrontEndSprite sprite) {
+	//	ImageView test = new ImageView(new Image("file:Images/bomb.png"));
+	//	test.setTranslateX(120);
+	//	test.setTranslateY(30);
+	//	test.setFitHeight(20);
+	//	test.setFitWidth(20);
+	//	spriteAdd.getChildren().add(test);
 	ImageView spriteImage = sprite.getImageView();
 	spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
 	spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);
@@ -222,8 +215,8 @@ public class GamePanel extends Panel{
 		towerPlaceMode = false;
 	    }
 	    catch(CannotAffordException e){
-		 Log.debug(e);
-		 //TODO aaahhhhhhhhh
+		Log.debug(e);
+		//TODO aaahhhhhhhhh
 		//GameScreen popup for cannot afford
 	    }
 	}

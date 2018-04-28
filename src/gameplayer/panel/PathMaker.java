@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class PathMaker {
@@ -36,19 +35,23 @@ public class PathMaker {
 
 	myPathSize = pathSize;
 	setGridConstraints(grid, width, height);
+
 	addImagesToGrid(map);
 	return grid;
     }
 
     private void addImagesToGrid(Map<String, List<Point>> map) {
 	for (String key: map.keySet()) {
+	    String imageKey = key.substring(1);
+	    System.out.println("ImagePath PathMaker: " + key);
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
 		Point point = pointList.get(i);
 		// TODO handle IllegalArgumentException where key is invalid
 		ImageView image = new ImageView();
 		try{
-		    image = new ImageView(new Image(key));
+		    image = new ImageView(new Image(imageKey));
+
 		}
 		catch(IllegalArgumentException e){
 		    Log.debug(e);
@@ -75,5 +78,7 @@ public class PathMaker {
 	    grid.getRowConstraints().add(rowConst);         
 	}
     }
-}
 
+
+
+}

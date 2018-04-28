@@ -33,7 +33,8 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	    getView().loadErrorScreen("BadConstants");
 	} catch (MissingPropertiesException e) {
 //	    Log.error(e);
-	    getView().loadErrorScreen("NoConstants");
+	    //Log.error(e);
+	    getView().loadErrorScreen("BadConstants");
 	}
     }
 
@@ -60,6 +61,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			Log.error(e);
+
 			getView().loadErrorScreen("NoObject");
 		    }
 		}
@@ -70,6 +72,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 			    | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			 Log.error(e);
+
 			getView().loadErrorScreen("NoObject");
 		    }
 		}

@@ -34,7 +34,11 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 		try {
 			myDefaultName = getView().getPropertiesReader().findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
 		} catch (MissingPropertiesException e) {
+<<<<<<< HEAD
 //		    Log.error(e);
+=======
+		    //Log.error(e);
+>>>>>>> 8893fc6e0264e82550b9c677912c84023ec607d8
 		    getView().loadErrorScreen("NoConstants");
 		}
 	}

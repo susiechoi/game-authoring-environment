@@ -70,7 +70,6 @@ public class Level {
 
 	// TODO 
 	public void addPath(Path path) {
-		myPaths.clear();
 		myPaths.add(path); 
 	}
 
@@ -234,7 +233,13 @@ public class Level {
 	}
 
 	public List<Path> getPaths() {
-		return myPaths; 
+	    	List<Path> pathsWithoutDefault = new ArrayList<>();
+	    	for(Path path: myPaths) {
+	    	    if(!path.equals(myPaths.get(0))){
+	    		pathsWithoutDefault.add(path);
+	    	    }
+	    	}
+		return pathsWithoutDefault; 
 	}
 
 	public Map<String, Tower> getTowers() {
@@ -338,38 +343,38 @@ public class Level {
 		//			}
 		//		}
 		//		return pathMap;
-		if (myPaths.size() > 0) {
-			return myPaths.get(0).getPathMap();
+		if (myPaths.size() > 1) {
+			return myPaths.get(myPaths.size() - 1).getPathMap();
 		}
 		return null;
 	}
 
 	public String getBackGroundImage() {
-		return myPaths.get(0).getBackgroundImage();
+		return myPaths.get(myPaths.size() - 1).getBackgroundImage();
 	}
 
 	public int getPathSize() {
-		return myPaths.get(0).getPathSize();
+		return myPaths.get(myPaths.size() - 1).getPathSize();
 	}
 	
-	public int getColumnCount() {
-		return myPaths.get(0).getColumnCount();
+	public int getGridWidth() {
+		return myPaths.get(myPaths.size() - 1).getGridWidth();
 	}
 	
-	public int getRowCount() {
-		return myPaths.get(0).getRowCount();
+	public int getGridHeight() {
+		return myPaths.get(myPaths.size() - 1).getGridHeight();
 	}
 	
 	public String getPathImage() {
-		return myPaths.get(0).getPathImage();
+		return myPaths.get(myPaths.size() - 1).getPathImage();
 	}
 	
 	public String getStartImage() {
-		return myPaths.get(0).getStartImage();
+		return myPaths.get(myPaths.size() - 1).getStartImage();
 	}
 	
 	public String getEndImage() {
-		return myPaths.get(0).getEndImage();
+		return myPaths.get(myPaths.size() - 1).getEndImage();
 	}
 
 	/**
