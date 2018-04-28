@@ -9,13 +9,11 @@ public class DoubleGraphScreen extends GraphScreen {
 
 	private String myGame1FilePath; 
 	private String myGame2FilePath; 
-	private String myGraphType; 
 
 	protected DoubleGraphScreen(AuthoringView view, String game1Path, String game2Path, String graphType) {
-		super(view);
+		super(view, graphType);
 		myGame1FilePath = game1Path; 
 		myGame2FilePath = game2Path; 
-		myGraphType = graphType; 
 	}
 
 	@Override

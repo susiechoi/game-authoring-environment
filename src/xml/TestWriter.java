@@ -9,9 +9,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 ///Put this at the top of the file:
-import java.io.*;
-import java.net.MalformedURLException;
-import java.util.*;
+import java.io.File;
 
 import data.GameData;
 import engine.sprites.Sprite;

@@ -46,6 +46,7 @@ public class Sprite implements FrontEndSprite{
 	 * 
 	 * @return String: the name of the Sprite
 	 */
+	@Override
 	public String getName() {
 		return myName;
 	}
@@ -55,6 +56,7 @@ public class Sprite implements FrontEndSprite{
 	 * 
 	 * @return ImageView representing game object's image
 	 */
+	@Override
 	public ImageView getImageView() { 
 		return myImageView;
 	}

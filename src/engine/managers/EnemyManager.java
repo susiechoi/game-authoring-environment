@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import engine.path.Path;
-import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
@@ -61,6 +60,7 @@ public class EnemyManager extends ShootingSpriteManager {
 		    enemy.move(elapsedTime);
 		}
 		else {
+
 		    Point newPosition = path.nextPosition(enemy.getIndex());
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
 		    enemy.setNewPosition(newPosition);

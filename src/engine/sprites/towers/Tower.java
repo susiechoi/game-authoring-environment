@@ -14,7 +14,7 @@ import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
-import javafx.scene.image.Image;
+import file.DataPointWriter;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
@@ -25,9 +25,10 @@ import javafx.scene.image.Image;
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
 
-    private final static String ENEMIES_KILLED = "Enemies Killed";
-    private final static int FAKE_X = 100000;
-    private final static int FAKE_Y = 100000;
+	public static final String DEFAULT_TOWER_GRAPH_PATH = "Kills/";
+	public final static String ENEMIES_KILLED = "Enemies Killed";
+	public final static int FAKE_X = 100000;
+	public final static int FAKE_Y = 100000;
 
     private HealthProperty myHealth;
     private String myName; 
@@ -48,6 +49,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private ValueProperty myValue;
     private double myTowerValue; 
     private Map<String, Integer> propertyStats;
+    
+    private DataPointWriter myKillWriter; 
 
     /**
      * Constructor for a Tower object that accepts parameter properties.
@@ -79,9 +82,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myLauncherRange = launcher.getRange(); 
 	myValue = value;
 	myTowerValue = value.getProperty();
-
     }
 
+    
     private void setupStats(Map<String, Integer> propStats, String property, int value) {
     	propStats.put(property, value);
     }
@@ -129,6 +132,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     /**
      * Handles selling a tower
      */
+    @Override
     public int sell() {
 	removeAllProjectiles();
 	return (int) myValue.getProperty();
@@ -195,6 +199,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return myHealth;
     }
 
+    @Override
     public Map<String, Integer> getTowerStats(){
 	updateStatsMap(ENEMIES_KILLED, (int) this.getDeadCount());
 	return propertyStats;

@@ -9,8 +9,6 @@ import java.util.Calendar;
 public class DataPointWriter {
 	
 	public static final String DEFAULT_DATE_FORMAT = "MM-dd-yyyy_hh-mm-ss"; 
-	public static final String DEFAULT_SCORE_IDENTIFIER = "Score"; 
-	public static final String DEFAULT_HEALTH_IDENTIFIER = "Health";
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_FILENAME_SEPARATOR = "_";
 	public static final int DEFAULT_SECOND_DIVISOR = 1000; 
