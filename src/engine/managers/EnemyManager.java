@@ -49,10 +49,11 @@ public class EnemyManager extends ShootingSpriteManager {
 	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
+	    System.out.println(myEnemies.get(path).size());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		if(!enemy.isAlive()) {
-		    myEnemies.get(path).remove(enemy);
-		    break;
+		newEnemies.get(path).add(enemy);
+		if (!enemy.isAlive()) {
+		    newEnemies.get(path).remove(enemy);
 		}
 		newEnemies.get(path).add(enemy);
 		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
@@ -76,7 +77,6 @@ public class EnemyManager extends ShootingSpriteManager {
 	myEnemies = newEnemies;
 	return deadEnemies;
     }
-
 
     private boolean isInRange(Point curr, Point target) {
 	return curr.distance(target)<10;

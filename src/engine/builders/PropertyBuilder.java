@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
+import voogasalad.util.reflection.*;
 
 public class PropertyBuilder {
 
