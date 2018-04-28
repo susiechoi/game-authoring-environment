@@ -25,10 +25,10 @@ public class Path {
 	private String myPathImage;
 	private String myStartImage;
 	private String myEndImage;
+	private Point myStartAbsoluteCoordinate;
 
 	public Path(List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) {
-		myCoordinates = null;
-		newCoordinates = coordinates;
+		myCoordinates = coordinates.get(0);
 		myBackgroundImage = backgroundImage;
 		myPathImage = pathImage;
 		myStartImage = startImage;
@@ -39,6 +39,7 @@ public class Path {
 		pathIndex = 0;
 //		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
+		myStartAbsoluteCoordinate = coordinates.get(0).get(0);
 	}
 
 

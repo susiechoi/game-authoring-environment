@@ -100,8 +100,7 @@ public class WaveDirectionsPanel extends PathPanel{
     }
     @Override
     protected Node getPanel() {
-	// TODO Auto-generated method stub
-	return null;
+	return myRoot;
     }
     @Override
     protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
