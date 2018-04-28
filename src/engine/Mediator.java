@@ -43,7 +43,7 @@ public class Mediator implements MVController{
 	private ScreenManager myScreenManager;
 	private GameEngine myGameEngine;
 	private PlayController myPlayController;
-
+	
 	//    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
 	//    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
 	//    private ObservableValue<Integer> gameSpeed;
