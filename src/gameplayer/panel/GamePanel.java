@@ -29,12 +29,10 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
-
 //note to andrew: delete if you see this not on his branch
 //need two seperate rangeIndicators, one for on click of placed tower, one for display when placing when cursor is changed
 //as is if you click on tower, the mouseonexit method will make range disappear if you leave panel
 public class GamePanel extends Panel{
-
 
     private final GameScreen GAME_SCREEN;
     private FrontEndTower towerSelected;
@@ -76,7 +74,6 @@ public class GamePanel extends Panel{
 //	gamePane.setMaxHeight(Double.MAX_VALUE);
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
-
 	setBackgroundImage(gamePane);
 
 	spriteAdd = gamePane;
@@ -156,6 +153,7 @@ public class GamePanel extends Panel{
 	    resetCursor();
 	    towerPlaceMode = false;
 	}
+
     }
 
     private void addTowerImageViewAction(FrontEndTower tower) {

@@ -35,9 +35,22 @@ public class View {
 	myLanguage = languageIn;
 	myController = controller;
     }
+    
+    /**
+     * Returns current language being used by screen
+     * @return String specifying language
+     */
+//    public String getLanguage() {
+//	return myLanguage;
+//    }
 
-    
-    
+//    public void playControllerDemo(AuthoringModel model) {
+//	new PlayController(myManager, myLanguage,
+//		model).demoPlay(model.getGame());
+//    }
+//    public void playControllerInstructions(AuthoringModel model) {
+//	new PlayController(myManager, myLanguage, model).loadInstructionScreen();
+//    }
     
 	/**
 	 * Loads an error screen when a user has done something so problematic that the program
@@ -81,6 +94,7 @@ public class View {
     public PropertiesReader getPropertiesReader() {
 	return myPropertiesReader; 
     }
+
     public void playControllerDemo() {
 	try {
  	myController.playControllerDemo(myManager, myLanguage);
@@ -97,5 +111,4 @@ public class View {
  	    loadErrorScreen("NoFile");
  	}
      }
-
 }
