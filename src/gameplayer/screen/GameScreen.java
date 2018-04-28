@@ -17,14 +17,7 @@ import frontend.PromptReader;
 import frontend.Screen;
 import frontend.View;
 import gameplayer.ScreenManager;
-import gameplayer.panel.BuyPanel;
-import gameplayer.panel.ControlsPanel;
-import gameplayer.panel.GamePanel;
-import gameplayer.panel.ScorePanel;
-import gameplayer.panel.SettingsPanel;
-import gameplayer.panel.TowerInfoPanel;
-import gameplayer.panel.TowerPanel;
-import gameplayer.panel.UpgradePanel;
+import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -43,6 +36,7 @@ public class GameScreen extends Screen {
 	private GamePanel GAME_PANEL;
 	private ScorePanel SCORE_PANEL;
 	private ControlsPanel CONTROLS_PANEL;
+	private SplashPanel SPLASH_PANEL;
 	private UpgradePanel UPGRADE_PANEL;
 	private ScreenManager SCREEN_MANAGER;
 	private BorderPane displayPane;
@@ -51,6 +45,7 @@ public class GameScreen extends Screen {
 	private BorderPane rootPane;
 	private ITRTSoundFactory SOUND_FACTORY;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
+	private boolean GAME_WON; //false if lost
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
@@ -276,4 +271,21 @@ public class GameScreen extends Screen {
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
 	}
+
+	public void gameWon() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+	}
+
+	public void gameLost() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+	}
+
+	public void nextLevel() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+	}
+
 }

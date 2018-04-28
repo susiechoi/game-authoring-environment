@@ -11,7 +11,6 @@ import java.util.Map.Entry;
 import com.sun.javafx.tools.packager.Log;
 
 import javafx.scene.control.ScrollPane;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;

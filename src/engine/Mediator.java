@@ -264,10 +264,22 @@ public class Mediator implements MVController{
 		return styling; 
 	}
 
+	public void gameWon() {
+	    myScreenManager.getGameScreen().gameWon();
+    }
+
+    public void nextLevel() {
+	    myScreenManager.getGameScreen().nextLevel();
+    }
+
 
 	@Override
 	public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{
 	    myPlayController.demoPlay(new AuthoringModel().getGame());
 	}
+
+	public void gameLost() {
+	    myScreenManager.getGameScreen().gameLost();
+    }
 
 }
