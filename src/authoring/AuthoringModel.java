@@ -407,15 +407,21 @@ public class AuthoringModel {
     public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
 	Level currentLevel = myGame.levelCheck(level);
 	System.out.println("POINT WANTED: " + point.toString());
+	 Point initialPointBufferOne = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())+1);
+	    Point initialPointBufferTwo = new Point((int) Math.round(point.getX())+1, (int) Math.round(point.getY()));
+	    Point initialPointBufferThree = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())-1);
+	    Point initialPointBufferFour = new Point((int)Math.round(point.getX())-1, (int) Math.round(point.getY()));
 	List<Path> paths = currentLevel.getPaths();
 	for(Path path: paths) {
 	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
-	    if(path.initialPoint().equals(point)){
+	    if(path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
+		    path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
 		return path;
 	    }
 	}
 	throw new ObjectNotFoundException("");
     }
+
     
 
 }
