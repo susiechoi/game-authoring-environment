@@ -121,7 +121,6 @@ public class PlayState implements GameData {
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
-
 		}
 		catch (Exception e) {
 		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die

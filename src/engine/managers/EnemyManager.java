@@ -51,33 +51,28 @@ public class EnemyManager extends ShootingSpriteManager {
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
+		newEnemies.get(path).add(enemy);
 		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 		    deadEnemies.add(enemy);
+		    newEnemies.get(path).remove(enemy);
 		}
-		if (enemy.isAlive()) {
-		    if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
-			enemy.move(elapsedTime);
-		    	List<Enemy> newList = newEnemies.get(path);
-		    	newList.add(enemy);
-		    	newEnemies.put(path, newList);
-		    }
-		    else {
-			Point newPosition = path.nextPosition(enemy.getIndex());
-			int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
-			enemy.setNewPosition(newPosition);
-			enemy.move(elapsedTime);
-			enemy.setIndex(pathIndex);
-			List<Enemy> newList = newEnemies.get(path);
-			newList.add(enemy);
-			newEnemies.put(path, newList);
+
+		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
+		    enemy.move(elapsedTime);
+		}
+		else {
+		    Point newPosition = path.nextPosition(enemy.getIndex());
+		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
+		    enemy.setNewPosition(newPosition);
+		    enemy.move(elapsedTime);
+		    enemy.setIndex(pathIndex);
 		    }
 		}
 	    }
-	}
 	myEnemies = newEnemies;
 	return deadEnemies;
     }
-    
+
     private boolean isInRange(Point curr, Point target) {
 	return curr.distance(target)<10;
     }
