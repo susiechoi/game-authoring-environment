@@ -5,15 +5,20 @@
  * Useful in populating sliders, dropdowns, and textboxes with user input that is currently held in objects
  */
 
-package authoring;
+package authoring.factory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import authoring.Reflection;
+import authoring.frontend.exceptions.ObjectNotFoundException;
+import engine.level.Level;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
+import engine.sprites.towers.Tower;
 
 /**
  * 
@@ -30,7 +35,34 @@ public class PropertyFactory {
 	currentProperties = new HashMap<String, Property>();
     }
     
-    public Property getProperty(String objectName, String propertyName, List<Object> attributes) {
+    public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
+	if (objectType.equals("Enemy")) {
+	    if (currentLevel.containsEnemy(objectName)) {
+		Enemy enemy = currentLevel.getEnemy(objectName);
+		enemy.addProperty(getProperty(objectName, propertyName, attributes));
+	    }
+	}
+	else if (objectType.equals("Tower")) {
+	    if (currentLevel.containsTower(objectName)) {
+		Tower tower = currentLevel.getTower(objectName);
+		tower.addProperty(getProperty(objectName, propertyName, attributes));
+	    }
+	}
+	else if (objectType.equals("Projectile")) {
+	    if (currentLevel.containsTower(objectName)) {
+		Tower tower = currentLevel.getTower(objectName);
+		tower.addProjectileProperty(getProperty(objectName, propertyName, attributes));
+	    }
+	}
+	else if (objectType.equals("Launcher")) {
+	    if (currentLevel.containsTower(objectName)) {
+		Tower tower = currentLevel.getTower(objectName);
+		tower.addLauncherProperty(getProperty(objectName, propertyName, attributes));
+	    }
+	}
+    }
+    
+    private Property getProperty(String objectName, String propertyName, List<Object> attributes) {
 	Property ret;
 	String className = PACKAGE + propertyName;
 	String type = null;

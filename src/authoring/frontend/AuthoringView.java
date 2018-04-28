@@ -22,7 +22,6 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
-import controller.PlayController;
 import engine.path.Path;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -31,7 +30,6 @@ import frontend.View;
 import gameplayer.ScreenManager;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 
 public class AuthoringView extends View {
@@ -310,26 +308,16 @@ public class AuthoringView extends View {
 
 	protected void deleteObject(String objectType, String objectName) {
 		try {
-			myModel.deleteObject(myLevel, objectType, objectName);
+			myModel.deleteSprite(myLevel, objectType, objectName);
 		} catch (ObjectNotFoundException e) {
 			loadErrorAlert("NoObject");
 		}
 	}
 
 
-	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	public void makeSprite(String objectType, String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
-			myController.makeTower(myLevel, name);
-		} catch (MissingPropertiesException e) {
-			loadErrorAlert("NoImageFile");
-		} catch (NoDuplicateNamesException e) {
-			loadErrorAlert("NoDuplicateNames");
-		} 
-	}
-	
-	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
-		try {
-			myController.makeEnemy(myLevel, name);
+			myController.makeSprite(objectType, myLevel, name);
 		} catch (MissingPropertiesException e) {
 			loadErrorAlert("NoImageFile");
 		} catch (NoDuplicateNamesException e) {

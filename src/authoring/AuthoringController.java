@@ -248,7 +248,7 @@ public class AuthoringController {
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
-    
+
     /**
      * Method to retrieve the highest wave number found in a level (including all paths)
      * @param level is level desired
@@ -259,22 +259,17 @@ public class AuthoringController {
 	return myModel.getHighestWaveNumber(level);
     }
 
-	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
-		myModel.makeTower(level, name);
-	}
-	
-	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
-		myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
-	}
-	
-	public void setObjectAttributes(int level, String objectType, String name, String propertyName, List<Object> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
-		myModel.setObjectAttributes(level, objectType, name, propertyName, attributes);
-	}
+    public void makeSprite(String objectType, int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	myModel.makeSprite(objectType, level, name);
+    }
 
-	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
-		myModel.makeEnemy(myLevel, name);
-	}
-	
+    public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
+    }
+
+    public void setObjectAttributes(int level, String objectType, String name, String propertyName, List<Object> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+	myModel.setObjectProperty(level, objectType, name, propertyName, attributes);
+    }
 
     public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
 	Level currentLevel = myModel.getLevel(level);
@@ -285,9 +280,9 @@ public class AuthoringController {
 	desiredWave.setWaveTime(time);
     }
 
-	public void writeToFile() throws ObjectNotFoundException {
-		myModel.updateAllProperties(); 
-		AuthoringModelWriter writer = new AuthoringModelWriter();
-		writer.write(myModel.getGame(), myModel.getGameName());
-	}
+    public void writeToFile() throws ObjectNotFoundException {
+	myModel.updateAllProperties(); 
+	AuthoringModelWriter writer = new AuthoringModelWriter();
+	writer.write(myModel.getGame(), myModel.getGameName());
+    }
 }

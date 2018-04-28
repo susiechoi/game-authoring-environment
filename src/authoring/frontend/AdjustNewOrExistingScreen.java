@@ -11,7 +11,7 @@ package authoring.frontend;
 import java.util.HashMap;
 import java.util.Map;
 
-import authoring.AttributeFinder;
+import authoring.factory.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
