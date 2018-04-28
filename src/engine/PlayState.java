@@ -157,7 +157,6 @@ public class PlayState implements GameData {
     
     private void checkLoss() {
 	if (myHealth.getValue() <= 0) {
-	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();

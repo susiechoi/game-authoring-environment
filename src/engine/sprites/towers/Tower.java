@@ -15,6 +15,7 @@ import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import file.DataPointWriter;
+import javafx.scene.image.Image;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
