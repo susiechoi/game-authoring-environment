@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
+
+import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -55,6 +57,7 @@ public class ScreenManager extends View {
 			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
 		}
 		catch (MissingPropertiesException e) {
+			Log.debug(e);
 		}
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;

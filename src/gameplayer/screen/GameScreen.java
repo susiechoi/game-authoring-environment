@@ -20,15 +20,19 @@ import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import sound.ITRTSoundFactory;
+import javafx.stage.Stage;
 
 
 public class GameScreen extends Screen {
 
-	//TODO delete this and re-factor to abstract
 	private final String DEFAULT_SHARED_STYLESHEET;
 
 	private final PromptReader PROMPTS;
@@ -36,7 +40,6 @@ public class GameScreen extends Screen {
 	private GamePanel GAME_PANEL;
 	private ScorePanel SCORE_PANEL;
 	private ControlsPanel CONTROLS_PANEL;
-	private SplashPanel SPLASH_PANEL;
 	private UpgradePanel UPGRADE_PANEL;
 	private ScreenManager SCREEN_MANAGER;
 	private BorderPane displayPane;
@@ -45,7 +48,6 @@ public class GameScreen extends Screen {
 	private BorderPane rootPane;
 	private ITRTSoundFactory SOUND_FACTORY;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
-	private boolean GAME_WON; //false if lost
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;
@@ -58,8 +60,6 @@ public class GameScreen extends Screen {
 		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
 		SCORE_PANEL = new ScorePanel(this);
 		GAME_PANEL = new GamePanel(this);
-		//TODO the null argument on creation is terrible, needs to change once
-		//actual functionality of panels is changed
 	}
 
 
@@ -85,8 +85,6 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-//		rootPane.getStylesheets().add(MEDIATOR.getStyling());
-		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
 
@@ -94,12 +92,6 @@ public class GameScreen extends Screen {
 		GAME_PANEL.towerSelected(tower);
 	}
 
-	//	public void setStyling() {
-	//		String style = MEDIATOR.getStyling();
-	//		if (style != null) {
-	//			rootPane.getStylesheets().add(style);
-	//		}
-	//	}
 
 	@Override
 	protected View getView() {
@@ -156,7 +148,7 @@ public class GameScreen extends Screen {
 				SOUND_FACTORY.setBackgroundMusic("epic");
 			}
 			catch (FileNotFoundException e) {
-			    Log.debug(e); //TODO!!!
+			    Log.debug(e);
 			}
 			SOUND_FACTORY.playBackgroundMusic();
 
@@ -166,11 +158,26 @@ public class GameScreen extends Screen {
 			SOUND_FACTORY.pauseBackgroundMusic();
 		}
 		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
-
+			createPopupBrowser(GAMEPLAYER_PROPERTIES.get("instrURL"));
 		}
 		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
-
+			createPopupBrowser(GAMEPLAYER_PROPERTIES.get("helpURL"));
 		}
+	}
+
+	private void createPopupBrowser(String url) {
+		Stage popUpWindow = new Stage();
+		popUpWindow.initModality(Modality.APPLICATION_MODAL);
+		popUpWindow.setTitle(GAMEPLAYER_PROPERTIES.get("browserTitle"));
+		WebView browser = new WebView();
+		WebEngine engine = browser.getEngine();
+		engine.load(url);
+		VBox browserView = new VBox(browser);
+		Scene scene1 = new Scene(browserView, Integer.parseInt(GAMEPLAYER_PROPERTIES.get("browserWidth")), Integer.parseInt(GAMEPLAYER_PROPERTIES.get("browserHeight")));
+		popUpWindow.setScene(scene1);
+		popUpWindow.showAndWait();
+
+
 	}
 
 	/**
@@ -270,6 +277,17 @@ public class GameScreen extends Screen {
 
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
+	}
+
+
+	private void gameStartAction() {
+		MEDIATOR.startGameLoop();
+		gamePane.setCenter(GAME_PANEL.getPanel());
+	}
+	public void gameStarted() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStartAction());
 	}
 
 	public void gameWon() {

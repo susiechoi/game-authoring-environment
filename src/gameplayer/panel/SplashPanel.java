@@ -1,10 +1,10 @@
 package gameplayer.panel;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
-import frontend.PropertiesReader;
 import gameplayer.screen.GameScreen;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import com.sun.javafx.tools.packager.Log;
 
 import java.util.Map;
 
@@ -25,7 +25,11 @@ public class SplashPanel extends Panel {
         Label titleLabel = new Label();
         Label infoLabel = new Label();
 
-        if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("nextLevel"))) {
+        if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("gameStart"))) {
+            titleLabel.setText(GAMEPLAYER_PROPERTIES.get("gameStartTitle"));
+            infoLabel.setText(GAMEPLAYER_PROPERTIES.get("gameStartInfo"));
+        }
+        else if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("nextLevel"))) {
             titleLabel.setText(GAMEPLAYER_PROPERTIES.get("nextLevelTitle"));
             infoLabel.setText(GAMEPLAYER_PROPERTIES.get("nextLevelInfo"));
         }
@@ -38,7 +42,7 @@ public class SplashPanel extends Panel {
             infoLabel.setText(GAMEPLAYER_PROPERTIES.get("gameLoseInfo"));
         }
         else {
-            //TODO error here for wrong input
+            Log.debug(new MissingPropertiesException(GAMEPLAYER_PROPERTIES.get("incorrectState")));
         }
         VBox panelRoot = new VBox(titleLabel, infoLabel);
         PANEL = panelRoot;

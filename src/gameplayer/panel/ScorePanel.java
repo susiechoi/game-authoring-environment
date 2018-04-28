@@ -48,7 +48,7 @@ public class ScorePanel extends ListenerPanel {
 	try {
 	    myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH); 
 	} catch (IOException e) {
-	    //			Log.error(e);
+		Log.debug(e);
 	    GAME_SCREEN.loadErrorScreen("NoFile");
 	}
 
@@ -117,7 +117,7 @@ public class ScorePanel extends ListenerPanel {
 
     /**
      * Wrapper method on score to reduce order of call dependencies
-     * @param score	initial health of the level
+     * @param health initial health of the level
      */
     private void setInitialHealth(int health) {
 	initialHealth= setInitalProperty(HealthText, health);

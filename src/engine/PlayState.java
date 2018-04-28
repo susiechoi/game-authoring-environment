@@ -107,6 +107,7 @@ public class PlayState implements GameData {
 
 
     private void spawnEnemies() {
+
 	try {
 	    if (currentLevel.getWave(0).isFinished()) {
 		currentLevel.removeWave();   
