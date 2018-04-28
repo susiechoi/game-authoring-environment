@@ -344,37 +344,37 @@ public class Level {
 		//		}
 		//		return pathMap;
 		if (myPaths.size() > 1) {
-			return myPaths.get(1).getPathMap();
+			return myPaths.get(myPaths.size() - 1).getPathMap();
 		}
 		return null;
 	}
 
 	public String getBackGroundImage() {
-		return myPaths.get(1).getBackgroundImage();
+		return myPaths.get(myPaths.size() - 1).getBackgroundImage();
 	}
 
 	public int getPathSize() {
-		return myPaths.get(1).getPathSize();
+		return myPaths.get(myPaths.size() - 1).getPathSize();
 	}
 	
-	public int getColumnCount() {
-		return myPaths.get(1).getColumnCount();
+	public int getGridWidth() {
+		return myPaths.get(myPaths.size() - 1).getGridWidth();
 	}
 	
-	public int getRowCount() {
-		return myPaths.get(1).getRowCount();
+	public int getGridHeight() {
+		return myPaths.get(myPaths.size() - 1).getGridHeight();
 	}
 	
 	public String getPathImage() {
-		return myPaths.get(1).getPathImage();
+		return myPaths.get(myPaths.size() - 1).getPathImage();
 	}
 	
 	public String getStartImage() {
-		return myPaths.get(1).getStartImage();
+		return myPaths.get(myPaths.size() - 1).getStartImage();
 	}
 	
 	public String getEndImage() {
-		return myPaths.get(1).getEndImage();
+		return myPaths.get(myPaths.size() - 1).getEndImage();
 	}
 
 	/**

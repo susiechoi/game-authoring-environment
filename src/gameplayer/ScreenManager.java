@@ -168,9 +168,9 @@ public class ScreenManager extends View {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 		checkGameScreenInitialization();
-		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
+		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
