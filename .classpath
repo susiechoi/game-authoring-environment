@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="SavedModels"/>
-	<classpathentry kind="src" path="default_objects"/>
-	<classpathentry kind="lib" path="lib/xstream-1.4.10.jar"/>
-	<classpathentry kind="lib" path="lib/xstream-benchmark-1.4.10.jar"/>
-	<classpathentry kind="lib" path="lib/xstream-hibernate-1.4.10.jar"/>
-	<classpathentry kind="lib" path="lib/xstream-jmh-1.4.10.jar"/>
-<<<<<<< HEAD
+	<classpathentry kind="lib" path="C:/Users/bigma/OneDrive/Documents/Coding/XStream/xstream-1.4.10.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-=======
-	<classpathentry exported="true" kind="src" path="/voogasalad_util"/>
->>>>>>> b63489ba4ca79dfac2299b974a80e218628071a1
 	<classpathentry kind="output" path="bin"/>
 </classpath>
