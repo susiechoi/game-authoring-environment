@@ -26,15 +26,16 @@ public class PropertyScreenFactory {
 	String className = filepath.substring(filepath.lastIndexOf(".") + 1);
 	for(String specificKey : keys) {
 	    if(specificKey.contains("Slider")) {
-		Slider nextSlider = myUIFactory.setupSlider("", Integer.parseInt(myPropertiesReader.findVal(filepath, key)));
-		myAttributeFinder.setFieldValue(key.substring(0, key.lastIndexOf("S")-1), objectName, newValue);
-		nextSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-		    	myView.getPro
-		});
+//		Slider nextSlider = myUIFactory.setupSlider("", Integer.parseInt(myPropertiesReader.findVal(filepath, key)));
+//		myAttributeFinder.setFieldValue(key.substring(0, key.lastIndexOf("S")-1), objectName, newValue);
+//		nextSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+//		    	myView.getPro
+//		});
 
 	    }
-	    elseif(key.contains(s))
+//	    elseif(key.contains(s));
 	}
+	return vb;
     }
     
 }

@@ -138,7 +138,7 @@ public class PlayState implements GameData {
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
 		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
-		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
+		    myEnemyManager.addEnemy(currentPath, newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
 		}
