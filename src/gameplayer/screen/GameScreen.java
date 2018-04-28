@@ -9,9 +9,6 @@ import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 
 import authoring.AuthoringController;
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
-import controller.PlayController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -231,8 +228,8 @@ public class GameScreen extends Screen {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
-		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
 	}
 
 	private void setVertPanelsLeft() {
@@ -279,17 +276,17 @@ public class GameScreen extends Screen {
 
 	public void gameWon() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		//gamePane.setCenter(SPLASH_PANEL.getPanel());
 	}
 
 	public void gameLost() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
+	//	gamePane.setCenter(SPLASH_PANEL.getPanel());
 	}
 
 	public void nextLevel() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		//gamePane.setCenter(SPLASH_PANEL.getPanel());
 		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
 	}
 

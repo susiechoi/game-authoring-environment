@@ -208,16 +208,6 @@ public class Mediator implements MVController{
 	}
 
 
-	/**
-	 * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
-	 * lives. 
-	 * @param myResources integer property for currency
-	 * @param myScore	integer property for score
-	 * @param IntegerProperty	 integer property for health
-	 */
-	public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
-		myScreenManager.attachListeners(myCurrency, myScore, myLives);
-	}
 
 	/**
 	 * Takes a list of sprites that are to be removed from PlayState, removes them
@@ -229,8 +219,8 @@ public class Mediator implements MVController{
 		}
 	}
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
-		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
 	}
 
 	/**

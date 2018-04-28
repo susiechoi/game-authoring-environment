@@ -16,16 +16,14 @@ import engine.sprites.towers.FrontEndTower;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
@@ -41,7 +39,7 @@ public class GamePanel extends Panel{
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
-    private Pane spriteAdd;
+    private Group spriteAdd;
     private final UIFactory UIFACTORY;
     private Boolean towerClick = false;
     private Circle rangeIndicator;
@@ -66,14 +64,16 @@ public class GamePanel extends Panel{
 
 	//TODO potentially fix needed?
 
-	Pane gamePane = new Pane();
+	Group gamePane = new Group();
 	ScrollPane panelRoot = new ScrollPane(gamePane);
+	panelRoot.setMaxHeight(Double.MAX_VALUE);
+	panelRoot.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
-	panelRoot.setFitToHeight(true);
-	panelRoot.setFitToWidth(true);
+	
+	//used in old implementation, forces children to resize to fit view port
+	//panelRoot.setFitToHeight(true);	
+	//panelRoot.setFitToWidth(true);
 
-//	gamePane.setMaxWidth(Double.MAX_VALUE);
-//	gamePane.setMaxHeight(Double.MAX_VALUE);
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 
@@ -83,7 +83,7 @@ public class GamePanel extends Panel{
 	PANEL = panelRoot;
     }
 
-    private void setBackgroundImage(Pane gamePane) {
+    private void setBackgroundImage(Group gamePane) {
 	PropertiesReader propReader = new PropertiesReader();
 	Random rand = new Random();
 
@@ -97,8 +97,6 @@ public class GamePanel extends Panel{
 		if(entry.getKey().equals(GAMEPLAYER_PROPERTIES.get("general"))) {
 		    ImageView imageView = new ImageView();
 		    imageView.setImage(entry.getValue());
-		    imageView.fitHeightProperty().bind(gamePane.heightProperty());
-		    imageView.fitWidthProperty().bind(gamePane.widthProperty());
 		    gamePane.getChildren().add(imageView);
 		}
 	    }
@@ -108,9 +106,9 @@ public class GamePanel extends Panel{
 	}
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 		PathMaker pathMaker = new PathMaker();
-		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, col, row, spriteAdd);
+		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 		//	setGridConstraints(grid, imageMap);
 		if (spriteAdd == null) {
 		    makePanel();
@@ -162,7 +160,6 @@ public class GamePanel extends Panel{
 	ImageView towerImage = tower.getImageView();
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    // applySelectionGlow(towerImage);
 	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
@@ -176,7 +173,6 @@ public class GamePanel extends Panel{
     private void addRangeIndicator(FrontEndTower tower) {
 	spriteAdd.getChildren().remove(rangeIndicator);
 	ImageView towImage = tower.getImageView();
-	//TODO replace hardcoded constant with tower's range AA
 	rangeIndicator = new Circle(towImage.getX()+(towImage.getImage().getWidth()/2),
 		towImage.getY()+(towImage.getImage().getHeight()/2), tower.getTowerRange());
 	rangeIndicator.setStroke(Color.ORANGE);
@@ -214,8 +210,8 @@ public class GamePanel extends Panel{
 
     public void handleMouseInput(double x, double y) {
 	if(towerPlaceMode) {
-	    Point position = new Point((int)x,(int)y);
 	    try {
+		Point position = new Point((int)x,(int)y);
 		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
@@ -224,8 +220,6 @@ public class GamePanel extends Panel{
 		spriteAdd.getChildren().add(towerImage);
 		resetCursor();
 		towerPlaceMode = false;
-		//TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
-
 	    }
 	    catch(CannotAffordException e){
 		 Log.debug(e);
