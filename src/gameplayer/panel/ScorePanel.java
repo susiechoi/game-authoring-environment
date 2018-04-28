@@ -1,7 +1,6 @@
 package gameplayer.panel;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -10,10 +9,13 @@ import java.util.Calendar;
 import gameplayer.screen.GameScreen;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
+
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Priority;
-import jdk.internal.jline.internal.Log;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
@@ -70,7 +72,8 @@ public class ScorePanel extends ListenerPanel {
 			healthFile.getParentFile().mkdirs(); 
 			myHealthWriter = new PrintWriter(healthFile);
 		} catch (IOException e) {
-			Log.error(e);
+		    	Log.debug(e);
+
 			GAME_SCREEN.loadErrorScreen("NoFile");
 		}
 	}

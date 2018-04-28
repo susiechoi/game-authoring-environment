@@ -3,6 +3,8 @@ package gameplayer.panel;
 
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -12,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import jdk.internal.jline.internal.Log;
 import javafx.scene.control.Tooltip;
 import frontend.PromptReader;
 
@@ -65,7 +66,7 @@ public class ControlsPanel extends Panel{
 						GAME_SCREEN.controlTriggered(control.getKey());
 					} catch (MissingPropertiesException e) {
 						// TODO Auto-generated catch block
-					    	Log.error(e);
+					    	Log.debug(e);
 						e.printStackTrace();
 					}
 				});
@@ -79,7 +80,7 @@ public class ControlsPanel extends Panel{
 				count++;
 			}
 		} catch (MissingPropertiesException e) {
-		    Log.error(e);
+		    Log.debug(e);
 			//something went wrong and we don't have the control images
 			//TODO something reasonable here
 			//probably have default images that aren't the ones specified by authoring
