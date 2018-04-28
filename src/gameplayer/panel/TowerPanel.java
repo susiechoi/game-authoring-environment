@@ -22,7 +22,6 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 
-
 public class TowerPanel extends ListenerPanel {
 
     //TODO read this from settings or properties file, even better would be autoscaling to fit space
