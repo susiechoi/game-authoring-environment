@@ -9,6 +9,9 @@ import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.PlayController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -23,13 +26,15 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
+import voogasalad.util.soundfactory.*;
+
 
 
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
 	private final String DEFAULT_SHARED_STYLESHEET;
+	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
@@ -51,7 +56,7 @@ public class GameScreen extends Screen {
 		SCREEN_MANAGER = ScreenController;
 		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
 		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
-		SOUND_FACTORY = new ITRTSoundFactory();
+		SOUND_FACTORY = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this);

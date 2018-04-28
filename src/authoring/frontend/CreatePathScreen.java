@@ -32,8 +32,12 @@ public class CreatePathScreen extends PathScreen {
 
 	public CreatePathScreen(AuthoringView view) {
 		super(view);
-		myPathPanel = new CreatePathPanel(view);
-		myPathToolBar = new CreatePathToolBar(view);
+
+	}
+	@Override
+	public void makePanels() {
+		myPathPanel = new CreatePathPanel(getView());
+		myPathToolBar = new CreatePathToolBar(getView());
 		me = this;
 	}
 
@@ -57,6 +61,7 @@ public class CreatePathScreen extends PathScreen {
 						gridCheck = true;
 						List<Point> coords = new ArrayList<Point>(grid.getAbsoluteCoordinates());
 						myCoords.add(coords);
+
 					} else {
 						gridCheck = false;
 					}

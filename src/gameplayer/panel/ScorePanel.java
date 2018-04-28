@@ -1,8 +1,6 @@
 package gameplayer.panel;
 
 import java.io.IOException;
-
-
 import gameplayer.screen.GameScreen;
 import java.util.Map;
 

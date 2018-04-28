@@ -18,6 +18,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class InstructionScreen extends Screen {
 	private String DEFAULT_SHARED_STYLESHEET;
@@ -39,12 +40,16 @@ public class InstructionScreen extends Screen {
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		VBox rootBox = new VBox();
-		Text title = getUIFactory().makeScreenTitleText(GAMEPLAYER_PROPERTIES.get("newGameText"));
+		String titleText = GAMEPLAYER_PROPERTIES.get("newGameText"); 
+		Text title = getUIFactory().makeScreenTitleText(titleText);
 		// TODO: Make a load game button
 		//	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 		//	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew());
 
-		ComboBox<String> allGames = UIFACTORY.makeTextDropdown("", gameOptions());
+		ArrayList<String> gameOptions = new ArrayList<>(); 
+		gameOptions.add(titleText);
+		gameOptions.addAll(gameOptions());
+		ComboBox<String> allGames = UIFACTORY.makeTextDropdown("", gameOptions);
 		allGames.setOnAction(click ->{ 
 			continueButt.setDisable(false);
 		});

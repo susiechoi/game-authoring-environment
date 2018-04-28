@@ -14,9 +14,11 @@ import javafx.scene.chart.XYChart.Series;
 
 abstract class GraphScreen extends AuthoringScreen {
 	
+	protected String myGraphType; 
 	
-	public GraphScreen(AuthoringView view) {
+	public GraphScreen(AuthoringView view, String graphType) {
 		super(view);
+		myGraphType = graphType; 
 		setSaved(); 
 	}
 	
@@ -31,7 +33,7 @@ abstract class GraphScreen extends AuthoringScreen {
 		x.setTickLabelsVisible(false);
 		x.setForceZeroInRange(false);
 		NumberAxis y = new NumberAxis(); 
-		y.setLabel(getErrorCheckedPrompt("Score"));
+		y.setLabel(myGraphType);
 		LineChart<Number, Number> graph = new LineChart<Number, Number>(x, y);
 		graph.setLegendVisible(false);
 		graph.setTitle(title);

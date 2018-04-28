@@ -207,6 +207,7 @@ public class Mediator implements MVController{
 		myScreenManager.updateLevelCount(newLevel);
 	}
 
+
 	/**
 	 * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
 	 * lives. 
