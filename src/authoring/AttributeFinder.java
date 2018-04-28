@@ -23,48 +23,60 @@ public class AttributeFinder {
 	 */
 	public Object retrieveFieldValue(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException{
 		Object fieldValue = null; 
-		fieldValue = loopThroughFields(fieldName, objectWithFields);
+		fieldValue = loopThroughFields(fieldName, objectWithFields.getClass(), objectWithFields);
 		if (fieldValue != null) {
 			return fieldValue;
 		}
+		fieldValue = retrieveFieldValueSuper(fieldName, objectWithFields); 
+		if (fieldValue != null) {
+			return fieldValue; 
+		}
 		throw new ObjectNotFoundException(fieldName);
-	}
-
-	public Object retrieveFieldValueSuper(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
+	} 
+	
+	private Object retrieveFieldValueSuper(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		Object fieldValue = null; 
 		while (objectWithFields.getClass().getSuperclass() != null) {
-				fieldValue = loopThroughFields(fieldName, objectWithFields);
-				if (fieldValue != null) {
-					return fieldValue; 
+			fieldValue = loopThroughFields(fieldName, objectWithFields.getClass().getSuperclass(), objectWithFields);
+			if (fieldValue != null) {
+				return fieldValue; 
 			}
 		}
 		throw new ObjectNotFoundException(fieldName);
 	}
-
-	public Object loopThroughFields(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException {
+	
+	private Object loopThroughFields(String fieldName, Class<?> objectClass, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException {
 		Object fieldValue = null; 
-		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
+		Field foundField = getField(fieldName, objectClass); 
+		foundField.setAccessible(true);
+		fieldValue = foundField.get(objectWithFields);
+		return fieldValue;
+	}
+
+	private Field getField(String fieldName, Class<?> objectClass) {
+		for (Field aField : objectClass.getDeclaredFields()) {
 			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
 			if (fieldSimpleString.equals(fieldName)) {
-				aField.setAccessible(true);
-				fieldValue = aField.get(objectWithFields);
-				return fieldValue; 
+				return aField; 
 			}
 		}
 		return null; 
 	}
-
+	
 	public void setFieldValue(String fieldName, Object objectWithFields, Object fieldValue) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
-		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
-			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
-			if (fieldSimpleString.equals(fieldName)) {
-				aField.setAccessible(true);
-				aField.set(objectWithFields, fieldValue);
-				return; 
+		Field foundField = getField(fieldName, objectWithFields.getClass());
+		if (foundField == null) {
+			while (objectWithFields.getClass().getSuperclass() != null) {
+				foundField = getField(fieldName, objectWithFields.getClass().getSuperclass());
+				if (foundField != null) {
+					break; 
+				}
 			}
 		}
-		throw new ObjectNotFoundException(fieldName);
+		foundField.setAccessible(true);
+		foundField.set(objectWithFields, fieldValue);
+		return; 
 	}
-
+	
 }
 
