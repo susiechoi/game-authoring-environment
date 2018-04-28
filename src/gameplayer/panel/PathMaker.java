@@ -35,7 +35,7 @@ public class PathMaker {
 				// TODO handle IllegalArgumentException where key is invalid
 				ImageView image = new ImageView();
 				try{
-				    image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(key), 50, 50, true, true));
+				    image = new ImageView(new Image("file:"+key, 50, 50, true, true));
 				}
 				catch(IllegalArgumentException e){
 				    Log.debug(e);
