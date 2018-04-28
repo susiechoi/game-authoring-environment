@@ -187,6 +187,14 @@ public class Mediator implements MVController{
 	public void fastForward(Integer sliderValue) {
 		myGameEngine.setSpeed(sliderValue);
 	}
+	
+	/**
+	 * Called by the frontend when the restart button is pressed.
+	 */
+	public void restartLevel() {
+	    System.out.println("in restart");
+	    myGameEngine.getPlayState().restartLevel();
+	}
 
 	//WILL BE ADDED BACK IN WHEN UPGRADES ARE ADDED
 	/**
