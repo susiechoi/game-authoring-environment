@@ -168,10 +168,4 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 //	myProperties.add(new SpeedProperty(0, 0, 50));
 //	updateImage(myImage);
 //    }
-
-    @Override
-    public void loseHealth(double damage) {
-    	System.out.println(this.getProperty("HealthProperty") + " enemy lose health method");
-	((HealthProperty) this.getProperty("HealthProperty")).loseHealth(damage);
-    }
 }

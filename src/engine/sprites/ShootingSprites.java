@@ -78,10 +78,10 @@ public abstract class ShootingSprites extends Sprite{
 		    toBeRemoved.add(projectile);
 		    projectilesToBeDeactivated.add(projectile);
 		}
-		for (Projectile deactivatedProjectile: projectilesToBeDeactivated) { //TODO implement method in shootingSprite (deactivateProjectile) that does this
-		    this.getLauncher().removeFromActiveList(deactivatedProjectile);
-		}
 	    }
+	}
+	for (Projectile deactivatedProjectile: projectilesToBeDeactivated) { //TODO implement method in shootingSprite (deactivateProjectile) that does this
+	    this.getLauncher().removeFromActiveList(deactivatedProjectile);
 	}
 	return toBeRemoved;
     }
@@ -166,7 +166,7 @@ public abstract class ShootingSprites extends Sprite{
      */
     //TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
-//	System.out.println("gets here");
+	//	System.out.println("gets here");
 	if(upgradeName.equals("test4")) {
 	    System.out.println("upgrade is working woo");
 	    return upgradeLauncherProperty(balance, "FireRateProperty");
@@ -224,8 +224,7 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public void loseHealth(double damage) {
-	// TODO Auto-generated method stub
-
+	((HealthProperty) this.getProperty("HealthProperty")).loseHealth(damage);
     }
 
 }
