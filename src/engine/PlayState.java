@@ -73,126 +73,6 @@ public class PlayState implements GameData {
 	count = 0;
     }
 
-    public void update(double elapsedTime) {
-	count++;
-	checkLoss();
-	if (count % 120 == 0) {
-	    spawnEnemies();
-	}
-	List<Sprite> endPathEnemies = myEnemyManager.moveEnemies(elapsedTime);
-	updateHealth(endPathEnemies);
-	myMediator.removeListOfSpritesFromScreen(endPathEnemies);
-	handleCollisions(elapsedTime);
-    }
-
-    private void handleCollisions(double elapsedTime) {
-	List<Sprite> toBeRemoved = new ArrayList<>();
-	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
-	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
-	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
-	activeEnemies.removeAll(toBeRemoved);
-	activeTowers.removeAll(toBeRemoved);
-	myEnemyManager.setActiveList(activeEnemies);
-	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
-	myTowerManager.moveTowers();
-
-	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
-	    myMediator.addSpriteToScreen(projectile);
-	}
-	updateScore(toBeRemoved);
-	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
-    }
-
-
-    private void spawnEnemies() {
-	try {
-	    if (currentLevel.getWave(0).isFinished()) {
-		currentLevel.removeWave();   
-	    }
-	    Wave currentWave = currentLevel.getWave(0);
-	    for (Path currentPath : currentLevel.getPaths()) {
-		try {
-		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
-		    newEnemy.setInitialPoint(currentPath.initialPoint());
-		    //newEnemy.updateImage();
-		    //enemy.move(path.initialPoint(),elapsedTime);
-		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
-		    myEnemyManager.addToActiveList(newEnemy);
-		    myMediator.addSpriteToScreen(newEnemy);
-		}
-		catch (Exception e) {
-		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
-		}
-	    }
-	}
-	catch (Exception e) {
-	    // Level is over
-	    if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
-		currentLevel = myLevels.get(currentLevel.myNumber());
-		myMediator.updateLevel(currentLevel.myNumber());
-		// TODO: call Mediator to trigger next level
-		myMediator.nextLevel();
-	    }
-	    else {
-		// TODO: end game, player won
-			myMediator.gameWon();
-	    }
-	}
-    }
-    
-    private void checkLoss() {
-	if (myHealth.getValue() <= 0) {
-	    System.out.println("Lost game!");
-	    myMediator.pause();
-	    myMediator.endLoop();
-	    myMediator.gameLost();
-	}
-    }
-
-    private void updateScore(List<Sprite> toBeRemoved) {
-	for(Sprite sprite : toBeRemoved) {
-	    myScore.set(myScore.get() + sprite.getPointValue());
-	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
-		Enemy enemy = (Enemy) sprite;
-		myResources.set(myResources.get() + enemy.getPointValue());
-	    }
-	}
-    }
-    
-    private void updateHealth(List<Sprite> toBeRemoved) {
-	for(Sprite sprite : toBeRemoved) {
-	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
-		Enemy enemy = (Enemy) sprite;
-		myHealth.set(myHealth.get() 
-			- Double.valueOf(Math.round(enemy.getDamage())).intValue());
-	    }
-	}
-    }
-
-    public void setLevel(int levelNumber) {
-	currentLevel = myLevels.get(levelNumber);
-	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
-	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
-    }
-
-    /**
-     * Restarts the level that you were currently on.
-     */
-    public void restartLevel() {
-	clearLevel();
-	setLevel(currlvl);
-    }
-
-    private void clearLevel() {
-	List<Sprite> toBeRemoved = new ArrayList<>();
-	toBeRemoved.addAll(myTowerManager.getListOfActive());
-	toBeRemoved.addAll(myTowerManager.removeAllProjectiles());
-	toBeRemoved.addAll(myEnemyManager.getListOfActive());
-	myTowerManager.getListOfActive().clear();
-	myEnemyManager.getListOfActive().clear();
-    }
-
     /**
      * Places a tower, adds to the necessary backend data structures
      * @param location : The point on the map where the tower is added
@@ -231,9 +111,144 @@ public class PlayState implements GameData {
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
 	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
-    
+
     public String getStyling() throws MissingPropertiesException {
-    	return mySettings.getCSSTheme();
+	return mySettings.getCSSTheme();
+    }
+
+    public void setLevel(int levelNumber) {
+	currentLevel = myLevels.get(levelNumber);
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
+	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
+    }
+
+    /**
+     * Restarts the level that you were currently on.
+     */
+    public void restartLevel() {
+	clearLevel();
+	setLevel(currlvl);
+    }
+
+    public void update(double elapsedTime) {
+	count++;
+	checkLoss();
+	if (count % 120 == 0) {
+	    spawnEnemies();
+	}
+	checkPathEnd(elapsedTime);
+	handleCollisions(elapsedTime);
+    }
+
+    private void checkLoss() {
+	if (myHealth.getValue() <= 0) {
+	    System.out.println("Lost game!");
+	    myMediator.pause();
+	    myMediator.endLoop();
+	    myMediator.gameLost();
+	}
+    }
+    
+    /**
+     * Checks if enemies have reached the end of the path. Removes the enemies from the
+     * screen and the enemy manager object if they reach the end of the path.
+     */
+    private void checkPathEnd(double elapsedTime) {
+	List<Sprite> endPathEnemies = myEnemyManager.moveEnemies(elapsedTime);
+	updateHealth(endPathEnemies);
+	myMediator.removeListOfSpritesFromScreen(endPathEnemies);
+    }
+
+    private void checkWin() {
+	// Level is over
+	if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
+	    currentLevel = myLevels.get(currentLevel.myNumber());
+	    myMediator.updateLevel(currentLevel.myNumber());
+	    // TODO: call Mediator to trigger next level
+	    myMediator.nextLevel();
+	}
+	else {
+	    // TODO: end game, player won
+	    myMediator.gameWon();
+	}
+    }
+
+    private void spawnEnemies() {
+	try {
+	    if (currentLevel.getWave(0).isFinished()) {
+		currentLevel.removeWave();   
+	    }
+	    Wave currentWave = currentLevel.getWave(0);
+	    for (Path currentPath : currentLevel.getPaths()) {
+		try {
+		    spawnEnemy(currentWave, currentPath);
+		}
+		catch (Exception e) {
+		    // do nothing, path contains no enemies
+		}
+	    }
+	}
+	catch (Exception e) {
+	    checkWin();
+	}
+    }
+
+    private void spawnEnemy(Wave wave, Path path) {
+	Enemy newEnemy = wave.getEnemySpecificPath(path);
+	newEnemy.setInitialPoint(path.initialPoint());
+	//newEnemy.updateImage();
+	//enemy.move(path.initialPoint(),elapsedTime);
+	myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
+	myEnemyManager.addToActiveList(newEnemy);
+	myMediator.addSpriteToScreen(newEnemy);
+    }
+
+    private void handleCollisions(double elapsedTime) {
+	List<Sprite> toBeRemoved = new ArrayList<>();
+	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
+	activeEnemies.removeAll(toBeRemoved);
+	activeTowers.removeAll(toBeRemoved);
+	myEnemyManager.setActiveList(activeEnemies);
+	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
+	myTowerManager.moveTowers();
+
+	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
+	    myMediator.addSpriteToScreen(projectile);
+	}
+	updateScore(toBeRemoved);
+	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
+    }
+
+    private void updateScore(List<Sprite> toBeRemoved) {
+	for(Sprite sprite : toBeRemoved) {
+	    myScore.set(myScore.get() + sprite.getPointValue());
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		myResources.set(myResources.get() + enemy.getPointValue());
+	    }
+	}
+    }
+
+    private void updateHealth(List<Sprite> toBeRemoved) {
+	for(Sprite sprite : toBeRemoved) {
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		myHealth.set(myHealth.get() 
+			- Double.valueOf(Math.round(enemy.getDamage())).intValue());
+	    }
+	}
+    }
+
+    private void clearLevel() {
+	List<Sprite> toBeRemoved = new ArrayList<>();
+	toBeRemoved.addAll(myTowerManager.getListOfActive());
+	toBeRemoved.addAll(myTowerManager.removeAllProjectiles());
+	toBeRemoved.addAll(myEnemyManager.getListOfActive());
+	myTowerManager.getListOfActive().clear();
+	myEnemyManager.getListOfActive().clear();
     }
 }
 
