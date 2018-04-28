@@ -118,6 +118,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     /**
      * Handles selling a tower
      */
+    @Override
     public int sell() {
 	removeAllProjectiles();
 	return (int) myValue.getProperty();
@@ -184,6 +185,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return myHealth;
     }
 
+    @Override
     public Map<String, Integer> getTowerStats(){
 	updateStatsMap(ENEMIES_KILLED, (int) this.getDeadCount());
 	return propertyStats;

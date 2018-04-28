@@ -15,11 +15,8 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.FrontEndTower;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
 /**
