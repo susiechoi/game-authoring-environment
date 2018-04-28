@@ -7,6 +7,7 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.Property;
+import engine.sprites.enemies.Enemy;
 
 /**
  * Projectile class is a sprite that is launched from the tower
@@ -18,6 +19,7 @@ import engine.sprites.properties.Property;
  */
 public class Projectile extends Sprite implements FrontEndSprite{
 
+    private static final double mySpeedFactor = 1.5;
     private double mySize; 
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
@@ -39,6 +41,11 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
 	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	myTarget = target;
+	if (target instanceof Enemy) {
+	    Enemy myEnemy = (Enemy) target;
+	    Double speed = myEnemy.getProperty("SpeedProperty").getProperty();
+	    getProperty("SpeedProperty").setProperty(speed*mySpeedFactor);
+	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();
 	hitTargets = new ArrayList<>();

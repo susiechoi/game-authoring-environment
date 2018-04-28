@@ -1,5 +1,7 @@
 package frontend;
+
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.scene.Parent;
 
@@ -21,10 +23,14 @@ public abstract class Screen {
 	private Parent myRoot;
 	private UIFactory myUIFactory;
 	private PropertiesReader myPropertiesReader;
-
+	private Logger myLogger;
 	protected Screen() {
 		myUIFactory = new UIFactory();
 		myPropertiesReader = new PropertiesReader();
+		//myLogger = Logger.getLogger(this.getClass().getSimpleName());
+	}
+	protected Logger getLogger() {
+	    return myLogger;
 	}
 
 	protected UIFactory getUIFactory() {

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+//import jdk.internal.jline.internal.Log;
 
 abstract class SpecifyNameScreen extends AuthoringScreen {
 
@@ -30,8 +31,10 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	try {
 	    myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
 	} catch (NumberFormatException e) {
+//	    Log.error(e);
 	    getView().loadErrorScreen("BadConstants");
 	} catch (MissingPropertiesException e) {
+//	    Log.error(e);
 	    getView().loadErrorScreen("NoConstants");
 	}
     }
@@ -58,6 +61,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 			getView().makeSprite(TOWER_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
+//			Log.error(e);
 			getView().loadErrorScreen("NoObject");
 		    }
 		}
@@ -67,6 +71,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		    } catch (NumberFormatException | FileNotFoundException
 			    | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
+//			 Log.error(e);
 			getView().loadErrorScreen("NoObject");
 		    }
 		}
