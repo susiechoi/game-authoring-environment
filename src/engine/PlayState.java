@@ -17,6 +17,7 @@ import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -68,6 +69,17 @@ public class PlayState implements GameData {
 	mySettings=settings;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
+	for (Level level: levels) {
+	    for (String enemyString:level.getAllEnemies()) {
+		Enemy myEnemy = level.getEnemies().get(enemyString);
+		myEnemy.updateImage();
+		
+	    }
+	    for (String towerString:level.getAllTowers()) {
+		Tower myTower = level.getTowers().get(towerString);
+		myTower.updateImage();
+	    }
+	}
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
@@ -77,12 +89,14 @@ public class PlayState implements GameData {
 	count++;
 	checkLoss();
 	if (count % 120 == 0) {
+	    System.out.println("spawning enemy!");
 	    spawnEnemies();
 	}
 	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
 	updateHealth(deadEnemies);
 	myMediator.removeListOfSpritesFromScreen(deadEnemies);
 	handleCollisions(elapsedTime);
+
     }
 
     private void handleCollisions(double elapsedTime) {

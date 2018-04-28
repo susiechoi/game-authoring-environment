@@ -7,7 +7,6 @@ import java.util.Map;
 import file.DataPointWriter;
 import com.sun.javafx.tools.packager.Log;
 
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Priority;
@@ -66,7 +65,6 @@ public class ScorePanel extends ListenerPanel {
 	ScoreText.setMaxWidth(Double.MAX_VALUE);
 	LevelText.setMaxWidth(Double.MAX_VALUE);
 	HealthText.setMaxWidth(Double.MAX_VALUE);
-
 
 	HBox panelRoot = new HBox();
 

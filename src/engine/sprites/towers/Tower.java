@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import engine.builders.LauncherBuilder;
 import engine.builders.ProjectileBuilder;
 import engine.sprites.ShootingSprites;
@@ -35,6 +37,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myHealthUpgradeCost; 
     private double myHealthUpgradeValue; 
     private double mySize;
+    @XStreamOmitField
+    private transient Image projectileImage;
     private String myProjectileImage;
     private double myProjectileDamage; 
     private double myProjectileSpeed;

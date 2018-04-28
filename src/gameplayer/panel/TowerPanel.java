@@ -128,7 +128,7 @@ public class TowerPanel extends ListenerPanel {
 	Button prevTowerButton = new Button();
 
 	for(FrontEndTower tower : availableTowers) {
-	    ImageView imageView = tower.getImageView();
+	    ImageView imageView = tower.getImageView(); // Currently creating null imageview
 	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
 	    //    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
 	    //    imageView.setPreserveRatio(false);

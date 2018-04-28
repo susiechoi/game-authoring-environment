@@ -35,11 +35,28 @@ public class PathMaker {
 //	grid.scaleXProperty().bind(maxScale);
 //	grid.scaleYProperty().bind(maxScale);
 
-	myPathSize = pathSize;
-	setGridConstraints(grid, row, col);
-	addImagesToGrid(map);
-	return grid;
-    }
+	public void addImagesToGrid(Map<String, List<Point>> map) {
+		for (String key: map.keySet()) { //goes through images
+			List<Point> pointList = map.get(key);
+			for (int i = 0; i < pointList.size(); i++) {
+				Point point = pointList.get(i);
+				// TODO handle IllegalArgumentException where key is invalid
+				ImageView image = new ImageView();
+				try{
+				    image = new ImageView(new Image("file:"+key, 50, 50, true, true));
+				}
+				catch(IllegalArgumentException e){
+				    Log.debug(e);
+				    image = new ImageView(); //TODO this should not be hardcoded
+				}
+				image.setFitWidth(myPathSize);
+				image.setFitHeight(myPathSize);
+				GridPane.setFillWidth(image, true);
+				GridPane.setFillHeight(image, true);
+				grid.add(image, (int)point.getX(), (int)point.getY());
+			}
+		}
+	}
 
     private void addImagesToGrid(Map<String, List<Point>> map) {
 	for (String key: map.keySet()) {
