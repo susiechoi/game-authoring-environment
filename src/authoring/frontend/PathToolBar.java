@@ -63,12 +63,12 @@ public abstract class PathToolBar extends AuthoringScreen {
 	    	HBox hb = new HBox();
 		Image plusImg = new Image(DEFAULT_PLUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myPlusButton = getUIFactory().makeImageButton("", plusImg);
-		myPlusButton.getStyleClass().add("button-pathsize");
+		myPlusButton.setStyle("-fx-min-width: 50;");
 		mySizingButtons.add(myPlusButton);
 
 		Image minusImg = new Image(DEFAULT_MINUS_IMAGE, buttonWidth, buttonHeight, true, false);
 		myMinusButton = getUIFactory().makeImageButton("", minusImg);
-		myMinusButton.getStyleClass().add("button-pathsize");
+		myMinusButton.setStyle("-fx-min-width: 50;");
 		mySizingButtons.add(myMinusButton);
 		hb.getChildren().addAll(mySizingButtons);
 		return hb;

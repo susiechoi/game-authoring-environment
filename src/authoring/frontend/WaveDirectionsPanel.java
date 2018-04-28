@@ -1,7 +1,7 @@
 package authoring.frontend;
 
-import com.sun.javafx.tools.packager.Log;
 
+import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.beans.value.ChangeListener;
@@ -100,8 +100,7 @@ public class WaveDirectionsPanel extends PathPanel{
     }
     @Override
     protected Node getPanel() {
-	// TODO Auto-generated method stub
-	return null;
+	return myRoot;
     }
     @Override
     protected void setApplyButtonAction(EventHandler<ActionEvent> e) {

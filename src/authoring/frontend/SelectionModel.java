@@ -45,7 +45,7 @@ public class SelectionModel {
 		for (Node node: selectedNodes) {
 			if (node instanceof ImageView) {
 				DraggableImage image = new DraggableImage(((ImageView) node).getImage());
-				image.setCopyDraggable();
+//				image.setCopyDraggable();
 			}
 		}
 	}

@@ -1,8 +1,6 @@
 package gameplayer.panel;
 
 import java.io.IOException;
-
-
 import gameplayer.screen.GameScreen;
 import java.util.Map;
 
@@ -27,8 +25,7 @@ public class ScorePanel extends ListenerPanel {
     private Label ScoreText;
     private Label LevelText;
     private Label HealthText;
-    private Integer initialScore;
-    private Integer initialHealth;
+
 
     private DataPointWriter myScoreWriter; 
     private DataPointWriter myHealthWriter;
@@ -36,14 +33,10 @@ public class ScorePanel extends ListenerPanel {
     public ScorePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-
 	setupWriters(); 
     }
 
     private void setupWriters() {
-	initialScore = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultScore"));
-	initialHealth = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultHealth"));
-
 	try {
 	    myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH); 
 	} catch (IOException e) {
@@ -63,9 +56,9 @@ public class ScorePanel extends ListenerPanel {
     @Override
     public void makePanel() {
 	//TODO Read words SCORE, LEVEL, and + from properties file
-	ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText") + initialScore);
+	ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText"));
 	LevelText = new Label();
-	HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText") + initialHealth);
+	HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText"));
 
 	ScoreText.setMaxWidth(Double.MAX_VALUE);
 
@@ -107,10 +100,8 @@ public class ScorePanel extends ListenerPanel {
      * @param score	initial score of the level
      */
     private void setInitalScore(int score) {
-	initialScore = setInitalProperty(ScoreText, score);
-	if(initialScore == -1) {
-	    updateScore(score);
-	}
+	checkForPanelCreation(ScoreText);
+	updateScore(score);
     }
 
     /**
@@ -118,11 +109,8 @@ public class ScorePanel extends ListenerPanel {
      * @param score	initial health of the level
      */
     private void setInitialHealth(int health) {
-	initialHealth= setInitalProperty(HealthText, health);
-	if(initialHealth == -1) {
-	    updateHealth(health);
-
-	}
+	checkForPanelCreation(HealthText);
+	updateHealth(health);
     }
 
 

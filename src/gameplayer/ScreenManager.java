@@ -16,6 +16,7 @@ import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Parent;
 
 /**
@@ -62,17 +63,17 @@ public class ScreenManager extends View {
 	}
 
 
-//	public ScreenManager(StageManager stageManager, String language) {
-//	    	
-//		STAGE_MANAGER = stageManager;
-//		try {
-//			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
-//		}
-//		catch (MissingPropertiesException e) {
-//		}
-//		PROMPTS = new PromptReader(language, this);
-//		findSettings();
-//	}
+	//	public ScreenManager(StageManager stageManager, String language) {
+	//	    	
+	//		STAGE_MANAGER = stageManager;
+	//		try {
+	//			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
+	//		}
+	//		catch (MissingPropertiesException e) {
+	//		}
+	//		PROMPTS = new PromptReader(language, this);
+	//		findSettings();
+	//	}
 
 
 
@@ -93,7 +94,6 @@ public class ScreenManager extends View {
 
 	public void loadGameScreenNew() {
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
-		System.out.println("trying to make a playcontroller!!");
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
 	}
@@ -103,19 +103,19 @@ public class ScreenManager extends View {
 	}
 
 	//DO WE NEED THIS METHOD????
-//	public void loadGameScreenContinuation() {
-//
-//	}
+	//	public void loadGameScreenContinuation() {
+	//
+	//	}
 
 
 	public void updateLevelCount(Integer newLevelCount) {
-	    checkGameScreenInitialization();
-	    GAME_SCREEN.updateLevel(newLevelCount);
+		checkGameScreenInitialization();
+		GAME_SCREEN.updateLevel(newLevelCount);
 	}
 
 	public void display(FrontEndSprite sprite) {
-	    checkGameScreenInitialization();
-	    GAME_SCREEN.displaySprite(sprite);
+		checkGameScreenInitialization();
+		GAME_SCREEN.displaySprite(sprite);
 	}
 
 
@@ -158,39 +158,42 @@ public class ScreenManager extends View {
 	}
 
 	public void remove(FrontEndSprite sprite) {
-	    checkGameScreenInitialization();
-	    GAME_SCREEN.remove(sprite);
+		checkGameScreenInitialization();
+		GAME_SCREEN.remove(sprite);
 	}
 
 	public void setAvailableTowers(List<FrontEndTower> availableTowers) {
-	    checkGameScreenInitialization();
-	    GAME_SCREEN.setAvailbleTowers(availableTowers);
+		checkGameScreenInitialization();
+		GAME_SCREEN.setAvailbleTowers(availableTowers);
 	}
 
 
-
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-	    checkGameScreenInitialization();
-		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize);;
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+		checkGameScreenInitialization();
+		GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
-		IntegerProperty myLives) {
-	    checkGameScreenInitialization();
-	    GAME_SCREEN.attachListeners(myCurrency, myScore, myLives);	    
+			IntegerProperty myLives) {
+		checkGameScreenInitialization();
+		GAME_SCREEN.attachListeners(myCurrency, myScore, myLives);	    
 	}
 
 
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
 	}
-	
+
 	/**
 	 * Called before GameScreen is used to eliminate OrderOfCall dependencies
 	 */
 	private void checkGameScreenInitialization() {
-	    if(GAME_SCREEN == null) {
-		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
-	    }
+		if(GAME_SCREEN == null) {
+			GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
+		}
+	}
+
+	public GameScreen getGameScreen() {
+		return GAME_SCREEN;
 	}
 }

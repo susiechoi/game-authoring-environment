@@ -18,6 +18,10 @@ public class AdjustWaveScreen extends PathScreen {
 	protected AdjustWaveScreen(AuthoringView view, String waveNumber) {
 		super(view);
 		myWaveNumber = waveNumber;
+
+	}
+	
+	public void makePanels() {
 		myWaveDirectionsPanel = new WaveDirectionsPanel(getView(), myWaveNumber);
 		myWaveToolBar = new WaveToolBar(getView());
 	}
@@ -28,6 +32,7 @@ public class AdjustWaveScreen extends PathScreen {
 	 */
 	@Override
 	public void initializeGridSettings(CreatePathGrid grid) {
+	    	System.out.println("here path issue");
 		setPathPanel(myWaveDirectionsPanel, myWaveToolBar);
 		grid.setUpForWaves(e -> {setPathPanel(new WavePanel(getView(), grid.getMostRecentlyClicked(), myWaveNumber), myWaveToolBar);});//TODO: action here!!!);
 	}

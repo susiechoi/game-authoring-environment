@@ -6,26 +6,35 @@ import java.util.Map;
 
 import com.sun.javafx.tools.packager.Log;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class PathMaker {
 
-	private GridPane grid;
-	private int myPathSize;
+    private GridPane grid;
+    private int myPathSize;
 
-	public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize) {
-		grid = new GridPane();
-		grid.setMaxSize(1020, 650);
-		grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
-		myPathSize = pathSize;
-		setGridConstraints(grid);
-		addImagesToGrid(map);
-		return grid;
-	}
+    public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int col, int row, Pane gamePane) {
+	grid = new GridPane();
+	grid.setGridLinesVisible(true);
+	grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
+	grid.prefHeightProperty().bind(gamePane.heightProperty());
+	grid.prefWidthProperty().bind(gamePane.widthProperty());
+	grid.maxHeightProperty().bind(gamePane.heightProperty());
+	grid.maxWidthProperty().bind(gamePane.widthProperty());
+	grid.minHeightProperty().bind(gamePane.heightProperty());
+	grid.minWidthProperty().bind(gamePane.widthProperty());
+	return grid;
+    }
+//	NumberBinding maxScale = Bindings.min(gamePane.widthProperty(), gamePane.heightProperty());
+//	grid.scaleXProperty().bind(maxScale);
+//	grid.scaleYProperty().bind(maxScale);
 
 	public void addImagesToGrid(Map<String, List<Point>> map) {
 		for (String key: map.keySet()) { //goes through images
@@ -50,17 +59,17 @@ public class PathMaker {
 		}
 	}
 
-	public void setGridConstraints(GridPane grid) {
-		for (int i = 0; i < 1020/myPathSize; i++) {
-			ColumnConstraints colConst = new ColumnConstraints();
-			colConst.setPrefWidth(myPathSize);
-			grid.getColumnConstraints().add(colConst);
-		}
-		for (int i = 0; i <  750/myPathSize; i++) {
-			RowConstraints rowConst = new RowConstraints();
-			rowConst.setPrefHeight(myPathSize);
-			grid.getRowConstraints().add(rowConst);         
-		}
+    private void setGridConstraints(GridPane grid, int numRow, int numCol) {
+	for (int i = 0; i < numCol; i++) {
+	    ColumnConstraints colConst = new ColumnConstraints();
+	    colConst.setPercentWidth(100.0/numCol);
+	    grid.getColumnConstraints().add(colConst);
 	}
+	for (int i = 0; i < numRow; i++) {
+	    RowConstraints rowConst = new RowConstraints();
+	    rowConst.setPercentHeight(100.0/numRow);
+	    grid.getRowConstraints().add(rowConst);         
+	}
+    }
 }
 
