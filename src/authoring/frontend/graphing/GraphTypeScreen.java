@@ -1,8 +1,10 @@
-package authoring.frontend;
+package authoring.frontend.graphing;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.AuthoringScreen;
+import authoring.frontend.AuthoringView;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;

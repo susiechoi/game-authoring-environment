@@ -1,4 +1,4 @@
-package authoring.frontend;
+package authoring.frontend.graphing;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import com.sun.javafx.tools.packager.Log;
 
+import authoring.frontend.AuthoringScreen;
+import authoring.frontend.AuthoringView;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;

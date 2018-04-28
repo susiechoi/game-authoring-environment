@@ -308,7 +308,7 @@ public class AuthoringView extends View {
 		return myCSSChanged; 
 	}
 
-	protected String getGameName() {
+	public String getGameName() {
 		return myController.getGameName();
 	}
 
