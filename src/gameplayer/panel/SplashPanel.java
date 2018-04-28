@@ -24,6 +24,7 @@ public class SplashPanel extends Panel {
     public void makePanel() {
         Label titleLabel = new Label();
         Label infoLabel = new Label();
+        VBox panelRoot = new VBox();
         if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("nextLevel"))) {
             titleLabel.setText(GAMEPLAYER_PROPERTIES.get("nextLevelTitle"));
             infoLabel.setText(GAMEPLAYER_PROPERTIES.get("nextLevelInfo"));
@@ -39,7 +40,7 @@ public class SplashPanel extends Panel {
         else {
             //TODO error here for wrong input
         }
-        VBox panelRoot = new VBox(titleLabel, infoLabel);
+
         PANEL = panelRoot;
 
     }

@@ -285,7 +285,7 @@ public class GameScreen extends Screen {
 	public void nextLevel() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
 		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		//TODO load in new level? Not sure how that happens
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
 	}
 
 }
