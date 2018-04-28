@@ -7,6 +7,8 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
+
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
@@ -113,6 +115,11 @@ public class PlayState implements GameData {
 	myTowerManager.moveTowers();
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
+	    try {
+		myMediator.getSoundFactory().playSoundEffect("cannon"); //TODO: THIS SHOULD BE CUSTOMIZED
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); //TODO: handle what happens if the sound file isnt there
+	    }
 	}
 	updateScore(toBeRemoved);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);

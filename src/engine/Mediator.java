@@ -4,6 +4,8 @@ package engine;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import voogasalad.util.soundfactory.ITRTSoundFactory;
+import voogasalad.util.soundfactory.SoundFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +32,7 @@ import xml.XMLFactory;
  * Mediator has a method for every event that can occur in the game. These methods delegate tasks to other classes that are more specialized for handling
  * those behaviors.
  *
- * @author benauriemma 4/5
+ * @author benauriemma
  * @author andrewarnold
  * @author Brendan Cheng
  * @author Alexi Kontos
@@ -38,10 +40,13 @@ import xml.XMLFactory;
  *
  */
 public class Mediator implements MVController{
+    
+    	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
 	private ScreenManager myScreenManager;
 	private GameEngine myGameEngine;
 	private PlayController myPlayController;
+	private SoundFactory mySoundFactory;
 
 	//    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
 	//    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
@@ -57,6 +62,7 @@ public class Mediator implements MVController{
 	 * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
 	 */
 	public Mediator(PlayController p) {
+	    	mySoundFactory = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
 		myPlayController = p;
 		//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
 		//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
@@ -291,5 +297,10 @@ public class Mediator implements MVController{
 	public void gameLost() {
 	    myScreenManager.getGameScreen().gameLost();
     }
+
+
+	public SoundFactory getSoundFactory() {
+	    return mySoundFactory;
+	}
 
 }
