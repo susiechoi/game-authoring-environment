@@ -1,4 +1,4 @@
-package api;
+package doc.api;
 
 /**
  * Class is used when a projectile is launched from the Launcher (in Tower and possibly enemy)

@@ -147,7 +147,7 @@ public class Mediator {
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	//TODO add in money (decrement when purchased)
-	System.out.println(myGameEngine.getPlayState());
+//	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
 
@@ -191,7 +191,7 @@ public class Mediator {
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	System.out.println("upgrade is called OF TYPE " + upgradeName);
+//	System.out.println("upgrade is called OF TYPE " + upgradeName);
 	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
 

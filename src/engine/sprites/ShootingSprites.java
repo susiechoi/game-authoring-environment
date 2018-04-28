@@ -166,7 +166,7 @@ public abstract class ShootingSprites extends Sprite{
      */
     //TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
-	System.out.println("gets here");
+//	System.out.println("gets here");
 	if(upgradeName.equals("test4")) {
 	    System.out.println("upgrade is working woo");
 	    return upgradeLauncherProperty(balance, "FireRateProperty");

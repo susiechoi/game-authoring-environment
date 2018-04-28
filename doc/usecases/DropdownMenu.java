@@ -7,7 +7,7 @@
  * 
  */
 
-package usecases;
+package doc.usecases;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.ObservableList;

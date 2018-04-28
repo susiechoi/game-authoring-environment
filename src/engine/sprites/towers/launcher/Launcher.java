@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.builders.PropertyBuilder;
-import java.util.List;
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
-import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.Property;
-import engine.sprites.properties.RangeProperty;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -40,7 +37,7 @@ public class Launcher extends Manager<Projectile>{
 	myProperties = new ArrayList<Property>();
 	//TODO do we have to do this
 	for(Property p : launcher.getProperties()) {
-	    myProperties.add(makeProperty(p));
+	    myProperties.add(myPropertyFactory.getProperty(p));
 	}
 	myProjectile = launcher.getProjectile();
 	timeSinceLastShot = 0;
@@ -86,17 +83,6 @@ public class Launcher extends Manager<Projectile>{
 	return myProjectile.upgradeProperty("DamageProperty", balance);
     } 
 
-    public void addProperty(Property property) {
-	Property toRemove = null;
-	for(Property p : myProperties) {
-	    if(property.getName().equals(p.getName())) {
-		toRemove = p;
-	    }
-	}
-	myProperties.remove(toRemove);
-	myProperties.add(property);
-    }
-
     public void addProjectileProperty(Property property) {
 	myProjectile.addProperty(property);
     }
@@ -108,10 +94,9 @@ public class Launcher extends Manager<Projectile>{
     public void setProjectileImage(String image){
 	myProjectile.setImage(image);
     }
-
-
-    protected Property makeProperty(Property p) {
-	return myPropertyFactory.getProperty(p);
+    
+    public void addProperty(Property p){
+	myProperties.add(p);
     }
 
     /**
@@ -169,5 +154,6 @@ public class Launcher extends Manager<Projectile>{
     public double getDamage() {
 	return myProjectile.getDamage();
     }
+
 }
 

@@ -1,4 +1,4 @@
-package api;
+package doc.api;
 
 /**
  * Interface used for controlling Game Loop during play of a game. Engine contains the Game Loop 

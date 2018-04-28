@@ -77,11 +77,11 @@ public class PlayState implements GameData {
     public void update(double elapsedTime) {
 	count++;
 	if (count % 120 == 0) {
-	    System.out.println("Spawning enemy!");
+//	    System.out.println("Spawning enemy!");
 	    spawnEnemies();
 	}
 	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-	System.out.println(deadEnemies.size());
+//	System.out.println(deadEnemies.size());
 	updateHealth(deadEnemies);
 	myMediator.removeListOfSpritesFromScreen(deadEnemies);
 	myEnemyManager.moveEnemies(elapsedTime);
@@ -118,6 +118,7 @@ public class PlayState implements GameData {
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
+		    System.out.println("MADE NEW ENEMY " + newEnemy);
 		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);

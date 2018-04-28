@@ -119,8 +119,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
     }
 
     public void addProperty(Property property) {
-	System.out.println("Property: " + property);
-	System.out.println("Property Name: " + property.getName());
+//	System.out.println("Property: " + property);
+//	System.out.println("Property Name: " + property.getName());
 	Property toRemove = null;
 	for(Property p : myProperties) {
 	    if(property.getName().equals(p.getName())) {
@@ -135,11 +135,11 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public void setImage(String image) {
 	super.updateImage(image);
     }
-   
+    
     public List<Property> getProperties(){
 	return myProperties;
     }
-    
+
     /**
      * Handles upgrading the health of a tower
      */
