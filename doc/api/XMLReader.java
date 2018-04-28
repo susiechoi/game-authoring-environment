@@ -1,4 +1,4 @@
-package api;
+package doc.api;
 
 import org.w3c.dom.Document;
 

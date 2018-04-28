@@ -14,7 +14,7 @@ public abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	public static final String DEFAULT_FILE_ERRORMESSAGE = "Missing specified language property files.";
-	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_CONSTANTS_FILEPATH = "src/frontend/Constants.properties";
 	public static final String DEFAULT_PROMPT = "";
 	//private AuthoringView myView; 
 	private String myStylesheet; 
@@ -70,14 +70,6 @@ public abstract class Screen {
 	private void applyStyle(String stylesheet) {
 		if (myRoot != null && stylesheet != null) {
 			myRoot.getStylesheets().add(stylesheet);
-		}
-	}
-
-	private void applyStyles(List<String> stylesheets) {
-		if (myRoot != null) {
-			for (String s : stylesheets) {
-				myRoot.getStylesheets().add(s);
-			}		
 		}
 	}
 

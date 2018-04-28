@@ -1,4 +1,4 @@
-package api;
+package doc.api;
 
 import javafx.scene.Node;
 

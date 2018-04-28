@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
@@ -32,24 +33,24 @@ public class GamePanel extends Panel{
 
     private final GameScreen GAME_SCREEN;
     private FrontEndTower towerSelected;
+    private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
-    private List<FrontEndTower> towersPlaced;
     private Pane spriteAdd;
     private Boolean towerClick = false;
-    private ImageView highLightedImageVew;
     private Circle rangeIndicator;
 
-    //TODO changes this to be passed from mediator
+    //TODO changes this to be passed from mediator ******************************************************************************
     private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
-    private final String CONSTANTS_FILE_PATH = "src/frontend/Constants.properties";
+    private String CONSTANTS_FILE_PATH;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
-	towersPlaced = new ArrayList<FrontEndTower>();
+	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 	PROP_READ = new PropertiesReader();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
-	towerSelected =  null; //maybe make a new towerContructor which creates a null tower?
+	towerSelected =  null;
+	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
     }
 
     @Override
@@ -59,7 +60,7 @@ public class GamePanel extends Panel{
 
 	Pane gamePane = new Pane();
 	ScrollPane panelRoot = new ScrollPane(gamePane);
-	gamePane.setId("gamePanel");
+	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 	//panelRoot.setBottom(new Up);
 	gamePane.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setMaxHeight(Double.MAX_VALUE);
@@ -75,22 +76,22 @@ public class GamePanel extends Panel{
     private void setBackgroundImage(Pane gamePane) {
 	PropertiesReader propReader = new PropertiesReader();
 	Random rand = new Random();
+
 	try {
-	    //TODO fix this hardcoding, should just expand to fill space given(don't care about scaling
+	    //TODO fix this hardcoding, should just expand to fill space given(don't care about scaling ************************************
 	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
 	    int random = rand.nextInt(backgroundMap.size());
 	    int count = 0;
-	    for(String s:  backgroundMap.keySet()) {
-		if(s.equals("general")) {
+
+	    for(Entry<String, Image> entry : backgroundMap.entrySet()) {
+		if(entry.getKey().equals(GAMEPLAYER_PROPERTIES.get("general"))) {
 		    ImageView imageView = new ImageView();
-		    imageView.setImage(backgroundMap.get(s));
+		    imageView.setImage(entry.getValue());
 		    gamePane.getChildren().add(imageView);
 		}
 	    }
 	} catch (MissingPropertiesException e1) {
-	    //TODO should fix but who cares since this will be refactored
-	    //to be gotten from mediator
-	    System.out.println("Background Images failed to load");
+		e1.printStackTrace();
 	}
     }
 
@@ -147,9 +148,8 @@ public class GamePanel extends Panel{
 
     private void addTowerImageViewAction(FrontEndTower tower) {
 	ImageView towerImage = tower.getImageView();
-	towerImage.setOnMouseClicked((args) ->{
+	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    highLightedImageVew = towerImage;
 	    // applySelectionGlow(towerImage);
 	    addRangeIndicator(tower);
 	    towerClick = true;
@@ -225,15 +225,12 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
 
-		if(newTower!= null) {
+		addTowerImageViewAction(newTower);
+		spriteAdd.getChildren().add(towerImage);
+		resetCursor();
+		towerPlaceMode = false;
+		//TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
 
-		    addTowerImageViewAction(newTower);
-		    towersPlaced.add(newTower);
-		    spriteAdd.getChildren().add(towerImage);
-		    resetCursor();
-		    towerPlaceMode = false;
-		    //TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
-		}
 	    }
 	    catch(CannotAffordException e){
 		//GameScreen popup for cannot afford

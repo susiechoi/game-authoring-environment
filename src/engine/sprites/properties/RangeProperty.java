@@ -8,7 +8,7 @@ package engine.sprites.properties;
  * @date 4/7/18
  *
  */
-public class RangeProperty extends UpgradeProperty {
+public class RangeProperty extends Property {
    
     /**
      * Constructor that takes in cost of range property, upgrade value, and 
@@ -18,8 +18,11 @@ public class RangeProperty extends UpgradeProperty {
      * @param value
      * @param range
      */
-    public RangeProperty(double cost, double value, double range) {
-	super(cost, value, range);
+    public RangeProperty(double cost) {
+	super(cost);
     }
 
+    public RangeProperty(Property p) {
+	super(p);
+    }
 }

@@ -1,4 +1,5 @@
 /**
+ /**
  * @author Sarah Bland
  * @author susiechoi
  * 
@@ -21,9 +22,8 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import controller.PlayController;
 import engine.path.Path;
-import frontend.ErrorReader;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.Screen;
 import frontend.StageManager;
@@ -156,6 +156,7 @@ public class AuthoringView extends View {
 			}
 		}
 		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+		    	System.out.println(clazz.getSimpleName());
 			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 			myStageManager.switchScreen(nextScreen.getScreen());
 		}
@@ -198,7 +199,7 @@ public class AuthoringView extends View {
 	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
 	 */
 	public List<String> getCurrentObjectOptions(String objectType) {
-		List<String> availableObjectOptions = new ArrayList<String>(); 
+		List<String> availableObjectOptions = new ArrayList<>(); 
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
@@ -228,10 +229,6 @@ public class AuthoringView extends View {
 	 */
 	protected void setLevel(int level) {
 		myLevel = level; 
-	}
-
-	protected Scene getScene() {
-		return myStageManager.getScene();
 	}
 	
 	/**
@@ -275,7 +272,7 @@ public class AuthoringView extends View {
 		    	e.printStackTrace();
 			loadErrorAlert("NoObject");
 		}
-		return new HashMap<String, Integer>();
+		return new HashMap<>();
 
 	}
 	
@@ -288,10 +285,6 @@ public class AuthoringView extends View {
 		loadErrorScreen("NoObject");
 	    }
 	    return 1;
-	}
-	
-	public GridPane getPathGrid() {
-		return myGrid;
 	}
 
 	protected void writeToFile() {
@@ -347,6 +340,14 @@ public class AuthoringView extends View {
 	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
 		try {
 			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
+		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+			loadErrorScreen("NoObject");
+		}
+	}
+	
+	public void setObjectAttributes(String objectType, String name, String propertyName, List<Object> attributes) {
+		try {
+			myController.setObjectAttributes(myLevel, objectType, name, propertyName, attributes);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			loadErrorScreen("NoObject");
 		}

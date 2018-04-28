@@ -30,4 +30,7 @@ public class FireRateProperty extends UpgradeProperty<Boolean> {
 	return (Boolean)false;
 	}
 
+    public FireRateProperty(Property p) {
+	super(p);
+    }
 }

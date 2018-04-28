@@ -1,5 +1,7 @@
 package frontend;
 
+import authoring.AuthoringModel;
+import controller.PlayController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,19 +16,32 @@ import javafx.scene.text.Text;
  * @author Sarahbland
  *
  */
+
 public class View {
     StageManager myManager;
     PromptReader myPromptReader;
-    ErrorReader myErrorReader;
+    protected ErrorReader myErrorReader;
     PropertiesReader myPropertiesReader;
+    String myLanguage;
     
     public View(StageManager manager, String languageIn) {
 	myPromptReader = new PromptReader(languageIn, this);
 	myErrorReader = new ErrorReader(languageIn, this);
 	myPropertiesReader = new PropertiesReader();
 	myManager = manager;
+	myLanguage = languageIn;
     }
 
+    public void playControllerDemo(AuthoringModel model) {
+	new PlayController(myManager, myLanguage,
+		model).demoPlay(model.getGame());
+    }
+    public void playControllerInstructions(AuthoringModel model) {
+	new PlayController(myManager, myLanguage, model).loadInstructionScreen();
+    }
+    
+    
+    
 	/**
 	 * Loads an error screen when a user has done something so problematic that the program
 	 * cannot recover (such as choosing a language with no prompts and not having English

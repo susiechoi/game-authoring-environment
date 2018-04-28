@@ -22,6 +22,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 
+
 /**
  * Handles the current state of the game, including current score, money, and lists
  * of active towers and enemies
@@ -29,10 +30,10 @@ import javafx.beans.value.ChangeListener;
  * @author Katherine Van Dyk
  * @author benauriemma 4/8
  * @author Ben Hodgson 
+ * @author Ryan Pond
  */
 public class PlayState implements GameData {
 
-    private double UNIVERSAL_TIME;
     private int count;
     private IntegerProperty myScore;
     private IntegerProperty myResources;
@@ -61,28 +62,28 @@ public class PlayState implements GameData {
 	currentLevel = myLevels.get(0);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
-
 	myScore = new SimpleIntegerProperty(score);
 	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
 	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
-	myMediator.addIntegerProperties(myResources, myScore, new SimpleIntegerProperty(score));
+	myMediator.addIntegerProperties(myResources, myScore, myHealth);
 	mySettings=settings;
-
-	UNIVERSAL_TIME = universalTime;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
-
     }
 
     public void update(double elapsedTime) {
 	count++;
-	UNIVERSAL_TIME+=elapsedTime;
 	if (count % 120 == 0) {
+//	    System.out.println("Spawning enemy!");
 	    spawnEnemies();
 	}
+	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
+//	System.out.println(deadEnemies.size());
+	updateHealth(deadEnemies);
+	myMediator.removeListOfSpritesFromScreen(deadEnemies);
 	myEnemyManager.moveEnemies(elapsedTime);
 	handleCollisions(elapsedTime);
     }
@@ -117,6 +118,7 @@ public class PlayState implements GameData {
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
+		    System.out.println("MADE NEW ENEMY " + newEnemy);
 		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
@@ -147,7 +149,17 @@ public class PlayState implements GameData {
 	    myScore.set(myScore.get() + sprite.getPointValue());
 	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
 		Enemy enemy = (Enemy) sprite;
-		myResources.set(myResources.get() + enemy.getPointValue());;
+		myResources.set(myResources.get() + enemy.getPointValue());
+	    }
+	}
+    }
+    
+    private void updateHealth(List<Sprite> toBeRemoved) {
+	for(Sprite sprite : toBeRemoved) {
+	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
+		Enemy enemy = (Enemy) sprite;
+		myHealth.set(myHealth.get() 
+			- Double.valueOf(Math.round(enemy.getDamage())).intValue());
 	    }
 	}
     }
@@ -184,9 +196,16 @@ public class PlayState implements GameData {
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
-	myResources.set(placedTower.purchase(myResources.get()));
-	return placedTower;
+	try {
+	    myResources.set(placedTower.purchase(myResources.get()));
+	    return placedTower;
+	}
+	catch(CannotAffordException e) {
+	    myTowerManager.sell(placedTower);
+	    throw new CannotAffordException(e.getMessage());
+	}
     }
+
     /**
      * Sells the tower, increments users currency, and removes it from collection and screen
      * @param tower
@@ -195,6 +214,7 @@ public class PlayState implements GameData {
 	myTowerManager.upgrade(tower,"rando",myResources.get());
 	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
+
     }
 
     /**
@@ -206,12 +226,9 @@ public class PlayState implements GameData {
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
 	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
-
-
-
+    
     public String getStyling() throws MissingPropertiesException {
-	return mySettings.getCSSTheme();
+    	return mySettings.getCSSTheme();
     }
-
 }
 

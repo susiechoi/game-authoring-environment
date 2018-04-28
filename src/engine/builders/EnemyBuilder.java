@@ -1,11 +1,14 @@
 package engine.builders;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.DamageProperty;
-import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.HealthProperty;
-import engine.sprites.properties.RangeProperty;
+import engine.sprites.properties.Property;
+import engine.sprites.properties.SpeedProperty;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.launcher.Launcher;
 
@@ -18,7 +21,12 @@ public class EnemyBuilder {
 
     public Enemy construct(String name, String image, double speed, double initialHealth, double healthImpact,
 	    double killReward, double killUpgradeCost, double killUpgradeValue) {
-	Enemy newEnemy = new Enemy(name, image, speed, 50, new Launcher(null, null), new HealthProperty(0, 0, initialHealth), new DamageProperty(0 , 0 , healthImpact), new ValueProperty(killReward));
+	List<Property> properties = new ArrayList<>();
+	properties.add(new HealthProperty(0, 0, initialHealth));
+	properties.add(new DamageProperty(0 , 0 , healthImpact));
+	properties.add(new ValueProperty(killReward));
+	properties.add(new SpeedProperty(0, 0, speed));
+	Enemy newEnemy = new Enemy(name, image, speed, new Launcher(null, null), properties);
 	return newEnemy;
     }
 
