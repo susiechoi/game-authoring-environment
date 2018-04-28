@@ -264,6 +264,10 @@ public class Mediator implements MVController{
 		return styling; 
 	}
 
+	public void gameWon() {
+	    myGameEngine.getPlayState();
+    }
+
 
 	@Override
 	public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{

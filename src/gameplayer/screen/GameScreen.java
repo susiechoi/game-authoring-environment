@@ -274,4 +274,9 @@ public class GameScreen extends Screen {
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
 	}
+
+	private void gameWon() {
+
+
+	}
 }
