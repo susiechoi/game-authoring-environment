@@ -1,8 +1,6 @@
 package authoring.frontend;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -112,7 +110,7 @@ public class StartScreen extends AuthoringScreen {
 		List<String> existingGames = new ArrayList<>();
 		String gameNamePrompt = getErrorCheckedPrompt("GameEditSelector");
 		existingGames.add(gameNamePrompt);
-		existingGames.addAll(getFileNames(DEFAULT_XML_FOLDER));
+		existingGames.addAll(getUIFactory().getFileNames(DEFAULT_XML_FOLDER));
 		Button editButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel"));
 		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", existingGames, e -> {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, gameNamePrompt);
@@ -130,27 +128,5 @@ public class StartScreen extends AuthoringScreen {
 		editExisting.getChildren().add(editButton);
 		vbox.getChildren().add(editExisting);
 	}
-
-	//Method by Ben Hodgson/Andrew Arnold!
-	private List<String> getFileNames(String folderName) {
-		String currentDir = System.getProperty("user.dir");
-		try {
-			File file = new File(currentDir + File.separator + folderName);
-			File[] fileArray = file.listFiles();
-			List<String> fileNames = new ArrayList<>();
-			for (File aFile : fileArray) {
-				String colorName = aFile.getName();
-				String[] nameSplit = colorName.split("\\.");
-				String fileName = nameSplit[0];
-				fileNames.add(fileName);
-			}
-			return Collections.unmodifiableList(fileNames);
-		}
-		catch (Exception e) {
-		    Log.error(e);
-			getView().loadErrorScreen("NoFile");
-		}
-		return Collections.unmodifiableList(new ArrayList<String>());
-	}
-
+	
 }

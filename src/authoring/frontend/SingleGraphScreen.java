@@ -7,10 +7,12 @@ import javafx.scene.text.Text;
 
 public class SingleGraphScreen extends GraphScreen {
 	
-	private String myGameFilepath; 
+	private String myGraphType; 
+	private String myGameFilepath;
 
-	protected SingleGraphScreen(AuthoringView view, String filepath) {
+	protected SingleGraphScreen(AuthoringView view, String filepath, String graphType) {
 		super(view);
+		myGraphType = graphType; 
 		myGameFilepath = filepath; 
 		setSaved(); 
 	}
@@ -22,7 +24,9 @@ public class SingleGraphScreen extends GraphScreen {
 		Text graphTitle = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("GraphTitle"));
 		LineChart<Number, Number> graph = makeGraph(parseTitle(myGameFilepath)); 
 		addPointsToGraph(myGameFilepath, graph);
-		vb.getChildren().addAll(graphTitle, graph, setupBackButton());
+		vb.getChildren().addAll(graphTitle, graph, setupBackButtonCustom(e -> {
+			getView().getStageManager().switchScreen(new GraphMenuScreen(getView(), myGraphType).getScreen());
+		}));
 		
 		return vb;
 	}
