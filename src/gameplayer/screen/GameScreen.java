@@ -33,7 +33,7 @@ import voogasalad.util.soundfactory.*;
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
-	private static final String DEFAULT_SHARED_STYLESHEET = "styling/jungleTheme.css";
+	private final String DEFAULT_SHARED_STYLESHEET;
 	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
 	private final PromptReader PROMPTS;
