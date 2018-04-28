@@ -92,7 +92,11 @@ public class TowerPanel extends ListenerPanel {
 			Button swapButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("swapButtonID"), buttonMap.get(GAMEPLAYER_PROPERTIES.get("swapButton")));
 			swapButton.setOnMouseClicked(arg0 -> GAME_SCREEN.swapVertPanel());
 			swapButton.setTooltip(new Tooltip(GAMEPLAYER_PROPERTIES.get("swapTooltip"))); //TODO make properties file
+			//swapButton.setMaxWidth(Double.MAX_VALUE);
+			//swapButton.setMaxHeight(Double.MAX_VALUE);
+
 			HBox swapWrap = new HBox(swapButton);
+			//HBox.setHgrow(swapButton, Priority.ALWAYS);
 			swapWrap.setId(GAMEPLAYER_PROPERTIES.get("swapWrapID"));
 			swapWrap.setAlignment(Pos.CENTER_RIGHT);
 			currencyAndSwap.getChildren().add(swapWrap);
