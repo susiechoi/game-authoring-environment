@@ -113,6 +113,7 @@ public class AuthoringModel {
 	myBackgroundImage = backgroundImage;
 	myPathCoordinates = coordinates;
 	Level currentLevel = myGame.levelCheck(level);
+	
 	Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathSize);
 	currentLevel.addPath(newPath);
     }

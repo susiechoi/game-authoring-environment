@@ -16,6 +16,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -58,6 +59,7 @@ public class CreatePathScreen extends PathScreen {
 							getView().getObjectAttribute("Path", "", "myBackgroundImage");
 							getView().goForwardFrom(mySelf.getClass().getSimpleName()+"Apply"); //TODO: Not Getting the class name
 						} catch (ObjectNotFoundException e1) {
+						    Log.error(e);
 							getView().loadErrorScreen("NoScreenFlow");
 						}
 					} else {
