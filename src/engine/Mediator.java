@@ -229,8 +229,8 @@ public class Mediator implements MVController{
 		}
 	}
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
-		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
+	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
 	}
 
 	/**

@@ -45,6 +45,7 @@ public class AuthoringModel {
 	protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
 	protected String myBackgroundImage = new String();
 	protected List<Point> myPathCoordinates = new ArrayList<Point>();
+	private int myPathSize;
 
 	public AuthoringModel() throws MissingPropertiesException {
 		this(new AuthoredGame());
@@ -108,9 +109,10 @@ public class AuthoringModel {
 	 * @throws ObjectNotFoundException 
 	 */
 
-	public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
+	public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
 		myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
 		myBackgroundImage = backgroundImage;
+		myPathSize = pathSize;
 		System.out.println("BACKGROUND IMAGE PASSING: " +backgroundImage);
 		//				myPathCoordinates = coordinates;
 		
@@ -118,7 +120,7 @@ public class AuthoringModel {
 		for(List<Point> list : coordinates) {
 		    List<List<Point>> listOfLists = new ArrayList<List<Point>>();
 		    listOfLists.add(list);
-		    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+		    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
 		    currentLevel.addPath(newPath);
 		}
 		
@@ -421,7 +423,7 @@ public class AuthoringModel {
 	List<Path> paths = currentLevel.getPaths();
 	for(Path path: paths) {
 	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
-	    if(Math.abs(path.initialPoint().getX()-point.getX())<60 && Math.abs(path.initialPoint().getY()-point.getY())<60) {
+	    if(Math.abs(path.initialPoint().getX()-point.getX())<myPathSize && Math.abs(path.initialPoint().getY()-point.getY())<60) {
 		   // path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
 		   // path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
 		return path;

@@ -17,7 +17,7 @@ public class PathMaker {
     private GridPane grid;
     private int myPathSize;
 
-    public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int col, int row) {
+    public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
 	grid = new GridPane();
 	grid.setMaxSize(1020, 650);
 	//		System.out.println("IMAGE: " +backgroundImage);
