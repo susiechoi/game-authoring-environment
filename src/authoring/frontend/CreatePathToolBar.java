@@ -29,65 +29,77 @@ public class CreatePathToolBar extends PathToolBar {
     //	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
     public static final String BACKGROUND_IMAGE_PREFIX = "images/ThemeSpecificImages/BackGroundImages/";
     public static final String BACKGROUND_IMAGE_SUFFIX = "BackGroundImageNames.properties";
-    private Button startImageButton;
-    private Button endImageButton;
-    private Button pathImageButton;
-    private Button backgroundImageButton;
+    public static final String PATH_IMAGE_PREFIX = "images/ThemeSpecificImages/PathImages/";
+    public static final String PATH_IMAGE_SUFFIX = "PathImageNames.properties";
+    public static final String START_IMAGE_PREFIX = "images/ThemeSpecificImages/StartImages/";
+    public static final String START_IMAGE_SUFFIX = "StartImageNames.properties";
+    public static final String END_IMAGE_PREFIX = "images/ThemeSpecificImages/EndImages/";
+    public static final String END_IMAGE_SUFFIX = "EndImageNames.properties";
+    private HBox startImageSelect;
+    private HBox endImageSelect;
+    private HBox pathImageSelect;
+    private HBox backgroundImageSelect;
+    private AuthoringView myView;
 
     public CreatePathToolBar(AuthoringView view) {
 	super(view);
+	myView = view;
     }
 
     @Override
     public void makePanel() {
-	
-	HBox backgroundImageSelect = makeImageSelector("BackGround", "", BACKGROUND_IMAGE_PREFIX + getView().getTheme() + BACKGROUND_IMAGE_SUFFIX);
-	
-	backgroundImageButton = getUIFactory().makeTextButton("", "Choose Background Image");
-	backgroundImageButton.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(ActionEvent event) {
-		Stage dialog = new Stage();
-		VBox dialogVbox = new VBox();
-		dialogVbox.setMaxSize(500, 500);
-		dialogVbox.getChildren().add(backgroundImageSelect);
-		Scene dialogScene = new Scene(dialogVbox, 500, 500);
-		dialogScene.getStylesheets().add("SharedStyling.css");
-		dialog.setScene(dialogScene);
-		dialog.show();
-	    }
-	});
 
-	pathImageButton = getUIFactory().makeTextButton("", "Choose Path Image");
+	backgroundImageSelect = makeImageSelector("BackGround", "", BACKGROUND_IMAGE_PREFIX + getView().getTheme() + BACKGROUND_IMAGE_SUFFIX);
+	pathImageSelect = makeImageSelector("BackGround", "", PATH_IMAGE_PREFIX + getView().getTheme() + PATH_IMAGE_SUFFIX);
+	startImageSelect = makeImageSelector("BackGround", "", START_IMAGE_PREFIX + getView().getTheme() + START_IMAGE_SUFFIX);
+	endImageSelect = makeImageSelector("BackGround", "", END_IMAGE_PREFIX + getView().getTheme() + END_IMAGE_SUFFIX);
 
-	startImageButton = getUIFactory().makeTextButton("", "Choose Start Image");
+	Button backgroundImageButton = getUIFactory().makeTextButton("", "Choose Background Image");
+	setImageButtonEvent(backgroundImageButton, backgroundImageSelect);
 
-	endImageButton = getUIFactory().makeTextButton("", "Choose End Image");
+	Button pathImageButton = getUIFactory().makeTextButton("", "Choose Path Image");
+	setImageButtonEvent(pathImageButton, pathImageSelect);
 
+	Button startImageButton = getUIFactory().makeTextButton("", "Choose Start Image");
+	setImageButtonEvent(startImageButton, startImageSelect);
 
-	HBox backGroundImageSelect = makeImageSelector("BackGround", "", BACKGROUND_IMAGE_PREFIX + getView().getTheme() + BACKGROUND_IMAGE_SUFFIX);
-	//		HBox startImage = getUIFactory().setupImageSelector(getPropertiesReader(), "", propertiesFilepath, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
-	//				getErrorCheckedPrompt("NewImageName"),imageDropdown, imageDisplay);
+	Button endImageButton = getUIFactory().makeTextButton("", "Choose End Image");
+	setImageButtonEvent(endImageButton, endImageSelect);
 
 	getToolBar().getChildren().addAll(backgroundImageButton, startImageButton, pathImageButton, endImageButton);
     }
 
-    public Button getPathImageButton() {
-	return pathImageButton;
+    public HBox getPathHBox() {
+	return pathImageSelect;
     }
 
-    public Button getStartImageButton() {
-	return startImageButton;
+    public HBox getStartHBox() {
+	return startImageSelect;
     }
 
-    public Button getEndImageButton() {
-	return endImageButton;
+    public HBox getEndHBox() {
+	return endImageSelect;
     }
 
-    public Button getBackgroundButton() {
-	return backgroundImageButton;
+    public HBox getBackgroundHBox() {
+	return backgroundImageSelect;
     }
 
+    private void setImageButtonEvent(Button button, HBox imageSelector) {
+	button.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent event) {
+		Stage dialog = new Stage();
+		VBox dialogVbox = new VBox();
+		//			dialogVbox.setMaxSize(600, 300);
+		dialogVbox.getChildren().add(imageSelector);
+		Scene dialogScene = new Scene(dialogVbox);
+		dialogScene.getStylesheets().add(myView.getCurrentCSS());
+		dialog.setScene(dialogScene);
+		dialog.show();
+	    }
+	});
+    }
 
     protected HBox makeImageSelector(String objectType, String imageName, String propertiesFilepath){
 	HBox imageSelect = new HBox();
@@ -101,6 +113,7 @@ public class CreatePathToolBar extends PathToolBar {
 	} 
 	ComboBox<String> imageDropdownCopy = imageDropdown;
 	imageDropdown.addEventHandler(ActionEvent.ACTION,e -> {
+	 
 	    //	    try {
 	    //		getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
 	    //	    }
@@ -111,7 +124,7 @@ public class CreatePathToolBar extends PathToolBar {
 	});
 
 	try {
-	    imageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", propertiesFilepath, 20, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
+	    imageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", propertiesFilepath, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
 		    getErrorCheckedPrompt("NewImageName"),imageDropdown, imageDisplay);
 	    //	    String key = getPropertiesReader().findKey(propertiesFilepath, (String)getView().getObjectAttribute(objectType, mySelectedObjectName, "myImage"));
 	    //	    ActionEvent fakeSelection = new ActionEvent();
