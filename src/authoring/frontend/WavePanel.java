@@ -2,6 +2,9 @@ package authoring.frontend;
 
 import java.util.List;
 import java.util.Map;
+
+import com.sun.javafx.tools.packager.Log;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -12,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.internal.jline.internal.Log;
 
 
 /**
@@ -116,7 +118,7 @@ public class WavePanel extends PathPanel{
 			myEnemyNumber = Integer.parseInt(myNumberTextField.getText());
 		}
 		catch(NumberFormatException e) {
-		    Log.error(e);
+		    Log.debug(e);
 		    getView().loadErrorAlert("BadValue");
 			return false;
 		}

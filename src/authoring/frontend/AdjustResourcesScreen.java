@@ -9,6 +9,8 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -19,7 +21,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.internal.jline.internal.Log;
 
 public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 	
@@ -54,7 +55,7 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		    maxStartingCurrency = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "StartingMoney"));
 		}
 		catch(MissingPropertiesException e) {
-		    Log.error(e);
+		    Log.debug(e);
 		    getView().loadErrorScreen("NoConstants");
 		}
 		HBox promptGameName = getUIFactory().addPromptAndSetupHBox("", myGameNameEntry, getErrorCheckedPrompt("GameName"));
@@ -77,7 +78,7 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		try {
 			cssOptions = getPropertiesReader().allKeys(DEFAULT_CSS_STYLES);
 		} catch (MissingPropertiesException e1) {
-		    	Log.error(e1);
+		    	Log.debug(e1);
 			getView().loadErrorAlert("NoFile");
 		}
 		myCSSFilenameChooser = getUIFactory().makeTextDropdown("", cssOptions);

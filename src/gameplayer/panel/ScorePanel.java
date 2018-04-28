@@ -8,12 +8,14 @@ import java.util.Calendar;
 
 import gameplayer.screen.GameScreen;
 import java.util.Map;
+
+import com.sun.javafx.tools.packager.Log;
+
 import gameplayer.screen.GameScreen;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Priority;
-import jdk.internal.jline.internal.Log;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
@@ -46,7 +48,7 @@ public class ScorePanel extends ListenerPanel {
 		try {
 			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILEPATH+GAME_SCREEN.getGameName()+"_"+formattedDate), true);
 		} catch (IOException e) {
-		    	Log.error(e);
+		    	Log.debug(e);
 			GAME_SCREEN.loadErrorScreen("NoFile");
 		}
 	}
