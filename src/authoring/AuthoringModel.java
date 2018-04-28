@@ -113,9 +113,15 @@ public class AuthoringModel {
 		myBackgroundImage = backgroundImage;
 		System.out.println("BACKGROUND IMAGE PASSING: " +backgroundImage);
 		//				myPathCoordinates = coordinates;
+		
 		Level currentLevel = myGame.levelCheck(level);
-		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
-		currentLevel.addPath(newPath);
+		for(List<Point> list : coordinates) {
+		    List<List<Point>> listOfLists = new ArrayList<List<Point>>();
+		    listOfLists.add(list);
+		    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+		    currentLevel.addPath(newPath);
+		}
+		
 	}
 
 	/**
@@ -404,5 +410,24 @@ public class AuthoringModel {
 			level.updateAllProperties(); 
 		}
 	}
+    
+    public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
+	Level currentLevel = myGame.levelCheck(level);
+	System.out.println("POINT WANTED: " + point.toString());
+	 Point initialPointBufferOne = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())+2);
+	    Point initialPointBufferTwo = new Point((int) Math.round(point.getX())+2, (int) Math.round(point.getY()));
+	    Point initialPointBufferThree = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())-2);
+	    Point initialPointBufferFour = new Point((int)Math.round(point.getX())-2, (int) Math.round(point.getY()));
+	List<Path> paths = currentLevel.getPaths();
+	for(Path path: paths) {
+	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
+	    if(Math.abs(path.initialPoint().getX()-point.getX())<60 && Math.abs(path.initialPoint().getY()-point.getY())<60) {
+		   // path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
+		   // path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
+		return path;
+	    }
+	}
+	throw new ObjectNotFoundException("");
+    }
 
 }

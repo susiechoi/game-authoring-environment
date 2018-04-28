@@ -16,7 +16,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -56,7 +55,7 @@ public class CreatePathGrid {
     private ArrayList<Point> startPoints = new ArrayList<Point>();
     private ArrayList<Point> endPoints = new ArrayList<Point>();
     private ArrayList<Point> pathPoints = new ArrayList<Point>();
-    private DraggableImage myCurrentClicked;
+    private Point myCurrentClicked;
     private DraggableImage path;
     private AuthoringView myView;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
@@ -269,21 +268,31 @@ public class CreatePathGrid {
     }
 
     private void makeUnDraggable(EventHandler<MouseEvent> action) {	
+	List<Point> startCoords = getStartingPosition(checkGrid);
+
 	grid.setOnMouseClicked(new EventHandler <MouseEvent>() {
 	    @Override
 	    public void handle(MouseEvent event) {
+		//have start coords, first in the coords is first path...
 		Node node = (Node) event.getTarget();
 		if (node instanceof ImageView && ((ImageView) node).getId() == "start") {
+		    Bounds nodeBounds = node.getBoundsInParent();
+		    double x = (nodeBounds.getMinX() + nodeBounds.getMaxX())/2;
+		    double y = (nodeBounds.getMinY() + nodeBounds.getMaxY())/2;
+		    Point point = new Point((int) x, (int) y);
+		    myCurrentClicked = point;
 		    action.handle(event);
 		    ColorAdjust colorAdjust = new ColorAdjust();
 		    colorAdjust.setBrightness(0.5);
 		    ((ImageView) node).setEffect(colorAdjust);
+
+		    //TODO: with waves, need the starting point, specify waves for each point
 		}
 	    }
 	});
     }
 
-    protected DraggableImage getMostRecentlyClicked() {
+    protected Point getMostRecentlyClicked() {
 	return myCurrentClicked;
     }
 
@@ -337,7 +346,7 @@ public class CreatePathGrid {
 	gridImageCoordinates.put("s"+startImage, startPoints);
 	gridImageCoordinates.put("e"+endImage, endPoints);
 	gridImageCoordinates.put("p"+pathImage, pathPoints);
-//	System.out.println("MAPPPPPPP: " +gridImageCoordinates);
+	//	System.out.println("MAPPPPPPP: " +gridImageCoordinates);
 	return gridImageCoordinates;
     }
 

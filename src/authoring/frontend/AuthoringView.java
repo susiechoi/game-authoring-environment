@@ -111,9 +111,9 @@ public class AuthoringView extends View {
 		loadErrorScreen("NoObject");
 	    }
 	}
-	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
+	protected void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int amount) {
 		try {
-		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		    myController.addWaveEnemy(level, path, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
 		    Log.debug(e);
@@ -264,9 +264,8 @@ public class AuthoringView extends View {
 		myController.setGameName(gameName);
 	}
 	
-	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
+	protected Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) { 
 		try {
-			Path path = myController.getPathFromName(pathName, level);
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
 		}
 		catch(ObjectNotFoundException e) {
@@ -277,7 +276,6 @@ public class AuthoringView extends View {
 		return new HashMap<>();
 
 	}
-	
 	protected Integer getHighestWaveNumber(int level) {
 	    try {
 	    return myController.getHighestWaveNumber(level);
@@ -366,6 +364,17 @@ public class AuthoringView extends View {
 		}
 		System.out.println(myTheme);
 		return myTheme; 
+	}
+	
+	protected Path getPathWithStartingPoint(int level, Point point) {
+	    try {
+		return myController.getPathWithStartingPoint(level, point);
+	    }
+	    catch(ObjectNotFoundException e) {
+		Log.debug(e);
+		loadErrorScreen("NoObject");
+	    }
+	    return null;
 	}
 
 }

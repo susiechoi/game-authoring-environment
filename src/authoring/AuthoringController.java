@@ -147,8 +147,7 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
      * @param newAmount: the new amount of the specified enemy to put in the wave
      * @throws ObjectNotFoundException: thrown if the level isn't found
      */
-    public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
-	Path path = getPathFromName(Integer.parseInt(pathName), level);
+    public void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 	Level thisLevel = myModel.getLevel(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	Wave thisWave;
@@ -254,6 +253,9 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
      */
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
+    }
+    public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
+	return myModel.getPathWithStartingPoint(level, point);
     }
     
     /**
