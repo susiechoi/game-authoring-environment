@@ -19,6 +19,8 @@ import javafx.scene.control.Label;
 
 public class ScorePanel extends ListenerPanel {
 
+	public static final String DEFAULT_SCORE_PATH = "Score/"; 
+	public static final String DEFAULT_HEALTH_PATH = "Health/"; 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 
 	private final GameScreen GAME_SCREEN;
@@ -45,17 +47,16 @@ public class ScorePanel extends ListenerPanel {
 		initialHealth = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultHealth"));
 
 		try {
-			myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName()); 
+			myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH); 
 		} catch (IOException e) {
-			Log.error(e);
+//			Log.error(e);
 			GAME_SCREEN.loadErrorScreen("NoFile");
 		}
 
 		try {
-			myHealthWriter = new DataPointWriter(GAME_SCREEN.getGameName()); 
+			myHealthWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_HEALTH_PATH); 
 		} catch (IOException e) {
 		    	Log.debug(e);
-
 			GAME_SCREEN.loadErrorScreen("NoFile");
 		}
 	}

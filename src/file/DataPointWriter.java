@@ -9,8 +9,6 @@ import java.util.Calendar;
 public class DataPointWriter {
 	
 	public static final String DEFAULT_DATE_FORMAT = "MM-dd-yyyy_hh-mm-ss"; 
-	public static final String DEFAULT_SCORE_PATH = "Score/"; 
-	public static final String DEFAULT_HEALTH_PATH = "Health/"; 
 	public static final String DEFAULT_SCORE_IDENTIFIER = "Score"; 
 	public static final String DEFAULT_HEALTH_IDENTIFIER = "Health";
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
@@ -19,12 +17,12 @@ public class DataPointWriter {
 	
 	private PrintWriter myWriter; 
 
-	public DataPointWriter(String gameName) throws FileNotFoundException {
+	public DataPointWriter(String gameName, String subfolder) throws FileNotFoundException {
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat df = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
 		String formattedDate = df.format(c.getTime());
 		
-		String scoreFileName = DEFAULT_DATAPOINTS_FILEPATH+DEFAULT_SCORE_PATH+gameName+DEFAULT_FILENAME_SEPARATOR+formattedDate; 
+		String scoreFileName = DEFAULT_DATAPOINTS_FILEPATH+subfolder+gameName+DEFAULT_FILENAME_SEPARATOR+formattedDate; 
 		File scoreFile = new File(scoreFileName);
 		scoreFile.getParentFile().mkdirs(); 
 		myWriter = new PrintWriter(scoreFile);
