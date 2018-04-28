@@ -106,6 +106,10 @@ public class AuthoringModel implements GameData {
 	Level currentLevel = myGame.levelCheck(level);
 	currentLevel.addWave(wave);
     }
+    
+    public Level levelCheck(int level) throws ObjectNotFoundException {
+    	return myGame.levelCheck(level);
+    }
 
     /**
      * Method through which information can be sent to instantiate or edit a path object
