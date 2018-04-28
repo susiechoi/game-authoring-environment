@@ -49,7 +49,7 @@ public class InstructionScreen extends Screen {
 		ArrayList<String> gameOptions = new ArrayList<>(); 
 		gameOptions.add(titleText);
 		gameOptions.addAll(gameOptions());
-		ComboBox<String> allGames = UIFACTORY.makeTextDropdown("", gameOptions());
+		ComboBox<String> allGames = UIFACTORY.makeTextDropdown("", gameOptions);
 		allGames.setOnAction(click ->{ 
 			continueButt.setDisable(false);
 		});
