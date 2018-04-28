@@ -17,10 +17,31 @@ public class AttributeFinder {
 	 * @param fieldName - name of the field whose info is desired
 	 * @param objectWithFields - object of interest
 	 * @return value held within the field
+	 * @throws ObjectNotFoundException 
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
 	public Object retrieveFieldValue(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException{
+		Object fieldValue = null; 
+		fieldValue = loopThroughFields(fieldName, objectWithFields);
+		if (fieldValue != null) {
+			return fieldValue;
+		}
+		throw new ObjectNotFoundException(fieldName);
+	}
+
+	public Object retrieveFieldValueSuper(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
+		Object fieldValue = null; 
+		while (objectWithFields.getClass().getSuperclass() != null) {
+				fieldValue = loopThroughFields(fieldName, objectWithFields);
+				if (fieldValue != null) {
+					return fieldValue; 
+			}
+		}
+		throw new ObjectNotFoundException(fieldName);
+	}
+
+	public Object loopThroughFields(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException {
 		Object fieldValue = null; 
 		for (Field aField : objectWithFields.getClass().getDeclaredFields()) {
 			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
@@ -30,7 +51,7 @@ public class AttributeFinder {
 				return fieldValue; 
 			}
 		}
-		throw new ObjectNotFoundException(fieldName);
+		return null; 
 	}
 
 	public void setFieldValue(String fieldName, Object objectWithFields, Object fieldValue) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
@@ -39,7 +60,6 @@ public class AttributeFinder {
 			if (fieldSimpleString.equals(fieldName)) {
 				aField.setAccessible(true);
 				aField.set(objectWithFields, fieldValue);
-				System.out.println("in attribute finder : " + fieldValue + " ***");
 				return; 
 			}
 		}
