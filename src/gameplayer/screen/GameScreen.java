@@ -26,9 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import voogasalad.util.soundfactory.*;
-
-
+import voogasalad.util.soundfactory.ITRTSoundFactory;
 
 public class GameScreen extends Screen {
 

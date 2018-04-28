@@ -79,9 +79,9 @@ public class PlayState implements GameData {
 	if (count % 120 == 0) {
 	    spawnEnemies();
 	}
-	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-	updateHealth(deadEnemies);
-	myMediator.removeListOfSpritesFromScreen(deadEnemies);
+	List<Sprite> endPathEnemies = myEnemyManager.moveEnemies(elapsedTime);
+	updateHealth(endPathEnemies);
+	myMediator.removeListOfSpritesFromScreen(endPathEnemies);
 	handleCollisions(elapsedTime);
     }
 
