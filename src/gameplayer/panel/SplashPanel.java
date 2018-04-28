@@ -41,9 +41,6 @@ public class SplashPanel extends Panel {
             titleLabel.setText(GAMEPLAYER_PROPERTIES.get("gameLoseTitle"));
             infoLabel.setText(GAMEPLAYER_PROPERTIES.get("gameLoseInfo"));
         }
-        else {
-            Log.debug(new MissingPropertiesException(GAMEPLAYER_PROPERTIES.get("incorrectState")));
-        }
         VBox panelRoot = new VBox(titleLabel, infoLabel);
         PANEL = panelRoot;
 

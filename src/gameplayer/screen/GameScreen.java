@@ -137,6 +137,9 @@ public class GameScreen extends Screen {
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("settings"))) {
 			settingsClickedOn();
 		}
+		else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
+			MEDIATOR.restartGame();
+		}
 	}
 
 	public void settingsTriggered(String setting) {

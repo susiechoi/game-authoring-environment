@@ -168,17 +168,17 @@ public abstract class ShootingSprites extends Sprite{
 	//TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
 	System.out.println("gets here");
-	if(upgradeName.equals("test4")) {
+	if(upgradeName.equals("Armor_Upgrade")) {
 	    System.out.println("upgrade is working woo");
 	    return upgradeFireRate(balance);
 	}
-	if(upgradeName == "test3") {
+	if(upgradeName == "Health_Upgrade") {
 	    return upgradeHealth(balance);
 	}
-	if(upgradeName == "test2") {
+	if(upgradeName == "Damage_Upgrade") {
 	    return upgradeDamage(balance);
 	}
-	if(upgradeName == "test1") {
+	if(upgradeName == "Fire_Rate_Upgrade") {
 	    return upgradeRange(balance);
 	}
 	return balance;
