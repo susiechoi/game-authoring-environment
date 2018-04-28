@@ -31,6 +31,7 @@ public class ImageWrapper implements ImageViewSerializer {
 	//ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myImagePath), 50, 50, true, true));
 //	image.setFitHeight(height);
 //	image.setFitWidth(width);
+	System.out.println("ImageWrapper - IMAGEVIEW FILEPATH: " + myImagePath);
 	image.setX(x);
 	image.setY(y);
 	image.setVisible(visible);
