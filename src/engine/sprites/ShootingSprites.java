@@ -6,9 +6,9 @@ import java.util.List;
 import engine.physics.ImageIntersecter;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
+import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
-import frontend.PropertiesReader;
 
 /**
  * This class is a more specific Sprite that applies to just shooting objects (Enemy and Tower).
@@ -20,7 +20,6 @@ import frontend.PropertiesReader;
  */
 public abstract class ShootingSprites extends Sprite{
 
-    private PropertiesReader PROP_READ;
     private Launcher myLauncher;
     private int hitCount;
     private int deadCount;
@@ -35,8 +34,8 @@ public abstract class ShootingSprites extends Sprite{
      * @param size: Size parameter of the image
      * @param launcher: Launcher object specific to shooting sprite
      */
-    public ShootingSprites(String name, String image, double size, Launcher launcher) {
-	super(name, image, size);
+    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) {
+	super(name, image, size, properties);
 	hitCount=0;
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
@@ -105,16 +104,16 @@ public abstract class ShootingSprites extends Sprite{
     public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	if (intersector.overlaps(shooter.getImageView())) {
-		if(this.handleCollision(shooter)) {
-			toBeRemoved.add(this);
-		}
+	    if(this.handleCollision(shooter)) {
+		toBeRemoved.add(this);
+	    }
 	}
 	return toBeRemoved;
     }
 
     public boolean hasInRange(Sprite passedSprite) {
 	double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
-	return (distanceBetween <= myLauncher.getRange());
+	return (distanceBetween <= myLauncher.getProperty("RangeProperty").getProperty());
     }
 
     public boolean hasReloaded(double elapsedTime) {
@@ -138,60 +137,69 @@ public abstract class ShootingSprites extends Sprite{
     public Launcher getLauncher() {
 	return myLauncher;
     }
-    
+
     @Override
     public double getDamage() {
 	return myLauncher.getProjectileDamage();
     }
-    
+
     protected int getHitCount() {
 	return hitCount;
     }
-    
+
     protected double getDeadCount() {
 	return deadCount;
     }
-    
+
     public boolean isAlive() {
-    	return (this.getHealthProp().getProperty() > 0);
+	return (this.getHealthProp().getProperty() > 0);
     }
 
-	protected HealthProperty getHealthProp() {
-		// TODO Auto-generated method stub
-		return new HealthProperty(0,0,0);
-	}
+    protected HealthProperty getHealthProp() {
+	// TODO Auto-generated method stub
+	return new HealthProperty(0,0,0);
+    }
 
     /**
      * Method that will upgrade the Sprite
      * @param upgradeName : Property to be upgraded
      */
-	//TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
+    //TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
-	System.out.println("gets here");
+	//	System.out.println("gets here");
 	if(upgradeName.equals("test4")) {
 	    System.out.println("upgrade is working woo");
-	    return upgradeFireRate(balance);
+	    return upgradeLauncherProperty(balance, "FireRateProperty");
 	}
 	if(upgradeName == "test3") {
-	    return upgradeHealth(balance);
+	    return upgradeProperty(balance, "HealthProperty");
 	}
 	if(upgradeName == "test2") {
 	    return upgradeDamage(balance);
 	}
 	if(upgradeName == "test1") {
-	    return upgradeRange(balance);
+	    return upgradeLauncherProperty(balance, "RangeProperty");
 	}
 	return balance;
-	
+
+    }
+
+    public double upgradeProperty(double balance, String propertyName) {
+	UpgradeProperty propToUpgrade = (UpgradeProperty)this.getProperty(propertyName);
+	return propToUpgrade.upgrade(balance);
+    }
+
+    public double upgradeLauncherProperty(double balance, String propertyName) {
+	return this.getLauncher().upgradeProperty(balance, propertyName);
     }
 
     private double upgradeFireRate(double balance) {
-	return this.getLauncher().upgradeFireRate(balance);
+	return this.getLauncher().upgradeProperty("FireProperty", balance);
     }
 
     private double upgradeHealth(double balance) {
 	return balance;
-	
+
     }
 
     private double upgradeDamage(double balance) {
@@ -199,11 +207,11 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     private double upgradeRange(double balance) {
-	return this.getLauncher().upgradeRange(balance);
+	return this.getLauncher().upgradeProperty("RangeProperty", balance);
     }
-    
+
     protected void updateLauncher(Launcher launcher) {
-    	myLauncher = launcher; 
+	myLauncher = launcher; 
     }
 
     /**
@@ -215,9 +223,8 @@ public abstract class ShootingSprites extends Sprite{
 	return this.isAlive();
     }
 
-	public void loseHealth(double damage) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void loseHealth(double damage) {
+	((HealthProperty) this.getProperty("HealthProperty")).loseHealth(damage);
+    }
 
 }

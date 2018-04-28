@@ -11,9 +11,8 @@ package authoring.frontend;
 import java.util.HashMap;
 import java.util.Map;
 
+import authoring.factory.AttributeFinder;
 import com.sun.javafx.tools.packager.Log;
-
-import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
@@ -101,6 +100,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		}
 
 		for (String key : fieldsToAttributes.keySet()) {
+		    	System.out.println("FIELD: " + key);
 			Object myField = null; 
 			try {
 				myField = attributeFinder.retrieveFieldValue(key, this);
