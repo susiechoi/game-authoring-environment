@@ -1,4 +1,5 @@
 /**
+ /**
  * @author Sarah Bland
  * @author susiechoi
  * 
@@ -21,6 +22,7 @@ import authoring.AuthoringModel;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import controller.PlayController;
 import engine.path.Path;
 import frontend.PropertiesReader;
 import frontend.Screen;
@@ -51,8 +53,8 @@ public class AuthoringView extends View {
 	private String myTheme; 
 
 	public AuthoringView(StageManager stageManager, String languageIn, AuthoringController controller) {
-		super(stageManager, languageIn);
-
+		super(stageManager, languageIn, controller);
+		myGrid = new GridPane();
 		myPropertiesReader = new PropertiesReader();
 		myStageManager = stageManager; 
 		myController = controller; 
@@ -154,13 +156,14 @@ public class AuthoringView extends View {
 			}
 		}
 		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+		    	System.out.println(clazz.getSimpleName());
 			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 			myStageManager.switchScreen(nextScreen.getScreen());
 		}
-		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
-			myStageManager.switchScreen(nextScreen.getScreen());
-		} 
+//		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+//			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+//			myStageManager.switchScreen(nextScreen.getScreen());
+//		} 
 		else {
 			throw new MissingPropertiesException("");
 		}
@@ -302,12 +305,12 @@ public class AuthoringView extends View {
 	}
 
 	protected String getGameName() {
-		return myModel.getGameName();
+		return myController.getGameName();
 	}
 
 	protected void deleteObject(String objectType, String objectName) {
 		try {
-			myModel.deleteObject(myLevel, objectType, objectName);
+			myController.deleteObject(myLevel, objectType, objectName);
 		} catch (ObjectNotFoundException e) {
 			loadErrorAlert("NoObject");
 		}

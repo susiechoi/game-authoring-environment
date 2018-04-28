@@ -2,6 +2,7 @@ package frontend;
 
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
+import authoring.frontend.GraphMenuScreen;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import controller.PlayController;
 import frontend.Screen;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import jdk.internal.jline.internal.Log;
 
 /**
  * Screen that users initially see where they can choose between authoring a game and playing it.
@@ -22,7 +24,7 @@ public class MainScreen extends Screen {
 	public static final String DEFAULT_CSS = "styling/GameAuthoringStartScreen.css";
 	// private  final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	//    private  final String DEFAULT_ENGINE_STYLESHEET = "styling/EngineFrontEnd.css";
-	private final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_LANGUAGE = "English";
 
 	private final UIFactory myUIFactory;
 	private final StageManager myStageManager;
@@ -58,15 +60,12 @@ public class MainScreen extends Screen {
 				.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
+			    	Log.error(e);
 				e.printStackTrace();
+				myView.loadErrorScreen("NoFile");
 			}
 		});
-
-		Button visualizations = getUIFactory().makeTextButton("", myView.getErrorCheckedPrompt("Visualizations"));
-		visualizations.setOnAction(click-> {
-			myStageManager.switchScreen(new VisualizationsScreen().getScreen());
-		});
-
+		
 		//	HBox leftCenter = new HBox(newAuthorButt);
 		//	leftCenter.setAlignment(Pos.CENTER);
 		//	leftCenter.setMaxWidth(Double.MAX_VALUE);
@@ -79,7 +78,7 @@ public class MainScreen extends Screen {
 		//	HBox.setHgrow(leftCenter, Priority.ALWAYS);
 		//	HBox.setHgrow(rightCenter, Priority.ALWAYS);
 
-		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt, visualizations);
+		rootBox.getChildren().addAll(title, newAuthorButt, newGameButt);
 
 		rootBox.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 		//	rootBox.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);

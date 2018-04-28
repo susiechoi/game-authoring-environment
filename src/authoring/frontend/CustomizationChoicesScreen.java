@@ -2,13 +2,9 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
-import controller.PlayController;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -25,7 +21,7 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	public static final String TEST_PROPERTIES = "images/TestProperties.properties";
 
 
-	protected CustomizationChoicesScreen(AuthoringView view, AuthoringModel model) {
+	protected CustomizationChoicesScreen(AuthoringView view) {
 	    	super(view);
 	}
 
@@ -54,12 +50,10 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			getView().addNewLevel();
 			getView().goForwardFrom(this.getClass().getSimpleName()+"EditNewLevel");
 		});
-		AuthoringModel currentModel = getView().getModel();
 		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
 		    	getView().writeToFile();
-		    	new PlayController(getView().getStageManager(), getView().getLanguage(),
-				currentModel).demoPlay(currentModel.getGame()); //TODO: there has to be a way to do this with listeners - can't be good to give a Screen the Model
+		    	getView().playControllerDemo();
 		});
 		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setDisable(false);
@@ -94,30 +88,31 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			newLevelHBox.getChildren().add(autogenerateButton);
 		}
 		
-		HBox songSelector = new HBox();
-		ComboBox<String> songDropdown = new ComboBox<>();
-		try {
-			songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
-		}
-		catch(MissingPropertiesException e){
-			getView().loadErrorScreen("NoFile");
-		}
-		ImageView imageDisplay = new ImageView(); 
-		try {
-			songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song"), getErrorCheckedPrompt("NewSong"),
-					getErrorCheckedPrompt("NewSongName"), songDropdown, imageDisplay);
-		}
-		catch(MissingPropertiesException e) {
-			getView().loadErrorScreen("NoFile");
-		}
-		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
+//		HBox songSelector = new HBox();
+//		ComboBox<String> songDropdown = new ComboBox<>();
+//		try {
+//			songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
+//		}
+//		catch(MissingPropertiesException e){
+//			getView().loadErrorScreen("NoFile");
+//		}
+//		ImageView imageDisplay = new ImageView(); 
+//		try {
+//			songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song"), getErrorCheckedPrompt("NewSong"),
+//					getErrorCheckedPrompt("NewSongName"), songDropdown, imageDisplay);
+//		}
+//		catch(MissingPropertiesException e) {
+//			getView().loadErrorScreen("NoFile");
+//		}
+//		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
-		vbox.getChildren().add(newLevelHBox);
-		vbox.getChildren().add(hbox);
+		Button visualizations = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Graphs"));
+		visualizations.setOnAction(click-> {
+			getView().goForwardFrom(this.getClass().getSimpleName()+"Graphs");
+		});
+		
+		vbox.getChildren().addAll(newLevelHBox, hbox, demoButton, saveButton, visualizations, mainButton);
 		//vbox.getChildren().add(songPrompted); TODO: change to mp3 selector and readd
-		vbox.getChildren().add(demoButton);
-		vbox.getChildren().add(saveButton);
-		vbox.getChildren().add(mainButton);
 		return vbox;
 
 	}

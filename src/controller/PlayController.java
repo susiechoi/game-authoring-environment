@@ -49,6 +49,8 @@ public class PlayController {
 	 * @param pathToXML: Path to game XML file
 	 */
 	public void newPlay(String pathToXML) {
+		System.out.println("path to xml "+pathToXML);
+		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
 		AuthoredGame playModel = myReader.createModel(pathToXML);
 		List<Level> levels = playModel.unmodifiableLevels();
@@ -67,9 +69,9 @@ public class PlayController {
 	public void demoPlay(AuthoredGame model) {
 		myScreenManager.setGameFilePath(model.getGameName());
 		List<Level> levels = model.unmodifiableLevels();
+		myScreenManager.loadGameScreenNew();
 		PlayState play = new PlayState(myMediator, levels, 0, model.getSettings(), 0);
 		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize());
-		myScreenManager.loadGameScreenNew();
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
 	}

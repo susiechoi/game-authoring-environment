@@ -1,7 +1,7 @@
 package engine.physics;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
+import engine.sprites.Sprite;
 import javafx.scene.Node;
 
 /**
@@ -16,8 +16,8 @@ public class ImageIntersecter implements Intersecter {
     @XStreamOmitField
     private transient Node currentNode;
     
-    public ImageIntersecter(Node input) {
-	currentNode = input;
+    public ImageIntersecter(Sprite input) {
+	currentNode = input.getImageView();
     }
     /**
      * Determines if two nodes on the screen overlap
@@ -26,7 +26,7 @@ public class ImageIntersecter implements Intersecter {
      */
     @Override
     public boolean overlaps(Node thatNode) {
-	return currentNode.getBoundsInParent().intersects(thatNode.getBoundsInParent());
+	return currentNode.getBoundsInLocal().intersects(thatNode.getBoundsInLocal());
     }
 
 }

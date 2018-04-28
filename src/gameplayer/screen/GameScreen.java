@@ -89,6 +89,7 @@ public class GameScreen extends Screen {
 		setVertPanelsLeft();
 
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+//		rootPane.getStylesheets().add(MEDIATOR.getStyling());
 		//rootPane.getStylesheets().add(DEFAULT_ENGINE_STYLESHEET);
 		return rootPane;
 	}
@@ -128,13 +129,7 @@ public class GameScreen extends Screen {
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup")))
 			MEDIATOR.fastForward(10);
 		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
-			try {
-				new PlayController(SCREEN_MANAGER.getStageManager(), DEFAULT_LANGUAGE, new AuthoringModel())
-						.loadInstructionScreen();
-			} catch (MissingPropertiesException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    getView().playControllerInstructions();
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { // Susie added this
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
@@ -175,9 +170,9 @@ public class GameScreen extends Screen {
 
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
-		ChangeListener currencyListener = TOWER_PANEL.createCurrencyListener();
-		ChangeListener scoreListener = SCORE_PANEL.createScoreListener();
-		ChangeListener healthListener = SCORE_PANEL.createHealthListener();
+		ChangeListener<Number> currencyListener = TOWER_PANEL.createCurrencyListener();
+		ChangeListener<Number> scoreListener = SCORE_PANEL.createScoreListener();
+		ChangeListener<Number> healthListener = SCORE_PANEL.createHealthListener();
 		myCurrency.addListener(currencyListener);
 		myScore.addListener(scoreListener);
 		myLives.addListener(healthListener);
@@ -255,6 +250,10 @@ public class GameScreen extends Screen {
 		else {
 			setVertPanelsLeft();
 		}
+	}
+
+	public String getGameName() {
+		return SCREEN_MANAGER.getGameFilePath();
 	}
 
 	public ScreenManager getScreenManager() {

@@ -1,8 +1,14 @@
 
 package gameplayer.panel;
 
-import java.util.Map;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import gameplayer.screen.GameScreen;
+import java.util.Map;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,91 +18,111 @@ import javafx.scene.control.Label;
 
 public class ScorePanel extends Panel {
 
-    private final GameScreen GAME_SCREEN;
-    private Map<String,String> GAMEPLAYER_PROPERTIES;
+	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
+	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
+	private PrintWriter myScoreWriter; 
+	private long myScoreXIncrement;
 
-    private Label ScoreText;
-    private Label LevelText;
-    private Label HealthText;
-    private Integer SCORE;
-    private Integer HEALTH;
-    private Integer LEVEL;
+	private final GameScreen GAME_SCREEN;
+	private Map<String,String> GAMEPLAYER_PROPERTIES;
+
+	private Label ScoreText;
+	private Label LevelText;
+	private Label HealthText;
+	private Integer SCORE;
+	private Integer HEALTH;
+	private Integer LEVEL;
 
     public ScorePanel(GameScreen gameScreen) {
 		GAME_SCREEN = gameScreen;
 		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+		String formattedDate = df.format(c.getTime());
+
+		try {
+			myScoreWriter = new PrintWriter(new FileWriter(DEFAULT_DATAPOINTS_FILEPATH+GAME_SCREEN.getGameName()+"_"+formattedDate), true);
+		} catch (IOException e) {
+			GAME_SCREEN.loadErrorScreen("NoFile");
+		}
 	}
 
+	@Override
+	public void makePanel() {
 
+		//TODO Read words SCORE, LEVEL, and + from properties file
+		ScoreText = new Label();
+		updateScore(0);
+		LevelText = new Label();
+		HealthText = new Label();
 
-    @Override
-    public void makePanel() {
+		ScoreText.setMaxWidth(Double.MAX_VALUE);
 
-	//TODO Read words SCORE, LEVEL, and + from properties file
-	ScoreText = new Label();
-	LevelText = new Label();
-	HealthText = new Label();
+		LevelText.setMaxWidth(Double.MAX_VALUE);
 
+		HealthText.setMaxWidth(Double.MAX_VALUE);
 
-	ScoreText.setMaxWidth(Double.MAX_VALUE);
+		HBox panelRoot = new HBox();
 
-	LevelText.setMaxWidth(Double.MAX_VALUE);
+		HBox.setHgrow(ScoreText, Priority.ALWAYS);
+		HBox.setHgrow(LevelText, Priority.ALWAYS);
+		HBox.setHgrow(HealthText, Priority.ALWAYS);
+		panelRoot.getChildren().addAll(ScoreText, LevelText, HealthText);
 
-	HealthText.setMaxWidth(Double.MAX_VALUE);
-
-	HBox panelRoot = new HBox();
-
-	HBox.setHgrow(ScoreText, Priority.ALWAYS);
-	HBox.setHgrow(LevelText, Priority.ALWAYS);
-	HBox.setHgrow(HealthText, Priority.ALWAYS);
-	panelRoot.getChildren().addAll(ScoreText, LevelText, HealthText);
-
-	panelRoot.setMaxWidth(Double.MAX_VALUE);
-	panelRoot.setMaxHeight(Double.MAX_VALUE);
-	PANEL = panelRoot;
+		panelRoot.setMaxWidth(Double.MAX_VALUE);
+		panelRoot.setMaxHeight(Double.MAX_VALUE);
+		PANEL = panelRoot;
     }
 
-    private void updateScore(Integer newScore) {
-	ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
-    }
+	private void updateScore(Integer newScore) {		
+		myScoreXIncrement = System.currentTimeMillis() / 1000;
+		myScoreWriter.write(Long.toString(myScoreXIncrement)+" ");
+		myScoreWriter.write(Integer.toString(newScore)+"\n");
 
-    private void updateHealth(Integer newHealth) {
-	HealthText.setText(GAMEPLAYER_PROPERTIES.get("healthText")+ newHealth);
-    }
+		myScoreWriter.flush();
 
-    public void updateLevel(Integer newLevel) {
-	LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
-    }
-
-    public void setInitialScore(Integer score) {
-	SCORE = score;
-    }
-
-    public void setInitialLives(Integer lives) {
-	HEALTH = lives;
-    }
-
-    public void setInitialLevel(Integer level) {
-    	LEVEL = level;
+		ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
 	}
-    
 
-    public ChangeListener createScoreListener() {
-	return new ChangeListener() {
-	    @Override
-	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-		updateScore((Integer)observableValue.getValue());
-	    }
-	};
-    }
-    
-    public ChangeListener createHealthListener() {
-   	return new ChangeListener() {
-   	    @Override
-   	    public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-   		updateHealth((Integer)observableValue.getValue());
-   	    }
-   	};
-       }
+	private void updateHealth(Integer newHealth) {
+		HealthText.setText(GAMEPLAYER_PROPERTIES.get("healthText")+ newHealth);
+	}
+
+	public void updateLevel(Integer newLevel) {
+		LevelText.setText(GAMEPLAYER_PROPERTIES.get("levelText")+ newLevel);
+	}
+
+	public void setInitialScore(Integer score) {
+		SCORE = score;
+	}
+
+	public void setInitialLives(Integer lives) {
+		HEALTH = lives;
+	}
+
+	public void setInitialLevel(Integer level) {
+		LEVEL = level;
+	}
+
+	public ChangeListener<Number> createScoreListener() {
+		return new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				updateScore((Integer)arg0.getValue());
+			}
+		};
+	}
+
+	public ChangeListener<Number> createHealthListener() {
+		return new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				updateHealth((Integer)arg0.getValue());
+			}
+		};
+	}
 
 }
