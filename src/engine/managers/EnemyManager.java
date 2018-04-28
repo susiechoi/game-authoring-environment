@@ -16,12 +16,13 @@ import engine.sprites.enemies.Enemy;
  * active Enemy objects in the game loop.
  * 
  * @author Miles Todzo
+ * @author Ryan POnd
  */
 public class EnemyManager extends ShootingSpriteManager {
 
     int count = 0;
 
-    private final Map<Path, List<Enemy>> myEnemies;
+    private Map<Path, List<Enemy>> myEnemies;
 
 
     /**
@@ -45,27 +46,33 @@ public class EnemyManager extends ShootingSpriteManager {
      */
     public List<Sprite> moveEnemies(double elapsedTime) {
 	List<Sprite> deadEnemies = new ArrayList<>();
+	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
+	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		if(path.checkKill(enemy.currentPosition())) {
+		newEnemies.get(path).add(enemy);
+		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 		    deadEnemies.add(enemy);
+		    newEnemies.get(path).remove(enemy);
 		}
+
 		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
 		    enemy.move(elapsedTime);
 		}
 		else {
+
 		    Point newPosition = path.nextPosition(enemy.getIndex());
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
 		    enemy.setNewPosition(newPosition);
 		    enemy.move(elapsedTime);
 		    enemy.setIndex(pathIndex);
+		    }
 		}
 	    }
-	}
+	myEnemies = newEnemies;
 	return deadEnemies;
-
     }
-    
+
     private boolean isInRange(Point curr, Point target) {
 	return curr.distance(target)<10;
     }

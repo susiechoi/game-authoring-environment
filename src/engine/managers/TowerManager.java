@@ -19,6 +19,7 @@ import engine.sprites.towers.projectiles.Projectile;
  *
  * @author Miles Todzo
  * @author Katie Van Dyk
+ * @author Ryan Pond
 */
 
 
@@ -55,11 +56,6 @@ public class TowerManager extends ShootingSpriteManager {
     }
     
     public FrontEndTower place(Point location, String type) {
-	System.out.println(type);
-	for (Entry<String, Tower> entry : myTowerTypeToInstance.entrySet()) {
-	    System.out.println(entry.getKey());
-	    System.out.println(entry.getValue());
-	}
     		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
     		this.addToActiveList(newTower);
     		newTower.place(location.getX(), location.getY());
@@ -90,18 +86,4 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return balance;
     }
-
-    /**
-     * Removes all of the projectiles from the tower manager
-     * @return
-     */
-    public Collection<Projectile> removeAllProjectiles() {
-	List<Projectile> toBeRemoved = new ArrayList<>();
-	for(ShootingSprites tower : this.getListOfActive()) {
-	    toBeRemoved.addAll(tower.getLauncher().getListOfActive());
-	    tower.getLauncher().getListOfActive().clear();
-	}
-	return toBeRemoved;
-    }
-
 }

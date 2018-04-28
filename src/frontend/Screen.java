@@ -1,5 +1,7 @@
 package frontend;
+
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.scene.Parent;
 
@@ -14,17 +16,21 @@ public abstract class Screen {
 
 	public static final String DEFAULT_SHARED_STYLESHEET = "styling/SharedStyling.css";
 	public static final String DEFAULT_FILE_ERRORMESSAGE = "Missing specified language property files.";
-	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_CONSTANTS_FILEPATH = "src/frontend/Constants.properties";
 	public static final String DEFAULT_PROMPT = "";
 	//private AuthoringView myView; 
 	private String myStylesheet; 
 	private Parent myRoot;
 	private UIFactory myUIFactory;
 	private PropertiesReader myPropertiesReader;
-
+	private Logger myLogger;
 	protected Screen() {
 		myUIFactory = new UIFactory();
 		myPropertiesReader = new PropertiesReader();
+		//myLogger = Logger.getLogger(this.getClass().getSimpleName());
+	}
+	protected Logger getLogger() {
+	    return myLogger;
 	}
 
 	protected UIFactory getUIFactory() {
@@ -70,14 +76,6 @@ public abstract class Screen {
 	private void applyStyle(String stylesheet) {
 		if (myRoot != null && stylesheet != null) {
 			myRoot.getStylesheets().add(stylesheet);
-		}
-	}
-
-	private void applyStyles(List<String> stylesheets) {
-		if (myRoot != null) {
-			for (String s : stylesheets) {
-				myRoot.getStylesheets().add(s);
-			}		
 		}
 	}
 

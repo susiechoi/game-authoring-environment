@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.image.Image;
 

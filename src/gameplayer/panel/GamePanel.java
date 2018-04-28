@@ -1,10 +1,13 @@
 package gameplayer.panel;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import com.sun.javafx.tools.packager.Log;
+
+import java.util.Map.Entry;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
@@ -32,24 +35,25 @@ public class GamePanel extends Panel{
 
     private final GameScreen GAME_SCREEN;
     private FrontEndTower towerSelected;
+    private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
-    private List<FrontEndTower> towersPlaced;
     private Pane spriteAdd;
     private Boolean towerClick = false;
-    private ImageView highLightedImageVew;
     private Circle rangeIndicator;
 
-    //TODO changes this to be passed from mediator
-    private final String BACKGROUND_FILE_PATH = "images/BackgroundImageNames.properties";
-    private final String CONSTANTS_FILE_PATH = "src/frontend/Constants.properties";
+    //TODO changes this to be passed from mediator ******************************************************************************
+    private final String BACKGROUND_FILE_PATH;
+    private String CONSTANTS_FILE_PATH;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
-	towersPlaced = new ArrayList<FrontEndTower>();
+	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
+	BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("backgroundFilePath");
 	PROP_READ = new PropertiesReader();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
-	towerSelected =  null; //maybe make a new towerContructor which creates a null tower?
+	towerSelected =  null;
+	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
     }
 
     @Override
@@ -59,7 +63,7 @@ public class GamePanel extends Panel{
 
 	Pane gamePane = new Pane();
 	ScrollPane panelRoot = new ScrollPane(gamePane);
-	gamePane.setId("gamePanel");
+	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 	//panelRoot.setBottom(new Up);
 	gamePane.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setMaxHeight(Double.MAX_VALUE);
@@ -75,35 +79,36 @@ public class GamePanel extends Panel{
     private void setBackgroundImage(Pane gamePane) {
 	PropertiesReader propReader = new PropertiesReader();
 	Random rand = new Random();
+
 	try {
-	    //TODO fix this hardcoding, should just expand to fill space given(don't care about scaling
+	    //TODO fix this hardcoding, should just expand to fill space given(don't care about scaling ************************************
 	    Map<String, Image> backgroundMap = propReader.keyToImageMap(BACKGROUND_FILE_PATH, 1020.0, 650.0);
 	    int random = rand.nextInt(backgroundMap.size());
 	    int count = 0;
-	    for(String s:  backgroundMap.keySet()) {
-		if(s.equals("general")) {
+
+	    for(Entry<String, Image> entry : backgroundMap.entrySet()) {
+		if(entry.getKey().equals(GAMEPLAYER_PROPERTIES.get("general"))) {
 		    ImageView imageView = new ImageView();
-		    imageView.setImage(backgroundMap.get(s));
+		    imageView.setImage(entry.getValue());
 		    gamePane.getChildren().add(imageView);
 		}
 	    }
 	} catch (MissingPropertiesException e1) {
-	    //TODO should fix but who cares since this will be refactored
-	    //to be gotten from mediator
-	    System.out.println("Background Images failed to load");
+	    Log.debug(e1);
+		e1.printStackTrace();
 	}
     }
 
-
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize) {
-	PathMaker pathMaker = new PathMaker();
-	GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize);
-	//	setGridConstraints(grid, imageMap);
-	if (spriteAdd == null) {
-	    makePanel();
-	}
-	spriteAdd.getChildren().add(grid);
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
+		PathMaker pathMaker = new PathMaker();
+		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, col, row);
+		//	setGridConstraints(grid, imageMap);
+		if (spriteAdd == null) {
+		    makePanel();
+		}
+		spriteAdd.getChildren().add(grid);
     }
+
 
     private void resetCursor() {
 	GAME_SCREEN.getScreenManager().getStageManager().getScene().setCursor(Cursor.DEFAULT);
@@ -137,8 +142,7 @@ public class GamePanel extends Panel{
 	    spriteAdd.setOnMouseMoved(e -> {
 		rangeIndicator.setCenterX(e.getX()+(towerImage.getImage().getWidth()/2));
 		rangeIndicator.setCenterY(e.getY()+(towerImage.getImage().getHeight()/2)); });
-	}
-	else { //TODO (thread canceling towerPlacement)
+	} else { //TODO (thread canceling towerPlacement)
 	    //maybe make a new towerContructor which creates a null tower?
 	    resetCursor();
 	    towerPlaceMode = false;
@@ -147,9 +151,8 @@ public class GamePanel extends Panel{
 
     private void addTowerImageViewAction(FrontEndTower tower) {
 	ImageView towerImage = tower.getImageView();
-	towerImage.setOnMouseClicked((args) ->{
+	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    highLightedImageVew = towerImage;
 	    // applySelectionGlow(towerImage);
 	    addRangeIndicator(tower);
 	    towerClick = true;
@@ -174,6 +177,8 @@ public class GamePanel extends Panel{
 	    spriteAdd.getChildren().add(rangeIndicator);
 	    towImage.toFront();
 	} catch (MissingPropertiesException e) {
+	    Log.debug(e);
+	    //TODO let's not fail please!!
 	    System.out.println("Constants property file not found");
 	}
 
@@ -193,6 +198,7 @@ public class GamePanel extends Panel{
 
 	} catch (MissingPropertiesException e) {
 	    // TODO Auto-generated catch block
+	    Log.debug(e);
 	    e.printStackTrace();
 	}
     }
@@ -225,17 +231,16 @@ public class GamePanel extends Panel{
 		ImageView towerImage = newTower.getImageView();
 		Image towerImageActual = towerImage.getImage();
 
-		if(newTower!= null) {
+		addTowerImageViewAction(newTower);
+		spriteAdd.getChildren().add(towerImage);
+		resetCursor();
+		towerPlaceMode = false;
+		//TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
 
-		    addTowerImageViewAction(newTower);
-		    towersPlaced.add(newTower);
-		    spriteAdd.getChildren().add(towerImage);
-		    resetCursor();
-		    towerPlaceMode = false;
-		    //TODO (thread canceling towerPlacement) maybe make a new towerContructor which creates a null tower?
-		}
 	    }
 	    catch(CannotAffordException e){
+		 Log.debug(e);
+		 //TODO aaahhhhhhhhh
 		//GameScreen popup for cannot afford
 	    }
 	}

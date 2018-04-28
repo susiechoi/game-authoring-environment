@@ -5,6 +5,7 @@ import java.util.List;
 
 import engine.physics.ImageIntersecter;
 import engine.sprites.properties.HealthProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import frontend.PropertiesReader;
@@ -70,9 +71,8 @@ public abstract class ShootingSprites extends Sprite{
     public List<Sprite> checkForCollision(ShootingSprites target) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
-	List<Projectile> projectiles = this.getProjectiles();
-	toBeRemoved.addAll(this.checkTowerEnemyCollision(target)); //TODO add any dead tower/enemy to toBeRemoved list
-	for (Projectile projectile: projectiles) {
+	toBeRemoved.addAll(this.checkTowerEnemyCollision(target));
+	for (Projectile projectile: this.getProjectiles()) {
 	    if(target.intersects(projectile) && !(projectile.hasHit(target))){
 		toBeRemoved.addAll(objectCollision(target, projectile)); //checks collisions between projectiles and enemy/tower
 		if (projectile.handleCollision(target)) {
@@ -104,14 +104,15 @@ public abstract class ShootingSprites extends Sprite{
      */
     public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
-	if (intersector.overlaps(shooter.getImageView())) { 
-	    this.handleCollision(shooter); //TODO - handle these
-	    shooter.handleCollision(this);
+	if (intersector.overlaps(shooter.getImageView())) {
+		if(this.handleCollision(shooter)) {
+			toBeRemoved.add(this);
+		}
 	}
 	return toBeRemoved;
     }
 
-    public boolean hasInRange(ShootingSprites passedSprite) {
+    public boolean hasInRange(Sprite passedSprite) {
 	double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
 	return (distanceBetween <= myLauncher.getRange());
     }
@@ -205,5 +206,18 @@ public abstract class ShootingSprites extends Sprite{
     	myLauncher = launcher; 
     }
 
+    /**
+     * Returns true if this ShootingSprite is still alive
+     */
+    @Override
+    public boolean handleCollision(Sprite collider) {
+	this.loseHealth(collider.getDamage());
+	return this.isAlive();
+    }
+
+	public void loseHealth(double damage) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

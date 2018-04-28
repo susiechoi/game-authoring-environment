@@ -70,18 +70,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     }
 
     /**
-     * Used for debugging/demo purposes, should not actually be used
-     * @param string
-     * @param string2
-     * @param i
-     */
-    public Enemy(String name, String image, double size) {
-	super(name, image, size, null);
-	myHealth = new HealthProperty(10000,10000,100);
-	myDamage = new DamageProperty(10000, 10000, 10000);
-	myValue = new ValueProperty(900);
-    }
-    /**
      * Sets the initial spawning point of the enemy
      * @param initialPoint
      */
@@ -186,7 +174,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     }
 
 
-    private double getSpeed() {
+    public double getSpeed() {
 	return mySpeed; 
     }
 
@@ -219,6 +207,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 //	System.out.println("enemy image: " + myImage);
 //	updateImage(myImage);
 //    }
-
-
+    @Override
+    public void loseHealth(double damage) {
+    	myHealth.loseHealth(damage);
+    }
 }

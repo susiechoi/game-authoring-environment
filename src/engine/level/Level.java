@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
@@ -53,10 +54,10 @@ public class Level {
 	 */
 	public Level(Level copiedLevel) {
 		myNumber = copiedLevel.getNumber() + 1; 
-		myWaves = copiedLevel.getWaves(); 
+		myWaves = copiedLevel.getWaveCopies(); 
 		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getTowers();
-		myEnemies = copiedLevel.getEnemies();
+		myTowers = copiedLevel.getCopiedTowers();
+		myEnemies = copiedLevel.getCopiedEnemies();
 	}
 
 	/**
@@ -158,21 +159,31 @@ public class Level {
 		return listToReturn; 
 	}
 	
-    public void removeTower(String name) throws ObjectNotFoundException {
-    	if (myTowers.containsKey(name)) {
+    public void removeTower(String name) throws ObjectNotFoundException, DeleteDefaultException {
+    	if(name.equals("Default")) {
+    	    throw new DeleteDefaultException("");
+    	}
+    	if (myTowers.containsKey(name) && !name.equals("Default")) {
     		myTowers.remove(name);
     	}
-    	throw new ObjectNotFoundException(name);
+    	else {
+    	    throw new ObjectNotFoundException(name);
+    	}
     }
     
-    public void removeEnemy(String name) throws ObjectNotFoundException {
-    	if (myEnemies.containsKey(name)) {
+    public void removeEnemy(String name) throws ObjectNotFoundException, DeleteDefaultException {
+    	if(name.equals("Default")) {
+    	    throw new DeleteDefaultException("");
+    	}
+    	else if (myEnemies.containsKey(name) && !name.equals("Default")) {
     		myEnemies.remove(name);
+    	    	for(Wave wave: myWaves) {
+    	    	    wave.removeEnemyType(name);
+    	    	}
     	}
-    	for(Wave wave: myWaves) {
-    	    wave.removeEnemyType(name);
+    	else {
+    	    throw new ObjectNotFoundException(name);
     	}
-    	throw new ObjectNotFoundException(name);
     }
 
 	/**
@@ -218,7 +229,7 @@ public class Level {
 		return waveEnemy;
 	}
 
-	protected int getNumber() {
+	public int getNumber() {
 		return myNumber; 
 	}
 
@@ -229,9 +240,23 @@ public class Level {
 	public Map<String, Tower> getTowers() {
 		return myTowers;
 	}
-
+	public Map<String, Tower> getCopiedTowers(){
+	    Map<String, Tower> copy = new HashMap<>();
+	    for(String key : myTowers.keySet()) {
+		copy.put(key, new Tower(myTowers.get(key)));
+	    }
+	    return copy;
+	}
 	public Map<String, Enemy> getEnemies() {
 		return myEnemies; 
+	}
+	
+	public Map<String, Enemy> getCopiedEnemies(){
+	    Map<String, Enemy> copy = new HashMap<>();
+	    for(String key : myEnemies.keySet()) {
+		copy.put(key, new Enemy(myEnemies.get(key)));
+	    }
+	    return copy;
 	}
 
 	public int getHighestWaveNumber() {
@@ -251,6 +276,14 @@ public class Level {
 
 	public List<Wave> getWaves() {
 		return myWaves;
+	}
+	
+	protected List<Wave> getWaveCopies(){
+	    List<Wave> copy = new ArrayList<>();
+	    for(Wave wave : myWaves) {
+		copy.add(wave.getCopy());
+	    }
+	    return copy;
 	}
 
 	/**
@@ -317,6 +350,26 @@ public class Level {
 
 	public int getPathSize() {
 		return myPaths.get(0).getPathSize();
+	}
+	
+	public int getColumnCount() {
+		return myPaths.get(0).getColumnCount();
+	}
+	
+	public int getRowCount() {
+		return myPaths.get(0).getRowCount();
+	}
+	
+	public String getPathImage() {
+		return myPaths.get(0).getPathImage();
+	}
+	
+	public String getStartImage() {
+		return myPaths.get(0).getStartImage();
+	}
+	
+	public String getEndImage() {
+		return myPaths.get(0).getEndImage();
 	}
 
 	/**

@@ -9,6 +9,8 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -46,27 +48,37 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		Text settingsHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SettingsHeading"));
 		myGameNameEntry = getUIFactory().makeTextField("");
 		vb.getChildren().add(settingsHeading);
-
+		int maxStartingHealth = 0;
+		int maxStartingCurrency = 0;
+		try {
+		    maxStartingHealth = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "StartingHealth"));
+		    maxStartingCurrency = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "StartingMoney"));
+		}
+		catch(MissingPropertiesException e) {
+		    Log.debug(e);
+		    getView().loadErrorScreen("NoConstants");
+		}
 		HBox promptGameName = getUIFactory().addPromptAndSetupHBox("", myGameNameEntry, getErrorCheckedPrompt("GameName"));
 		vb.getChildren().add(promptGameName);	
-		myStartingHealthSlider = getUIFactory().setupSlider("startingHealth", 100);
+		myStartingHealthSlider = getUIFactory().setupSlider("startingHealth", maxStartingHealth);
 		myStartingHealthSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, "", "myStartingHealth", newValue);
 		});
 		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", myStartingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
 		vb.getChildren().add(startingHealth);
 
-		myStartingCurrencySlider = getUIFactory().setupSlider("startingCurrency", 999);
+		myStartingCurrencySlider = getUIFactory().setupSlider("startingCurrency", maxStartingCurrency);
 		myStartingCurrencySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, "", "myStartingMoney", newValue);
 		});
 		HBox startingCurrency = getUIFactory().setupSliderWithValue("startingCurrency", myStartingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
 		vb.getChildren().add(startingCurrency);
 
-		List<String> cssOptions = new ArrayList<String>(); 
+		List<String> cssOptions = new ArrayList<>(); 
 		try {
 			cssOptions = getPropertiesReader().allKeys(DEFAULT_CSS_STYLES);
 		} catch (MissingPropertiesException e1) {
+		    	Log.debug(e1);
 			getView().loadErrorAlert("NoFile");
 		}
 		myCSSFilenameChooser = getUIFactory().makeTextDropdown("", cssOptions);

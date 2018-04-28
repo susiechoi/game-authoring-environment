@@ -16,9 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.frontend.AuthoringView;
+import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import controller.MVController;
+import controller.PlayController;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
@@ -29,12 +32,11 @@ import xml.AuthoringModelReader;
 import xml.AuthoringModelWriter;
 
 
-public class AuthoringController {
+public class AuthoringController implements MVController{
 
     private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
-
 
     /**
      * Creates a new AuthoringController
@@ -78,10 +80,11 @@ public class AuthoringController {
      * @throws ObjectNotFoundException 
      */
 
-    public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException { 
-	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathSize); 
+
+public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
+	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row); 
 	myImageMap = imageCoordinates;
-    }
+}
 
 
 
@@ -239,6 +242,10 @@ public class AuthoringController {
 	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
     }
+    
+    public void setModel(AuthoringModel model) {
+	myModel = model;
+    }
 
     /**
      * Returns a map of String image names to a list of Point coordinates where those 
@@ -286,4 +293,23 @@ public class AuthoringController {
 		AuthoringModelWriter writer = new AuthoringModelWriter();
 		writer.write(myModel.getGame(), myModel.getGameName());
 	}
+	@Override
+	public void playControllerDemo(StageManager manager, String language) {
+	    new PlayController(manager, language,
+			myModel).demoPlay(myModel.getGame());
+	}
+	public void deleteObject(int level, String objectType, String objectName) {
+	    try {
+	    myModel.deleteObject(level, objectType, objectName);
+	    }
+	    catch(ObjectNotFoundException e) {
+		myView.loadErrorScreen("NoObject");
+	    }
+	    catch(DeleteDefaultException e2) {
+		myView.loadErrorAlert("NoDeleteDefault");
+	    }
+	}
 }
+
+
+

@@ -10,12 +10,13 @@
 package authoring;
 
 import java.awt.Point;
-import java.lang.Double; 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
@@ -106,15 +107,15 @@ public class AuthoringModel {
      * Wraps constructor in case of new object creation
      * @throws ObjectNotFoundException 
      */
-
-    public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
-	myImageMap = imageCoordinates;
-	myBackgroundImage = backgroundImage;
-	myPathCoordinates = coordinates;
-	Level currentLevel = myGame.levelCheck(level);
-	Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathSize);
-	currentLevel.addPath(newPath);
-    }
+    
+	public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
+		myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
+		myBackgroundImage = backgroundImage;
+		//				myPathCoordinates = coordinates;
+		Level currentLevel = myGame.levelCheck(level);
+		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+		currentLevel.addPath(newPath);
+	}
 
     /**
      * Method through which information can be sent to instantiate or edit a path object
@@ -361,13 +362,16 @@ public class AuthoringModel {
 	return newLevelNumber; 
     }
 
-    public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
+    public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException, DeleteDefaultException {
 	Level currentLevel = myGame.levelCheck(level);
 	if (objectType.equals("Tower")) {
 	    currentLevel.removeTower(name);
 	}
 	if (objectType.equals("Enemy")) {
 	    currentLevel.removeEnemy(name);
+	}
+	if (objectType.equals("Wave")) {
+	    	currentLevel.removeWave(name.split(" ")[1]);
 	}
     }
 
@@ -391,7 +395,6 @@ public class AuthoringModel {
 	    attributeFinder.setFieldValue(attribute, myGame.getSettings(), attributeValue);
 	}
     }
-    
     public void updateAllProperties() throws ObjectNotFoundException {
 	Level level;
 	for (String levelNumber : getLevels()) {

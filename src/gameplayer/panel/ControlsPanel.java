@@ -3,6 +3,8 @@ package gameplayer.panel;
 
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -18,17 +20,15 @@ import frontend.PromptReader;
 
 public class ControlsPanel extends Panel{
 
-	//TODO read this from settings or properties file, even better would be autoscaling to fit space
-	private final int DEFAULT_CONTROL_BUTTON_SIZE = 35;
-
 	private final PromptReader PROMPTS;
 	private final GameScreen GAME_SCREEN;
+	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private final UIFactory UIFACTORY;
-	private static final String CONTROL_BUTTON_FILEPATH = "images/ControlPanelImages/ControlButtonNames.properties";
 	private final PropertiesReader PROP_READ;
 
 	public ControlsPanel(GameScreen gameScreen, PromptReader promptReader) {
 		GAME_SCREEN = gameScreen;
+		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 		UIFACTORY = new UIFactory();
 		PROP_READ = new PropertiesReader();
 		PROMPTS = promptReader;
@@ -51,21 +51,26 @@ public class ControlsPanel extends Panel{
 
 
 	private void makeControlButtons(HBox topControls, HBox botControls) {
+
+		String CONTROL_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("ControlButtonFilepath");
+		Integer DEFAULT_CONTROL_BUTTON_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("ControlButtonSize"));
 		try {
+
 			Map<String,Image> controlsMap = PROP_READ.keyToImageMap(CONTROL_BUTTON_FILEPATH, DEFAULT_CONTROL_BUTTON_SIZE, DEFAULT_CONTROL_BUTTON_SIZE);
 			int controlsSplit = controlsMap.keySet().size()/2;
 			int count = 0;
 			for(Map.Entry<String,Image> control: controlsMap.entrySet()) {
-				Button controlButton = UIFACTORY.makeImageButton("controlButton", controlsMap.get(control.getKey()));
+				Button controlButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("ControlButtonID"), controlsMap.get(control.getKey()));
 				controlButton.setOnMouseClicked(arg0  -> {
 					try {
 						GAME_SCREEN.controlTriggered(control.getKey());
 					} catch (MissingPropertiesException e) {
 						// TODO Auto-generated catch block
-						System.out.println("Could not find property in ControlsPanel class");
+					    	Log.debug(e);
+						e.printStackTrace();
 					}
 				});
-				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control.getKey()+"Tooltip")));
+				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control.getKey()+GAMEPLAYER_PROPERTIES.get("Tooltip"))));
 				if(count <controlsSplit) {
 					topControls.getChildren().add(controlButton);
 				}
@@ -75,6 +80,7 @@ public class ControlsPanel extends Panel{
 				count++;
 			}
 		} catch (MissingPropertiesException e) {
+		    Log.debug(e);
 			//something went wrong and we don't have the control images
 			//TODO something reasonable here
 			//probably have default images that aren't the ones specified by authoring

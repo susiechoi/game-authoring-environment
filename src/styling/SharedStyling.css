@@ -22,3 +22,46 @@ Text {
   -fx-font: bold 36pt "Helvetica";
 }
 
+@font-face {
+	src: url("vcr-sd-mono.ttf");
+}
+
+.label {
+	-fx-font-family: "VCR OSD Mono";
+	-fx-font-size: 24;
+	-fx-font-weight: bold;
+	-fx-alignment: center;
+	-fx-border-width: 2;
+	-fx-border-radius: 6;
+	-fx-background-radius: 6;
+}
+
+.img-view:hover {
+    -fx-effect: dropshadow(three-pass-box, black, 40, 0.0 , 0 , 5);
+}
+
+.sizebuttons {
+        -fx-min-width: 20;
+        -fx-min-height: 50;
+        -fx-background-color: #B7D5D4;
+}
+
+.chart {
+	-fx-padding: 20px;
+}
+
+.chart-plot-background {
+	-fx-background-color: white; 
+}
+
+.chart-vertical-grid-lines {
+	-fx-stroke: transparent;
+}
+
+.chart-horizontal-grid-lines {
+	-fx-stroke: transparent;
+}
+
+.axis-label {
+	-fx-font-size: 18px;
+}

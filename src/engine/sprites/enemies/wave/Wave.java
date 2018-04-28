@@ -30,6 +30,18 @@ public class Wave {
 	myTime = DEFAULT_WAVE_TIME;
     }
     
+    public Wave getCopy() {
+	Wave copy = new Wave();
+	copy.setWaveTime(myTime);
+	for(Path path : myWaveMap.keySet()) {
+	    for(Enemy enemy : myWaveMap.get(path).keySet()) {
+		copy.addEnemy(new Enemy(enemy), path, myWaveMap.get(path).get(enemy));
+	    }
+	}
+	return copy;
+	
+    }
+    
     
 
     /**
@@ -42,7 +54,7 @@ public class Wave {
     public void addEnemy(Enemy enemy, int number) {
 	Map<Enemy, Integer> enemyMap = new HashMap<>();
 	enemyMap.put(enemy, number);
-	myWaveMap.put(new Path(null, null, null, 0), enemyMap);
+	myWaveMap.put(new Path(null, null, null, null, null, null, 0, number, number), enemyMap);
     }
     
     public int getWaveTime() {

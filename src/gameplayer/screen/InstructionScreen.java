@@ -17,41 +17,44 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class InstructionScreen extends Screen {
-	public static final String DEFAULT_SHARED_STYLESHEET = "styling/GameAuthoringStartScreen.css";
+	private String DEFAULT_SHARED_STYLESHEET;
 	private final ScreenManager SCREEN_MANAGER;
+	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private final PromptReader PROMPTS;
 	private final UIFactory UIFACTORY;
-	private ComboBox<String> allGames;
 	private Button continueButt;
-	private Button backButton;
 
 	public InstructionScreen(ScreenManager screenManager, PromptReader promptReader) {
 		SCREEN_MANAGER = screenManager;
+		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
 		UIFACTORY = new UIFactory();
 		PROMPTS = promptReader;
+		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("sharedStylingSheet");
 		setStyleSheet(DEFAULT_SHARED_STYLESHEET);
 	}
 
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		VBox rootBox = new VBox();
-		Text title = getUIFactory().makeScreenTitleText("Select a New Game to Play");
+		Text title = getUIFactory().makeScreenTitleText(GAMEPLAYER_PROPERTIES.get("newGameText"));
 		// TODO: Make a load game button
 		//	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 		//	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew());
 
-		allGames = UIFACTORY.makeTextDropdown("", gameOptions());
+		ComboBox<String> allGames = UIFACTORY.makeTextDropdown("", gameOptions());
 		allGames.setOnAction(click ->{ 
 			continueButt.setDisable(false);
 		});
 
-		continueButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("ContinueButton"));
+		continueButt = UIFACTORY.makeTextButton(GAMEPLAYER_PROPERTIES.get("buttonID"), PROMPTS.resourceDisplayText("ContinueButton"));
 		continueButt.setDisable(true);
 		continueButt.setOnMouseClicked(arg0 -> SCREEN_MANAGER.loadGameScreenNew(allGames.getValue()));
 		//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenContinuation());
-		backButton = UIFACTORY.setupBackButton(e->{
+		Button backButton = UIFACTORY.setupBackButton(e->{
 			SCREEN_MANAGER.toMain();
 		}, PROMPTS.resourceDisplayText("Cancel"));
 
@@ -70,7 +73,7 @@ public class InstructionScreen extends Screen {
 	 * @return List<String>: containing all game options
 	 */
 	private List<String> gameOptions(){
-		File[] files = new File("SavedModels/").listFiles();
+		File[] files = new File(GAMEPLAYER_PROPERTIES.get("savedModelsPathname")).listFiles();
 		List<String> ret = new ArrayList<>();
 		for(File file : files){
 			ret.add(file.getName().substring(0, file.getName().indexOf(".")));
