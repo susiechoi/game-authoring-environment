@@ -1,6 +1,5 @@
-package authoring.frontend.graphing;
+package authoring.frontend;
 
-import authoring.frontend.AuthoringView;
 import javafx.scene.Parent;
 import javafx.scene.chart.LineChart;
 import javafx.scene.layout.VBox;

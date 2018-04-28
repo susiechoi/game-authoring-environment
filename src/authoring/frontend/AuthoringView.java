@@ -153,6 +153,10 @@ public class AuthoringView extends View {
 				Screen nextScreen = (Screen) constructor.newInstance(myStageManager, this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
+			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
+			myStageManager.switchScreen(nextScreen.getScreen());
+		}
 		}
 		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
 		    	System.out.println(clazz.getSimpleName());
