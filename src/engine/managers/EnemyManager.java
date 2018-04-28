@@ -61,6 +61,7 @@ public class EnemyManager extends ShootingSpriteManager {
 		    enemy.move(elapsedTime);
 		}
 		else {
+
 		    Point newPosition = path.nextPosition(enemy.getIndex());
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
 		    enemy.setNewPosition(newPosition);
