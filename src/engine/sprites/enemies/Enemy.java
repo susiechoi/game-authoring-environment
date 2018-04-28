@@ -173,7 +173,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     }
 
 
-    private double getSpeed() {
+    public double getSpeed() {
 	return mySpeed; 
     }
 
@@ -210,6 +210,4 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public void loseHealth(double damage) {
     	myHealth.loseHealth(damage);
     }
-
-
 }

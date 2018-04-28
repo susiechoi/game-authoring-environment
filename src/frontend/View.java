@@ -94,7 +94,7 @@ public class View {
     public PropertiesReader getPropertiesReader() {
 	return myPropertiesReader; 
     }
-    
+
     public void playControllerDemo() {
 	try {
  	myController.playControllerDemo(myManager, myLanguage);
@@ -111,6 +111,4 @@ public class View {
  	    loadErrorScreen("NoFile");
  	}
      }
-
-    
 }

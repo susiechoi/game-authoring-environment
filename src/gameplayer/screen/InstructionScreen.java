@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 import java.util.Map;
 
 public class InstructionScreen extends Screen {
-	public String DEFAULT_SHARED_STYLESHEET;
+	private String DEFAULT_SHARED_STYLESHEET;
 	private final ScreenManager SCREEN_MANAGER;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private final PromptReader PROMPTS;

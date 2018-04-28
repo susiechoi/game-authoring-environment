@@ -6,6 +6,7 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.DamageProperty;
 
 /**
@@ -13,10 +14,12 @@ import engine.sprites.properties.DamageProperty;
  * and can intersect with enemies to destroy them. 
  * 
  * @author Katherine Van Dyk
+ * @author Ryan Pond
  *
  */
 public class Projectile extends Sprite implements FrontEndSprite{
 
+    private static final double mySpeedFactor = 1.5;
     private DamageProperty myDamage;
     private double mySpeed;
     private double mySize; 
@@ -44,7 +47,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
 	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
 	myTarget = target;
-	mySpeed = myProjectile.getSpeed();
+	if (target instanceof Enemy) {
+	    Enemy myEnemy = (Enemy) target;
+	    mySpeed = myEnemy.getSpeed()*mySpeedFactor;
+	}
+	else {
+	    mySpeed = myProjectile.getSpeed();
+	}
 	myDamage = myProjectile.getDamageProperty();
 	this.place(shooterX, shooterY);
 	this.rotateImage();

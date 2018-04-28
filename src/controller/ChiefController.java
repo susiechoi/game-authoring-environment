@@ -1,6 +1,7 @@
 package controller;
 
 import authoring.AuthoringController;
+import engine.Mediator;
 import frontend.MainScreen;
 import frontend.StageManager;
 import frontend.View;
@@ -34,8 +35,7 @@ public class ChiefController {
      * user input about the size of the screen.
      */
     public void start() {
-	MainScreen mainScreen  = new MainScreen(STAGE_MANAGER, new View(STAGE_MANAGER, DEFAULT_LANGUAGE,
-		new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE)));
+	MainScreen mainScreen  = new MainScreen(STAGE_MANAGER, new View(STAGE_MANAGER, DEFAULT_LANGUAGE, new AuthoringController(STAGE_MANAGER, DEFAULT_LANGUAGE)));
 	Scene scene = new Scene(mainScreen.getScreen());
 	STAGE_MANAGER.switchScene(scene);
     }

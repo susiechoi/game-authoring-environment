@@ -21,6 +21,8 @@ import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+
 
 /**
  * Handles the current state of the game, including current score, money, and lists
@@ -29,6 +31,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Katherine Van Dyk
  * @author benauriemma 4/8
  * @author Ben Hodgson 
+ * @author Ryan Pond
  */
 public class PlayState implements GameData {
 
@@ -60,13 +63,11 @@ public class PlayState implements GameData {
 	currentLevel = myLevels.get(0);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
-
 	myScore = new SimpleIntegerProperty(score);
 	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
 	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
 	myMediator.addIntegerProperties(myResources, myScore, myHealth);
 	mySettings=settings;
-
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
 	for (Level level: levels) {
@@ -83,20 +84,18 @@ public class PlayState implements GameData {
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
-
     }
 
     public void update(double elapsedTime) {
 	count++;
+	checkLoss();
 	if (count % 120 == 0) {
 	    System.out.println("spawning enemy!");
 	    spawnEnemies();
 	}
 	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-	System.out.println(deadEnemies.size());
 	updateHealth(deadEnemies);
 	myMediator.removeListOfSpritesFromScreen(deadEnemies);
-	myEnemyManager.moveEnemies(elapsedTime);
 	handleCollisions(elapsedTime);
 
     }
@@ -105,10 +104,12 @@ public class PlayState implements GameData {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
+	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	myTowerManager.moveProjectiles(elapsedTime);
+	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
@@ -134,7 +135,6 @@ public class PlayState implements GameData {
 		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
-
 		}
 		catch (Exception e) {
 		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
@@ -149,8 +149,16 @@ public class PlayState implements GameData {
 		// TODO: call Mediator to trigger next level
 	    }
 	    else {
-		// TODO: end game
+		// TODO: end game, player won
 	    }
+	}
+    }
+    
+    private void checkLoss() {
+	if (myHealth.getValue() <= 0) {
+	    System.out.println("Lost game!");
+	    myMediator.pause();
+	    myMediator.endLoop();
 	}
     }
 
@@ -159,7 +167,7 @@ public class PlayState implements GameData {
 	    myScore.set(myScore.get() + sprite.getPointValue());
 	    if(sprite.getClass().getName().equals("engine.sprites.enemies.Enemy")) {
 		Enemy enemy = (Enemy) sprite;
-		myResources.set(myResources.get() + enemy.getPointValue());;
+		myResources.set(myResources.get() + enemy.getPointValue());
 	    }
 	}
     }
@@ -223,6 +231,7 @@ public class PlayState implements GameData {
 	myTowerManager.upgrade(tower,"rando",myResources.get());
 	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
+
     }
 
     /**
@@ -234,12 +243,9 @@ public class PlayState implements GameData {
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
 	myResources.set((int) myTowerManager.upgrade(tower,upgradeName,myResources.get())); 
     }
-
-
-
+    
     public String getStyling() throws MissingPropertiesException {
-	return mySettings.getCSSTheme();
+    	return mySettings.getCSSTheme();
     }
-
 }
 

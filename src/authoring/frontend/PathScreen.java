@@ -1,5 +1,7 @@
 package authoring.frontend;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -65,6 +67,7 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			    	}
 			    	catch(MissingPropertiesException e) {
+			    	 Log.debug(e);
 			    	    getView().loadErrorScreen("NoFile");
 			    	}
 			}
@@ -81,6 +84,7 @@ public abstract class PathScreen extends AdjustScreen {
 				}
 			    }
 			    catch(MissingPropertiesException e) {
+				 Log.debug(e);
 				getView().loadErrorScreen("NoFile");
 			    }
 			}

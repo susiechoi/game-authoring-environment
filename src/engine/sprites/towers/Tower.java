@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
  * 
  * @author Katherine Van Dyk
  * @author Miles Todzo
+ * @author Ryan Pond
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
 

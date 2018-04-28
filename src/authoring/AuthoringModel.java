@@ -18,6 +18,7 @@ import java.util.Map;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
@@ -366,13 +367,16 @@ public class AuthoringModel implements GameData {
 	return newLevelNumber; 
     }
 
-    public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException {
+    public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException, DeleteDefaultException {
 	Level currentLevel = myGame.levelCheck(level);
 	if (objectType.equals("Tower")) {
 	    currentLevel.removeTower(name);
 	}
 	if (objectType.equals("Enemy")) {
 	    currentLevel.removeEnemy(name);
+	}
+	if (objectType.equals("Wave")) {
+	    	currentLevel.removeWave(name.split(" ")[1]);
 	}
     }
 

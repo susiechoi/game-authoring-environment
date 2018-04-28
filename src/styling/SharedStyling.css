@@ -24,7 +24,6 @@ Text {
 
 .chart {
 	-fx-padding: 20px;
-	-fx-pref-height: 1000px; 
 }
 
 .chart-plot-background {
@@ -42,4 +41,3 @@ Text {
 .axis-label {
 	-fx-font-size: 18px;
 }
-

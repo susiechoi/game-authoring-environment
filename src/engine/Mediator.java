@@ -4,6 +4,7 @@ package engine;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 
 import java.util.List;
 import java.util.Map;
@@ -34,10 +35,10 @@ import xml.XMLFactory;
  * @author andrewarnold
  * @author Brendan Cheng
  * @author Alexi Kontos
+ * @author Ryan Pond
  *
  */
-public class Mediator implements MVController {
-
+public class Mediator implements MVController{
 
     private ScreenManager myScreenManager;
     private GameEngine myGameEngine;
@@ -208,6 +209,17 @@ public class Mediator implements MVController {
     }
 
     /**
+     * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
+     * lives. 
+     * @param myResources integer property for currency
+     * @param myScore	integer property for score
+     * @param IntegerProperty	 integer property for health
+     */
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+	myScreenManager.attachListeners(myCurrency, myScore, myLives);
+    }
+
+    /**
      * Takes a list of sprites that are to be removed from PlayState, removes them
      * @param list
      */
@@ -228,38 +240,34 @@ public class Mediator implements MVController {
      * @param myScore	integer property for score
      * @param simpleIntegerProperty	 integer property for health
      */
-    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, SimpleIntegerProperty myLives) {
+    public void addIntegerProperties(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
 	myScreenManager.attachListeners(myCurrency, myScore, myLives);
     }
-
-    /**
-     * Ends game loop in case that user wants to return to authoring/editing the game
-     * @author susiechoi
-     */
-    public void endLoop() {
-	myGameEngine.endLoop();
-    }
-
-    public String getStyling() {
-	String styling = null; 
-	if (myGameEngine.getPlayState() != null) {
-	    try {
-		styling = myGameEngine.getPlayState().getStyling();
-	    } catch (MissingPropertiesException e) {
-		myScreenManager.loadErrorAlert("NoFile");
-	    }
+    
+	/**
+	 * Ends game loop in case that user wants to return to authoring/editing the game
+	 * @author susiechoi
+	 */
+	public void endLoop() {
+		myGameEngine.endLoop();
 	}
-	return styling; 
-    }
-	
+
+	public String getStyling() {
+		String styling = null; 
+		if (myGameEngine.getPlayState() != null) {
+			try {
+				styling = myGameEngine.getPlayState().getStyling();
+			} catch (MissingPropertiesException e) {
+				myScreenManager.loadErrorAlert("NoFile");
+			}
+		}
+		return styling; 
+	}
+
+
 	@Override
 	public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{
 	    myPlayController.demoPlay(new AuthoringModel().getGame());
 	}
 
-    
 }
-    
-
-
-
