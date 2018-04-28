@@ -92,6 +92,7 @@ public class PlayState implements GameData {
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
 	activeTowers.removeAll(toBeRemoved);
+	myEnemyManager.removeFromMap(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	//myTowerManager.moveProjectiles(elapsedTime);

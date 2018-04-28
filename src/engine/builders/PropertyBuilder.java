@@ -2,9 +2,9 @@ package engine.builders;
 
 import java.util.ResourceBundle;
 
-import authoring.Reflection;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
+import voogasalad.util.reflection.Reflection;
 
 public class PropertyBuilder {
 

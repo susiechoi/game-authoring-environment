@@ -18,7 +18,7 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.Tower;
-import src.voogasalad.util.reflection.*;
+import voogasalad.util.reflection.*;
 
 /**
  * 
