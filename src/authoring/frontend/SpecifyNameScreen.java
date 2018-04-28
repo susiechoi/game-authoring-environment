@@ -29,10 +29,10 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	try {
 	    myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
 	} catch (NumberFormatException e) {
-//	    Log.error(e);
+	    //Log.error(e);
 	    getView().loadErrorScreen("BadConstants");
 	} catch (MissingPropertiesException e) {
-//	    Log.error(e);
+	    //Log.error(e);
 	    getView().loadErrorScreen("NoConstants");
 	}
     }
@@ -59,7 +59,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 			getView().makeTower(myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
-//			Log.error(e);
+			//Log.error(e);
 			getView().loadErrorScreen("NoObject");
 		    }
 		}
@@ -69,7 +69,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		    } catch (NumberFormatException | FileNotFoundException
 			    | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
-//			 Log.error(e);
+			 //Log.error(e);
 			getView().loadErrorScreen("NoObject");
 		    }
 		}
