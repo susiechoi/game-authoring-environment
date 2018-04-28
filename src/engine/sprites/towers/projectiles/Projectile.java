@@ -51,8 +51,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	if (this.myTarget.isAlive()) {
 	    rotateImage();
 	}
-	//System.out.println("Constantspeedproperty "  + getValue("ConstantSpeedProperty"));
-	//System.out.println("elapsedTime "  + elapsedTime);
 	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;

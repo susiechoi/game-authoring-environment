@@ -38,7 +38,9 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, double size, List<Property> properties) {
 	myName = name;
 	myImageString = image;
+	System.out.println("debugging");
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
+	System.out.println("test");
 	myImageView.setPreserveRatio(true);
 	myProperties = properties;
 	myPropertyBuilder = new PropertyBuilder();

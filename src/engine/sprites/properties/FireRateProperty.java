@@ -10,25 +10,25 @@ package engine.sprites.properties;
  */
 public class FireRateProperty extends UpgradeProperty<Boolean> {
 
-	/**
-	 * Constructor that takes in cost, value and rate of fire
-	 * 
-	 * @param cost: Cost of the projectile object upgrade
-	 * @param value: How much the fire rate is incremented per upgrade
-	 * @param fireRate: Rate of fire
-	 */
-	public FireRateProperty(double cost, double value, double fireRate) {
-		super(cost, value, fireRate);
-	}
+    /**
+     * Constructor that takes in cost, value and rate of fire
+     * 
+     * @param cost: Cost of the projectile object upgrade
+     * @param value: How much the fire rate is incremented per upgrade
+     * @param fireRate: Rate of fire
+     */
+    public FireRateProperty(double cost, double value, double fireRate) {
+	super(cost, value, fireRate);
+    }
 
-	@Override
-	public Boolean execute(Object...args) {
-		double timeLastFired = (double) args[0];
-		if(timeLastFired >= 100/this.getProperty()) {
-     		return true;
-     	}
-	return (Boolean)false;
+    @Override
+    public Boolean execute(Object...args) {
+	double timeLastFired = ((Double) args[0]).doubleValue();
+	if(timeLastFired >= 100/this.getProperty()) {
+	    return true;
 	}
+	return (Boolean)false;
+    }
 
     public FireRateProperty(UpgradeProperty p) {
 	super(p);

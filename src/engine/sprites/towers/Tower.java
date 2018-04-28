@@ -61,17 +61,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     /**
-     * Handles decrementing tower's damage when it gets hit by an enemy
-     * 
-     * @return boolean: True if tower is alive, false otherwise
-     */
-    @Override
-    public boolean handleCollision(Sprite collider) {
-    this.myHealth.loseHealth(collider.getDamage());
-	return true;
-    }
-
-    /**
      * Handles selling a tower
      */
     public int sell() {

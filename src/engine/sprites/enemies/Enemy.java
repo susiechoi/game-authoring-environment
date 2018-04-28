@@ -43,6 +43,8 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	myHealthImpact = getValue("DamageProperty");
 	mySpeed = getValue("SpeedProperty");
 	myKillReward = getValue("ValueProperty");
+	System.out.println(getValue("HealthProperty"));
+	System.out.println(getProperty("HealthProperty").getName() + " is  the health prop");
     }
 
     /**
@@ -166,9 +168,4 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 //	myProperties.add(new SpeedProperty(0, 0, 50));
 //	updateImage(myImage);
 //    }
-
-    @Override
-    public void loseHealth(double damage) {
-	((HealthProperty) getProperty("HealthProperty")).loseHealth(damage);
-    }
 }
