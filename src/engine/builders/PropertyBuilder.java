@@ -2,7 +2,7 @@ package engine.builders;
 
 import java.util.ResourceBundle;
 
-import authoring.Reflection;
+import voogasalad.util.reflection.*;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 
