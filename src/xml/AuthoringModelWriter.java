@@ -34,6 +34,8 @@ public class AuthoringModelWriter implements XMLWriter {
 			System.out.println("Bad configuration"); // update exception
 		}
 		parser = new XStream(new StaxDriver());
+		parser.autodetectAnnotations(true);
+//		parser.registerConverter(new ObservableListConverter(parser.getMapper()));
 	}
 
     /**
@@ -43,7 +45,7 @@ public class AuthoringModelWriter implements XMLWriter {
     public void write(GameData g, String filepath) throws BadGameDataException {
 	// check type
 	if (!g.getClass().getSimpleName().equals("AuthoredGame")) {
-	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
+	    throw new BadGameDataException("Incorrect GameData: Must use AuthoredGame object to store correct data");
 	}
 //	file = new File("SavedModels/" + filepath + ".xml");
 //	// Write data using XStream

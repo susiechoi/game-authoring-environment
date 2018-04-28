@@ -90,6 +90,7 @@ public class AuthoringModel {
 		Enemy testEnemy = new Enemy(myDefaultEnemy);
 		firstLevel.addEnemy(myDefaultName, testEnemy);
 		firstLevel.addPath(myDefaultPath);
+		System.out.println("size of paths" + firstLevel.getPaths().size());
 		myGame.addLevel(1, firstLevel);
 	}
 

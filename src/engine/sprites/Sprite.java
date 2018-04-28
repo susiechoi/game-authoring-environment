@@ -1,7 +1,10 @@
 package engine.sprites;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import xml.serialization.ImageWrapper;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -16,7 +19,9 @@ import javafx.scene.image.ImageView;
 public class Sprite implements FrontEndSprite{
 
 	private String myName;
-	private ImageView myImageView;
+	@XStreamOmitField
+	private transient ImageView myImageView;
+	private ImageWrapper myWrapper;
 	private String myImageString;
 
 
@@ -33,7 +38,7 @@ public class Sprite implements FrontEndSprite{
 		myImageString = image;
 		myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 		myImageView.setPreserveRatio(true);
-
+		myWrapper = new ImageWrapper(image);
 	}
 
 	/**
@@ -57,6 +62,10 @@ public class Sprite implements FrontEndSprite{
 	public void setImage(Image image) {
 		myImageView  = new ImageView(image);
 	}
+	
+//	public void updateImage() {
+//	    myImageView = myWrapper.toImageView();
+//	}
 
 	public void place(double newX, double newY) {
 		myImageView.setX(newX);
@@ -122,8 +131,11 @@ public class Sprite implements FrontEndSprite{
 
 	protected void updateImage(String imagePath) {
 		myImageString = imagePath; 
-		Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
-		myImageView.setImage(newImage);
+		myWrapper.updateImageString(imagePath);
+//		Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
+//		System.out.println(myImageView == null);
+//		myImageView.setImage(newImage);
+		myImageView = myWrapper.toImageView();
 		myImageView.setPreserveRatio(true);
 	}
 
