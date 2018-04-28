@@ -32,7 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import src.voogasalad.util.soundfactory.ITRTSoundFactory;
+import voogasalad.util.soundfactory.*;
 
 
 
