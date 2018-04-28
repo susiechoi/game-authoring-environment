@@ -1,10 +1,8 @@
-package authoring.frontend.graphing;
+package authoring.frontend;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import authoring.frontend.AuthoringScreen;
-import authoring.frontend.AuthoringView;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -36,7 +34,7 @@ public class GraphTypeScreen extends AuthoringScreen {
 				e -> {graphButton.setDisable(true);}, title);
 		graphButton.setDisable(true);
 		graphButton.setOnAction(e -> {
-			getView().getStageManager().switchScreen(new GraphMenuScreen(getView(), dropdown.getSelectionModel().getSelectedItem()).getScreen());
+			getView().goForwardFrom(this.getClass().getSimpleName(), dropdown.getSelectionModel().getSelectedItem());
 		});
 		
 		vb.getChildren().addAll(titleText, dropdown, graphButton, setupBackButton());

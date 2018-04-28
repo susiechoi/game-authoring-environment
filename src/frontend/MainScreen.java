@@ -4,8 +4,8 @@ import com.sun.javafx.tools.packager.Log;
 
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
+import authoring.frontend.GraphMenuScreen;
 import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.graphing.GraphMenuScreen;
 import controller.PlayController;
 import frontend.Screen;
 import frontend.UIFactory;
@@ -66,7 +66,7 @@ public class MainScreen extends Screen {
 				myView.loadErrorScreen("NoFile");
 			}
 		});
-
+		
 		//	HBox leftCenter = new HBox(newAuthorButt);
 		//	leftCenter.setAlignment(Pos.CENTER);
 		//	leftCenter.setMaxWidth(Double.MAX_VALUE);

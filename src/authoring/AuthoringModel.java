@@ -16,10 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import authoring.frontend.exceptions.DeleteDefaultException;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.NoDuplicateNamesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
+import data.GameData;
 import engine.builders.PathBuilder;
 import engine.Settings;
 import engine.builders.SettingsBuilder;
@@ -30,7 +33,7 @@ import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
 
-public class AuthoringModel {
+public class AuthoringModel implements GameData {
 	
     private final GenericModel myGeneric = new GenericModel();
     private final String mySettingsFile = "default_objects/Settings.properties";
@@ -39,8 +42,10 @@ public class AuthoringModel {
     private String DEFAULT_CONSTANT_FILEPATH;
     private PropertiesReader myPropertiesReader;
     private String myDefaultName; 
-    private Tower myDefaultTower;
-    private Enemy myDefaultEnemy;
+    @XStreamOmitField
+    private transient Tower myDefaultTower;
+    @XStreamOmitField
+    private transient Enemy myDefaultEnemy;
     private Path myDefaultPath;
     protected Map<String, List<Point>> myImageMap = new HashMap<String, List<Point>>();
     protected String myBackgroundImage = new String();

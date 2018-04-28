@@ -73,7 +73,6 @@ public class PlayController {
 		myScreenManager.loadGameScreenNew();
 		PlayState play = new PlayState(myMediator, levels, 0, model.getSettings(), 0);
 		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getColumnCount(), levels.get(0).getRowCount());
-		myScreenManager.loadGameScreenNew();
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
 	}

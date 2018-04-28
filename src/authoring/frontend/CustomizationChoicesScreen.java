@@ -106,7 +106,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 //		}
 //		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
-
 		Button visualizations = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Graphs"));
 		visualizations.setOnAction(click-> {
 			getView().goForwardFrom(this.getClass().getSimpleName()+"Graphs");

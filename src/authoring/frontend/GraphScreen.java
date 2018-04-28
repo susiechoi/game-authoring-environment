@@ -1,4 +1,4 @@
-package authoring.frontend.graphing;
+package authoring.frontend;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,8 +7,6 @@ import java.io.IOException;
 
 import com.sun.javafx.tools.packager.Log;
 
-import authoring.frontend.AuthoringScreen;
-import authoring.frontend.AuthoringView;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -16,9 +14,11 @@ import javafx.scene.chart.XYChart.Series;
 
 abstract class GraphScreen extends AuthoringScreen {
 	
+	protected String myGraphType; 
 	
-	public GraphScreen(AuthoringView view) {
+	public GraphScreen(AuthoringView view, String graphType) {
 		super(view);
+		myGraphType = graphType; 
 		setSaved(); 
 	}
 	
@@ -33,7 +33,7 @@ abstract class GraphScreen extends AuthoringScreen {
 		x.setTickLabelsVisible(false);
 		x.setForceZeroInRange(false);
 		NumberAxis y = new NumberAxis(); 
-		y.setLabel(getErrorCheckedPrompt("Score"));
+		y.setLabel(myGraphType);
 		LineChart<Number, Number> graph = new LineChart<Number, Number>(x, y);
 		graph.setLegendVisible(false);
 		graph.setTitle(title);
