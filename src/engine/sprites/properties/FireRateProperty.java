@@ -23,8 +23,8 @@ public class FireRateProperty extends UpgradeProperty<Boolean> {
 
 	@Override
 	public Boolean execute(Object...args) {
-		Integer timeLastFired = (Integer)args[0];
-		if((Integer)timeLastFired >= 100/this.getProperty()) {
+		double timeLastFired = (double) args[0];
+		if(timeLastFired >= 100/this.getProperty()) {
      		return true;
      	}
 	return (Boolean)false;

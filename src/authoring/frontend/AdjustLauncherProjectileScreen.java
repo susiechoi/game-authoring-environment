@@ -36,7 +36,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private Object myLauncherRange;
 
     protected AdjustLauncherProjectileScreen(AuthoringView view, String selectedObjectName) {
-	super(view, selectedObjectName, PROJECTILE_FIELDS, OBJECT_TYPE);
+	super(view, selectedObjectName, PROJECTILE_FIELDS, PROJECTILE_TYPE);
 	myObjectName = selectedObjectName; 
     }
 
@@ -65,7 +65,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     }
 
     private void makeProjectileComponents(VBox vb) {
-	HBox projectileImageSelect = makeImageSelector("Tower", "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
+	HBox projectileImageSelect = makeImageSelector("Projectile", "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	vb.getChildren().add(projectileImageSelect);
 	
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());

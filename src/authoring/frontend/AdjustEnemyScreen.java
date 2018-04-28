@@ -87,7 +87,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    setProperty("ValueProperty", myKillReward);
-	    setProperty("ConstantDamageProperty", myHealthImpact);
+	    setProperty("DamageProperty", 0.0, 0.0, myHealthImpact);
 	    setProperty("HealthProperty", 0.0, 0.0, myInitialHealth);
 	    setProperty("SpeedProperty", 0.0, 0.0, mySpeed);
 	    System.out.println("my speed: " + mySpeed);

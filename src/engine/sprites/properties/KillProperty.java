@@ -6,11 +6,9 @@ public class KillProperty extends Property {
 	super(property);
     }
     
-    
     public KillProperty(Property property) {
 	super(property);
     }
-
 
     @Override
     public Object execute(Object... args) {
