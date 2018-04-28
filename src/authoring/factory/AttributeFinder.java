@@ -4,7 +4,7 @@
  * Useful in populating sliders, dropdowns, and textboxes with user input that is currently held in objects
  */
 
-package authoring;
+package authoring.factory;
 
 import java.lang.reflect.Field;
 

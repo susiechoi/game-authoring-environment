@@ -1,4 +1,4 @@
-package doc.api;
+package api;
 
 /**
  * This interface has all of the methods that will be called on a tower object, through

@@ -1,6 +1,6 @@
-package doc.usecases;
+package usecases;
 
-import doc.api.Panel;
+import api.Panel;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;

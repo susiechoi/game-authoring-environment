@@ -5,7 +5,7 @@
  * 
  */
 
-package doc.usecases;
+package usecases;
 import javafx.scene.image.Image;
 
 class AuthoringTowerExample {

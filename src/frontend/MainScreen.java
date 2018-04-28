@@ -1,5 +1,7 @@
 package frontend;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoringController;
 import authoring.AuthoringModel;
 import authoring.frontend.GraphMenuScreen;
@@ -59,7 +61,9 @@ public class MainScreen extends Screen {
 				.loadInstructionScreen();
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
+			    	Log.debug(e);
 				e.printStackTrace();
+				myView.loadErrorScreen("NoFile");
 			}
 		});
 
