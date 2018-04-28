@@ -107,16 +107,15 @@ public class AuthoringModel {
      * Wraps constructor in case of new object creation
      * @throws ObjectNotFoundException 
      */
-
-    public void makePath(int level, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException {
-	myImageMap = imageCoordinates;
-	myBackgroundImage = backgroundImage;
-	myPathCoordinates = coordinates;
-	Level currentLevel = myGame.levelCheck(level);
-	
-	Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathSize);
-	currentLevel.addPath(newPath);
-    }
+    
+	public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
+		myImageMap = imageCoordinates;
+		myBackgroundImage = backgroundImage;
+		//				myPathCoordinates = coordinates;
+		Level currentLevel = myGame.levelCheck(level);
+		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+		currentLevel.addPath(newPath);
+	}
 
     /**
      * Method through which information can be sent to instantiate or edit a path object

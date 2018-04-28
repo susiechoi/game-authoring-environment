@@ -80,10 +80,11 @@ public class AuthoringController implements MVController{
      * @throws ObjectNotFoundException 
      */
 
-    public void makePath(int level, GridPane grid, List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, int pathSize) throws ObjectNotFoundException { 
-	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathSize); 
+
+public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
+	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row); 
 	myImageMap = imageCoordinates;
-    }
+}
 
 
 
@@ -309,4 +310,6 @@ public class AuthoringController implements MVController{
 	    }
 	}
 }
+
+
 

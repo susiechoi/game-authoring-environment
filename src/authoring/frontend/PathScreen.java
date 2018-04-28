@@ -22,7 +22,7 @@ public abstract class PathScreen extends AdjustScreen {
 
 	protected PathScreen(AuthoringView view) {	
 		super(view);
-//		setStyleSheet(view.getCurrentCSS());
+		setStyleSheet(view.getCurrentCSS());
 		grid = new CreatePathGrid(view);
 	}
 	
@@ -40,7 +40,6 @@ public abstract class PathScreen extends AdjustScreen {
 
 	@Override
 	public Parent makeScreenWithoutStyling() {
-		setStyleSheet(DEFAULT_OWN_STYLESHEET);
 		pathGrid = grid.makePathGrid();
 		pathRoot = new StackPane();
 		initializeGridSettings(grid);
