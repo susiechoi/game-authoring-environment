@@ -4,8 +4,6 @@ package engine;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-
 import java.util.List;
 import java.util.Map;
 
@@ -207,6 +205,7 @@ public class Mediator implements MVController{
 	public void updateLevel(Integer newLevel) {
 		myScreenManager.updateLevelCount(newLevel);
 	}
+
 
 	/**
 	 * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 

@@ -6,7 +6,6 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import authoring.AuthoredGame;
-import authoring.AuthoringModel;
 
 /**
  * Reads an XML document using XStream to reconstruct an AuthoringModel object to either be further edited by authoring environment or to create a game engine

@@ -4,6 +4,7 @@
  */
 
 package authoring.frontend;
+
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
