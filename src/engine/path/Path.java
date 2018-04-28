@@ -38,6 +38,7 @@ public class Path {
 		pathIndex = 0;
 //		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
+		System.out.println("making a path");
 	}
 
 

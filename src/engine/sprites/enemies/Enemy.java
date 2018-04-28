@@ -60,7 +60,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public Enemy(Enemy copiedEnemy) {
 	super("", copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher());
 	myName = copiedEnemy.getName(); 
-	setImage(copiedEnemy.getImageView().getImage()); 
+	if(copiedEnemy.getImageView()!=null) {
+	    setImage(copiedEnemy.getImageView().getImage()); 
+	}
 	myIntersecter = copiedEnemy.getIntersecter(); 
 	myHealth = new HealthProperty(copiedEnemy.getHealth()); 
 	myDamage = copiedEnemy.getDamageProperty();
@@ -201,7 +203,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 		myHealth = new HealthProperty(0, 0, myInitialHealth);
 		myDamage = new DamageProperty(0, 0, myHealthImpact); 
 		myValue = new ValueProperty(myKillReward);
-		updateImage(myImage);
+    		if(myImage!=null) {
+    		    updateImage(myImage);
+    		}
 }
 //    public void updateImage() {
 //	System.out.println("enemy image: " + myImage);

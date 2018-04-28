@@ -65,9 +65,11 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			myMaxPrice = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxPrice"));
 			myMaxUpgradeIncrement = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS, "MaxUpgradeIncrement"));
 		} catch (NumberFormatException e) {
+		    e.printStackTrace();
 		    Log.debug(e);
 			getView().loadErrorScreen("BadConstants");
 		} catch (MissingPropertiesException e) {
+		    e.printStackTrace();
 		    Log.debug(e);
 			getView().loadErrorScreen("NoConstants");
 		}
@@ -97,6 +99,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
 		} catch (MissingPropertiesException e) {
 		    Log.debug(e);
+		    e.printStackTrace();
 			getView().loadErrorScreen("ObjectAttributeDNE");
 		}
 
@@ -107,6 +110,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
 			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
 			    Log.debug(e);	
+			    e.printStackTrace();
 			    getView().loadErrorScreen("ObjectAttributeDNE");
 			}
 		}
@@ -164,6 +168,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		try {
 			imageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(propertiesFilepath));
 		} catch (MissingPropertiesException e) {
+		    e.printStackTrace();
 		    	Log.debug(e);
 			getView().loadErrorScreen("NoImageFile");
 		} 
@@ -173,6 +178,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
 		    	}
 		    	catch(MissingPropertiesException e2) {
+		    	    e2.printStackTrace();
 		    	    Log.debug(e2);
 		    	    getView().loadErrorScreen("NoImageFile");
 		    	}
@@ -191,6 +197,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			    imageDropdown.fireEvent(fakeSelection);
 			}
 		} catch (MissingPropertiesException e) {
+		    e.printStackTrace();
 		    Log.debug(e);
 			getView().loadErrorScreen("NoImageFile");
 		}

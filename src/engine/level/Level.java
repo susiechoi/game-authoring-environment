@@ -411,6 +411,7 @@ public class Level {
 		}
 	}
 	public void clearPaths() {
+	    System.out.println("clearing paths?");
 	    List<Path> myPathCopy = new ArrayList<>();
 	    myPathCopy.addAll(myPaths);
 	    for(Path path : myPathCopy) {

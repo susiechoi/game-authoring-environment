@@ -233,9 +233,9 @@ public class CreatePathGrid {
 	}
 
 	protected void addCoordinates(int row, int col) {
-		Bounds nodeBounds = getNode(grid, col, row).getBoundsInLocal();
-		double x = nodeBounds.getMinX() + (nodeBounds.getWidth()/2);
-		double y = nodeBounds.getMinY() + (nodeBounds.getHeight()/2);
+		Bounds nodeBounds = getNode(grid, col, row).localToScreen(getNode(grid, col, row).getBoundsInLocal());
+		double x = (nodeBounds.getMinX() + nodeBounds.getWidth())/2;
+		double y = (nodeBounds.getMinY() + nodeBounds.getHeight())/2;
 		Point point = new Point((int) Math.round(x), (int) Math.round(y));
 		pathCoords.add(point);
 	}
@@ -278,9 +278,9 @@ public class CreatePathGrid {
 				//have start coords, first in the coords is first path...
 				Node node = (Node) event.getTarget();
 				if (node instanceof ImageView && ((ImageView) node).getId() == "start") {
-					Bounds nodeBounds = node.getBoundsInLocal();
-					double x = nodeBounds.getMinX() + (nodeBounds.getWidth()/2);
-					double y = nodeBounds.getMinY() + (nodeBounds.getHeight()/2);
+				    Bounds nodeBounds = node.localToScreen(node.getBoundsInLocal());
+					double x = (nodeBounds.getMinX() + nodeBounds.getWidth())/2;
+					double y = (nodeBounds.getMinY() + nodeBounds.getHeight())/2;
 					Point point = new Point((int) Math.round(x), (int) Math.round(y));
 					myCurrentClicked = point;
 					action.handle(event);

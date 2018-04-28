@@ -233,7 +233,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     		Projectile projectile = new ProjectileBuilder().construct(myName, myProjectileImage, myProjectileDamage, myProjectileSize, myProjectileSpeed);
     		myLauncher = new LauncherBuilder().construct(myLauncherRate, myLauncherRange, projectile);
     		myValue = new ValueProperty(myTowerValue);
+    		if(myImage!=null) {
     		updateImage(myImage);
+    		}
     		updateLauncher(myLauncher); 
     		    		
     		setupStats(propertyStats, myHealth.getName(), (int) myHealth.getProperty());
