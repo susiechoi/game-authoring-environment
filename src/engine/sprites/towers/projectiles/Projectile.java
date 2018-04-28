@@ -7,6 +7,7 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.Property;
+import engine.sprites.properties.SpeedProperty;
 import engine.sprites.enemies.Enemy;
 
 /**
@@ -44,7 +45,9 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
 	    Double speed = myEnemy.getProperty("SpeedProperty").getProperty();
-	    getProperty("SpeedProperty").setProperty(speed*mySpeedFactor);
+//	    System.out.println(myEnemy.getProperty("SpeedProperty") + " SPEED PROPERTY ");
+	    this.addProperty(new SpeedProperty(0,0,mySpeedFactor*myEnemy.getProperty("SpeedProperty").getProperty()));
+//	    getProperty("SpeedProperty").setProperty(speed*mySpeedFactor);
 	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();
@@ -55,6 +58,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * Moves image in direction of it's orientation
      */
     public void move(double elapsedTime) {
+	System.out.println("MOVING PROJECTILE");
 	if (this.myTarget.isAlive()) {
 	    rotateImage();
 	}
