@@ -34,7 +34,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double mySpeed;
     private double myKillReward;
 
-    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
+    public Enemy(String name, String image, double size, Launcher launcher, List<Property<Object>> properties) {
 	super(name, image, size, launcher, properties);
 	myIntersecter = new ImageIntersecter(this); 
 	pathIndex = 0;
@@ -47,13 +47,28 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	System.out.println(getProperty("HealthProperty").getName() + " is  the health prop");
     }
 
+//    /**
+//     * Copy constructor
+//     */
+//    public Enemy(Enemy copiedEnemy) {
+//	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
+//	myIntersecter = copiedEnemy.getIntersecter(); 
+//    }
+    
     /**
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
 	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
-	myIntersecter = copiedEnemy.getIntersecter(); 
+	myIntersecter = new ImageIntersecter(this); 
+	pathIndex = 0;
+	pathAngle = 0;
+	myInitialHealth = getValue("HealthProperty");
+	myHealthImpact = getValue("DamageProperty");
+	mySpeed = getValue("SpeedProperty");
+	myKillReward = getValue("ValueProperty");
     }
+
 
     /**
      * Sets the initial spawning point of the enemy

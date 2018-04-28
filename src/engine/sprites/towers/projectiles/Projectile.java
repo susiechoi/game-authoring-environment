@@ -33,21 +33,28 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
      */
-    public Projectile(String name, double size, String image, List<Property> properties) {
+    public Projectile(String name, double size, String image, List<Property<Object>> properties) {
 	super(name, image, size, properties);
 	mySize = size; 
 	hitTargets = new ArrayList<>();
     }
 
+    /**
+     * Moves projectile and accelerates according to enemy speed
+     * 
+     * @param myProjectile
+     * @param target
+     * @param shooterX
+     * @param shooterY
+     */
+    @SuppressWarnings("unchecked")
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
 	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	myTarget = target;
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
 	    Double speed = myEnemy.getProperty("SpeedProperty").getProperty();
-//	    System.out.println(myEnemy.getProperty("SpeedProperty") + " SPEED PROPERTY ");
-	    this.addProperty(new SpeedProperty(0,0,mySpeedFactor*myEnemy.getProperty("SpeedProperty").getProperty()));
-//	    getProperty("SpeedProperty").setProperty(speed*mySpeedFactor);
+	    this.addProperty(new SpeedProperty(0,0, mySpeedFactor*speed));
 	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();
@@ -58,7 +65,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * Moves image in direction of it's orientation
      */
     public void move(double elapsedTime) {
-	System.out.println("MOVING PROJECTILE");
 	if (this.myTarget.isAlive()) {
 	    rotateImage();
 	}
@@ -87,9 +93,9 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public double getDamage() {
 	return getValue("DamageProperty");
     }
-
+    
     public double getSize() {
-	return mySize; 
+	return mySize;
     }
 
     /**

@@ -1,5 +1,6 @@
 package engine.sprites;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import engine.builders.PropertyBuilder;
@@ -24,26 +25,26 @@ public class Sprite implements FrontEndSprite{
     private ImageView myImageView;
     private String myImageString;
     private PropertyBuilder myPropertyBuilder;
-    private List<Property> myProperties;
+    private List<Property<Object>> myProperties;
 
 
     /**
      * Constructor that takes in a sprite's image
      * Source for the image path fix: https://stackoverflow.com/questions/16099427/cannot-load-image-in-javafx @author susiechoi
-     * Source for resizing image: https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
      * 
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-    public Sprite(String name, String image, double size, List<Property> properties) {
+    public Sprite(String name, String image, double size, List<Property<Object>> properties) {
 	myName = name;
 	myImageString = image;
-	System.out.println("debugging");
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
-	System.out.println("test");
 	myImageView.setPreserveRatio(true);
-	myProperties = properties;
+	myProperties = new ArrayList<>();
 	myPropertyBuilder = new PropertyBuilder();
+	for(Property p : properties) {
+	    myProperties.add(this.makeProperty(p));
+	}
     }
 
     /**
@@ -67,11 +68,6 @@ public class Sprite implements FrontEndSprite{
     public void setImageString(String image) {
 	myImageString = image;
 	myImageView  = new ImageView(new Image("file:"+image, 50, 50, true, true));
-    }
-
-    public void setImage(Image image) {
-	System.out.println("IMAGE IS BEING SET TO " + image);
-	myImageView  = new ImageView(image);
     }
 
     public void place(double newX, double newY) {
@@ -143,12 +139,12 @@ public class Sprite implements FrontEndSprite{
 	myImageView.setPreserveRatio(true);
     }
 
-    protected Property makeProperty(Property p) {
+    protected Property<Object> makeProperty(Property<Object> p) {
 	return myPropertyBuilder.getProperty(p);
     }
     
-    public Property getProperty(String ID) {
-	for(Property property : myProperties) {
+    public Property<Object> getProperty(String ID) {
+	for(Property<Object> property : myProperties) {
 	    if(property != null && property.getName().equals(ID)) {
 		return property;
 	    }
@@ -161,21 +157,21 @@ public class Sprite implements FrontEndSprite{
      * Handles upgrading the health of a tower
      */
     public double upgradeProperty(String name, double balance) {
-	for(Property property : myProperties) {
+	for(Property<Object> property : myProperties) {
 	    if(property.getName() == name) {
-		return ((UpgradeProperty) property).upgrade(balance);
+		return ((UpgradeProperty<Object>) property).upgrade(balance);
 	    }
 	}
 	return balance;
     }
     
-    public List<Property> getProperties(){
+    public List<Property<Object>> getProperties(){
 	return myProperties;
     }
     
-    public void addProperty(Property property) {
-	Property toRemove = null;
-	for(Property p : myProperties) {
+    public void addProperty(Property<Object> property) {
+	Property<Object> toRemove = null;
+	for(Property<Object> p : myProperties) {
 	    if(property.getName().equals(p.getName())) {
 		toRemove = p;
 	    }
@@ -185,7 +181,7 @@ public class Sprite implements FrontEndSprite{
     }
     
     public double getValue(String ID) {
-	for(Property property : myProperties) {
+	for(Property<Object> property : myProperties) {
 	    if(property.getName().equals(ID)) {
 		return property.getProperty();
 	    }
