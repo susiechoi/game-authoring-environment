@@ -54,7 +54,7 @@ public class CreatePathGrid {
 	private ArrayList<Point> startPoints = new ArrayList<Point>();
 	private ArrayList<Point> endPoints = new ArrayList<Point>();
 	private ArrayList<Point> pathPoints = new ArrayList<Point>();
-	private DraggableImage myCurrentClicked;
+	private Point myCurrentClicked;
 	private DraggableImage path;
 	private int startCount = 0;
 	private AuthoringView myView;
@@ -278,10 +278,14 @@ public class CreatePathGrid {
 				//have start coords, first in the coords is first path...
 				Node node = (Node) event.getTarget();
 				if (node instanceof ImageView && ((ImageView) node).getId() == "start") {
-					
+					Bounds nodeBounds = node.getBoundsInParent();
+					double x = (nodeBounds.getMinX() + nodeBounds.getWidth())/2;
+					double y = (nodeBounds.getMinY() + nodeBounds.getHeight())/2;
+					Point point = new Point((int) x, (int) y);
+					myCurrentClicked = point;
 					action.handle(event);
 					ColorAdjust colorAdjust = new ColorAdjust();
-				    colorAdjust.setBrightness(0.5);
+					colorAdjust.setBrightness(0.5);
 					((ImageView) node).setEffect(colorAdjust);
 					
 					//have startCoords sort based on id
@@ -304,7 +308,7 @@ public class CreatePathGrid {
 		//			}
 	}
 
-	protected DraggableImage getMostRecentlyClicked() {
+	protected Point getMostRecentlyClicked() {
 		return myCurrentClicked;
 	}
 

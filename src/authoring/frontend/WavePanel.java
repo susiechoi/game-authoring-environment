@@ -1,10 +1,12 @@
 package authoring.frontend;
 
+import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
 import com.sun.javafx.tools.packager.Log;
 
+import engine.path.Path;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -29,7 +31,7 @@ import javafx.scene.text.Text;
 public class WavePanel extends PathPanel{
 
 
-	private int myPathNumber;
+	private Path myPath;
 	private Button myApplyButton;
 	private VBox myRoot;
 	private ComboBox<String> myEnemyDropdown;
@@ -37,11 +39,13 @@ public class WavePanel extends PathPanel{
 	private Integer myEnemyNumber;
 	private Integer myWaveNumber;
 	private WavePanel mySelf;
-	public WavePanel(AuthoringView view, DraggableImage grid, String waveNumber) {
+	public WavePanel(AuthoringView view, Point point, String waveNumber) {
 		super(view);
 //		if (grid == null) {
 //			myPathNumber = 1;
 //		}
+		myPath = getView().getPathWithStartingPoint(getView().getLevel(), point);
+		
 		if(waveNumber.equals("Default")) {
 		    myWaveNumber = getView().getHighestWaveNumber(getView().getLevel());
 		}
@@ -55,14 +59,14 @@ public class WavePanel extends PathPanel{
 		    }
 		}
 		//System.out.println("highest wave number panel: " + getView().getHighestWaveNumber(getView().getLevel()));
-		myPathNumber = 1; //TODO!!
+		//myPathNumber = 1; //TODO!!
 		mySelf = this;
 		makePanel();
 	}
 	
 	@Override
 	public void makePanel() {
-		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPathNumber, myWaveNumber);
+		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPath, myWaveNumber);
 		myRoot = new VBox();
 		myRoot.setMaxSize(280, 900);
 		VBox pseudoRoot = new VBox();
@@ -93,7 +97,7 @@ public class WavePanel extends PathPanel{
 		myApplyButton.setOnAction(e -> {
 		    setSaved();
 			if(errorcheckResponses()) {
-				getView().addWaveEnemy(getView().getLevel(),((Integer)myPathNumber).toString(), myWaveNumber, 
+				getView().addWaveEnemy(getView().getLevel(),myPath, myWaveNumber, 
 						myEnemyDropdown.getValue(), myEnemyNumber);
 				getView().goForwardFrom(mySelf.getClass().getSimpleName()+"Apply", myWaveNumber.toString());
 				//System.out.println("highest wave number" + getView().getHighestWaveNumber(getView().getLevel()));

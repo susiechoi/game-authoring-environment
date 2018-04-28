@@ -112,9 +112,15 @@ public class AuthoringModel {
 		myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
 		myBackgroundImage = backgroundImage;
 		//				myPathCoordinates = coordinates;
+		
 		Level currentLevel = myGame.levelCheck(level);
-		Path newPath = new PathBuilder().construct(coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
-		currentLevel.addPath(newPath);
+		for(List<Point> list : coordinates) {
+		    List<List<Point>> listOfLists = new ArrayList<List<Point>>();
+		    listOfLists.add(list);
+		    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+		    currentLevel.addPath(newPath);
+		}
+		
 	}
 
     /**
@@ -160,24 +166,19 @@ public class AuthoringModel {
 	    if (listToReturn.size() == 0) {
 		listToReturn.add(myDefaultEnemy.getName());
 	    }
-	} else if (objectType.equals("Tower")) {
+	}
+	else if (objectType.equals("Tower")) {
 	    listToReturn = currentLevel.getAllTowers();
 	    if (listToReturn.size() == 0) {
 		listToReturn.add(myDefaultTower.getName());
 	    }
 	}
-	if(objectType.equals("Wave")) {
+	else if(objectType.equals("Wave")) {
 	    int size = currentLevel.getHighestWaveNumber();
 	    for(Integer k = 1; k<=(size+1); k+=1) {
 		listToReturn.add("Wave " + k.toString());
 	    }
 	}
-	//		if(objectType.equals("Path")) {
-	//			listToReturn.add(currentLevel.getPath());
-	//			if (listToReturn.size() == 0) {
-	//				listToReturn.add(myDefaultPath.getName());
-	//			}
-	//		}
 	listToReturn.remove(myDefaultName);
 	return listToReturn; 
     }
@@ -402,6 +403,19 @@ public class AuthoringModel {
 		level = getLevel(numLevel);
 		level.updateAllProperties(); 
 	}
-}
+    }
+    public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
+	Level currentLevel = myGame.levelCheck(level);
+	System.out.println("POINT WANTED: " + point.toString());
+	List<Path> paths = currentLevel.getPaths();
+	for(Path path: paths) {
+	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
+	    if(path.initialPoint().equals(point)){
+		return path;
+	    }
+	}
+	throw new ObjectNotFoundException("");
+    }
+    
 
 }
