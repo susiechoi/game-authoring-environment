@@ -44,7 +44,7 @@ public class PlayState implements GameData {
     private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
-    private int currlvl;
+    private Level currentLevelCopy;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -58,8 +58,8 @@ public class PlayState implements GameData {
     public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
-	currlvl = 0;
 	currentLevel = myLevels.get(0);
+	currentLevelCopy = new Level(currentLevel);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	myScore = new SimpleIntegerProperty(score);
@@ -105,12 +105,12 @@ public class PlayState implements GameData {
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
+	myEnemyManager.removeFromMap(toBeRemoved);
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
-
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	}
@@ -184,9 +184,9 @@ public class PlayState implements GameData {
     }
 
     public void setLevel(int levelNumber) {
+	clearLevel();
 	currentLevel = myLevels.get(levelNumber);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
-	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
     }
 
     /**
@@ -194,7 +194,8 @@ public class PlayState implements GameData {
      */
     public void restartLevel() {
 	clearLevel();
-	setLevel(currlvl);
+	currentLevel = currentLevelCopy;
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
     }
 
     private void clearLevel() {
@@ -202,8 +203,10 @@ public class PlayState implements GameData {
 	toBeRemoved.addAll(myTowerManager.getListOfActive());
 	toBeRemoved.addAll(myTowerManager.removeAllProjectiles());
 	toBeRemoved.addAll(myEnemyManager.getListOfActive());
+	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	myTowerManager.getListOfActive().clear();
 	myEnemyManager.getListOfActive().clear();
+	myEnemyManager.clearEnemiesMap();
     }
 
     /**
