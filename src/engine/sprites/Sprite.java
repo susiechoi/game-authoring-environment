@@ -65,6 +65,12 @@ public class Sprite implements FrontEndSprite{
 		myImageView  = new ImageView(image);
 	}
 	
+	public void setImage(String image) {
+	    myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); //TODO Replace w non-magic values or getresourcestream
+	    myImageView.setPreserveRatio(true);
+		
+	}
+	
 	/**
 	 * Method that allows the sprite to be updated based on its wrapper. To be used when deserializing.
 	 */

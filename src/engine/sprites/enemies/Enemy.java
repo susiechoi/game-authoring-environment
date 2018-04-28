@@ -58,9 +58,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-	super("", copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher());
+	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher());
 	myName = copiedEnemy.getName(); 
-	setImage(copiedEnemy.getImageView().getImage()); 
+	setImage(copiedEnemy.getImageString()); 
 	myIntersecter = copiedEnemy.getIntersecter(); 
 	myHealth = new HealthProperty(copiedEnemy.getHealth()); 
 	myDamage = copiedEnemy.getDamageProperty();
