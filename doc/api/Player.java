@@ -1,4 +1,4 @@
-package doc.api;
+package api;
 
 /**
  * 

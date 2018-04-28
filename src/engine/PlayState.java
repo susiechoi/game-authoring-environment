@@ -94,12 +94,9 @@ public class PlayState implements GameData {
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-<<<<<<< HEAD
-	myTowerManager.moveProjectiles(elapsedTime);
+	//myTowerManager.moveProjectiles(elapsedTime);
 	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
-=======
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
->>>>>>> 233e5c6d3272fea39341cec37b2b0c259c9abc12
 	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
@@ -137,19 +134,11 @@ public class PlayState implements GameData {
 		currentLevel = myLevels.get(currentLevel.myNumber());
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
-<<<<<<< HEAD
-	//	myMediator.nextLevel();
-	    }
-	    else {
-		// TODO: end game, player won
-		//	myMediator.gameWon();
-=======
 		myMediator.nextLevel();
 	    }
 	    else {
 		// TODO: end game, player won
 			myMediator.gameWon();
->>>>>>> 233e5c6d3272fea39341cec37b2b0c259c9abc12
 	    }
 	}
     }
@@ -159,11 +148,7 @@ public class PlayState implements GameData {
 	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
-<<<<<<< HEAD
-	  //  myMediator.gameLost();
-=======
 	    myMediator.gameLost();
->>>>>>> 233e5c6d3272fea39341cec37b2b0c259c9abc12
 	}
     }
 

@@ -1,4 +1,4 @@
-package doc.api;
+package api;
 
 import java.io.File;
 

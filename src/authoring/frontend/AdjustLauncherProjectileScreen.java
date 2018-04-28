@@ -15,26 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
-<<<<<<< HEAD
-=======
-	
-	public static final String OBJECT_TYPE = "Tower";
-	public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
-	public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
-	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
-	
-	private String myObjectName; 
-	private Slider myProjectileDamageSlider;
-	private Slider myProjectileSpeedSlider; 
-	private Slider myLauncherRateSlider;
-	private Slider myLauncherRangeSlider;
-//	private Slider myProjectileSizeSlider; 
-
-	protected AdjustLauncherProjectileScreen(AuthoringView view, String selectedObjectName) {
-		super(view, selectedObjectName, PROJECTILE_FIELDS, OBJECT_TYPE);
-		myObjectName = selectedObjectName; 
-	}
->>>>>>> 233e5c6d3272fea39341cec37b2b0c259c9abc12
 
     public static final String OBJECT_TYPE = "Tower";
     public static final String PROJECTILE_TYPE = "Projectile";
@@ -87,7 +67,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	HBox projectileImageSelect = makeImageSelector("Projectile", "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	vb.getChildren().add(projectileImageSelect);
 	
-<<<<<<< HEAD
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());
 	HBox projectileDamage = getUIFactory().setupSliderWithValue("ProjectileDamageSlider", myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 	vb.getChildren().add(projectileDamage);
@@ -134,29 +113,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	List<Object> list = new ArrayList<>();
 	for(Object attribute : attributes) {
 	    list.add(attribute);
-=======
-	private void makeProjectileComponents(VBox vb) {
-		HBox projectileImageSelect = makeImageSelector(OBJECT_TYPE, "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
-		vb.getChildren().add(projectileImageSelect);
-
-		Slider projectileDamageSlider = getUIFactory().setupSlider("ProjectileDamageSlider", getMyMaxRange());
-		myProjectileDamageSlider = projectileDamageSlider; 
-		HBox projectileDamage = getUIFactory().setupSliderWithValue("ProjectileDamageSlider", projectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
-		vb.getChildren().add(projectileDamage);
-		myProjectileDamageSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileDamage", newValue);
-		});
-		
-//		Slider projectileSizeSlider = getUIFactory().setupSlider("ProjectileSize", getMyMaxUpgradeIncrement());
-//		myProjectileSizeSlider = projectileSizeSlider; 
-		Slider projectileSpeedSlider = getUIFactory().setupSlider("ProjectileSpeed", getMyMaxUpgradeIncrement());
-		myProjectileSpeedSlider = projectileSpeedSlider; 
-		HBox projectileSpeed = getUIFactory().setupSliderWithValue("ProjectileSpeed", myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileSpeed"));
-		vb.getChildren().add(projectileSpeed);
-		myProjectileSpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-			getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileSpeed", newValue);
-		});
->>>>>>> 233e5c6d3272fea39341cec37b2b0c259c9abc12
 	}
 	return list;
     }

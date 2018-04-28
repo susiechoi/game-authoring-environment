@@ -11,13 +11,8 @@ package authoring.frontend;
 import java.util.HashMap;
 import java.util.Map;
 
-<<<<<<< HEAD
 import authoring.factory.AttributeFinder;
-=======
 import com.sun.javafx.tools.packager.Log;
-
-import authoring.AttributeFinder;
->>>>>>> 233e5c6d3272fea39341cec37b2b0c259c9abc12
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;

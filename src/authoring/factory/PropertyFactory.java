@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import authoring.Reflection;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.level.Level;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.Tower;
+import src.voogasalad.util.reflection.*;
 
 /**
  * 
