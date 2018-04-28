@@ -1,6 +1,5 @@
 package engine.sprites;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import engine.builders.PropertyBuilder;

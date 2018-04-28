@@ -1,8 +1,11 @@
 package authoring.frontend;
 
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -11,6 +14,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 
 /**
@@ -21,6 +25,7 @@ import javafx.scene.layout.GridPane;
 public class DraggableImage extends Parent {
 	private ImageView pathImage;
 	private String pathName;
+	private int startNumber;
 	private EventHandler<MouseEvent> myCopyDragEvent;
 	private EventHandler<MouseEvent> myDragEvent;
 	private EventHandler<DragEvent> myDragDone;
@@ -39,6 +44,22 @@ public class DraggableImage extends Parent {
 	}
 
 	public ImageView setCopyDraggable() {
+		pathImage.setOnMouseEntered(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event){
+				ColorAdjust colorAdjust = new ColorAdjust();
+				colorAdjust.setBrightness(0.3);
+				pathImage.setEffect(colorAdjust);
+				event.consume();    
+			}
+		});
+		pathImage.setOnMouseExited(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event){
+				pathImage.setEffect(null);
+				event.consume();    
+			}
+		});
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event){
@@ -63,6 +84,23 @@ public class DraggableImage extends Parent {
 	}
 
 	public void setDraggable(GridPane grid, int row, int col) {
+//		pathImage.setOnMouseEntered(new EventHandler <MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent event){
+//				ColorAdjust colorAdjust = new ColorAdjust();
+//				colorAdjust.setBrightness(0.3);
+//				pathImage.setEffect(colorAdjust);
+//				event.consume();    
+//			}
+//		});
+//		pathImage.setOnMouseExited(new EventHandler <MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent event){
+//				pathImage.setEffect(null);
+//				event.consume();    
+//			}
+//		});
+		
 		pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event){
@@ -103,17 +141,6 @@ public class DraggableImage extends Parent {
 		pathImage.setOnDragDetected(e -> {});
 		pathImage.setOnDragDone(e -> {});
 	}
-	
-	protected void setPathName(int path_num) {
-		pathName = "Path " +String.valueOf(path_num);
-	}
-	
-	protected String getPathName() {
-	    	if(pathName == null) {
-	    	    return "Default";
-	    	}
-		return pathName;
-	}
 
 
 	protected void setNewImage(Image image) {
@@ -135,6 +162,15 @@ public class DraggableImage extends Parent {
 	protected void setEnd() {
 		imageType = "end";
 	}
+	
+	protected void setStartNumber(int num) {
+		startNumber = num;
+	}
+
+	protected int getStartNumber() {
+		return startNumber;
+	}
+	
 	
 	protected String getImageType() {
 		return imageType;

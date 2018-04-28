@@ -142,8 +142,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public int getPointValue() {
 	return (int) getValue("ValueProperty");
     }
-
-
+    
     public void setIndex(int i) {
 	pathIndex = i;
     } 

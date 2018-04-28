@@ -1,4 +1,4 @@
-package doc.api;
+package api;
 
 /**
  * This class is the interface for the enemy object. it can getHitBy( Projectile), and attack Tower. 

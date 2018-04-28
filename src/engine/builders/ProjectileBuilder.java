@@ -17,10 +17,10 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class ProjectileBuilder {
 
-    public Projectile construct(String name, String imagepath, DamageProperty damage, double size, ConstantSpeedProperty constantSpeedProperty) {
+    public Projectile construct(String name, String imagepath, double damage, double size, double constantSpeedProperty) {
 	List<Property> properties = new ArrayList<>();
-	properties.add(damage);
-	properties.add(constantSpeedProperty);
+	properties.add(new DamageProperty(0, 0, damage));
+	properties.add(new ConstantSpeedProperty(constantSpeedProperty));
 	return new Projectile(name, size, imagepath, properties);
     }
 

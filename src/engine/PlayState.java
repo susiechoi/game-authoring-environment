@@ -20,7 +20,6 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 
 
 /**
@@ -95,8 +94,9 @@ public class PlayState implements GameData {
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	myTowerManager.moveProjectiles(elapsedTime);
+	//myTowerManager.moveProjectiles(elapsedTime);
 	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
+	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
@@ -134,11 +134,11 @@ public class PlayState implements GameData {
 		currentLevel = myLevels.get(currentLevel.myNumber());
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
-	//	myMediator.nextLevel();
+		myMediator.nextLevel();
 	    }
 	    else {
 		// TODO: end game, player won
-		//	myMediator.gameWon();
+			myMediator.gameWon();
 	    }
 	}
     }
@@ -148,7 +148,7 @@ public class PlayState implements GameData {
 	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
-	  //  myMediator.gameLost();
+	    myMediator.gameLost();
 	}
     }
 

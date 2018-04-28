@@ -111,7 +111,7 @@ public abstract class ShootingSprites extends Sprite{
 	return toBeRemoved;
     }
 
-    public boolean hasInRange(ShootingSprites passedSprite) {
+    public boolean hasInRange(Sprite passedSprite) {
 	double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
 	return (distanceBetween <= myLauncher.getProperty("RangeProperty").getProperty());
     }

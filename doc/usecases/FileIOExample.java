@@ -1,4 +1,4 @@
-package doc.usecases;
+package usecases;
 
 public class FileIOExample {
 

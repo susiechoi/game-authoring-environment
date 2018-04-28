@@ -1,4 +1,4 @@
-package doc.api;
+package api;
 
 import engine.path.Path;
 import engine.sprites.enemies.wave.Wave;

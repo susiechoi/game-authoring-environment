@@ -46,7 +46,7 @@ public abstract class Property<T> {
     /**
      * @return current value of property
      */
-    protected void setProperty(double newValue) {
+    public void setProperty(double newValue) {
 	myProperty = newValue;
     }
     

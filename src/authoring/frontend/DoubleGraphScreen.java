@@ -10,8 +10,8 @@ public class DoubleGraphScreen extends GraphScreen {
 	private String myGame1FilePath; 
 	private String myGame2FilePath; 
 
-	protected DoubleGraphScreen(AuthoringView view, String game1Path, String game2Path) {
-		super(view);
+	protected DoubleGraphScreen(AuthoringView view, String game1Path, String game2Path, String graphType) {
+		super(view, graphType);
 		myGame1FilePath = game1Path; 
 		myGame2FilePath = game2Path; 
 	}
@@ -21,11 +21,14 @@ public class DoubleGraphScreen extends GraphScreen {
 		VBox vb = new VBox();
 
 		Text graphTitle = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("GraphTitle"));
-		LineChart<Number, Number> graph = makeGraph(true); 
-		addPointsToGraph(myGame1FilePath);
-		addPointsToGraph(myGame2FilePath);
+		LineChart<Number, Number> graph = makeGraph(parseTitle(myGame1FilePath)); 
+		addPointsToGraph(myGame1FilePath, graph);
+		LineChart<Number, Number> graph2 = makeGraph(parseTitle(myGame2FilePath)); 
+		addPointsToGraph(myGame2FilePath, graph2);
 		
-		vb.getChildren().addAll(graphTitle, graph, setupBackButton());
+		vb.getChildren().addAll(graphTitle, graph, graph2, setupBackButtonCustom(e -> {
+			getView().getStageManager().switchScreen(new GraphMenuScreen(getView(), myGraphType).getScreen());
+		}));
 
 		return vb;
 	}

@@ -6,7 +6,7 @@
  * 
  */
 
-package doc.usecases;
+package usecases;
 
 import java.util.ArrayList;
 
