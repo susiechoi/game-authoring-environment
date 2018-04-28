@@ -32,9 +32,10 @@ public abstract class PathScreen extends AdjustScreen {
 		pathRoot.getChildren().add(panel.getPanel());
 		pathRoot.getChildren().add(toolbar.getPanel());
 		pathRoot.getChildren().add(pathGrid);
-		StackPane.setAlignment(pathGrid, Pos.TOP_LEFT);
+
+		StackPane.setAlignment(pathGrid, Pos.BOTTOM_LEFT);
 		StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
-		StackPane.setAlignment(toolbar.getPanel(), Pos.BOTTOM_LEFT);
+		StackPane.setAlignment(toolbar.getPanel(), Pos.TOP_LEFT);
 	}
 	
 
