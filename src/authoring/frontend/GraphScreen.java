@@ -14,7 +14,6 @@ import javafx.scene.chart.XYChart.Series;
 
 abstract class GraphScreen extends AuthoringScreen {
 	
-	public static final String DEFAULT_TITLE = "Play from ";
 	
 	public GraphScreen(AuthoringView view) {
 		super(view);
@@ -23,7 +22,7 @@ abstract class GraphScreen extends AuthoringScreen {
 	
 	protected String parseTitle(String title) {
 		String gameName = getView().getGameName(); 
-		return DEFAULT_TITLE+title.substring(title.indexOf(gameName)+gameName.length()+1);
+		return title.substring(title.indexOf(gameName)+gameName.length()+1);
 	}
 
 	protected LineChart<Number, Number> makeGraph(String title) {
