@@ -27,4 +27,10 @@ public class ValueProperty extends Property {
 	double newValue = this.getProperty() + feature.getCost();
 	this.setProperty(newValue);
     }
+
+    @Override
+    public Object execute(Object... args) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

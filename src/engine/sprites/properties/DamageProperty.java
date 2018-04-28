@@ -16,4 +16,10 @@ public class DamageProperty extends UpgradeProperty {
 	    	super(p);
 	}
 
+	@Override
+	public Object execute(Object... args) {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
 }
