@@ -147,7 +147,7 @@ public class PlayState implements GameData {
     }
 
     /**
-     * Updates the properties of the PlayState to animate necessary game interactions
+     * Updates the properties of the PlayState to animate game interactions
      * 
      * @param elapsedTime: time elapsed since the last update loop was executed
      */
@@ -200,7 +200,7 @@ public class PlayState implements GameData {
     private void spawnEnemies() {
 	try {
 	    if (currentLevel.getWave(0).isFinished()) {
-		currentLevel.removeWave();   
+		currentLevel.removeWave();  
 	    }
 	    Wave currentWave = currentLevel.getWave(0);
 	    for (Path currentPath : currentLevel.getPaths()) {
@@ -208,7 +208,7 @@ public class PlayState implements GameData {
 		    spawnEnemy(currentWave, currentPath);
 		}
 		catch (Exception e) {
-		    // do nothing, path contains no enemies
+		    // do nothing, path contains no enemies or wave is not ready to spawn enemies
 		}
 	    }
 	}

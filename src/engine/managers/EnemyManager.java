@@ -54,10 +54,6 @@ public class EnemyManager extends ShootingSpriteManager {
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		if(!enemy.isAlive()) {
-		    myEnemies.get(path).remove(enemy);
-		    break;
-		}
 		newEnemies.get(path).add(enemy);
 		if (!enemy.isAlive()) {
 		    newEnemies.get(path).remove(enemy);

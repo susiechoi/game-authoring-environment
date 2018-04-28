@@ -18,7 +18,7 @@ public class Wave {
     public static final int DEFAULT_WAVE_TIME = 5;
 
     private Map<Path, Map<Enemy, Integer>> myWaveMap;
-    private int myTime;
+    private double myTime;
 
     @Deprecated
     public Wave(Path path) {
@@ -27,7 +27,7 @@ public class Wave {
 
     public Wave() {
 	myWaveMap = new HashMap<>();
-	myTime = DEFAULT_WAVE_TIME;
+	myTime = 0;
     }
     
     public Wave getCopy() {
@@ -57,11 +57,11 @@ public class Wave {
 	myWaveMap.put(new Path(null, null, null, null, null, null, 0, number, number), enemyMap);
     }
     
-    public int getWaveTime() {
+    public double getWaveTime() {
 	return myTime;
     }
     
-    public void setWaveTime(int time) {
+    public void setWaveTime(double time) {
 	myTime = time;
     }
 
