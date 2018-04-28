@@ -1,15 +1,10 @@
-
 package xml;
-
 
 import java.io.File;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -40,7 +35,7 @@ public class AuthoringModelWriter implements XMLWriter {
 		}
 		parser = new XStream(new StaxDriver());
 		parser.autodetectAnnotations(true);
-		parser.registerConverter(new ObservableListConverter(parser.getMapper()));
+//		parser.registerConverter(new ObservableListConverter(parser.getMapper()));
 	}
 
     /**
@@ -49,7 +44,7 @@ public class AuthoringModelWriter implements XMLWriter {
     @Override
     public void write(GameData g, String filepath) throws BadGameDataException {
 	// check type
-	if (!g.getClass().getSimpleName().equals("AuthoringModel")) {
+	if (!g.getClass().getSimpleName().equals("AuthoredGame")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoringModel object to store correct data");
 	}
 //	file = new File("SavedModels/" + filepath + ".xml");

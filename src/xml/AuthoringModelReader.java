@@ -5,7 +5,7 @@ import java.io.File;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
-import authoring.AuthoringModel;
+import authoring.AuthoredGame;
 
 /**
  * Reads an XML document using XStream to reconstruct an AuthoringModel object to either be further edited by authoring environment or to create a game engine
@@ -24,9 +24,9 @@ public class AuthoringModelReader implements XMLReader {
 	}
 	
 	@Override
-	public AuthoringModel createModel(String filename) {
+	public AuthoredGame createModel(String filename) {
 	    File f = new File("SavedModels/" + filename + ".xml");
-	    AuthoringModel g = (AuthoringModel) parser.fromXML(f);
+	    AuthoredGame g = (AuthoredGame) parser.fromXML(f);
 	    return g;
 	}
 
