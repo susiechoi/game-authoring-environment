@@ -39,7 +39,7 @@ public class TowerPanel extends ListenerPanel {
     private Button currencyDisplay;
     private Integer initialCurrency;
 
-    private DataPointWriter myCurrencyWriter; 
+//    private DataPointWriter myCurrencyWriter; 
     
     //TODO change to only use availibleTowers
     //private final FileIO FILE_READER;
@@ -54,16 +54,16 @@ public class TowerPanel extends ListenerPanel {
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	initialCurrency = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("initalCurrency"));
-	setupWriters(); 
+//	setupWriters(); 
     }
     
-    private void setupWriters() {
-    	try {
-			myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
-		} catch (FileNotFoundException e) {
-			GAME_SCREEN.loadErrorScreen("NoFile");
-		} 
-    }
+//    private void setupWriters() {
+//    	try {
+//			myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
+//		} catch (FileNotFoundException e) {
+//			GAME_SCREEN.loadErrorScreen("NoFile");
+//		} 
+//    }
 
 
     @Override
@@ -205,7 +205,7 @@ public class TowerPanel extends ListenerPanel {
     }
 
     private void updateCurrency(Integer newValue) {
-    	myCurrencyWriter.recordDataPoint(newValue);
+//    	myCurrencyWriter.recordDataPoint(newValue);
 	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
     }
 
