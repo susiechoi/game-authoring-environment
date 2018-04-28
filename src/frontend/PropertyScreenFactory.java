@@ -1,5 +1,6 @@
 package frontend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import authoring.AttributeFinder;
@@ -13,6 +14,7 @@ public class PropertyScreenFactory {
     PropertiesReader myPropertiesReader;
     UIFactory myUIFactory;
     AttributeFinder myAttributeFinder;
+    
     AuthoringView myView;
     public PropertyScreenFactory(AuthoringView view) {
 	//myPropertiesReader = new PropertiesReader();
@@ -20,19 +22,26 @@ public class PropertyScreenFactory {
 	myAttributeFinder = new AttributeFinder();
 	myView = view;
     }
-    public Parent makePropertyScreen(String filepath, String objectName) throws MissingPropertiesException{
+    public Parent makePropertyScreen(String propertyName, String UIComponentFilepath, String UIConstantFilepath, String objectName) throws MissingPropertiesException{
 	VBox vb = new VBox();
-	List<String> keys = myView.getPropertiesReader().allKeys(filepath);
-	String className = filepath.substring(filepath.lastIndexOf(".") + 1);
-	for(String specificKey : keys) {
-	    if(specificKey.contains("Slider")) {
-//		Slider nextSlider = myUIFactory.setupSlider("", Integer.parseInt(myPropertiesReader.findVal(filepath, key)));
-//		myAttributeFinder.setFieldValue(key.substring(0, key.lastIndexOf("S")-1), objectName, newValue);
-//		nextSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-//		    	myView.getPro
-//		});
+	vb.getChildren().add(myUIFactory.makeScreenTitleText(propertyName));
+	List<String> keys = myView.getPropertiesReader().allKeys(UIComponentFilepath);
+	ArrayList<String> keyList = new ArrayList<>();
+	keyList.addAll(keys);
+	List<Object> currentAttributes = 
+	for (int k = 0; k<keyList.size(); k+=1) {
+	    String key = keyList.get(k);
+	    String UIComponent = myPropertiesReader.findVal(UIComponentFilepath, key);
+	    if(UIComponent.equals("Slider")) {
+		Slider nextSlider = myUIFactory.setupSlider("", Integer.parseInt(myPropertiesReader.findVal(UIConstantFilepath, key)));
+		myUIFactory.setSliderToValue(nextSlider,);
+		nextSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+		    	myVie
+		});
+		vb.getChildren().add(nextSlider);
+		
 
-	    }
+	   }
 //	    elseif(key.contains(s));
 	}
 	return vb;
