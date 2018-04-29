@@ -193,6 +193,12 @@ public class GamePanel extends Panel{
     }
 
     public void addSprite(FrontEndSprite sprite) {
+//	ImageView test = new ImageView(new Image("file:Images/bomb.png"));
+//	test.setTranslateX(120);
+//	test.setTranslateY(30);
+//	test.setFitHeight(20);
+//	test.setFitWidth(20);
+//	spriteAdd.getChildren().add(test);
 	ImageView spriteImage = sprite.getImageView();
 	spriteImage.setLayoutX(-spriteImage.getFitWidth()/2);
 	spriteImage.setLayoutY(-spriteImage.getFitHeight()/2);

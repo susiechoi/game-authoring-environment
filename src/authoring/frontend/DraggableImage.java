@@ -134,12 +134,13 @@ public class DraggableImage extends Parent {
 	}
 
 	protected void disableDraggable() {
-		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myDragEvent);
-		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myCopyDragEvent);
-		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myDragDone);
-		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myCopyDragDone);
-		pathImage.setOnDragDetected(e -> {});
-		pathImage.setOnDragDone(e -> {});
+	    	pathImage.addEventHandler(MouseEvent.DRAG_DETECTED, null);
+//		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myDragEvent);
+//		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myCopyDragEvent);
+//		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myDragDone);
+//		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myCopyDragDone);
+//		pathImage.setOnDragDetected(e -> {});
+//		pathImage.setOnDragDone(e -> {});
 	}
 
 
@@ -170,7 +171,6 @@ public class DraggableImage extends Parent {
 	protected int getStartNumber() {
 		return startNumber;
 	}
-	
 	
 	protected String getImageType() {
 		return imageType;

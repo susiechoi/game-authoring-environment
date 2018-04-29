@@ -62,6 +62,7 @@ public class PlayController {
 		System.out.println("starting animation");
 	}
 
+
 	/**
 	 * Creates a new demo play based on the AuthoringModel object authored by
 	 * the user

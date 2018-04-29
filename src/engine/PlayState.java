@@ -7,6 +7,8 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
+
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
@@ -43,7 +45,7 @@ public class PlayState implements GameData {
     private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
-    private Level currentLevelCopy;
+    private int currlvl;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -57,8 +59,8 @@ public class PlayState implements GameData {
     public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
+	currlvl = 0;
 	currentLevel = myLevels.get(0);
-	currentLevelCopy = new Level(currentLevel);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	myScore = new SimpleIntegerProperty(score);
@@ -91,7 +93,6 @@ public class PlayState implements GameData {
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
-	myEnemyManager.removeFromMap(toBeRemoved);
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.removeFromMap(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
@@ -100,8 +101,14 @@ public class PlayState implements GameData {
 	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
+
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
+	    try {
+		myMediator.getSoundFactory().playSoundEffect("cannon"); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // YIKES THaT'S AND EASY FAIL
+	    }
 	}
 	updateScore(toBeRemoved);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
@@ -120,7 +127,7 @@ public class PlayState implements GameData {
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
 		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
-		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
+		    myEnemyManager.addEnemy(currentPath, newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
 		}
@@ -136,6 +143,12 @@ public class PlayState implements GameData {
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
 		myMediator.nextLevel();
+		try {
+		    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
+		} catch (FileNotFoundException e1) {
+		    e1.printStackTrace(); //TODO!!!
+		}
+		
 	    }
 	    else {
 		// TODO: end game, player won
@@ -150,6 +163,11 @@ public class PlayState implements GameData {
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();
+	    try {
+		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // TODO: 
+	    }
 	}
     }
 
@@ -174,9 +192,9 @@ public class PlayState implements GameData {
     }
 
     public void setLevel(int levelNumber) {
-	clearLevel();
 	currentLevel = myLevels.get(levelNumber);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
+	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
     }
 
     /**
@@ -184,8 +202,7 @@ public class PlayState implements GameData {
      */
     public void restartLevel() {
 	clearLevel();
-	currentLevel = currentLevelCopy;
-	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
+	setLevel(currlvl);
     }
 
     private void clearLevel() {
@@ -193,10 +210,8 @@ public class PlayState implements GameData {
 	toBeRemoved.addAll(myTowerManager.getListOfActive());
 	toBeRemoved.addAll(myTowerManager.removeAllProjectiles());
 	toBeRemoved.addAll(myEnemyManager.getListOfActive());
-	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	myTowerManager.getListOfActive().clear();
 	myEnemyManager.getListOfActive().clear();
-	myEnemyManager.clearEnemiesMap();
     }
 
     /**
@@ -225,7 +240,11 @@ public class PlayState implements GameData {
 	myTowerManager.upgrade(tower,"rando",myResources.get());
 	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
-
+	try {
+	    myMediator.getSoundFactory().playSoundEffect("cash"); //TODO: make custom
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace(); //TODO
+	} 
     }
 
     /**
