@@ -71,6 +71,11 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	targetDestination = new Point();
 	targetDestination.setLocation(target.getX(), target.getY());
     }
+    
+    public Projectile(Projectile projectile, double startX, double startY, double targetX, double targetY) {
+	super(projectile.getName(), projectile.getImageString(), projectile.getSize(), projectile.getProperties());
+	targetDestination.setLocation(targetX, targetY);
+    }
 
     /**
      * Moves image in direction of it's orientation
@@ -134,7 +139,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     }
     
     public boolean isTargetAlive() {
-	return myTarget.isAlive();
+	return myTarget == null || myTarget.isAlive();
     }
 
     public double getSpeed() {

@@ -15,10 +15,12 @@ import engine.managers.TowerManager;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
+import engine.sprites.properties.ClickProperty;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -268,6 +270,12 @@ public class PlayState implements GameData {
     	return mySettings.getCSSTheme();
     }
     
-    
+    public void handleClick(FrontEndTower activeTower, double clickedX, double clickedY) {
+	Tower tower = (Tower) activeTower;
+	if (tower.getProperty("ClickProperty") != null) {
+	    ClickProperty myClickProp = (ClickProperty) tower.getProperty("ClickProperty");
+	    tower.getNewProjectile(clickedX, clickedY);
+	}
+    }
     
 }

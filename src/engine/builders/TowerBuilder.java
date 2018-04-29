@@ -3,6 +3,7 @@ package engine.builders;
 import java.util.ArrayList;
 import java.util.List;
 
+import engine.sprites.properties.ClickToShootProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.ValueProperty;
@@ -35,6 +36,7 @@ public class TowerBuilder {
 	List<Property> properties = new ArrayList<>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));
+    	properties.add(new ClickToShootProperty(20));
 	return new Tower(name, imagepath, size, launcher, properties);
     }
 }

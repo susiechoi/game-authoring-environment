@@ -120,6 +120,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public void setProjectileImage(String image) {
 	myLauncher.setProjectileImage(image);
     }
+    
+    public void getNewProjectile(double targetX, double targetY) {
+	this.getLauncher().getNewProjectile(this.getX(), this.getY(), targetX, targetY);
+    }
 
 }
 
