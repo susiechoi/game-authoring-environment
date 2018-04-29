@@ -36,6 +36,7 @@ import frontend.PropertiesReader;
 
 public class AuthoringModel {
 
+
     public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
     public static final String DEFAULT_PROMPTS_FILE_KEY = "PromptsFile";
     public static final String DEFAULT_CONSTANTS_FILE_KEY = "ConstantFiles"; 
@@ -48,10 +49,9 @@ public class AuthoringModel {
     public static final String DEFAULT_WAVENAME_SEPARATOR = " ";
     public static final int DEFAULT_FIRSTLEVEL_NUMBER = 1;
 
-    private final GenericModel myGeneric = new GenericModel();
+    private final GenericModel myGeneric;
     private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
-    private String DEFAULT_PROMPTS;
     private String DEFAULT_CONSTANT_FILEPATH;
     private PropertiesReader myPropertiesReader;
     private String myDefaultName; 
@@ -71,7 +71,8 @@ public class AuthoringModel {
     }
 
     public AuthoringModel(AuthoredGame game) throws MissingPropertiesException {
-	myGame = game;
+	myGeneric = new GenericModel(); 
+    	myGame = game;
 	spriteFactory = new SpriteFactory(myGeneric);
     }
 
@@ -88,26 +89,6 @@ public class AuthoringModel {
 	} catch (NumberFormatException | FileNotFoundException e) {
 	    throw new MissingPropertiesException(myDefaultName);
 	}
-    }
-
-    private void setupDefaultSettings() throws MissingPropertiesException {
-	String defaultGameName = myPropertiesReader.findVal(DEFAULT_PROMPTS, "NewGame");
-	int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
-	int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
-	String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
-	String startingTheme = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingTheme");
-	Settings newSettings = new SettingsBuilder().construct(defaultGameName, 
-		startingHealth, startingMoney, startingCSS, startingTheme);
-	myGame.setSettings(newSettings);
-    } 
-
-    private void setupDefaultLevel() {
-	Level firstLevel = new Level(1);
-	firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
-	Enemy testEnemy = new Enemy(myDefaultEnemy);
-	firstLevel.addEnemy(myDefaultName, testEnemy);
-	firstLevel.addPath(myDefaultPath);
-	myGame.addLevel(1, firstLevel);
     }
 
     /**
@@ -211,7 +192,7 @@ public class AuthoringModel {
 	return propertyFactory.retrieveProperty(name, attribute);
     }
 
-    public void setObjectProperty(int level, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException{
+    public void createProperty(int level, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException{
 	Level currentLevel = myGame.levelCheck(level);
 	propertyFactory.setProperty(currentLevel, objectType, objectName, propertyName, attributes);
     }
@@ -311,10 +292,12 @@ public class AuthoringModel {
 
     public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
 	Level currentLevel = myGame.levelCheck(level);
-	System.out.println("POINT WANTED: " + point.toString());
+//	Point initialPointBufferOne = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())+2);
+//	Point initialPointBufferTwo = new Point((int) Math.round(point.getX())+2, (int) Math.round(point.getY()));
+//	Point initialPointBufferThree = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())-2);
+//	Point initialPointBufferFour = new Point((int)Math.round(point.getX())-2, (int) Math.round(point.getY()));
 	List<Path> paths = currentLevel.getPaths();
 	for(Path path: paths) {
-	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
 	    if(Math.abs(path.initialPoint().getX()-point.getX())<60 && Math.abs(path.initialPoint().getY()-point.getY())<60) { // HELLOOO PLEASE CHANGE
 		// path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
 		// path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
@@ -347,8 +330,6 @@ public class AuthoringModel {
 	spriteFactory.deleteSprite(objectType, currentLevel, name);
     } 
 
-    //1020
-
     /**
      * Used in the case that the user wants to edit an existing object:
      * Populates fields with current attributes of object 
@@ -364,5 +345,6 @@ public class AuthoringModel {
     public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 	attributeFactory.setObjectAttribute(level, objectType, name, attribute, attributeValue, myGame);
     }
+    
 }
 
