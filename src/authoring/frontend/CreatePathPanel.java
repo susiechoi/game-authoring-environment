@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 public class CreatePathPanel extends PathPanel {
 
     public static final int PANEL_PATH_SIZE = 90;
-    public static final int PANEL_WIDTH = 260;
+    public static final int PANEL_WIDTH = 330;
     public static final int PANEL_HEIGHT = 900;
     public static final String DEFAULT_PATH_IMAGE = "file:images/cobblestone.png";
     public static final String DEFAULT_START_IMAGE = "file:images/brick.png";

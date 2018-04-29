@@ -67,7 +67,7 @@ public class CreatePathGrid {
 	myGridWidth = width;
 	myGridHeight = height;
     }
-    
+
     private AuthoringView getView() {
 	return myView;
     }
@@ -82,7 +82,7 @@ public class CreatePathGrid {
 	checkGrid = new GridPane();
 	grid.setMaxSize(myGridWidth, myGridHeight); 
 	setGridConstraints(grid, INITIAL_PATH_SIZE);
-	
+
 	checkGrid.setMaxSize(myGridWidth, myGridHeight);
 	setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
@@ -154,10 +154,12 @@ public class CreatePathGrid {
 	}
     }
 
+    //need to set size before anything else...
     protected void setGridConstraints(GridPane grid, int size) {
 	grid.getColumnConstraints().clear();
 	grid.getRowConstraints().clear();
 	pathSize = size;
+
 	for (int i = 0; i < myGridWidth/pathSize; i++) {
 	    ColumnConstraints colConst = new ColumnConstraints();
 	    colConst.setPrefWidth(pathSize);
@@ -269,15 +271,19 @@ public class CreatePathGrid {
     }
 
     private void makeUnDraggable(EventHandler<MouseEvent> action) {	
-//	List<Point> startCoords = getStartingPosition(checkGrid);
-	
-	for (int i = 0; i <getColumnCount(); i++) {
-	    for (int j = 0; j < getRowCount(); j++) {
-//		if (getNode(grid, i, j)) {
-		    
-		}
-	    }  
-//	}
+	//	List<Point> startCoords = getStartingPosition(checkGrid);
+
+	for (int i = 0; i < grid.getChildren().size(); i++) {
+	    if (grid.getChildren().get(i) instanceof ImageView) {
+		ImageView node = (ImageView) grid.getChildren().get(i);
+		node.setOnDragDetected(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent e){
+			System.out.println("DRAG DETECTED");
+		    }
+		});
+	    }
+	}
 
 	grid.setOnMouseClicked(new EventHandler <MouseEvent>() {
 	    @Override
@@ -294,8 +300,6 @@ public class CreatePathGrid {
 		    ColorAdjust colorAdjust = new ColorAdjust();
 		    colorAdjust.setBrightness(0.5);
 		    ((ImageView) node).setEffect(colorAdjust);
-
-		    //TODO: with waves, need the starting point, specify waves for each point
 		}
 	    }
 	});
@@ -355,7 +359,6 @@ public class CreatePathGrid {
 	gridImageCoordinates.put("s"+startImage, startPoints);
 	gridImageCoordinates.put("e"+endImage, endPoints);
 	gridImageCoordinates.put("p"+pathImage, pathPoints);
-	//	System.out.println("MAPPPPPPP: " +gridImageCoordinates);
 	return gridImageCoordinates;
     }
 
@@ -378,13 +381,13 @@ public class CreatePathGrid {
     public int getRowCount() {
 	return grid.getRowCount();
     }
-    
+
     public int getGridWidth() {
-   	return 1020;
+	return 1020;
     }
-    
+
     public int getGridHeight() {
-   	return 650;
+	return 650;
     }
 
     public GridPane copyGrid(GridPane grid) {

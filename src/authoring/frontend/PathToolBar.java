@@ -41,7 +41,7 @@ public abstract class PathToolBar extends AdjustScreen {
 		    getView().loadErrorScreen("NoFile");
 		}
 		myPathToolBar.getStylesheets();
-		myPathToolBar.getChildren().add(makeSizingButtons());
+//		myPathToolBar.getChildren().add(makeSizingButtons());
 	}
 	
 	protected HBox getToolBar() {

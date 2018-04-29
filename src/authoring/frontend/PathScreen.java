@@ -38,9 +38,9 @@ public abstract class PathScreen extends AdjustScreen {
 	pathRoot.getChildren().add(panel.getPanel());
 	pathRoot.getChildren().add(toolbar.getPanel());
 
-	pathRoot.getChildren().add(pathGrid);
+	pathRoot.getChildren().add(grid.getGrid());
 
-	StackPane.setAlignment(pathGrid, Pos.TOP_LEFT);
+	StackPane.setAlignment(grid.getGrid(), Pos.TOP_LEFT);
 	StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
 	StackPane.setAlignment(toolbar.getPanel(), Pos.BOTTOM_LEFT);
     }
@@ -67,41 +67,39 @@ public abstract class PathScreen extends AdjustScreen {
     }
 
     protected void setGridUIComponents(PathPanel panel, PathToolBar toolbar) {
-	Button pathSizePlusButton = toolbar.getPlusButton();
-
-	pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(ActionEvent event) {
-		try {
-		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
-		    if (grid.getPathSize() < Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MaxGridSize"))) {
-			grid.setGridConstraints(grid.getGrid(), grid.getPathSize() + gridResize);
-		    }
-		}
-		catch(MissingPropertiesException e) {
-		    Log.debug(e);
-		    getView().loadErrorScreen("NoFile");
-		}
-	    }
-	});
-
-	Button pathSizeMinusButton = toolbar.getMinusButton();
-	pathSizeMinusButton.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(ActionEvent event) {
-		try {
-		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
-		    if (grid.getPathSize() > Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MinGridSize"))) {
-			grid.setGridConstraints(grid.getGrid(), grid.getPathSize() - gridResize);
-		    }
-		}
-		catch(MissingPropertiesException e) {
-		    Log.debug(e);
-		    getView().loadErrorScreen("NoFile");
-		}
-	    }
-	});
+//	Button pathSizePlusButton = toolbar.getPlusButton();
+//
+//	pathSizePlusButton.setOnAction(new EventHandler<ActionEvent>() {
+//	    @Override
+//	    public void handle(ActionEvent event) {
+//		try {
+//		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+//		    if (grid.getPathSize() < Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MaxGridSize"))) {
+//			grid.setGridConstraints(pathGrid, grid.getPathSize() + gridResize);
+//		    }
+//		}
+//		catch(MissingPropertiesException e) {
+//		    Log.debug(e);
+//		    getView().loadErrorScreen("NoFile");
+//		}
+//	    }
+//	});
+//
+//	Button pathSizeMinusButton = toolbar.getMinusButton();
+//	pathSizeMinusButton.setOnAction(new EventHandler<ActionEvent>() {
+//	    @Override
+//	    public void handle(ActionEvent event) {
+//		try {
+//		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+//		    if (grid.getPathSize() > Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MinGridSize"))) {
+//			grid.setGridConstraints(pathGrid, grid.getPathSize() - gridResize);
+//		    }
+//		}
+//		catch(MissingPropertiesException e) {
+//		    Log.debug(e);
+//		    getView().loadErrorScreen("NoFile");
+//		}
+//	    }
+//	});
     }
-
-
 }
