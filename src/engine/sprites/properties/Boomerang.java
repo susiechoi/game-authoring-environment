@@ -15,8 +15,8 @@ public class Boomerang extends MovingProperty{
     private double tCircle = 0.0;
     private double range = 50;
     
-    public Boomerang(double speed) {
-	super(speed);
+    public Boomerang(double range) {
+	super(range);
     }
     
     @Override
