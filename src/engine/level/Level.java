@@ -198,16 +198,6 @@ public class Level {
 		if(!myWaves.contains(wave)) {
 			myWaves.add(wave);
 		}
-		//		if(myWaves.containsKey(path)) {
-		//			List<Wave> waves = myWaves.get(path);
-		//			waves.add(wave);
-		//		}
-		//		else {
-		//			ArrayList<Wave> waveList = new ArrayList<>();
-		//			waveList.add(wave);
-		//			myWaves.put(path,waveList);
-		//		}
-
 	}
 
 	public void addWave(int waveNumber) {
@@ -389,30 +379,5 @@ public class Level {
 	public void addWave(Wave wave) {
 		myWaves.add(wave);
 	}
-
-	public void updateAllProperties() {
-		if (myTowers.size() > 1) {
-			myTowers.remove(DEFAULT_OBJ_NAME);
-		}
-		//updateTowerProperties(); 
-		//updateEnemyProperties(); 
-	}
-
-//	private void updateTowerProperties() {
-//		Tower tower; 
-//		for (String towerName : myTowers.keySet()) {
-//			tower = myTowers.get(towerName);
-//			tower.updateProperties();
-//		}
-//	}
-
-//	public void updateEnemyProperties() {
-//		Enemy enemy; 
-//		for (String enemyName : myEnemies.keySet()) {
-//			enemy = myEnemies.get(enemyName);
-//			enemy.updateProperties();
-//		}
-//	}
-
 
 }

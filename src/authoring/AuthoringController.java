@@ -79,15 +79,10 @@ public class AuthoringController implements MVController{
      * Method through which information can be sent to instantiate or edit a Path in Authoring Model
      * @throws ObjectNotFoundException 
      */
-
-
     public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
 	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row); 
 	myImageMap = imageCoordinates;
     }
-
-
-
 
     /**
      * Method that wraps Model method to return a Path object given its level and 
@@ -220,16 +215,7 @@ public class AuthoringController implements MVController{
      */
     public void setGameName(String gameName) {
 	myModel.setGameName(gameName);
-    }
-//	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
-//		myModel.makeTower(level, name);
-//	}
-//	
-//	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
-//		myModel.makeEnemy(myLevel, name);
-//	}
-
-	
+    }	
 
     /**
      * Gets current name of the game
@@ -297,7 +283,6 @@ public class AuthoringController implements MVController{
 	desiredWave.setWaveTime(time);
     }
 
-
     public void writeToFile() throws ObjectNotFoundException {
 	myModel.updateAllProperties(); 
 	AuthoringModelWriter writer = new AuthoringModelWriter();
@@ -319,7 +304,6 @@ public class AuthoringController implements MVController{
 	    myView.loadErrorAlert("NoDeleteDefault");
 	}
     }
-
 }
 
 
