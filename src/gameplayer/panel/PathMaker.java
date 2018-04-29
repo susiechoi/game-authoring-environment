@@ -20,6 +20,11 @@ public class PathMaker {
 
     private GridPane grid;
     private int myPathSize;
+    private final Map<String,String> GAMEPLAYER_PROPERTIES;
+    
+    public PathMaker(Map<String,String> gamePlayerProperties) {
+	GAMEPLAYER_PROPERTIES = gamePlayerProperties;
+    }
 
     public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
 	grid = new GridPane();
@@ -39,6 +44,8 @@ public class PathMaker {
 	for (String key: map.keySet()) {
 
 	    String imageKey = key.substring(1);
+	    String imageType = key.substring(0, 1);
+
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
 		Point point = pointList.get(i);
@@ -48,8 +55,11 @@ public class PathMaker {
 		    image = new ImageView(new Image(imageKey));
 		}
 		catch(IllegalArgumentException e){
-		    Log.debug(e);
-		    image = new ImageView(); //TODO this should not be hardcoded
+		    try {
+		    image = new ImageView(new Image("file:" + GAMEPLAYER_PROPERTIES.get("defaultPathImageFilePath" + imageType)));
+		    }catch(IllegalArgumentException e1){//TODO this should not be hardcoded
+			Log.debug(e1);
+		    }
 		}
 		image.setFitWidth(myPathSize);
 		image.setFitHeight(myPathSize);

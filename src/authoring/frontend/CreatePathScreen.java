@@ -3,6 +3,9 @@ package authoring.frontend;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
@@ -23,7 +26,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 //import jdk.internal.jline.internal.Log;
-import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 
