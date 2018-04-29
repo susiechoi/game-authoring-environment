@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
+
+import frontend.View;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -21,9 +23,11 @@ public class PathMaker {
     private GridPane grid;
     private int myPathSize;
     private final Map<String,String> GAMEPLAYER_PROPERTIES;
-    
-    public PathMaker(Map<String,String> gamePlayerProperties) {
+    private final View myView;
+
+    public PathMaker(Map<String,String> gamePlayerProperties, View view) {
 	GAMEPLAYER_PROPERTIES = gamePlayerProperties;
+	myView = view;
     }
 
     public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
@@ -42,10 +46,8 @@ public class PathMaker {
 
     private void addImagesToGrid(Map<String, List<Point>> map) {
 	for (String key: map.keySet()) {
-
 	    String imageKey = key.substring(1);
 	    String imageType = key.substring(0, 1);
-
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
 		Point point = pointList.get(i);
@@ -56,9 +58,11 @@ public class PathMaker {
 		}
 		catch(IllegalArgumentException e){
 		    try {
-		    image = new ImageView(new Image("file:" + GAMEPLAYER_PROPERTIES.get("defaultPathImageFilePath" + imageType)));
-		    }catch(IllegalArgumentException e1){//TODO this should not be hardcoded
+			image = new ImageView(new Image("file:" + GAMEPLAYER_PROPERTIES.get("defaultPathImageFilePath" + imageType)));
+		    }
+		    catch(IllegalArgumentException e1){
 			Log.debug(e1);
+			myView.loadErrorScreen("missingPathImages");
 		    }
 		}
 		image.setFitWidth(myPathSize);
