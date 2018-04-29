@@ -3,44 +3,49 @@ package gameplayer.panel;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import com.sun.javafx.tools.packager.Log;
+
 import javafx.scene.control.ScrollPane;
-import frontend.PromptReader;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import engine.sprites.towers.FrontEndTower;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+
+
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
 
 
 public class UpgradePanel extends SpecificPanel {
 
     //TODO don't have this be a static value
-    private final int UPGRADE_IMAGE_SIZE = 70;
 
     private final GameScreen GAME_SCREEN;
     private final UIFactory UI_FACTORY;
     private PropertiesReader PROP_READ;
-    private PromptReader PROMPTS;
-
-    //TODO use available tower upgrades
-    private final String UPGRADE_NAMES_FILE_PATH = "images/UpgradeImageNames.properties";
+	private Map<String,String> GAMEPLAYER_PROPERTIES;
 
 
-    public UpgradePanel (GameScreen gameScreen, PromptReader promptReader) {
+    public UpgradePanel (GameScreen gameScreen, FrontEndTower tower) {
+	super(tower);
 	GAME_SCREEN = gameScreen;
+	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 	UI_FACTORY = new UIFactory();
 	PROP_READ = new PropertiesReader();
-	PROMPTS = promptReader;
     }
 
 
     @Override
     public void makePanel() {
 	//TODO read in text from properties file
-	Label upgradeText = new Label("Upgrades: ");
 	HBox towerUpgrades = new HBox();
 	fillUpgrades(towerUpgrades);
 	towerUpgrades.setFillHeight(true);
@@ -49,28 +54,31 @@ public class UpgradePanel extends SpecificPanel {
 	ScrollPane upgradeDisplay = new ScrollPane(towerUpgrades);
 	upgradeDisplay.setFitToWidth(true);
 
-	HBox panelRoot = new HBox(upgradeText, upgradeDisplay);
-	HBox.setHgrow(upgradeDisplay, Priority.ALWAYS);
+	VBox panelRoot = new VBox(upgradeDisplay);
+	VBox.setVgrow(upgradeDisplay, Priority.ALWAYS);
 	panelRoot.setAlignment(Pos.CENTER);
-	panelRoot.setId("upgradePanel");
+	panelRoot.setId(GAMEPLAYER_PROPERTIES.get("upgradePanelID"));
 	PANEL = panelRoot;
     }
 
     private void fillUpgrades(HBox availUpgrades) {
 	HBox upgrades = availUpgrades;
+	Integer UPGRADE_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("upgradeImageSize"));
+	String UPGRADE_NAMES_FILE_PATH = GAMEPLAYER_PROPERTIES.get("upgradeNamesFilePath");
 	try {
 	    Map<String, Image> upgradeMap = PROP_READ.keyToImageMap(UPGRADE_NAMES_FILE_PATH, UPGRADE_IMAGE_SIZE, UPGRADE_IMAGE_SIZE);
-	    for (String upgradeType: upgradeMap.keySet()) {
-		Button upgradeButton = UI_FACTORY.makeImageButton("button", upgradeMap.get(upgradeType));
-		//upgradeButton.setOnMouseClicked((arg0) -> GAME_SCREEN.
-		upgrades.getChildren().add(upgradeButton);
-		HBox.setHgrow(upgradeButton, Priority.ALWAYS);
-		upgradeButton.setMaxWidth(Double.MAX_VALUE);
-		upgradeButton.setMaxHeight(Double.MAX_VALUE);
+	    for (Entry<String, Image> entry: upgradeMap.entrySet()) {
+			Button upgradeButton = UI_FACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("buttonID"), upgradeMap.get(entry.getKey()));
+			upgradeButton.setOnMouseClicked(arg0 -> GAME_SCREEN.upgradeClickedOn(TOWER, entry.getKey()));
+			upgrades.getChildren().add(upgradeButton);
+			HBox.setHgrow(upgradeButton, Priority.ALWAYS);
+			upgradeButton.setMaxWidth(Double.MAX_VALUE);
+			upgradeButton.setMaxHeight(Double.MAX_VALUE);
 	    }
 	}
 	catch (MissingPropertiesException e) {
-	    System.out.println("upgrade image load fail");
+	    Log.debug(e);
+	    System.out.println("upgrade image load fail"); //TODO!!!
 	}
     }
 }
