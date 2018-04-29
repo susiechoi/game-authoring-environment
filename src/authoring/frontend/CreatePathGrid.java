@@ -25,8 +25,7 @@ import javafx.scene.layout.StackPane;
  * IMPORTANT TODO: fix image checking, changing path images (load to edit won't work)
  *REFACTOR
  *
- *TONIGHT: fix zoom, get levels working, path for demo, right click specialty paths
- *TOMORROW: REFACTOR (magic numbers -> properties files, break long methods up, duplicated code...)
+ *path for demo, right click specialty paths
  */
 
 
@@ -342,13 +341,15 @@ public class CreatePathGrid {
 	return pathCoords;
     }
 
+    //if we want transparent...just have a condition that makes it transparent in game view
+    //copy/paste
     protected HashMap<String, List<Point>> getGridImageCoordinates(GridPane grid, String startImage, String pathImage, String endImage) {
 	pathPoints.clear();
 	endPoints.clear();
 	HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>();
 	for (int x = 0; x < grid.getColumnCount(); x++) {
 	    for (int y = 0; y < grid.getRowCount(); y++) {
-		if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals("path")) {
+		if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals("path")) { //account for curved paths
 		    pathPoints.add(new Point(x, y));
 		} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals("end")) {
 		    endPoints.add(new Point(x, y));

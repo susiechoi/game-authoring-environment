@@ -15,7 +15,7 @@ public class PathMaker {
     private GridPane grid;
     private int myPathSize;
 
-    public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
+    public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height, boolean transparent) {
 	grid = new GridPane();
 
 	grid.setMaxSize(width, height);
@@ -23,7 +23,7 @@ public class PathMaker {
 
 	myPathSize = pathSize;
 	setGridConstraints(grid, width, height);
-	if(map!= null) {
+	if(map!= null && transparent == false) {
 	    addImagesToGrid(map);
 	}
 	return grid;

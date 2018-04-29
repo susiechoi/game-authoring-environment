@@ -1,17 +1,22 @@
 package authoring.frontend;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -35,6 +40,7 @@ public class CreatePathPanel extends PathPanel {
     private Button applyButton;
     private Button backButton;
     private ImageView trashImage;
+    private boolean isTransparent;
 
     public CreatePathPanel(AuthoringView view) {
 	super(view);
@@ -58,6 +64,8 @@ public class CreatePathPanel extends PathPanel {
 	Label pathLabel = new Label("Path:");
 	Label endLabel = new Label("End:");
 
+	HBox pathHBox = new HBox();
+
 	pathImage = new DraggableImage(new Image(DEFAULT_PATH_IMAGE));
 	pathImage.setCopyDraggable();
 	pathImage.getPathImage().setId("path");
@@ -75,7 +83,21 @@ public class CreatePathPanel extends PathPanel {
 
 	trashImage = new ImageView(new Image("file:images/trash.png", 120, 120, true, false));
 
-	pathPanel.getChildren().addAll(panelTitle, startLabel, startImage.getPathImage(), pathLabel, pathImage.getPathImage(), endLabel, endImage.getPathImage(), trashImage, applyButton, backButton);
+	ToggleGroup radioGroup = new ToggleGroup();
+	ToggleButton transparentToggle = new ToggleButton("Make Path Transparent");
+	transparentToggle.setToggleGroup(radioGroup);
+	radioGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+	    public void changed(ObservableValue<? extends Toggle> ov,
+		    Toggle toggle, Toggle new_toggle) {
+		if (new_toggle == null) {
+		    isTransparent = false;
+		} else {
+		    isTransparent = true;
+		}
+	    }
+	});
+
+	pathPanel.getChildren().addAll(panelTitle, startLabel, startImage.getPathImage(), pathLabel, pathImage.getPathImage(), endLabel, endImage.getPathImage(), trashImage, transparentToggle, applyButton, backButton);
     }
 
     protected ImageView makeTrashImage() {
@@ -93,6 +115,10 @@ public class CreatePathPanel extends PathPanel {
 	    }
 	});
 	return trashImage;
+    }
+
+    protected boolean getTransparent() {
+	return isTransparent;
     }
 
     @Override

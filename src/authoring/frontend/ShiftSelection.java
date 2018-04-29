@@ -1,6 +1,7 @@
 package authoring.frontend;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -19,8 +20,11 @@ public class ShiftSelection {
 		if (event.isShiftDown()) {
 		    selectionModel.addNode(node);
 		    new RightClickDropDown(node, selectionModel);
-		} 
+		} else if (!event.isShiftDown() && event.getButton() != MouseButton.SECONDARY) {
+		    selectionModel.removeNode(node);
+		}
 	    }
 	});
+	
     }
 }
