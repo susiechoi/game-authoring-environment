@@ -11,11 +11,11 @@ import engine.sprites.towers.projectiles.Projectile;
  * @param <Projectile>
  */
 
-public class Boomerang extends MovingProperty{
+public class BoomerangProperty extends MovingProperty{
     private double tCircle = 0.0;
     private double range = 50;
     
-    public Boomerang(double speed) {
+    public BoomerangProperty(double speed) {
 	super(speed);
     }
     
@@ -32,7 +32,7 @@ public class Boomerang extends MovingProperty{
 //	Point origin = (Point) args[1];
     }
     
-    public Boomerang(Property p) {
+    public BoomerangProperty(Property p) {
 	super(p.getProperty());
     }
 	

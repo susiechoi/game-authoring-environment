@@ -3,7 +3,7 @@ package engine.builders;
 import java.util.ArrayList;
 import java.util.List;
 
-import engine.sprites.properties.Boomerang;
+import engine.sprites.properties.BoomerangProperty;
 import engine.sprites.properties.ConstantSpeedProperty;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HeatSeekingProperty;
