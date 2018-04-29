@@ -57,6 +57,7 @@ public class PlayController {
 		myReader = new AuthoringModelReader();
 
 		AuthoredGame playModel = myReader.createModel(pathToXML);
+		playModel.reconstruct();
 		List<Level> levels = playModel.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);
 		myGameEngine.setPlayState(play);
