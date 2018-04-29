@@ -21,6 +21,7 @@ public class HeatSeekingProperty extends MovingProperty{
 
     @Override
     public void move(Projectile projectile, double elapsedTime) {
+	System.out.println("heat seeking");
 	ShootingSprites myTarget = projectile.getTarget();
 	if (myTarget.isAlive()) {
 	    rotateImage(projectile, myTarget);

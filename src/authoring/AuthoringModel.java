@@ -36,6 +36,7 @@ import frontend.PropertiesReader;
 
 public class AuthoringModel {
 
+
     private final GenericModel myGeneric = new GenericModel();
     private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
@@ -109,12 +110,6 @@ public class AuthoringModel {
 	Level currentLevel = myGame.levelCheck(level);
 	currentLevel.addWave(wave);
     }
-
-    /**
-     * Method through which information can be sent to instantiate or edit a path object
-     * Wraps constructor in case of new object creation
-     * @throws ObjectNotFoundException 
-     */
 
     public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
 	myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
@@ -372,9 +367,9 @@ public class AuthoringModel {
 	List<Path> paths = currentLevel.getPaths();
 	for(Path path: paths) {
 	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
-	    if(Math.abs(path.initialPoint().getX()-point.getX())<60 && Math.abs(path.initialPoint().getY()-point.getY())<60) {
-		// path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
-		// path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
+	    if(Math.abs(path.initialPoint().getX()-point.getX())<60 && Math.abs(path.initialPoint().getY()-point.getY())<60) { // HELLOOO PLEASE CHANGE
+		   // path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
+		   // path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
 		return path;
 	    }
 	}

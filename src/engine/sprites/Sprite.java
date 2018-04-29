@@ -187,6 +187,7 @@ public class Sprite implements FrontEndSprite{
 	
     }
     
+    
     public double getValue(String ID) {
 	for(Property property : myProperties) {
 	    if(property.getName().equals(ID)) {
