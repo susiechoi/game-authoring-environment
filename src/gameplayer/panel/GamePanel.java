@@ -100,7 +100,7 @@ public class GamePanel extends Panel{
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	backgroundSet = setBackgroundImage(backgroundImageFilePath);
 	if(backgroundSet) {
-	    PathMaker pathMaker = new PathMaker(GAMEPLAYER_PROPERTIES);
+	    PathMaker pathMaker = new PathMaker(GAMEPLAYER_PROPERTIES, GAME_SCREEN.getScreenManager());
 	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	    if (spriteAdd == null) {
 		makePanel();
