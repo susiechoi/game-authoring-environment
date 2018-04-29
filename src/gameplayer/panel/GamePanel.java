@@ -45,6 +45,7 @@ public class GamePanel extends Panel{
     private final UIFactory UIFACTORY;
     private Boolean towerClick = false;
     private Circle rangeIndicator;
+    private GridPane currentGrid;
 
     //TODO changes this to be passed from mediator ******************************************************************************
     private final String BACKGROUND_FILE_PATH;
@@ -115,7 +116,11 @@ public class GamePanel extends Panel{
 		if (spriteAdd == null) {
 		    makePanel();
 		}
-		spriteAdd.getChildren().add(grid);
+		if (currentGrid != null) {
+		    spriteAdd.getChildren().remove(currentGrid);
+		}
+		currentGrid = grid;
+		spriteAdd.getChildren().add(currentGrid);
     }
 
 

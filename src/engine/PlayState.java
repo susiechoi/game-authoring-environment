@@ -65,12 +65,20 @@ public class PlayState implements GameData {
 	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
 	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
 	myMediator.addIntegerProperties(myResources, myScore, myHealth);
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getColumnCount(), currentLevel.getRowCount());
 	mySettings=settings;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
+	// print paths
+	for (Level level : myLevels) {
+	    System.out.println(level.getNumber());
+	    for (Path path : level.getPaths()) {
+		System.out.println(path);
+	    }
+	}
     }
 
     /**
@@ -134,6 +142,8 @@ public class PlayState implements GameData {
 	currentLevel = myLevels.get(levelNumber - 1);
 	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
+	myMediator.updateLevel(currentLevel.myNumber());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getColumnCount(), currentLevel.getRowCount());
     }
 
     /**
@@ -143,7 +153,7 @@ public class PlayState implements GameData {
 	clearLevel();
 	currentLevel = currentLevelCopy;
 	currentLevelCopy = new Level(currentLevel);
-	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());	
     }
 
     /**
@@ -207,6 +217,7 @@ public class PlayState implements GameData {
 	myMediator.updateLevel(currentLevel.myNumber());
 	// TODO: call Mediator to trigger next level
 	myMediator.nextLevel();
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getColumnCount(), currentLevel.getRowCount());
     }
 
     private void spawnEnemies() {

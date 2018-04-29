@@ -54,7 +54,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
 	    Double speed = myEnemy.getProperty("SpeedProperty").getProperty();
-	    this.addProperty(new SpeedProperty(0, 0, speed + myEnemy.getSpeed()));	    
+	    this.addProperty(new SpeedProperty(0, 0, speed + speed));	    
 	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();

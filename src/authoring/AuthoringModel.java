@@ -127,6 +127,8 @@ public class AuthoringModel {
 	    List<List<Point>> listOfLists = new ArrayList<List<Point>>();
 	    listOfLists.add(list);
 	    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+	    System.out.println("Making path object!");
+	    System.out.println(newPath);
 	    currentLevel.addPath(newPath);
 	}
 

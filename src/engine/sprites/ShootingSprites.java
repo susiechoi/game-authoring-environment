@@ -146,7 +146,6 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public boolean isAlive() {
-	System.out.println("healthProperty in isAlive " + this.getValue("HealthProperty"));
 	return (this.getValue("HealthProperty") > 0);
     }
 

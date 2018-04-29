@@ -134,14 +134,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	// TODO Auto-generated method stub
 	return 0;
     }
-    
-    /**
-     * 
-     * @return double: the speed of the Enemy
-     */
-    public double getSpeed() {
-	return mySpeed;
-    }
 
     /**
      * Handles returning an enemy's damage after hitting a tower
