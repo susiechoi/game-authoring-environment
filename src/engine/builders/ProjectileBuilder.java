@@ -17,8 +17,9 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class ProjectileBuilder {
 
+    @SuppressWarnings("unchecked")
     public Projectile construct(String name, String imagepath, double damage, double size, double constantSpeedProperty) {
-	List<Property> properties = new ArrayList<>();
+	List<Property<Object>> properties = new ArrayList<>();
 	properties.add(new DamageProperty(0, 0, damage));
 	properties.add(new ConstantSpeedProperty(constantSpeedProperty));
 	return new Projectile(name, size, imagepath, properties);

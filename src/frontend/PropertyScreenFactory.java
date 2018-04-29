@@ -2,7 +2,7 @@ package frontend;
 
 import java.util.List;
 
-import authoring.AttributeFinder;
+import authoring.factory.AttributeFinder;
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;

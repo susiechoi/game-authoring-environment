@@ -24,17 +24,17 @@ public class Launcher extends Manager<Projectile>{
 
     private Projectile myProjectile;
     private double timeSinceLastShot;
-    private List<Property> launcherProperties;
+    private List<Property<Object>> launcherProperties;
     private PropertyBuilder myPropertyFactory;
 
-    public Launcher(Projectile projectile, List<Property> properties) {
+    public Launcher(Projectile projectile, List<Property<Object>> properties) {
 	myProjectile = projectile;
 	launcherProperties = properties;
 	timeSinceLastShot = 0;
     }
 
     public Launcher(Launcher launcher) {
-	launcherProperties = new ArrayList<Property>();
+	launcherProperties = new ArrayList<Property<Object>>();
 	//TODO do we have to do this
 	for(Property p : launcher.getProperties()) {
 	    launcherProperties.add(myPropertyFactory.getProperty(p));
@@ -87,7 +87,7 @@ public class Launcher extends Manager<Projectile>{
 	myProjectile.addProperty(property);
     }
 
-    public List<Property> getProperties(){
+    public List<Property<Object>> getProperties(){
 	return launcherProperties;
     }
 
@@ -151,10 +151,6 @@ public class Launcher extends Manager<Projectile>{
 
     public double getProjectileDamage() {
 	return myProjectile.getDamage(); 
-    }
-
-    public double getProjectileSize() {
-	return myProjectile.getSize(); 
     }
     
     public double getDamage() {

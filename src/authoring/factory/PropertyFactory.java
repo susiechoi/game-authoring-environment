@@ -92,6 +92,7 @@ public class PropertyFactory {
 	double value =  ((Double)attributes.get(1)).doubleValue();
 	double property = ((Double)attributes.get(2)).doubleValue();
 	Reflection reflection = new Reflection();
+	System.out.println("Class name: " + className + " property: " + property);
 	return (UpgradeProperty) reflection.createInstance(className, cost, value, property );
     }
 

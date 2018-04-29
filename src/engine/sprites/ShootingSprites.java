@@ -24,7 +24,7 @@ public abstract class ShootingSprites extends Sprite{
     private int hitCount;
     private int deadCount;
     private ImageIntersecter intersector;
-    //   private List<Sprite> targetsBeingShotAt;
+    
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
      * on the screen
@@ -34,16 +34,12 @@ public abstract class ShootingSprites extends Sprite{
      * @param size: Size parameter of the image
      * @param launcher: Launcher object specific to shooting sprite
      */
-    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) {
+    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property<Object>> properties) {
 	super(name, image, size, properties);
 	hitCount=0;
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
-
-	//	this.getImageView().setFitHeight(size);
-	//	this.getImageView().setFitWidth(size);
 	myLauncher = launcher;
-	//	targetsBeingShotAt = new ArrayList<>();
     }
 
     /**
@@ -86,6 +82,13 @@ public abstract class ShootingSprites extends Sprite{
 	return toBeRemoved;
     }
 
+    /**
+     * Handles collisions between a sprite and a collider
+     * 
+     * @param target
+     * @param collider
+     * @return
+     */
     private List<Sprite> objectCollision(Sprite target, Sprite collider) {
 	List<Sprite> deadSprites = new ArrayList<>();
 	hitCount++;
@@ -138,26 +141,13 @@ public abstract class ShootingSprites extends Sprite{
 	return myLauncher;
     }
 
-    @Override
-    public double getDamage() {
-	return myLauncher.getProjectileDamage();
-    }
-
-    protected int getHitCount() {
-	return hitCount;
-    }
-
     protected double getDeadCount() {
 	return deadCount;
     }
 
     public boolean isAlive() {
-	return (this.getHealthProp().getProperty() > 0);
-    }
-
-    protected HealthProperty getHealthProp() {
-	// TODO Auto-generated method stub
-	return new HealthProperty(0,0,0);
+	System.out.println("healthProperty in isAlive " + this.getValue("HealthProperty"));
+	return (this.getValue("HealthProperty") > 0);
     }
 
     /**
@@ -175,7 +165,7 @@ public abstract class ShootingSprites extends Sprite{
 	    return upgradeProperty(balance, "HealthProperty");
 	}
 	if(upgradeName == "test2") {
-	    return upgradeDamage(balance);
+	    return upgradeProperty(balance, "DamageProperty");
 	}
 	if(upgradeName == "test1") {
 	    return upgradeLauncherProperty(balance, "RangeProperty");
@@ -185,29 +175,12 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public double upgradeProperty(double balance, String propertyName) {
-	UpgradeProperty propToUpgrade = (UpgradeProperty)this.getProperty(propertyName);
+	UpgradeProperty propToUpgrade = (UpgradeProperty) this.getProperty(propertyName);
 	return propToUpgrade.upgrade(balance);
     }
 
     public double upgradeLauncherProperty(double balance, String propertyName) {
 	return this.getLauncher().upgradeProperty(balance, propertyName);
-    }
-
-    private double upgradeFireRate(double balance) {
-	return this.getLauncher().upgradeProperty("FireProperty", balance);
-    }
-
-    private double upgradeHealth(double balance) {
-	return balance;
-
-    }
-
-    private double upgradeDamage(double balance) {
-	return this.getLauncher().upgradeDamage(balance);
-    }
-
-    private double upgradeRange(double balance) {
-	return this.getLauncher().upgradeProperty("RangeProperty", balance);
     }
 
     protected void updateLauncher(Launcher launcher) {

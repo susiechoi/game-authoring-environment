@@ -24,7 +24,7 @@ public abstract class Property<T> {
 	mySimpleName = this.getClass().getSimpleName();
     }
     
-    public Property(Property property) {
+    public Property(Property<T> property) {
 	myProperty = property.getProperty();
 	mySimpleName = this.getClass().getSimpleName();
     }
