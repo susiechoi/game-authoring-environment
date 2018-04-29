@@ -23,16 +23,12 @@ import javafx.scene.layout.StackPane;
 
 /* 
  * IMPORTANT TODO: fix image checking, changing path images (load to edit won't work)
- * Right click to be able to get specialty paths
- * Fix sizing of grid, set to fit space
- * make wave path undraggable
- * 
- * 
- *not creating new path for new levels, zoom out and can't place blocks in certain places
- *path for demo
- *
  *REFACTOR
+ *
+ *TONIGHT: fix zoom, make wave paths undraggable, get levels working, path for demo, right click specialty paths
+ *TOMORROW: REFACTOR (magic numbers -> properties files, break long methods up, duplicated code...)
  */
+
 
 /**
  * Class to create/manage the GridPane for path authoring and display.
@@ -58,15 +54,20 @@ public class CreatePathGrid {
     private Point myCurrentClicked;
     private DraggableImage path;
     private AuthoringView myView;
+    private int myGridWidth;
+    private int myGridHeight;
     private EventHandler<MouseEvent> myOnMouseClicked = new EventHandler <MouseEvent>() {
 	@Override
 	public void handle(MouseEvent event) {
 	    //DO NOTHING - just an initialization of the eventHandler
 	}
     };
-    public CreatePathGrid(AuthoringView view) {
+    public CreatePathGrid(AuthoringView view, int width, int height) {
 	myView = view;
+	myGridWidth = width;
+	myGridHeight = height;
     }
+    
     private AuthoringView getView() {
 	return myView;
     }
@@ -79,10 +80,10 @@ public class CreatePathGrid {
 	grid = new GridPane();
 
 	checkGrid = new GridPane();
-	grid.setMaxSize(1020.0, 650.0); 
+	grid.setMaxSize(myGridWidth, myGridHeight); 
 	setGridConstraints(grid, INITIAL_PATH_SIZE);
 	
-	checkGrid.setMaxSize(1020.0, 650.0);
+	checkGrid.setMaxSize(myGridWidth, myGridHeight);
 	setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
 	model = new SelectionModel();
@@ -157,12 +158,12 @@ public class CreatePathGrid {
 	grid.getColumnConstraints().clear();
 	grid.getRowConstraints().clear();
 	pathSize = size;
-	for (int i = 0; i < 1020.0/pathSize; i++) {
+	for (int i = 0; i < myGridWidth/pathSize; i++) {
 	    ColumnConstraints colConst = new ColumnConstraints();
 	    colConst.setPrefWidth(pathSize);
 	    grid.getColumnConstraints().add(colConst);
 	}
-	for (int i = 0; i < 650.0/pathSize; i++) {
+	for (int i = 0; i < myGridHeight/pathSize; i++) {
 	    RowConstraints rowConst = new RowConstraints();
 	    rowConst.setPrefHeight(pathSize);
 	    grid.getRowConstraints().add(rowConst);         
@@ -401,5 +402,4 @@ public class CreatePathGrid {
 	}
 	return copiedGrid;
     }
-
 }

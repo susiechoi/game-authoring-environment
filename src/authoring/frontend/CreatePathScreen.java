@@ -6,6 +6,7 @@ import java.util.List;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -15,8 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class CreatePathScreen extends PathScreen {
@@ -142,46 +143,40 @@ public class CreatePathScreen extends PathScreen {
 
 	pathHBox = myPathToolBar.getPathHBox();
 	ComboBox<String> pathComboBox = (ComboBox<String>) ((VBox) pathHBox.getChildren().get(0)).getChildren().get(0);
-	pathComboBox.addEventHandler(ActionEvent.ACTION, e -> {
-	    String pathImageFilePath = "file:images/"+pathComboBox.getValue()+".png";
-	    myGrid.setPathImage(myPathPanel.getPanelPathImage().getPathImage());
-	    //	    myPathPanel.getPanelPathImage().setPath();
-	    myPathPanel.getPanelPathImage().setNewImage(new Image(pathImageFilePath));
-//	    changeGridImages(pathImageFilePath);
-	    //	    for (int i = 0; i < getGrid().getGrid().getChildren().size(); i++) {
-	    //		if (getGrid().getGrid().getChildren().get(i) instanceof ImageView) {
-	    //		    getGrid().getGrid().getChildren().remove(i);
-	    //		}
-	    //	    }
-	    //	   getGrid().getCheckGrid().getChildren().clear();
-	});
-
+	setPathImages(pathComboBox, "path");
 
 	startHBox = myPathToolBar.getStartHBox();
 	ComboBox<String> startComboBox = (ComboBox<String>) ((VBox) startHBox.getChildren().get(0)).getChildren().get(0);
-	startComboBox.addEventHandler(ActionEvent.ACTION, e -> {
-	    String startImageFilePath = "file:images/"+startComboBox.getValue()+".png";
-	    myGrid.setStartImage(myPathPanel.getPanelPathImage().getPathImage());
-	    //	    myPathPanel.getPanelPathImage().setStart();
-	    myPathPanel.getPanelStartImage().setNewImage(new Image(startImageFilePath));
-	});
+	setPathImages(startComboBox, "start");
 
 	endHBox = myPathToolBar.getEndHBox();
 	ComboBox<String> endComboBox = (ComboBox<String>) ((VBox) endHBox.getChildren().get(0)).getChildren().get(0);
-	endComboBox.addEventHandler(ActionEvent.ACTION, e -> {
-	    String endImageFilePath = "file:images/"+endComboBox.getValue()+".png";
-	    myGrid.setEndImage(myPathPanel.getPanelPathImage().getPathImage());
-	    //	    myPathPanel.getPanelPathImage().setEnd();
-	    myPathPanel.getPanelEndImage().setNewImage(new Image(endImageFilePath));
+	setPathImages(endComboBox, "end");
+    }
+
+    private void setPathImages(ComboBox<String> box, String pathType) {
+	box.addEventHandler(ActionEvent.ACTION, e -> {
+	    String pathImageFilePath = "file:images/"+box.getValue()+".png";
+	    if (pathType == "path") {
+		myGrid.setPathImage(myPathPanel.getPanelPathImage().getPathImage());
+		myPathPanel.getPanelPathImage().setNewImage(new Image(pathImageFilePath));
+	    } else if (pathType == "start") {
+		myGrid.setPathImage(myPathPanel.getPanelStartImage().getPathImage());
+		myPathPanel.getPanelStartImage().setNewImage(new Image(pathImageFilePath));
+	    } else if (pathType == "end") {
+		myGrid.setPathImage(myPathPanel.getPanelStartImage().getPathImage());
+		myPathPanel.getPanelEndImage().setNewImage(new Image(pathImageFilePath));
+	    }
+	    changeGridImages(pathImageFilePath, pathType);
 	});
     }
-    
-    //Might need to just remove path blocks when changing images
-//    private void changeGridImages(String imageFilePath) {
-//	for (int i = 0; i < myGrid.getColumnCount(); i++) {
-//		if (getGrid().getNode(getGrid().getCheckGrid(), i, j) != null && ((Label) getGrid().getNode(getGrid().getCheckGrid(), i, j)).getText() == "path") {
-		    //iterate through children of grid, change those ImageViews?
-//		}
-//	    }	
-//	}
+
+    private void changeGridImages(String imageFilePath, String pathType) {
+	for (int i = 0; i < getGrid().getGrid().getChildren().size(); i++) {
+	    Node node = getGrid().getGrid().getChildren().get(i);
+	    if (node instanceof ImageView && ((Label) getGrid().getNode(getGrid().getCheckGrid(), GridPane.getColumnIndex(node), GridPane.getRowIndex(node))).getText() == pathType) {
+		((ImageView) node).setImage(new Image(imageFilePath));
+	    }
+	}
+    }
 }

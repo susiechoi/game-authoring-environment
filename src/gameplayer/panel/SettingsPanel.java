@@ -7,7 +7,7 @@ import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
+//import sound.ITRTSoundFactory;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -20,7 +20,7 @@ public class SettingsPanel extends Panel {
     private final GameScreen GAME_SCREEN;
     private final PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
-    private ITRTSoundFactory SOUND_FACTORY;
+//    private ITRTSoundFactory SOUND_FACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
 
 
@@ -30,7 +30,7 @@ public class SettingsPanel extends Panel {
         GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
         PROP_READ = new PropertiesReader();
         UIFACTORY = new UIFactory();
-        SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
+//        SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
     }
 
     @Override
@@ -47,13 +47,13 @@ public class SettingsPanel extends Panel {
         String SETTINGS_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("settingsButtonFilepath");
         Integer DEFAULT_SETTINGS_BUTTON_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("settingsButtonSize"));
 
-        settingsBox.getChildren().add(SOUND_FACTORY.createVolumeSlider());
+//        settingsBox.getChildren().add(SOUND_FACTORY.createVolumeSlider());
         try {
 
             Map<String,Image> settingsMap = PROP_READ.keyToImageMap(SETTINGS_BUTTON_FILEPATH, DEFAULT_SETTINGS_BUTTON_SIZE, DEFAULT_SETTINGS_BUTTON_SIZE);
             for (Entry<String, Image> entry : settingsMap.entrySet()) {
                 Button settingButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("settingsButtonID"), entry.getValue());
-                settingButton.setOnMouseClicked(arg0 -> GAME_SCREEN.settingsTriggered(entry.getKey()));
+//                settingButton.setOnMouseClicked(arg0 -> GAME_SCREEN.settingsTriggered(entry.getKey()));
                 settingsBox.getChildren().add(settingButton);
             }
         }

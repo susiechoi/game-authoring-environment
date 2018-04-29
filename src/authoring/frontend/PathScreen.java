@@ -17,7 +17,6 @@ public abstract class PathScreen extends AdjustScreen {
 
     public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 
-
     private StackPane pathRoot;
     protected GridPane pathGrid;
     protected CreatePathGrid grid;
@@ -25,7 +24,12 @@ public abstract class PathScreen extends AdjustScreen {
     protected PathScreen(AuthoringView view) {	
 	super(view);
 	setStyleSheet(view.getCurrentCSS());
-	grid = new CreatePathGrid(view);
+	
+	Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+	int gridWidth = (int) primaryScreenBounds.getWidth() - CreatePathPanel.PANEL_WIDTH;
+	int gridHeight = (int) primaryScreenBounds.getHeight() - CreatePathToolBar.TOOLBAR_HEIGHT;
+
+	grid = new CreatePathGrid(view, gridWidth, gridHeight);
     }
 
     protected void setPathPanel(PathPanel panel, PathToolBar toolbar) {
@@ -33,15 +37,12 @@ public abstract class PathScreen extends AdjustScreen {
 	//System.out.println(panel.getPanel());
 	pathRoot.getChildren().add(panel.getPanel());
 	pathRoot.getChildren().add(toolbar.getPanel());
-	
+
 	pathRoot.getChildren().add(pathGrid);
 
-	Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-	double gridWidth = primaryScreenBounds.getWidth() - 10;
-	
-	StackPane.setAlignment(pathGrid, Pos.BOTTOM_LEFT);
+	StackPane.setAlignment(pathGrid, Pos.TOP_LEFT);
 	StackPane.setAlignment(panel.getPanel(), Pos.CENTER_RIGHT);
-	StackPane.setAlignment(toolbar.getPanel(), Pos.TOP_LEFT);
+	StackPane.setAlignment(toolbar.getPanel(), Pos.BOTTOM_LEFT);
     }
 
 
@@ -58,7 +59,9 @@ public abstract class PathScreen extends AdjustScreen {
     public abstract void makePanels();
 
     public abstract void initializeGridSettings(CreatePathGrid grid);
+
     public abstract void setSpecificUIComponents();
+
     protected CreatePathGrid getGrid() {
 	return grid;
     }

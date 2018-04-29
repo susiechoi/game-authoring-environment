@@ -23,7 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import sound.ITRTSoundFactory;
+//import sound.ITRTSoundFactory;
 
 
 public class GameScreen extends Screen {
@@ -43,7 +43,7 @@ public class GameScreen extends Screen {
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
 	private BorderPane rootPane;
-	private ITRTSoundFactory SOUND_FACTORY;
+//	private ITRTSoundFactory SOUND_FACTORY;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private boolean GAME_WON; //false if lost
 
@@ -51,7 +51,7 @@ public class GameScreen extends Screen {
 		SCREEN_MANAGER = ScreenController;
 		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
 		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
-		SOUND_FACTORY = new ITRTSoundFactory();
+//		SOUND_FACTORY = new ITRTSoundFactory();
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
 		TOWER_PANEL = new TowerPanel(this);
@@ -147,31 +147,31 @@ public class GameScreen extends Screen {
 		}
 	}
 
-	public void settingsTriggered(String setting) {
-		if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
-			SOUND_FACTORY.mute();
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
-			try{
-				SOUND_FACTORY.setBackgroundMusic("epic");
-			}
-			catch (FileNotFoundException e) {
-			    Log.debug(e); //TODO!!!
-			}
-			SOUND_FACTORY.playBackgroundMusic();
-
-
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
-			SOUND_FACTORY.pauseBackgroundMusic();
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
-
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
-
-		}
-	}
+//	public void settingsTriggered(String setting) {
+//		if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
+//			SOUND_FACTORY.mute();
+//		}
+//		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
+//			try{
+//				SOUND_FACTORY.setBackgroundMusic("epic");
+//			}
+//			catch (FileNotFoundException e) {
+//			    Log.debug(e); //TODO!!!
+//			}
+//			SOUND_FACTORY.playBackgroundMusic();
+//
+//
+//		}
+//		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
+//			SOUND_FACTORY.pauseBackgroundMusic();
+//		}
+//		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
+//
+//		}
+//		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
+//
+//		}
+//	}
 
 	/**
 	 * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
@@ -264,9 +264,9 @@ public class GameScreen extends Screen {
 	}
 
 
-	public ITRTSoundFactory getSoundFactory() {
-		return SOUND_FACTORY;
-	}
+//	public ITRTSoundFactory getSoundFactory() {
+//		return SOUND_FACTORY;
+//	}
 
 	public Map<String,String> getGameplayerProperties() {
 		return GAMEPLAYER_PROPERTIES;
