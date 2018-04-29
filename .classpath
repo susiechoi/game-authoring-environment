@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	<classpathentry kind="src" path="SavedModels"/>
 	<classpathentry kind="src" path="images"/>
@@ -9,6 +10,8 @@
 	<classpathentry kind="src" path="data"/>
 	<classpathentry kind="src" path="default_objects"/>
 >>>>>>> 7a1d502f617a2091a9b4e7b85d9854db9bf70bdc
+=======
+>>>>>>> 660d0b05c70aaf796f6be50578f640da2328a441
 	<classpathentry kind="lib" path="lib/xstream-1.4.10.jar"/>
 	<classpathentry kind="lib" path="lib/xstream-benchmark-1.4.10.jar"/>
 	<classpathentry kind="lib" path="lib/xstream-hibernate-1.4.10.jar"/>
