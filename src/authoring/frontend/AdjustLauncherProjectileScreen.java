@@ -1,13 +1,12 @@
 /**
  * @author susiechoi
+ * @author Katherine Van Dyk
  * Abstract class for developing the fields for customizing 
  * (new or existing, depending on whether corresponding tower is new or existing) launcher/projectile object
  */
 
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -52,10 +51,10 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}); 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
-	    setProperty(PROJECTILE_TYPE, "DamageProperty", 0.0, 0.0, myProjectileDamage);
-	    setProperty(PROJECTILE_TYPE, "ConstantSpeedProperty", myProjectileSpeed);
-	    setProperty(LAUNCHER_TYPE, "RangeProperty", myLauncherRange);
-	    setProperty(LAUNCHER_TYPE, "FireRateProperty", 0.0, 0.0, myLauncherRate);
+	    setProperty(PROJECTILE_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myProjectileDamage);
+	    setProperty(PROJECTILE_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
+	    setProperty(LAUNCHER_TYPE, myObjectName, "RangeProperty", myLauncherRange);
+	    setProperty(LAUNCHER_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 	});
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
@@ -103,18 +102,4 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myLauncherRange", newValue);
 	});
     }
-
-    private void setProperty(String objectType, String propertyName, Object ...args) {
-	List<Object> attributes = makeList(args);
-	getView().setObjectAttributes(objectType, myObjectName, propertyName, attributes);
-    }
-
-    private List<Object> makeList(Object ...attributes) {
-	List<Object> list = new ArrayList<>();
-	for(Object attribute : attributes) {
-	    list.add(attribute);
-	}
-	return list;
-    }
-
 }

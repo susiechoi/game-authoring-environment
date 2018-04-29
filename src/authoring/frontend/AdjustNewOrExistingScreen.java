@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * @author Katherine Van Dyk
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
@@ -8,7 +9,9 @@
 
 package authoring.frontend;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import authoring.factory.AttributeFinder;
@@ -198,6 +201,20 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	}
 	return imageSelect;
     }
+    
+    protected void setProperty(String objectType, String objectName, String propertyName, Object ...args) {
+	List<Object> attributes = makeList(args);
+	getView().setObjectAttributes(objectType, objectName, propertyName, attributes);
+    }
+
+    private List<Object> makeList(Object ...attributes) {
+	List<Object> list = new ArrayList<>();
+	for(Object attribute : attributes) {
+	    list.add(attribute);
+	}
+	return list;
+    }
+
 
 
 }
