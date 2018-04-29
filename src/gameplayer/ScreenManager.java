@@ -150,12 +150,6 @@ public class ScreenManager extends View {
 		return myGameFilePath; 
 	}
 
-	@Override
-	public void loadErrorScreen(String errorMessage) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void remove(FrontEndSprite sprite) {
 		checkGameScreenInitialization();
 		GAME_SCREEN.remove(sprite);

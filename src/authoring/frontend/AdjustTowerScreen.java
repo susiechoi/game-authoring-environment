@@ -27,10 +27,10 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
     private Slider myTowerValueSlider;
 
     private String myObjectName; 
-    private Object myHealthUpgradeValue;
-    private Object myHealthUpgradeCost;
-    private Object myHealthValue;
-    private Object myTowerValue;
+    private Double myHealthUpgradeValue;
+    private Double myHealthUpgradeCost;
+    private Double myHealthValue;
+    private Double myTowerValue;
 
 
     protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
@@ -51,6 +51,8 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	makeTowerComponents(vb);
 	makeHealthComponents(vb);
 
+	vb.getChildren().add(makePropertySelector());
+	
 	Button goToProjectileLauncherButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 	vb.getChildren().add(goToProjectileLauncherButton);
 	goToProjectileLauncherButton.setOnAction(e -> {
@@ -63,6 +65,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		getView().loadErrorAlert("NoSelection");
 	    }
 	});
+	
 	Button backButton = setupBackButton(); 
 	vb.getChildren().add(backButton);
 	return vb;
@@ -78,7 +81,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerValue = getUIFactory().setupSliderWithValue(myTowerValueSlider, getErrorCheckedPrompt("TowerValue"));
 	vb.getChildren().add(towerValue);
 	myTowerValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myTowerValue = newValue;
+	    myTowerValue = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerValue", newValue);
 	});
 
@@ -89,7 +92,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerHealthValue = getUIFactory().setupSliderWithValue(myTowerHealthValueSlider, getErrorCheckedPrompt("TowerHealthValue"));
 	vb.getChildren().add(towerHealthValue);
 	myTowerHealthValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthValue = newValue;
+	    myHealthValue = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthValue", newValue);
 	});
 
@@ -97,7 +100,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerHealthUpgradeCost = getUIFactory().setupSliderWithValue(myTowerHealthUpgradeCostSlider, getErrorCheckedPrompt("TowerHealthUpgradeCost"));
 	vb.getChildren().add(towerHealthUpgradeCost);
 	myTowerHealthUpgradeCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthUpgradeCost = newValue;
+	    myHealthUpgradeCost = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthUpgradeCost", newValue);
 	});
 
@@ -105,7 +108,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerHealthUpgradeValue = getUIFactory().setupSliderWithValue( myTowerHealthUpgradeValueSlider, getErrorCheckedPrompt("TowerHealthUpgradeValue"));
 	vb.getChildren().add(towerHealthUpgradeValue);
 	myTowerHealthUpgradeValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthUpgradeValue = newValue;
+	    myHealthUpgradeValue = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthUpgradeValue", newValue);
 	});
     }

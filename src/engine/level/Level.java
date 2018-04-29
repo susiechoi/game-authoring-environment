@@ -390,5 +390,8 @@ public class Level {
 		wave.removeStalePaths(currPaths);
 	    }
 	}
+	public Path getDefaultPath() {
+	    return myPaths.get(0);
+	}
 }
 

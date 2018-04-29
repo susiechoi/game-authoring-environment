@@ -370,7 +370,7 @@ public class UIFactory {
 		hb.getChildren().add(imageDisplay);
 		return hb; 
 	}
-
+	
 	public HBox setupSliderWithValue(Slider slider, String prompt) {
 		return setupSliderWithValue("", slider, prompt);
 	}
