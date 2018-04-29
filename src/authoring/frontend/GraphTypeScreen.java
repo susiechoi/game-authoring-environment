@@ -34,7 +34,7 @@ public class GraphTypeScreen extends AuthoringScreen {
 				e -> {graphButton.setDisable(true);}, title);
 		graphButton.setDisable(true);
 		graphButton.setOnAction(e -> {
-			getView().getStageManager().switchScreen(new GraphMenuScreen(getView(), dropdown.getSelectionModel().getSelectedItem()).getScreen());
+			getView().goForwardFrom(this.getClass().getSimpleName(), dropdown.getSelectionModel().getSelectedItem());
 		});
 		
 		vb.getChildren().addAll(titleText, dropdown, graphButton, setupBackButton());

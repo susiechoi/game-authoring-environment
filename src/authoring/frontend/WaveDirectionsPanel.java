@@ -1,7 +1,7 @@
 package authoring.frontend;
 
-import com.sun.javafx.tools.packager.Log;
 
+import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.beans.value.ChangeListener;

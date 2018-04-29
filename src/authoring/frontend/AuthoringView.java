@@ -1,4 +1,4 @@
-/**
+
  /**
  * @author Sarah Bland
  * @author susiechoi
@@ -182,8 +182,8 @@ public class AuthoringView extends View {
 		goForwardFrom(id,  parameterList);
 	}
 
-	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
 	}
 
 	/**
@@ -314,10 +314,35 @@ public class AuthoringView extends View {
 	    	myController.deleteObject(myLevel, objectType, objectName);
 	}
 
+//
+//	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		try {
+//			myController.makeTower(myLevel, name);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoImageFile");
+//		} catch (NoDuplicateNamesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoDuplicateNames");
+//		} 
+//	}
+//	
+//	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		try {
+//			myController.makeEnemy(myLevel, name);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoImageFile");
+//		} catch (NoDuplicateNamesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoDuplicateNames");
+//		} 
+//	}
+	
 
-	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	    public void makeSprite(String objectType, String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
-			myController.makeTower(myLevel, name);
+		    myController.makeSprite(objectType, myLevel, name);
 		} catch (MissingPropertiesException e) {
 		    Log.debug(e);	
 		    loadErrorAlert("NoImageFile");
@@ -325,28 +350,26 @@ public class AuthoringView extends View {
 		    Log.debug(e);	
 		    loadErrorAlert("NoDuplicateNames");
 		} 
-	}
-	
-	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	    }
+
+	    public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
 		try {
-			myController.makeEnemy(myLevel, name);
-		} catch (MissingPropertiesException e) {
-		    Log.debug(e);	
-		    loadErrorAlert("NoImageFile");
-		} catch (NoDuplicateNamesException e) {
-		    Log.debug(e);	
-		    loadErrorAlert("NoDuplicateNames");
-		} 
-	}
-	
-	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
-		try {
-			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
+		    myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 		    Log.debug(e);	
 		    loadErrorScreen("NoObject");
 		}
-	}
+	    }
+
+	    public void setObjectAttributes(String objectType, String name, String propertyName, List<Object> attributes) {
+		try {
+		    myController.setObjectAttributes(myLevel, objectType, name, propertyName, attributes);
+		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
+		}
+	    }
+
 	
 	public void setTheme(String selectedTheme) {
 		myTheme = selectedTheme; 
