@@ -126,6 +126,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	    keyMove.move(this, code);
 	}
     }
+    @Override
+    public int getTowerCost() {
+	 return (int) getValue("ValueProperty");
+
+    }
 
 }
 
