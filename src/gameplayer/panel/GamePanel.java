@@ -37,6 +37,7 @@ public class GamePanel extends Panel{
     private Boolean towerClick = false;
     private Circle rangeIndicator;
     private ScrollPane scroll;
+    private GridPane grid;
 
     //TODO changes this to be passed from mediator ******************************************************************************
     private final String DEFAULT_BACKGROUND_FILE_PATH;
@@ -99,13 +100,17 @@ public class GamePanel extends Panel{
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
 	if(!pathSet) {
 	    PathMaker pathMaker = new PathMaker();
-	    GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
 	    spriteAdd.getChildren().add(grid);
 	    pathSet = true;
+	}
+	if(pathSet) {
+	    spriteAdd.getChildren().remove(grid);
+	    spriteAdd.getChildren().add(grid);
 	}
 	return backgroundSet;
     }
