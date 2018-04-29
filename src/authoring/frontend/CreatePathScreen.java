@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -89,7 +90,8 @@ public class CreatePathScreen extends PathScreen {
 			getView().getObjectAttribute("Path", "", "myEndImage");
 			getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 		    } catch (ObjectNotFoundException e1) {
-			// TODO Auto-generated catch block
+			Log.debug(e1);
+			getView().loadErrorScreen("NoObject");
 		    }
 		} else {
 		    Alert alert = new Alert(AlertType.INFORMATION);
