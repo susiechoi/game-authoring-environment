@@ -86,6 +86,8 @@ public class GameScreen extends Screen {
 
     public void towerSelectedForPlacement(FrontEndTower tower) {
 	GAME_PANEL.towerSelected(tower);
+	TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
+	displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
     }
 
     //	public void setStyling() {
