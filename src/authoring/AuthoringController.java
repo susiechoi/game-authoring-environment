@@ -79,15 +79,8 @@ public class AuthoringController implements MVController{
      * Method through which information can be sent to instantiate or edit a Path in Authoring Model
      * @throws ObjectNotFoundException 
      */
-<<<<<<< HEAD
-    public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
-	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row); 
-=======
-
-
     public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException { 
 	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height); 
->>>>>>> c3020ead6dc7d20595b731e84686e0e6559c861d
 	myImageMap = imageCoordinates;
     }
 
