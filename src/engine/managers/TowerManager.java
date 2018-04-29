@@ -1,16 +1,13 @@
 package engine.managers;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
-import engine.sprites.towers.projectiles.Projectile;
+import javafx.scene.input.KeyCode;
 
 
 /**
@@ -51,8 +48,11 @@ public class TowerManager extends ShootingSpriteManager {
     /**
      * Moves towers on every step of the GameLoop
      */
-    public void moveTowers() {
-	// TODO Auto-generated method stub
+    @SuppressWarnings("unlikely-arg-type")
+    public void moveTowers(FrontEndTower tower, KeyCode c) {
+	if(this.getListOfActive().contains(tower)) {
+	    ((Tower) tower).move(c);
+	}
     }
 
     public FrontEndTower place(Point location, String type) {
@@ -67,6 +67,7 @@ public class TowerManager extends ShootingSpriteManager {
      * Removes the tower from the list of active towers
      * @param tower : front end tower
      */
+    @SuppressWarnings("unlikely-arg-type")
     public int sell(FrontEndTower tower) {
 	if(this.getListOfActive().remove(tower)) {
 	    return tower.sell();
@@ -87,4 +88,5 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return balance;
     }
+
 }

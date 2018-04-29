@@ -1,11 +1,10 @@
 /**
  * @author susiechoi
+ * @author Katherine Van Dyk
  * Abstract class for developing the fields for customizing (new or existing) enemy object
  */
 
 package authoring.frontend;
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -88,17 +87,17 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    try {
-		setProperty("ValueProperty", myKillReward);
-		setProperty("DamageProperty", 0.0, 0.0, myHealthImpact);
-		setProperty("HealthProperty", 0.0, 0.0, myInitialHealth);
-		setProperty("SpeedProperty", 0.0, 0.0, mySpeed);
-		//	    System.out.println("my speed: " + mySpeed);
+		setProperty(OBJECT_TYPE, myObjectName, "ValueProperty", myKillReward);
+		setProperty(OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myHealthImpact);
+		setProperty(OBJECT_TYPE, myObjectName, "HealthProperty", 0.0, 0.0, myInitialHealth);
+		setProperty(OBJECT_TYPE, myObjectName, "SpeedProperty", 0.0, 0.0, mySpeed);
 		setSaved();
 		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);			
 	    }
 	    catch(NullPointerException e1) {
 		getView().loadErrorAlert("NoSelection");
 	    }
+
 	});
 
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
@@ -110,19 +109,4 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
     protected TextField getNameField() {
 	return myNameField; 
     }
-
-    private void setProperty(String propertyName, Object ...args) {
-	List<Object> attributes = makeList(args);
-	getView().setObjectAttributes(OBJECT_TYPE, myObjectName, propertyName, attributes);
-    }
-
-    private List<Object> makeList(Object ...attributes) {
-	List<Object> list = new ArrayList<Object>();
-	for(Object attribute : attributes) {
-	    list.add(attribute);
-	}
-	return list;
-    }
-
-
 }
