@@ -1,13 +1,5 @@
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.sun.javafx.tools.packager.Log;
-
-import authoring.frontend.exceptions.MissingPropertiesException;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 /**
@@ -18,71 +10,29 @@ import javafx.scene.layout.HBox;
  *
  */
 public abstract class PathToolBar extends AdjustScreen {
-	public static final String DEFAULT_PLUS_IMAGE = "file:images/plus.png";
-	public static final String DEFAULT_MINUS_IMAGE = "file:images/minus.png";
-	private List<Button> mySizingButtons;
-	private Button myPlusButton;
-	private Button myMinusButton;
-	private HBox myPathToolBar;
-	public PathToolBar(AuthoringView view) {
-		super(view);
-		mySizingButtons = new ArrayList<>();
-		setUpSizing();
-		makePanel();
-	}
-	
-	protected void setUpSizing() {
-		myPathToolBar = new HBox();
-		try {
-		myPathToolBar.setMaxSize(Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarHeight")), Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "ToolbarWidth")));
-		}
-		catch(MissingPropertiesException e) {
-		    Log.debug(e);
-		    getView().loadErrorScreen("NoFile");
-		}
-		myPathToolBar.getStylesheets();
-//		myPathToolBar.getChildren().add(makeSizingButtons());
-	}
-	
-	protected HBox getToolBar() {
-		return myPathToolBar;
-	}
-	
-	protected HBox getPanel() { //TODO: fix this!!
-		return myPathToolBar;
-	}
-	
-	protected abstract void makePanel();
-	
-	protected HBox makeSizingButtons() {
-	    try {
-	    	int buttonWidth = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonWidth"));
-		int buttonHeight = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonHeight"));
-	    	HBox hb = new HBox();
-		Image plusImg = new Image(DEFAULT_PLUS_IMAGE, buttonWidth, buttonHeight, true, false);
-		myPlusButton = getUIFactory().makeImageButton("", plusImg);
-		myPlusButton.setStyle("-fx-min-width: 50;");
-		mySizingButtons.add(myPlusButton);
+    public static final int TOOLBAR_HEIGHT = 120;
+    public static final int TOOLBAR_WIDTH = 600;
+    private HBox myPathToolBar;
 
-		Image minusImg = new Image(DEFAULT_MINUS_IMAGE, buttonWidth, buttonHeight, true, false);
-		myMinusButton = getUIFactory().makeImageButton("", minusImg);
-		myMinusButton.setStyle("-fx-min-width: 50;");
-		mySizingButtons.add(myMinusButton);
-		hb.getChildren().addAll(mySizingButtons);
-		return hb;
-	    }
-	    catch(MissingPropertiesException e) {
-		 Log.debug(e);
-		getView().loadErrorScreen("NoConstants");
-		return null;
-	    }
-	}
-	
-	protected Button getPlusButton() {
-		return myPlusButton;
-	}
+    public PathToolBar(AuthoringView view) {
+	super(view);
+	setUpSizing();
+	makePanel();
+    }
 
-	protected Button getMinusButton() {
-		return myMinusButton;
-	}
+    protected void setUpSizing() {
+	myPathToolBar = new HBox();
+	myPathToolBar.setMaxSize(TOOLBAR_WIDTH, TOOLBAR_HEIGHT);
+	myPathToolBar.getStylesheets();
+    }
+
+    protected HBox getToolBar() {
+	return myPathToolBar;
+    }
+
+    protected HBox getPanel() { //TODO: fix this!!
+	return myPathToolBar;
+    }
+
+    protected abstract void makePanel();
 }

@@ -30,8 +30,6 @@ public class CreatePathToolBar extends PathToolBar {
     public static final String START_IMAGE_SUFFIX = "StartImageNames.properties";
     public static final String END_IMAGE_PREFIX = "images/ThemeSpecificImages/EndImages/";
     public static final String END_IMAGE_SUFFIX = "EndImageNames.properties";
-    public static final int TOOLBAR_HEIGHT = 120;
-    public static final int TOOLBAR_WIDTH = 600;
     private HBox startImageSelect;
     private HBox endImageSelect;
     private HBox pathImageSelect;
@@ -63,6 +61,7 @@ public class CreatePathToolBar extends PathToolBar {
 	Button endImageButton = getUIFactory().makeTextButton("", "Choose End Image");
 	setImageButtonEvent(endImageButton, endImageSelect);
 
+//	getToolBar().setMaxHeight(TOOLBAR_HEIGHT);
 	getToolBar().getChildren().addAll(backgroundImageButton, startImageButton, pathImageButton, endImageButton);
     }
 

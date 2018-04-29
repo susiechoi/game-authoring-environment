@@ -24,13 +24,6 @@ import javafx.scene.layout.VBox;
  */
 public class DraggableImage extends Parent {
     private ImageView pathImage;
-    private String pathName;
-    private int startNumber;
-    private EventHandler<MouseEvent> myCopyDragEvent;
-    private EventHandler<MouseEvent> myDragEvent;
-    private EventHandler<DragEvent> myDragDone;
-    private EventHandler<DragEvent> myCopyDragDone;
-    private String imageType = "";
 
     public DraggableImage(Image image) {
 	setPathImage(image);
@@ -133,17 +126,6 @@ public class DraggableImage extends Parent {
 	} 
     }
 
-    protected void disableDraggable() {
-	pathImage.addEventHandler(MouseEvent.DRAG_DETECTED, null);
-	//		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myDragEvent);
-	//		pathImage.removeEventHandler(MouseEvent.DRAG_DETECTED, myCopyDragEvent);
-	//		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myDragDone);
-	//		pathImage.removeEventHandler(DragEvent.DRAG_DONE, myCopyDragDone);
-	//		pathImage.setOnDragDetected(e -> {});
-	//		pathImage.setOnDragDone(e -> {});
-    }
-
-
     protected void setNewImage(Image image) {
 	pathImage.setImage(image);
     }
@@ -151,30 +133,5 @@ public class DraggableImage extends Parent {
     protected ImageView getPathImage() {
 	return pathImage;
     }
-
-    protected void setPath() {
-	imageType = "path";
-    }
-
-    protected void setStart() {
-	imageType = "start";
-    }
-
-    protected void setEnd() {
-	imageType = "end";
-    }
-
-    protected void setStartNumber(int num) {
-	startNumber = num;
-    }
-
-    protected int getStartNumber() {
-	return startNumber;
-    }
-
-    protected String getImageType() {
-	return imageType;
-    }
-    //way to designate as path, start, or end
 
 }

@@ -112,7 +112,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public Point currentPosition() {
 	Point position = new Point();
 	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
-//	position.setLocation(120, 30);
+//	position.setLocation(475, 26);
 	return position;
     }
 

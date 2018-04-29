@@ -3,11 +3,18 @@ package authoring.frontend;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.sun.javafx.tools.packager.Log;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +26,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -33,9 +41,15 @@ public class CreatePathScreen extends PathScreen {
     private HBox pathHBox;
     private HBox startHBox;
     private HBox endHBox;
+    private AuthoringView myView;
+    private Button myPlusButton;
+    private Button myMinusButton;
+    private Button mySizeApplyButton;
+    private Stage myDialogStage;
 
     public CreatePathScreen(AuthoringView view) {
 	super(view);
+	myView = view;
 
     }
     @Override
@@ -105,11 +119,111 @@ public class CreatePathScreen extends PathScreen {
     public void initializeGridSettings(CreatePathGrid gridIn) {
 	setPathPanel(myPathPanel, myPathToolBar);
 	setGridApplied(gridIn);
+//	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == 2) {
+//	    setPathInstructionPopup();
+//	    setGridUIComponents();
+//	}
     }
+
+    protected HBox makeSizingButtons() {
+	HBox sizingButtons = new HBox();
+	try {
+	    int buttonWidth = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonWidth"));
+	    int buttonHeight = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonHeight"));
+	    Image plusImg = new Image(DEFAULT_PLUS_IMAGE, buttonWidth, buttonHeight, true, false);
+	    myPlusButton = getUIFactory().makeImageButton("", plusImg);
+	    myPlusButton.setStyle("-fx-min-width: 50;");
+
+	    Image minusImg = new Image(DEFAULT_MINUS_IMAGE, buttonWidth, buttonHeight, true, false);
+	    myMinusButton = getUIFactory().makeImageButton("", minusImg);
+	    myMinusButton.setStyle("-fx-min-width: 50;");
+
+	    mySizeApplyButton = getUIFactory().makeTextButton("", "Apply");
+	    sizingButtons.getChildren().addAll(myPlusButton, myMinusButton, mySizeApplyButton);
+
+	    return sizingButtons;
+
+	}
+	catch(MissingPropertiesException e) {
+	    Log.debug(e);
+	    getView().loadErrorScreen("NoConstants");
+	    return null;
+	}
+    }
+
+    protected void setGridUIComponents() {
+	myPlusButton.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent event) {
+		try {
+		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+		    if (grid.getPathSize() < Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MaxGridSize"))) {
+			grid.setGridConstraints(pathGrid, grid.getPathSize() + gridResize);
+		    }
+		}
+		catch(MissingPropertiesException e) {
+		    Log.debug(e);
+		    getView().loadErrorScreen("NoFile");
+		}
+	    }
+	});
+
+	myMinusButton.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent event) {
+		try {
+		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+		    if (grid.getPathSize() > Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MinGridSize"))) {
+			grid.setGridConstraints(pathGrid, grid.getPathSize() - gridResize);
+		    }
+		}
+		catch(MissingPropertiesException e) {
+		    Log.debug(e);
+		    getView().loadErrorScreen("NoFile");
+		}
+	    }
+	});
+
+	mySizeApplyButton.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent event) {
+		myPathPanel.getPanel().setDisable(false);
+		myPathToolBar.getPanel().setDisable(false);
+		grid.getGrid().setGridLinesVisible(false);
+		myDialogStage.close();
+	    }
+	});
+    }
+
+    public void setPathInstructionPopup() {
+
+	myDialogStage = new Stage();
+	VBox dialogVbox = new VBox();
+	dialogVbox.setMaxSize(500, 500);
+	Label popupTitle = new Label(getView().getErrorCheckedPrompt("PathPopupTitle"));
+	Label popupInstructions = new Label(getView().getErrorCheckedPrompt("PathInstructions"));
+	popupInstructions.setWrapText(true);
+	dialogVbox.getChildren().addAll(popupTitle, popupInstructions, makeSizingButtons());
+	Scene dialogScene = new Scene(dialogVbox);
+	dialogScene.getStylesheets().add(myView.getCurrentCSS());
+	myDialogStage.setScene(dialogScene);
+	myDialogStage.setAlwaysOnTop(true);
+	myPathPanel.getPanel().setDisable(true);
+	myPathToolBar.getPanel().setDisable(true);
+	grid.getGrid().setGridLinesVisible(true);
+	myDialogStage.setOnCloseRequest(event -> {
+	    myPathPanel.getPanel().setDisable(false);
+	    myPathToolBar.getPanel().setDisable(false);
+	    grid.getGrid().setGridLinesVisible(false);
+	});
+	myDialogStage.show();
+    }
+
 
     @Override
     public void setSpecificUIComponents() {
-	setGridUIComponents(myPathPanel, myPathToolBar);
+
+	//	setGridUIComponents(myPathPanel, myPathToolBar);
 	ImageView trashImage = myPathPanel.makeTrashImage();
 	trashImage.setOnDragOver(new EventHandler <DragEvent>() {
 	    @Override

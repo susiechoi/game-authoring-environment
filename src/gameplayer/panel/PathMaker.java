@@ -20,7 +20,6 @@ public class PathMaker {
     public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
 	grid = new GridPane();
 	grid.setMaxSize(1020, 650);
-	//		System.out.println("IMAGE: " +backgroundImage);
 	grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
 	myPathSize = pathSize;
 	setGridConstraints(grid);
@@ -58,7 +57,7 @@ public class PathMaker {
 	    colConst.setPrefWidth(myPathSize);
 	    grid.getColumnConstraints().add(colConst);
 	}
-	for (int i = 0; i < 750/myPathSize; i++) {
+	for (int i = 0; i < 650/myPathSize; i++) {
 	    RowConstraints rowConst = new RowConstraints();
 	    rowConst.setPrefHeight(myPathSize);
 	    grid.getRowConstraints().add(rowConst);         
