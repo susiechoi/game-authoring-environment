@@ -39,7 +39,7 @@ public class GamePanel extends Panel{
     private ScrollPane scroll;
 
     //TODO changes this to be passed from mediator ******************************************************************************
-    private final String DEFAULT_BACKGROUND_FILE_PATH;
+//    private final String DEFAULT_BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
     private boolean backgroundSet;
     private boolean pathSet;
@@ -47,7 +47,7 @@ public class GamePanel extends Panel{
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-	DEFAULT_BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("defaultBackgroundFilePath");
+//	DEFAULT_BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("defaultBackgroundFilePath");
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
@@ -84,9 +84,9 @@ public class GamePanel extends Panel{
 	try {
 	    imageView = new ImageView(new Image(backgroundFilePath, imageWidth,imageHeight , false, false));
 	} catch (IllegalArgumentException e){
-	    imageView = new ImageView(new Image("file:" + DEFAULT_BACKGROUND_FILE_PATH,imageWidth, imageHeight, false, false));
+//	    imageView = new ImageView(new Image("file:" + DEFAULT_BACKGROUND_FILE_PATH,imageWidth, imageHeight, false, false));
 	}
-	spriteAdd.getChildren().add(imageView);
+//	spriteAdd.getChildren().add(imageView);
 	return true;
 
     }
