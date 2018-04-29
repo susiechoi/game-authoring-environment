@@ -152,4 +152,8 @@ public class Path {
 	public String getEndImage( ) {
 		return myEndImage;
 	}
+	public void updatePathPoints(List<Point> newCoords, Map<String, List<Point>> newImageMap) {
+	    myCoordinates = newCoords;
+	    myPathMap = newImageMap;
+	}
 }

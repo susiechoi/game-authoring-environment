@@ -71,11 +71,6 @@ public class Level {
 	public void addPath(Path path) {
 		myPaths.add(path); 
 	}
-	
-	public void clearPaths(Path path) {
-	    	//TODO
-	}
-
 	/**
 	 * Returns an unmodifiable list of path objects in the level
 	 * 
@@ -382,6 +377,15 @@ public class Level {
 	 */
 	public void addWave(Wave wave) {
 		myWaves.add(wave);
+	}
+	public void replacePaths(List<Path> currPaths) {
+	    myPaths.removeAll(getPaths());
+	    System.out.println("paths size adding" + currPaths.size());
+	    myPaths.addAll(currPaths);
+	    System.out.println("path size after readding" + myPaths.size());
+	    for(Wave wave : myWaves) {
+		wave.removeStalePaths(currPaths);
+	    }
 	}
 }
 
