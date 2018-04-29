@@ -11,6 +11,9 @@ import java.lang.reflect.Field;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 
 public class AttributeFinder {
+	
+	public static final String DEFAULT_CLASSPATH_SEPARATOR = ".";
+	public static final int DEFAULT_CLASSPATH_INDEX_OFFSET = 1; 
 
 	/**
 	 * Retrieves value of requested field from specified object
@@ -55,7 +58,7 @@ public class AttributeFinder {
 
 	private Field getField(String fieldName, Class<?> objectClass) {
 		for (Field aField : objectClass.getDeclaredFields()) {
-			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(".")+1); 
+			String fieldSimpleString = aField.toString().substring(aField.toString().lastIndexOf(DEFAULT_CLASSPATH_SEPARATOR)+DEFAULT_CLASSPATH_INDEX_OFFSET); 
 			if (fieldSimpleString.equals(fieldName)) {
 				return aField; 
 			}

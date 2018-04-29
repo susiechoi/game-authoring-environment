@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 
 public abstract class PathScreen extends AdjustScreen {
 
+	public static final String DEFAULT_NOFILE_ERROR_KEY = "NoFile";
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
 	private StackPane pathRoot;
 	protected GridPane pathGrid;
@@ -68,7 +69,7 @@ public abstract class PathScreen extends AdjustScreen {
 			    	}
 			    	catch(MissingPropertiesException e) {
 			    	 Log.debug(e);
-			    	    getView().loadErrorScreen("NoFile");
+			    	    getView().loadErrorScreen(DEFAULT_NOFILE_ERROR_KEY);
 			    	}
 			}
 		});
@@ -85,7 +86,7 @@ public abstract class PathScreen extends AdjustScreen {
 			    }
 			    catch(MissingPropertiesException e) {
 				 Log.debug(e);
-				getView().loadErrorScreen("NoFile");
+				getView().loadErrorScreen(DEFAULT_NOFILE_ERROR_KEY);
 			    }
 			}
 		});

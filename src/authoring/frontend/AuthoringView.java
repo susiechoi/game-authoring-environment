@@ -40,6 +40,12 @@ public class AuthoringView extends View {
 	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
 	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_THEME_IDENTIFIER = "myGameTheme";
+	public static final String DEFAULT_SETTINGS_OBJ_NAME = "Settings"; 
+	public static final String DEFAULT_BACK_SCREENFLOW_KEY = "Back"; 
+	public static final String DEFAULT_NOOBJECTERROR_KEY = "NoObject"; 
+	public static final String DEFAULT_DUPLICATE_ERROR_KEY = "NoDuplicateNames"; 
+	public static final String DEFAULT_NOIMAGEERROR_KEY = "NoImageFile"; 
 
 	private StageManager myStageManager; 
 	private PropertiesReader myPropertiesReader;
@@ -69,17 +75,6 @@ public class AuthoringView extends View {
 		myController.setModel(model);
 	}
 
-	//	/**
-	//	 * Returns the AuthoringModel object the user uses to author a game. 
-	//	 * Should never return null because the model and view are both created
-	//	 * in the AuthoringController class and the view's method setModel is called.
-	//	 * 
-	//	 * @return AuthoringModel: the model authored by the user
-	//	 */
-	//	public AuthoringModel getModel() {
-	//	    return myModel;
-	//	}
-
 	/**
 	 * Loads the first authoring screen shown to user (currently StartScreen) from which ScreenFlow
 	 *  can direct further screens.
@@ -108,7 +103,7 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
-			loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
 	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
@@ -118,12 +113,12 @@ public class AuthoringView extends View {
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
 			e.printStackTrace();
-			loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
 
 	protected void goBackFrom(String id) {
-		goForwardFrom(id+"Back");
+		goForwardFrom(id+DEFAULT_BACK_SCREENFLOW_KEY);
 	}
 
 
@@ -137,10 +132,6 @@ public class AuthoringView extends View {
 			Class<?> clazz = Class.forName(nextScreenClass);
 			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 			if(constructor.getParameterTypes().length == 2) {
-				//			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
-				//				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
-				//				myStageManager.switchScreen(nextScreen.getScreen());
-				//			}
 				if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
 					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 					myStageManager.switchScreen(nextScreen.getScreen());
@@ -163,10 +154,6 @@ public class AuthoringView extends View {
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
-			//		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-			//			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
-			//			myStageManager.switchScreen(nextScreen.getScreen());
-			//		} 
 			else {
 				throw new MissingPropertiesException("");
 			}
@@ -199,7 +186,7 @@ public class AuthoringView extends View {
 	}
 
 	/**
-	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
+	 * Method through which information can be retrieved from AuthoringModel re: the current objects of a given type are available for editing
 	 */
 	public List<String> getCurrentObjectOptions(String objectType) {
 		List<String> availableObjectOptions = new ArrayList<>(); 
@@ -207,11 +194,15 @@ public class AuthoringView extends View {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
 			Log.debug(e);	
-			loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return availableObjectOptions; 
 	}
 
+	public Object getObjectAttribute(String objectType, String attribute) {
+		return getObjectAttribute(objectType, "", attribute);
+	}
+	
 	/**
 	 * Method through which information about object fields can be requested
 	 * Invoked when populating authoring frontend screens used to edit existing objects
@@ -222,7 +213,7 @@ public class AuthoringView extends View {
 			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			Log.debug(e);	
-			loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		} 
 		return returnedObjectAttribute; 
 	}
@@ -276,7 +267,7 @@ public class AuthoringView extends View {
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);	
 			e.printStackTrace();
-			loadErrorAlert("NoObject");
+			loadErrorAlert(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return new HashMap<>();
 
@@ -289,7 +280,7 @@ public class AuthoringView extends View {
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
 			e.printStackTrace();
-			loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return 1;
 	}
@@ -299,7 +290,7 @@ public class AuthoringView extends View {
 			myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
 			Log.debug(e);
-			loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		} 
 	}
 
@@ -326,10 +317,10 @@ public class AuthoringView extends View {
 			myController.makeTower(myLevel, name);
 		} catch (MissingPropertiesException e) {
 			Log.debug(e);	
-			loadErrorAlert("NoImageFile");
+			loadErrorAlert(DEFAULT_NOIMAGEERROR_KEY);
 		} catch (NoDuplicateNamesException e) {
 			Log.debug(e);	
-			loadErrorAlert("NoDuplicateNames");
+			loadErrorAlert(DEFAULT_DUPLICATE_ERROR_KEY);
 		} 
 	}
 
@@ -338,11 +329,15 @@ public class AuthoringView extends View {
 			myController.makeEnemy(myLevel, name);
 		} catch (MissingPropertiesException e) {
 			Log.debug(e);	
-			loadErrorAlert("NoImageFile");
+			loadErrorAlert(DEFAULT_NOIMAGEERROR_KEY);
 		} catch (NoDuplicateNamesException e) {
 			Log.debug(e);	
-			loadErrorAlert("NoDuplicateNames");
+			loadErrorAlert(DEFAULT_DUPLICATE_ERROR_KEY);
 		} 
+	}
+	
+	public void setObjectAttribute(String objectType, String attribute, Object attributeValue) {
+		setObjectAttribute(objectType, "", attribute, attributeValue);
 	}
 
 	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
@@ -350,25 +345,24 @@ public class AuthoringView extends View {
 			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			Log.debug(e);	
-			loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
 
 	public void setTheme(String selectedTheme) {
 		myTheme = selectedTheme; 
-		setObjectAttribute("Settings", "", "myGameTheme", myTheme);
+		setObjectAttribute(DEFAULT_SETTINGS_OBJ_NAME, DEFAULT_THEME_IDENTIFIER, myTheme);
 	}
 
 	public String getTheme() {
 		if (myTheme == null) {
 			try {
-				myTheme = (String) myController.getObjectAttribute(1, "Settings", "", "myGameTheme");
+				myTheme = (String) myController.getObjectAttribute(1, DEFAULT_SETTINGS_OBJ_NAME, "", DEFAULT_THEME_IDENTIFIER);
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 				Log.debug(e);	
 				loadErrorAlert("NoFile");
 			}
 		}
-		System.out.println(myTheme);
 		return myTheme; 
 	}
 

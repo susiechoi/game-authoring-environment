@@ -65,3 +65,7 @@ Text {
 .axis-label {
 	-fx-font-size: 18px;
 }
+
+#plusButton, #minusButton {
+-fx-min-width: 50px;
+}

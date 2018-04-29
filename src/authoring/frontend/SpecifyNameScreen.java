@@ -13,7 +13,9 @@ import javafx.scene.layout.VBox;
 
 abstract class SpecifyNameScreen extends AuthoringScreen {
 
+	public static final String DEFAULT_NO_OBJECT_ERROR_KEY = "NoObject";
     public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
+    public static final String DEFAULT_APPLY_SCREENFLOW = "Apply"; 
 
     private String myDefaultObjectName; 
     private String myObjectDescription; 
@@ -46,7 +48,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	VBox vb = new VBox(); 
 
 	vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyObjectName")+myObjectDescription));
-	TextField nameField = getUIFactory().makeTextField("");
+	TextField nameField = getUIFactory().makeTextField();
 	vb.getChildren().add(nameField);
 	myNameField = nameField; 
 
@@ -60,7 +62,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			Log.error(e);
-			getView().loadErrorScreen("NoObject");
+			getView().loadErrorScreen(DEFAULT_NO_OBJECT_ERROR_KEY);
 		    }
 		}
 		else if (this.getClass().getSimpleName().equals("SpecifyEnemyNameScreen")) {
@@ -70,10 +72,10 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 			    | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			 Log.error(e);
-			getView().loadErrorScreen("NoObject");
+			getView().loadErrorScreen(DEFAULT_NO_OBJECT_ERROR_KEY);
 		    }
 		}
-		getView().goForwardFrom(this.getClass().getSimpleName()+"Apply",myNameField.getText());
+		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW,myNameField.getText());
 	    }
 	});
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);

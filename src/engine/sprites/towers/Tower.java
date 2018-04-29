@@ -51,7 +51,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     private double myTowerValue; 
     private Map<String, Integer> propertyStats;
     
-    private DataPointWriter myKillWriter; 
+//    private DataPointWriter myKillWriter; 
 
     /**
      * Constructor for a Tower object that accepts parameter properties.

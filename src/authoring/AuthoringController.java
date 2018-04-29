@@ -34,6 +34,11 @@ import xml.AuthoringModelWriter;
 
 public class AuthoringController implements MVController{
 
+	public static final String NO_DEFAULT_OBJ_ALERT_KEY = "NoDefaultObject"; 
+	public static final String DEFAULT_EDIT_BUTTON_CTRLFLOW = "Edit";
+	public static final String DEFAULT_OBJNOTFOUNDEXCEPTION_ALERT = "NoObject";
+	public static final String DEFAULT_NODEFAULTOBJECT_ALERT = "NoDeleteDefault"; 
+	
     private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
@@ -48,7 +53,7 @@ public class AuthoringController implements MVController{
 	try {
 	    myModel = new AuthoringModel();
 	} catch (MissingPropertiesException e) {
-	    myView.loadErrorScreen("NoDefaultObject");
+	    myView.loadErrorScreen(NO_DEFAULT_OBJ_ALERT_KEY);
 	}
 	myView.setModel(myModel);
 	myView.loadInitialScreen();
@@ -160,7 +165,6 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 	    thisWave = thisLevel.getWave(waveNumber);
 
 	}
-	System.out.println("NEW AMOUNT: " + newAmount);
 	thisWave.addEnemy(thisEnemy, path, newAmount);
     }
 
@@ -240,7 +244,7 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = new AuthoringModel(reader.createModel(gameName));
 	myView.setModel(myModel);
-	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
+	myView.goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDIT_BUTTON_CTRLFLOW, getGameName());
     }
     
     public void setModel(AuthoringModel model) {
@@ -303,10 +307,10 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 	    myModel.deleteObject(level, objectType, objectName);
 	    }
 	    catch(ObjectNotFoundException e) {
-		myView.loadErrorScreen("NoObject");
+		myView.loadErrorScreen(DEFAULT_OBJNOTFOUNDEXCEPTION_ALERT);
 	    }
 	    catch(DeleteDefaultException e2) {
-		myView.loadErrorAlert("NoDeleteDefault");
+		myView.loadErrorAlert(DEFAULT_NODEFAULTOBJECT_ALERT);
 	    }
 	}
 }
