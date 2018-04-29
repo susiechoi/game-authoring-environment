@@ -1,12 +1,14 @@
 package engine.sprites.properties;
 
+import engine.sprites.towers.projectiles.Projectile;
+
 /**
  * This class will handle the movement of a projectile that is heat seeking 
  * (Follows the enemy it is shot at)
  * @author ryanpond
  *
  */
-public class HeatSeekingProperty extends MovingProperty<Object>{
+public class HeatSeekingProperty extends MovingProperty{
 
     public HeatSeekingProperty(double range) {
 	super(range);
@@ -17,8 +19,9 @@ public class HeatSeekingProperty extends MovingProperty<Object>{
     }
 
     @Override
-    public Object execute(Object... args) {
-	return null;
+    public void move(Projectile projectile, double elapsedTime) {
+	// TODO Auto-generated method stub
+	
     }
     
     

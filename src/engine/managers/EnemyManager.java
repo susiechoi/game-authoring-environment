@@ -50,12 +50,12 @@ public class EnemyManager extends ShootingSpriteManager {
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		if(!enemy.isAlive()) {
-		    myEnemies.get(path).remove(enemy);
-		    break;
-		}
 		newEnemies.get(path).add(enemy);
-		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
+		if (!enemy.isAlive()) {
+		    newEnemies.get(path).remove(enemy);
+		}
+		//newEnemies.get(path).add(enemy);
+		else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 		    deadEnemies.add(enemy);
 		    newEnemies.get(path).remove(enemy);
 		}
@@ -72,11 +72,12 @@ public class EnemyManager extends ShootingSpriteManager {
 		    enemy.setIndex(pathIndex);
 		    }
 		}
+	    myEnemies.get(path).removeAll(deadEnemies);
 	    }
-	myEnemies = newEnemies;
+	
+	
 	return deadEnemies;
     }
-
 
     private boolean isInRange(Point curr, Point target) {
 	return curr.distance(target)<10;
@@ -112,18 +113,6 @@ public class EnemyManager extends ShootingSpriteManager {
 	myEnemies.clear();
     }
     
-    /**
-     * Method to remove enemies from the current enemies map
-     * @param toBeRemoved
-     */
-    public void removeFromMap(List<Sprite> toBeRemoved) {
-	for(Sprite s : toBeRemoved) {
-	    myEnemies.remove(s);
-	}
-	
-    }
-
-
     /**
      * Method to remove enemies from the current enemies map
      * @param toBeRemoved

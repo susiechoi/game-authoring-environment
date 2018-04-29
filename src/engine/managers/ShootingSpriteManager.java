@@ -43,7 +43,6 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      * @return Projectiles to add to the front end view
      */
     public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
-	System.out.println("SHOOTING");
 	List<Projectile> newProjectiles = new ArrayList<>();
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
@@ -72,9 +71,9 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	    List<Projectile> removeSpritesProjectiles = new ArrayList<Projectile>();
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
 		projectile.move(elapsedTime);
-		if (!shootingSprite.hasInRange(projectile)) {
-		    removeSpritesProjectiles.add(projectile);
-		}
+//		if (!shootingSprite.hasInRange(projectile)) {
+//		    removeSpritesProjectiles.add(projectile);
+//		}
 	    }
 	    for (Projectile spriteProjectile : removeSpritesProjectiles) {
 		shootingSprite.getLauncher().removeFromActiveList(spriteProjectile);

@@ -32,7 +32,7 @@ public class TowerBuilder {
     	System.out.println("IN BUILDER");
     	System.out.println(name);
     	System.out.println(imagepath);
-	List<Property<Object>> properties = new ArrayList<>();
+	List<Property> properties = new ArrayList<>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));
 	return new Tower(name, imagepath, size, launcher, properties);

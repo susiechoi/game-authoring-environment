@@ -9,7 +9,7 @@ import java.util.List;
  * @author Katherine Van Dyk
  *
  */
-public abstract class Property<T> {
+public abstract class Property {
 
     private double myProperty;
     private String mySimpleName;
@@ -24,18 +24,18 @@ public abstract class Property<T> {
 	mySimpleName = this.getClass().getSimpleName();
     }
     
-    public Property(Property<T> property) {
+    public Property(Property property) {
 	myProperty = property.getProperty();
 	mySimpleName = this.getClass().getSimpleName();
     }
     
-    /**
-     * 
-     * @param args
-     * @return the object corresponding to the specific property class
-     */
-    public abstract T execute(Object...args); 
-    
+//    /**
+//     * 
+//     * @param args
+//     * @return the object corresponding to the specific property class
+//     */
+//    public abstract T execute(Object...args); 
+//    
     /**
      * @return current value of property
      */
