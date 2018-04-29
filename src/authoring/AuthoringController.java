@@ -34,6 +34,11 @@ import xml.AuthoringModelWriter;
 
 public class AuthoringController implements MVController{
 
+	public static final String NO_DEFAULT_OBJ_ALERT_KEY = "NoDefaultObject"; 
+	public static final String DEFAULT_EDIT_BUTTON_CTRLFLOW = "Edit";
+	public static final String DEFAULT_OBJNOTFOUNDEXCEPTION_ALERT = "NoObject";
+	public static final String DEFAULT_NODEFAULTOBJECT_ALERT = "NoDeleteDefault"; 
+	
     private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
@@ -48,7 +53,7 @@ public class AuthoringController implements MVController{
 	try {
 	    myModel = new AuthoringModel();
 	} catch (MissingPropertiesException e) {
-	    myView.loadErrorScreen("NoDefaultObject");
+	    myView.loadErrorScreen(NO_DEFAULT_OBJ_ALERT_KEY);
 	}
 	myView.setModel(myModel);
 	myView.loadInitialScreen();
@@ -154,7 +159,6 @@ public class AuthoringController implements MVController{
 	    thisWave = thisLevel.getWave(waveNumber);
 
 	}
-	System.out.println("NEW AMOUNT: " + newAmount);
 	thisWave.addEnemy(thisEnemy, path, newAmount);
     }
 
@@ -234,7 +238,7 @@ public class AuthoringController implements MVController{
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = new AuthoringModel(reader.createModel(gameName));
 	myView.setModel(myModel);
-	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
+	myView.goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDIT_BUTTON_CTRLFLOW, getGameName());
     }
 
     public void setModel(AuthoringModel model) {

@@ -13,9 +13,11 @@ import javafx.scene.layout.VBox;
 
 abstract class SpecifyNameScreen extends AuthoringScreen {
 
+	public static final String DEFAULT_TOWER_TYPE = "Tower";
+	public static final String DEFAULT_ENEMY_TYPE = "Enemy";
+	public static final String DEFAULT_NO_OBJECT_ERROR_KEY = "NoObject";
     public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
-    private final String TOWER_TYPE = "Tower";
-    private final String ENEMY_TYPE = "Enemy";
+    public static final String DEFAULT_APPLY_SCREENFLOW = "Apply"; 
 
     private String myDefaultObjectName; 
     private String myObjectDescription; 
@@ -48,7 +50,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	VBox vb = new VBox(); 
 
 	vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyObjectName")+myObjectDescription));
-	TextField nameField = getUIFactory().makeTextField("");
+	TextField nameField = getUIFactory().makeTextField();
 	vb.getChildren().add(nameField);
 	myNameField = nameField; 
 
@@ -58,26 +60,24 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	    if (validNameField(myNameField)) {
 		if (this.getClass().getSimpleName().equals("SpecifyTowerNameScreen")) {
 		    try {
-			getView().makeSprite(TOWER_TYPE, myNameField.getText());
+			getView().makeSprite(DEFAULT_TOWER_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			Log.error(e);
-
-			getView().loadErrorScreen("NoObject");
+			getView().loadErrorScreen(DEFAULT_NO_OBJECT_ERROR_KEY);
 		    }
 		}
 		else if (this.getClass().getSimpleName().equals("SpecifyEnemyNameScreen")) {
 		    try {
-			getView().makeSprite(ENEMY_TYPE, myNameField.getText());
+			getView().makeSprite(DEFAULT_ENEMY_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException
 			    | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			 Log.error(e);
-
-			getView().loadErrorScreen("NoObject");
+			getView().loadErrorScreen(DEFAULT_NO_OBJECT_ERROR_KEY);
 		    }
 		}
-		getView().goForwardFrom(this.getClass().getSimpleName()+"Apply",myNameField.getText());
+		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW,myNameField.getText());
 	    }
 	});
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);

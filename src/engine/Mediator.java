@@ -128,7 +128,6 @@ public class Mediator implements MVController{
     }
 
     /************************************************ GAMEPLAY ********************************************/
-
     /**
      * to be called by the frontend when a user drops a tower on the gamescreen.
      * @param location, where the tower should be placed
@@ -221,8 +220,6 @@ public class Mediator implements MVController{
     public void updateLevel(Integer newLevel) {
 	myScreenManager.updateLevelCount(newLevel);
     }
-
-
 
     /**
      * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 

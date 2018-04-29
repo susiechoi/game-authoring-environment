@@ -2,7 +2,6 @@ package engine.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import engine.builders.PropertyBuilder;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;

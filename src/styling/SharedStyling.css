@@ -66,6 +66,9 @@ Text {
 	-fx-font-size: 18px;
 }
 
+#plusButton, #minusButton {
+-fx-min-width: 50px;
+}
 
 .scroll-pane {
     -fx-border-color: transparent;
@@ -107,5 +110,3 @@ Text {
 	-fx-background-radius: 2em;
 	-fx-border-color: transparent;
 }
-
-
