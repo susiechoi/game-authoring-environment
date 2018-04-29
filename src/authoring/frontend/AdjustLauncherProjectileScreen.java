@@ -1,6 +1,7 @@
 /**
  * @author susiechoi
  * @author Katherine Van Dyk
+ * @author benauriemma
  * Abstract class for developing the fields for customizing 
  * (new or existing, depending on whether corresponding tower is new or existing) launcher/projectile object
  */
@@ -23,15 +24,20 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     public static final String DEFAULT_BACKBUTTON_SCREENFLOW = "Back";
 
     private String myObjectName; 
+
+
 //    private Slider myProjectileDamageSlider;
 //    private Slider myProjectileSpeedSlider; 
 //    private Slider myLauncherRateSlider;
 //    private Slider myLauncherRangeSlider;
-//    private Slider myProjectileSizeSlider; 
+//    private Slider myProjectileSizeSlider;
+    // TODO: bma
     private Double myProjectileDamage;
     private Double myProjectileSpeed;
     private Double myLauncherRate;
     private Double myLauncherRange;
+
+
 
     protected AdjustLauncherProjectileScreen(AuthoringView view, String selectedObjectName) {
 	super(view, selectedObjectName, PROJECTILE_FIELDS, PROJECTILE_OBJECT_TYPE);
@@ -72,6 +78,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private void makeProjectileComponents(VBox vb) {
 	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	vb.getChildren().add(projectileImageSelect);
+	
+	//HBox projectileSoundSelect = 
 
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
 	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
