@@ -22,7 +22,6 @@ Text {
   -fx-font: bold 36pt "Helvetica";
 }
 
-<<<<<<< HEAD
 @font-face {
 	src: url("vcr-sd-mono.ttf");
 }
@@ -32,7 +31,6 @@ Text {
 	-fx-font-size: 24;
 	-fx-font-weight: bold;
 	-fx-alignment: center;
-	-fx-background-color: #B7D5D4;
 	-fx-border-width: 2;
 	-fx-border-radius: 6;
 	-fx-background-radius: 6;
@@ -47,7 +45,7 @@ Text {
         -fx-min-height: 50;
         -fx-background-color: #B7D5D4;
 }
-=======
+
 .chart {
 	-fx-padding: 20px;
 }
@@ -67,8 +65,48 @@ Text {
 .axis-label {
 	-fx-font-size: 18px;
 }
-<<<<<<< HEAD
 
->>>>>>> 9faee1913162cc7bde4f91624e495e4a100e25e4
-=======
->>>>>>> 2db4df9b9bddd365517a35a040a0cccb6e68f0ec
+#plusButton, #minusButton {
+-fx-min-width: 50px;
+}
+
+.scroll-pane {
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal ,
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+.scroll-bar .increment-arrow ,
+.scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 0;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:pressed,
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+
+
+
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background{
+	-fx-background-radius: 2em;
+	-fx-border-color: transparent;
+}

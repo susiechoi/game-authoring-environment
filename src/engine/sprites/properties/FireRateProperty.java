@@ -9,7 +9,7 @@ package engine.sprites.properties;
  *
  */
 public class FireRateProperty extends UpgradeProperty {
-    
+
     /**
      * Constructor that takes in cost, value and rate of fire
      * 
@@ -21,4 +21,14 @@ public class FireRateProperty extends UpgradeProperty {
 	super(cost, value, fireRate);
     }
 
+    public boolean hasReloaded(double timeLastFired) {
+	if(timeLastFired >= 100/this.getProperty()) {
+	    return true;
+	}
+	return false;
+    }
+
+    public FireRateProperty(UpgradeProperty p) {
+	super(p);
+    }
 }

@@ -1,16 +1,14 @@
 package engine.sprites.enemies;
 
 import java.awt.Point;
+import java.util.List;
 
-import engine.physics.ImageIntersecter;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.properties.DamageProperty;
-import engine.sprites.properties.HealthProperty;
-import engine.sprites.properties.ValueProperty;
+import engine.sprites.properties.CollisionProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.towers.launcher.Launcher;
-
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -23,33 +21,15 @@ import engine.sprites.towers.launcher.Launcher;
  */
 public class Enemy extends ShootingSprites implements FrontEndSprite{
 
-    private String myName; 
-    private String myImage; 
-    private HealthProperty myHealth;
-    private double myInitialHealth; 
-    private DamageProperty myDamage;
-    private double myHealthImpact; 
-    private ValueProperty myValue;
-    private ImageIntersecter myIntersecter;
-    private double mySpeed;
     private double mySize;
-    private double myKillReward;
     private int pathIndex;
     private double pathAngle;
     private Point targetPosition;
+    private boolean freeze;
 
-    public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
-	super(name, image, size, launcher);
-	myName = name; 
-	myImage = image; 
-	myHealth = health;
-	myInitialHealth = myHealth.getProperty();
-	myDamage = damage;
-	myHealthImpact = myDamage.getProperty();
-	myValue = value;
-	myIntersecter = new ImageIntersecter(this); 
-	mySpeed = speed; 
-	myKillReward = value.getProperty();
+    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
+	super(name, image, size, launcher, properties);
+	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
     }
@@ -58,15 +38,10 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-	super("", copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher());
-	myName = copiedEnemy.getName(); 
-	setImage(copiedEnemy.getImageView().getImage()); 
-	myIntersecter = copiedEnemy.getIntersecter(); 
-	myHealth = new HealthProperty(copiedEnemy.getHealth()); 
-	myDamage = copiedEnemy.getDamageProperty();
-	myHealthImpact = myDamage.getProperty(); 
-	myValue = copiedEnemy.getValue();
-	mySpeed = copiedEnemy.getSpeed();
+	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
+	freeze = false;
+	pathIndex = 0;
+	pathAngle = 0;
     }
 
     /**
@@ -84,8 +59,11 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @param elapsedTime
      */
     public void move(double elapsedTime) {
+	if(freeze) {
+	    return;
+	}
 	rotateImage();
-	double totalDistanceToMove = this.mySpeed*elapsedTime;
+	double totalDistanceToMove = this.getProperty("SpeedProperty").getProperty()*elapsedTime; 
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	this.getImageView().setX(this.getX()+xMove);
@@ -123,12 +101,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	targetPosition = newPosition;
     }
 
-    public String getName() {
-	return myName; 
-    }
-    
     public int getMoney() {
-	// TODO Auto-generated method stub
 	return 0;
     }
 
@@ -139,7 +112,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public double getDamage() {
-	return myDamage.getProperty();
+	return getValue("DamageProperty");
     }
 
     /**
@@ -147,36 +120,16 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	myHealth.loseHealth(collider.getDamage());
-	return myHealth.isAlive();
-    }
-
-    private ImageIntersecter getIntersecter() {
-	return myIntersecter; 
-    }
-
-    private HealthProperty getHealth() {
-	return myHealth; 
-    }
-
-    private DamageProperty getDamageProperty() {
-	return myDamage; 
-    }
-
-    private ValueProperty getValue() {
-	return myValue; 
+	CollisionProperty myCollisionProperty = (CollisionProperty) collider.getPropertySuperclassType("CollisionProperty");
+	myCollisionProperty.collidesWith(this);
+	return this.isAlive();
     }
 
     @Override
     public int getPointValue() {
-	return (int) myValue.getProperty();
+	return (int) getValue("ValueProperty");
     }
-
-
-    public double getSpeed() {
-	return mySpeed; 
-    }
-
+    
     public void setIndex(int i) {
 	pathIndex = i;
     } 
@@ -184,11 +137,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public int getIndex() {
 	return pathIndex;
     }
-    @Override
-    protected HealthProperty getHealthProp() {
-	return this.myHealth;
-    }
-
+    
     public double getAngle() {
 	return pathAngle;
     }
@@ -196,18 +145,17 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public void setAngle(double a) {
 	pathAngle = a;
     }
-    public void updateProperties() {
-		myHealth = new HealthProperty(0, 0, myInitialHealth);
-		myDamage = new DamageProperty(0, 0, myHealthImpact); 
-		myValue = new ValueProperty(myKillReward);
-		updateImage(myImage);
-}
-//    public void updateImage() {
-//	System.out.println("enemy image: " + myImage);
+    
+    public void freeze(double duration) {
+	freeze = true;
+    }
+   
+//    public void updateProperties() {
+//	myProperties = new ArrayList<>();
+//	myProperties.add(new HealthProperty(0, 0, myInitialHealth));
+//	myProperties.add(new DamageProperty(0, 0, myHealthImpact)); 
+//	myProperties.add(new ValueProperty(myKillReward));
+//	myProperties.add(new SpeedProperty(0, 0, 50));
 //	updateImage(myImage);
 //    }
-    @Override
-    public void loseHealth(double damage) {
-    	myHealth.loseHealth(damage);
-    }
 }

@@ -7,6 +7,8 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
+
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
@@ -20,7 +22,6 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 
 
 /**
@@ -45,6 +46,7 @@ public class PlayState implements GameData {
     private List<Level> myLevels;
     private Level currentLevel;
     private int currlvl;
+    private boolean backgroundSet;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -72,9 +74,15 @@ public class PlayState implements GameData {
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
+	backgroundSet = false;
     }
 
     public void update(double elapsedTime) {
+	//Background has to be passed after a layout pass has been done on the Scene in order to adapt to
+	//differences in computers screen size 
+	if(!backgroundSet) {
+	    backgroundSet = myMediator.setPath(myLevels.get(0).getLevelPathMap(), myLevels.get(0).getBackGroundImage(), myLevels.get(0).getPathSize(), myLevels.get(0).getGridWidth(), myLevels.get(0).getGridHeight());
+	}
 	count++;
 	checkLoss();
 	if (count % 120 == 0) {
@@ -93,13 +101,21 @@ public class PlayState implements GameData {
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
 	activeTowers.removeAll(toBeRemoved);
+	myEnemyManager.removeFromMap(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	//myTowerManager.moveProjectiles(elapsedTime);
+	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
+	    try {
+		myMediator.getSoundFactory().playSoundEffect("cannon"); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // YIKES THaT'S AND EASY FAIL
+	    }
 	}
 	updateScore(toBeRemoved);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
@@ -119,7 +135,7 @@ public class PlayState implements GameData {
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
 		    //newEnemy.updateImage();
 		    //enemy.move(path.initialPoint(),elapsedTime);
-		    myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
+		    myEnemyManager.addEnemy(currentPath, newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
 		}
@@ -135,6 +151,12 @@ public class PlayState implements GameData {
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
 		myMediator.nextLevel();
+		try {
+		    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
+		} catch (FileNotFoundException e1) {
+		    e1.printStackTrace(); //TODO!!!
+		}
+		
 	    }
 	    else {
 		// TODO: end game, player won
@@ -149,6 +171,11 @@ public class PlayState implements GameData {
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();
+	    try {
+		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // TODO: 
+	    }
 	}
     }
 
@@ -221,7 +248,11 @@ public class PlayState implements GameData {
 	myTowerManager.upgrade(tower,"rando",myResources.get());
 	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
-
+	try {
+	    myMediator.getSoundFactory().playSoundEffect("cash"); //TODO: make custom
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace(); //TODO
+	} 
     }
 
     /**
@@ -238,4 +269,3 @@ public class PlayState implements GameData {
     	return mySettings.getCSSTheme();
     }
 }
-

@@ -15,13 +15,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+//import jdk.internal.jline.internal.Log;
 
 abstract class SpecifyObjectScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
-
+	public static final String DEFAULT_APPLY_SCREENFLOW = "Apply";
+	public static final String DEFAULT_DELETE_SCREENFLOW = "Delete";
+	public static final String DEFAULT_NEW_SCREENFLOW = "NewButton"; 
+	
 	private String myDefaultName; 
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
@@ -33,7 +37,9 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 		try {
 			myDefaultName = getView().getPropertiesReader().findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
 		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoConstants");
+
+//		    Log.error(e);
+		    getView().loadErrorScreen("NoConstants");
 		}
 	}
 
@@ -56,23 +62,23 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		Button backButton = setupBackButton();
-		Button deleteButton = getUIFactory().makeTextButton("deleteButton", getErrorCheckedPrompt("Delete"));
+		Button deleteButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("Delete"));
 
-		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction("objectOptions",dropdownOptions, 
+		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction(dropdownOptions, 
 				e-> { applyButton.setDisable(false); deleteButton.setDisable(false); }, 
 				e-> { applyButton.setDisable(true); deleteButton.setDisable(true); }, editPrompt); 
 		applyButton.setDisable(true);
 		deleteButton.setDisable(true);
 		applyButton.setOnAction(e -> {
 		    	setSaved();
-			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW, objectsDropdown.getValue());
 		});
 		deleteButton.setOnAction(e -> {
 			getView().deleteObject(myObjectDescription, objectsDropdown.getValue());
-			getView().goForwardFrom(this.getClass().getSimpleName()+"Delete");
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_DELETE_SCREENFLOW);
 		});
 
-		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, editPrompt);
+		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox(objectsDropdown, editPrompt);
 
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
@@ -92,9 +98,9 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 	 * @return Button to add to Parent
 	 */
 	protected Button makeCreateNewObjectButton(String object) {
-		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
+		Button newObjectButton = getUIFactory().makeTextButton(DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction(event -> {
-			getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton", myDefaultName);
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_NEW_SCREENFLOW, myDefaultName);
 		});
 		return newObjectButton;
 	}

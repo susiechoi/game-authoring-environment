@@ -6,16 +6,11 @@
 
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sun.javafx.tools.packager.Log;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
-import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -24,13 +19,16 @@ import javafx.scene.text.Text;
 
 public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 	
+	public static final String DEFAULT_GAME_NAME_KEY = "myGameName"; 
+	public static final String DEFAULT_HEALTH_KEY = "myStartingHealth";
+	public static final String DEFAULT_MONEY_KEY = "myStartingMoney";
 	public static final String DEFAULT_CSS_STYLES = "src/styling/CurrentCSS.properties";
 	public static final String OBJECT_TYPE = "Settings";
 	
     	private TextField myGameNameEntry;
 	private Slider myStartingHealthSlider;
 	private Slider myStartingCurrencySlider;
-	private ComboBox<String> myCSSFilenameChooser;
+//	private ComboBox<String> myCSSFilenameChooser;
 	
     	protected AdjustResourcesScreen(AuthoringView view) {
 		super(view);
@@ -46,7 +44,7 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyStartingResources")));
 
 		Text settingsHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SettingsHeading"));
-		myGameNameEntry = getUIFactory().makeTextField("");
+		myGameNameEntry = getUIFactory().makeTextField();
 		vb.getChildren().add(settingsHeading);
 		int maxStartingHealth = 0;
 		int maxStartingCurrency = 0;
@@ -58,41 +56,41 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		    Log.debug(e);
 		    getView().loadErrorScreen("NoConstants");
 		}
-		HBox promptGameName = getUIFactory().addPromptAndSetupHBox("", myGameNameEntry, getErrorCheckedPrompt("GameName"));
+		HBox promptGameName = getUIFactory().addPromptAndSetupHBox(myGameNameEntry, getErrorCheckedPrompt("GameName"));
 		vb.getChildren().add(promptGameName);	
-		myStartingHealthSlider = getUIFactory().setupSlider("startingHealth", maxStartingHealth);
+		myStartingHealthSlider = getUIFactory().setupSlider(maxStartingHealth);
 		myStartingHealthSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-			getView().setObjectAttribute(OBJECT_TYPE, "", "myStartingHealth", newValue);
+			getView().setObjectAttribute(OBJECT_TYPE, DEFAULT_HEALTH_KEY, newValue);
 		});
-		HBox startingHealth = getUIFactory().setupSliderWithValue("startingHealth", myStartingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
+		HBox startingHealth = getUIFactory().setupSliderWithValue(myStartingHealthSlider, getErrorCheckedPrompt("StartingHealth"));
 		vb.getChildren().add(startingHealth);
+		myStartingCurrencySlider = getUIFactory().setupSlider(maxStartingCurrency);
 
-		myStartingCurrencySlider = getUIFactory().setupSlider("startingCurrency", maxStartingCurrency);
 		myStartingCurrencySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-			getView().setObjectAttribute(OBJECT_TYPE, "", "myStartingMoney", newValue);
+			getView().setObjectAttribute(OBJECT_TYPE, DEFAULT_MONEY_KEY, newValue);
 		});
-		HBox startingCurrency = getUIFactory().setupSliderWithValue("startingCurrency", myStartingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
+		HBox startingCurrency = getUIFactory().setupSliderWithValue(myStartingCurrencySlider, getErrorCheckedPrompt("StartingCurrency"));
 		vb.getChildren().add(startingCurrency);
 
-		List<String> cssOptions = new ArrayList<>(); 
-		try {
-			cssOptions = getPropertiesReader().allKeys(DEFAULT_CSS_STYLES);
-		} catch (MissingPropertiesException e1) {
-		    	Log.debug(e1);
-			getView().loadErrorAlert("NoFile");
-		}
-		myCSSFilenameChooser = getUIFactory().makeTextDropdown("", cssOptions);
-		vb.getChildren().add(getUIFactory().addPromptAndSetupHBox("", myCSSFilenameChooser, getErrorCheckedPrompt("CSS")));
-		myCSSFilenameChooser.addEventHandler(ActionEvent.ACTION, e -> {
-			getView().setObjectAttribute(OBJECT_TYPE, "", "myCSSTheme", myCSSFilenameChooser.getSelectionModel().getSelectedItem()); 
-		});
+//		List<String> cssOptions = new ArrayList<>(); 
+//		try {
+//			cssOptions = getPropertiesReader().allKeys(DEFAULT_CSS_STYLES);
+//		} catch (MissingPropertiesException e1) {
+//		    	Log.debug(e1);
+//			getView().loadErrorAlert("NoFile");
+//		}
+//		myCSSFilenameChooser = getUIFactory().makeTextDropdown(cssOptions);
+//		vb.getChildren().add(getUIFactory().addPromptAndSetupHBox(myCSSFilenameChooser, getErrorCheckedPrompt("CSS")));
+//		myCSSFilenameChooser.addEventHandler(ActionEvent.ACTION, e -> {
+//			getView().setObjectAttribute(OBJECT_TYPE, "myCSSTheme", myCSSFilenameChooser.getSelectionModel().getSelectedItem()); 
+//		});
 		
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
 		    	setSaved();
 		    	getView().setGameName(myGameNameEntry.getText());
-		    	getView().setObjectAttribute(OBJECT_TYPE, "", "myGameName", myGameNameEntry.getText());
+		    	getView().setObjectAttribute(OBJECT_TYPE, DEFAULT_GAME_NAME_KEY, myGameNameEntry.getText());
 		    	getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
@@ -104,9 +102,8 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 
 	@Override
 	protected void populateFieldsWithData() {
-		myGameNameEntry.setText(getView().getObjectAttribute("Settings", "", "myGameName").toString());
-		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute("Settings", "", "myStartingHealth").toString());
-		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute("Settings", "", "myStartingMoney").toString());	
-		getUIFactory().setComboBoxToValue(myCSSFilenameChooser, getView().getObjectAttribute("Settings", "", "myCSSTheme").toString());
+		myGameNameEntry.setText(getView().getObjectAttribute(OBJECT_TYPE, DEFAULT_GAME_NAME_KEY).toString());
+		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute(OBJECT_TYPE, DEFAULT_HEALTH_KEY).toString());
+		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute(OBJECT_TYPE, DEFAULT_MONEY_KEY).toString());	
 	}
 }

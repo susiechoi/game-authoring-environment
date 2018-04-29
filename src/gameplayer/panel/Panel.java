@@ -1,6 +1,5 @@
 package gameplayer.panel;
 
-import frontend.Screen;
 import javafx.scene.Parent;
 
 /**

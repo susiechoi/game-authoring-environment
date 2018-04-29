@@ -126,10 +126,10 @@ public class GameEngine {
 		}
 	}
 
+
 	public void triggerGame() {
 		gameTriggered = true;
 	}
-
 
 
 }

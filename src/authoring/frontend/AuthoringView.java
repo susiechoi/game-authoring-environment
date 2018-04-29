@@ -1,4 +1,4 @@
-/**
+
  /**
  * @author Sarah Bland
  * @author susiechoi
@@ -40,7 +40,13 @@ public class AuthoringView extends View {
 	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
 	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
 	public static final String DEFAULT_LANGUAGE = "English";
-	
+	public static final String DEFAULT_THEME_IDENTIFIER = "myGameTheme";
+	public static final String DEFAULT_SETTINGS_OBJ_NAME = "Settings"; 
+	public static final String DEFAULT_BACK_SCREENFLOW_KEY = "Back"; 
+	public static final String DEFAULT_NOOBJECTERROR_KEY = "NoObject"; 
+	public static final String DEFAULT_DUPLICATE_ERROR_KEY = "NoDuplicateNames"; 
+	public static final String DEFAULT_NOIMAGEERROR_KEY = "NoImageFile"; 
+
 	private StageManager myStageManager; 
 	private PropertiesReader myPropertiesReader;
 	private AuthoringController myController; 
@@ -68,17 +74,6 @@ public class AuthoringView extends View {
 	public void setModel(AuthoringModel model) {
 		myController.setModel(model);
 	}
-	
-//	/**
-//	 * Returns the AuthoringModel object the user uses to author a game. 
-//	 * Should never return null because the model and view are both created
-//	 * in the AuthoringController class and the view's method setModel is called.
-//	 * 
-//	 * @return AuthoringModel: the model authored by the user
-//	 */
-//	public AuthoringModel getModel() {
-//	    return myModel;
-//	}
 
 	/**
 	 * Loads the first authoring screen shown to user (currently StartScreen) from which ScreenFlow
@@ -111,19 +106,20 @@ public class AuthoringView extends View {
 		loadErrorScreen("NoObject");
 	    }
 	}
-	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
+	protected void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int amount) {
 		try {
-		    myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+
+		    myController.addWaveEnemy(level, path, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
 		    Log.debug(e);
 		    e.printStackTrace();
-		    loadErrorScreen("NoObject");
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
 
 	protected void goBackFrom(String id) {
-		goForwardFrom(id+"Back");
+		goForwardFrom(id+DEFAULT_BACK_SCREENFLOW_KEY);
 	}
 	
 
@@ -182,8 +178,8 @@ public class AuthoringView extends View {
 		goForwardFrom(id,  parameterList);
 	}
 
-	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
 	}
 
 	/**
@@ -195,19 +191,23 @@ public class AuthoringView extends View {
 	}
 
 	/**
-	 * Method through which information can be retrieved from AuthoringMOdel re: the current objects of a given type are available for editing
+	 * Method through which information can be retrieved from AuthoringModel re: the current objects of a given type are available for editing
 	 */
 	public List<String> getCurrentObjectOptions(String objectType) {
 		List<String> availableObjectOptions = new ArrayList<>(); 
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
 		} catch (ObjectNotFoundException e) {
-		    Log.debug(e);	
-		    loadErrorScreen("NoObject");
+			Log.debug(e);	
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return availableObjectOptions; 
 	}
 
+	public Object getObjectAttribute(String objectType, String attribute) {
+		return getObjectAttribute(objectType, "", attribute);
+	}
+	
 	/**
 	 * Method through which information about object fields can be requested
 	 * Invoked when populating authoring frontend screens used to edit existing objects
@@ -217,8 +217,8 @@ public class AuthoringView extends View {
 		try {
 			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-		    Log.debug(e);	
-		    loadErrorScreen("NoObject");
+			Log.debug(e);	
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		} 
 		return returnedObjectAttribute; 
 	}
@@ -263,21 +263,21 @@ public class AuthoringView extends View {
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
+
 	
-	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
+	protected Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) { 
 		try {
-			Path path = myController.getPathFromName(pathName, level);
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
 		}
 		catch(ObjectNotFoundException e) {
-		    Log.debug(e);	
-		    e.printStackTrace();
-			loadErrorAlert("NoObject");
+			Log.debug(e);	
+			e.printStackTrace();
+			loadErrorAlert(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return new HashMap<>();
 
 	}
-	
+
 	protected Integer getHighestWaveNumber(int level) {
 	    try {
 	    return myController.getHighestWaveNumber(level);
@@ -294,8 +294,8 @@ public class AuthoringView extends View {
 		try {
 		    myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
-		    Log.debug(e);
-		    loadErrorScreen("NoObject");
+			Log.debug(e);
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		} 
 	}
 
@@ -316,56 +316,93 @@ public class AuthoringView extends View {
 	    	myController.deleteObject(myLevel, objectType, objectName);
 	}
 
+//
+//	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		try {
+//			myController.makeTower(myLevel, name);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoImageFile");
+//		} catch (NoDuplicateNamesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoDuplicateNames");
+//		} 
+//	}
+//	
+//	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		try {
+//			myController.makeEnemy(myLevel, name);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoImageFile");
+//		} catch (NoDuplicateNamesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoDuplicateNames");
+//		} 
+//	}
 
-	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	    public void makeSprite(String objectType, String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
-			myController.makeTower(myLevel, name);
+		    myController.makeSprite(objectType, myLevel, name);
 		} catch (MissingPropertiesException e) {
-		    Log.debug(e);	
-		    loadErrorAlert("NoImageFile");
+			Log.debug(e);	
+			loadErrorAlert(DEFAULT_NOIMAGEERROR_KEY);
 		} catch (NoDuplicateNamesException e) {
-		    Log.debug(e);	
-		    loadErrorAlert("NoDuplicateNames");
+			Log.debug(e);	
+			loadErrorAlert(DEFAULT_DUPLICATE_ERROR_KEY);
 		} 
-	}
-	
-	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	    }
+
+	    public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
 		try {
-			myController.makeEnemy(myLevel, name);
-		} catch (MissingPropertiesException e) {
-		    Log.debug(e);	
-		    loadErrorAlert("NoImageFile");
-		} catch (NoDuplicateNamesException e) {
-		    Log.debug(e);	
-		    loadErrorAlert("NoDuplicateNames");
-		} 
-	}
-	
-	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
-		try {
-			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
+			 myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 		    Log.debug(e);	
 		    loadErrorScreen("NoObject");
 		}
+	    }
+	
+	public void setObjectAttribute(String objectType, String attribute, Object attributeValue) {
+		setObjectAttribute(objectType, "", attribute, attributeValue);
 	}
+		 
+
+	    public void setObjectAttributes(String objectType, String name, String propertyName, List<Object> attributes) {
+		try {
+		    myController.setObjectAttributes(myLevel, objectType, name, propertyName, attributes);
+		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+			Log.debug(e);	
+			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
+		}
+	    }
+
 	
 	public void setTheme(String selectedTheme) {
 		myTheme = selectedTheme; 
-		setObjectAttribute("Settings", "", "myGameTheme", myTheme);
+		setObjectAttribute(DEFAULT_SETTINGS_OBJ_NAME, DEFAULT_THEME_IDENTIFIER, myTheme);
 	}
 	
 	public String getTheme() {
 		if (myTheme == null) {
 			try {
-				myTheme = (String) myController.getObjectAttribute(1, "Settings", "", "myGameTheme");
+				myTheme = (String) myController.getObjectAttribute(1, DEFAULT_SETTINGS_OBJ_NAME, "", DEFAULT_THEME_IDENTIFIER);
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			    Log.debug(e);	
 			    loadErrorAlert("NoFile");
 			}
 		}
-		System.out.println(myTheme);
 		return myTheme; 
+	}
+	
+	protected Path getPathWithStartingPoint(int level, Point point) {
+	    try {
+		return myController.getPathWithStartingPoint(level, point);
+	    }
+	    catch(ObjectNotFoundException e) {
+		Log.debug(e);
+		loadErrorScreen("NoObject");
+	    }
+	    return null;
 	}
 
 }

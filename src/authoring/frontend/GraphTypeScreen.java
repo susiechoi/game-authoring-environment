@@ -28,13 +28,13 @@ public class GraphTypeScreen extends AuthoringScreen {
 		List<String> graphOptions = new ArrayList<String>();
 		graphOptions.add(title);
 		graphOptions.addAll(getUIFactory().getFileNames(DEFAULT_GRAPHING_FOLDER));
-		Button graphButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("GraphTopic"));
-		ComboBox<String> dropdown = getUIFactory().makeTextDropdownSelectAction("", graphOptions, 
+		Button graphButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("GraphTopic"));
+		ComboBox<String> dropdown = getUIFactory().makeTextDropdownSelectAction(graphOptions, 
 				e -> {graphButton.setDisable(false);}, 
 				e -> {graphButton.setDisable(true);}, title);
 		graphButton.setDisable(true);
 		graphButton.setOnAction(e -> {
-			getView().getStageManager().switchScreen(new GraphMenuScreen(getView(), dropdown.getSelectionModel().getSelectedItem()).getScreen());
+			getView().goForwardFrom(this.getClass().getSimpleName(), dropdown.getSelectionModel().getSelectedItem());
 		});
 		
 		vb.getChildren().addAll(titleText, dropdown, graphButton, setupBackButton());

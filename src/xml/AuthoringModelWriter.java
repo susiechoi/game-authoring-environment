@@ -1,4 +1,3 @@
-
 package xml;
 
 
@@ -34,6 +33,8 @@ public class AuthoringModelWriter implements XMLWriter {
 			System.out.println("Bad configuration"); // update exception
 		}
 		parser = new XStream(new StaxDriver());
+		parser.autodetectAnnotations(true);
+//		parser.registerConverter(new ObservableListConverter(parser.getMapper()));
 	}
 
     /**

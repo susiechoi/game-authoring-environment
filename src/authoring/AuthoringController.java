@@ -34,6 +34,11 @@ import xml.AuthoringModelWriter;
 
 public class AuthoringController implements MVController{
 
+	public static final String NO_DEFAULT_OBJ_ALERT_KEY = "NoDefaultObject"; 
+	public static final String DEFAULT_EDIT_BUTTON_CTRLFLOW = "Edit";
+	public static final String DEFAULT_OBJNOTFOUNDEXCEPTION_ALERT = "NoObject";
+	public static final String DEFAULT_NODEFAULTOBJECT_ALERT = "NoDeleteDefault"; 
+	
     private AuthoringView myView; 
     private Map<String, List<Point>> myImageMap;
     private AuthoringModel myModel; 
@@ -48,7 +53,7 @@ public class AuthoringController implements MVController{
 	try {
 	    myModel = new AuthoringModel();
 	} catch (MissingPropertiesException e) {
-	    myView.loadErrorScreen("NoDefaultObject");
+	    myView.loadErrorScreen(NO_DEFAULT_OBJ_ALERT_KEY);
 	}
 	myView.setModel(myModel);
 	myView.loadInitialScreen();
@@ -79,15 +84,10 @@ public class AuthoringController implements MVController{
      * Method through which information can be sent to instantiate or edit a Path in Authoring Model
      * @throws ObjectNotFoundException 
      */
-
-
-public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException { 
-	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row); 
+    public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException { 
+	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height); 
 	myImageMap = imageCoordinates;
-}
-
-
-
+    }
 
     /**
      * Method that wraps Model method to return a Path object given its level and 
@@ -147,8 +147,7 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
      * @param newAmount: the new amount of the specified enemy to put in the wave
      * @throws ObjectNotFoundException: thrown if the level isn't found
      */
-    public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
-	Path path = getPathFromName(Integer.parseInt(pathName), level);
+    public void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 	Level thisLevel = myModel.getLevel(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	Wave thisWave;
@@ -160,7 +159,6 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 	    thisWave = thisLevel.getWave(waveNumber);
 
 	}
-	System.out.println("NEW AMOUNT: " + newAmount);
 	thisWave.addEnemy(thisEnemy, path, newAmount);
     }
 
@@ -221,7 +219,7 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
      */
     public void setGameName(String gameName) {
 	myModel.setGameName(gameName);
-    }
+    }	
 
     /**
      * Gets current name of the game
@@ -240,9 +238,9 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = new AuthoringModel(reader.createModel(gameName));
 	myView.setModel(myModel);
-	myView.goForwardFrom(this.getClass().getSimpleName()+"Edit", getGameName());
+	myView.goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDIT_BUTTON_CTRLFLOW, getGameName());
     }
-    
+
     public void setModel(AuthoringModel model) {
 	myModel = model;
     }
@@ -255,7 +253,9 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
-    
+    public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
+	return myModel.getPathWithStartingPoint(level, point);
+    }
     /**
      * Method to retrieve the highest wave number found in a level (including all paths)
      * @param level is level desired
@@ -266,18 +266,17 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 	return myModel.getHighestWaveNumber(level);
     }
 
-	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
-		myModel.makeTower(level, name);
-	}
-	
-	public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
-		myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
-	}
+    public void makeSprite(String objectType, int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	myModel.makeSprite(objectType, level, name);
+    }
 
-	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
-		myModel.makeEnemy(myLevel, name);
-	}
-	
+    public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
+    }
+
+    public void setObjectAttributes(int level, String objectType, String name, String propertyName, List<Object> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+	myModel.setObjectProperty(level, objectType, name, propertyName, attributes);
+    }
 
     public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
 	Level currentLevel = myModel.getLevel(level);
@@ -288,27 +287,28 @@ public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Ma
 	desiredWave.setWaveTime(time);
     }
 
-	public void writeToFile() throws ObjectNotFoundException {
-		myModel.updateAllProperties(); 
-		AuthoringModelWriter writer = new AuthoringModelWriter();
-		writer.write(myModel.getGame(), myModel.getGameName());
-	}
-	@Override
-	public void playControllerDemo(StageManager manager, String language) {
-	    new PlayController(manager, language,
-			myModel).demoPlay(myModel.getGame());
-	}
-	public void deleteObject(int level, String objectType, String objectName) {
-	    try {
+    public void writeToFile() throws ObjectNotFoundException {
+	AuthoringModelWriter writer = new AuthoringModelWriter();
+	writer.write(myModel.getGame(), myModel.getGameName());
+    }
+    
+    @Override
+    public void playControllerDemo(StageManager manager, String language) {
+	new PlayController(manager, language,
+		myModel).demoPlay(myModel.getGame());
+    }
+    
+    public void deleteObject(int level, String objectType, String objectName) {
+	try {
 	    myModel.deleteObject(level, objectType, objectName);
-	    }
-	    catch(ObjectNotFoundException e) {
-		myView.loadErrorScreen("NoObject");
-	    }
-	    catch(DeleteDefaultException e2) {
-		myView.loadErrorAlert("NoDeleteDefault");
-	    }
 	}
+	catch(ObjectNotFoundException e) {
+	    myView.loadErrorScreen("NoObject");
+	}
+	catch(DeleteDefaultException e2) {
+	    myView.loadErrorAlert("NoDeleteDefault");
+	}
+    }
 }
 
 

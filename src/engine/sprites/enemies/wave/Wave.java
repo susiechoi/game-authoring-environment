@@ -77,8 +77,6 @@ public class Wave {
 	}
     }
 
-
-
     /**
      * Returns a map that an Enemy type key to an Integer value representing the number
      * of that type in the wave. 
@@ -101,8 +99,6 @@ public class Wave {
 	    return Collections.unmodifiableMap(enemiesMap);
 	}
     }
-
-
 
     /**
      * Decrements the number of a specified enemy remaining in the wave
