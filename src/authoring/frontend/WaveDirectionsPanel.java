@@ -22,6 +22,7 @@ public class WaveDirectionsPanel extends PathPanel{
     private Slider myTimeSlider;
     private VBox myRoot;
     private Button myApplyButton;
+    
     public WaveDirectionsPanel(AuthoringView view, String waveNumber) {
 	super(view);
 	if(waveNumber.equals("Default")) { //coming from new wave
@@ -45,10 +46,9 @@ public class WaveDirectionsPanel extends PathPanel{
 		myWaveNumber = Integer.parseInt(splitUpWave[0]);  //coming from wavepanel
 	    }
 	}
-
-
 	setUpPanel();
     }
+    
     private void setUpPanel() {
 	myRoot = new VBox();
 	myRoot.setMaxSize(280, 900);
@@ -88,11 +88,12 @@ public class WaveDirectionsPanel extends PathPanel{
 	pseudoRoot.getChildren().add(backButton);
 	myRoot.getChildren().add(pseudoRoot);
     }
+    
     @Override
     protected void makePanel() {
 	// TODO Auto-generated method stub
-	
     }
+    
     @Override
     protected Button getApplyButton() {
 	// TODO Auto-generated method stub

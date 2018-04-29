@@ -34,6 +34,7 @@ import javafx.scene.input.KeyCode;
  */
 public class PlayState implements GameData {
 
+    private final int FRAMES_PER_SECOND = 60;
     private int count;
     private IntegerProperty myScore;
     private IntegerProperty myResources;
@@ -166,7 +167,7 @@ public class PlayState implements GameData {
 	count++;
 	checkLoss();
 	if (count % 120 == 0) {
-	    spawnEnemies();
+	    spawnEnemies(elapsedTime);
 	}
 	checkPathEnd(elapsedTime);
 	handleCollisions(elapsedTime);
@@ -197,7 +198,7 @@ public class PlayState implements GameData {
 	    advanceLevel();
 	}
 	else {
-	    // TODO: end game, player won
+	    // TODO: end game, player won. Handle case where enemies are still alive
 	    myMediator.gameWon();
 	}
     }
@@ -221,12 +222,20 @@ public class PlayState implements GameData {
 	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
-    private void spawnEnemies() {
+    private void spawnEnemies(double elapsedTime) {
 	try {
-	    if (currentLevel.getWave(0).isFinished()) {
-		currentLevel.removeWave();  
-	    }
 	    Wave currentWave = currentLevel.getWave(0);
+	    if (currentWave.isFinished()) {
+		double time = currentWave.getWaveTime();
+		System.out.println("Time variable: " + time);
+		System.out.println(elapsedTime);
+		System.out.println(time/elapsedTime);
+		System.out.println(count);
+		currentLevel.removeWave();  
+		currentWave = currentLevel.getWave(0);
+		// TODO remove magic number! put FPS in constant file
+		currentWave.setWaveTime(time*FRAMES_PER_SECOND + count);		
+	    }
 	    for (Path currentPath : currentLevel.getPaths()) {
 		try {
 		    spawnEnemy(currentWave, currentPath);
@@ -237,12 +246,13 @@ public class PlayState implements GameData {
 	    }
 	}
 	catch (Exception e) {
+	    // no waves left in the level, check for win conditions
 	    checkWin();
 	}
     }
 
     private void spawnEnemy(Wave wave, Path path) {
-	Enemy newEnemy = wave.getEnemySpecificPath(path);
+	Enemy newEnemy = wave.getEnemySpecificPath(path, count);
 	newEnemy.setInitialPoint(path.initialPoint());
 	//newEnemy.updateImage();
 	//enemy.move(path.initialPoint(),elapsedTime);
@@ -302,7 +312,6 @@ public class PlayState implements GameData {
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
-    	System.out.println("PLAY STATE");
 	myTowerManager.moveTowers(tower, c);
     }
 }

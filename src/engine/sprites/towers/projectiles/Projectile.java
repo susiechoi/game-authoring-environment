@@ -6,7 +6,6 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.SpeedProperty;
@@ -22,6 +21,7 @@ import engine.sprites.enemies.Enemy;
  */
 public class Projectile extends Sprite implements FrontEndSprite{
 
+    private static final double mySpeedFactor = 1.5;
     private double mySize; 
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
@@ -58,7 +58,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
 	    Double speed = myEnemy.getProperty("SpeedProperty").getProperty();
-	    this.addProperty(new SpeedProperty(0, 0, speed + speed));	    
+	    this.addProperty(new SpeedProperty(0,0, mySpeedFactor*speed));
 	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();

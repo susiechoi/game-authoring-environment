@@ -18,10 +18,10 @@ import engine.sprites.enemies.Enemy;
  * Class used for defining a wave of enemies to appear in a level
  */
 public class Wave {
-    public static final int DEFAULT_WAVE_TIME = 5;
+    public static final int DEFAULT_WAVE_TIME = 3;
 
     private Map<Path, Map<Enemy, Integer>> myWaveMap;
-    private int myTime;
+    private double myTime;
 
     @Deprecated
     public Wave(Path path) {
@@ -60,12 +60,13 @@ public class Wave {
 	myWaveMap.put(new Path(null, null, null, null, null, null, 0, number, number), enemyMap);
     }
     
-    public int getWaveTime() {
+    public double getWaveTime() {
 	return myTime;
     }
     
-    public void setWaveTime(int time) {
+    public void setWaveTime(double time) {
 	myTime = time;
+	System.out.println("My time!!!! " + myTime);
     }
 
     public void addEnemy(Enemy enemy, Path path, int number) {
@@ -120,9 +121,9 @@ public class Wave {
      * @return Enemy: an enemy object
      */
     @Deprecated
-    public Enemy getEnemy() {
+    public Enemy getEnemy(int count) {
 	for(Path path : myWaveMap.keySet()) {
-	   Enemy potentialEnemy = getEnemySpecificPath(path);
+	   Enemy potentialEnemy = getEnemySpecificPath(path, count);
 	   if(potentialEnemy != null) {
 	       return potentialEnemy;
 	   }
@@ -131,13 +132,17 @@ public class Wave {
 
     }
     
-    public Enemy getEnemySpecificPath(Path path) {
+    public Enemy getEnemySpecificPath(Path path, int count) {
 	for (Entry<Enemy, Integer> entry : myWaveMap.get(path).entrySet()) {
-		if (entry.getValue() > 0) {
+		if (entry.getValue() > 0 && count >= myTime) {
 		    Enemy retEnemy = entry.getKey();
 		    decrementEnemyCount(retEnemy, path);
 		    return new Enemy(retEnemy);
 		}
+		System.out.println("Couldnt spawn enemy!");
+		System.out.println("Timing: ");
+		System.out.println("Count " + count);
+		System.out.println("myTime: " + myTime);
 	    }
 	return null;
     }
