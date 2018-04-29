@@ -20,7 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -81,7 +81,7 @@ public class CreatePathScreen extends PathScreen {
 			grid.getStartingPosition(grid.getCheckGrid());
 
 			getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid(), startImage, pathImage, endImage), myBackgroundImage, 
-				pathImage, startImage, endImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
+				pathImage, startImage, endImage, grid.getPathSize(), grid.getGridWidth(), grid.getGridHeight());
 			getView().getObjectAttribute("Path", "", "myPathMap");
 			getView().getObjectAttribute("Path", "", "myBackgroundImage");
 			getView().getObjectAttribute("Path", "", "myPathSize");
@@ -90,7 +90,7 @@ public class CreatePathScreen extends PathScreen {
 			getView().getObjectAttribute("Path", "", "myEndImage");
 			getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 		    } catch (ObjectNotFoundException e1) {
-			Log.debug(e1);
+			//Log.debug(e1);
 			getView().loadErrorScreen("NoObject");
 		    }
 		} else {

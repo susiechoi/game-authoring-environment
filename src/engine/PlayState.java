@@ -7,6 +7,8 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
+
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
@@ -101,6 +103,11 @@ public class PlayState implements GameData {
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
+	    try {
+		myMediator.getSoundFactory().playSoundEffect("cannon"); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // YIKES THaT'S AND EASY FAIL
+	    }
 	}
 	updateScore(toBeRemoved);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
@@ -135,6 +142,12 @@ public class PlayState implements GameData {
 		myMediator.updateLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
 		myMediator.nextLevel();
+		try {
+		    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
+		} catch (FileNotFoundException e1) {
+		    e1.printStackTrace(); //TODO!!!
+		}
+		
 	    }
 	    else {
 		// TODO: end game, player won
@@ -149,6 +162,11 @@ public class PlayState implements GameData {
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();
+	    try {
+		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // TODO: 
+	    }
 	}
     }
 
@@ -221,7 +239,11 @@ public class PlayState implements GameData {
 	myTowerManager.upgrade(tower,"rando",myResources.get());
 	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
-
+	try {
+	    myMediator.getSoundFactory().playSoundEffect("cash"); //TODO: make custom
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace(); //TODO
+	} 
     }
 
     /**
