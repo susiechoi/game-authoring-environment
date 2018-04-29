@@ -269,7 +269,6 @@ public class PlayState implements GameData {
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
-    	System.out.println("PLAY STATE");
 	myTowerManager.moveTowers(tower, c);
     }
 }
