@@ -290,14 +290,4 @@ public class GameScreen extends Screen {
 	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
     }
 
-	private void gameStartAction() {
-		MEDIATOR.startGameLoop();
-		gamePane.setCenter(GAME_PANEL.getPanel());
-	}
-	public void gameStarted() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStartAction());
-	}
-
 }
