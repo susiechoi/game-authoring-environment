@@ -6,10 +6,13 @@ import java.util.Map;
 
 import com.sun.javafx.tools.packager.Log;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
 public class PathMaker {
@@ -17,27 +20,37 @@ public class PathMaker {
     private GridPane grid;
     private int myPathSize;
 
-    public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
+    public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int col, int row, Pane gamePane) {
 	grid = new GridPane();
-	grid.setMaxSize(1020, 650);
-	//		System.out.println("IMAGE: " +backgroundImage);
+	grid.setGridLinesVisible(true);
 	grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
+	grid.prefHeightProperty().bind(gamePane.heightProperty());
+	grid.prefWidthProperty().bind(gamePane.widthProperty());
+	grid.maxHeightProperty().bind(gamePane.heightProperty());
+	grid.maxWidthProperty().bind(gamePane.widthProperty());
+	grid.minHeightProperty().bind(gamePane.heightProperty());
+	grid.minWidthProperty().bind(gamePane.widthProperty());
+	
+//	NumberBinding maxScale = Bindings.min(gamePane.widthProperty(), gamePane.heightProperty());
+//	grid.scaleXProperty().bind(maxScale);
+//	grid.scaleYProperty().bind(maxScale);
+
 	myPathSize = pathSize;
-	setGridConstraints(grid);
+	setGridConstraints(grid, row, col);
 	addImagesToGrid(map);
 	return grid;
     }
 
-    public void addImagesToGrid(Map<String, List<Point>> map) {
+
+    private void addImagesToGrid(Map<String, List<Point>> map) {
 	for (String key: map.keySet()) {
-	    String imageKey = key.substring(1);
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
 		Point point = pointList.get(i);
 		// TODO handle IllegalArgumentException where key is invalid
 		ImageView image = new ImageView();
 		try{
-		    image = new ImageView(new Image(imageKey));
+		    image = new ImageView(new Image(key));
 		}
 		catch(IllegalArgumentException e){
 		    Log.debug(e);
@@ -52,15 +65,15 @@ public class PathMaker {
 	}
     }
 
-    public void setGridConstraints(GridPane grid) {
-	for (int i = 0; i < 1020/myPathSize; i++) {
+    private void setGridConstraints(GridPane grid, int numRow, int numCol) {
+	for (int i = 0; i < numCol; i++) {
 	    ColumnConstraints colConst = new ColumnConstraints();
-	    colConst.setPrefWidth(myPathSize);
+	    colConst.setPercentWidth(100.0/numCol);
 	    grid.getColumnConstraints().add(colConst);
 	}
-	for (int i = 0; i < 750/myPathSize; i++) {
+	for (int i = 0; i < numRow; i++) {
 	    RowConstraints rowConst = new RowConstraints();
-	    rowConst.setPrefHeight(myPathSize);
+	    rowConst.setPercentHeight(100.0/numRow);
 	    grid.getRowConstraints().add(rowConst);         
 	}
     }

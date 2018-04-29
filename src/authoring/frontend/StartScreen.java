@@ -82,7 +82,7 @@ public class StartScreen extends AuthoringScreen {
 	}
 
 	private void setupNewGameComponents(VBox vbox) {
-		ArrayList<String> existingThemes = new ArrayList<String>(); 
+		ArrayList<String> existingThemes = new ArrayList<>(); 
 		existingThemes.add(getErrorCheckedPrompt("ThemeSelector"));
 		try {
 			existingThemes.addAll(getPropertiesReader().findVals(DEFAULT_THEMES));

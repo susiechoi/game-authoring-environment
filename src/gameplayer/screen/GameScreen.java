@@ -9,6 +9,9 @@ import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 
 import authoring.AuthoringController;
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.PlayController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -30,6 +33,7 @@ public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
 	private final String DEFAULT_SHARED_STYLESHEET;
+	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;

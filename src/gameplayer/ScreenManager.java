@@ -16,6 +16,7 @@ import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Parent;
 
 /**
@@ -93,7 +94,6 @@ public class ScreenManager extends View {
 
 	public void loadGameScreenNew() {
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
-		System.out.println("trying to make a playcontroller!!");
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
 	}
