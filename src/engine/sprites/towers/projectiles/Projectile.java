@@ -7,6 +7,7 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.DamageProperty;
+import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.SpeedProperty;
 import engine.sprites.enemies.Enemy;
@@ -25,6 +26,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
     private int myHits = 1;
+    private MovingProperty myMovingProperty;
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -33,10 +35,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
      */
-    public Projectile(String name, double size, String image, List<Property<Object>> properties) {
+    public Projectile(String name, double size, String image, List<Property> properties) {
 	super(name, image, size, properties);
 	mySize = size; 
 	hitTargets = new ArrayList<>();
+	for (Property p: properties) {
+	    System.out.println(p.getName() + " in projectile property list");
+	}
     }
 
     /**
@@ -47,7 +52,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param shooterX
      * @param shooterY
      */
-    @SuppressWarnings("unchecked")
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
 	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	myTarget = target;
@@ -59,20 +63,21 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	this.place(shooterX, shooterY);
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
+	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
     }
 
     /**
      * Moves image in direction of it's orientation
      */
     public void move(double elapsedTime) {
-	if (this.myTarget.isAlive()) {
-	    rotateImage();
+	try {
+	    myMovingProperty.move(this, elapsedTime);
+	}catch(NullPointerException e) {
+	    //this means there is not movement property defined for the projectile, so don't move them
+	    System.out.println("no movement property");
+	    return;
 	}
-	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
-	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-	this.getImageView().setX(this.getX()+xMove);
-	this.getImageView().setY(this.getY()+yMove);
+	
     }
 
     /**
@@ -120,5 +125,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
     
     public void setImage(String image) {
 	super.updateImage(image);
+    }
+    
+    public ShootingSprites getTarget() {
+	return myTarget;
+    }
+
+    public double getSpeed() {
+	return this.getProperty("SpeedProperty").getProperty();
     }
 }

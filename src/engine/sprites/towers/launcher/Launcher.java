@@ -6,6 +6,7 @@ import java.util.List;
 import engine.builders.PropertyBuilder;
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
+import engine.sprites.properties.FireRateProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.projectiles.Projectile;
@@ -24,17 +25,17 @@ public class Launcher extends Manager<Projectile>{
 
     private Projectile myProjectile;
     private double timeSinceLastShot;
-    private List<Property<Object>> launcherProperties;
+    private List<Property> launcherProperties;
     private PropertyBuilder myPropertyFactory;
 
-    public Launcher(Projectile projectile, List<Property<Object>> properties) {
+    public Launcher(Projectile projectile, List<Property> properties) {
 	myProjectile = projectile;
 	launcherProperties = properties;
 	timeSinceLastShot = 0;
     }
 
     public Launcher(Launcher launcher) {
-	launcherProperties = new ArrayList<Property<Object>>();
+	launcherProperties = new ArrayList<Property>();
 	//TODO do we have to do this
 	for(Property p : launcher.getProperties()) {
 	    launcherProperties.add(myPropertyFactory.getProperty(p));
@@ -64,8 +65,11 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+//	System.out.println("LAUNCHING");
 	timeSinceLastShot=0;
+//	System.out.println(myProjectile.getProperty("Boomerang")+ " is boomerang prop in launcher");
 	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
+	System.out.println("launched Projectile " + launchedProjectile.getProperties().size());
 	this.addToActiveList(launchedProjectile);
 	return launchedProjectile;
     }
@@ -87,7 +91,7 @@ public class Launcher extends Manager<Projectile>{
 	myProjectile.addProperty(property);
     }
 
-    public List<Property<Object>> getProperties(){
+    public List<Property> getProperties(){
 	return launcherProperties;
     }
 
@@ -126,7 +130,8 @@ public class Launcher extends Manager<Projectile>{
      * @return 
      */
     public boolean hasReloaded(double elapsedTime) {
-	boolean hasReloaded = (boolean) this.getProperty("FireRateProperty").execute(timeSinceLastShot);
+	FireRateProperty fireRate = (FireRateProperty) this.getProperty("FireRateProperty");
+	boolean hasReloaded = fireRate.hasReloaded(timeSinceLastShot);
 	timeSinceLastShot+=elapsedTime;
 	return hasReloaded;
     }

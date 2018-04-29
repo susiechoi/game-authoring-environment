@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,10 +15,11 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+//import jdk.internal.jline.internal.Log;
 import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
@@ -55,10 +55,7 @@ public class CreatePathScreen extends PathScreen {
 		setSaved();
 		List<Point> startCoords = grid.getStartingPosition(grid.getCheckGrid());
 		if (startCoords.size() == 0) {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    alert.setTitle("Path Cutomization Error");
-		    alert.setContentText("Your path has no starting blocks");
-		    alert.showAndWait();
+		    getView().loadErrorAlert("PathNoStart");
 		}
 		for (Point point: startCoords) {
 		    gridCheck = false;
@@ -81,7 +78,7 @@ public class CreatePathScreen extends PathScreen {
 			grid.getStartingPosition(grid.getCheckGrid());
 
 			getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid(), startImage, pathImage, endImage), myBackgroundImage, 
-				pathImage, startImage, endImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
+				pathImage, startImage, endImage, grid.getPathSize(), grid.getGridWidth(), grid.getGridHeight());
 			getView().getObjectAttribute("Path", "", "myPathMap");
 			getView().getObjectAttribute("Path", "", "myBackgroundImage");
 			getView().getObjectAttribute("Path", "", "myPathSize");
@@ -94,10 +91,7 @@ public class CreatePathScreen extends PathScreen {
 			getView().loadErrorScreen("NoObject");
 		    }
 		} else {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    alert.setTitle("Path Customization Error");
-		    alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
-		    alert.showAndWait();
+		    getView().loadErrorAlert("PathCustomization");
 		}
 	    }
 	});

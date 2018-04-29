@@ -41,6 +41,7 @@ public class EnemyManager extends ShootingSpriteManager {
 
     }
 
+
     /**
      * Moves all the enemies along the path on every step.
      * If the enemy isn't alive, remove it from the enemy manager. If the enemy reaches the end 
@@ -52,13 +53,8 @@ public class EnemyManager extends ShootingSpriteManager {
 	List<Sprite> deadEnemies = new ArrayList<>();
 	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
-
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		if(!enemy.isAlive()) {
-		    myEnemies.get(path).remove(enemy);
-		    break;
-		}
 		newEnemies.get(path).add(enemy);
 		if (!enemy.isAlive()) {
 		    newEnemies.get(path).remove(enemy);
@@ -78,11 +74,12 @@ public class EnemyManager extends ShootingSpriteManager {
 		    enemy.setIndex(pathIndex);
 		    }
 		}
+	    myEnemies.get(path).removeAll(deadEnemies);
 	    }
-	myEnemies = newEnemies;
+	
+	
 	return deadEnemies;
     }
-
 
     private boolean isInRange(Point curr, Point target) {
 	return curr.distance(target)<10;
@@ -117,7 +114,7 @@ public class EnemyManager extends ShootingSpriteManager {
     public void clearEnemiesMap() {
 	myEnemies.clear();
     }
-
+    
     /**
      * Method to remove enemies from the current enemies map
      * @param toBeRemoved

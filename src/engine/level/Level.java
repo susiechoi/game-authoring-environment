@@ -71,11 +71,6 @@ public class Level {
 	public void addPath(Path path) {
 		myPaths.add(path); 
 	}
-	
-	public void clearPaths(Path path) {
-	    	//TODO
-	}
-
 	/**
 	 * Returns an unmodifiable list of path objects in the level
 	 * 
@@ -92,7 +87,6 @@ public class Level {
 	 * @param tower: The tower object to be added
 	 */
 	public void addTower(String name, Tower tower) {
-		//	System.out.println(tower.getImageView().getFitWidth() + " level tower width");
 		myTowers.put(name, tower);
 	}
 
@@ -121,6 +115,9 @@ public class Level {
 	 * @return List<String>: all the towers available in the level
 	 */
 	public List<String> getAllTowers() {
+		if (myTowers.size() > 1) {
+			myTowers.remove(DEFAULT_OBJ_NAME);
+		}
 		List<String> listToReturn = new ArrayList<String>(); 
 		listToReturn.addAll(myTowers.keySet()); 
 		return listToReturn; 
@@ -198,16 +195,6 @@ public class Level {
 		if(!myWaves.contains(wave)) {
 			myWaves.add(wave);
 		}
-		//		if(myWaves.containsKey(path)) {
-		//			List<Wave> waves = myWaves.get(path);
-		//			waves.add(wave);
-		//		}
-		//		else {
-		//			ArrayList<Wave> waveList = new ArrayList<>();
-		//			waveList.add(wave);
-		//			myWaves.put(path,waveList);
-		//		}
-
 	}
 
 	public void addWave(int waveNumber) {
@@ -355,18 +342,20 @@ public class Level {
 	public String getBackGroundImage() {
 		return myPaths.get(myPaths.size()-1).getBackgroundImage();
 	}
+	
+	public int getGridWidth() {
+		return myPaths.get(myPaths.size() - 1).getGridWidth();
+	}
+	
+	public int getGridHeight() {
+		return myPaths.get(myPaths.size() - 1).getGridHeight();
+	}
+
 
 	public int getPathSize() {
 		return myPaths.get(myPaths.size()-1).getPathSize();
 	}
 	
-	public int getColumnCount() {
-		return myPaths.get(myPaths.size()-1).getColumnCount();
-	}
-	
-	public int getRowCount() {
-		return myPaths.get(myPaths.size()-1).getRowCount();
-	}
 	
 	public String getPathImage() {
 		return myPaths.get(myPaths.size()-1).getPathImage();
@@ -389,30 +378,14 @@ public class Level {
 	public void addWave(Wave wave) {
 		myWaves.add(wave);
 	}
-
-	public void updateAllProperties() {
-		if (myTowers.size() > 1) {
-			myTowers.remove(DEFAULT_OBJ_NAME);
-		}
-		//updateTowerProperties(); 
-		//updateEnemyProperties(); 
+	public void replacePaths(List<Path> currPaths) {
+	    myPaths.removeAll(getPaths());
+	    System.out.println("paths size adding" + currPaths.size());
+	    myPaths.addAll(currPaths);
+	    System.out.println("path size after readding" + myPaths.size());
+	    for(Wave wave : myWaves) {
+		wave.removeStalePaths(currPaths);
+	    }
 	}
-
-//	private void updateTowerProperties() {
-//		Tower tower; 
-//		for (String towerName : myTowers.keySet()) {
-//			tower = myTowers.get(towerName);
-//			tower.updateProperties();
-//		}
-//	}
-
-//	public void updateEnemyProperties() {
-//		Enemy enemy; 
-//		for (String enemyName : myEnemies.keySet()) {
-//			enemy = myEnemies.get(enemyName);
-//			enemy.updateProperties();
-//		}
-//	}
-
-
 }
+

@@ -65,7 +65,7 @@ public class PlayState implements GameData {
 	myResources = new SimpleIntegerProperty((int) settings.startingMoney());
 	myHealth = new SimpleIntegerProperty((int) settings.startingHealth());
 	myMediator.addIntegerProperties(myResources, myScore, myHealth);
-	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getColumnCount(), currentLevel.getRowCount());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
 	mySettings=settings;
 	List<FrontEndTower> availTowers = new ArrayList<>();
 	availTowers.addAll(currentLevel.getTowers().values());
@@ -143,7 +143,7 @@ public class PlayState implements GameData {
 	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
 	myMediator.updateLevel(currentLevel.myNumber());
-	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getColumnCount(), currentLevel.getRowCount());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
     /**
@@ -217,7 +217,7 @@ public class PlayState implements GameData {
 	myMediator.updateLevel(currentLevel.myNumber());
 	// TODO: call Mediator to trigger next level
 	myMediator.nextLevel();
-	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getColumnCount(), currentLevel.getRowCount());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
     private void spawnEnemies() {

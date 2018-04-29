@@ -10,7 +10,7 @@ import java.util.List;
  * @date 4/7/18
  *
  */
-public abstract class UpgradeProperty<T> extends Property<Object> {
+public abstract class UpgradeProperty extends Property {
 
     private double upgradeCost;
     private double upgradeValue;
