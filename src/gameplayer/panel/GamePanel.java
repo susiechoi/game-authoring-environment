@@ -233,9 +233,9 @@ public class GamePanel extends Panel{
 	    }
 	}
 	else if(!towerClick) {
-	    GAME_SCREEN.blankGamePanelClick();
 	    removeTowerRangeIndicator();
 	}
+	GAME_SCREEN.blankGamePanelClick();
 	towerClick = false;
     }
 
