@@ -310,6 +310,3 @@ public class AuthoringController implements MVController{
 	}
     }
 }
-
-
-

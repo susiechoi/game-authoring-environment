@@ -28,7 +28,7 @@ import voogasalad.util.reflection.*;
 public class PropertyFactory {
     
     private Map<String, Property> currentProperties;
-    protected ResourceBundle PROPERTIES = ResourceBundle.getBundle("authoring/resources/properties");
+    protected ResourceBundle PROPERTIES = ResourceBundle.getBundle("engine/sprites/properties/resources/properties");
     private final String PACKAGE = "engine.sprites.properties.";
     
     public PropertyFactory() {
