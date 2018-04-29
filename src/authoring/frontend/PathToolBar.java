@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
  *
  */
 public abstract class PathToolBar extends AdjustScreen {
+
     public static final int TOOLBAR_HEIGHT = 120;
     public static final int TOOLBAR_WIDTH = 600;
     private HBox myPathToolBar;

@@ -7,7 +7,7 @@ import frontend.UIFactory;
 import gameplayer.screen.GameScreen;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-//import sound.ITRTSoundFactory;
+import voogasalad.util.soundfactory.*;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -15,15 +15,10 @@ import com.sun.javafx.tools.packager.Log;
 
 public class SettingsPanel extends Panel {
 
-
-
     private final GameScreen GAME_SCREEN;
     private final PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
-//    private ITRTSoundFactory SOUND_FACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
-
-
 
     public SettingsPanel(GameScreen gameScreen) {
         GAME_SCREEN = gameScreen;

@@ -139,6 +139,7 @@ public class Path {
 	public int getGridHeight() {
 		return myHeight;
 	}
+
 	
 	public String getPathImage( ) {
 		return myPathImage;
@@ -150,5 +151,9 @@ public class Path {
 	
 	public String getEndImage( ) {
 		return myEndImage;
+	}
+	public void updatePathPoints(List<Point> newCoords, Map<String, List<Point>> newImageMap) {
+	    myCoordinates = newCoords;
+	    myPathMap = newImageMap;
 	}
 }

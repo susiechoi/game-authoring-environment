@@ -1,6 +1,8 @@
 package controller;
 
+import java.awt.Point;
 import java.util.List;
+import java.util.Map;
 
 import authoring.AuthoredGame;
 import authoring.AuthoringModel;
@@ -10,6 +12,7 @@ import engine.PlayState;
 import engine.level.Level;
 import frontend.StageManager;
 import gameplayer.ScreenManager;
+import javafx.animation.Timeline;
 import xml.AuthoringModelReader;
 
 /**
@@ -56,10 +59,11 @@ public class PlayController {
 		AuthoredGame playModel = myReader.createModel(pathToXML);
 		List<Level> levels = playModel.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);
-		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getGridWidth(), levels.get(0).getGridHeight());
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
+		System.out.println("starting animation");
 	}
+
 
 	/**
 	 * Creates a new demo play based on the AuthoringModel object authored by
@@ -72,11 +76,11 @@ public class PlayController {
 		List<Level> levels = model.unmodifiableLevels();
 		myScreenManager.loadGameScreenNew();
 		PlayState play = new PlayState(myMediator, levels, 0, model.getSettings(), 0);
-		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getGridWidth(), levels.get(0).getGridHeight());
-		myScreenManager.loadGameScreenNew();
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
 	}
+	
+
 
 	/**
 	 * Calls the ScreenManager to load the InstructionScreen

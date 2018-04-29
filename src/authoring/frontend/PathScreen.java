@@ -12,10 +12,10 @@ public abstract class PathScreen extends AdjustScreen {
     public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
     public static final String DEFAULT_PLUS_IMAGE = "file:images/plus.png";
     public static final String DEFAULT_MINUS_IMAGE = "file:images/minus.png";
+    public static final String DEFAULT_NOFILE_ERROR_KEY = "NoFile";
     private StackPane pathRoot;
     protected GridPane pathGrid;
     protected CreatePathGrid grid;
-
 
     protected PathScreen(AuthoringView view) {	
 	super(view);

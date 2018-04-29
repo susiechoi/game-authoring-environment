@@ -2,8 +2,10 @@ package engine.sprites.enemies.wave;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
@@ -77,8 +79,6 @@ public class Wave {
 	}
     }
 
-
-
     /**
      * Returns a map that an Enemy type key to an Integer value representing the number
      * of that type in the wave. 
@@ -101,8 +101,6 @@ public class Wave {
 	    return Collections.unmodifiableMap(enemiesMap);
 	}
     }
-
-
 
     /**
      * Decrements the number of a specified enemy remaining in the wave
@@ -167,5 +165,14 @@ public class Wave {
 	    }
 	}
 	return true;
+    }
+    
+    public void removeStalePaths(List<Path> currentPaths) {
+	Set<Path> wavePaths = myWaveMap.keySet();
+	for(Path path : wavePaths) {
+	    if(!currentPaths.contains(path)) {
+		myWaveMap.remove(path);
+	    }
+	}
     }
 }

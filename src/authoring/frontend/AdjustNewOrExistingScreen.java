@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * @author sarahbland
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
@@ -8,25 +9,21 @@
 
 package authoring.frontend;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.sun.javafx.tools.packager.Log;
-
-import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
-    public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
+	public static final String DEFAULT_OBJATTRIBUTEDNE_KEY = "ObjectAttributeDNE"; 
+	public static final String DEFAULT_NOIMAGEFILE_KEY = "NoImageFile";
+	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
+	public static final String EMPTY_STRING = "";
 
     private String myFieldsPropertiesPath; 
     private String myObjectDescription; 
@@ -43,7 +40,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
     protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 	super(view);
 	setConstants();
-	setSaved();
 	System.out.println("HERRE: " +selectedObjectName);
 	myFieldsPropertiesPath = fieldsPropertiesPath; 
 	myObjectDescription = objectDescription; 
@@ -54,7 +50,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
     protected AdjustNewOrExistingScreen(AuthoringView view) {
 	super(view);
 	setConstants();
-	setSaved();
     }
 
     private void setConstants() {
@@ -88,31 +83,30 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
     }
 
     protected abstract Parent populateScreenWithFields();
-
+    
     protected void populateFieldsWithData() {
-	AttributeFinder attributeFinder = new AttributeFinder(); 
-
-	Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
-
-	try {
-	    fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
-	} catch (MissingPropertiesException e) {
-	    Log.debug(e);
-	    getView().loadErrorScreen("ObjectAttributeDNE");
+//		AttributeFinder attributeFinder = new AttributeFinder(); 
+//
+//		Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
+//
+//		try {
+//			fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);
+//			getView().loadErrorScreen(DEFAULT_OBJATTRIBUTEDNE_KEY);
+//		}
+//
+//		for (String key : fieldsToAttributes.keySet()) {
+//			Object myField = null; 
+//			try {
+//				myField = attributeFinder.retrieveFieldValue(key, this);
+//				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
+//			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
+//			    Log.debug(e);	
+//			    getView().loadErrorScreen(DEFAULT_OBJATTRIBUTEDNE_KEY);
+//			}
+//		}
 	}
-
-	for (String key : fieldsToAttributes.keySet()) {
-	    Object myField = null; 
-	    try {
-		myField = attributeFinder.retrieveFieldValue(key, this);
-		getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
-	    } catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
-		Log.debug(e);	
-		getView().loadErrorScreen("ObjectAttributeDNE");
-	    }
-	}
-
-    }
 
     /**
      * Used when the changes on the Screen are applied and the Screen must convey whether the object that has been created is new or existing 
@@ -163,10 +157,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	ComboBox<String> imageDropdown = new ComboBox<String>();
 	ImageView imageDisplay = new ImageView(); 
 	try {
-	    imageDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(propertiesFilepath));
+	    imageDropdown = getUIFactory().makeTextDropdown(getPropertiesReader().allKeys(propertiesFilepath));
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    getView().loadErrorScreen("NoImageFile");
+	    getView().loadErrorScreen(DEFAULT_NOIMAGEFILE_KEY);
 	} 
 	ComboBox<String> imageDropdownCopy = imageDropdown;
 	imageDropdown.addEventHandler(ActionEvent.ACTION,e -> {
@@ -175,7 +169,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	    }
 	    catch(MissingPropertiesException e2) {
 		Log.debug(e2);
-		getView().loadErrorScreen("NoImageFile");
+		getView().loadErrorScreen(DEFAULT_NOIMAGEFILE_KEY);
 	    }
 	});
 
@@ -184,7 +178,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		    getErrorCheckedPrompt("NewImageName"),imageDropdown, imageDisplay);
 	    String key = getPropertiesReader().findKey(propertiesFilepath, (String)getView().getObjectAttribute(objectType, mySelectedObjectName, "myImage"));
 	    ActionEvent fakeSelection = new ActionEvent();
-	    if(key.equals("")) {
+	    if(key.equals(EMPTY_STRING)) {
 		imageDropdown.getSelectionModel().select(0);
 	    }
 	    else {
@@ -193,7 +187,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	    }
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    getView().loadErrorScreen("NoImageFile");
+	    getView().loadErrorScreen(DEFAULT_NOIMAGEFILE_KEY);
 	}
 	return imageSelect;
     }
