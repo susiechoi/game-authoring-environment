@@ -28,8 +28,8 @@ public class GraphTypeScreen extends AuthoringScreen {
 		List<String> graphOptions = new ArrayList<String>();
 		graphOptions.add(title);
 		graphOptions.addAll(getUIFactory().getFileNames(DEFAULT_GRAPHING_FOLDER));
-		Button graphButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("GraphTopic"));
-		ComboBox<String> dropdown = getUIFactory().makeTextDropdownSelectAction("", graphOptions, 
+		Button graphButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("GraphTopic"));
+		ComboBox<String> dropdown = getUIFactory().makeTextDropdownSelectAction(graphOptions, 
 				e -> {graphButton.setDisable(false);}, 
 				e -> {graphButton.setDisable(true);}, title);
 		graphButton.setDisable(true);

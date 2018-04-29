@@ -43,7 +43,7 @@ public class GraphMenuScreen extends AuthoringScreen {
 			}
 		}
 		
-		Button singleButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SingleGame"));
+		Button singleButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("SingleGame"));
 		String choosePrompt = getView().getErrorCheckedPrompt("ChooseGame");
 		List<String> singleDropdownOptions = new ArrayList<String>();
 		singleDropdownOptions.add(choosePrompt);
@@ -64,7 +64,7 @@ public class GraphMenuScreen extends AuthoringScreen {
 		vb.getChildren().addAll(singleChooser, singleButton);
 		vb.getChildren().add(new Text(getErrorCheckedPrompt("or")));
 		
-		Button compareButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CompareGames"));
+		Button compareButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CompareGames"));
 		List<String> dropdownOptions = new ArrayList<String>();
 		dropdownOptions.add(choosePrompt);
 		dropdownOptions.addAll(relevantGraphs);

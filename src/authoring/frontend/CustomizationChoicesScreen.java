@@ -18,13 +18,14 @@ import javafx.scene.text.Text;
  */
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
+	
 	public static final String TEST_PROPERTIES = "images/TestProperties.properties";
-
-
+	public static final String DEFAULT_EDITEXISTINGLEVEL_KEY = "EditExistingLevel"; 
+	public static final String DEFAULT_GRAPHS_KEY = "Graphs"; 
+	
 	protected CustomizationChoicesScreen(AuthoringView view) {
 	    	super(view);
 	}
-
 	
 	/**
 	 * Creates UI elements (buttons, selectors) necessary for User to choose next customization
@@ -41,21 +42,21 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		Text heading = getUIFactory().makeScreenTitleText(getView().getGameName());
 		vbox.getChildren().add(heading);
 
-		Button resourcesButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CustomizeResources"));
+		Button resourcesButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CustomizeResources"));
 		resourcesButton.setOnAction(e -> {getView().goForwardFrom(this.getClass().getSimpleName()+"ResourcesButton");});
 		vbox.getChildren().add(resourcesButton);
 
-		Button newLevelButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("CreateLevelLabel"));
+		Button newLevelButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CreateLevelLabel"));
 		newLevelButton.setOnAction(e -> {
 			getView().addNewLevel();
 			getView().goForwardFrom(this.getClass().getSimpleName()+"EditNewLevel");
 		});
-		Button demoButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("DemoLabel"));
+		Button demoButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
 		    	getView().writeToFile();
 		    	getView().playControllerDemo();
 		});
-		Button saveButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("SaveLabel"));
+		Button saveButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("SaveLabel"));
 		saveButton.setDisable(false);
 		saveButton.setOnAction(e -> {
 		    	setSaved();
@@ -69,18 +70,18 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		currentLevels.add(levelPrompt);
 		currentLevels.addAll(getView().getLevels()); 
 		if (currentLevels.size() > 0) {
-			Button editButton = getUIFactory().makeTextButton("editbutton", levelPrompt);
-			ComboBox<String> levelChooser = getUIFactory().makeTextDropdownSelectAction("", currentLevels, e -> {
+			Button editButton = getUIFactory().makeTextButton(levelPrompt);
+			ComboBox<String> levelChooser = getUIFactory().makeTextDropdownSelectAction(currentLevels, e -> {
 				editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, levelPrompt);
 			editButton.setDisable(true);
 			editButton.setOnAction(e -> {
 				getView().setLevel(Integer.parseInt(levelChooser.getValue()));
-				getView().goForwardFrom(this.getClass().getSimpleName()+"EditExistingLevel");
+				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDITEXISTINGLEVEL_KEY);
 			});
-			Button autogenerateButton = getUIFactory().makeTextButton("", getErrorCheckedPrompt("AutogenerateLevel"));
+			Button autogenerateButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("AutogenerateLevel"));
 			autogenerateButton.setOnAction(e -> {
 				getView().autogenerateLevel(); 
-				getView().goForwardFrom(this.getClass().getSimpleName()+"EditExistingLevel");
+				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDITEXISTINGLEVEL_KEY);
 			});
 			hbox.getChildren().add(levelChooser);
 			hbox.getChildren().add(editButton);
@@ -106,10 +107,10 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 //		}
 //		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
+		Button visualizations = getUIFactory().makeTextButton(getErrorCheckedPrompt(DEFAULT_GRAPHS_KEY));
 
-		Button visualizations = getUIFactory().makeTextButton("", getErrorCheckedPrompt("Graphs"));
 		visualizations.setOnAction(click-> {
-			getView().goForwardFrom(this.getClass().getSimpleName()+"Graphs");
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_GRAPHS_KEY);
 		});
 		
 		vbox.getChildren().addAll(newLevelHBox, hbox, demoButton, saveButton, visualizations, mainButton);
