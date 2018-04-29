@@ -53,7 +53,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	    mySpeed = newValue;
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "mySpeed", newValue);
 	});
-
+	
 	Slider enemyInitialHealthSlider = getUIFactory().setupSlider("enemyInitialHealthSlider",  getMyMaxHealthImpact()); 
 	myInitialHealthSlider = enemyInitialHealthSlider; 
 	HBox initialHealth = getUIFactory().setupSliderWithValue("enemyInitialHealthSlider", enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 

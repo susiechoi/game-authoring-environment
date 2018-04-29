@@ -11,6 +11,8 @@ import engine.sprites.Sprite;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.towers.launcher.Launcher;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 /**
@@ -75,6 +77,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @param initialPoint
      */
     public void setInitialPoint(Point initialPoint) {
+	System.out.println("INITIAL POINT: " +initialPoint);
 	targetPosition = initialPoint;
 	this.getImageView().setX(initialPoint.getX());
 	this.getImageView().setY(initialPoint.getY());
@@ -85,6 +88,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @param elapsedTime
      */
     public void move(double elapsedTime) {
+	
 	rotateImage();
 	double totalDistanceToMove = 50*elapsedTime; //getValue("SpeedProperty")*elapsedTime;
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
@@ -110,6 +114,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public Point currentPosition() {
 	Point position = new Point();
 	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
+//	position.setLocation(120, 30);
 	return position;
     }
 

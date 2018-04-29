@@ -147,8 +147,7 @@ public class AuthoringController implements MVController{
      * @param newAmount: the new amount of the specified enemy to put in the wave
      * @throws ObjectNotFoundException: thrown if the level isn't found
      */
-    public void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
-	Path path = getPathFromName(Integer.parseInt(pathName), level);
+    public void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int newAmount) throws ObjectNotFoundException {
 	Level thisLevel = myModel.getLevel(level);
 	Enemy thisEnemy = thisLevel.getEnemy(enemyKey);
 	Wave thisWave;
@@ -222,6 +221,15 @@ public class AuthoringController implements MVController{
     public void setGameName(String gameName) {
 	myModel.setGameName(gameName);
     }
+//	public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		myModel.makeTower(level, name);
+//	}
+//	
+//	public void makeEnemy(int myLevel, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		myModel.makeEnemy(myLevel, name);
+//	}
+
+	
 
     /**
      * Gets current name of the game
@@ -255,7 +263,9 @@ public class AuthoringController implements MVController{
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
-
+    public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
+	return myModel.getPathWithStartingPoint(level, point);
+    }
     /**
      * Method to retrieve the highest wave number found in a level (including all paths)
      * @param level is level desired
