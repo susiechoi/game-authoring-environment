@@ -39,9 +39,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	super(name, image, size, properties);
 	mySize = size; 
 	hitTargets = new ArrayList<>();
-	for (Property p: properties) {
-	    System.out.println(p.getName() + " in projectile property list");
-	}
     }
 
     /**

@@ -46,6 +46,7 @@ public class PlayState implements GameData {
     private Mediator myMediator;
     private List<Level> myLevels;
     private Level currentLevel;
+    private Level currentLevelCopy;
     private int currlvl;
     private boolean backgroundSet;
 
@@ -104,9 +105,6 @@ public class PlayState implements GameData {
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.removeFromMap(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
-	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	//myTowerManager.moveProjectiles(elapsedTime);
-	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
@@ -133,8 +131,6 @@ public class PlayState implements GameData {
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
-		    //newEnemy.updateImage();
-		    //enemy.move(path.initialPoint(),elapsedTime);
 		    myEnemyManager.addEnemy(currentPath, newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
@@ -149,6 +145,7 @@ public class PlayState implements GameData {
 	    if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
 		currentLevel = myLevels.get(currentLevel.myNumber());
 		myMediator.updateLevel(currentLevel.myNumber());
+		setLevel(currentLevel.myNumber());
 		// TODO: call Mediator to trigger next level
 		myMediator.nextLevel();
 		try {
@@ -200,9 +197,12 @@ public class PlayState implements GameData {
     }
 
     public void setLevel(int levelNumber) {
-	currentLevel = myLevels.get(levelNumber);
+	clearLevel();
+	currentLevel = myLevels.get(levelNumber - 1);
+	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
-	myEnemyManager.setEnemies(currentLevel.getEnemies().values());
+	myMediator.updateLevel(currentLevel.myNumber());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
     /**
@@ -210,7 +210,9 @@ public class PlayState implements GameData {
      */
     public void restartLevel() {
 	clearLevel();
-	setLevel(currlvl);
+	currentLevel = currentLevelCopy;
+	currentLevelCopy = new Level(currentLevel);
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());	
     }
 
     private void clearLevel() {
@@ -218,8 +220,11 @@ public class PlayState implements GameData {
 	toBeRemoved.addAll(myTowerManager.getListOfActive());
 	toBeRemoved.addAll(myTowerManager.removeAllProjectiles());
 	toBeRemoved.addAll(myEnemyManager.getListOfActive());
+	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
 	myTowerManager.getListOfActive().clear();
 	myEnemyManager.getListOfActive().clear();
+	myEnemyManager.clearEnemiesMap();
+
     }
 
     /**
@@ -270,7 +275,6 @@ public class PlayState implements GameData {
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
-    	System.out.println("PLAY STATE");
 	myTowerManager.moveTowers(tower, c);
     }
 }

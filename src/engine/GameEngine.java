@@ -72,10 +72,14 @@ public class GameEngine {
 	 * Starts Game Loop animation, so Game State continuously loops
 	 */
 	public void start() {
+<<<<<<< HEAD
 		myMediator.gameStarted();
 		while (gameTriggered) {
 			ANIMATION.play();
 		}
+=======
+	    ANIMATION.play();
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 
 	}
 
