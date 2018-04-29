@@ -15,7 +15,9 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  * @author Katherine Van Dyk
  * @author Ryan Pond 4/9
-
+ * 
+ * @param image
+ * @param projectileManager
  */
 public abstract class ShootingSprites extends Sprite{
 
