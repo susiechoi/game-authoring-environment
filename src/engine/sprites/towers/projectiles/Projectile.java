@@ -1,5 +1,6 @@
 package engine.sprites.towers.projectiles;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     private List<Sprite> hitTargets;
     private int myHits = 1;
     private MovingProperty myMovingProperty;
+    private Point targetDestination;
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -66,6 +68,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	hitTargets = new ArrayList<>();
 	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
 	myMovingProperty.setProjectileOrigin(shooterX, shooterY);
+	targetDestination = new Point();
+	targetDestination.setLocation(target.getX(), target.getY());
     }
 
     /**
@@ -129,11 +133,18 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	super.updateImage(image);
     }
     
-    public ShootingSprites getTarget() {
-	return myTarget;
+    public boolean isTargetAlive() {
+	return myTarget.isAlive();
     }
 
     public double getSpeed() {
 	return this.getProperty("SpeedProperty").getProperty();
+    }
+    public void setProjectileTarget(Point newTargetDestination) {
+	targetDestination = newTargetDestination;
+    }
+
+    public Point getTargetDestination() {
+	return targetDestination;
     }
 }
