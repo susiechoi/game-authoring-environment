@@ -28,10 +28,10 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
     private Slider myHealthImpactSlider; 
     private Slider myValueSlider; 
 
-    private Object mySpeed;
-    private Object myInitialHealth;
-    private Object myHealthImpact;
-    private Object myKillReward;
+    private Double mySpeed;
+    private Double myInitialHealth;
+    private Double myHealthImpact;
+    private Double myKillReward;
 
     protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
 	super(view, selectedObjectName, ENEMY_FIELDS, OBJECT_TYPE);
@@ -50,8 +50,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox enemySpeed = getUIFactory().setupSliderWithValue(enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed"));
 	vb.getChildren().add(enemySpeed);
 	mySpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    mySpeed = newValue;
-
+	    mySpeed = (Double) newValue;
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "mySpeed", newValue);
 	});
 
@@ -60,7 +59,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox initialHealth = getUIFactory().setupSliderWithValue(enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 
 	vb.getChildren().add(initialHealth);
 	myInitialHealthSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myInitialHealth = newValue;
+	    myInitialHealth = (Double) newValue;
 	    //getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myInitialHealth", newValue);
 	});
 
@@ -69,7 +68,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox enemyImpact = getUIFactory().setupSliderWithValue(enemyHealthImpactSlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 	vb.getChildren().add(enemyImpact);
 	myHealthImpactSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthImpact = newValue;
+	    myHealthImpact = (Double) newValue;
 	    //getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthImpact", newValue);
 	});
 
@@ -78,7 +77,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox enemyValue = getUIFactory().setupSliderWithValue(enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 	vb.getChildren().add(enemyValue);
 	myValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myKillReward = newValue;
+	    myKillReward = (Double) newValue;
 	    //getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myKillReward", newValue);
 	});
 
@@ -99,7 +98,9 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	    }
 
 	});
-
+	
+	vb.getChildren().add(makePropertySelector());
+	
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 	vb.getChildren().add(backAndApplyButton);
 

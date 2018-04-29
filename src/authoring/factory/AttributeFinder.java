@@ -86,7 +86,7 @@ public class AttributeFinder {
 	//		throw new ObjectNotFoundException(fieldName);
 	//	} 
 	//
-	private Object retrieveFieldValueSuper(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
+	public Object retrieveFieldValueSuper(String fieldName, Object objectWithFields) throws IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 		Object fieldValue = null; 
 		while (objectWithFields.getClass().getSuperclass() != null) {
 			for (Field aField : objectWithFields.getClass().getSuperclass().getDeclaredFields()) {
