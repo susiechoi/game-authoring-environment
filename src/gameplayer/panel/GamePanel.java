@@ -19,7 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
@@ -63,21 +62,15 @@ public class GamePanel extends Panel{
 
 	//TODO potentially fix needed?
 	Pane gamePane = new Pane();
-	ScrollPane panelRoot = new ScrollPane(gamePane);
-	panelRoot.setMaxHeight(Double.MAX_VALUE);
-	panelRoot.setMaxWidth(Double.MAX_VALUE);
+	scroll = new ScrollPane(gamePane);
+	scroll.setMaxHeight(Double.MAX_VALUE);
+	scroll.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
-
-	//used in old implementation, forces children to resize to fit view port
-	//panelRoot.setFitToHeight(true);	
-	//panelRoot.setFitToWidth(true);
-
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 
-	scroll = panelRoot;
 	spriteAdd = gamePane;
-	PANEL = panelRoot;
+	PANEL = scroll;
     }
 
     private boolean setBackgroundImage(String backgroundFilePath) {
@@ -101,15 +94,16 @@ public class GamePanel extends Panel{
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
-
-	PathMaker pathMaker = new PathMaker();
-	GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
-	//	setGridConstraints(grid, imageMap);
-	if (spriteAdd == null) {
-	    makePanel();
+	if(!pathSet) {
+	    PathMaker pathMaker = new PathMaker();
+	    GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	    //	setGridConstraints(grid, imageMap);
+	    if (spriteAdd == null) {
+		makePanel();
+	    }
+	    spriteAdd.getChildren().add(grid);
+	    pathSet = true;
 	}
-	spriteAdd.getChildren().add(grid);
-	pathSet = true;
 	return backgroundSet;
     }
 
