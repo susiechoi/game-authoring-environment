@@ -113,6 +113,7 @@ public class AuthoringView extends View {
 	}
 	protected void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int amount) {
 		try {
+
 		    myController.addWaveEnemy(level, path, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
@@ -263,6 +264,7 @@ public class AuthoringView extends View {
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
+
 	
 	protected Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) { 
 		try {
@@ -276,6 +278,7 @@ public class AuthoringView extends View {
 		return new HashMap<>();
 
 	}
+
 	protected Integer getHighestWaveNumber(int level) {
 	    try {
 	    return myController.getHighestWaveNumber(level);

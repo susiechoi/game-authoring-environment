@@ -355,18 +355,20 @@ public class Level {
 	public String getBackGroundImage() {
 		return myPaths.get(myPaths.size()-1).getBackgroundImage();
 	}
+	
+	public int getGridWidth() {
+		return myPaths.get(myPaths.size() - 1).getGridWidth();
+	}
+	
+	public int getGridHeight() {
+		return myPaths.get(myPaths.size() - 1).getGridHeight();
+	}
+
 
 	public int getPathSize() {
 		return myPaths.get(myPaths.size()-1).getPathSize();
 	}
 	
-	public int getColumnCount() {
-		return myPaths.get(myPaths.size()-1).getColumnCount();
-	}
-	
-	public int getRowCount() {
-		return myPaths.get(myPaths.size()-1).getRowCount();
-	}
 	
 	public String getPathImage() {
 		return myPaths.get(myPaths.size()-1).getPathImage();
