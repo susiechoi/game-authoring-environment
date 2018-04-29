@@ -44,6 +44,7 @@ public class PlayState implements GameData {
     private List<Level> myLevels;
     private Level currentLevel;
     private int currlvl;
+    private boolean backgroundSet;
 
     /**
      * Constructor for play state object that sets up initial levels.
@@ -71,9 +72,15 @@ public class PlayState implements GameData {
 	myMediator.setAvailableTowers(availTowers);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
+	backgroundSet = false;
     }
 
     public void update(double elapsedTime) {
+	//Background has to be passed after a layout pass has been done on the Scene in order to adapt to
+	//differences in computers screen size 
+	if(!backgroundSet) {
+	    backgroundSet = myMediator.setPath(myLevels.get(0).getLevelPathMap(), myLevels.get(0).getBackGroundImage(), myLevels.get(0).getPathSize(), myLevels.get(0).getGridWidth(), myLevels.get(0).getGridHeight());
+	}
 	count++;
 	checkLoss();
 	if (count % 120 == 0) {

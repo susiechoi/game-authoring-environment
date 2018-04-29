@@ -3,12 +3,7 @@ package gameplayer.panel;
 import java.awt.Point;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import com.sun.javafx.tools.packager.Log;
-
-import java.util.Map.Entry;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -20,7 +15,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
@@ -44,20 +38,25 @@ public class GamePanel extends Panel{
     private final UIFactory UIFACTORY;
     private Boolean towerClick = false;
     private Circle rangeIndicator;
+    private ScrollPane scroll;
 
     //TODO changes this to be passed from mediator ******************************************************************************
-    private final String BACKGROUND_FILE_PATH;
+    private final String DEFAULT_BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
+    private boolean backgroundSet;
+    private boolean pathSet;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
-	BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("backgroundFilePath");
+	DEFAULT_BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("defaultBackgroundFilePath");
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
 	//TODO probably a better way of doing this (thread canceling towerPlacement)
 	towerSelected =  null;
 	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
+	backgroundSet = false;
+	pathSet = false;
     }
 
     @Override
@@ -67,7 +66,6 @@ public class GamePanel extends Panel{
 
 	Group gamePane = new Group();
 	ScrollPane panelRoot = new ScrollPane(gamePane);
-	Pane holdingPane = new Pane(panelRoot);
 	panelRoot.setMaxHeight(Double.MAX_VALUE);
 	panelRoot.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
@@ -79,21 +77,32 @@ public class GamePanel extends Panel{
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 
-
+	scroll = panelRoot;
 	spriteAdd = gamePane;
-	PANEL = holdingPane;
+	PANEL = panelRoot;
     }
 
-    private void setBackgroundImage(String backgroundFilePath) {
-	//TODO fix this hardcoding, should just expand to fill space given(don't care about scaling ************************************
-	Bounds centerBounds = PANEL.getBoundsInLocal();
-	ImageView imageView = new ImageView(new Image(backgroundFilePath,centerBounds.getWidth(), centerBounds.getHeight(), false, false));
+    private boolean setBackgroundImage(String backgroundFilePath) {
+	Bounds centerBounds = scroll.getViewportBounds();
+	if(centerBounds.getHeight() ==0 && centerBounds.getWidth() == 0) {
+	    return false;
+	}
+	ImageView imageView;
+	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
+	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
+	try {
+	    imageView = new ImageView(new Image(backgroundFilePath, imageWidth,imageHeight , false, false));
+	} catch (IllegalArgumentException e){
+	    imageView = new ImageView(new Image("file:" + DEFAULT_BACKGROUND_FILE_PATH,imageWidth, imageHeight, false, false));
+	}
 	spriteAdd.getChildren().add(imageView);
+	return true;
 
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	setBackgroundImage(backgroundImageFilePath);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
+
 	PathMaker pathMaker = new PathMaker();
 	GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	//	setGridConstraints(grid, imageMap);
@@ -101,6 +110,8 @@ public class GamePanel extends Panel{
 	    makePanel();
 	}
 	spriteAdd.getChildren().add(grid);
+	pathSet = true;
+	return backgroundSet;
     }
 
 
@@ -226,4 +237,5 @@ public class GamePanel extends Panel{
 	}
 	towerClick = false;
     }
+
 }

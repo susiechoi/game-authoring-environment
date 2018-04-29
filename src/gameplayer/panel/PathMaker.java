@@ -21,29 +21,29 @@ public class PathMaker {
 	grid.setMaxSize(width, height);
 	grid.setMinSize(width, height);
 	grid.setGridLinesVisible(true);
-	
-	
-//	grid.prefHeightProperty().bind(gamePane.heightProperty());
-//	grid.prefWidthProperty().bind(gamePane.widthProperty());
-//	grid.maxHeightProperty().bind(gamePane.heightProperty());
-//	grid.maxWidthProperty().bind(gamePane.widthProperty());
-//	grid.minHeightProperty().bind(gamePane.heightProperty());
-//	grid.minWidthProperty().bind(gamePane.widthProperty());
-//	NumberBinding maxScale = Bindings.min(gamePane.widthProperty(), gamePane.heightProperty());
-//	grid.scaleXProperty().bind(maxScale);
-//	grid.scaleYProperty().bind(maxScale);
+
+
+	//	grid.prefHeightProperty().bind(gamePane.heightProperty());
+	//	grid.prefWidthProperty().bind(gamePane.widthProperty());
+	//	grid.maxHeightProperty().bind(gamePane.heightProperty());
+	//	grid.maxWidthProperty().bind(gamePane.widthProperty());
+	//	grid.minHeightProperty().bind(gamePane.heightProperty());
+	//	grid.minWidthProperty().bind(gamePane.widthProperty());
+	//	NumberBinding maxScale = Bindings.min(gamePane.widthProperty(), gamePane.heightProperty());
+	//	grid.scaleXProperty().bind(maxScale);
+	//	grid.scaleYProperty().bind(maxScale);
 
 	myPathSize = pathSize;
 	setGridConstraints(grid, width, height);
-
-	addImagesToGrid(map);
+	if(map!= null) {
+	    addImagesToGrid(map);
+	}
 	return grid;
     }
 
     private void addImagesToGrid(Map<String, List<Point>> map) {
 	for (String key: map.keySet()) {
 	    String imageKey = key.substring(1);
-	    System.out.println("ImagePath PathMaker: " + key);
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
 		Point point = pointList.get(i);

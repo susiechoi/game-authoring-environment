@@ -72,11 +72,10 @@ public class GameScreen extends Screen {
 		displayPane = new BorderPane();
 		displayPane.setCenter(TOWER_PANEL.getPanel());
 		displayPane.setBottom(CONTROLS_PANEL.getPanel());
-		VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
 		gamePane = new BorderPane();
-		gamePane.setMaxWidth(Double.MAX_VALUE);
-		gamePane.setMaxHeight(Double.MAX_VALUE);
+//		gamePane.setMaxWidth(Double.MAX_VALUE);
+//		gamePane.setMaxHeight(Double.MAX_VALUE);
 
 
 		gamePane.setTop(SCORE_PANEL.getPanel());
@@ -228,8 +227,8 @@ public class GameScreen extends Screen {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
 	}
 
 	private void setVertPanelsLeft() {
@@ -276,17 +275,17 @@ public class GameScreen extends Screen {
 
 	public void gameWon() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
-		//gamePane.setCenter(SPLASH_PANEL.getPanel());
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
 	}
 
 	public void gameLost() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
-	//	gamePane.setCenter(SPLASH_PANEL.getPanel());
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
 	}
 
 	public void nextLevel() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
-		//gamePane.setCenter(SPLASH_PANEL.getPanel());
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
 		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
 	}
 
