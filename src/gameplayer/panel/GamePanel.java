@@ -84,12 +84,11 @@ public class GamePanel extends Panel{
 	    return false;
 	}
 	ImageView imageView;
-	
+
 	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
 	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
 	scroll.setMaxWidth(imageWidth);
 	scroll.setMaxHeight(imageHeight);
-	System.out.println("MW: " + imageWidth + " MH: " + imageHeight);
 	try {
 	    imageView = new ImageView(new Image(backgroundFilePath, imageWidth,imageHeight , false, false));
 	} catch (IllegalArgumentException e){
@@ -164,7 +163,15 @@ public class GamePanel extends Panel{
 	ImageView towerImage = tower.getImageView();
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    addRangeIndicator(tower);
+	    towerClick = true;
+	    if(!towerPlaceMode) moveTowerImageViewAction(tower);
+	});
+    }
+
+    private void moveTowerImageViewAction(FrontEndTower tower) {
+	ImageView towerImage = tower.getImageView();
+	towerImage.setOnMouseClicked(args ->{
+	    GAME_SCREEN.towerClickedOn(tower);
 	    towerClick = true;
 	});
     }

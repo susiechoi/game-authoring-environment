@@ -286,10 +286,9 @@ public class Mediator implements MVController{
 	myScreenManager.getGameScreen().nextLevel();
     }
 
-
-	public void restartGame() {
-		myGameEngine.getPlayState().restartLevel();
-	}
+    public void restartGame() {
+	myGameEngine.getPlayState().restartLevel();
+    }
 
 
     @Override
@@ -304,7 +303,7 @@ public class Mediator implements MVController{
     public SoundFactory getSoundFactory() {
 	return mySoundFactory;
     }
-    
+
     public void moveTowers(FrontEndTower tower, KeyCode c) {
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }
