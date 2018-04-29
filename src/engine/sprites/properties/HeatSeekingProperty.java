@@ -1,7 +1,6 @@
-package engine.sprites.properties.projectilesMoving;
+package engine.sprites.properties;
 
 import engine.sprites.ShootingSprites;
-import engine.sprites.properties.Property;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**

@@ -1,8 +1,7 @@
-package engine.sprites.properties.projectilesMoving;
+package engine.sprites.properties;
 
 import java.util.Random;
 
-import engine.sprites.properties.Property;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -13,6 +12,7 @@ import engine.sprites.towers.projectiles.Projectile;
 public class RandomShotProperty extends MovingProperty{
 
     private boolean hasSetPath;
+    
     public RandomShotProperty(double range) {
 	super(range);
 	hasSetPath = false;

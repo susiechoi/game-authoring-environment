@@ -8,6 +8,7 @@ import engine.physics.ImageIntersecter;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.properties.CollisionProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.towers.launcher.Launcher;
@@ -33,10 +34,12 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private double myHealthImpact;
     private double mySpeed;
     private double myKillReward;
+    private boolean freeze;
 
     public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher, properties);
 	myIntersecter = new ImageIntersecter(this); 
+	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
 	myInitialHealth = getValue("HealthProperty");
@@ -61,6 +64,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public Enemy(Enemy copiedEnemy) {
 	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
 	myIntersecter = new ImageIntersecter(this); 
+	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
 	myInitialHealth = getValue("HealthProperty");
@@ -85,6 +89,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @param elapsedTime
      */
     public void move(double elapsedTime) {
+	if(freeze) {
+	    return;
+	}
 	rotateImage();
 	double totalDistanceToMove = this.getProperty("SpeedProperty").getProperty()*elapsedTime; 
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
@@ -144,8 +151,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	loseHealth(collider.getDamage());
-	return ((HealthProperty) getProperty("HealthProperty")).isAlive();
+	CollisionProperty myCollisionProperty = (CollisionProperty) collider.getPropertySuperclassType("CollisionProperty");
+	myCollisionProperty.collidesWith(this);
+	return this.isAlive();
     }
 
     private ImageIntersecter getIntersecter() {
@@ -171,6 +179,10 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     public void setAngle(double a) {
 	pathAngle = a;
+    }
+    
+    public void freeze(double duration) {
+	freeze = true;
     }
    
 //    public void updateProperties() {

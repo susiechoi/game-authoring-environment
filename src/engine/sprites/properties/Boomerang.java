@@ -1,8 +1,7 @@
-package engine.sprites.properties.projectilesMoving;
+package engine.sprites.properties;
 
 import java.awt.Point;
 
-import engine.sprites.properties.Property;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**

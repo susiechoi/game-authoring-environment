@@ -3,12 +3,14 @@ package engine.builders;
 import java.util.ArrayList;
 import java.util.List;
 
+import engine.sprites.properties.Boomerang;
 import engine.sprites.properties.ConstantSpeedProperty;
+import engine.sprites.properties.DamageCollisionProperty;
 import engine.sprites.properties.DamageProperty;
+import engine.sprites.properties.FreezeProperty;
+import engine.sprites.properties.HeatSeekingProperty;
 import engine.sprites.properties.Property;
-import engine.sprites.properties.projectilesMoving.Boomerang;
-import engine.sprites.properties.projectilesMoving.HeatSeekingProperty;
-import engine.sprites.properties.projectilesMoving.RandomShotProperty;
+import engine.sprites.properties.RandomShotProperty;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -26,6 +28,7 @@ public class ProjectileBuilder {
 	properties.add(new ConstantSpeedProperty(constantSpeedProperty));
 	System.out.println("out here");
 	properties.add(new RandomShotProperty(100));
+	properties.add(new DamageCollisionProperty(100));
 	return new Projectile(name, size, imagepath, properties);
     }
 
