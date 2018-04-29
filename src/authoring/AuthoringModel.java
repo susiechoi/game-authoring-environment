@@ -119,7 +119,7 @@ public class AuthoringModel {
 	currentLevel.addWave(wave);
     }
 
-    public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) throws ObjectNotFoundException {
+    public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
 	myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
 	myBackgroundImage = backgroundImage;
 	System.out.println("BACKGROUND IMAGE PASSING: " +backgroundImage);
@@ -129,7 +129,7 @@ public class AuthoringModel {
 	for(List<Point> list : coordinates) {
 	    List<List<Point>> listOfLists = new ArrayList<List<Point>>();
 	    listOfLists.add(list);
-	    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, col, row);
+	    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
 	    currentLevel.addPath(newPath);
 	}
 

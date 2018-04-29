@@ -181,6 +181,14 @@ public class Mediator implements MVController{
 	//	System.out.println("upgrade is called OF TYPE " + upgradeName);
 	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
+	
+	/**
+	 * Called by the frontend when the restart button is pressed.
+	 */
+	public void restartLevel() {
+	    System.out.println("in restart");
+	    myGameEngine.getPlayState().restartLevel();
+	}
 
     /**
      * to be called by the backend to play the simulation
@@ -234,9 +242,10 @@ public class Mediator implements MVController{
 	}
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
-	myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
-    }
+	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+	}
+
 
     /**
      * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 

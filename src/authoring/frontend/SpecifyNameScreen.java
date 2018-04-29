@@ -33,10 +33,10 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	try {
 	    myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
 	} catch (NumberFormatException e) {
-	    //Log.error(e);
+//	    Log.error(e);
 	    getView().loadErrorScreen("BadConstants");
 	} catch (MissingPropertiesException e) {
-	    //Log.error(e);
+//	    Log.error(e);
 	    getView().loadErrorScreen("NoConstants");
 	}
     }

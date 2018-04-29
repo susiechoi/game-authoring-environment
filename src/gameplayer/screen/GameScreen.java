@@ -9,9 +9,6 @@ import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 
 import authoring.AuthoringController;
-import authoring.AuthoringModel;
-import authoring.frontend.exceptions.MissingPropertiesException;
-import controller.PlayController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -24,8 +21,6 @@ import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import voogasalad.util.soundfactory.*;
 
 
@@ -74,11 +69,9 @@ public class GameScreen extends Screen {
 		displayPane = new BorderPane();
 		displayPane.setCenter(TOWER_PANEL.getPanel());
 		displayPane.setBottom(CONTROLS_PANEL.getPanel());
-		VBox.setVgrow(TOWER_PANEL.getPanel(), Priority.ALWAYS);
 
 		gamePane = new BorderPane();
-		gamePane.setMaxWidth(Double.MAX_VALUE);
-		gamePane.setMaxHeight(Double.MAX_VALUE);
+
 
 
 		gamePane.setTop(SCORE_PANEL.getPanel());
@@ -141,7 +134,6 @@ public class GameScreen extends Screen {
 		    getView().playControllerInstructions();
 		}
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("edit"))) { // Susie added this
-
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
@@ -230,8 +222,8 @@ public class GameScreen extends Screen {
 	}
 
 
-	public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-		GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
 	}
 
 	private void setVertPanelsLeft() {

@@ -37,7 +37,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param value: Value of the tower for selling
      */
     @SuppressWarnings("unchecked")
-    public Tower(String name, String image, double size, Launcher launcher, List<Property<Object>> properties) {
+    public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher, properties);
 	mySize = size;
 	myLauncher = launcher;
@@ -77,9 +77,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     /**
      * Upgrades all aspects of a tower
      */
-    @SuppressWarnings("rawtypes")
     public double upgrade(double balance) {
-	for(Property<Object> property : getProperties()) {
+	for(Property property : getProperties()) {
 	    balance -= ((UpgradeProperty) property).upgrade(balance);
 	}
 	return balance;
@@ -87,7 +86,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     public Map<String, Integer> getTowerStats(){
 	Map<String, Integer> propertyStats = new HashMap<String, Integer>();
-	for(Property<Object> p : getProperties()) {
+	for(Property p : getProperties()) {
 	    propertyStats.put(p.getName(), (int) p.getProperty());
 	}
 	return propertyStats;
@@ -111,11 +110,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return this.getLauncher().getPropertyValue("RangeProperty");
     }
 
-    public void addLauncherProperty(Property<Object> property) {
+    public void addLauncherProperty(Property property) {
 	myLauncher.addProperty(property);
     }
     
-    public void addProjectileProperty(Property<Object> property) {
+    public void addProjectileProperty(Property property) {
 	myLauncher.addProjectileProperty(property);
     }
     
