@@ -29,7 +29,7 @@ public class CreatePathScreen extends PathScreen {
 
     private CreatePathPanel myPathPanel;
     private CreatePathToolBar myPathToolBar;
-    private String myBackgroundImage = "file:Images/generalbackground.jpg";
+    private String myBackgroundImage = "file:images/generalbackground.jpg";
     private CreatePathGrid myGrid;
     private List<List<Point>> myCoords = new ArrayList<List<Point>>();
     private boolean gridCheck = false;
