@@ -12,6 +12,10 @@ public class ValueProperty extends Property {
     public ValueProperty(double propertyValue) {
 	super(propertyValue);
     }
+    
+    public ValueProperty(Property property) {
+	super(property);
+    }
 
     /**
      * Updates an object's value in response to an upgrade 
@@ -24,4 +28,9 @@ public class ValueProperty extends Property {
 	this.setProperty(newValue);
     }
 
+    @Override
+    public Object execute(Object... args) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

@@ -8,8 +8,8 @@ package engine.sprites.properties;
  * @date 4/5/18
  *
  */
-public class FireRateProperty extends UpgradeProperty {
-    
+public class FireRateProperty extends UpgradeProperty<Boolean> {
+
     /**
      * Constructor that takes in cost, value and rate of fire
      * 
@@ -21,4 +21,16 @@ public class FireRateProperty extends UpgradeProperty {
 	super(cost, value, fireRate);
     }
 
+    @Override
+    public Boolean execute(Object...args) {
+	double timeLastFired = ((Double) args[0]).doubleValue();
+	if(timeLastFired >= 100/this.getProperty()) {
+	    return true;
+	}
+	return (Boolean)false;
+    }
+
+    public FireRateProperty(UpgradeProperty p) {
+	super(p);
+    }
 }

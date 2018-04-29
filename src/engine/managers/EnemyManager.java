@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import engine.path.Path;
-import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
@@ -52,6 +51,10 @@ public class EnemyManager extends ShootingSpriteManager {
 
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
+		if(!enemy.isAlive()) {
+		    myEnemies.get(path).remove(enemy);
+		    break;
+		}
 		newEnemies.get(path).add(enemy);
 		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 		    deadEnemies.add(enemy);
@@ -74,6 +77,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	myEnemies = newEnemies;
 	return deadEnemies;
     }
+
 
     private boolean isInRange(Point curr, Point target) {
 	return curr.distance(target)<10;

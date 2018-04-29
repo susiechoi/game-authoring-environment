@@ -11,9 +11,8 @@ package authoring.frontend;
 import java.util.HashMap;
 import java.util.Map;
 
+import authoring.factory.AttributeFinder;
 import com.sun.javafx.tools.packager.Log;
-
-import authoring.AttributeFinder;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
@@ -88,31 +87,33 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
     }
 
     protected abstract Parent populateScreenWithFields();
-
     protected void populateFieldsWithData() {
-	AttributeFinder attributeFinder = new AttributeFinder(); 
+		AttributeFinder attributeFinder = new AttributeFinder(); 
 
-	Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
+		Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
 
-	try {
-	    fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
-	} catch (MissingPropertiesException e) {
-	    Log.debug(e);
-	    getView().loadErrorScreen("ObjectAttributeDNE");
+		try {
+			fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
+		} catch (MissingPropertiesException e) {
+		    Log.debug(e);
+			getView().loadErrorScreen("ObjectAttributeDNE");
+		}
+
+		for (String key : fieldsToAttributes.keySet()) {
+		    	System.out.println("FIELD: " + key);
+			Object myField = null; 
+			try {
+				myField = attributeFinder.retrieveFieldValue(key, this);
+				System.out.println("SET SLIDERS TO" + getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
+				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
+			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
+			    Log.debug(e);	
+			    getView().loadErrorScreen("ObjectAttributeDNE");
+			}
+		}
+	
 	}
-
-	for (String key : fieldsToAttributes.keySet()) {
-	    Object myField = null; 
-	    try {
-		myField = attributeFinder.retrieveFieldValue(key, this);
-		getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
-	    } catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
-		Log.debug(e);	
-		getView().loadErrorScreen("ObjectAttributeDNE");
-	    }
-	}
-
-    }
+ 
 
     /**
      * Used when the changes on the Screen are applied and the Screen must convey whether the object that has been created is new or existing 

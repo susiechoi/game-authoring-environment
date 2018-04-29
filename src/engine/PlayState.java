@@ -20,7 +20,6 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 
 
 /**
@@ -95,6 +94,8 @@ public class PlayState implements GameData {
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
+	//myTowerManager.moveProjectiles(elapsedTime);
+	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	myTowerManager.moveTowers();
 
@@ -237,4 +238,3 @@ public class PlayState implements GameData {
     	return mySettings.getCSSTheme();
     }
 }
-

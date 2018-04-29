@@ -14,8 +14,6 @@ import javafx.scene.layout.StackPane;
 public abstract class PathScreen extends AdjustScreen {
 
 	public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
-
-
 	private StackPane pathRoot;
 	protected GridPane pathGrid;
 	protected CreatePathGrid grid;
