@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 //import jdk.internal.jline.internal.Log;
+import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -54,10 +55,7 @@ public class CreatePathScreen extends PathScreen {
 		setSaved();
 		List<Point> startCoords = grid.getStartingPosition(grid.getCheckGrid());
 		if (startCoords.size() == 0) {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    alert.setTitle("Path Cutomization Error");
-		    alert.setContentText("Your path has no starting blocks");
-		    alert.showAndWait();
+		    getView().loadErrorAlert("PathNoStart");
 		}
 		for (Point point: startCoords) {
 		    gridCheck = false;
@@ -89,14 +87,11 @@ public class CreatePathScreen extends PathScreen {
 			getView().getObjectAttribute("Path", "", "myEndImage");
 			getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 		    } catch (ObjectNotFoundException e1) {
-//			Log.debug(e1);
+			Log.debug(e1);
 			getView().loadErrorScreen("NoObject");
 		    }
 		} else {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    alert.setTitle("Path Customization Error");
-		    alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
-		    alert.showAndWait();
+		    getView().loadErrorAlert("PathCustomization");
 		}
 	    }
 	});
