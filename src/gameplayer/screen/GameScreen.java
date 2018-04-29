@@ -19,25 +19,14 @@ import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import voogasalad.util.soundfactory.*;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+
 
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
  */
-
-import voogasalad.util.soundfactory.*;
-
-
-
 public class GameScreen extends Screen {
 
 
@@ -66,7 +55,7 @@ public class GameScreen extends Screen {
 	MEDIATOR = mediator;
 	SOUND_FACTORY = MEDIATOR.getSoundFactory();
 	TOWER_PANEL = new TowerPanel(this);
-	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
+	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS, SCREEN_MANAGER);
 	SCORE_PANEL = new ScorePanel(this);
 	GAME_PANEL = new GamePanel(this);
     }
@@ -286,6 +275,7 @@ public class GameScreen extends Screen {
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
 	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+
     }
 
 }

@@ -27,7 +27,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
  
     private Launcher myLauncher;
     private double mySize;
-
     /**
      * Constructor for a Tower object that accepts parameter properties.
      * 
@@ -126,6 +125,11 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	if(keyMove != null) {
 	    keyMove.move(this, code);
 	}
+    }
+    @Override
+    public int getTowerCost() {
+	 return (int) getValue("ValueProperty");
+
     }
 
 }

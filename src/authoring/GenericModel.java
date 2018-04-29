@@ -25,6 +25,7 @@ import frontend.PropertiesReader;
 /**
  * 
  * @author Ben Hodgson 4/8/18
+ * @author benauriemma
  *
  * Class to generate generic objects to be used in the AuthoringModel
  */
@@ -32,6 +33,8 @@ public class GenericModel {
 
 	public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
 
+
+	private String DEFAULT_SHOOTING_SOUND;
 //	private String DEFAULT_ENEMY_IMAGES;
 //	private String DEFAULT_ENEMY_IMAGE;
 //	private String DEFAULT_TOWER_IMAGES;
@@ -46,6 +49,8 @@ public class GenericModel {
 	private String DEFAULT_PATH_END;
 	private String DEFAULT_BACKGROUND_IMAGE;
 	private String DEFAULT_CONSTANT_FILEPATH;
+	
+	
 	private PropertiesReader myPropertiesReader;
 	private String myDefaultName;
 
@@ -201,12 +206,15 @@ public class GenericModel {
 				// TODO add projectile speed !!!!
 				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
 				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
-				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
+				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")),
+				DEFAULT_SHOOTING_SOUND); // TODO FOR BMA: this is a hardcoded default sound for a projectile
 	}
 
 	private void populateInstanceVariables() throws MissingPropertiesException {
 		myPropertiesReader = new PropertiesReader();
 		myPropertiesReader = new PropertiesReader();
+
+		DEFAULT_SHOOTING_SOUND = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ShootingSound");
 //		DEFAULT_ENEMY_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "EnemyImages");
 //		DEFAULT_ENEMY_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Enemy");
 //		DEFAULT_TOWER_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "TowerImages");
