@@ -81,7 +81,7 @@ public class CreatePathScreen extends PathScreen {
 			grid.getStartingPosition(grid.getCheckGrid());
 
 			getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid(), startImage, pathImage, endImage), myBackgroundImage, 
-				pathImage, startImage, endImage, grid.getPathSize(), grid.getColumnCount(), grid.getRowCount());
+				pathImage, startImage, endImage, grid.getPathSize(), grid.getGridWidth(), grid.getGridHeight());
 			getView().getObjectAttribute("Path", "", "myPathMap");
 			getView().getObjectAttribute("Path", "", "myBackgroundImage");
 			getView().getObjectAttribute("Path", "", "myPathSize");

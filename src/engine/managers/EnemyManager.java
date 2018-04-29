@@ -41,14 +41,18 @@ public class EnemyManager extends ShootingSpriteManager {
 
     }
 
+
     /**
-     * Moves all the enemies along the path on every step
+     * Moves all the enemies along the path on every step.
+     * If the enemy isn't alive, remove it from the enemy manager. If the enemy reaches the end 
+     * of the path, add it to the returned list so the PlayState knows to deduct the player's 
+     * health appropriately. 
+     * @return List<Sprite>: A list of enemy objects that have reached the end of the path
      */
     public List<Sprite> moveEnemies(double elapsedTime) {
 	List<Sprite> deadEnemies = new ArrayList<>();
 	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
-
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
 		if(!enemy.isAlive()) {
@@ -56,16 +60,17 @@ public class EnemyManager extends ShootingSpriteManager {
 		    break;
 		}
 		newEnemies.get(path).add(enemy);
-		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
+		if (!enemy.isAlive()) {
+		    newEnemies.get(path).remove(enemy);
+		}
+		else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 		    deadEnemies.add(enemy);
 		    newEnemies.get(path).remove(enemy);
 		}
-
 		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
 		    enemy.move(elapsedTime);
 		}
 		else {
-
 		    Point newPosition = path.nextPosition(enemy.getIndex());
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
 		    enemy.setNewPosition(newPosition);

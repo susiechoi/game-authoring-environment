@@ -79,11 +79,11 @@ public class CreatePathGrid {
 	grid = new GridPane();
 
 	checkGrid = new GridPane();
-	checkGrid.setMaxSize(1020.0, 650.0);
-	setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
-
 	grid.setMaxSize(1020.0, 650.0); 
 	setGridConstraints(grid, INITIAL_PATH_SIZE);
+	
+	checkGrid.setMaxSize(1020.0, 650.0);
+	setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
 	model = new SelectionModel();
 	new ShiftSelection(grid, model);
@@ -268,7 +268,15 @@ public class CreatePathGrid {
     }
 
     private void makeUnDraggable(EventHandler<MouseEvent> action) {	
-	List<Point> startCoords = getStartingPosition(checkGrid);
+//	List<Point> startCoords = getStartingPosition(checkGrid);
+	
+	for (int i = 0; i <getColumnCount(); i++) {
+	    for (int j = 0; j < getRowCount(); j++) {
+//		if (getNode(grid, i, j)) {
+		    
+		}
+	    }  
+//	}
 
 	grid.setOnMouseClicked(new EventHandler <MouseEvent>() {
 	    @Override
@@ -368,6 +376,14 @@ public class CreatePathGrid {
 
     public int getRowCount() {
 	return grid.getRowCount();
+    }
+    
+    public int getGridWidth() {
+   	return 1020;
+    }
+    
+    public int getGridHeight() {
+   	return 650;
     }
 
     public GridPane copyGrid(GridPane grid) {
