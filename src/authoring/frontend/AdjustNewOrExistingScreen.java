@@ -90,28 +90,29 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
     }
 
     protected abstract Parent populateScreenWithFields();
+    
     protected void populateFieldsWithData() {
-		AttributeFinder attributeFinder = new AttributeFinder(); 
-
-		Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
-
-		try {
-			fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
-		} catch (MissingPropertiesException e) {
-		    Log.debug(e);
-			getView().loadErrorScreen(DEFAULT_OBJATTRIBUTEDNE_KEY);
-		}
-
-		for (String key : fieldsToAttributes.keySet()) {
-			Object myField = null; 
-			try {
-				myField = attributeFinder.retrieveFieldValue(key, this);
-				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
-			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
-			    Log.debug(e);	
-			    getView().loadErrorScreen(DEFAULT_OBJATTRIBUTEDNE_KEY);
-			}
-		}
+//		AttributeFinder attributeFinder = new AttributeFinder(); 
+//
+//		Map<String, String> fieldsToAttributes = new HashMap<String, String>(); 
+//
+//		try {
+//			fieldsToAttributes = getView().getPropertiesReader().read(myFieldsPropertiesPath);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);
+//			getView().loadErrorScreen(DEFAULT_OBJATTRIBUTEDNE_KEY);
+//		}
+//
+//		for (String key : fieldsToAttributes.keySet()) {
+//			Object myField = null; 
+//			try {
+//				myField = attributeFinder.retrieveFieldValue(key, this);
+//				getUIFactory().setSliderToValue((Slider) myField, getView().getObjectAttribute(myObjectDescription, getMySelectedObjectName(), fieldsToAttributes.get(key)).toString());
+//			} catch (IllegalArgumentException | ObjectNotFoundException | IllegalAccessException e) {
+//			    Log.debug(e);	
+//			    getView().loadErrorScreen(DEFAULT_OBJATTRIBUTEDNE_KEY);
+//			}
+//		}
 	}
 
     /**
