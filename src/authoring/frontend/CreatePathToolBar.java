@@ -1,10 +1,7 @@
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.sun.javafx.tools.packager.Log;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -26,7 +22,6 @@ import javafx.stage.Stage;
 
 public class CreatePathToolBar extends PathToolBar {
 
-    //	public static final String BACKGROUND_IMAGES = "images/BackgroundImageNames.properties";
     public static final String BACKGROUND_IMAGE_PREFIX = "images/ThemeSpecificImages/BackGroundImages/";
     public static final String BACKGROUND_IMAGE_SUFFIX = "BackGroundImageNames.properties";
     public static final String PATH_IMAGE_PREFIX = "images/ThemeSpecificImages/PathImages/";
@@ -66,6 +61,7 @@ public class CreatePathToolBar extends PathToolBar {
 	Button endImageButton = getUIFactory().makeTextButton("", "Choose End Image");
 	setImageButtonEvent(endImageButton, endImageSelect);
 
+//	getToolBar().setMaxHeight(TOOLBAR_HEIGHT);
 	getToolBar().getChildren().addAll(backgroundImageButton, startImageButton, pathImageButton, endImageButton);
     }
 
