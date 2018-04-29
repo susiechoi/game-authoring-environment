@@ -56,7 +56,7 @@ public class GameScreen extends Screen {
 		MEDIATOR = mediator;
 		SOUND_FACTORY = MEDIATOR.getSoundFactory();
 		TOWER_PANEL = new TowerPanel(this);
-		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
+		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS, SCREEN_MANAGER);
 		SCORE_PANEL = new ScorePanel(this);
 		GAME_PANEL = new GamePanel(this);
 	}
