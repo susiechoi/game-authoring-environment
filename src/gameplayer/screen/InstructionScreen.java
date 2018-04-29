@@ -20,6 +20,11 @@ import javafx.scene.text.Text;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 public class InstructionScreen extends Screen {
 	private String DEFAULT_SHARED_STYLESHEET;
 	private final ScreenManager SCREEN_MANAGER;

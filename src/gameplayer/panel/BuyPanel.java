@@ -4,12 +4,19 @@ import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import gameplayer.screen.GameScreen;
 import frontend.UIFactory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import java.util.Map;
+
+
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
 
 public class BuyPanel extends SpecificPanel {
 
@@ -32,10 +39,11 @@ public class BuyPanel extends SpecificPanel {
     @Override
     public void makePanel() {
 
-        Label TowerInfo = new Label("THIS IS FILLER TEXT WE NEED INFO ON UPGRADES");
+        String upgradeName = splitInput(UPGRADE_TYPE);
+        Label TowerInfo = new Label(upgradeName);
         TowerInfo.setWrapText(true);
 
-        Button buyUpgrade = UI_FACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("BuyTowerUpgrade"));
+        Button buyUpgrade = UI_FACTORY.makeTextButton(GAMEPLAYER_PROPERTIES.get("buttonID"), PROMPTS.resourceDisplayText("BuyTowerUpgrade"));
         buyUpgrade.setOnMouseClicked(arg0 -> GAME_SCREEN.upgradeBought(TOWER, UPGRADE_TYPE));
 
         VBox panelRoot = new VBox(TowerInfo, buyUpgrade);
@@ -46,11 +54,28 @@ public class BuyPanel extends SpecificPanel {
         PANEL = panelRoot;
     }
 
-    public String getUpgradeInfoFromClick() {
-        //TODO Once backend is linked, write method to take information from button click on upgradePanel
-        //TODO and send it over to the buyPanel
-        return null;
+    private String splitInput(String input) {
+        StringBuilder sb = new StringBuilder();
+        if (input.contains("_")) {
+            String[] split = input.split("_");
+            for (String s: split) {
+                sb.append(s);
+                sb.append(" ");
+            }
+        }
+        return sb.toString().trim();
     }
-
+    
+    private void checkAffordUpgrade() {
+	
+    }
+    
+    public ChangeListener<Number> createCurrencyListener() {
+  	return new ChangeListener<Number>() {
+  	    @Override
+  	    public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+  	    }
+  	};
+      }
 
 }

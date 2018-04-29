@@ -52,11 +52,11 @@ public class StageManager {
      * @param topNode is Parent node containing all elements of Scene
      */
     public void switchScreen(Parent topNode) {
-	Scene programScene = new Scene(topNode);
-	myStage.setScene(programScene);
-	myStage.setWidth(stageWidth);
-	myStage.setHeight(stageHeight);
-	myStage.show();
+    		Scene programScene = new Scene(topNode);
+    		myStage.setScene(programScene);
+    		myStage.setWidth(stageWidth);
+    		myStage.setHeight(stageHeight);
+    		myStage.show();	
     } 
 
 }
