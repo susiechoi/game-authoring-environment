@@ -13,7 +13,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
 	public static final String OBJECT_TYPE = "Tower";
@@ -57,10 +56,15 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	Button goToProjectileLauncherButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 	vb.getChildren().add(goToProjectileLauncherButton);
 	goToProjectileLauncherButton.setOnAction(e -> {
+	    try{
 	    setProperty("HealthProperty", myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
 	    setProperty("ValueProperty", myTowerValue);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW_KEY, myObjectName);
-	});
+	    }
+	    catch(NullPointerException e1) {
+		getView().loadErrorAlert("NoSelection");
+	    }
+	    });
 	Button backButton = setupBackButton(); 
 	vb.getChildren().add(backButton);
 	return vb;
