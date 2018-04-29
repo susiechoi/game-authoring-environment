@@ -23,6 +23,7 @@ public class GameEngine {
 	private Mediator myMediator;
 	private Timeline ANIMATION;
 	private double timeFactor;
+	private boolean gameTriggered = false;
 
 	public GameEngine(Mediator mediator) {
 		myPlayState = null;
@@ -71,7 +72,11 @@ public class GameEngine {
 	 * Starts Game Loop animation, so Game State continuously loops
 	 */
 	public void start() {
-		ANIMATION.play();
+		myMediator.gameStarted();
+		while (gameTriggered) {
+			ANIMATION.play();
+		}
+
 	}
 
 	/**
@@ -120,5 +125,11 @@ public class GameEngine {
 			ANIMATION.stop();
 		}
 	}
+
+
+	public void triggerGame() {
+		gameTriggered = true;
+	}
+
 
 }

@@ -68,9 +68,9 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	    List<Projectile> removeSpritesProjectiles = new ArrayList<Projectile>();
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
 		projectile.move(elapsedTime);
-//		if (!shootingSprite.hasInRange(projectile)) {
-//		    removeSpritesProjectiles.add(projectile);
-//		}
+		if (!shootingSprite.hasInRange(projectile)) {
+		    removeSpritesProjectiles.add(projectile);
+		}
 	    }
 	    for (Projectile spriteProjectile : removeSpritesProjectiles) {
 		shootingSprite.getLauncher().removeFromActiveList(spriteProjectile);

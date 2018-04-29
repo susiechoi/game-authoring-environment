@@ -1,6 +1,11 @@
 package gameplayer.panel;
 
 
+/**
+ * @Author Andrew Arnold
+ */
+
+
 public abstract class ListenerPanel extends Panel {
     
 	/**
