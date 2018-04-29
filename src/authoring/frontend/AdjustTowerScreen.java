@@ -5,8 +5,6 @@
 
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -15,19 +13,19 @@ import javafx.scene.layout.VBox;
 
 class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 
-	public static final String OBJECT_TYPE = "Tower";
-	public static final String DEFAULT_APPLY_SCREENFLOW_KEY = "Apply";
-	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
-	public static final String TOWER_IMAGE_PREFIX = "images/ThemeSpecificImages/TowerImages/";
-	public static final String TOWER_IMAGE_SUFFIX = "TowerImageNames.properties";
-	static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
-	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
-	
+    public static final String OBJECT_TYPE = "Tower";
+    public static final String DEFAULT_APPLY_SCREENFLOW_KEY = "Apply";
+    public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
+    public static final String TOWER_IMAGE_PREFIX = "images/ThemeSpecificImages/TowerImages/";
+    public static final String TOWER_IMAGE_SUFFIX = "TowerImageNames.properties";
+    static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
+    public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
+
     private Slider myTowerHealthUpgradeValueSlider;
     private Slider myTowerHealthUpgradeCostSlider;
     private Slider myTowerHealthValueSlider;
     private Slider myTowerValueSlider;
-    
+
     private String myObjectName; 
     private Object myHealthUpgradeValue;
     private Object myHealthUpgradeCost;
@@ -57,14 +55,14 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	vb.getChildren().add(goToProjectileLauncherButton);
 	goToProjectileLauncherButton.setOnAction(e -> {
 	    try{
-	    setProperty("HealthProperty", myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
-	    setProperty("ValueProperty", myTowerValue);
-	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW_KEY, myObjectName);
+		setProperty(OBJECT_TYPE, myObjectName, "HealthProperty", myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
+		setProperty(OBJECT_TYPE, myObjectName, "ValueProperty", myTowerValue);
+		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW_KEY, myObjectName);
 	    }
 	    catch(NullPointerException e1) {
 		getView().loadErrorAlert("NoSelection");
 	    }
-	    });
+	});
 	Button backButton = setupBackButton(); 
 	vb.getChildren().add(backButton);
 	return vb;
@@ -110,18 +108,5 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	    myHealthUpgradeValue = newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthUpgradeValue", newValue);
 	});
-    }
-
-    private void setProperty(String propertyName, Object ...args) {
-	List<Object> attributes = makeList(args);
-	getView().setObjectAttributes(OBJECT_TYPE, myObjectName, propertyName, attributes);
-    }
-
-    private List<Object> makeList(Object ...attributes) {
-	List<Object> list = new ArrayList<Object>();
-	for(Object attribute : attributes) {
-	    list.add(attribute);
-	}
-	return list;
     }
 }

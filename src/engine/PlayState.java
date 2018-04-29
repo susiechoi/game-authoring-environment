@@ -20,6 +20,7 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.input.KeyCode;
 
 
 /**
@@ -261,7 +262,6 @@ public class PlayState implements GameData {
 	myEnemyManager.setActiveList(activeEnemies);
 	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
-	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
@@ -299,5 +299,10 @@ public class PlayState implements GameData {
 	myTowerManager.getListOfActive().clear();
 	myEnemyManager.getListOfActive().clear();
 	myEnemyManager.clearEnemiesMap();
+    }
+
+    public void moveTowers(FrontEndTower tower, KeyCode c) {
+    	System.out.println("PLAY STATE");
+	myTowerManager.moveTowers(tower, c);
     }
 }
