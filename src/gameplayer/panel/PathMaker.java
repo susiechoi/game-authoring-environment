@@ -20,18 +20,7 @@ public class PathMaker {
 	grid = new GridPane();
 	grid.setMaxSize(width, height);
 	grid.setMinSize(width, height);
-	grid.setGridLinesVisible(true);
-
-
-	//	grid.prefHeightProperty().bind(gamePane.heightProperty());
-	//	grid.prefWidthProperty().bind(gamePane.widthProperty());
-	//	grid.maxHeightProperty().bind(gamePane.heightProperty());
-	//	grid.maxWidthProperty().bind(gamePane.widthProperty());
-	//	grid.minHeightProperty().bind(gamePane.heightProperty());
-	//	grid.minWidthProperty().bind(gamePane.widthProperty());
-	//	NumberBinding maxScale = Bindings.min(gamePane.widthProperty(), gamePane.heightProperty());
-	//	grid.scaleXProperty().bind(maxScale);
-	//	grid.scaleYProperty().bind(maxScale);
+	//grid.setGridLinesVisible(true);
 
 	myPathSize = pathSize;
 	setGridConstraints(grid, width, height);

@@ -21,8 +21,6 @@ import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import voogasalad.util.soundfactory.*;
 
 
@@ -74,8 +72,7 @@ public class GameScreen extends Screen {
 		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
 		gamePane = new BorderPane();
-//		gamePane.setMaxWidth(Double.MAX_VALUE);
-//		gamePane.setMaxHeight(Double.MAX_VALUE);
+
 
 
 		gamePane.setTop(SCORE_PANEL.getPanel());
