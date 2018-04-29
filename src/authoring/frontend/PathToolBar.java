@@ -51,7 +51,7 @@ public abstract class PathToolBar extends AdjustScreen {
 	protected HBox getPanel() { //TODO: fix this!!
 		return myPathToolBar;
 	}
-	
+
 	protected abstract void makePanel();
 	
 	protected HBox makeSizingButtons() {
