@@ -4,7 +4,8 @@ import java.util.ResourceBundle;
 
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
-import voogasalad.util.reflection.*;
+import voogasalad.util.reflection.Reflection;
+
 
 public class PropertyBuilder {
 
@@ -13,8 +14,8 @@ public class PropertyBuilder {
     private String PROPERTIES = "authoring/resources/properties";
     //private ResourceBundle bundle;
 
-    public Property<Object> getProperty(Property<Object> p) {
-	Property<Object> ret;
+    public Property getProperty(Property p) {
+	Property ret;
 	System.out.println(p);
 	System.out.println(p.getName());
 	String propertyName = p.getName();

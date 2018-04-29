@@ -10,11 +10,4 @@ public class KillProperty extends Property {
 	super(property);
     }
 
-    @Override
-    public Object execute(Object... args) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-    
-
 }
