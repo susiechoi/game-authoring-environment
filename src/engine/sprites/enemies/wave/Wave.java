@@ -2,6 +2,7 @@ package engine.sprites.enemies.wave;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -168,7 +169,8 @@ public class Wave {
     }
     
     public void removeStalePaths(List<Path> currentPaths) {
-	Set<Path> wavePaths = myWaveMap.keySet();
+	Set<Path> wavePaths = new HashSet<>();
+	wavePaths.addAll(myWaveMap.keySet());
 	for(Path path : wavePaths) {
 	    if(!currentPaths.contains(path)) {
 		myWaveMap.remove(path);
