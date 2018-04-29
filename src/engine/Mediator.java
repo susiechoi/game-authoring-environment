@@ -121,7 +121,6 @@ public class Mediator implements MVController{
     }
 
     /************************************************ GAMEPLAY ********************************************/
-
     /**
      * to be called by the frontend when a user drops a tower on the gamescreen.
      * @param location, where the tower should be placed

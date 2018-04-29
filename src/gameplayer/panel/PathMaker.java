@@ -22,7 +22,7 @@ public class PathMaker {
 
 	public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int col, int row, Pane gamePane) {
 		grid = new GridPane();
-		grid.setGridLinesVisible(true);
+		//	grid.setGridLinesVisible(true);
 		grid.setStyle("-fx-background-image: url(" + backgroundImage + ")"); 
 		grid.prefHeightProperty().bind(gamePane.heightProperty());
 		grid.prefWidthProperty().bind(gamePane.widthProperty());
@@ -30,27 +30,38 @@ public class PathMaker {
 		grid.maxWidthProperty().bind(gamePane.widthProperty());
 		grid.minHeightProperty().bind(gamePane.heightProperty());
 		grid.minWidthProperty().bind(gamePane.widthProperty());
-		return grid; 
-	}
 
-	//	NumberBinding maxScale = Bindings.min(gamePane.widthProperty(), gamePane.heightProperty());
-	//	grid.scaleXProperty().bind(maxScale);
-	//	grid.scaleYProperty().bind(maxScale);
+		//	NumberBinding maxScale = Bindings.min(gamePane.widthProperty(), gamePane.heightProperty());
+		//	grid.scaleXProperty().bind(maxScale);
+		//	grid.scaleYProperty().bind(maxScale);
+
+		myPathSize = pathSize;
+		setGridConstraints(grid, row, col);
+		addImagesToGrid(map);
+		return grid;
+	}
 
 	private void addImagesToGrid(Map<String, List<Point>> map) {
 		for (String key: map.keySet()) {
+			//System.out.println("trying to add to grid");
+			String imageKey = key.substring(1);
 			List<Point> pointList = map.get(key);
 			for (int i = 0; i < pointList.size(); i++) {
 				Point point = pointList.get(i);
 				// TODO handle IllegalArgumentException where key is invalid
 				ImageView image = new ImageView();
 				try{
-					image = new ImageView(new Image(key));
+					image = new ImageView(new Image(imageKey));
 				}
 				catch(IllegalArgumentException e){
 					Log.debug(e);
 					image = new ImageView(); //TODO this should not be hardcoded
 				}
+				image.setFitWidth(myPathSize);
+				image.setFitHeight(myPathSize);
+				GridPane.setFillWidth(image, true);
+				GridPane.setFillHeight(image, true);
+				grid.add(image, (int)point.getX(), (int)point.getY());
 			}
 		}
 	}

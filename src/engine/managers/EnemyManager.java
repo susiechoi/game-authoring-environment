@@ -100,28 +100,10 @@ public class EnemyManager extends ShootingSpriteManager {
 	    myEnemies.put(path, pathEnemies);
 	}
 	else {
-	    List<Enemy> pathEnemies = new ArrayList<>();
+	    List<Enemy> pathEnemies = new ArrayList<Enemy>();
 	    pathEnemies.add(enemy);
 	    myEnemies.put(path, pathEnemies);
 	}
-    }
-    
-    /**
-     * Clears all the current enemies in the map
-     */
-    public void clearEnemiesMap() {
-	myEnemies.clear();
-    }
-
-    /**
-     * Method to remove enemies from the current enemies map
-     * @param toBeRemoved
-     */
-    public void removeFromMap(List<Sprite> toBeRemoved) {
-	for(Sprite s : toBeRemoved) {
-	    myEnemies.remove(s);
-	}
-	
     }
 
 }

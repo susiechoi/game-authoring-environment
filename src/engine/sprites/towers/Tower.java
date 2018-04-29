@@ -4,9 +4,6 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import engine.builders.LauncherBuilder;
-import engine.builders.ProjectileBuilder;
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.KillProperty;
 import engine.sprites.properties.Property;
@@ -14,7 +11,6 @@ import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import file.DataPointWriter;
-import javafx.scene.image.Image;
 
 /**
  * Class for tower object in game. Implements Sprite methods.

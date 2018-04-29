@@ -7,7 +7,6 @@ import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import xml.serialization.ImageWrapper;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -35,7 +34,6 @@ public class Sprite implements FrontEndSprite{
      * @param image: tower's initial image
      * @param size: size of tower's image
      */
-
     public Sprite(String name, String image, double size, List<Property<Object>> properties) {
 	myName = name;
 	myImageString = image;

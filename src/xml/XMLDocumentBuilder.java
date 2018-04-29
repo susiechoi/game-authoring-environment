@@ -30,7 +30,6 @@ import org.w3c.dom.Node;
 public class XMLDocumentBuilder {
 
     private final static String FILE_SETTINGS = "<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"no\\\"?>";
-    private final static String XSTREAM_DEFAULT_CONFIG = "<?xml version=\"1.0\" ?>";
 	
 	/**
 	 * Creates new instance of a document to be written to
@@ -38,7 +37,7 @@ public class XMLDocumentBuilder {
 	 * @return document to be written to
 	 * @throws ParserConfigurationException 
 	 */
-	protected static Document initializeDoc() throws ParserConfigurationException {
+	public static Document initializeDoc() throws ParserConfigurationException {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		return db.newDocument();
@@ -52,7 +51,7 @@ public class XMLDocumentBuilder {
 	 * @throws TransformerFactoryConfigurationError 
 	 * @throws TransformerException 
 	 */
-	protected static void saveXMLFile(Document doc, File file) throws TransformerFactoryConfigurationError, TransformerException {
+	public static void saveXMLFile(Document doc, File file) throws TransformerFactoryConfigurationError, TransformerException {
 		Transformer transformer = TransformerFactory.newInstance().newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		DOMSource source = new DOMSource(doc);
@@ -69,7 +68,7 @@ public class XMLDocumentBuilder {
 	 * @param data: The data to be added
 	 * @return A node to be added to the xml file
 	 */
-	protected static Node addData(Document doc, String elemName, String data) {
+	public static Node addData(Document doc, String elemName, String data) {
 		Element e = doc.createElement(elemName);
 		e.appendChild(doc.createTextNode(data));
 		return e;
@@ -82,7 +81,7 @@ public class XMLDocumentBuilder {
 	 * @param name	 Node name/type
 	 * @return		 Node that has been appended to parent
 	 */
-	protected static Element appendElement(Element parent, String name, Document file) {
+	public static Element appendElement(Element parent, String name, Document file) {
 		Element e = file.createElement(name);
 		parent.appendChild(e);
 		return e;
@@ -94,8 +93,7 @@ public class XMLDocumentBuilder {
 	     * @param data	data to be written
 	     * @param filename	name of file to be written to
 	     */
-	    protected static void stringToXML(String data, String filename) {
-		data = processData(data);
+	    public static void stringToXML(String data, String filename) {
 		try {
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 		    writer.write(data);
@@ -104,21 +102,6 @@ public class XMLDocumentBuilder {
 		    // TODO Auto-generated catch block
 		    e.printStackTrace();
 		}
-	    }
-	    
-	    /**
-	     * Removes XML configurations from an XStreamed data string (i.e. xml version, encoding, etc.) and returns the data with only one
-	     * XML configuration node at the top
-	     * @param data	Combined data from all XStreamed data
-	     * @return		Modified data string to be written
-	     */
-	    protected static String processData(String data) {
-		String[] parsedData = data.split(XSTREAM_DEFAULT_CONFIG); // remove initial XStream configurations
-		String xml = "";
-		for (String node:parsedData) {
-		    xml = xml + node + "\n";
-		}
-		return xml;
 	    }
 	
 }
