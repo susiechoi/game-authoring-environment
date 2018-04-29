@@ -13,6 +13,12 @@ import java.util.Map.Entry;
 
 import com.sun.javafx.tools.packager.Log;
 
+
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 public class SettingsPanel extends Panel {
 
     private final GameScreen GAME_SCREEN;
