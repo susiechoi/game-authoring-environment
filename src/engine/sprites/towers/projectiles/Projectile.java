@@ -8,6 +8,7 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.BoomerangProperty;
+import engine.sprites.properties.HeatSeekingProperty;
 import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.SpeedProperty;
@@ -74,6 +75,12 @@ public class Projectile extends Sprite implements FrontEndSprite{
     
     public Projectile(Projectile projectile, double startX, double startY, double targetX, double targetY) {
 	super(projectile.getName(), projectile.getImageString(), projectile.getSize(), projectile.getProperties());
+	this.place(startX, startY);
+//	System.out.println(" testing " + projectile.getPropertySuperclassType("MovingProperty"));
+//	System.out.println(" testing again " + projectile.getProperty("MovingProperty"));
+	this.myMovingProperty = (MovingProperty)projectile.getPropertySuperclassType("MovingProperty");
+	System.out.println(this.myMovingProperty+" this is the moving property for the projectile");
+	targetDestination = new Point();
 	targetDestination.setLocation(targetX, targetY);
     }
 
@@ -81,6 +88,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * Moves image in direction of it's orientation
      */
     public boolean move(double elapsedTime) {
+	  System.out.println(myMovingProperty);
 	try {
 	    return myMovingProperty.move(this, elapsedTime);
 	}catch(NullPointerException e) {

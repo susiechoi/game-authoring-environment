@@ -24,7 +24,6 @@ public abstract class MovingProperty extends Property{
     
     public boolean checkIfProjectileIsOutOfRange(Projectile projectile) {
 	double distanceBetween = Math.sqrt(Math.pow(projectileOrigin.getX()-projectile.getX(),2)+Math.pow(projectileOrigin.getY()-projectile.getY(), 2));
-	System.out.println(distanceBetween + " " + this.getProperty());
 	return (distanceBetween >= this.getProperty());
     }
     

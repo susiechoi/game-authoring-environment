@@ -155,6 +155,7 @@ public class GamePanel extends Panel{
 	    addRangeIndicator(tower);
 	    towerClick = true;
 	    clickedTower = tower;
+	    System.out.println("towerClick is TRUE  AND clicked tower = "+clickedTower);
 	});
     }
 
@@ -226,13 +227,12 @@ public class GamePanel extends Panel{
 		//GameScreen popup for cannot afford
 	    }
 	}
-	else if (towerClick && clickedTower != null) {
-	    
-	}
-	else if(!towerClick) {
+	else if (!towerClick) {
+	    if (clickedTower != null) {
+		GAME_SCREEN.clickToShoot(clickedTower, x, y);
+	    }
 	    GAME_SCREEN.blankGamePanelClick();
 	    removeTowerRangeIndicator();
-	    
 	}
 	towerClick = false;
     }

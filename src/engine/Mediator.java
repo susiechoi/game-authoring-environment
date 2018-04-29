@@ -142,6 +142,7 @@ public class Mediator implements MVController{
     }
     
     public void handleTowerClickToShoot(FrontEndTower tower, double clickedX, double clickedY) {
+	System.out.println("MADE IT TO MEDIATOR CALL");
 	Sprite shotProjectile = myGameEngine.getPlayState().handleClick(tower, clickedX, clickedY);
 	if (shotProjectile != null) {
 	    this.addSpriteToScreen(shotProjectile);

@@ -272,7 +272,9 @@ public class PlayState implements GameData {
     
     public Sprite handleClick(FrontEndTower activeTower, double clickedX, double clickedY) {
 	Tower tower = (Tower) activeTower;
-	if (tower.getProperty("ClickProperty") != null) {
+	//System.out.println("THIS IS CLICK PROPERTY");
+	if (tower.getProperty("ClickToShootProperty") != null) {
+	    System.out.println("GOT CLICKED PROPETY");
 	    ClickProperty myClickProp = (ClickProperty) tower.getProperty("ClickProperty");
 	    return (Sprite) tower.getNewProjectile(clickedX, clickedY);
 	}

@@ -283,4 +283,10 @@ public class GameScreen extends Screen {
 		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
 	}
 
+
+	public void clickToShoot(FrontEndTower clickedTower, double x, double y) {
+	    System.out.println("going to mediator");
+	    MEDIATOR.handleTowerClickToShoot(clickedTower, x, y);
+	}
+
 }
