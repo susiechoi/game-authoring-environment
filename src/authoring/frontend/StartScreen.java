@@ -26,9 +26,13 @@ import javafx.scene.text.Text;
  *
  */
 public class StartScreen extends AuthoringScreen {
+	
+	public static final String DEFAULT_NEW_SCREENFLOW_IDETIFIER = "New";
+	public static final String DEFAULT_NOFILE_ERROR_KEY = "NoFile";
 	public static final String DEFAULT_XML_FOLDER = "/SavedModels";
 	public static final String DEFAULT_THEMES = "images/ThemeSpecificImages/Themes.properties";
 	public static final String DEFAULT_STYLINGS  = "src/styling/CurrentCSS.properties";
+	
 	private AuthoringView myView; 
 	private final List<String> myCSSFiles; 
 	private int currCSSIndex; 
@@ -64,7 +68,7 @@ public class StartScreen extends AuthoringScreen {
 		setupNewGameComponents(vbox);
 		setupEditGameComponents(vbox);
 
-		Button changeCSS = getUIFactory().makeTextButton("cssbutton", getErrorCheckedPrompt("ChangeStyling"));
+		Button changeCSS = getUIFactory().makeTextButton(getErrorCheckedPrompt("ChangeStyling"));
 		changeCSS.setOnAction(e -> {
 			currCSSIndex++; 
 			if (currCSSIndex > myCSSFiles.size()-1) {
@@ -88,7 +92,7 @@ public class StartScreen extends AuthoringScreen {
 			existingThemes.addAll(getPropertiesReader().findVals(DEFAULT_THEMES));
 		} catch (MissingPropertiesException e1) {
 		    Log.debug(e1);
-			getView().loadErrorScreen("NoFile");
+			getView().loadErrorScreen(DEFAULT_NOFILE_ERROR_KEY);
 		}
 
 		String newGameButtonPrompt = getErrorCheckedPrompt("NewGameButtonLabel"); 
@@ -100,7 +104,7 @@ public class StartScreen extends AuthoringScreen {
 		});
 		newGameButton.setDisable(true);
 		newGameButton.setOnAction(e -> {
-			getView().goForwardFrom(this.getClass().getSimpleName()+"New", getErrorCheckedPrompt("NewGame"));
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_NEW_SCREENFLOW_IDETIFIER, getErrorCheckedPrompt("NewGame"));
 		});
 		
 		HBox newGame = new HBox(); 
@@ -115,7 +119,7 @@ public class StartScreen extends AuthoringScreen {
 		existingGames.add(gameNamePrompt);
 		existingGames.addAll(getUIFactory().getFileNames(DEFAULT_XML_FOLDER));
 		Button editButton = getUIFactory().makeTextButton("editbutton", getErrorCheckedPrompt("EditButtonLabel"));
-		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction("", existingGames, e -> {
+		ComboBox<String> gameChooser = getUIFactory().makeTextDropdownSelectAction(existingGames, e -> {
 			editButton.setDisable(false);}, e -> {editButton.setDisable(true);}, gameNamePrompt);
 		editButton.setDisable(true);
 		editButton.setOnAction(e -> {
@@ -130,28 +134,6 @@ public class StartScreen extends AuthoringScreen {
 		editExisting.getChildren().add(gameChooser);
 		editExisting.getChildren().add(editButton);
 		vbox.getChildren().add(editExisting);
-	}
-
-	//Method by Ben Hodgson/Andrew Arnold!
-	private List<String> getFileNames(String folderName) {
-		String currentDir = System.getProperty("user.dir");
-		try {
-			File file = new File(currentDir + File.separator + folderName);
-			File[] fileArray = file.listFiles();
-			List<String> fileNames = new ArrayList<>();
-			for (File aFile : fileArray) {
-				String colorName = aFile.getName();
-				String[] nameSplit = colorName.split("\\.");
-				String fileName = nameSplit[0];
-				fileNames.add(fileName);
-			}
-			return Collections.unmodifiableList(fileNames);
-		}
-		catch (Exception e) {
-		    Log.debug(e);
-			getView().loadErrorScreen("NoFile");
-		}
-		return Collections.unmodifiableList(new ArrayList<String>());
 	}
 
 

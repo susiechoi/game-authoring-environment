@@ -110,4 +110,5 @@ public class AuthoredGame implements GameData {
     public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 	return levelCheck(levelNum).getPaths().get(name-1);
     }
+
 }

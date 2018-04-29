@@ -10,6 +10,7 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 ///Put this at the top of the file:
 import java.io.File;
+import java.net.MalformedURLException;
 
 public class TestWriter {
     

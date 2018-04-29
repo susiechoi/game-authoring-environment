@@ -4,6 +4,9 @@ package engine;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import voogasalad.util.soundfactory.ITRTSoundFactory;
+import voogasalad.util.soundfactory.SoundFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -39,28 +42,32 @@ import xml.XMLFactory;
  */
 public class Mediator implements MVController{
 
-    private ScreenManager myScreenManager;
-    private GameEngine myGameEngine;
-    private PlayController myPlayController;
+	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    
+	private ScreenManager myScreenManager;
+	private GameEngine myGameEngine;
+	private PlayController myPlayController;
+	private SoundFactory mySoundFactory;
+	
+	//    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
+	//    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
+	//    private ObservableValue<Integer> gameSpeed;
+	//    private ObservableValue<Integer> level;
+	//    private ObservableValue<Integer> difficulty;
+	//    private ObservableValue<Tower> placeTower;
+	//    private ObservableValue<Boolean> saveFileAvailable;
+	//    private ObservableValue<Boolean> loadGameFromFile;
 
-    //    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
-    //    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
-    //    private ObservableValue<Integer> gameSpeed;
-    //    private ObservableValue<Integer> level;
-    //    private ObservableValue<Integer> difficulty;
-    //    private ObservableValue<Tower> placeTower;
-    //    private ObservableValue<Boolean> saveFileAvailable;
-    //    private ObservableValue<Boolean> loadGameFromFile;
-
-    /**
-     * Constructs Mediator object and sets all fields to null.
-     * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
-     */
-    public Mediator(PlayController p) {
-	myPlayController = p;
-	//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
-	//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
-    }
+	/**
+	 * Constructs Mediator object and sets all fields to null.
+	 * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
+	 */
+	public Mediator(PlayController p) {
+		myPlayController = p;
+		mySoundFactory = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
+		//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
+		//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
+	}
 
 
     /************************************************ SETUP ********************************************/
@@ -121,8 +128,6 @@ public class Mediator implements MVController{
     }
 
     /************************************************ GAMEPLAY ********************************************/
-
-
     /**
      * to be called by the frontend when a user drops a tower on the gamescreen.
      * @param location, where the tower should be placed
@@ -178,6 +183,14 @@ public class Mediator implements MVController{
     }
 
     /**
+     * Called by the frontend when the restart button is pressed.
+     */
+    public void restartLevel() {
+	System.out.println("in restart");
+	myGameEngine.getPlayState().restartLevel();
+    }
+
+    /**
      * to be called by the backend to play the simulation
      */
     public void play() {
@@ -208,7 +221,6 @@ public class Mediator implements MVController{
 	myScreenManager.updateLevelCount(newLevel);
     }
 
-
     /**
      * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
      * lives. 
@@ -230,9 +242,10 @@ public class Mediator implements MVController{
 	}
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
-	myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
-    }
+	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+	}
+
 
     /**
      * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
@@ -282,5 +295,9 @@ public class Mediator implements MVController{
     public void gameLost() {
 	myScreenManager.getGameScreen().gameLost();
     }
+	
+	public SoundFactory getSoundFactory() {
+	    return mySoundFactory;
+	}
 
 }

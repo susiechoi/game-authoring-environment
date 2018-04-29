@@ -21,7 +21,7 @@ VBox, HBox {
     -fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;
-    -fx-borden-color: black;
+    -fx-border-color: transparent;
 }
 
 .button {
@@ -54,6 +54,15 @@ VBox, HBox {
     -fx-text-fill: saddlebrown;
 }
 
+.scroll-pane{
+    -fx-background-image: url("file:images/jungle.png");
+}
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
+	-fx-background-color: saddlebrown;
+	
+}
+
 /**************************** Specific Stylings ****************************/
 
 #currencyButton {
@@ -81,5 +90,12 @@ VBox, HBox {
 #voidButton:disabled, #voidButton:disabled > * {
     -fx-opacity: 1.0;
 }
+#towerPanel{
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+
+
+
 
 

@@ -69,6 +69,7 @@ public class Launcher extends Manager<Projectile>{
 	timeSinceLastShot=0;
 //	System.out.println(myProjectile.getProperty("Boomerang")+ " is boomerang prop in launcher");
 	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
+	System.out.println("launched Projectile " + launchedProjectile.getProperties().size());
 	this.addToActiveList(launchedProjectile);
 	return launchedProjectile;
     }

@@ -12,6 +12,7 @@ public abstract class MovingProperty extends Property{
     
     public MovingProperty(double range) {
 	super(range);
+
       }
     
     public abstract void move(Projectile projectile, double elapsedTime);

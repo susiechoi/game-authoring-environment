@@ -23,7 +23,6 @@ import engine.sprites.towers.projectiles.Projectile;
 public abstract class ShootingSprites extends Sprite{
 
     private Launcher myLauncher;
-    private int hitCount;
     private int deadCount;
     private ImageIntersecter intersector;
     
@@ -38,7 +37,6 @@ public abstract class ShootingSprites extends Sprite{
      */
     public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, properties);
-	hitCount=0;
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
 	myLauncher = launcher;
@@ -51,14 +49,6 @@ public abstract class ShootingSprites extends Sprite{
 	return myLauncher.getListOfActive();
     }
 
-    /**
-     * Increases the hit count of the enemy
-     * 
-     * @param increaseAmount
-     */
-    public void increaseHitCount(int increaseAmount) {
-	hitCount+=increaseAmount;
-    }
 
     /**
      * This checks for collisions between the shooter's projectiles and this ShootingSprite
@@ -96,7 +86,6 @@ public abstract class ShootingSprites extends Sprite{
      */
     private List<Sprite> objectCollision(Sprite target, Sprite collider) {
 	List<Sprite> deadSprites = new ArrayList<>();
-	hitCount++;
 	if(!target.handleCollision(collider)) {
 	    deadCount++;
 	    deadSprites.add(target);
@@ -140,7 +129,6 @@ public abstract class ShootingSprites extends Sprite{
      */
     public boolean intersects(Projectile projectile) {
 	return this.getImageView().getBoundsInLocal().intersects(projectile.getImageView().getBoundsInLocal());
-	//return intersector.overlaps(projectile.getImageView());
     }
 
     public Launcher getLauncher() {

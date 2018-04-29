@@ -26,6 +26,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
     private int myHits = 1;
+    private MovingProperty myMovingProperty;
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -62,6 +63,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	this.place(shooterX, shooterY);
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
+	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
     }
 
     /**
@@ -69,7 +71,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
      */
     public void move(double elapsedTime) {
 	try {
-	    ((MovingProperty)this.getProperty("Boomerang")).move(this, elapsedTime);
+	    myMovingProperty.move(this, elapsedTime);
 	}catch(NullPointerException e) {
 	    //this means there is not movement property defined for the projectile, so don't move them
 	    System.out.println("no movement property");
@@ -77,18 +79,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	}
 	
     }
-	
-	
-	
-//	if (this.myTarget.isAlive()) {
-//	    rotateImage();
-//	}
-//	double totalDistanceToMove = getValue("ConstantSpeedProperty")*elapsedTime;
-//	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-//	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-//	this.getImageView().setX(this.getX()+xMove);
-//	this.getImageView().setY(this.getY()+yMove);
-//    }
 
     /**
      * Rotates the image to face the target
@@ -135,5 +125,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
     
     public void setImage(String image) {
 	super.updateImage(image);
+    }
+    
+    public ShootingSprites getTarget() {
+	return myTarget;
+    }
+
+    public double getSpeed() {
+	return this.getProperty("SpeedProperty").getProperty();
     }
 }

@@ -68,10 +68,12 @@ public class Level {
 		return myNumber;
 	}
 
-	// TODO 
 	public void addPath(Path path) {
-		myPaths.clear();
 		myPaths.add(path); 
+	}
+	
+	public void clearPaths(Path path) {
+	    	//TODO
 	}
 
 	/**
@@ -90,7 +92,6 @@ public class Level {
 	 * @param tower: The tower object to be added
 	 */
 	public void addTower(String name, Tower tower) {
-		//	System.out.println(tower.getImageView().getFitWidth() + " level tower width");
 		myTowers.put(name, tower);
 	}
 
@@ -119,6 +120,9 @@ public class Level {
 	 * @return List<String>: all the towers available in the level
 	 */
 	public List<String> getAllTowers() {
+		if (myTowers.size() > 1) {
+			myTowers.remove(DEFAULT_OBJ_NAME);
+		}
 		List<String> listToReturn = new ArrayList<String>(); 
 		listToReturn.addAll(myTowers.keySet()); 
 		return listToReturn; 
@@ -196,16 +200,6 @@ public class Level {
 		if(!myWaves.contains(wave)) {
 			myWaves.add(wave);
 		}
-		//		if(myWaves.containsKey(path)) {
-		//			List<Wave> waves = myWaves.get(path);
-		//			waves.add(wave);
-		//		}
-		//		else {
-		//			ArrayList<Wave> waveList = new ArrayList<>();
-		//			waveList.add(wave);
-		//			myWaves.put(path,waveList);
-		//		}
-
 	}
 
 	public void addWave(int waveNumber) {
@@ -234,7 +228,13 @@ public class Level {
 	}
 
 	public List<Path> getPaths() {
-		return myPaths; 
+	    	List<Path> pathsWithoutDefault = new ArrayList<>();
+	    	for(Path path: myPaths) {
+	    	    if(!path.equals(myPaths.get(0))){
+	    		pathsWithoutDefault.add(path);
+	    	    }
+	    	}
+		return pathsWithoutDefault; 
 	}
 
 	public Map<String, Tower> getTowers() {
@@ -338,38 +338,40 @@ public class Level {
 		//			}
 		//		}
 		//		return pathMap;
-		if (myPaths.size() > 0) {
-			return myPaths.get(0).getPathMap();
+		if (myPaths.size() > 1) {
+			return myPaths.get(myPaths.size()-1).getPathMap();
 		}
 		return null;
 	}
 
 	public String getBackGroundImage() {
-		return myPaths.get(0).getBackgroundImage();
+		return myPaths.get(myPaths.size()-1).getBackgroundImage();
+	}
+	
+	public int getGridWidth() {
+		return myPaths.get(myPaths.size() - 1).getGridWidth();
+	}
+	
+	public int getGridHeight() {
+		return myPaths.get(myPaths.size() - 1).getGridHeight();
 	}
 
+
 	public int getPathSize() {
-		return myPaths.get(0).getPathSize();
+		return myPaths.get(myPaths.size()-1).getPathSize();
 	}
 	
-	public int getColumnCount() {
-		return myPaths.get(0).getColumnCount();
-	}
-	
-	public int getRowCount() {
-		return myPaths.get(0).getRowCount();
-	}
 	
 	public String getPathImage() {
-		return myPaths.get(0).getPathImage();
+		return myPaths.get(myPaths.size()-1).getPathImage();
 	}
 	
 	public String getStartImage() {
-		return myPaths.get(0).getStartImage();
+		return myPaths.get(myPaths.size()-1).getStartImage();
 	}
 	
 	public String getEndImage() {
-		return myPaths.get(0).getEndImage();
+		return myPaths.get(myPaths.size()-1).getEndImage();
 	}
 
 	/**
@@ -381,30 +383,5 @@ public class Level {
 	public void addWave(Wave wave) {
 		myWaves.add(wave);
 	}
-
-	public void updateAllProperties() {
-		if (myTowers.size() > 1) {
-			myTowers.remove(DEFAULT_OBJ_NAME);
-		}
-		//updateTowerProperties(); 
-		//updateEnemyProperties(); 
-	}
-
-//	private void updateTowerProperties() {
-//		Tower tower; 
-//		for (String towerName : myTowers.keySet()) {
-//			tower = myTowers.get(towerName);
-//			tower.updateProperties();
-//		}
-//	}
-
-//	public void updateEnemyProperties() {
-//		Enemy enemy; 
-//		for (String enemyName : myEnemies.keySet()) {
-//			enemy = myEnemies.get(enemyName);
-//			enemy.updateProperties();
-//		}
-//	}
-
-
 }
+
