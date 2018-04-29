@@ -52,12 +52,18 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	}); 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
+	    try {
 	    setProperty(PROJECTILE_OBJECT_TYPE, "DamageProperty", 0.0, 0.0, myProjectileDamage);
 	    setProperty(PROJECTILE_OBJECT_TYPE, "ConstantSpeedProperty", myProjectileSpeed);
 	    setProperty(PROJECTILE_OBJECT_TYPE, "RangeProperty", myLauncherRange);
 	    setProperty(PROJECTILE_OBJECT_TYPE, "FireRateProperty", 0.0, 0.0, myLauncherRate);
+	    setSaved();
 	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
-	});
+	    }
+	    catch(NullPointerException e1) {
+		getView().loadErrorAlert("NoSelection");
+	    }
+	    });
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 	vb.getChildren().add(backAndApplyButton);
 	return vb;
