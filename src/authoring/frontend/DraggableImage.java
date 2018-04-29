@@ -171,6 +171,9 @@ public class DraggableImage extends Parent {
 		return startNumber;
 	}
 	
+	protected String getImageID() {
+	    return pathImage.getId();
+	}
 	
 	protected String getImageType() {
 		return imageType;

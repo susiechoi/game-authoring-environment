@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
  * @author Sarahbland
  *
  */
-public abstract class PathToolBar extends AuthoringScreen {
+public abstract class PathToolBar extends AdjustScreen {
 	public static final String DEFAULT_PLUS_IMAGE = "file:images/plus.png";
 	public static final String DEFAULT_MINUS_IMAGE = "file:images/minus.png";
 	private List<Button> mySizingButtons;

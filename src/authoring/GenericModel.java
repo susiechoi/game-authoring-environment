@@ -17,6 +17,8 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.properties.ConstantSpeedProperty;
+import engine.sprites.properties.DamageProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -143,7 +145,7 @@ public class GenericModel {
 	public Tower generateGenericTower() throws NumberFormatException, FileNotFoundException, MissingPropertiesException {
 		return generateGenericTower(myDefaultName);
 	}
-
+    
 	/**
 	 * Reads information from GenericTower.properties file to create a default
 	 * Tower object to be used to populate user input fields.

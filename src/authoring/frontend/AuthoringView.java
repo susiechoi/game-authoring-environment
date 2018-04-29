@@ -1,4 +1,4 @@
-/**
+
  /**
  * @author Sarah Bland
  * @author susiechoi
@@ -92,27 +92,27 @@ public class AuthoringView extends View {
 	protected String getCurrentCSS() {
 		return myCurrentCSS;
 	}
-
+	
 	protected void setCurrentCSS(String css) {
 		myCurrentCSS = css; 
 		myCSSChanged.set(!myCSSChanged.get());
 	}
 	protected void setWaveTime(int waveNumber, int time) {
-		try {
-			myController.setWaveTime(getLevel(), waveNumber, time);
-		}
-		catch(ObjectNotFoundException e) {
-			Log.debug(e);
-			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
-		}
+	    try {
+	    	myController.setWaveTime(getLevel(), waveNumber, time);
+	    }
+	    catch(ObjectNotFoundException e) {
+		 Log.debug(e);
+		loadErrorScreen("NoObject");
+	    }
 	}
-	protected void addWaveEnemy(int level, String pathName, int waveNumber, String enemyKey, int amount) {
+	protected void addWaveEnemy(int level, Path path, int waveNumber, String enemyKey, int amount) {
 		try {
-			myController.addWaveEnemy(level, pathName, waveNumber, enemyKey, amount);
+		    myController.addWaveEnemy(level, path, waveNumber, enemyKey, amount);
 		}
 		catch(ObjectNotFoundException e) {
-			Log.debug(e);
-			e.printStackTrace();
+		    Log.debug(e);
+		    e.printStackTrace();
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
@@ -120,56 +120,60 @@ public class AuthoringView extends View {
 	protected void goBackFrom(String id) {
 		goForwardFrom(id+DEFAULT_BACK_SCREENFLOW_KEY);
 	}
-
+	
 
 	protected void goForwardFrom(String id) {
 		goForwardFrom(id, "");
 	}
-
+	
 	public void goForwardFrom(String id, List<String> name) {
-		try {
-			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
-			Class<?> clazz = Class.forName(nextScreenClass);
-			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
-			if(constructor.getParameterTypes().length == 2) {
-				if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
-					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-				else if(constructor.getParameterTypes()[1].equals(String.class)) {
-					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name.get(0));
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-				else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
-					Screen nextScreen = (Screen) constructor.newInstance(myStageManager, this);
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-				else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
-					myStageManager.switchScreen(nextScreen.getScreen());
-				}
-			}
-			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				System.out.println(clazz.getSimpleName());
-				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+	    try {
+		String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
+		Class<?> clazz = Class.forName(nextScreenClass);
+		Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
+		if(constructor.getParameterTypes().length == 2) {
+//			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
+//				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
+//				myStageManager.switchScreen(nextScreen.getScreen());
+//			}
+			if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
+				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
-			else {
-				throw new MissingPropertiesException("");
+			else if(constructor.getParameterTypes()[1].equals(String.class)) {
+			    	AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name.get(0));
+				myStageManager.switchScreen(nextScreen.getScreen());
 			}
+			else if(constructor.getParameterTypes()[0].equals(StageManager.class)){
+				Screen nextScreen = (Screen) constructor.newInstance(myStageManager, this);
+				myStageManager.switchScreen(nextScreen.getScreen());
+			}
+		}
+		else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
+		    	System.out.println(clazz.getSimpleName());
+			AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
+			myStageManager.switchScreen(nextScreen.getScreen());
+		}
+//		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
+//			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
+//			myStageManager.switchScreen(nextScreen.getScreen());
+//		} 
+		else {
+			throw new MissingPropertiesException("");
+		}
 
-		}
-		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
-				| IllegalAccessException | InstantiationException e) {
-			Log.debug(e);	
-			e.printStackTrace();
-			loadErrorScreen("NoScreenFlow");
-		}
 	}
-
+	catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
+			| IllegalAccessException | InstantiationException e) {
+	    	Log.debug(e);	
+	    	e.printStackTrace();
+		loadErrorScreen("NoScreenFlow");
+	}
+	}
+	
 	public void goForwardFrom(String id, String name) {
-		ArrayList<String> parameterList= new ArrayList<>();
-		parameterList.add(name);
+	    	ArrayList<String> parameterList= new ArrayList<>();
+	    	parameterList.add(name);
 		goForwardFrom(id,  parameterList);
 	}
 
@@ -226,7 +230,7 @@ public class AuthoringView extends View {
 	protected void setLevel(int level) {
 		myLevel = level; 
 	}
-
+	
 	/**
 	 * Returns the StageManager object used by the game to switch the Screens
 	 * displayed on the Stage.
@@ -234,7 +238,7 @@ public class AuthoringView extends View {
 	 * @return StageManager: the StageManager object in the game
 	 */
 	public StageManager getStageManager() {
-		return myStageManager;
+	    return myStageManager;
 	}
 
 	protected void addNewLevel() {
@@ -258,10 +262,9 @@ public class AuthoringView extends View {
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
-
-	protected Map<String, Integer> getEnemyNameToNumberMap(int level, int pathName, int waveNumber) { 
+	
+	protected Map<String, Integer> getEnemyNameToNumberMap(int level, Path path, int waveNumber) { 
 		try {
-			Path path = myController.getPathFromName(pathName, level);
 			return myController.getEnemyNameToNumberMap(level, path, waveNumber);
 		}
 		catch(ObjectNotFoundException e) {
@@ -272,22 +275,21 @@ public class AuthoringView extends View {
 		return new HashMap<>();
 
 	}
-
 	protected Integer getHighestWaveNumber(int level) {
-		try {
-			return myController.getHighestWaveNumber(level);
-		}
-		catch(ObjectNotFoundException e) {
-			Log.debug(e);
-			e.printStackTrace();
-			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
-		}
-		return 1;
+	    try {
+	    return myController.getHighestWaveNumber(level);
+	    }
+	    catch(ObjectNotFoundException e) {
+		 Log.debug(e);
+		e.printStackTrace();
+		loadErrorScreen("NoObject");
+	    }
+	    return 1;
 	}
 
 	protected void writeToFile() {
 		try {
-			myController.writeToFile();
+		    myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
 			Log.debug(e);
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
@@ -295,26 +297,50 @@ public class AuthoringView extends View {
 	}
 
 	protected void readFromFile(String name) throws MissingPropertiesException {
-		myController.setModel(name);
+	    myController.setModel(name);
 	}
-
+	
 
 	protected BooleanProperty cssChangedProperty() {
 		return myCSSChanged; 
 	}
 
-	public String getGameName() {
+	protected String getGameName() {
 		return myController.getGameName();
 	}
 
 	protected void deleteObject(String objectType, String objectName) {
-		myController.deleteObject(myLevel, objectType, objectName);
+	    	myController.deleteObject(myLevel, objectType, objectName);
 	}
 
+//
+//	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		try {
+//			myController.makeTower(myLevel, name);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoImageFile");
+//		} catch (NoDuplicateNamesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoDuplicateNames");
+//		} 
+//	}
+//	
+//	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+//		try {
+//			myController.makeEnemy(myLevel, name);
+//		} catch (MissingPropertiesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoImageFile");
+//		} catch (NoDuplicateNamesException e) {
+//		    Log.debug(e);	
+//		    loadErrorAlert("NoDuplicateNames");
+//		} 
+//	}
 
-	public void makeTower(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	    public void makeSprite(String objectType, String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
-			myController.makeTower(myLevel, name);
+		    myController.makeSprite(objectType, myLevel, name);
 		} catch (MissingPropertiesException e) {
 			Log.debug(e);	
 			loadErrorAlert(DEFAULT_NOIMAGEERROR_KEY);
@@ -322,48 +348,58 @@ public class AuthoringView extends View {
 			Log.debug(e);	
 			loadErrorAlert(DEFAULT_DUPLICATE_ERROR_KEY);
 		} 
-	}
+	    }
 
-	public void makeEnemy(String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	    public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
 		try {
-			myController.makeEnemy(myLevel, name);
-		} catch (MissingPropertiesException e) {
-			Log.debug(e);	
-			loadErrorAlert(DEFAULT_NOIMAGEERROR_KEY);
-		} catch (NoDuplicateNamesException e) {
-			Log.debug(e);	
-			loadErrorAlert(DEFAULT_DUPLICATE_ERROR_KEY);
-		} 
-	}
+			 myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
+		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
+		    Log.debug(e);	
+		    loadErrorScreen("NoObject");
+		}
+	    }
 	
 	public void setObjectAttribute(String objectType, String attribute, Object attributeValue) {
 		setObjectAttribute(objectType, "", attribute, attributeValue);
 	}
+		 
 
-	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
+	    public void setObjectAttributes(String objectType, String name, String propertyName, List<Object> attributes) {
 		try {
-			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
+		    myController.setObjectAttributes(myLevel, objectType, name, propertyName, attributes);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			Log.debug(e);	
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
-	}
+	    }
 
+	
 	public void setTheme(String selectedTheme) {
 		myTheme = selectedTheme; 
 		setObjectAttribute(DEFAULT_SETTINGS_OBJ_NAME, DEFAULT_THEME_IDENTIFIER, myTheme);
 	}
-
+	
 	public String getTheme() {
 		if (myTheme == null) {
 			try {
 				myTheme = (String) myController.getObjectAttribute(1, DEFAULT_SETTINGS_OBJ_NAME, "", DEFAULT_THEME_IDENTIFIER);
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
-				Log.debug(e);	
-				loadErrorAlert("NoFile");
+			    Log.debug(e);	
+			    loadErrorAlert("NoFile");
 			}
 		}
 		return myTheme; 
+	}
+	
+	protected Path getPathWithStartingPoint(int level, Point point) {
+	    try {
+		return myController.getPathWithStartingPoint(level, point);
+	    }
+	    catch(ObjectNotFoundException e) {
+		Log.debug(e);
+		loadErrorScreen("NoObject");
+	    }
+	    return null;
 	}
 
 }

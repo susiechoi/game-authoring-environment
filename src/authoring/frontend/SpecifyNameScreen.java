@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 
 abstract class SpecifyNameScreen extends AuthoringScreen {
 
+	public static final String DEFAULT_TOWER_TYPE = "Tower";
+	public static final String DEFAULT_ENEMY_TYPE = "Enemy";
 	public static final String DEFAULT_NO_OBJECT_ERROR_KEY = "NoObject";
     public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
     public static final String DEFAULT_APPLY_SCREENFLOW = "Apply"; 
@@ -58,7 +60,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	    if (validNameField(myNameField)) {
 		if (this.getClass().getSimpleName().equals("SpecifyTowerNameScreen")) {
 		    try {
-			getView().makeTower(myNameField.getText());
+			getView().makeSprite(DEFAULT_TOWER_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			Log.error(e);
@@ -67,7 +69,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		}
 		else if (this.getClass().getSimpleName().equals("SpecifyEnemyNameScreen")) {
 		    try {
-			getView().makeEnemy(myNameField.getText());
+			getView().makeSprite(DEFAULT_ENEMY_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException
 			    | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
