@@ -30,7 +30,6 @@ import voogasalad.util.soundfactory.*;
 public class GameScreen extends Screen {
 
 
-    private final String DEFAULT_SHARED_STYLESHEET;
     private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
     private final PromptReader PROMPTS;
@@ -50,7 +49,7 @@ public class GameScreen extends Screen {
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 	SCREEN_MANAGER = ScreenController;
 	GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
-	DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
+	setStyleSheet(GAMEPLAYER_PROPERTIES.get("themeStylesheet"));
 	PROMPTS = promptReader;
 	MEDIATOR = mediator;
 	SOUND_FACTORY = MEDIATOR.getSoundFactory();
@@ -65,7 +64,6 @@ public class GameScreen extends Screen {
     public Parent makeScreenWithoutStyling() {
 	rootPane = new BorderPane();
 	rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
-	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 
 	displayPane = new BorderPane();
 	displayPane.setCenter(TOWER_PANEL.getPanel());
