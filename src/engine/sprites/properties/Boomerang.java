@@ -13,7 +13,7 @@ import engine.sprites.towers.projectiles.Projectile;
 
 public class Boomerang extends MovingProperty{
     private double tCircle = 0.0;
-    private double range = 200;
+    private double range = 50;
     
     public Boomerang(double speed) {
 	super(speed);
@@ -21,8 +21,8 @@ public class Boomerang extends MovingProperty{
     
     @Override
     public void move(Projectile projectile, double elapsedTime) {
-	System.out.println("WADDDDDDDDDDDUPPPPPPPPPPPPPPP");
-	tCircle+=this.getProperty()*elapsedTime;
+//	tCircle+=this.getProperty()*elapsedTime;
+	tCircle += 1;
 	double x = projectile.getX();
 	double y = projectile.getY();
 	projectile.getImageView().setX(range* Math.cos(tCircle) + x);
@@ -30,6 +30,10 @@ public class Boomerang extends MovingProperty{
 
 //	Projectile movingProjectile = (Projectile) args[0];
 //	Point origin = (Point) args[1];
+    }
+    
+    public Boomerang(Property p) {
+	super(p.getProperty());
     }
 	
 }

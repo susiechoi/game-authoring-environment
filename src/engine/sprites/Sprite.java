@@ -43,7 +43,7 @@ public class Sprite implements FrontEndSprite{
 	myProperties = new ArrayList<>();
 	myPropertyBuilder = new PropertyBuilder();
 	for(Property p : properties) {
-	    System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
+	  //  System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
 	    myProperties.add(this.makeProperty(p));
 	}
     }

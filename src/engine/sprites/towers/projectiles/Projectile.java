@@ -70,7 +70,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public void move(double elapsedTime) {
 	try {
 	    ((MovingProperty)this.getProperty("Boomerang")).move(this, elapsedTime);
-	    System.out.println("GOT BOOMERANG PROPERTY");
 	}catch(NullPointerException e) {
 	    //this means there is not movement property defined for the projectile, so don't move them
 	    System.out.println("no movement property");
