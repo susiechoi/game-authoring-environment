@@ -24,7 +24,6 @@ public class LauncherBuilder {
 	List<Property> launcherProps = new ArrayList<>();
 	launcherProps.add(rate);
 	launcherProps.add(range);
-	System.out.println("IN LAUNCHER BUILDER BOOMERANG IS "+projectile.getProperty("Boomerang"));
 	return new Launcher(projectile, launcherProps);
     }
 
