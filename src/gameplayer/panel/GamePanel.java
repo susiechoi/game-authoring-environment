@@ -220,7 +220,6 @@ public class GamePanel extends Panel{
 	    catch(CannotAffordException e){
 		Log.debug(e);
 		resetCursor();
-		removeTowerRangeIndicator();
 	    }
 	    GAME_SCREEN.blankGamePanelClick();
 	}
