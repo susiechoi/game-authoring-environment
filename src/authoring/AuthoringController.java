@@ -274,7 +274,7 @@ public class AuthoringController implements MVController{
 	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
     }
 
-    public void createProperty(int level, String objectType, String name, String propertyName, List<Double> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+    public void createProperty(int level, String objectType, String name, String propertyName, List<Double> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException, MissingPropertiesException {
 	myModel.createProperty(level, objectType, name, propertyName, attributes);
     }
 

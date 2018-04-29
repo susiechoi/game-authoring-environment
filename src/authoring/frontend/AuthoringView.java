@@ -368,7 +368,11 @@ public class AuthoringView extends View {
 
 	public void createProperty(String objectType, String name, String propertyName, List<Double> attributes) {
 		try {
-			myController.createProperty(myLevel, objectType, name, propertyName, attributes);
+			try {
+				myController.createProperty(myLevel, objectType, name, propertyName, attributes);
+			} catch (MissingPropertiesException e) {
+				loadErrorAlert("NoObject");
+			}
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
 			Log.debug(e);	
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);

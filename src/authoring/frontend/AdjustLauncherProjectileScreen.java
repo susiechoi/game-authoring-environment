@@ -56,6 +56,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
 	});
+	vb.getChildren().add(makePropertySelector());
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 	vb.getChildren().add(backAndApplyButton);
 	return vb;
@@ -101,5 +102,5 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myLauncherRange", newValue);
 	});
     }
-
+    
 }

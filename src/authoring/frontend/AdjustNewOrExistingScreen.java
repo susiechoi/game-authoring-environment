@@ -20,12 +20,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
-	public static final String DEFAULT_PROPERTIES_FILES_PREFIX = "default_objects/Properties";
-	public static final String DEFAULT_FILEPATH_SEPARATOR = "/";
+	public static final String DEFAULT_PROPERTIES_FILES_PREFIX = "default_objects/Properties/";
 	public static final String DEFAULT_OBJATTRIBUTEDNE_KEY = "ObjectAttributeDNE"; 
 	public static final String DEFAULT_NOIMAGEFILE_KEY = "NoImageFile";
 	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
@@ -98,7 +96,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 		ArrayList<String> propertyOptions = new ArrayList<>();
 		propertyOptions.add(propertySelectionPrompt);
-		propertyOptions.addAll(getUIFactory().getFileNames(DEFAULT_PROPERTIES_FILES_PREFIX));
+		propertyOptions.addAll(getUIFactory().getFileNames(DEFAULT_PROPERTIES_FILES_PREFIX+myObjectDescription));
 
 		Button addPropertyButton = getUIFactory().makeTextButton(propertySelectionPrompt);
 
@@ -108,7 +106,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 				propertySelectionPrompt);
 		addPropertyButton.setOnAction(e -> {
 			getView().getStageManager().switchScreen(
-					new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName)
+					new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName, this)
 					.getScreen());
 		});
 

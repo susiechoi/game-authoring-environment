@@ -10,14 +10,15 @@ package authoring.factory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.level.Level;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.Tower;
+import frontend.PropertiesReader;
 import voogasalad.util.reflection.*;
 
 /**
@@ -27,16 +28,22 @@ import voogasalad.util.reflection.*;
  */
 public class PropertyFactory {
     
-    private Map<String, Property> currentProperties;
-    protected ResourceBundle PROPERTIES = ResourceBundle.getBundle("authoring/resources/properties");
+	public static final String DEFAULT_PROPERTIES_FILES_PATH = "default_objects/Properties/properties.properties";
+	private Map<String, Property> currentProperties;
     public static final String PACKAGE = "engine.sprites.properties.";
     
     public PropertyFactory() {
 	currentProperties = new HashMap<String, Property>();
     }
     
-    public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException {
-	if (objectType.equals("Enemy")) {
+    public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
+//	System.out.println("SETTING PROPERTY");
+//	System.out.println(currentLevel);
+//	System.out.println(objectType);
+//	System.out.println(objectName);
+//	System.out.println(propertyName);
+	for (Double d : attributes) System.out.println(d);
+    	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
 		Enemy enemy = currentLevel.getEnemy(objectName);
 		enemy.addProperty(getProperty(objectName, propertyName, attributes));
@@ -62,15 +69,10 @@ public class PropertyFactory {
 	}
     }
     
-    private Property getProperty(String objectName, String propertyName, List<Double> attributes) {
+    private Property getProperty(String objectName, String propertyName, List<Double> attributes) throws MissingPropertiesException {
 	Property ret;
 	String className = PACKAGE + propertyName;
-	String type = null;
-	for(String key : PROPERTIES.keySet()) {
-	    if(propertyName.equals(key)) {
-		type = (String) PROPERTIES.getObject(key);
-	    }
-	}
+	String type = new PropertiesReader().findKey(DEFAULT_PROPERTIES_FILES_PATH, propertyName);
 	if(type == null) {
 	    return null;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import authoring.frontend.AuthoringScreen;
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import frontend.Screen;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ import javafx.scene.layout.VBox;
 public class PropertyScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_NOFILEERROR_KEY = "NoFile";
-	public static final String DEFAULT_PROPERTIES_FILES_PREFIX = "default_objects/Properties";
+	public static final String DEFAULT_PROPERTIES_FILES_PREFIX = "default_objects/Properties/";
 	public static final String DEFAULT_PROPERTIES_FILES_SUFFIX = ".properties";
 	public static final String DEFAULT_FILEPATH_SEPARATOR = "/";
 	public static final String DEFAULT_CONSTANTS_FILEPATH = "src/frontend/Constants.properties";
@@ -29,13 +30,15 @@ public class PropertyScreen extends AuthoringScreen {
 	private String myPropertyName;
 	private String myObjectType;
 	private String myObjectName;
+	private Screen myReturnToScreen;
 
-	public PropertyScreen(AuthoringView view, String propertyName, String objectType, String objectName) {
+	public PropertyScreen(AuthoringView view, String propertyName, String objectType, String objectName, Screen returnToScreen) {
 		super(view);
-		myPropertiesFilepath = DEFAULT_PROPERTIES_FILES_PREFIX+DEFAULT_FILEPATH_SEPARATOR+propertyName+DEFAULT_PROPERTIES_FILES_SUFFIX; 
+		myPropertiesFilepath = DEFAULT_PROPERTIES_FILES_PREFIX+objectType+DEFAULT_FILEPATH_SEPARATOR+propertyName+DEFAULT_PROPERTIES_FILES_SUFFIX; 
 		myPropertyName = propertyName;
 		myObjectType = objectType;
 		myObjectName = objectName;
+		myReturnToScreen = returnToScreen;
 	}
 
 	@Override
@@ -48,10 +51,12 @@ public class PropertyScreen extends AuthoringScreen {
 		} catch (MissingPropertiesException e1) {
 			getView().loadErrorScreen(DEFAULT_NOFILEERROR_KEY);
 		}
+		List<Node> allSliders = new ArrayList<>(); 
 		for (String key : keys) {
 			Slider aSlider = new Slider();
 			try {
 				aSlider = getUIFactory().setupSlider(Integer.parseInt(getView().getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, DEFAULT_PROPERTIES_SLIDER_MAX_KEY)));
+				allSliders.add(aSlider);
 			} catch (NumberFormatException | MissingPropertiesException e1) {
 				getView().loadErrorScreen(DEFAULT_NOFILEERROR_KEY);
 			}
@@ -65,7 +70,8 @@ public class PropertyScreen extends AuthoringScreen {
 		}
 		Button applyButton = getUIFactory().makeTextButton(getView().getErrorCheckedPrompt(DEFAULT_APPLY_PROMPT_KEY));
 		applyButton.setOnAction(e -> {
-			applyPropertyScreen(myPropertyName, myObjectType, myObjectName, vb.getChildren());
+			applyPropertyScreen(myPropertyName, myObjectType, myObjectName, allSliders);
+			getView().getStageManager().switchScreen(myReturnToScreen.getScreen());
 		});
 		vb.getChildren().add(applyButton);
 		return vb;

@@ -177,7 +177,7 @@ public class AuthoringModel {
 	return propertyFactory.retrieveProperty(name, attribute);
     }
 
-    public void createProperty(int level, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException{
+    public void createProperty(int level, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException{
 	Level currentLevel = myGame.levelCheck(level);
 	propertyFactory.setProperty(currentLevel, objectType, objectName, propertyName, attributes);
     }
