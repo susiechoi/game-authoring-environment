@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 import authoring.AuthoringController;
+import engine.GameEngine;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -71,10 +72,13 @@ public class GameScreen extends Screen {
 		displayPane.setCenter(TOWER_PANEL.getPanel());
 		displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+
 		gamePane = new BorderPane();
 		gamePane.setTop(SCORE_PANEL.getPanel());
-		gamePane.setCenter(GAME_PANEL.getPanel());
-
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		MEDIATOR.pause();
 		rootPane.setCenter(gamePane);
 		setVertPanelsLeft();
 		return rootPane;
@@ -274,18 +278,20 @@ public class GameScreen extends Screen {
 	public void nextLevel() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
 		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+		MEDIATOR.pause();
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> newLevel());
 
 	}
 
-	private void gameStartAction() {
-		MEDIATOR.startGameLoop();
+	private void newLevel() {
 		gamePane.setCenter(GAME_PANEL.getPanel());
+		MEDIATOR.play();
+
 	}
-	public void gameStarted() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStartAction());
+
+	private void gameStart() {
+		gamePane.setCenter(GAME_PANEL.getPanel());
+		MEDIATOR.play();
 	}
 
 

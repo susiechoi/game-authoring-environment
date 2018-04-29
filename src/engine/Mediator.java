@@ -286,14 +286,6 @@ public class Mediator implements MVController{
 	myScreenManager.getGameScreen().nextLevel();
     }
 
-    public void gameStarted() {
-		myScreenManager.getGameScreen().gameStarted();
-	}
-
-	public void startGameLoop() {
-		myGameEngine.triggerGame();
-	}
-
 	public void restartGame() {
 		myGameEngine.getPlayState().restartLevel();
 	}
