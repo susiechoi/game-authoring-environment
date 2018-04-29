@@ -152,6 +152,7 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public boolean isAlive() {
+	System.out.println(this.getHealthProp().getProperty());
 	return (this.getHealthProp().getProperty() > 0);
     }
 

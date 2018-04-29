@@ -50,21 +50,23 @@ public class EnemyManager extends ShootingSpriteManager {
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		if(!enemy.isAlive()) {
-		    myEnemies.get(path).remove(enemy);
-		    break;
-		}
+		System.out.println("ENEMY");
 		newEnemies.get(path).add(enemy);
-		if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
+		if (!enemy.isAlive()) {
+		    System.out.println("Enemy is not alive");
+		    newEnemies.get(path).remove(enemy);
+		}
+		else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
+		    System.out.println("End of path!");
 		    deadEnemies.add(enemy);
 		    newEnemies.get(path).remove(enemy);
 		}
-
 		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
+		    System.out.println("Actually moving...");
 		    enemy.move(elapsedTime);
 		}
 		else {
-
+		    System.out.println("In else block");
 		    Point newPosition = path.nextPosition(enemy.getIndex());
 		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
 		    enemy.setNewPosition(newPosition);
