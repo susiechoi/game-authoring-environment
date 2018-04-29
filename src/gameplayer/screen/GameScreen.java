@@ -24,6 +24,9 @@ import javafx.scene.layout.BorderPane;
 <<<<<<< HEAD
 =======
 import voogasalad.util.soundfactory.*;
+<<<<<<< HEAD
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
+=======
 >>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -32,7 +35,10 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 
 
 /**
@@ -41,6 +47,7 @@ import javafx.stage.Stage;
 
 import voogasalad.util.soundfactory.*;
 
+<<<<<<< HEAD
 >>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 
 
@@ -51,10 +58,13 @@ import voogasalad.util.soundfactory.*;
 <<<<<<< HEAD
 import voogasalad.util.soundfactory.*;
 
+=======
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 
 
 public class GameScreen extends Screen {
 
+<<<<<<< HEAD
 	private final String DEFAULT_SHARED_STYLESHEET;
 	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
@@ -97,6 +107,8 @@ public class GameScreen extends Screen {
 		gamePane = new BorderPane();
 
 =======
+=======
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 
     private final String DEFAULT_SHARED_STYLESHEET;
     private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
@@ -246,6 +258,9 @@ public class GameScreen extends Screen {
 	else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
 	    MEDIATOR.restartGame();
 	}
+	else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
+	    MEDIATOR.restartGame();
+	}
     }
 
     public void settingsTriggered(String setting) {
@@ -258,6 +273,7 @@ public class GameScreen extends Screen {
 		Log.debug(e);
 	    }
 	    SOUND_FACTORY.playBackgroundMusic();
+<<<<<<< HEAD
 
 
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
@@ -271,6 +287,21 @@ public class GameScreen extends Screen {
 >>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 	}
 
+
+=======
+
+
+	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
+	    SOUND_FACTORY.pauseBackgroundMusic();
+	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
+	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("instrURL"), GAMEPLAYER_PROPERTIES);
+	    pop.makePopupBrowser();
+	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
+	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
+	    pop.makePopupBrowser();
+	}
+    }
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 
 
     /**

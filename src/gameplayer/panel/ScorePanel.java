@@ -9,6 +9,19 @@ import com.sun.javafx.tools.packager.Log;
 
 import file.DataPointWriter;
 import com.sun.javafx.tools.packager.Log;
+<<<<<<< HEAD
+=======
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

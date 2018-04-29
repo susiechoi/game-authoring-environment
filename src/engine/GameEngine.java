@@ -73,10 +73,14 @@ public class GameEngine {
 	 */
 	public void start() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		myMediator.gameStarted();
 		while (gameTriggered) {
 			ANIMATION.play();
 		}
+=======
+	    ANIMATION.play();
+>>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
 =======
 	    ANIMATION.play();
 >>>>>>> d32a75dfbf13b595a4a635adbc17e69f444cd9a3
