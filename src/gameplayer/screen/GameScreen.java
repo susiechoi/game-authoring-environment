@@ -294,5 +294,8 @@ public class GameScreen extends Screen {
 		MEDIATOR.play();
 	}
 
+	public String getInstructions() {
+		return MEDIATOR.getInstructions();
+	}
 
 }

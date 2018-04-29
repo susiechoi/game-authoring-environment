@@ -277,4 +277,8 @@ public class PlayState implements GameData {
     public void moveTowers(FrontEndTower tower, KeyCode c) {
 	myTowerManager.moveTowers(tower, c);
     }
+
+    public String getInstructions() {
+    	return mySettings.getInstructions();
+	}
 }
