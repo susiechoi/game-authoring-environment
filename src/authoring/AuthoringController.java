@@ -274,8 +274,8 @@ public class AuthoringController implements MVController{
 	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
     }
 
-    public void setObjectAttributes(int level, String objectType, String name, String propertyName, List<Object> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
-	myModel.setObjectProperty(level, objectType, name, propertyName, attributes);
+    public void createProperty(int level, String objectType, String name, String propertyName, List<Double> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException, MissingPropertiesException {
+	myModel.createProperty(level, objectType, name, propertyName, attributes);
     }
 
     public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
