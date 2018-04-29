@@ -280,6 +280,7 @@ public class Level {
 	for(Wave wave : myWaves) {
 	    copy.add(wave.getCopy());
 	}
+<<<<<<< HEAD
 	return copy;
     }
 
@@ -298,6 +299,34 @@ public class Level {
     public void removeWave(String name) {
 	myWaves.remove(Integer.parseInt(name)-1);
     }
+=======
+	
+	public int getGridWidth() {
+		return myPaths.get(myPaths.size() - 1).getGridWidth();
+	}
+	
+	public int getGridHeight() {
+		return myPaths.get(myPaths.size() - 1).getGridHeight();
+	}
+
+
+	public int getPathSize() {
+		return myPaths.get(myPaths.size()-1).getPathSize();
+	}
+	
+	
+	public String getPathImage() {
+		return myPaths.get(myPaths.size()-1).getPathImage();
+	}
+	
+	public String getStartImage() {
+		return myPaths.get(myPaths.size()-1).getStartImage();
+	}
+	
+	public String getEndImage() {
+		return myPaths.get(myPaths.size()-1).getEndImage();
+	}
+>>>>>>> c3020ead6dc7d20595b731e84686e0e6559c861d
 
     /**
      * @return Wave corresponding to @param waveNumber

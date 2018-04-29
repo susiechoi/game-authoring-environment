@@ -223,6 +223,7 @@ public class Mediator implements MVController{
     }
 
 
+
     /**
      * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
      * lives. 
@@ -244,9 +245,10 @@ public class Mediator implements MVController{
 	}
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
-	myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, col, row);
-    }
+	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+		return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+	}
+
 
     /**
      * PlayState passing integer properties to Game Screen to attach listeners for currency, score and 
