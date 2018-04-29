@@ -13,6 +13,7 @@ import javafx.scene.layout.RowConstraints;
 
 public class PathMaker {
 
+
     private GridPane grid;
     private int myPathSize;
 
@@ -54,6 +55,7 @@ public class PathMaker {
 	    }
 	}
     }
+
 
     private void setGridConstraints(GridPane grid, int width, int height) {
 	for (int i = 0; i < width/myPathSize; i++) {

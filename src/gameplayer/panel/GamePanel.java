@@ -15,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
@@ -32,7 +33,7 @@ public class GamePanel extends Panel{
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private boolean towerPlaceMode = false;
-    private Group spriteAdd;
+    private Pane spriteAdd;
     private final UIFactory UIFACTORY;
     private Boolean towerClick = false;
     private Circle rangeIndicator;
@@ -61,8 +62,7 @@ public class GamePanel extends Panel{
     public void makePanel() {
 
 	//TODO potentially fix needed?
-
-	Group gamePane = new Group();
+	Pane gamePane = new Pane();
 	ScrollPane panelRoot = new ScrollPane(gamePane);
 	panelRoot.setMaxHeight(Double.MAX_VALUE);
 	panelRoot.setMaxWidth(Double.MAX_VALUE);
@@ -97,6 +97,7 @@ public class GamePanel extends Panel{
 	return true;
 
     }
+
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
