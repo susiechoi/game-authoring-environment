@@ -132,17 +132,23 @@ public class Wave {
 
     }
     
+    /**
+     * Returns an enemy object specific to the given path argument if the path contains
+     * an enemy and the count argument is greater than or equal to the Wave objects field
+     * myTime. If count is given as -1 then an enemy is always returned if the path 
+     * contains an enemy. 
+     * 
+     * @param path: the path specific to the enemy object returned
+     * @param count: the loop count from the game loop, or -1 if no loop count is necessary
+     * @return Enemy: an enemy object specific to the path argument
+     */
     public Enemy getEnemySpecificPath(Path path, int count) {
 	for (Entry<Enemy, Integer> entry : myWaveMap.get(path).entrySet()) {
-		if (entry.getValue() > 0 && count >= myTime) {
+		if (entry.getValue() > 0 && (count >= myTime || count == -1)) {
 		    Enemy retEnemy = entry.getKey();
 		    decrementEnemyCount(retEnemy, path);
 		    return new Enemy(retEnemy);
 		}
-		System.out.println("Couldnt spawn enemy!");
-		System.out.println("Timing: ");
-		System.out.println("Count " + count);
-		System.out.println("myTime: " + myTime);
 	    }
 	return null;
     }

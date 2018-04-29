@@ -20,13 +20,11 @@ public class GameEngine {
 	private final Integer DEFAULT_RELATIVE_SPEED = 5;
 	private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private PlayState myPlayState;
-	private Mediator myMediator;
 	private Timeline ANIMATION;
 	private double timeFactor;
 
 	public GameEngine(Mediator mediator) {
 		myPlayState = null;
-		myMediator = mediator;
 		timeFactor = 1;
 
 		setSpeed(DEFAULT_RELATIVE_SPEED);

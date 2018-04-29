@@ -217,9 +217,8 @@ public class PlayState implements GameData {
 	currentLevel = myLevels.get(currentLevel.myNumber());
 	currentLevelCopy = new Level(currentLevel);
 	myMediator.updateLevel(currentLevel.myNumber());
-	// TODO: call Mediator to trigger next level
+	setLevel(currentLevel.getNumber());
 	myMediator.nextLevel();
-	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
     private void spawnEnemies(double elapsedTime) {
@@ -227,10 +226,6 @@ public class PlayState implements GameData {
 	    Wave currentWave = currentLevel.getWave(0);
 	    if (currentWave.isFinished()) {
 		double time = currentWave.getWaveTime();
-		System.out.println("Time variable: " + time);
-		System.out.println(elapsedTime);
-		System.out.println(time/elapsedTime);
-		System.out.println(count);
 		currentLevel.removeWave();  
 		currentWave = currentLevel.getWave(0);
 		// TODO remove magic number! put FPS in constant file
@@ -254,9 +249,7 @@ public class PlayState implements GameData {
     private void spawnEnemy(Wave wave, Path path) {
 	Enemy newEnemy = wave.getEnemySpecificPath(path, count);
 	newEnemy.setInitialPoint(path.initialPoint());
-	//newEnemy.updateImage();
-	//enemy.move(path.initialPoint(),elapsedTime);
-	myEnemyManager.addEnemy(currentLevel.getPaths().get(0), newEnemy);
+	myEnemyManager.addEnemy(path, newEnemy);
 	myEnemyManager.addToActiveList(newEnemy);
 	myMediator.addSpriteToScreen(newEnemy);
     }
