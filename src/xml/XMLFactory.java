@@ -3,9 +3,6 @@ package xml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import authoring.AuthoredGame;
-import authoring.frontend.exceptions.MissingPropertiesException;
-
 /**
  * Static class that creates XMLWriters/XMLReaders to handle data parsing. Holds a main method for testing purposes.
  *
@@ -31,8 +28,9 @@ public class XMLFactory {
 	public static XMLWriter generateWriter(String writerType) {
 		try {
 			Class<?> writer = Class.forName("xml." + writerType);
+			Constructor<?> c = writer.getConstructor();
 			try {
-			    return (XMLWriter) writer.newInstance();
+			    return (XMLWriter) c.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();
@@ -42,8 +40,10 @@ public class XMLFactory {
 			} catch (IllegalArgumentException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();
+			} catch (InvocationTargetException e) {
+			    e.printStackTrace();
 			}
-		} catch (ClassNotFoundException | SecurityException e) {
+		} catch (ClassNotFoundException | SecurityException | NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -85,16 +85,16 @@ public class XMLFactory {
 		return null;
 	}
 	
-	public static void main(String[] args) throws MissingPropertiesException {
-	    XMLFactory f = new XMLFactory();
-	    AuthoringModelWriter p = (AuthoringModelWriter) XMLFactory.generateWriter("AuthoringModelWriter");
-	    //AuthoredGame a = new AuthoredGame();
-	    //p.write(a, "test1");
-	    AuthoringModelReader r = (AuthoringModelReader) XMLFactory.generateReader("AuthoringModelReader");
-	    AuthoredGame b = r.createModel("test1");
-//	    if (b!= null)
-//		System.out.println("not Null");
-	}
+//	public static void main(String[] args) throws MissingPropertiesException {
+//	    XMLFactory f = new XMLFactory();
+//	    AuthoringModelWriter p = (AuthoringModelWriter) XMLFactory.generateWriter("AuthoringModelWriter");
+//	    //AuthoredGame a = new AuthoredGame();
+//	    //p.write(a, "test1");
+//	    AuthoringModelReader r = (AuthoringModelReader) XMLFactory.generateReader("AuthoringModelReader");
+//	    AuthoredGame b = r.createModel("test1");
+////	    if (b!= null)
+////		System.out.println("not Null");
+//	}
 
 }
 

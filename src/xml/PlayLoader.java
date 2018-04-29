@@ -3,7 +3,7 @@ package xml;
 import java.io.File;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import engine.PlayState;
 
@@ -12,7 +12,7 @@ public class PlayLoader implements XMLReader {
     private XStream parser;
     
     public PlayLoader() {
-	parser = new XStream(new StaxDriver());
+	parser = new XStream(new DomDriver());
     }
     
     @Override

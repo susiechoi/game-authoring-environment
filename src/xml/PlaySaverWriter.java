@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import data.GameData;
 
@@ -33,7 +33,7 @@ public class PlaySaverWriter implements XMLWriter {
 		} catch (ParserConfigurationException p) {
 			System.out.println("Bad configuration");
 		}
-		parser = new XStream(new StaxDriver());
+		parser = new XStream(new DomDriver());
 		game = d.createElement("game");
 		d.appendChild(game);
 	}

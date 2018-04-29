@@ -1,12 +1,7 @@
 package xml;
 
-
-import java.io.File;
-
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import data.GameData;
 
@@ -19,20 +14,13 @@ public class AuthoringModelWriter implements XMLWriter {
 	 * @author Brendan Cheng 3/31/2018
 	 */
 
-	private Document d;
-	private File file;
 	private XStream parser;
 
 	/**
 	 * Initializes file that will be written
 	 */
 	public AuthoringModelWriter() {
-		try {
-			d = XMLDocumentBuilder.initializeDoc();
-		} catch (ParserConfigurationException p) {
-			System.out.println("Bad configuration"); // update exception
-		}
-		parser = new XStream(new StaxDriver());
+		parser = new XStream(new DomDriver());
 		parser.autodetectAnnotations(true);
 //		parser.registerConverter(new ObservableListConverter(parser.getMapper()));
 	}

@@ -28,8 +28,6 @@ import org.w3c.dom.Node;
  */
 
 public class XMLDocumentBuilder {
-
-    private final static String FILE_SETTINGS = "<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"no\\\"?>";
 	
 	/**
 	 * Creates new instance of a document to be written to
