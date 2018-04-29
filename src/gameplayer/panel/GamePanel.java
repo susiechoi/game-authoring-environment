@@ -22,6 +22,11 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 
 
 public class GamePanel extends Panel{
@@ -64,7 +69,6 @@ public class GamePanel extends Panel{
 
 	//TODO potentially fix needed?
 	Pane gamePane = new Pane();
-	gamePane.setStyle("	-fx-background-color: yellow;");
 	scroll = new ScrollPane(gamePane);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 
@@ -80,12 +84,11 @@ public class GamePanel extends Panel{
 	    return false;
 	}
 	ImageView imageView;
-	
+
 	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
 	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
-	scroll.setMaxWidth(imageWidth);
-	scroll.setMaxHeight(imageHeight);
-	System.out.println("MW: " + imageWidth + " MH: " + imageHeight);
+	spriteAdd.setMaxHeight(imageHeight);
+	spriteAdd.setMaxWidth(imageWidth);
 	try {
 	    imageView = new ImageView(new Image(backgroundFilePath, imageWidth,imageHeight , false, false));
 	} catch (IllegalArgumentException e){
@@ -97,11 +100,10 @@ public class GamePanel extends Panel{
     }
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
-	if(!pathSet) {
-	    PathMaker pathMaker = new PathMaker();
+	backgroundSet = setBackgroundImage(backgroundImageFilePath);
+	if(backgroundSet) {
+	    PathMaker pathMaker = new PathMaker(GAMEPLAYER_PROPERTIES, GAME_SCREEN.getScreenManager());
 	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
-	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
@@ -134,7 +136,6 @@ public class GamePanel extends Panel{
      * @param tower will be null if tower placement is canceled
      */
     public void towerSelected(FrontEndTower tower) {
-
 	if(tower!= null && tower != towerSelected ) { //TODO (thread canceling towerPlacement)
 	    towerSelected = tower;
 	    ImageView towerImage = tower.getImageView();
@@ -223,8 +224,6 @@ public class GamePanel extends Panel{
 		Point position = new Point((int)x,(int)y);
 		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
 		ImageView towerImage = newTower.getImageView();
-		Image towerImageActual = towerImage.getImage();
-
 		addTowerImageViewAction(newTower);
 		spriteAdd.getChildren().add(towerImage);
 		resetCursor();
@@ -232,13 +231,13 @@ public class GamePanel extends Panel{
 	    }
 	    catch(CannotAffordException e){
 		Log.debug(e);
-		//TODO aaahhhhhhhhh
-		//GameScreen popup for cannot afford
+		resetCursor();
 	    }
+	    GAME_SCREEN.blankGamePanelClick();
 	}
 	else if(!towerClick) {
-	    GAME_SCREEN.blankGamePanelClick();
 	    removeTowerRangeIndicator();
+	    GAME_SCREEN.blankGamePanelClick();
 	}
 	towerClick = false;
     }

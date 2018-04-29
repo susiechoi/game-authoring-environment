@@ -17,6 +17,7 @@ import engine.sprites.enemies.Enemy;
  * 
  * @author Katherine Van Dyk
  * @author Ryan Pond
+ * @author benauriemma
  *
  */
 public class Projectile extends Sprite implements FrontEndSprite{
@@ -27,6 +28,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     private List<Sprite> hitTargets;
     private int myHits = 1;
     private MovingProperty myMovingProperty;
+    private String myShootingSound;
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -35,13 +37,11 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
      */
-    public Projectile(String name, double size, String image, List<Property> properties) {
+    public Projectile(String name, double size, String image, List<Property> properties, String shootingSound) {
 	super(name, image, size, properties);
 	mySize = size; 
 	hitTargets = new ArrayList<>();
-	for (Property p: properties) {
-	    System.out.println(p.getName() + " in projectile property list");
-	}
+	myShootingSound = shootingSound;
     }
 
     /**
@@ -64,6 +64,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
 	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
+	myShootingSound = myProjectile.getShootingSound();
     }
 
     /**
@@ -134,4 +135,9 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public double getSpeed() {
 	return this.getProperty("SpeedProperty").getProperty();
     }
+    
+    public String getShootingSound() {
+	return myShootingSound;
+    }
+    
 }

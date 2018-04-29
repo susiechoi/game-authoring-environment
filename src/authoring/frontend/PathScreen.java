@@ -16,7 +16,6 @@ public abstract class PathScreen extends AdjustScreen {
     private StackPane pathRoot;
     protected GridPane pathGrid;
     protected CreatePathGrid grid;
-
     protected PathScreen(AuthoringView view) {	
 	super(view);
 	setStyleSheet(view.getCurrentCSS());
