@@ -27,7 +27,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
  
     private Launcher myLauncher;
     private double mySize;
-
     /**
      * Constructor for a Tower object that accepts parameter properties.
      * 

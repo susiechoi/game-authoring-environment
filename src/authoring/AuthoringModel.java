@@ -279,11 +279,15 @@ public class AuthoringModel {
      * Adds a new level to the authored game, based on the previous level that the user has created
      * (or the default level if the user has not customized any level) 
      */
-    public int addNewLevel() {
-	int newLevelNumber = autogenerateLevel(); 
+    public int addNewLevel() throws ObjectNotFoundException{
+	List<Level> levels = myGame.unmodifiableLevels();
+	int newLevelNumber = levels.size()+1;
+	Level newLevel = new Level(newLevelNumber);
+	newLevel.addPath(levels.get(levels.size()-1).getDefaultPath());
+	myGame.addLevel(newLevelNumber, newLevel);
+	return newLevelNumber; 
 	//		int newLevelNumber = myLevels.size()+1; 
 	//		myLevels.put(newLevelNumber, new Level(newLevelNumber));
-	return newLevelNumber; 
     }
 
     public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
@@ -308,6 +312,7 @@ public class AuthoringModel {
      * @return int corresponding to level number of level generated
      */
     public int autogenerateLevel() {
+	
 	List<Level> levels = myGame.unmodifiableLevels();
 	int newLevelNumber = levels.size()+1;
 	Level copiedLevel = levels.get(levels.size()-1);

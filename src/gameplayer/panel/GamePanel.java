@@ -101,20 +101,15 @@ public class GamePanel extends Panel{
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
-	if(!pathSet) {
-	    PathMaker pathMaker = new PathMaker();
-	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	spriteAdd.getChildren().remove(grid);
+	PathMaker pathMaker = new PathMaker();
+	grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
 	    spriteAdd.getChildren().add(grid);
 	    pathSet = true;
-	}
-	if(pathSet) {
-	    spriteAdd.getChildren().remove(grid);
-	    spriteAdd.getChildren().add(grid);
-	}
 	return backgroundSet;
     }
 

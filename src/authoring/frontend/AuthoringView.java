@@ -243,8 +243,13 @@ public class AuthoringView extends View {
 	}
 
 	protected void addNewLevel() {
+	    	try {
 		int newLevel = myController.addNewLevel(); 
 		setLevel(newLevel);
+	    	}
+	    	catch(ObjectNotFoundException e) {
+	    	    loadErrorScreen("NoObject");
+	    	}
 	}
 
 	protected List<String> getLevels() {
