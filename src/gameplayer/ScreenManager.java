@@ -18,10 +18,8 @@ import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -108,12 +106,6 @@ public class ScreenManager extends View {
 	public void loadMainScreen() {
 		MainScreen mainScreen = new MainScreen(STAGE_MANAGER, this);
 	}
-
-	//DO WE NEED THIS METHOD????
-	//	public void loadGameScreenContinuation() {
-	//
-	//	}
-
 
 	public void updateLevelCount(Integer newLevelCount) {
 		checkGameScreenInitialization();
@@ -205,14 +197,11 @@ public class ScreenManager extends View {
 	}
 	
 	public void moveTower(FrontEndTower tower) {
-	    	System.out.println("IN SCREEN MANAGER");
 	        STAGE_MANAGER.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
 	            @Override
 	            public void handle(KeyEvent event) {
-	        		System.out.println("KEY HANDLER");
 	               MEDIATOR.moveTowers(tower, event.getCode());
 	            }
 	        });
-	        System.out.println("HEEERE");
 	}
 }

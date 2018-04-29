@@ -41,135 +41,133 @@ import voogasalad.util.soundfactory.*;
 public class GameScreen extends Screen {
 
 
-	private final String DEFAULT_SHARED_STYLESHEET;
-	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    private final String DEFAULT_SHARED_STYLESHEET;
+    private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
-	private final PromptReader PROMPTS;
-	private TowerPanel TOWER_PANEL;
-	private GamePanel GAME_PANEL;
-	private ScorePanel SCORE_PANEL;
-	private ControlsPanel CONTROLS_PANEL;
-	private UpgradePanel UPGRADE_PANEL;
-	private ScreenManager SCREEN_MANAGER;
-	private BorderPane displayPane;
-	private BorderPane gamePane;
-	private final Mediator MEDIATOR;
-	private BorderPane rootPane;
-	private SoundFactory SOUND_FACTORY;
-	private Map<String,String> GAMEPLAYER_PROPERTIES;
+    private final PromptReader PROMPTS;
+    private TowerPanel TOWER_PANEL;
+    private GamePanel GAME_PANEL;
+    private ScorePanel SCORE_PANEL;
+    private ControlsPanel CONTROLS_PANEL;
+    private UpgradePanel UPGRADE_PANEL;
+    private ScreenManager SCREEN_MANAGER;
+    private BorderPane displayPane;
+    private BorderPane gamePane;
+    private final Mediator MEDIATOR;
+    private BorderPane rootPane;
+    private SoundFactory SOUND_FACTORY;
+    private Map<String,String> GAMEPLAYER_PROPERTIES;
 
-	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
-		SCREEN_MANAGER = ScreenController;
-		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
-		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
-		PROMPTS = promptReader;
-		MEDIATOR = mediator;
-		SOUND_FACTORY = MEDIATOR.getSoundFactory();
-		TOWER_PANEL = new TowerPanel(this);
-		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
-		SCORE_PANEL = new ScorePanel(this);
-		GAME_PANEL = new GamePanel(this);
+    public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
+	SCREEN_MANAGER = ScreenController;
+	GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
+	DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
+	PROMPTS = promptReader;
+	MEDIATOR = mediator;
+	SOUND_FACTORY = MEDIATOR.getSoundFactory();
+	TOWER_PANEL = new TowerPanel(this);
+	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
+	SCORE_PANEL = new ScorePanel(this);
+	GAME_PANEL = new GamePanel(this);
+    }
+
+
+    @Override
+    public Parent makeScreenWithoutStyling() {
+	rootPane = new BorderPane();
+	rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
+	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
+
+	displayPane = new BorderPane();
+	displayPane.setCenter(TOWER_PANEL.getPanel());
+	displayPane.setBottom(CONTROLS_PANEL.getPanel());
+
+	gamePane = new BorderPane();
+	gamePane.setTop(SCORE_PANEL.getPanel());
+	gamePane.setCenter(GAME_PANEL.getPanel());
+
+	rootPane.setCenter(gamePane);
+	setVertPanelsLeft();
+	return rootPane;
+    }
+
+    public void towerSelectedForPlacement(FrontEndTower tower) {
+	GAME_PANEL.towerSelected(tower);
+	TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
+	displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
+    }
+
+
+    @Override
+    protected View getView() {
+	return SCREEN_MANAGER;
+    }
+
+    public void displaySprite(FrontEndSprite sprite) {
+	GAME_PANEL.addSprite(sprite);
+    }
+
+    public void remove(FrontEndSprite sprite) {
+	GAME_PANEL.removeSprite(sprite);
+    }
+
+    public void setAvailbleTowers(List<FrontEndTower> availableTowers) {
+	TOWER_PANEL.setAvailableTowers(availableTowers);
+    }
+
+    public void loadErrorScreen(String message) {
+	SCREEN_MANAGER.loadErrorScreen(message);
+    }
+
+    //TODO implement reflection//rest of controls
+    public void controlTriggered(String control) throws MissingPropertiesException {
+	if(control.equals(GAMEPLAYER_PROPERTIES.get("play"))) {
+	    MEDIATOR.play();
 	}
-
-
-	@Override
-	public Parent makeScreenWithoutStyling() {
-		rootPane = new BorderPane();
-
-		displayPane = new BorderPane();
-		displayPane.setCenter(TOWER_PANEL.getPanel());
-		displayPane.setBottom(CONTROLS_PANEL.getPanel());
-
-		gamePane = new BorderPane();
-
-
-
-		gamePane.setTop(SCORE_PANEL.getPanel());
-		gamePane.setCenter(GAME_PANEL.getPanel());
-
-		rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
-		rootPane.setCenter(gamePane);
-		setVertPanelsLeft();
-
-		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
-		return rootPane;
+	else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause"))) {
+	    MEDIATOR.pause();
 	}
-
-	public void towerSelectedForPlacement(FrontEndTower tower) {
-		GAME_PANEL.towerSelected(tower);
+	else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup"))) {
+	    MEDIATOR.fastForward(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("fastForwardSize")));
 	}
-
-
-	@Override
-	protected View getView() {
-		return SCREEN_MANAGER;
+	else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
+	    getView().playControllerInstructions();
 	}
-
-	public void displaySprite(FrontEndSprite sprite) {
-		GAME_PANEL.addSprite(sprite);
+	else if (control.equals(GAMEPLAYER_PROPERTIES.get("edit"))) { // Susie added this
+	    MEDIATOR.endLoop();
+	    AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
+	    authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
 	}
-
-	public void remove(FrontEndSprite sprite) {
-		GAME_PANEL.removeSprite(sprite);
+	else if (control.equals(GAMEPLAYER_PROPERTIES.get("settings"))) {
+	    settingsClickedOn();
 	}
-
-	public void setAvailbleTowers(List<FrontEndTower> availableTowers) {
-		TOWER_PANEL.setAvailableTowers(availableTowers);
+	else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
+	    MEDIATOR.restartGame();
 	}
+    }
 
-	public void loadErrorScreen(String message) {
-		SCREEN_MANAGER.loadErrorScreen(message);
+    public void settingsTriggered(String setting) {
+	if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
+	    SOUND_FACTORY.mute();
+	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
+	    try {
+		SOUND_FACTORY.setBackgroundMusic("stillDre");
+	    } catch (FileNotFoundException e) {
+		Log.debug(e);
+	    }
+	    SOUND_FACTORY.playBackgroundMusic();
+
+
+	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
+	    SOUND_FACTORY.pauseBackgroundMusic();
+	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
+	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("instrURL"), GAMEPLAYER_PROPERTIES);
+	    pop.makePopupBrowser();
+	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
+	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
+	    pop.makePopupBrowser();
 	}
-
-	//TODO implement reflection//rest of controls
-	public void controlTriggered(String control) throws MissingPropertiesException {
-		if(control.equals(GAMEPLAYER_PROPERTIES.get("play"))) {
-			MEDIATOR.play();
-		}
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("pause"))) {
-			MEDIATOR.pause();
-		}
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("speedup"))) {
-			MEDIATOR.fastForward(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("fastForwardSize")));
-		}
-		else if(control.equals(GAMEPLAYER_PROPERTIES.get("quit"))) { //WHY DO I HAVE TO MAKE A NEW PLAY-CONTROLLER OH MY GOD
-		    getView().playControllerInstructions();
-		}
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("edit"))) { // Susie added this
-			MEDIATOR.endLoop();
-			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
-			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
-		}
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("settings"))) {
-			settingsClickedOn();
-		}
-		else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
-			MEDIATOR.restartGame();
-		}
-	}
-
-	public void settingsTriggered(String setting) {
-		if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
-			SOUND_FACTORY.mute();
-		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
-			try {
-				SOUND_FACTORY.setBackgroundMusic("stillDre");
-			} catch (FileNotFoundException e) {
-				Log.debug(e);
-			}
-			SOUND_FACTORY.playBackgroundMusic();
-
-
-		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
-			SOUND_FACTORY.pauseBackgroundMusic();
-		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
-			BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("instrURL"), GAMEPLAYER_PROPERTIES);
-			pop.makePopupBrowser();
-		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
-			BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
-			pop.makePopupBrowser();
-		}
-	}
+    }
 
 
     /**
@@ -197,7 +195,7 @@ public class GameScreen extends Screen {
 
 
     public void towerClickedOn(FrontEndTower tower) {
-    	SCREEN_MANAGER.moveTower(tower);
+	SCREEN_MANAGER.moveTower(tower);
 	TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 	UPGRADE_PANEL = new UpgradePanel(this, tower);
 	displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
@@ -260,7 +258,7 @@ public class GameScreen extends Screen {
     public ScreenManager getScreenManager() {
 	return SCREEN_MANAGER;
     }
-    
+
     public void upgradeBought(FrontEndTower tower, String upgradeName) {
 	MEDIATOR.upgradeTower(tower, upgradeName);
     }
@@ -289,15 +287,5 @@ public class GameScreen extends Screen {
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
 	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
     }
-
-	private void gameStartAction() {
-		MEDIATOR.startGameLoop();
-		gamePane.setCenter(GAME_PANEL.getPanel());
-	}
-	public void gameStarted() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStartAction());
-	}
 
 }
