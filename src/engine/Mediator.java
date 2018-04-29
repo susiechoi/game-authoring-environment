@@ -129,7 +129,6 @@ public class Mediator implements MVController{
 
     /************************************************ GAMEPLAY ********************************************/
 
-
     /**
      * to be called by the frontend when a user drops a tower on the gamescreen.
      * @param location, where the tower should be placed
@@ -183,6 +182,14 @@ public class Mediator implements MVController{
 	//	System.out.println("upgrade is called OF TYPE " + upgradeName);
 	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
+	
+	/**
+	 * Called by the frontend when the restart button is pressed.
+	 */
+	public void restartLevel() {
+	    System.out.println("in restart");
+	    myGameEngine.getPlayState().restartLevel();
+	}
 
     /**
      * to be called by the backend to play the simulation

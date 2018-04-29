@@ -11,18 +11,29 @@ import engine.sprites.towers.projectiles.Projectile;
  * @param <Projectile>
  */
 
-public class Boomerang<Projectile> extends MovingProperty<Object>{
+public class Boomerang extends MovingProperty{
+    private double tCircle = 0.0;
+    private double range = 50;
     
-    public Boomerang(double range) {
-	super(range);
+    public Boomerang(double speed) {
+	super(speed);
     }
     
-    
     @Override
-    public Projectile execute(Object...args) {
-	Projectile movingProjectile = (Projectile) args[0];
-	Point origin = (Point) args[1];
-	return null;
+    public void move(Projectile projectile, double elapsedTime) {
+//	tCircle+=this.getProperty()*elapsedTime;
+	tCircle += 1;
+	double x = projectile.getX();
+	double y = projectile.getY();
+	projectile.getImageView().setX(range* Math.cos(tCircle) + x);
+	projectile.getImageView().setY(range* Math.sin(tCircle) + y);
+
+//	Projectile movingProjectile = (Projectile) args[0];
+//	Point origin = (Point) args[1];
+    }
+    
+    public Boomerang(Property p) {
+	super(p.getProperty());
     }
 	
 }

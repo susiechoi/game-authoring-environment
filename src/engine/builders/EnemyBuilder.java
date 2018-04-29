@@ -21,7 +21,7 @@ public class EnemyBuilder {
     @SuppressWarnings("unchecked")
     public Enemy construct(String name, String image, double speed, double initialHealth, double healthImpact,
 	    double killReward, double killUpgradeCost, double killUpgradeValue, Launcher launcher) {
-	List<Property<Object>> properties = new ArrayList<>();
+	List<Property> properties = new ArrayList<>();
 	properties.add(new HealthProperty(0, 0, initialHealth));
 	properties.add(new DamageProperty(0 , 0 , healthImpact));
 	properties.add(new ValueProperty(killReward));
