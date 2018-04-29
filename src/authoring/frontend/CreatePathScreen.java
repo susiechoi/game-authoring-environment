@@ -85,15 +85,15 @@ public class CreatePathScreen extends PathScreen {
 			String pathImage = myPathPanel.getPanelPathImage().getPathImage().getImage().getUrl();
 			String endImage = myPathPanel.getPanelEndImage().getPathImage().getImage().getUrl();
 			grid.getStartingPosition(grid.getCheckGrid());
-
+			
 			getView().makePath(grid.getGrid(), myCoords, grid.getGridImageCoordinates(grid.getCheckGrid(), startImage, pathImage, endImage), myBackgroundImage, 
 				pathImage, startImage, endImage, grid.getPathSize(), grid.getGridWidth(), grid.getGridHeight());
-			getView().getObjectAttribute("Path", "", "myPathMap");
-			getView().getObjectAttribute("Path", "", "myBackgroundImage");
-			getView().getObjectAttribute("Path", "", "myPathSize");
-			getView().getObjectAttribute("Path", "", "myPathImage");
-			getView().getObjectAttribute("Path", "", "myStartImage");
-			getView().getObjectAttribute("Path", "", "myEndImage");
+//			getView().getObjectAttribute("Path", "", "myPathMap");
+//			getView().getObjectAttribute("Path", "", "myBackgroundImage");
+//			getView().getObjectAttribute("Path", "", "myPathSize");
+//			getView().getObjectAttribute("Path", "", "myPathImage");
+//			getView().getObjectAttribute("Path", "", "myStartImage");
+//			getView().getObjectAttribute("Path", "", "myEndImage");
 			getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 		    } catch (ObjectNotFoundException e1) {
 			Log.debug(e1);
@@ -270,7 +270,7 @@ public class CreatePathScreen extends PathScreen {
 		myGrid.setPathImage(myPathPanel.getPanelStartImage().getPathImage());
 		myPathPanel.getPanelStartImage().setNewImage(new Image(pathImageFilePath));
 	    } else if (pathType == "end") {
-		myGrid.setPathImage(myPathPanel.getPanelStartImage().getPathImage());
+		myGrid.setPathImage(myPathPanel.getPanelEndImage().getPathImage());
 		myPathPanel.getPanelEndImage().setNewImage(new Image(pathImageFilePath));
 	    }
 	    changeGridImages(pathImageFilePath, pathType);

@@ -183,15 +183,16 @@ public class CreatePathGrid {
 		path.getPathImage().setFitWidth(pathSize);
 		path.getPathImage().setFitHeight(pathSize);
 		grid.add(path.getPathImage(), (int)point.getX(), (int)point.getY());
-		if (imageKey.equals(getView().getObjectAttribute("Path", "", "myStartImage"))) {
+		if (key.equals("s"+getView().getObjectAttribute("Path", "", "myStartImage"))) {
 		    checkGrid.add(new Label("start"), (int)point.getX(), (int)point.getY());
 		    path.getPathImage().setId("start");
-		    setPathImage(new ImageView(new Image(imageKey)));
-		} else if (imageKey.equals(getView().getObjectAttribute("Path", "", "myPathImage"))) {
+		    setStartImage(new ImageView(new Image(imageKey)));
+		} else if (key.equals("p"+getView().getObjectAttribute("Path", "", "myPathImage"))) {
 		    checkGrid.add(new Label("path"), (int)point.getX(), (int)point.getY());
 		    path.getPathImage().setId("path");
 		    setPathImage(new ImageView(new Image(imageKey)));
-		} else if (imageKey.equals(getView().getObjectAttribute("Path", "", "myEndImage"))) {
+		} else if (key.equals("e"+getView().getObjectAttribute("Path", "", "myEndImage"))) {
+		    System.out.println("GETTING HERE");
 		    checkGrid.add(new Label("end"), (int)point.getX(), (int)point.getY());
 		    path.getPathImage().setId("end");
 		    setEndImage(new ImageView(new Image(imageKey)));
@@ -204,10 +205,8 @@ public class CreatePathGrid {
 
     protected boolean checkPathConnected(GridPane grid, int row, int col) {
 	Label checkLabel = (Label) getNode(grid, col, row);
-//	addCoordinates(row, col);
 	if (getNode(grid, col, row) != null) {
 	    if (checkLabel.getText() == "end") {
-//		addCoordinates(row, col);
 		return true;
 	    } 
 	} else {
