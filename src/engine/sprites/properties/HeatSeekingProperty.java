@@ -1,5 +1,6 @@
 package engine.sprites.properties;
 
+import engine.sprites.ShootingSprites;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -20,9 +21,27 @@ public class HeatSeekingProperty extends MovingProperty{
 
     @Override
     public void move(Projectile projectile, double elapsedTime) {
-	// TODO Auto-generated method stub
-	
+	ShootingSprites myTarget = projectile.getTarget();
+	if (myTarget.isAlive()) {
+	    rotateImage(projectile, myTarget);
+	}
+	double totalDistanceToMove = projectile.getSpeed()*elapsedTime;
+	double xMove = Math.sin(Math.toRadians(projectile.getRotate()))*totalDistanceToMove;
+	double yMove = Math.cos(Math.toRadians(projectile.getRotate()))*totalDistanceToMove;
+	projectile.getImageView().setX(projectile.getX()+xMove);
+	projectile.getImageView().setY(projectile.getY()+yMove);
     }
+
+    /**
+     * Rotates the image to face the target
+     */
+    private void rotateImage(Projectile projectile, ShootingSprites myTarget) {
+	double xDifference = myTarget.getX() - projectile.getX();
+	double yDifference = myTarget.getY() - projectile.getY();
+	double angleToRotateRads = Math.atan2(xDifference,yDifference);
+	projectile.setRotate(Math.toDegrees(angleToRotateRads));
+    }
+
     
     
     
