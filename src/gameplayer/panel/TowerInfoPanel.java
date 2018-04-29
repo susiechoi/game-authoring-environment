@@ -12,6 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 public class TowerInfoPanel extends SpecificPanel {
 
 	private final GameScreen GAME_SCREEN;

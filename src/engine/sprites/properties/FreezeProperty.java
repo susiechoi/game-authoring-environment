@@ -1,6 +1,5 @@
 package engine.sprites.properties;
 
-import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
 /**

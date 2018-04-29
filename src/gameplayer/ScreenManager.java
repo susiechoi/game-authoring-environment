@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
+
+import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -16,15 +18,13 @@ import frontend.View;
 import gameplayer.screen.GameScreen;
 import gameplayer.screen.InstructionScreen;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
  * 
- * @author Ben Hodgson 4/11/18
+ * @author Ben Hodgson 4/11/18, Alexi Kontos and Andrew Arnold
  * 
  * Class to manage updating Screen elements that remain across the entire game
  * (score, level, health, currency, etc.)
@@ -59,6 +59,7 @@ public class ScreenManager extends View {
 			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
 		}
 		catch (MissingPropertiesException e) {
+			Log.debug(e);
 		}
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;
@@ -105,12 +106,6 @@ public class ScreenManager extends View {
 	public void loadMainScreen() {
 		MainScreen mainScreen = new MainScreen(STAGE_MANAGER, this);
 	}
-
-	//DO WE NEED THIS METHOD????
-	//	public void loadGameScreenContinuation() {
-	//
-	//	}
-
 
 	public void updateLevelCount(Integer newLevelCount) {
 		checkGameScreenInitialization();
@@ -202,14 +197,11 @@ public class ScreenManager extends View {
 	}
 	
 	public void moveTower(FrontEndTower tower) {
-	    	System.out.println("IN SCREEN MANAGER");
 	        STAGE_MANAGER.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
 	            @Override
 	            public void handle(KeyEvent event) {
-	        		System.out.println("KEY HANDLER");
 	               MEDIATOR.moveTowers(tower, event.getCode());
 	            }
 	        });
-	        System.out.println("HEEERE");
 	}
 }

@@ -25,6 +25,11 @@ import engine.sprites.towers.FrontEndTower;
 import file.DataPointWriter;
 import gameplayer.screen.GameScreen;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 public class TowerPanel extends ListenerPanel {
 	
 	public static final String DEFAULT_SUBFOLDER_FILEPATH = "Currency/";
