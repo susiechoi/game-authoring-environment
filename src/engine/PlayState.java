@@ -109,9 +109,9 @@ public class PlayState implements GameData {
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	    try {
-		myMediator.getSoundFactory().playSoundEffect("cannon"); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
+		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
 	    } catch (FileNotFoundException e) {
-		e.printStackTrace(); // YIKES THaT'S AND EASY FAIL
+		e.printStackTrace(); // YIKES THAT'S AN EASY FAIL
 	    }
 	}
 	updateScore(toBeRemoved);

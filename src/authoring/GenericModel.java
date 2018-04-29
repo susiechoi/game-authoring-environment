@@ -27,6 +27,7 @@ import frontend.PropertiesReader;
 /**
  * 
  * @author Ben Hodgson 4/8/18
+ * @author benauriemma
  *
  * Class to generate generic objects to be used in the AuthoringModel
  */
@@ -41,6 +42,7 @@ public class GenericModel {
 	private String DEFAULT_PROJECTILE_IMAGES;
 	private String DEFAULT_TOWER_IMAGE;
 	private String DEFAULT_PROJECTILE_IMAGE;
+	private String DEFAULT_SHOOTING_SOUND;
 	private String DEFAULT_TOWER_FILEPATH;
 	private String DEFAULT_ENEMY_FILEPATH;
 	private String DEFAULT_PATH_START;
@@ -48,6 +50,8 @@ public class GenericModel {
 	private String DEFAULT_PATH_END;
 	private String DEFAULT_BACKGROUND_IMAGE;
 	private String DEFAULT_CONSTANT_FILEPATH;
+	
+	
 	private PropertiesReader myPropertiesReader;
 	private String myDefaultName;
 
@@ -203,7 +207,8 @@ public class GenericModel {
 				// TODO add projectile speed !!!!
 				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileDamage")), 
 				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSize")),
-				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")));
+				Double.parseDouble(myPropertiesReader.findVal(DEFAULT_TOWER_FILEPATH, "projectileSpeed")),
+				DEFAULT_SHOOTING_SOUND); // TODO FOR BMA: this is a hardcoded default sound for a projectile
 	}
 
 	private void populateInstanceVariables() throws MissingPropertiesException {
@@ -216,6 +221,7 @@ public class GenericModel {
 		DEFAULT_PROJECTILE_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ProjectileImages");
 		DEFAULT_TOWER_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Tower");
 		DEFAULT_PROJECTILE_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Projectile");
+		DEFAULT_SHOOTING_SOUND = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ShootingSound");
 		DEFAULT_TOWER_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "TowerFiles");
 		DEFAULT_ENEMY_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "EnemyFiles");
 		DEFAULT_PATH_START = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "PathStart");

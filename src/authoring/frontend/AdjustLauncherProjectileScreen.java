@@ -1,6 +1,7 @@
 /**
  * @author susiechoi
  * @author Katherine Van Dyk
+ * @author benauriemma
  * Abstract class for developing the fields for customizing 
  * (new or existing, depending on whether corresponding tower is new or existing) launcher/projectile object
  */
@@ -28,6 +29,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private Slider myLauncherRateSlider;
     private Slider myLauncherRangeSlider;
     private Slider myProjectileSizeSlider; 
+    
+    // TODO:
     private Object myProjectileDamage;
     private Object myProjectileSpeed;
     private Object myLauncherRate;
@@ -71,6 +74,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private void makeProjectileComponents(VBox vb) {
 	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	vb.getChildren().add(projectileImageSelect);
+	
+	//HBox projectileSoundSelect = 
 
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
 	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
