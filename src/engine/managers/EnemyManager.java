@@ -101,7 +101,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	    myEnemies.put(path, pathEnemies);
 	}
 	else {
-	    List<Enemy> pathEnemies = new ArrayList<>();
+	    List<Enemy> pathEnemies = new ArrayList<Enemy>();
 	    pathEnemies.add(enemy);
 	    myEnemies.put(path, pathEnemies);
 	}
