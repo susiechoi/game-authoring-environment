@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+
 /** 
  * Use the driver JavaFX library to start the application.
  *
@@ -11,6 +12,9 @@ import javafx.stage.Stage;
  * 
  */
 public class Driver extends Application {  
+	
+	public static final String DEFAULT_WINDOW_TITLE = "IfTrueReturnTrue VOOGASALAD";
+	public static final String DEFAULT_WINDOW_IMG = "file:images/sarahbland.png"; 
 
     /**
      * Initialize the program and begin the animation loop 
@@ -18,10 +22,11 @@ public class Driver extends Application {
      * 
      * @param stage: Primary stage to attach all scenes
      */
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-	primaryStage.setTitle("IfTrueReturnTrue VOOGASALAD");
-	primaryStage.getIcons().add(new Image("/images/sarahbland.png"));
+	primaryStage.setTitle(DEFAULT_WINDOW_TITLE);
+	primaryStage.getIcons().add(new Image(DEFAULT_WINDOW_IMG));
 	ChiefController controller = new ChiefController(primaryStage);
 	controller.start();
     }

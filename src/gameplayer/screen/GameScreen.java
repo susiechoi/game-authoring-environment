@@ -21,6 +21,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import voogasalad.util.soundfactory.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -38,6 +39,7 @@ import voogasalad.util.soundfactory.*;
 
 
 public class GameScreen extends Screen {
+
 
 	private final String DEFAULT_SHARED_STYLESHEET;
 	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
@@ -188,6 +190,7 @@ public class GameScreen extends Screen {
 	SCORE_PANEL.updateLevel(newLevel);
     }
 
+
     public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
 	return MEDIATOR.placeTower(position, tower.getName());
     }
@@ -201,7 +204,6 @@ public class GameScreen extends Screen {
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
 
-
     public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
 	BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
 	displayPane.setBottom(BUY_PANEL.getPanel());
@@ -210,7 +212,6 @@ public class GameScreen extends Screen {
 
     private void settingsClickedOn() {
 	SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
-
 	displayPane.setBottom(SETTINGS_PANEL.getPanel());
     }
 
@@ -229,6 +230,7 @@ public class GameScreen extends Screen {
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
     }
+
 
     private void setVertPanelsLeft() {
 	rootPane.getChildren().remove(displayPane);
@@ -258,7 +260,7 @@ public class GameScreen extends Screen {
     public ScreenManager getScreenManager() {
 	return SCREEN_MANAGER;
     }
-
+    
     public void upgradeBought(FrontEndTower tower, String upgradeName) {
 	MEDIATOR.upgradeTower(tower, upgradeName);
     }
@@ -272,22 +274,10 @@ public class GameScreen extends Screen {
 	return GAMEPLAYER_PROPERTIES;
     }
 
-
-	private void gameStartAction() {
-		MEDIATOR.startGameLoop();
-		gamePane.setCenter(GAME_PANEL.getPanel());
-	}
-	public void gameStarted() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStartAction());
-	}
-
-	public void gameWon() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-	}
-
+    public void gameWon() {
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+    }
 
     public void gameLost() {
 	SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
@@ -299,5 +289,15 @@ public class GameScreen extends Screen {
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
 	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
     }
+
+	private void gameStartAction() {
+		MEDIATOR.startGameLoop();
+		gamePane.setCenter(GAME_PANEL.getPanel());
+	}
+	public void gameStarted() {
+		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
+		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStartAction());
+	}
 
 }

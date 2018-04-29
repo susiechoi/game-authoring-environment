@@ -1,17 +1,14 @@
 package engine.sprites.enemies;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
+import java.util.List;
 
-import engine.path.Path;
-import engine.physics.ImageIntersecter;
+import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.properties.DamageProperty;
-import engine.sprites.properties.HealthProperty;
-import engine.sprites.properties.ValueProperty;
+import engine.sprites.properties.CollisionProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.towers.launcher.Launcher;
-
-import javafx.scene.Node;
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -22,85 +19,90 @@ import javafx.scene.Node;
  * @date 4/8/18
  *
  */
-public class Enemy extends ShootingSprites{
+public class Enemy extends ShootingSprites implements FrontEndSprite{
 
-    private String myName; 
-    private HealthProperty myHealth;
-    private double myInitialHealth; 
-    private DamageProperty myDamage;
-    private double myHealthImpact; 
-    private ValueProperty myValue;
-    private ImageIntersecter myIntersecter;
-    private double mySpeed;
     private double mySize;
-    private double myKillReward;
-    private String myImage; 
-    //    private double myKillUpgradeCost;
-    //    private double myKillUpgradeValue; 
+    private int pathIndex;
+    private double pathAngle;
+    private Point targetPosition;
+    private boolean freeze;
 
-    public Enemy(String name, String image, double speed, double size, Launcher launcher, HealthProperty health, DamageProperty damage, ValueProperty value) {
-	super(name, image, size, launcher);
-	myImage = image; 
-	myName = name; 
-	myHealth = health;
-	myInitialHealth = myHealth.getProperty();
-	myDamage = damage;
-	myHealthImpact = myDamage.getProperty();
-	myValue = value;
-	myIntersecter = new ImageIntersecter(this.getImageView()); 
-	mySpeed = speed; 
-	myKillReward = value.getProperty();
-	System.out.println("NEW ENEMY OBJ MADE WITH NAME "+name+" AND IMAGE "+image);
+    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
+	super(name, image, size, launcher, properties);
+	freeze = false;
+	pathIndex = 0;
+	pathAngle = 0;
     }
 
     /**
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
-	super("", copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher());
-	myName = copiedEnemy.getName(); 
-	setImage(copiedEnemy.getImageView().getImage()); 
-	myIntersecter = copiedEnemy.getIntersecter(); 
-	myHealth = copiedEnemy.getHealth(); 
-	myDamage = copiedEnemy.getDamageProperty();
-	myHealthImpact = myDamage.getProperty(); 
-	myValue = copiedEnemy.getValue();
-	mySpeed = copiedEnemy.getSpeed();
+	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
+	freeze = false;
+	pathIndex = 0;
+	pathAngle = 0;
     }
 
     /**
-     * Used for debugging/demo purposes, should not actually be used
-     * @param string
-     * @param string2
-     * @param i
+     * Sets the initial spawning point of the enemy
+     * @param initialPoint
      */
-    public Enemy(String name, String image, double size) {
-	super(name, image, size, null);
-	myHealth = new HealthProperty(10000,10000,10000);
-	myDamage = new DamageProperty(10000, 10000, 10000);
-    }
+    public void setInitialPoint(Point initialPoint) {
+	targetPosition = initialPoint;
+	this.getImageView().setX(initialPoint.getX());
+	this.getImageView().setY(initialPoint.getY());
+    } 
 
-    /**
-     * Tests to see if another ImageView overlaps with the Enemy
-     * @param otherImage : other image (projectile, tower, etc)
-     * @return boolean, yes or no
-     */
-    public boolean overlap(Node otherImage) {
-	return myIntersecter.overlaps(otherImage); 
-    }
-   
     /**
      * Moves the enemy along the path according to how much time has passed
      * @param elapsedTime
      */
-    public void move(Path path) {
-	Point2D newPosition = path.nextPosition(mySpeed);
-	this.getImageView().setX(newPosition.getX());
-	this.getImageView().setY(newPosition.getY());
+    public void move(double elapsedTime) {
+	if(freeze) {
+	    return;
+	}
+	rotateImage();
+	double totalDistanceToMove = this.getProperty("SpeedProperty").getProperty()*elapsedTime; 
+	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
+	this.getImageView().setX(this.getX()+xMove);
+	this.getImageView().setY(this.getY()+yMove);
+    }
+    /**
+     * Rotates the image to face the target
+     */
+    private void rotateImage() {
+	double xDifference = targetPosition.getX() - this.getX();
+	double yDifference = targetPosition.getY() - this.getY();
+	double angleToRotateRads = Math.atan2(xDifference,yDifference);
+	this.setRotate(Math.toDegrees(angleToRotateRads));
     }
 
-    public String getName() {
-	return myName; 
+    /**
+     * Returns the current position in a Point of the enemy
+     * @return
+     */
+    public Point currentPosition() {
+	Point position = new Point();
+	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
+	return position;
+    }
+
+    /**
+     * Returns the next target position it is going after
+     * @return
+     */
+    public Point targetPosition() {
+	return targetPosition;
+    }
+
+    public void setNewPosition(Point newPosition) {
+	targetPosition = newPosition;
+    }
+
+    public int getMoney() {
+	return 0;
     }
 
     /**
@@ -109,8 +111,8 @@ public class Enemy extends ShootingSprites{
      * @return Double: damage that Enemy incurs on the tower
      */
     @Override
-    public Double getDamage() {
-	return myDamage.getProperty();
+    public double getDamage() {
+	return getValue("DamageProperty");
     }
 
     /**
@@ -118,36 +120,42 @@ public class Enemy extends ShootingSprites{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	myHealth.loseHealth(collider.getDamage());
-	return myHealth.isAlive();
+	CollisionProperty myCollisionProperty = (CollisionProperty) collider.getPropertySuperclassType("CollisionProperty");
+	myCollisionProperty.collidesWith(this);
+	return this.isAlive();
     }
 
-    private ImageIntersecter getIntersecter() {
-	return myIntersecter; 
-    }
-
-    private HealthProperty getHealth() {
-	return myHealth; 
-    }
-
-    private DamageProperty getDamageProperty() {
-	return myDamage; 
-    }
-
-    private ValueProperty getValue() {
-	return myValue; 
-    }
+    @Override
     public int getPointValue() {
-    	return (int)this.myValue.getProperty();
-    }
-
-    
-    private double getSpeed() {
-	return mySpeed; 
+	return (int) getValue("ValueProperty");
     }
     
-    private String getImage() {
-    	return myImage; 
+    public void setIndex(int i) {
+	pathIndex = i;
+    } 
+
+    public int getIndex() {
+	return pathIndex;
+    }
+    
+    public double getAngle() {
+	return pathAngle;
     }
 
+    public void setAngle(double a) {
+	pathAngle = a;
+    }
+    
+    public void freeze(double duration) {
+	freeze = true;
+    }
+   
+//    public void updateProperties() {
+//	myProperties = new ArrayList<>();
+//	myProperties.add(new HealthProperty(0, 0, myInitialHealth));
+//	myProperties.add(new DamageProperty(0, 0, myHealthImpact)); 
+//	myProperties.add(new ValueProperty(myKillReward));
+//	myProperties.add(new SpeedProperty(0, 0, 50));
+//	updateImage(myImage);
+//    }
 }

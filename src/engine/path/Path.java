@@ -1,64 +1,66 @@
 package engine.path;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.Point;
-import java.awt.geom.Point2D;
-
 
 /**
  * Class for constructing path and determining next coordinates
  * 
+ * @author Ryan Pond
  * @author Katherine Van Dyk 4/8/18
  */
 public class Path {
+
 	private final double THRESHOLD = 5;
 	private List<Point> myCoordinates;
-	private Point currentPosition;
+	private List<List<Point>> newCoordinates;
 	private double myAngle;
 	private int pathIndex;
+	private int myPathSize;
+	private int myWidth;
+	private int myHeight;
 	private Map<String, List<Point>> myPathMap;
+	private String myBackgroundImage;
+	private String myPathImage;
+	private String myStartImage;
+	private String myEndImage;
 
-	public Path(List<Point> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage) {
-		System.out.println("Path: " +imageCoordinates);
-		myCoordinates = coordinates;
+	public Path(List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) {
+		myCoordinates = coordinates.get(0);
+		myBackgroundImage = backgroundImage;
+		myPathImage = pathImage;
+		myStartImage = startImage;
+		myEndImage = endImage;
+		myPathSize = pathSize;
+		myWidth = width;
+		myHeight = height;
 		pathIndex = 0;
-		currentPosition = myCoordinates.get(pathIndex);
-		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
+//		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
 	}
 
 
-	/**
-	 * Returns the next position of the object according to its speed
-	 * 
-	 * @param mySpeed
-	 */
-	public Point2D nextPosition(double speed) {
-		if(checkBounds()) {
-			currentPosition = myCoordinates.get(pathIndex++);
-			myAngle = getAngle(currentPosition, myCoordinates.get(pathIndex + 1));
-			return currentPosition;
-		}
-		else {
-			double newX = currentPosition.getX() + Math.cos(myAngle) * speed;
-			double newY = currentPosition.getY() + Math.sin(myAngle) * speed;
-			return new Point2D.Double(newX, newY); 
-		}
-	}
+    /**
+     * Returns the next position along the Path
+     * @param pathIndex : current index of the path it is on (block index)
+     * @return : returns the next point along the path index
+     */
+    public Point nextPosition(int pathIndex) {
+	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
+	return myCoordinates.get(pathIndex+1);
+    }
 
-	/**
-	 * Checks if current position is within the bounds of the next path turn
-	 * 
-	 * @return boolean: True if within range of next path coordinate, false otherwise
-	 */
-	private boolean checkBounds() {
-		double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX() - currentPosition.getX(), 2);
-		double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPosition.getY(), 2); 
-		return Math.sqrt(xDistance + yDistance) < THRESHOLD;
-	}
-
+    /**
+     * Checks if current position is within the bounds of the next path turn
+     * 
+     * @return boolean: True if within range of next path coordinate, false otherwise
+     */
+    private boolean checkBounds(Point currentPos, int pathIndex) {
+	double xDistance = Math.pow(myCoordinates.get(pathIndex+1).getX()  - currentPos.getX(), 2);
+	double yDistance = Math.pow(myCoordinates.get(pathIndex+1).getY() - currentPos.getY(), 2); 
+	return Math.sqrt(xDistance + yDistance) < THRESHOLD;
+    }
 
     /**
      * Returns a new angle for the image
@@ -70,11 +72,88 @@ public class Path {
     private double getAngle(Point point1, Point point2) {
 	double deltaY = point2.getY() - point1.getY();
 	double deltaX = point2.getX() - point1.getX();
-	return Math.atan(deltaY/deltaX);
-    }
-    
-    public Map<String, List<Point>> getPathMap() {
-    		return myPathMap;
+	double angle = Math.atan2(deltaX,deltaY);
+	return angle;
     }
 
+	/**
+	 * Returns the next position of the object according to its speed
+	 * 
+	 * @param mySpeed
+	 */
+	public Point nextPosition(Point currentPos, int pathIndex, double pathAngle) {
+		//	if(checkBounds(currentPos, pathIndex)) {
+		//	    currentPos = myCoordinates.get(pathIndex+1);
+		//	    return currentPos;
+		//	}
+		//	else {
+		//	    System.out.println("here");
+		//	    // 	System.out.println("CURRENT XPOS: " + currentPos.getX());
+		//	    // 	System.out.println("CURRENT YPOS: " + currentPos.getY());
+		//	    double newX = currentPos.getX() + OFFSET - Math.cos(pathAngle) * 3;
+		//	    double newY = currentPos.getY() + OFFSET + Math.sin(pathAngle) * 3;
+		//	    currentPos.setLocation(newX, newY);
+		//	    return currentPos; 
+		//	}
+	    	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
+		return myCoordinates.get(pathIndex+1);
+	}
+
+	public double pathAngle(int currIndex) {
+		return getAngle(myCoordinates.get(currIndex),myCoordinates.get(currIndex++));
+	}
+
+	public Map<String, List<Point>> getPathMap() {
+		return myPathMap;
+	}
+
+	public Point initialPoint() {
+		return myCoordinates.get(0);
+	}
+
+	public int getIndex(Point currentPos, int pathIndex) {
+		if(checkBounds(currentPos, pathIndex)) {
+			return pathIndex + 1;
+		}
+		return pathIndex;
+	}
+
+	public boolean checkKill(Point currentPos) {
+		double xDistance = Math.pow(myCoordinates.get(myCoordinates.size()-1).getX() - currentPos.getX(), 2);
+		double yDistance = Math.pow(myCoordinates.get(myCoordinates.size()-1).getY() - currentPos.getY(), 2); 
+		return Math.sqrt(xDistance + yDistance) < 1+THRESHOLD;
+	}
+
+	public int getPathSize() {
+		return myPathSize;
+	}
+
+	public String getBackgroundImage() {
+		return myBackgroundImage;
+	}
+	
+	public int getGridWidth() {
+		return myWidth;
+	}
+	
+	public int getGridHeight() {
+		return myHeight;
+	}
+
+	
+	public String getPathImage( ) {
+		return myPathImage;
+	}
+	
+	public String getStartImage( ) {
+		return myStartImage;
+	}
+	
+	public String getEndImage( ) {
+		return myEndImage;
+	}
+	public void updatePathPoints(List<Point> newCoords, Map<String, List<Point>> newImageMap) {
+	    myCoordinates = newCoords;
+	    myPathMap = newImageMap;
+	}
 }

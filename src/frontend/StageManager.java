@@ -11,7 +11,8 @@ import javafx.stage.Stage;
  */
 public class StageManager {
     
-    private  Stage myStage;
+    private Stage myStage;
+    //TODO read from properties file
     public static final int DEFAULT_WIDTH = 1280;
     public static final int DEFAULT_HEIGHT = 900;
     private final int stageWidth;
@@ -31,14 +32,25 @@ public class StageManager {
 	myStage.show();
     }
     
+    /**
+     * Switches which scene is displayed on Screen
+     * @param scene is new scene to be displayed
+     */
     public void switchScene(Scene scene) {
 	myStage.setScene(scene);
     }
+    /**
+     * @return current Scene on stage
+     */
     public Scene getScene() {
 	return myStage.getScene();
     }
     
     
+    /**
+     * Creates and displays a Scene given a Parent node
+     * @param topNode is Parent node containing all elements of Scene
+     */
     public void switchScreen(Parent topNode) {
 	Scene programScene = new Scene(topNode);
 	myStage.setScene(programScene);

@@ -7,6 +7,8 @@ import java.util.Map;
 import file.DataPointWriter;
 import com.sun.javafx.tools.packager.Log;
 
+import file.DataPointWriter;
+import com.sun.javafx.tools.packager.Log;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +20,11 @@ import javafx.scene.control.Label;
  * @Author Alexi Kontos & Andrew Arnold
  */
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
 
 public class ScorePanel extends ListenerPanel {
 

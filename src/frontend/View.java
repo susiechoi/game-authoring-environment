@@ -1,5 +1,9 @@
 package frontend;
 
+import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
+import controller.MVController;
+import controller.PlayController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,13 +18,35 @@ import javafx.scene.text.Text;
  * @author Sarahbland
  *
  */
-public abstract class View {
+
+public class View {
     StageManager myManager;
-    public View(StageManager manager) {
-	myManager = manager;
-    }
+    PromptReader myPromptReader;
+    protected ErrorReader myErrorReader;
+    PropertiesReader myPropertiesReader;
+    String myLanguage;
+    MVController myController;
     
-    public void loadErrorScreenToStage(String errorMessage) {
+    public View(StageManager manager, String languageIn, MVController controller) {
+	myPromptReader = new PromptReader(languageIn, this);
+	myErrorReader = new ErrorReader(languageIn, this);
+	myPropertiesReader = new PropertiesReader();
+	myManager = manager;
+	myLanguage = languageIn;
+	myController = controller;
+    }
+
+    
+    
+    
+	/**
+	 * Loads an error screen when a user has done something so problematic that the program
+	 * cannot recover (such as choosing a language with no prompts and not having English
+	 * prompts to default to).
+	 * @param error is key to the Error the user has committed
+	 */
+    public void loadErrorScreen(String errorMessage) {
+	errorMessage = myErrorReader.resourceDisplayText(errorMessage);
 	VBox vb = new VBox();
 	Text errorScreenMessage = new Text(errorMessage);
 	vb.setAlignment(Pos.CENTER);
@@ -28,20 +54,48 @@ public abstract class View {
 	vb.getChildren().add(errorScreenMessage);
 	myManager.switchScreen(vb);
     }
-    
-    public void loadErrorAlertToStage(String errorMessage) {
-		    Alert alert = new Alert(AlertType.ERROR);
-		    alert.setContentText(errorMessage);
-		    alert.showAndWait();
+
+	/**
+	 * Loads an error alert when the user needs to be notified, but the program can
+	 * recover.
+	 * @param error is error key for error User has committed
+	 */
+    public void loadErrorAlert(String errorMessage) {
+	errorMessage = myErrorReader.resourceDisplayText(errorMessage);
+	Alert alert = new Alert(AlertType.ERROR);
+	alert.setContentText(errorMessage);
+	alert.showAndWait();
+    }
+
+    /**
+     * @param prompt is key used in properties file to retrieve desired prompt
+     * @return prompt after error checking
+     */
+    public String getErrorCheckedPrompt(String prompt) {
+	return myPromptReader.resourceDisplayText(prompt);
     }
     
-//    public void loadErrorAlertToStage(String errorMessage, Screen returnToScreen) {
-//	    Alert alert = new Alert(AlertType.ERROR);
-//	    alert.setContentText(errorMessage);
-//	    myManager.switchScreen(returnToScreen.getScreen());
-//	    alert.showAndWait();
-//}
+    /**
+     * @return PropertiesReader used to read from properties files
+     */
+    public PropertiesReader getPropertiesReader() {
+	return myPropertiesReader; 
+    }
+    public void playControllerDemo() {
+	try {
+ 	myController.playControllerDemo(myManager, myLanguage);
+	}
+	catch(MissingPropertiesException e) {
+	    loadErrorScreen("NoFile");
+	}
+     }
+    public void playControllerInstructions() {
+	try {
+	    new PlayController(myManager, myLanguage, new AuthoringModel()).loadInstructionScreen();
+	}
+ 	catch(MissingPropertiesException e) {
+ 	    loadErrorScreen("NoFile");
+ 	}
+     }
 
-    public abstract void loadErrorScreen(String errorMessage);
-    
 }

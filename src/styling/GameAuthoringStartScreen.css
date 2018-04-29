@@ -1,23 +1,86 @@
-VBox, HBox {
-	-fx-background-color: #77878B;
+.root {
+	-fx-background-image: url("file:images/poly.png");
+	-fx-background-size: cover;
+}
+
+Text {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 14pt; 
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #488286;
+    -fx-stroke-width: 2px; 
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #488286;
+    -fx-background-radius: 0;
+    	-fx-padding: 1px;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #B7D5D4;
+    -fx-stroke-width: 2px; 
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #B7D5D4;
+    -fx-background-radius: 0;
+    	-fx-padding: 1px;
+}
+
+.axis-label {
+	-fx-font-family: "Quicksand";
+}
+
+TextField {
+	-fx-max-width: 200; 
+}
+
+.button:disabled, .button:disabled > * {
+	-fx-opacity: 0.7;
+}
+
+.combo-box .cell {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 12pt; 
+}
+
+#screenTitle {
+  -fx-alignment: center;
+  -fx-font-family: "Quicksand";
+  -fx-font-size: 36pt;
+}
+
+
+VBox {
+	-fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-alignment: center;
+}
+
+HBox {
 	-fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;
 }
 
 .button {
-		-fx-min-width: 200;
-		-fx-min-height: 50;
-		-fx-background-color: #B7D5D4;
+	-fx-font-family: "Quicksand";
+	-fx-min-width: 200;		
+	-fx-min-height: 50;
+	-fx-background-color: #B7D5D4;
 }
 
 .button:hover{
-	  -fx-font: bold 18pt "Helvetica";
-	  -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+   	-fx-font-size: 21pt; 
+   	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 ComboBox {
-	-fx-background-color: #488286;
+	-fx-font-family: "Quicksand";
+	-fx-background-color: #B7D5D4;
 	-fx-min-width: 200;
 	-fx-min-height: 50;
 }
@@ -29,17 +92,18 @@ ComboBox {
 
 #selector {
 	-fx-background-color: #488286;
-	-fx-font: 14pt "Helvetica";
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 14pt; 
 }
 
 #selector .Text {
-	  -fx-font: 14pt "Helvetica";
+	-fx-font-family: "Quicksand";
+ 	 -fx-font-size: 14pt;
 }
 
 #selector .HBox, .VBox {
 	-fx-padding: 10;
 	-fx-spacing: 10;
-	-fx-background-color: #488286;
 }
 
 #selector .ComboBox {
@@ -51,4 +115,17 @@ ComboBox {
 #towerHolders {
 	-fx-padding: 0;
 	-fx-spacing: 0;
+}
+
+#backButton {
+	-fx-background-color: #488286; 
+}
+
+#applyButton {
+	-fx-background-color: #488286; 
+}
+
+.chart-title {
+	-fx-font-family: "Quicksand";
+	-fx-font-size: 18pt; 
 }

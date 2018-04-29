@@ -2,46 +2,33 @@ package engine.sprites.towers;
 
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import engine.sprites.ShootingSprites;
-import engine.sprites.Sprite;
-import engine.sprites.enemies.Enemy;
-import engine.sprites.properties.*;
+import engine.sprites.properties.KeyMoveProperty;
+import engine.sprites.properties.KillProperty;
+import engine.sprites.properties.Property;
+import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.launcher.Launcher;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import engine.sprites.towers.projectiles.Projectile;
+import file.DataPointWriter;
+import javafx.scene.input.KeyCode;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
  * 
  * @author Katherine Van Dyk
  * @author Miles Todzo
+ * @author Ryan Pond
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
 
-    private HealthProperty myHealth;
-    private double myHealthValue;
-    private double myHealthUpgradeCost; 
-    private double myHealthUpgradeValue; 
-    private String myImage; 
+    private int FAKE_X = 100000;
+    private int FAKE_Y = 100000;
+ 
+    private Launcher myLauncher;
     private double mySize;
-    private Image myProjectileImage;
-    private double myProjectileDamage; 
-    private double myProjectileSpeed;
-    private double myProjectileSize;
-    //	private double myProjectileValue;  
-    //	private double myProjectileUgradeCost; 
-    //	private double myProjectileUpgradeValue; 
-    private Launcher myLauncher; 
-    //	private double myLauncherValue; 
-    //	private double myLauncherUpgradeCost; 
-    //	private double myLauncherUgradeValue; 
-    private double myLauncherRate;
-    private double myLauncherRange; 
-    private ValueProperty myValue;
-    private double myTowerValue; 
-    private Map<String, Double> propertyStats;
+    private DataPointWriter myKillWriter; 
 
     /**
      * Constructor for a Tower object that accepts parameter properties.
@@ -51,161 +38,97 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param health: Initial health of the tower
      * @param value: Value of the tower for selling
      */
-    public Tower(String name, String image, double size, Launcher launcher, HealthProperty health, ValueProperty value) {
-	super(name, image, size, launcher);
-	System.out.println("TOWER SIZE : " + size);
-	myHealth = health;
-	propertyStats = new HashMap<String, Double>();
-	System.out.println("health is " + health.getProperty());
-	System.out.println("health is " + value.getProperty());
-	System.out.println("health is " + this.getDamage());
-
-
-	propertyStats.put(health.getName(), health.getProperty());
-	propertyStats.put(value.getName(), value.getProperty());
-	propertyStats.put(this.getDamageName(), this.getDamage());
-	myHealthValue = health.getProperty(); 
-	myHealthUpgradeCost = health.getCost();
-	myHealthUpgradeValue = health.getUpgradeValue(); 
+    public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
+	super(name, image, size, launcher, properties);
+	mySize = size;
 	myLauncher = launcher;
-	myProjectileImage = launcher.getProjectileImage(); 
-	myProjectileDamage = launcher.getProjectileDamage(); 
-	myProjectileSpeed = launcher.getProjectileSpeed();
-	myProjectileSize = launcher.getProjectileSize(); 
-	myLauncherRate = launcher.getFireRate(); 
-	myLauncherRange = launcher.getRange(); 
-	myValue = value;
-	myTowerValue = value.getProperty();
+	addProperty(new KillProperty(0));
     }
 
     /**
      * Copy constructor
      */
     public Tower(Tower copiedTower) {
-	super(copiedTower.getName(), copiedTower.getImageString(), 
-		copiedTower.mySize, copiedTower.getLauncher()); 
-	myHealth = copiedTower.getHealthProperty();
-	myValue = copiedTower.getValueProperty(); 
+	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher(), copiedTower.getProperties()); 
     }
 
     /**
      * Copy constructor
+     * @return 
      */
-    public Tower(Tower copiedTower, Point point) {
-	super(copiedTower.getName(), copiedTower.getImageString(), 
-	copiedTower.mySize, new Launcher(copiedTower.getLauncher())); 
-	myHealth = copiedTower.getHealthProperty();
-	myValue = copiedTower.getValueProperty();
-	propertyStats = new HashMap<String, Double>();
-	propertyStats.put(myHealth.getName(), myHealth.getProperty());
-	propertyStats.put(myHealth.getName(), myHealth.getProperty());
-	propertyStats.put(this.getDamageName(), this.getDamage());
+    public void move(Point point) {
 	this.place(point.getX(), point.getY());
-    }
-
-    private void setConstructorVals() {
-
-    }
-
-    /**
-     * Handles decrementing tower's damage when it gets hit by an enemy
-     * 
-     * @return boolean: True if tower is alive, false otherwise
-     */
-    @Override
-    public boolean handleCollision(Sprite collider) {
-	myHealth.loseHealth(collider.getDamage());
-	return myHealth.isAlive();
     }
 
     /**
      * Handles selling a tower
      */
+    @Override
     public int sell() {
-	return (int) myValue.getProperty();
+	removeAllProjectiles();
+	return (int) getValue("ValueProperty");
     }
 
-    /**
-     * Handles upgrading the health of a tower
-     */
-    public double upgradeHealth(double balance) {
-	updateStatsMap(myHealth.getName(), myHealth.getProperty());
-	return myHealth.upgrade(balance);
-    }
-
-    /**
-     * Upgrades the rate of fire
-     */
-    public double upgradeRateOfFire(double balance) {
-	return this.getLauncher().upgradeFireRate(balance);
-    }
-
-    /**
-     * Upgrades the amount of damage a tower's projectiles exhibit
-     */
-    public double upgradeDamage(double balance) {
-	return this.getLauncher().upgradeDamage(balance);
+    private void removeAllProjectiles() {
+	for(Projectile projectile : this.getProjectiles()) {
+	    projectile.place(FAKE_X, FAKE_Y);
+	}
     }
 
     /**
      * Upgrades all aspects of a tower
      */
     public double upgrade(double balance) {
-	balance -= upgradeHealth(balance);
-	balance -= upgradeRateOfFire(balance);
-	balance = upgradeDamage(balance);
-	updateStatsMap(myHealth.getName(), myHealth.getProperty());
-	updateStatsMap(this.getLauncher().getFireRateName(), this.getLauncher().getFireRate());
-	updateStatsMap(this.getLauncher().getDamageName(), this.getLauncher().getDamage());
+	for(Property property : getProperties()) {
+	    balance -= ((UpgradeProperty) property).upgrade(balance);
+	}
 	return balance;
     }
 
-    public String getDamageName() {
-	return this.getLauncher().getDamageName();
-    }
-
-    /**
-     * Returns the image
-     * @return
-     */
-    public String getImage() {
-	return myImage;
-    }
-
-    /**
-     * Returns ValueProperty
-     * @return
-     */
-    public ValueProperty getValueProperty() {
-	return myValue;
-    }
-
-    /**
-     * Returns the health property
-     */
-    public HealthProperty getHealthProperty() {
-	return myHealth;
-    }
-
-    public Map<String, Double> getTowerStats(){
+    public Map<String, Integer> getTowerStats(){
+	Map<String, Integer> propertyStats = new HashMap<String, Integer>();
+	for(Property p : getProperties()) {
+	    propertyStats.put(p.getName(), (int) p.getProperty());
+	}
 	return propertyStats;
-    }
-
-    private void updateStatsMap(String name, double value) {
-	propertyStats.put(name, value);
     }
 
     @Override
     public int purchase(int myResources) throws CannotAffordException {
-	if (myResources < myValue.getProperty()) {
-	    throw new CannotAffordException();
+	if (myResources < getValue("ValueProperty")) {
+	    throw new CannotAffordException("You do not have enough money to purchase this tower");
 	}
-	return (int) (myResources - myValue.getProperty());
+	return (int) (myResources - getValue("ValueProperty") );
     }
 
     @Override
     public int getPointValue() {
+	// TODO Auto-generated method stub
 	return 0;
     }
 
+    public double getTowerRange() {
+	return this.getLauncher().getPropertyValue("RangeProperty");
+    }
+
+    public void addLauncherProperty(Property property) {
+	myLauncher.addProperty(property);
+    }
+    
+    public void addProjectileProperty(Property property) {
+	myLauncher.addProjectileProperty(property);
+    }
+    
+    public void setProjectileImage(String image) {
+	myLauncher.setProjectileImage(image);
+    }
+    
+    public void move(KeyCode code) {
+	KeyMoveProperty keyMove = (KeyMoveProperty) getProperty("KeyMoveProperty"); 
+	if(keyMove != null) {
+	    keyMove.move(this, code);
+	}
+    }
+
 }
+

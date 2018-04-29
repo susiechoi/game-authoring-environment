@@ -1,5 +1,6 @@
 package engine.managers;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import engine.path.Path;
+import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
 /**
@@ -14,18 +16,21 @@ import engine.sprites.enemies.Enemy;
  * active Enemy objects in the game loop.
  * 
  * @author Miles Todzo
+ * @author Ryan POnd
  */
 public class EnemyManager extends ShootingSpriteManager {
-    
-    private final Map<Path, List<Enemy>> myEnemies;
 
-	
+    int count = 0;
+
+    private Map<Path, List<Enemy>> myEnemies;
+
+
     /**
      * Constructor for Enemy manager
      */
     public EnemyManager() {
-    		super();
-    		myEnemies = new HashMap<Path, List<Enemy>>();
+	super();
+	myEnemies = new HashMap<Path, List<Enemy>>();
     }
 
     /**
@@ -33,25 +38,57 @@ public class EnemyManager extends ShootingSpriteManager {
      */
     public void moveProjectiles() {
 	// TODO Auto-generated method stub
-	
+
     }
 
+
     /**
-     * Moves all the enemies along the path on every step
+     * Moves all the enemies along the path on every step.
+     * If the enemy isn't alive, remove it from the enemy manager. If the enemy reaches the end 
+     * of the path, add it to the returned list so the PlayState knows to deduct the player's 
+     * health appropriately. 
+     * @return List<Sprite>: A list of enemy objects that have reached the end of the path
      */
-    public void moveEnemies() {
+    public List<Sprite> moveEnemies(double elapsedTime) {
+	List<Sprite> deadEnemies = new ArrayList<>();
+	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
+	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		enemy.move(path);
+		newEnemies.get(path).add(enemy);
+		if (!enemy.isAlive()) {
+		    newEnemies.get(path).remove(enemy);
+		}
+		else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
+		    deadEnemies.add(enemy);
+		    newEnemies.get(path).remove(enemy);
+		}
+		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
+		    enemy.move(elapsedTime);
+		}
+		else {
+		    Point newPosition = path.nextPosition(enemy.getIndex());
+		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
+		    enemy.setNewPosition(newPosition);
+		    enemy.move(elapsedTime);
+		    enemy.setIndex(pathIndex);
+		    }
+		}
+	    myEnemies.get(path).removeAll(deadEnemies);
 	    }
-	}
 	
+	
+	return deadEnemies;
+    }
+
+    private boolean isInRange(Point curr, Point target) {
+	return curr.distance(target)<10;
     }
 
     public void setEnemies(Collection<Enemy> enemies) {
 
     }
-    
+
     /**
      * Adds an enemy to the manager that's mapped to a specific path
      * 
@@ -71,4 +108,22 @@ public class EnemyManager extends ShootingSpriteManager {
 	}
     }
     
+    /**
+     * Clears all the current enemies in the map
+     */
+    public void clearEnemiesMap() {
+	myEnemies.clear();
+    }
+    
+    /**
+     * Method to remove enemies from the current enemies map
+     * @param toBeRemoved
+     */
+    public void removeFromMap(List<Sprite> toBeRemoved) {
+	for(Sprite s : toBeRemoved) {
+	    myEnemies.remove(s);
+	}
+	
+    }
+
 }

@@ -15,24 +15,31 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+//import jdk.internal.jline.internal.Log;
 
-abstract class SpecifyObjectScreen extends AdjustScreen {
+abstract class SpecifyObjectScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_NEWOBJECT_TEXT = "Create New ";
 	public static final String DEFAULT_GO_TEXT = "Go"; 
 	public static final String DEFAULT_CONSTANT_FILEPATH = "src/frontend/Constants.properties";
-
+	public static final String DEFAULT_APPLY_SCREENFLOW = "Apply";
+	public static final String DEFAULT_DELETE_SCREENFLOW = "Delete";
+	public static final String DEFAULT_NEW_SCREENFLOW = "NewButton"; 
+	
 	private String myDefaultName; 
 	protected List<String> myObjectOptions; 
 	private String myObjectDescription; 
 	protected SpecifyObjectScreen(AuthoringView view, String objectDescription) {
 		super(view);
+		setSaved();
 		myObjectDescription = objectDescription;
 		myObjectOptions = getView().getCurrentObjectOptions(myObjectDescription);
 		try {
 			myDefaultName = getView().getPropertiesReader().findVal(DEFAULT_CONSTANT_FILEPATH, "DefaultObjectName");
 		} catch (MissingPropertiesException e) {
-			getView().loadErrorScreen("NoConstants");
+
+//		    Log.error(e);
+		    getView().loadErrorScreen("NoConstants");
 		}
 	}
 
@@ -41,7 +48,7 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	 * @return Parent/root to attach to Scene that will be set on the stage
 	 */
 	@Override
-	protected Parent populateScreenWithFields() {
+	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 
 		Text orText = new Text("or"); 
 
@@ -49,23 +56,29 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		String editPrompt = getErrorCheckedPrompt("EditExisting")+myObjectDescription;
 		String selectPrompt = getErrorCheckedPrompt("SelectExisting")+myObjectDescription;
 
-		List<String> dropdownOptions = new ArrayList<String>(); 
+		List<String> dropdownOptions = new ArrayList<>(); 
 		dropdownOptions.add(selectPrompt);
 		dropdownOptions.addAll(myObjectOptions);
 		
 		Button applyButton = getUIFactory().setupApplyButton();
 		Button backButton = setupBackButton();
+		Button deleteButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("Delete"));
 
-		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction("objectOptions",dropdownOptions, 
-				e-> { applyButton.setDisable(false); }, 
-				e-> { applyButton.setDisable(true);}, editPrompt); 
+		ComboBox<String> objectsDropdown = getUIFactory().makeTextDropdownSelectAction(dropdownOptions, 
+				e-> { applyButton.setDisable(false); deleteButton.setDisable(false); }, 
+				e-> { applyButton.setDisable(true); deleteButton.setDisable(true); }, editPrompt); 
 		applyButton.setDisable(true);
+		deleteButton.setDisable(true);
 		applyButton.setOnAction(e -> {
-			System.out.println(objectsDropdown.getValue()+" iS THE SELECTION!!!!!!!");
-			getView().goForwardFrom(this.getClass().getSimpleName()+"Apply", objectsDropdown.getValue());
+		    	setSaved();
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW, objectsDropdown.getValue());
+		});
+		deleteButton.setOnAction(e -> {
+			getView().deleteObject(myObjectDescription, objectsDropdown.getValue());
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_DELETE_SCREENFLOW);
 		});
 
-		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox("", objectsDropdown, editPrompt);
+		HBox objectsWithPrompt = getUIFactory().addPromptAndSetupHBox(objectsDropdown, editPrompt);
 
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 
@@ -73,15 +86,11 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 		vb.getChildren().add(newObjectButton);
 		vb.getChildren().add(orText);
 		vb.getChildren().add(objectsWithPrompt);
+		vb.getChildren().add(deleteButton);
 		vb.getChildren().add(backAndApplyButton);
-
 		return vb;
 	}
-	
-	@Override
-	protected void populateFieldsWithData() {
-		//null method, since this type of screen only has buttons TODO: make this not an abstract method??
-	}
+
 
 	/**
 	 * For creating a button option to make a new object
@@ -89,9 +98,9 @@ abstract class SpecifyObjectScreen extends AdjustScreen {
 	 * @return Button to add to Parent
 	 */
 	protected Button makeCreateNewObjectButton(String object) {
-		Button newObjectButton = getUIFactory().makeTextButton("newObjectButton", DEFAULT_NEWOBJECT_TEXT+object); 
-		newObjectButton.setOnAction((event) -> {
-			getView().goForwardFrom(this.getClass().getSimpleName()+"NewButton", myDefaultName);
+		Button newObjectButton = getUIFactory().makeTextButton(DEFAULT_NEWOBJECT_TEXT+object); 
+		newObjectButton.setOnAction(event -> {
+			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_NEW_SCREENFLOW, myDefaultName);
 		});
 		return newObjectButton;
 	}

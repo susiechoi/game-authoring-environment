@@ -1,6 +1,5 @@
 package authoring.frontend;
 
-
 import frontend.Screen;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,12 +7,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 public abstract class AuthoringScreen extends Screen {
+	public static final String DEFAULT_CANCEL_KEY = "Cancel";
+	public static final String DEFAULT_NOTSAVED_KEY = "NotSaved";
+	
     private AuthoringView myView;
+    private boolean myIsSaved;
     
     public AuthoringScreen(AuthoringView view) {
 	super();
 	setStyleSheet(view.getCurrentCSS());
 	myView = view;
+	myIsSaved = false;
 	setupCSSListener(); 
     }
     
@@ -30,18 +34,43 @@ public abstract class AuthoringScreen extends Screen {
     public AuthoringView getView() {
 	return myView;
     }
-    
+    protected boolean getIsSaved() {
+	return myIsSaved;
+    }
+    protected void setSaved() {
+	myIsSaved = true;
+    }
     protected String getErrorCheckedPrompt(String prompt) {
 	return myView.getErrorCheckedPrompt(prompt);
     }
     
     protected Button setupBackButton() {
-	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSimpleName());}, myView.getErrorCheckedPrompt("Cancel"));
+		return getUIFactory().setupBackButton(e -> {
+			if(!myIsSaved) {
+				getView().loadErrorAlert(DEFAULT_NOTSAVED_KEY);
+				myIsSaved = true;
+			}
+			else {
+				getView().goBackFrom(this.getClass().getSimpleName());
+			}
+		},myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
+	    
     }
     protected Button setupBackButtonSuperclass() {
-	return getUIFactory().setupBackButton(e -> {getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());}, myView.getErrorCheckedPrompt("Cancel"));
+	{
+		return getUIFactory().setupBackButton(e -> {
+		    if(!myIsSaved) {
+			getView().loadErrorAlert(DEFAULT_NOTSAVED_KEY);
+			myIsSaved = true;
+		    }
+		    else {
+			getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());
+		    }
+		},myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
+		    
+	    }
     }
     protected Button setupBackButtonCustom(EventHandler<ActionEvent> e) {
-	return getUIFactory().setupBackButton(e, myView.getErrorCheckedPrompt("Cancel"));
+	return getUIFactory().setupBackButton(e, myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
     }
 }

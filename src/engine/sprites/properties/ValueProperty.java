@@ -12,6 +12,10 @@ public class ValueProperty extends Property {
     public ValueProperty(double propertyValue) {
 	super(propertyValue);
     }
+    
+    public ValueProperty(Property property) {
+	super(property);
+    }
 
     /**
      * Updates an object's value in response to an upgrade 
@@ -23,5 +27,4 @@ public class ValueProperty extends Property {
 	double newValue = this.getProperty() + feature.getCost();
 	this.setProperty(newValue);
     }
-
 }
