@@ -270,7 +270,7 @@ public class GameScreen extends Screen {
 
 	public void gameWon() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
-		//gamePane.setCenter(SPLASH_PANEL.getPanel());
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
 	}
 
 	public void gameLost() {
@@ -280,7 +280,7 @@ public class GameScreen extends Screen {
 
 	public void nextLevel() {
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
-		//gamePane.setCenter(SPLASH_PANEL.getPanel());
+		gamePane.setCenter(SPLASH_PANEL.getPanel());
 		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
 	}
 
