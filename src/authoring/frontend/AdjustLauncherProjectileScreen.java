@@ -14,8 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {	
-    public static final String OBJECT_TYPE = "Tower";
     public static final String PROJECTILE_OBJECT_TYPE = "Projectile";
+    public static final String LAUNCHER_OBJECT_TYPE = "Launcher";
     public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
     public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
     public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
@@ -54,8 +54,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    try {
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myProjectileDamage);
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
+		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
+		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
 		setSaved();
 		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
 	    }

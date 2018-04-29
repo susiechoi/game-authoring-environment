@@ -36,7 +36,6 @@ public class Launcher extends Manager<Projectile>{
 
     public Launcher(Launcher launcher) {
 	launcherProperties = new ArrayList<Property>();
-	//TODO do we have to do this
 	for(Property p : launcher.getProperties()) {
 	    launcherProperties.add(myPropertyFactory.getProperty(p));
 	}
@@ -65,11 +64,8 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
-//	System.out.println("LAUNCHING");
-	timeSinceLastShot=0;
-//	System.out.println(myProjectile.getProperty("Boomerang")+ " is boomerang prop in launcher");
-	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
-	System.out.println("launched Projectile " + launchedProjectile.getProperties().size());
+	timeSinceLastShot = 0;
+	Projectile launchedProjectile = new Projectile(myProjectile, target, shooterX, shooterY);
 	this.addToActiveList(launchedProjectile);
 	return launchedProjectile;
     }
