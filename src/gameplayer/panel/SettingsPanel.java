@@ -48,7 +48,7 @@ public class SettingsPanel extends Panel {
             Map<String,Image> settingsMap = PROP_READ.keyToImageMap(SETTINGS_BUTTON_FILEPATH, DEFAULT_SETTINGS_BUTTON_SIZE, DEFAULT_SETTINGS_BUTTON_SIZE);
             for (Entry<String, Image> entry : settingsMap.entrySet()) {
                 Button settingButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("settingsButtonID"), entry.getValue());
-//                settingButton.setOnMouseClicked(arg0 -> GAME_SCREEN.settingsTriggered(entry.getKey()));
+                settingButton.setOnMouseClicked(arg0 -> GAME_SCREEN.settingsTriggered(entry.getKey()));
                 settingsBox.getChildren().add(settingButton);
             }
         }

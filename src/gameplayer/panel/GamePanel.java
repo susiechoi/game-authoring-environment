@@ -38,6 +38,7 @@ public class GamePanel extends Panel{
     private Circle rangeIndicator;
     private GridPane currentGrid;
     private ScrollPane scroll;
+    private GridPane grid;
 
     //TODO changes this to be passed from mediator ******************************************************************************
     private final String DEFAULT_BACKGROUND_FILE_PATH;
@@ -63,9 +64,8 @@ public class GamePanel extends Panel{
 
 	//TODO potentially fix needed?
 	Pane gamePane = new Pane();
+	gamePane.setStyle("	-fx-background-color: yellow;");
 	scroll = new ScrollPane(gamePane);
-	scroll.setMaxHeight(Double.MAX_VALUE);
-	scroll.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
@@ -80,8 +80,12 @@ public class GamePanel extends Panel{
 	    return false;
 	}
 	ImageView imageView;
+	
 	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
 	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
+	scroll.setMaxWidth(imageWidth);
+	scroll.setMaxHeight(imageHeight);
+	System.out.println("MW: " + imageWidth + " MH: " + imageHeight);
 	try {
 	    imageView = new ImageView(new Image(backgroundFilePath, imageWidth,imageHeight , false, false));
 	} catch (IllegalArgumentException e){
@@ -96,7 +100,7 @@ public class GamePanel extends Panel{
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
 	if(!pathSet) {
 	    PathMaker pathMaker = new PathMaker();
-	    GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
@@ -107,6 +111,10 @@ public class GamePanel extends Panel{
 	    currentGrid = grid;
 	    spriteAdd.getChildren().add(currentGrid);
 	    pathSet = true;
+	}
+	if(pathSet) {
+	    spriteAdd.getChildren().remove(grid);
+	    spriteAdd.getChildren().add(grid);
 	}
 	return backgroundSet;
     }
