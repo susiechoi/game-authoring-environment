@@ -24,7 +24,6 @@ import javafx.scene.layout.BorderPane;
 import voogasalad.util.soundfactory.*;
 
 
-
 public class GameScreen extends Screen {
 
 	//TODO delete this and re-factor to abstract
@@ -43,7 +42,7 @@ public class GameScreen extends Screen {
 	private BorderPane gamePane;
 	private final Mediator MEDIATOR;
 	private BorderPane rootPane;
-	private ITRTSoundFactory SOUND_FACTORY;
+	private SoundFactory SOUND_FACTORY;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private boolean GAME_WON; //false if lost
 
@@ -51,9 +50,9 @@ public class GameScreen extends Screen {
 		SCREEN_MANAGER = ScreenController;
 		GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
 		DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
-		SOUND_FACTORY = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
 		PROMPTS = promptReader;
 		MEDIATOR = mediator;
+		SOUND_FACTORY = MEDIATOR.getSoundFactory();
 		TOWER_PANEL = new TowerPanel(this);
 		CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
 		SCORE_PANEL = new ScorePanel(this);
@@ -135,7 +134,6 @@ public class GameScreen extends Screen {
 		    getView().playControllerInstructions();
 		}
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("edit"))) { // Susie added this
-
 			MEDIATOR.endLoop();
 			AuthoringController authoringController = new AuthoringController(SCREEN_MANAGER.getStageManager(), SCREEN_MANAGER.getLanguage());
 			authoringController.setModel(SCREEN_MANAGER.getGameFilePath());
@@ -151,7 +149,7 @@ public class GameScreen extends Screen {
 		}
 		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
 			try{
-				SOUND_FACTORY.setBackgroundMusic("epic");
+				SOUND_FACTORY.setBackgroundMusic("stillDre");
 			}
 			catch (FileNotFoundException e) {
 			    Log.debug(e); //TODO!!!
@@ -262,7 +260,7 @@ public class GameScreen extends Screen {
 	}
 
 
-	public ITRTSoundFactory getSoundFactory() {
+	public SoundFactory getSoundFactory() {
 		return SOUND_FACTORY;
 	}
 

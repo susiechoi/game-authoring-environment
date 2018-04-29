@@ -20,14 +20,14 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  * @author Katie Van Dyk
  * @author Ryan Pond
-*/
+ */
 
 
 public class TowerManager extends ShootingSpriteManager {
 
-	//not sure exactly where this should be implemented/how the info for it will be passed in
-	Map<String, Tower> myTowerTypeToInstance;
-	
+    //not sure exactly where this should be implemented/how the info for it will be passed in
+    Map<String, Tower> myTowerTypeToInstance;
+
     /**
      * Constructor for super class
      */
@@ -47,19 +47,20 @@ public class TowerManager extends ShootingSpriteManager {
 	}
     }
 
-    
+
     /**
      * Moves towers on every step of the GameLoop
      */
     public void moveTowers() {
 	// TODO Auto-generated method stub
     }
-    
+
     public FrontEndTower place(Point location, String type) {
-    		Tower newTower = new Tower(myTowerTypeToInstance.get(type),location);
-    		this.addToActiveList(newTower);
-    		newTower.place(location.getX(), location.getY());
-    		return newTower;
+	Tower newTower = new Tower(myTowerTypeToInstance.get(type));
+	newTower.move(location);
+	this.addToActiveList(newTower);
+	newTower.place(location.getX(), location.getY());
+	return newTower;
     }
 
     /**
@@ -72,7 +73,7 @@ public class TowerManager extends ShootingSpriteManager {
 	}
 	return 0;
     }
-    
+
     /**
      * Called from PlayState, tower is to be upgraded by the type specified in upgradeName
      * @param tower
@@ -81,7 +82,7 @@ public class TowerManager extends ShootingSpriteManager {
     public double upgrade(FrontEndTower tower, String upgradeName, double balance) {
 	for(ShootingSprites realTower : this.getListOfActive()) {
 	    if(realTower.hashCode() == tower.hashCode()) {
-		 return realTower.upgrade(upgradeName, balance);
+		return realTower.upgrade(upgradeName, balance);
 	    }
 	}
 	return balance;

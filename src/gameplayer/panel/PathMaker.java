@@ -32,6 +32,7 @@ public class PathMaker {
 
     private void addImagesToGrid(Map<String, List<Point>> map) {
 	for (String key: map.keySet()) {
+
 	    String imageKey = key.substring(1);
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
@@ -40,7 +41,6 @@ public class PathMaker {
 		ImageView image = new ImageView();
 		try{
 		    image = new ImageView(new Image(imageKey));
-
 		}
 		catch(IllegalArgumentException e){
 		    Log.debug(e);
@@ -67,7 +67,6 @@ public class PathMaker {
 	    grid.getRowConstraints().add(rowConst);         
 	}
     }
-
 
 
 }

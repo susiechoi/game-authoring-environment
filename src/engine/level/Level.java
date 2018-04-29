@@ -68,9 +68,12 @@ public class Level {
 		return myNumber;
 	}
 
-	// TODO 
 	public void addPath(Path path) {
 		myPaths.add(path); 
+	}
+	
+	public void clearPaths(Path path) {
+	    	//TODO
 	}
 
 	/**
@@ -344,17 +347,13 @@ public class Level {
 		//		}
 		//		return pathMap;
 		if (myPaths.size() > 1) {
-			return myPaths.get(myPaths.size() - 1).getPathMap();
+			return myPaths.get(myPaths.size()-1).getPathMap();
 		}
 		return null;
 	}
 
 	public String getBackGroundImage() {
-		return myPaths.get(myPaths.size() - 1).getBackgroundImage();
-	}
-
-	public int getPathSize() {
-		return myPaths.get(myPaths.size() - 1).getPathSize();
+		return myPaths.get(myPaths.size()-1).getBackgroundImage();
 	}
 	
 	public int getGridWidth() {
@@ -364,17 +363,23 @@ public class Level {
 	public int getGridHeight() {
 		return myPaths.get(myPaths.size() - 1).getGridHeight();
 	}
+
+
+	public int getPathSize() {
+		return myPaths.get(myPaths.size()-1).getPathSize();
+	}
+	
 	
 	public String getPathImage() {
-		return myPaths.get(myPaths.size() - 1).getPathImage();
+		return myPaths.get(myPaths.size()-1).getPathImage();
 	}
 	
 	public String getStartImage() {
-		return myPaths.get(myPaths.size() - 1).getStartImage();
+		return myPaths.get(myPaths.size()-1).getStartImage();
 	}
 	
 	public String getEndImage() {
-		return myPaths.get(myPaths.size() - 1).getEndImage();
+		return myPaths.get(myPaths.size()-1).getEndImage();
 	}
 
 	/**
@@ -391,25 +396,25 @@ public class Level {
 		if (myTowers.size() > 1) {
 			myTowers.remove(DEFAULT_OBJ_NAME);
 		}
-		updateTowerProperties(); 
-		updateEnemyProperties(); 
+		//updateTowerProperties(); 
+		//updateEnemyProperties(); 
 	}
 
-	private void updateTowerProperties() {
-		Tower tower; 
-		for (String towerName : myTowers.keySet()) {
-			tower = myTowers.get(towerName);
-			tower.updateProperties();
-		}
-	}
+//	private void updateTowerProperties() {
+//		Tower tower; 
+//		for (String towerName : myTowers.keySet()) {
+//			tower = myTowers.get(towerName);
+//			tower.updateProperties();
+//		}
+//	}
 
-	public void updateEnemyProperties() {
-		Enemy enemy; 
-		for (String enemyName : myEnemies.keySet()) {
-			enemy = myEnemies.get(enemyName);
-			enemy.updateProperties();
-		}
-	}
+//	public void updateEnemyProperties() {
+//		Enemy enemy; 
+//		for (String enemyName : myEnemies.keySet()) {
+//			enemy = myEnemies.get(enemyName);
+//			enemy.updateProperties();
+//		}
+//	}
 
 
 }

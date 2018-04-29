@@ -139,6 +139,7 @@ public class Path {
 	public int getGridHeight() {
 		return myHeight;
 	}
+
 	
 	public String getPathImage( ) {
 		return myPathImage;

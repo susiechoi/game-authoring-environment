@@ -74,11 +74,12 @@ public class EnemyManager extends ShootingSpriteManager {
 		    enemy.setIndex(pathIndex);
 		    }
 		}
+	    myEnemies.get(path).removeAll(deadEnemies);
 	    }
-	myEnemies = newEnemies;
+	
+	
 	return deadEnemies;
     }
-
 
     private boolean isInRange(Point curr, Point target) {
 	return curr.distance(target)<10;
@@ -105,6 +106,24 @@ public class EnemyManager extends ShootingSpriteManager {
 	    pathEnemies.add(enemy);
 	    myEnemies.put(path, pathEnemies);
 	}
+    }    
+    /**
+     * Clears all the current enemies in the map
+     */
+    public void clearEnemiesMap() {
+	myEnemies.clear();
     }
+    
+    /**
+     * Method to remove enemies from the current enemies map
+     * @param toBeRemoved
+     */
+    public void removeFromMap(List<Sprite> toBeRemoved) {
+	for(Sprite s : toBeRemoved) {
+	    myEnemies.remove(s);
+	}
+	
+    }
+
 
 }

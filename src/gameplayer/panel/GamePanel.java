@@ -23,9 +23,7 @@ import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
 
-//note to andrew: delete if you see this not on his branch
-//need two seperate rangeIndicators, one for on click of placed tower, one for display when placing when cursor is changed
-//as is if you click on tower, the mouseonexit method will make range disappear if you leave panel
+
 public class GamePanel extends Panel{
 
 

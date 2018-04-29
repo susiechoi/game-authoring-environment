@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 abstract class SpecifyNameScreen extends AuthoringScreen {
 
     public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
+    private final String TOWER_TYPE = "Tower";
+    private final String ENEMY_TYPE = "Enemy";
 
     private String myDefaultObjectName; 
     private String myObjectDescription; 
@@ -33,8 +35,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	    getView().loadErrorScreen("BadConstants");
 	} catch (MissingPropertiesException e) {
 //	    Log.error(e);
-	    //Log.error(e);
-	    getView().loadErrorScreen("BadConstants");
+	    getView().loadErrorScreen("NoConstants");
 	}
     }
 
@@ -57,7 +58,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	    if (validNameField(myNameField)) {
 		if (this.getClass().getSimpleName().equals("SpecifyTowerNameScreen")) {
 		    try {
-			getView().makeTower(myNameField.getText());
+			getView().makeSprite(TOWER_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
 //			Log.error(e);
@@ -67,7 +68,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		}
 		else if (this.getClass().getSimpleName().equals("SpecifyEnemyNameScreen")) {
 		    try {
-			getView().makeEnemy(myNameField.getText());
+			getView().makeSprite(ENEMY_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException
 			    | ObjectNotFoundException e1) {
 			// TODO Auto-generated catch block
