@@ -89,7 +89,7 @@ public class CreatePathScreen extends PathScreen {
 			getView().getObjectAttribute("Path", "", "myEndImage");
 			getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 		    } catch (ObjectNotFoundException e1) {
-			//Log.debug(e1);
+//			Log.debug(e1);
 			getView().loadErrorScreen("NoObject");
 		    }
 		} else {

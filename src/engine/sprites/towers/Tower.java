@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.KillProperty;
 import engine.sprites.properties.Property;
