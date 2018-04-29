@@ -20,8 +20,7 @@ public class HeatSeekingProperty extends MovingProperty{
     }
 
     @Override
-    public void move(Projectile projectile, double elapsedTime) {
-	System.out.println("heat seeking");
+    public boolean move(Projectile projectile, double elapsedTime) {
 	ShootingSprites myTarget = projectile.getTarget();
 	if (myTarget.isAlive()) {
 	    rotateImage(projectile, myTarget);
@@ -31,6 +30,8 @@ public class HeatSeekingProperty extends MovingProperty{
 	double yMove = Math.cos(Math.toRadians(projectile.getRotate()))*totalDistanceToMove;
 	projectile.getImageView().setX(projectile.getX()+xMove);
 	projectile.getImageView().setY(projectile.getY()+yMove);
+	
+	return this.checkIfProjectileIsOutOfRange(projectile);
     }
 
     /**

@@ -1,5 +1,8 @@
 package engine.sprites.properties;
 
+import java.awt.Point;
+import java.util.List;
+
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -10,10 +13,22 @@ import engine.sprites.towers.projectiles.Projectile;
 
 public abstract class MovingProperty extends Property{
     
+    private Point projectileOrigin;
+    
     public MovingProperty(double range) {
 	super(range);
-
+	projectileOrigin = new Point();
       }
     
-    public abstract void move(Projectile projectile, double elapsedTime);
+    public abstract boolean move(Projectile projectile, double elapsedTime);
+    
+    public boolean checkIfProjectileIsOutOfRange(Projectile projectile) {
+	double distanceBetween = Math.sqrt(Math.pow(projectileOrigin.getX()-projectile.getX(),2)+Math.pow(projectileOrigin.getY()-projectile.getY(), 2));
+	System.out.println(distanceBetween + " " + this.getProperty());
+	return (distanceBetween >= this.getProperty());
+    }
+    
+    public void setProjectileOrigin(double x, double y) {
+	projectileOrigin.setLocation(x, y);
+    }
 }

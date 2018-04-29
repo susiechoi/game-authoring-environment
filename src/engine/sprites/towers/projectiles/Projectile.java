@@ -6,6 +6,7 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.properties.BoomerangProperty;
 import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.SpeedProperty;
@@ -64,18 +65,19 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
 	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
+	myMovingProperty.setProjectileOrigin(shooterX, shooterY);
     }
 
     /**
      * Moves image in direction of it's orientation
      */
-    public void move(double elapsedTime) {
+    public boolean move(double elapsedTime) {
 	try {
-	    myMovingProperty.move(this, elapsedTime);
+	    return myMovingProperty.move(this, elapsedTime);
 	}catch(NullPointerException e) {
 	    //this means there is not movement property defined for the projectile, so don't move them
 	    System.out.println("no movement property");
-	    return;
+	    return false;
 	}
 	
     }

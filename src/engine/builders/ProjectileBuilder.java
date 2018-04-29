@@ -27,7 +27,7 @@ public class ProjectileBuilder {
 	properties.add(new DamageProperty(0, 0, damage));
 	properties.add(new ConstantSpeedProperty(constantSpeedProperty));
 	System.out.println("out here");
-	properties.add(new RandomShotProperty(100));
+	properties.add(new BoomerangProperty(100));
 	properties.add(new DamageCollisionProperty(100));
 	return new Projectile(name, size, imagepath, properties);
     }
