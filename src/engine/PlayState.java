@@ -169,7 +169,7 @@ public class PlayState implements GameData {
 	    myMediator.gameLost();
 	}
     }
-    
+
     /**
      * Checks if enemies have reached the end of the path. Removes the enemies from the
      * screen and the enemy manager object if they reach the end of the path.
@@ -183,18 +183,30 @@ public class PlayState implements GameData {
     private void checkWin() {
 	// Level is over
 	if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
-	    myLevels.remove(currentLevel.getNumber()-1);
-	    myLevels.add(currentLevel.getNumber() - 1, currentLevelCopy);
-	    currentLevel = myLevels.get(currentLevel.myNumber());
-	    currentLevelCopy = new Level(currentLevel);
-	    myMediator.updateLevel(currentLevel.myNumber());
-	    // TODO: call Mediator to trigger next level
-	    myMediator.nextLevel();
+	    advanceLevel();
 	}
 	else {
 	    // TODO: end game, player won
 	    myMediator.gameWon();
 	}
+    }
+
+    private void advanceLevel() {
+	List<Level> newLevels = new ArrayList<Level>();
+	for (Level thisLevel : myLevels) {
+	    if (thisLevel.equals(currentLevel)) {
+		newLevels.add(currentLevelCopy);
+	    }
+	    else {
+		newLevels.add(thisLevel);
+	    }
+	}
+	myLevels = newLevels;
+	currentLevel = myLevels.get(currentLevel.myNumber());
+	currentLevelCopy = new Level(currentLevel);
+	myMediator.updateLevel(currentLevel.myNumber());
+	// TODO: call Mediator to trigger next level
+	myMediator.nextLevel();
     }
 
     private void spawnEnemies() {
