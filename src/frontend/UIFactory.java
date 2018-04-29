@@ -83,6 +83,10 @@ public class UIFactory {
 		return newButton; 
 	}
 
+	public TextField makeTextField() {
+		return makeTextField("");
+	}
+	
 	/**
 	 * Makes new Text field
 	 * @param description is CSS description of TextField
@@ -94,6 +98,10 @@ public class UIFactory {
 		return tf;
 	}
 
+	public Button makeTextButton(String buttonText) {
+		return makeTextButton("", buttonText);
+	}
+	
 	/**
 	 * Makes a new button with an text prompt 
 	 * @param id is CSS id of button
@@ -104,6 +112,11 @@ public class UIFactory {
 		Button newButton = new Button(buttonText);
 		newButton.setId(id);
 		return newButton; 
+	}
+	
+	public ComboBox<String> makeTextDropdownSelectAction(List<String> dropdownOptions, EventHandler<ActionEvent> chooseAction,
+			EventHandler<ActionEvent> noChoiceAction, String prompt) {
+		return makeTextDropdownSelectAction("", dropdownOptions, chooseAction, noChoiceAction, prompt);
 	}
 
 	/**
@@ -130,6 +143,10 @@ public class UIFactory {
 		return dropdown;
 	}
 
+	public ComboBox<String> makeTextDropdown(List<String> dropdownOptions) {
+		return makeTextDropdown("", dropdownOptions);
+	}
+	
 	/**
 	 * Sets up a new ComboBox dropdown with text
 	 * @param id is CSS id of dropdown
@@ -144,6 +161,10 @@ public class UIFactory {
 		return newDropdown; 
 	}
 
+	public Slider setupSlider(int sliderMax) {
+		return setupSlider("", sliderMax);
+	}
+	
 	/**
 	 * Sets up a new Slider given a max value
 	 * @param id is CSS id of slider
@@ -350,6 +371,10 @@ public class UIFactory {
 		return hb; 
 	}
 
+	public HBox setupSliderWithValue(Slider slider, String prompt) {
+		return setupSliderWithValue("", slider, prompt);
+	}
+	
 	/**
 	 * Sets up a new slider displaying its value next to it
 	 * @param id is CSS id
@@ -372,6 +397,10 @@ public class UIFactory {
 		return addPromptAndSetupHBox(id, hb, prompt);
 	}
 
+	public HBox addPromptAndSetupHBox(Node node, String prompt) {
+		return addPromptAndSetupHBox("", node, prompt);
+	}
+	
 	/**
 	 * Adds Prompt and sets up an HBox given a UI element
 	 * @param id is CSS ID
