@@ -42,15 +42,16 @@ public class AttributeFactory {
 
     public Object getObjectAttribute(int level, String objectType, String name, String attribute, AuthoredGame game) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 	Object attributeValue = null;
-	Level currentLevel = game.levelCheck(level);
 	AttributeFinder attributeFinder = new AttributeFinder(); 
 	if (objectType.equals("Enemy")) {
+	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
 		Enemy enemy = currentLevel.getEnemy(name);
 		attributeValue = attributeFinder.retrieveFieldValue(attribute, enemy);
 	    }
 	}
 	else if (objectType.equals("Tower")) {
+	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
 		Tower tower = currentLevel.getTower(name);
 		attributeValue = attributeFinder.retrieveFieldValue(attribute, tower);
@@ -60,10 +61,12 @@ public class AttributeFactory {
 	    attributeValue = attributeFinder.retrieveFieldValue(attribute, game.getSettings());
 	}
 	else if (objectType.equals("Path")) {
+	    Level currentLevel = game.levelCheck(level);
 	    Path path = currentLevel.getPath();
 	    attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
 	}
 	else if(objectType.equals("Wave")) {
+	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsWaveNumber(Integer.parseInt(name))) {
 		Wave wave = currentLevel.getWaves().get(Integer.parseInt(name));
 		attributeValue = attributeFinder.retrieveFieldValue(attribute, wave);
