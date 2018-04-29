@@ -66,6 +66,7 @@ public class Launcher extends Manager<Projectile>{
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
 	timeSinceLastShot=0;
 	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
+	System.out.println("launched Projectile " + launchedProjectile.getProperties().size());
 	this.addToActiveList(launchedProjectile);
 	return launchedProjectile;
     }

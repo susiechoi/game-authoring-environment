@@ -51,7 +51,6 @@ public class EnemyManager extends ShootingSpriteManager {
 	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
 		if(!enemy.isAlive()) {
-
 		    myEnemies.get(path).remove(enemy);
 		    break;
 		}
@@ -124,5 +123,16 @@ public class EnemyManager extends ShootingSpriteManager {
 	
     }
 
+
+    /**
+     * Method to remove enemies from the current enemies map
+     * @param toBeRemoved
+     */
+    public void removeFromMap(List<Sprite> toBeRemoved) {
+	for(Sprite s : toBeRemoved) {
+	    myEnemies.remove(s);
+	}
+	
+    }
 
 }

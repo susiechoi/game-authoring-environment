@@ -5,6 +5,7 @@ import java.util.List;
 
 import engine.sprites.properties.ConstantSpeedProperty;
 import engine.sprites.properties.DamageProperty;
+import engine.sprites.properties.HeatSeekingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -22,6 +23,8 @@ public class ProjectileBuilder {
 	List<Property<Object>> properties = new ArrayList<>();
 	properties.add(new DamageProperty(0, 0, damage));
 	properties.add(new ConstantSpeedProperty(constantSpeedProperty));
+	System.out.println("done done");
+	properties.add(new HeatSeekingProperty(100));
 	return new Projectile(name, size, imagepath, properties);
     }
 

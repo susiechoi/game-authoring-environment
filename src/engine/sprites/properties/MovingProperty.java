@@ -12,5 +12,5 @@ public abstract class MovingProperty<T> extends Property<Object>{
     
     public MovingProperty(double range) {
 	super(range);
-      }
+    }
 }
