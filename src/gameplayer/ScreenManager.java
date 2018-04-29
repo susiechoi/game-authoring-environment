@@ -22,7 +22,7 @@ import javafx.scene.Parent;
 
 /**
  * 
- * @author Ben Hodgson 4/11/18
+ * @author Ben Hodgson 4/11/18, Alexi Kontos and Andrew Arnold
  * 
  * Class to manage updating Screen elements that remain across the entire game
  * (score, level, health, currency, etc.)

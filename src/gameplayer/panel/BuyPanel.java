@@ -11,6 +11,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import java.util.Map;
 
+
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
 public class BuyPanel extends SpecificPanel {
 
     private final GameScreen GAME_SCREEN;

@@ -17,6 +17,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Tooltip;
 import frontend.PromptReader;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 
 public class ControlsPanel extends Panel{
 

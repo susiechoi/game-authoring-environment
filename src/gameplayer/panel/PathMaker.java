@@ -12,6 +12,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
+
+/**
+ * @Author Andrew Arnold & Erik Riis
+ */
+
 public class PathMaker {
 
 	private GridPane grid;

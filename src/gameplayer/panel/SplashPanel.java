@@ -8,6 +8,11 @@ import com.sun.javafx.tools.packager.Log;
 
 import java.util.Map;
 
+/**
+ * @Author Alexi Kontos
+ */
+
+
 public class SplashPanel extends Panel {
 
     private GameScreen GAME_SCREEN;

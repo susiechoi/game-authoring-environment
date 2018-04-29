@@ -26,6 +26,11 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 
 //note to andrew: delete if you see this not on his branch
 //need two seperate rangeIndicators, one for on click of placed tower, one for display when placing when cursor is changed

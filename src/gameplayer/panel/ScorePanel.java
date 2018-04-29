@@ -16,6 +16,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 public class ScorePanel extends ListenerPanel {
 
     public static final String DEFAULT_SCORE_PATH = "Score/"; 
