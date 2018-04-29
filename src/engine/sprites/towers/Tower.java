@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import engine.sprites.ShootingSprites;
+import engine.sprites.properties.KeyMoveProperty;
 import engine.sprites.properties.KillProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 import file.DataPointWriter;
+import javafx.scene.input.KeyCode;
 
 /**
  * Class for tower object in game. Implements Sprite methods.
@@ -120,6 +122,13 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     
     public void setProjectileImage(String image) {
 	myLauncher.setProjectileImage(image);
+    }
+    
+    public void move(KeyCode code) {
+	KeyMoveProperty keyMove = (KeyMoveProperty) getProperty("KeyMoveProperty"); 
+	if(keyMove != null) {
+	    keyMove.move(this, code);
+	}
     }
 
 }

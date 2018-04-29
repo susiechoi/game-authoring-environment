@@ -4,7 +4,7 @@ package engine;
 import gameplayer.ScreenManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
+import javafx.scene.input.KeyCode;
 import voogasalad.util.soundfactory.ITRTSoundFactory;
 import voogasalad.util.soundfactory.SoundFactory;
 
@@ -42,32 +42,32 @@ import xml.XMLFactory;
  */
 public class Mediator implements MVController{
 
-	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
-    
-	private ScreenManager myScreenManager;
-	private GameEngine myGameEngine;
-	private PlayController myPlayController;
-	private SoundFactory mySoundFactory;
-	
-	//    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
-	//    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
-	//    private ObservableValue<Integer> gameSpeed;
-	//    private ObservableValue<Integer> level;
-	//    private ObservableValue<Integer> difficulty;
-	//    private ObservableValue<Tower> placeTower;
-	//    private ObservableValue<Boolean> saveFileAvailable;
-	//    private ObservableValue<Boolean> loadGameFromFile;
+    private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
-	/**
-	 * Constructs Mediator object and sets all fields to null.
-	 * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
-	 */
-	public Mediator(PlayController p) {
-		myPlayController = p;
-		mySoundFactory = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
-		//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
-		//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
-	}
+    private ScreenManager myScreenManager;
+    private GameEngine myGameEngine;
+    private PlayController myPlayController;
+    private SoundFactory mySoundFactory;
+
+    //    private ObservableList<Tower> placedTowers = FXCollections.observableArrayList();
+    //    private ObservableList<Tower> availableTowers = FXCollections.observableArrayList();
+    //    private ObservableValue<Integer> gameSpeed;
+    //    private ObservableValue<Integer> level;
+    //    private ObservableValue<Integer> difficulty;
+    //    private ObservableValue<Tower> placeTower;
+    //    private ObservableValue<Boolean> saveFileAvailable;
+    //    private ObservableValue<Boolean> loadGameFromFile;
+
+    /**
+     * Constructs Mediator object and sets all fields to null.
+     * Before class is used, setGameEngine and setScreenManager methods should be called to set appropriate instance variables
+     */
+    public Mediator(PlayController p) {
+	myPlayController = p;
+	mySoundFactory = new ITRTSoundFactory(PROPERTIES_FILE_PATH);
+	//	loadGameFromFile = new ReadOnlyObjectWrapper<>(false);
+	//	saveFileAvailable = new ReadOnlyObjectWrapper<>(false);
+    }
 
 
     /************************************************ SETUP ********************************************/
@@ -245,9 +245,9 @@ public class Mediator implements MVController{
 	}
     }
 
-	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-		return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
-	}
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    }
 
 
     /**
@@ -298,9 +298,13 @@ public class Mediator implements MVController{
     public void gameLost() {
 	myScreenManager.getGameScreen().gameLost();
     }
-	
-	public SoundFactory getSoundFactory() {
-	    return mySoundFactory;
-	}
+
+    public SoundFactory getSoundFactory() {
+	return mySoundFactory;
+    }
+    
+    public void moveTowers(FrontEndTower tower, KeyCode c) {
+	myGameEngine.getPlayState().moveTowers(tower, c);
+    }
 
 }

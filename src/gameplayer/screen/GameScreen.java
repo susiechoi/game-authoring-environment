@@ -192,6 +192,7 @@ public class GameScreen extends Screen {
 	}
 
 	public void towerClickedOn(FrontEndTower tower) {
+	    	SCREEN_MANAGER.moveTower(tower);
 		TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 		UPGRADE_PANEL = new UpgradePanel(this, tower);
 		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());

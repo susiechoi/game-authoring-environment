@@ -238,6 +238,9 @@ public class Level {
 	}
 
 	public Map<String, Tower> getTowers() {
+		if (myTowers.size() > 1) {
+			myTowers.remove(DEFAULT_OBJ_NAME);
+		}
 		return myTowers;
 	}
 	public Map<String, Tower> getCopiedTowers(){
@@ -295,9 +298,11 @@ public class Level {
 	public void removeWave(Path path) {
 		removeWave();
 	}
+	
 	public void removeWave() {
 		myWaves.remove(0);
 	}
+	
 	public void removeWave(String name) {
 	    myWaves.remove(Integer.parseInt(name)-1);
 	}
@@ -356,11 +361,9 @@ public class Level {
 		return myPaths.get(myPaths.size() - 1).getGridHeight();
 	}
 
-
 	public int getPathSize() {
 		return myPaths.get(myPaths.size()-1).getPathSize();
 	}
-	
 	
 	public String getPathImage() {
 		return myPaths.get(myPaths.size()-1).getPathImage();
