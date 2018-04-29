@@ -62,9 +62,8 @@ public class GamePanel extends Panel{
 
 	//TODO potentially fix needed?
 	Pane gamePane = new Pane();
+	gamePane.setStyle("	-fx-background-color: yellow;");
 	scroll = new ScrollPane(gamePane);
-	scroll.setMaxHeight(Double.MAX_VALUE);
-	scroll.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
@@ -79,8 +78,12 @@ public class GamePanel extends Panel{
 	    return false;
 	}
 	ImageView imageView;
+	
 	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
 	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
+	scroll.setMaxWidth(imageWidth);
+	scroll.setMaxHeight(imageHeight);
+	System.out.println("MW: " + imageWidth + " MH: " + imageHeight);
 	try {
 	    imageView = new ImageView(new Image(backgroundFilePath, imageWidth,imageHeight , false, false));
 	} catch (IllegalArgumentException e){
