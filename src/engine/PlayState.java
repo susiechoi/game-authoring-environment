@@ -270,12 +270,13 @@ public class PlayState implements GameData {
     	return mySettings.getCSSTheme();
     }
     
-    public void handleClick(FrontEndTower activeTower, double clickedX, double clickedY) {
+    public Sprite handleClick(FrontEndTower activeTower, double clickedX, double clickedY) {
 	Tower tower = (Tower) activeTower;
 	if (tower.getProperty("ClickProperty") != null) {
 	    ClickProperty myClickProp = (ClickProperty) tower.getProperty("ClickProperty");
-	    tower.getNewProjectile(clickedX, clickedY);
+	    return (Sprite) tower.getNewProjectile(clickedX, clickedY);
 	}
+	return null;
     }
     
 }

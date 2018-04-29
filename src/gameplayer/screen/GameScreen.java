@@ -44,7 +44,6 @@ public class GameScreen extends Screen {
 	private BorderPane rootPane;
 	private SoundFactory SOUND_FACTORY;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
-	private boolean GAME_WON; //false if lost
 
 	public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 		SCREEN_MANAGER = ScreenController;

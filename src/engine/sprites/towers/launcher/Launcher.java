@@ -162,8 +162,10 @@ public class Launcher extends Manager<Projectile>{
 	return myProjectile.getDamage();
     }
 
-    public void getNewProjectile(double towerX, double towerY, double targetX, double targetY) {
-	this.addToActiveList(new Projectile(myProjectile, towerX, towerY, targetX, targetY));
+    public Projectile getNewProjectile(double towerX, double towerY, double targetX, double targetY) {
+	Projectile newProjectile = new Projectile(myProjectile, towerX, towerY, targetX, targetY);
+	this.addToActiveList(newProjectile);
+	return newProjectile;
     }
 
 }

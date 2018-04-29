@@ -10,6 +10,10 @@ public class ClickToShootProperty extends ClickProperty {
     public ClickToShootProperty(double speed) {
 	super(speed);
     }
+    
+    public ClickToShootProperty(Property p) {
+  	super(p.getProperty());
+      }
 
     @Override
     public void handleClick(Sprite spriteToMove, double destX, double destY) {

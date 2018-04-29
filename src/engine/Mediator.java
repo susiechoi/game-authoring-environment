@@ -140,6 +140,13 @@ public class Mediator implements MVController{
 	//	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
+    
+    public void handleTowerClickToShoot(FrontEndTower tower, double clickedX, double clickedY) {
+	Sprite shotProjectile = myGameEngine.getPlayState().handleClick(tower, clickedX, clickedY);
+	if (shotProjectile != null) {
+	    this.addSpriteToScreen(shotProjectile);
+	}
+    }
 
     /**
      * To be called by the backend any time a projectile or enemy should be added to the screen

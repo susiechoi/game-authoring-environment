@@ -37,6 +37,7 @@ public class GamePanel extends Panel{
     private Boolean towerClick = false;
     private Circle rangeIndicator;
     private ScrollPane scroll;
+    private FrontEndTower clickedTower;
 
     //TODO changes this to be passed from mediator ******************************************************************************
     private final String DEFAULT_BACKGROUND_FILE_PATH;
@@ -153,6 +154,7 @@ public class GamePanel extends Panel{
 	    GAME_SCREEN.towerClickedOn(tower);
 	    addRangeIndicator(tower);
 	    towerClick = true;
+	    clickedTower = tower;
 	});
     }
 
@@ -224,9 +226,13 @@ public class GamePanel extends Panel{
 		//GameScreen popup for cannot afford
 	    }
 	}
+	else if (towerClick && clickedTower != null) {
+	    
+	}
 	else if(!towerClick) {
 	    GAME_SCREEN.blankGamePanelClick();
 	    removeTowerRangeIndicator();
+	    
 	}
 	towerClick = false;
     }
