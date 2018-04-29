@@ -25,7 +25,6 @@ public class Path {
 	private String myPathImage;
 	private String myStartImage;
 	private String myEndImage;
-	private Point myStartAbsoluteCoordinate;
 
 	public Path(List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int col, int row) {
 		myCoordinates = coordinates.get(0);
@@ -39,7 +38,6 @@ public class Path {
 		pathIndex = 0;
 //		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
-		myStartAbsoluteCoordinate = coordinates.get(0).get(0);
 	}
 
 
@@ -49,6 +47,7 @@ public class Path {
      * @return : returns the next point along the path index
      */
     public Point nextPosition(int pathIndex) {
+	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
 	return myCoordinates.get(pathIndex+1);
     }
 
@@ -96,6 +95,7 @@ public class Path {
 		//	    currentPos.setLocation(newX, newY);
 		//	    return currentPos; 
 		//	}
+	    	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
 		return myCoordinates.get(pathIndex+1);
 	}
 
@@ -104,7 +104,6 @@ public class Path {
 	}
 
 	public Map<String, List<Point>> getPathMap() {
-		
 		return myPathMap;
 	}
 

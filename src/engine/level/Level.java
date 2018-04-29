@@ -68,10 +68,12 @@ public class Level {
 		return myNumber;
 	}
 
-	// TODO 
 	public void addPath(Path path) {
-		myPaths.clear();
 		myPaths.add(path); 
+	}
+	
+	public void clearPaths(Path path) {
+	    	//TODO
 	}
 
 	/**
@@ -234,7 +236,13 @@ public class Level {
 	}
 
 	public List<Path> getPaths() {
-		return myPaths; 
+	    	List<Path> pathsWithoutDefault = new ArrayList<>();
+	    	for(Path path: myPaths) {
+	    	    if(!path.equals(myPaths.get(0))){
+	    		pathsWithoutDefault.add(path);
+	    	    }
+	    	}
+		return pathsWithoutDefault; 
 	}
 
 	public Map<String, Tower> getTowers() {
@@ -338,38 +346,38 @@ public class Level {
 		//			}
 		//		}
 		//		return pathMap;
-		if (myPaths.size() > 0) {
-			return myPaths.get(0).getPathMap();
+		if (myPaths.size() > 1) {
+			return myPaths.get(myPaths.size()-1).getPathMap();
 		}
 		return null;
 	}
 
 	public String getBackGroundImage() {
-		return myPaths.get(0).getBackgroundImage();
+		return myPaths.get(myPaths.size()-1).getBackgroundImage();
 	}
 
 	public int getPathSize() {
-		return myPaths.get(0).getPathSize();
+		return myPaths.get(myPaths.size()-1).getPathSize();
 	}
 	
 	public int getColumnCount() {
-		return myPaths.get(0).getColumnCount();
+		return myPaths.get(myPaths.size()-1).getColumnCount();
 	}
 	
 	public int getRowCount() {
-		return myPaths.get(0).getRowCount();
+		return myPaths.get(myPaths.size()-1).getRowCount();
 	}
 	
 	public String getPathImage() {
-		return myPaths.get(0).getPathImage();
+		return myPaths.get(myPaths.size()-1).getPathImage();
 	}
 	
 	public String getStartImage() {
-		return myPaths.get(0).getStartImage();
+		return myPaths.get(myPaths.size()-1).getStartImage();
 	}
 	
 	public String getEndImage() {
-		return myPaths.get(0).getEndImage();
+		return myPaths.get(myPaths.size()-1).getEndImage();
 	}
 
 	/**
@@ -386,25 +394,25 @@ public class Level {
 		if (myTowers.size() > 1) {
 			myTowers.remove(DEFAULT_OBJ_NAME);
 		}
-		updateTowerProperties(); 
-		updateEnemyProperties(); 
+		//updateTowerProperties(); 
+		//updateEnemyProperties(); 
 	}
 
-	private void updateTowerProperties() {
-		Tower tower; 
-		for (String towerName : myTowers.keySet()) {
-			tower = myTowers.get(towerName);
-			tower.updateProperties();
-		}
-	}
+//	private void updateTowerProperties() {
+//		Tower tower; 
+//		for (String towerName : myTowers.keySet()) {
+//			tower = myTowers.get(towerName);
+//			tower.updateProperties();
+//		}
+//	}
 
-	public void updateEnemyProperties() {
-		Enemy enemy; 
-		for (String enemyName : myEnemies.keySet()) {
-			enemy = myEnemies.get(enemyName);
-			enemy.updateProperties();
-		}
-	}
+//	public void updateEnemyProperties() {
+//		Enemy enemy; 
+//		for (String enemyName : myEnemies.keySet()) {
+//			enemy = myEnemies.get(enemyName);
+//			enemy.updateProperties();
+//		}
+//	}
 
 
 }
