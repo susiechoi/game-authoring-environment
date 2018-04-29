@@ -15,11 +15,13 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
@@ -28,7 +30,9 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	public static final String DEFAULT_NOIMAGEFILE_KEY = "NoImageFile";
 	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 	public static final String EMPTY_STRING = "";
-
+	public static final int DEFAULT_POPUP_WIDTH = 600;
+	public static final int DEFAULT_POPUP_HEIGHT = 300; 
+	
 	//	private String myFieldsPropertiesPath; 
 	private String myObjectDescription; 
 	private String mySelectedObjectName; 
@@ -105,9 +109,15 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 				e-> { addPropertyButton.setDisable(true);  }, 
 				propertySelectionPrompt);
 		addPropertyButton.setOnAction(e -> {
-			getView().getStageManager().switchScreen(
-					new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName, this)
-					.getScreen());
+//			getView().getStageManager().switchScreen(
+//					new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName, this)
+//					.getScreen());
+			Stage propertyPopup = new Stage();
+			Parent propScreenRoot = new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName, propertyPopup).getScreen(); 
+			propertyPopup.setScene(new Scene(propScreenRoot));
+			propertyPopup.show();
+			propertyPopup.setHeight(DEFAULT_POPUP_HEIGHT);
+			propertyPopup.setWidth(DEFAULT_POPUP_WIDTH);
 		});
 
 		hb.getChildren().addAll(availableProperties, addPropertyButton);

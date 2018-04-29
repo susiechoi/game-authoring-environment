@@ -8,11 +8,13 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import frontend.Screen;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 //import jdk.internal.jimage.ImageReader.Node;
+import javafx.stage.Stage;
 
 public class PropertyScreen extends AuthoringScreen {
 
@@ -25,20 +27,21 @@ public class PropertyScreen extends AuthoringScreen {
 	public static final String DEFAULT_SLIDER_KEYWORD = "Slider";
 	public static final String DEFAULT_TOGGLE_KEYWORD = "ToggleButton";
 	public static final String DEFAULT_APPLY_PROMPT_KEY = "Apply";
+	public static final String DEFAULT_NOOBJECT_ERROR_KEY = "NoObject";
 
 	private String myPropertiesFilepath; 
 	private String myPropertyName;
 	private String myObjectType;
 	private String myObjectName;
-	private Screen myReturnToScreen;
+	private Stage myStage;
 
-	public PropertyScreen(AuthoringView view, String propertyName, String objectType, String objectName, Screen returnToScreen) {
+	public PropertyScreen(AuthoringView view, String propertyName, String objectType, String objectName, Stage stage) {
 		super(view);
 		myPropertiesFilepath = DEFAULT_PROPERTIES_FILES_PREFIX+objectType+DEFAULT_FILEPATH_SEPARATOR+propertyName+DEFAULT_PROPERTIES_FILES_SUFFIX; 
 		myPropertyName = propertyName;
 		myObjectType = objectType;
 		myObjectName = objectName;
-		myReturnToScreen = returnToScreen;
+		myStage = stage;
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class PropertyScreen extends AuthoringScreen {
 			try {
 				getUIFactory().setSliderToValue(aSlider, getView().getPropertiesReader().findVal(myPropertiesFilepath, key));
 			} catch (MissingPropertiesException e1) {
-				getView().loadErrorScreen("NoObject");
+				getView().loadErrorScreen(DEFAULT_NOOBJECT_ERROR_KEY);
 			}
 			HBox sliderWithPrompt = getUIFactory().setupSliderWithValue(aSlider, getView().getErrorCheckedPrompt(key));
 			vb.getChildren().add(sliderWithPrompt);
@@ -71,7 +74,7 @@ public class PropertyScreen extends AuthoringScreen {
 		Button applyButton = getUIFactory().makeTextButton(getView().getErrorCheckedPrompt(DEFAULT_APPLY_PROMPT_KEY));
 		applyButton.setOnAction(e -> {
 			applyPropertyScreen(myPropertyName, myObjectType, myObjectName, allSliders);
-			getView().getStageManager().switchScreen(myReturnToScreen.getScreen());
+			myStage.close();
 		});
 		vb.getChildren().add(applyButton);
 		return vb;
