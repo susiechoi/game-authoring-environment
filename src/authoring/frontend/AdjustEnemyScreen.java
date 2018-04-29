@@ -16,11 +16,11 @@ import javafx.scene.layout.VBox;
 
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
-	public static final String OBJECT_TYPE = "Enemy";
-	public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
-	public static final String ENEMY_IMAGE_PREFIX = "images/ThemeSpecificImages/EnemyImages/";
-	public static final String ENEMY_IMAGE_SUFFIX = "EnemyImageNames.properties";
-	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
+    public static final String OBJECT_TYPE = "Enemy";
+    public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
+    public static final String ENEMY_IMAGE_PREFIX = "images/ThemeSpecificImages/EnemyImages/";
+    public static final String ENEMY_IMAGE_SUFFIX = "EnemyImageNames.properties";
+    public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
     private String myObjectName; 
     private TextField myNameField; 
@@ -52,10 +52,10 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	vb.getChildren().add(enemySpeed);
 	mySpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    mySpeed = newValue;
-	    
+
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "mySpeed", newValue);
 	});
-	
+
 	Slider enemyInitialHealthSlider = getUIFactory().setupSlider(getMyMaxHealthImpact()); 
 	myInitialHealthSlider = enemyInitialHealthSlider; 
 	HBox initialHealth = getUIFactory().setupSliderWithValue(enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 
@@ -87,12 +87,18 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
-	    setProperty("ValueProperty", myKillReward);
-	    setProperty("DamageProperty", 0.0, 0.0, myHealthImpact);
-	    setProperty("HealthProperty", 0.0, 0.0, myInitialHealth);
-	    setProperty("SpeedProperty", 0.0, 0.0, mySpeed);
-//	    System.out.println("my speed: " + mySpeed);
-	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);			
+	    try {
+		setProperty("ValueProperty", myKillReward);
+		setProperty("DamageProperty", 0.0, 0.0, myHealthImpact);
+		setProperty("HealthProperty", 0.0, 0.0, myInitialHealth);
+		setProperty("SpeedProperty", 0.0, 0.0, mySpeed);
+		//	    System.out.println("my speed: " + mySpeed);
+		setSaved();
+		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);			
+	    }
+	    catch(NullPointerException e1) {
+		getView().loadErrorAlert("NoSelection");
+	    }
 	});
 
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);

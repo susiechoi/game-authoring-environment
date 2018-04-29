@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * @author sarahbland
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
@@ -8,17 +9,11 @@
 
 package authoring.frontend;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import authoring.factory.AttributeFinder;
 import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
-import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -45,7 +40,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
     protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 	super(view);
 	setConstants();
-	setSaved();
 	System.out.println("HERRE: " +selectedObjectName);
 	myFieldsPropertiesPath = fieldsPropertiesPath; 
 	myObjectDescription = objectDescription; 
@@ -56,7 +50,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
     protected AdjustNewOrExistingScreen(AuthoringView view) {
 	super(view);
 	setConstants();
-	setSaved();
     }
 
     private void setConstants() {
