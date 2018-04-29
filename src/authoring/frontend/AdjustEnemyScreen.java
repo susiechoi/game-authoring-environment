@@ -1,5 +1,6 @@
 /**
  * @author susiechoi
+ * @author Katherine Van Dyk
  * Abstract class for developing the fields for customizing (new or existing) enemy object
  */
 
@@ -14,11 +15,11 @@ import javafx.scene.layout.VBox;
 
 class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
-	public static final String OBJECT_TYPE = "Enemy";
-	public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
-	public static final String ENEMY_IMAGE_PREFIX = "images/ThemeSpecificImages/EnemyImages/";
-	public static final String ENEMY_IMAGE_SUFFIX = "EnemyImageNames.properties";
-	public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
+    public static final String OBJECT_TYPE = "Enemy";
+    public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
+    public static final String ENEMY_IMAGE_PREFIX = "images/ThemeSpecificImages/EnemyImages/";
+    public static final String ENEMY_IMAGE_SUFFIX = "EnemyImageNames.properties";
+    public static final String ENEMY_FIELDS = "default_objects/EnemyFields.properties";
 
     private String myObjectName; 
     private TextField myNameField; 
@@ -52,7 +53,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	    mySpeed = (Double) newValue;
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "mySpeed", newValue);
 	});
-	
+
 	Slider enemyInitialHealthSlider = getUIFactory().setupSlider(getMyMaxHealthImpact()); 
 	myInitialHealthSlider = enemyInitialHealthSlider; 
 	HBox initialHealth = getUIFactory().setupSliderWithValue(enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 
@@ -84,12 +85,18 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
-	    setProperty(OBJECT_TYPE, myObjectName, "ValueProperty", myKillReward);
-	    setProperty(OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myHealthImpact);
-	    setProperty(OBJECT_TYPE, myObjectName,"HealthProperty", 0.0, 0.0, myInitialHealth);
-	    setProperty(OBJECT_TYPE, myObjectName, "SpeedProperty", 0.0, 0.0, mySpeed);
-//	    System.out.println("my speed: " + mySpeed);
-	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);			
+	    try {
+		setProperty(OBJECT_TYPE, myObjectName, "ValueProperty", myKillReward);
+		setProperty(OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myHealthImpact);
+		setProperty(OBJECT_TYPE, myObjectName, "HealthProperty", 0.0, 0.0, myInitialHealth);
+		setProperty(OBJECT_TYPE, myObjectName, "SpeedProperty", 0.0, 0.0, mySpeed);
+		setSaved();
+		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);			
+	    }
+	    catch(NullPointerException e1) {
+		getView().loadErrorAlert("NoSelection");
+	    }
+
 	});
 	
 	vb.getChildren().add(makePropertySelector());
@@ -103,6 +110,4 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
     protected TextField getNameField() {
 	return myNameField; 
     }
-
-
 }

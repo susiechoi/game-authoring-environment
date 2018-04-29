@@ -22,6 +22,11 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 
 
 public class GamePanel extends Panel{
@@ -37,6 +42,7 @@ public class GamePanel extends Panel{
     private Boolean towerClick = false;
     private Circle rangeIndicator;
     private ScrollPane scroll;
+    private GridPane grid;
 
     //TODO changes this to be passed from mediator ******************************************************************************
     private final String DEFAULT_BACKGROUND_FILE_PATH;
@@ -63,8 +69,6 @@ public class GamePanel extends Panel{
 	//TODO potentially fix needed?
 	Pane gamePane = new Pane();
 	scroll = new ScrollPane(gamePane);
-	scroll.setMaxHeight(Double.MAX_VALUE);
-	scroll.setMaxWidth(Double.MAX_VALUE);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 
 	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
@@ -79,8 +83,11 @@ public class GamePanel extends Panel{
 	    return false;
 	}
 	ImageView imageView;
+	
 	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
 	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
+	spriteAdd.setMaxHeight(imageHeight);
+	spriteAdd.setMaxWidth(imageWidth);
 	try {
 	    imageView = new ImageView(new Image(backgroundFilePath, imageWidth,imageHeight , false, false));
 	} catch (IllegalArgumentException e){
@@ -96,13 +103,17 @@ public class GamePanel extends Panel{
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
 	if(!pathSet) {
 	    PathMaker pathMaker = new PathMaker();
-	    GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
 	    spriteAdd.getChildren().add(grid);
 	    pathSet = true;
+	}
+	if(pathSet) {
+	    spriteAdd.getChildren().remove(grid);
+	    spriteAdd.getChildren().add(grid);
 	}
 	return backgroundSet;
     }
@@ -122,7 +133,6 @@ public class GamePanel extends Panel{
      * @param tower will be null if tower placement is canceled
      */
     public void towerSelected(FrontEndTower tower) {
-
 	if(tower!= null && tower != towerSelected ) { //TODO (thread canceling towerPlacement)
 	    towerSelected = tower;
 	    ImageView towerImage = tower.getImageView();
@@ -211,8 +221,6 @@ public class GamePanel extends Panel{
 		Point position = new Point((int)x,(int)y);
 		FrontEndTower newTower = GAME_SCREEN.placeTower(towerSelected, position);
 		ImageView towerImage = newTower.getImageView();
-		Image towerImageActual = towerImage.getImage();
-
 		addTowerImageViewAction(newTower);
 		spriteAdd.getChildren().add(towerImage);
 		resetCursor();
@@ -225,9 +233,9 @@ public class GamePanel extends Panel{
 	    }
 	}
 	else if(!towerClick) {
-	    GAME_SCREEN.blankGamePanelClick();
 	    removeTowerRangeIndicator();
 	}
+	GAME_SCREEN.blankGamePanelClick();
 	towerClick = false;
     }
 

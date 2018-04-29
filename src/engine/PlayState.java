@@ -22,6 +22,7 @@ import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.input.KeyCode;
 
 
 /**
@@ -103,11 +104,7 @@ public class PlayState implements GameData {
 	activeTowers.removeAll(toBeRemoved);
 	myEnemyManager.removeFromMap(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
-	//toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
-	//myTowerManager.moveProjectiles(elapsedTime);
-	//toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
-	myTowerManager.moveTowers();
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
@@ -132,8 +129,6 @@ public class PlayState implements GameData {
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
-		    //newEnemy.updateImage();
-		    //enemy.move(path.initialPoint(),elapsedTime);
 		    myEnemyManager.addEnemy(currentPath, newEnemy);
 		    myEnemyManager.addToActiveList(newEnemy);
 		    myMediator.addSpriteToScreen(newEnemy);
@@ -266,5 +261,9 @@ public class PlayState implements GameData {
     
     public String getStyling() throws MissingPropertiesException {
     	return mySettings.getCSSTheme();
+    }
+
+    public void moveTowers(FrontEndTower tower, KeyCode c) {
+	myTowerManager.moveTowers(tower, c);
     }
 }

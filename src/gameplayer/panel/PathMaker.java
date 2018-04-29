@@ -3,13 +3,17 @@ package gameplayer.panel;
 import java.awt.Point;
 import java.util.List;
 import java.util.Map;
-
 import com.sun.javafx.tools.packager.Log;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+
+
+/**
+ * @Author Andrew Arnold & Erik Riis
+ */
 
 public class PathMaker {
 
@@ -19,9 +23,9 @@ public class PathMaker {
 
     public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
 	grid = new GridPane();
+
 	grid.setMaxSize(width, height);
 	grid.setMinSize(width, height);
-	//grid.setGridLinesVisible(true);
 
 	myPathSize = pathSize;
 	setGridConstraints(grid, width, height);
@@ -63,12 +67,11 @@ public class PathMaker {
 	    colConst.setPrefWidth(myPathSize);
 	    grid.getColumnConstraints().add(colConst);
 	}
+
 	for (int i = 0; i < height/myPathSize; i++) {
 	    RowConstraints rowConst = new RowConstraints();
 	    rowConst.setPrefHeight(myPathSize);
 	    grid.getRowConstraints().add(rowConst);         
 	}
     }
-
-
 }

@@ -11,7 +11,7 @@ import xml.XMLFactory;
  * This class will handle all of the gameLoop interactions, and will also hold the 
  * current instance of the PlayState
  * @author ryanpond
- *
+ * 
  */
 public class GameEngine {
 
@@ -23,6 +23,7 @@ public class GameEngine {
 	private Mediator myMediator;
 	private Timeline ANIMATION;
 	private double timeFactor;
+	private boolean gameTriggered = false;
 
 	public GameEngine(Mediator mediator) {
 		myPlayState = null;
@@ -71,7 +72,8 @@ public class GameEngine {
 	 * Starts Game Loop animation, so Game State continuously loops
 	 */
 	public void start() {
-		ANIMATION.play();
+	    ANIMATION.play();
+
 	}
 
 	/**
@@ -120,5 +122,11 @@ public class GameEngine {
 			ANIMATION.stop();
 		}
 	}
+
+
+	public void triggerGame() {
+		gameTriggered = true;
+	}
+
 
 }

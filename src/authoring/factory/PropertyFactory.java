@@ -31,6 +31,7 @@ public class PropertyFactory {
 	public static final String DEFAULT_PROPERTIES_FILES_PATH = "default_objects/Properties/properties.properties";
 	private Map<String, Property> currentProperties;
     public static final String PACKAGE = "engine.sprites.properties.";
+
     
     public PropertyFactory() {
 	currentProperties = new HashMap<String, Property>();

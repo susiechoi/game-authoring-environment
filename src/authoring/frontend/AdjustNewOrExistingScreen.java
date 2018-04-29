@@ -1,5 +1,8 @@
 /**
  * @author susiechoi
+ * @author Katherine Van Dyk
+ * @author sarahbland
+ * 
  * Abstract class of screens that have both "new" and "existing" object edit options 
  * (e.g. AdjustTowerScreen extends AdjustNewOrExistingScreen because a designer can edit 
  * a new or existing Tower) 
@@ -108,6 +111,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 				e-> { addPropertyButton.setDisable(false); }, 
 				e-> { addPropertyButton.setDisable(true);  }, 
 				propertySelectionPrompt);
+		addPropertyButton.setDisable(true);
 		addPropertyButton.setOnAction(e -> {
 //			getView().getStageManager().switchScreen(
 //					new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName, this)
@@ -246,4 +250,5 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return list;
 	}
 
+   
 }

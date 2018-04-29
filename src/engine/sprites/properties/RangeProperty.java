@@ -18,8 +18,8 @@ public class RangeProperty extends Property {
      * @param value
      * @param range
      */
-    public RangeProperty(double cost) {
-	super(cost);
+    public RangeProperty(double range) {
+	super(range);
     }
 
     public RangeProperty(Property p) {
