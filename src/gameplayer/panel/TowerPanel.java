@@ -85,6 +85,7 @@ public class TowerPanel extends ListenerPanel {
 
 
 	VBox currencyAndSwap = new VBox(currencyDisplay);
+	currencyAndSwap.setId(GAMEPLAYER_PROPERTIES.get("currencyAndSwapID"));
 	currencyAndSwap.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 
 	currencyAndSwap.setAlignment(Pos.CENTER);
