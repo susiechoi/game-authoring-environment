@@ -5,8 +5,6 @@
 
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -30,10 +28,10 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
     private Slider myTowerValueSlider;
     
     private String myObjectName; 
-    private Object myHealthUpgradeValue;
-    private Object myHealthUpgradeCost;
-    private Object myHealthValue;
-    private Object myTowerValue;
+    private Double myHealthUpgradeValue;
+    private Double myHealthUpgradeCost;
+    private Double myHealthValue;
+    private Double myTowerValue;
 
 
     protected AdjustTowerScreen(AuthoringView view, String selectedObjectName) {
@@ -57,10 +55,11 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	Button goToProjectileLauncherButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 	vb.getChildren().add(goToProjectileLauncherButton);
 	goToProjectileLauncherButton.setOnAction(e -> {
-	    setProperty("HealthProperty", myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
-	    setProperty("ValueProperty", myTowerValue);
+	    setProperty(OBJECT_TYPE, myObjectName, "HealthProperty", myHealthUpgradeCost, myHealthUpgradeValue, myHealthValue);
+	    setProperty(OBJECT_TYPE, myObjectName, "ValueProperty", myTowerValue);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLY_SCREENFLOW_KEY, myObjectName);
 	});
+	vb.getChildren().add(makePropertySelector());
 	Button backButton = setupBackButton(); 
 	vb.getChildren().add(backButton);
 	return vb;
@@ -76,7 +75,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerValue = getUIFactory().setupSliderWithValue(myTowerValueSlider, getErrorCheckedPrompt("TowerValue"));
 	vb.getChildren().add(towerValue);
 	myTowerValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myTowerValue = newValue;
+	    myTowerValue = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myTowerValue", newValue);
 	});
 
@@ -87,7 +86,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerHealthValue = getUIFactory().setupSliderWithValue(myTowerHealthValueSlider, getErrorCheckedPrompt("TowerHealthValue"));
 	vb.getChildren().add(towerHealthValue);
 	myTowerHealthValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthValue = newValue;
+	    myHealthValue = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthValue", newValue);
 	});
 
@@ -95,7 +94,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerHealthUpgradeCost = getUIFactory().setupSliderWithValue(myTowerHealthUpgradeCostSlider, getErrorCheckedPrompt("TowerHealthUpgradeCost"));
 	vb.getChildren().add(towerHealthUpgradeCost);
 	myTowerHealthUpgradeCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthUpgradeCost = newValue;
+	    myHealthUpgradeCost = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthUpgradeCost", newValue);
 	});
 
@@ -103,21 +102,9 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	HBox towerHealthUpgradeValue = getUIFactory().setupSliderWithValue( myTowerHealthUpgradeValueSlider, getErrorCheckedPrompt("TowerHealthUpgradeValue"));
 	vb.getChildren().add(towerHealthUpgradeValue);
 	myTowerHealthUpgradeValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthUpgradeValue = newValue;
+	    myHealthUpgradeValue = (Double) newValue;
 	    //    getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthUpgradeValue", newValue);
 	});
     }
 
-    private void setProperty(String propertyName, Object ...args) {
-	List<Object> attributes = makeList(args);
-	getView().setObjectAttributes(OBJECT_TYPE, myObjectName, propertyName, attributes);
-    }
-
-    private List<Object> makeList(Object ...attributes) {
-	List<Object> list = new ArrayList<Object>();
-	for(Object attribute : attributes) {
-	    list.add(attribute);
-	}
-	return list;
-    }
 }

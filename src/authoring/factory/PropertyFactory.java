@@ -29,13 +29,13 @@ public class PropertyFactory {
     
     private Map<String, Property> currentProperties;
     protected ResourceBundle PROPERTIES = ResourceBundle.getBundle("authoring/resources/properties");
-    private final String PACKAGE = "engine.sprites.properties.";
+    public static final String PACKAGE = "engine.sprites.properties.";
     
     public PropertyFactory() {
 	currentProperties = new HashMap<String, Property>();
     }
     
-    public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
+    public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException {
 	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
 		Enemy enemy = currentLevel.getEnemy(objectName);
@@ -62,7 +62,7 @@ public class PropertyFactory {
 	}
     }
     
-    private Property getProperty(String objectName, String propertyName, List<Object> attributes) {
+    private Property getProperty(String objectName, String propertyName, List<Double> attributes) {
 	Property ret;
 	String className = PACKAGE + propertyName;
 	String type = null;
@@ -87,18 +87,16 @@ public class PropertyFactory {
 	return ret;
     }
     
-    private Property createUpgradeProperty(String className, String type, List<Object> attributes) {
+    private Property createUpgradeProperty(String className, String type, List<Double> attributes) {
 	double cost = ((Double)attributes.get(0)).doubleValue();
 	double value =  ((Double)attributes.get(1)).doubleValue();
 	double property = ((Double)attributes.get(2)).doubleValue();
-	Reflection reflection = new Reflection();
-	System.out.println("Class name: " + className + " property: " + property);
-	return (UpgradeProperty) reflection.createInstance(className, cost, value, property );
+//	System.out.println("Class name: " + className + " property: " + property);
+	return (UpgradeProperty) Reflection.createInstance(className, cost, value, property );
     }
 
     private Property createProperty(String className, String type, Object attribute) {
-	Reflection reflection = new Reflection();
-	return (Property) reflection.createInstance(className, (double) attribute);
+	return (Property) Reflection.createInstance(className, (double) attribute);
     }
     
     public List<Object> retrieveProperty(String objectName, String propertyName) {

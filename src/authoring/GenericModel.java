@@ -17,8 +17,6 @@ import engine.builders.TowerBuilder;
 import engine.level.Level;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
-import engine.sprites.properties.ConstantSpeedProperty;
-import engine.sprites.properties.DamageProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
@@ -34,13 +32,13 @@ public class GenericModel {
 
 	public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
 
-	private String DEFAULT_ENEMY_IMAGES;
-	private String DEFAULT_ENEMY_IMAGE;
-	private String DEFAULT_TOWER_IMAGES;
-	private String DEFAULT_IMAGES_SUFFIX;
-	private String DEFAULT_PROJECTILE_IMAGES;
-	private String DEFAULT_TOWER_IMAGE;
-	private String DEFAULT_PROJECTILE_IMAGE;
+//	private String DEFAULT_ENEMY_IMAGES;
+//	private String DEFAULT_ENEMY_IMAGE;
+//	private String DEFAULT_TOWER_IMAGES;
+//	private String DEFAULT_IMAGES_SUFFIX;
+//	private String DEFAULT_PROJECTILE_IMAGES;
+//	private String DEFAULT_TOWER_IMAGE;
+//	private String DEFAULT_PROJECTILE_IMAGE;
 	private String DEFAULT_TOWER_FILEPATH;
 	private String DEFAULT_ENEMY_FILEPATH;
 	private String DEFAULT_PATH_START;
@@ -209,13 +207,13 @@ public class GenericModel {
 	private void populateInstanceVariables() throws MissingPropertiesException {
 		myPropertiesReader = new PropertiesReader();
 		myPropertiesReader = new PropertiesReader();
-		DEFAULT_ENEMY_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "EnemyImages");
-		DEFAULT_ENEMY_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Enemy");
-		DEFAULT_TOWER_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "TowerImages");
-		DEFAULT_IMAGES_SUFFIX =  myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ImageSuffix");
-		DEFAULT_PROJECTILE_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ProjectileImages");
-		DEFAULT_TOWER_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Tower");
-		DEFAULT_PROJECTILE_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Projectile");
+//		DEFAULT_ENEMY_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "EnemyImages");
+//		DEFAULT_ENEMY_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Enemy");
+//		DEFAULT_TOWER_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "TowerImages");
+//		DEFAULT_IMAGES_SUFFIX =  myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ImageSuffix");
+//		DEFAULT_PROJECTILE_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ProjectileImages");
+//		DEFAULT_TOWER_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Tower");
+//		DEFAULT_PROJECTILE_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Projectile");
 		DEFAULT_TOWER_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "TowerFiles");
 		DEFAULT_ENEMY_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "EnemyFiles");
 		DEFAULT_PATH_START = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "PathStart");

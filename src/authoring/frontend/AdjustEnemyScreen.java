@@ -4,8 +4,6 @@
  */
 
 package authoring.frontend;
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -29,10 +27,10 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
     private Slider myHealthImpactSlider; 
     private Slider myValueSlider; 
 
-    private Object mySpeed;
-    private Object myInitialHealth;
-    private Object myHealthImpact;
-    private Object myKillReward;
+    private Double mySpeed;
+    private Double myInitialHealth;
+    private Double myHealthImpact;
+    private Double myKillReward;
 
     protected AdjustEnemyScreen(AuthoringView view, String selectedObjectName) {
 	super(view, selectedObjectName, ENEMY_FIELDS, OBJECT_TYPE);
@@ -51,7 +49,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox enemySpeed = getUIFactory().setupSliderWithValue(enemySpeedSlider, getErrorCheckedPrompt("EnemySpeed"));
 	vb.getChildren().add(enemySpeed);
 	mySpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    mySpeed = newValue;
+	    mySpeed = (Double) newValue;
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "mySpeed", newValue);
 	});
 	
@@ -60,7 +58,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox initialHealth = getUIFactory().setupSliderWithValue(enemyInitialHealthSlider, getErrorCheckedPrompt("EnemyInitialHealth")); 
 	vb.getChildren().add(initialHealth);
 	myInitialHealthSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myInitialHealth = newValue;
+	    myInitialHealth = (Double) newValue;
 	    //getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myInitialHealth", newValue);
 	});
 
@@ -69,7 +67,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox enemyImpact = getUIFactory().setupSliderWithValue(enemyHealthImpactSlider, getErrorCheckedPrompt("EnemyHealthImpact")); 
 	vb.getChildren().add(enemyImpact);
 	myHealthImpactSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myHealthImpact = newValue;
+	    myHealthImpact = (Double) newValue;
 	    //getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myHealthImpact", newValue);
 	});
 
@@ -78,7 +76,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	HBox enemyValue = getUIFactory().setupSliderWithValue(enemyValueSlider, getErrorCheckedPrompt("EnemyValue"));
 	vb.getChildren().add(enemyValue);
 	myValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myKillReward = newValue;
+	    myKillReward = (Double) newValue;
 	    //getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myKillReward", newValue);
 	});
 
@@ -86,14 +84,16 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
-	    setProperty("ValueProperty", myKillReward);
-	    setProperty("DamageProperty", 0.0, 0.0, myHealthImpact);
-	    setProperty("HealthProperty", 0.0, 0.0, myInitialHealth);
-	    setProperty("SpeedProperty", 0.0, 0.0, mySpeed);
+	    setProperty(OBJECT_TYPE, myObjectName, "ValueProperty", myKillReward);
+	    setProperty(OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myHealthImpact);
+	    setProperty(OBJECT_TYPE, myObjectName,"HealthProperty", 0.0, 0.0, myInitialHealth);
+	    setProperty(OBJECT_TYPE, myObjectName, "SpeedProperty", 0.0, 0.0, mySpeed);
 //	    System.out.println("my speed: " + mySpeed);
 	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);			
 	});
-
+	
+	vb.getChildren().add(makePropertySelector());
+	
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 	vb.getChildren().add(backAndApplyButton);
 
@@ -102,19 +102,6 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 
     protected TextField getNameField() {
 	return myNameField; 
-    }
-
-    private void setProperty(String propertyName, Object ...args) {
-	List<Object> attributes = makeList(args);
-	getView().setObjectAttributes(OBJECT_TYPE, myObjectName, propertyName, attributes);
-    }
-
-    private List<Object> makeList(Object ...attributes) {
-	List<Object> list = new ArrayList<Object>();
-	for(Object attribute : attributes) {
-	    list.add(attribute);
-	}
-	return list;
     }
 
 
