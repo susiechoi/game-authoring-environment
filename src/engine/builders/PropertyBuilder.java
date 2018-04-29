@@ -49,6 +49,4 @@ public class PropertyBuilder {
     private ResourceBundle bundle() {
 	return ResourceBundle.getBundle("authoring/resources/properties");
     }
-
-
 }

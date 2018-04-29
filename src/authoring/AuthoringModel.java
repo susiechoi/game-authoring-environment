@@ -36,7 +36,6 @@ import frontend.PropertiesReader;
 
 public class AuthoringModel {
 
-
     private final GenericModel myGeneric = new GenericModel();
     private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
@@ -340,14 +339,4 @@ public class AuthoringModel {
     public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 	attributeFactory.setObjectAttribute(level, objectType, name, attribute, attributeValue, myGame);
     }
-
-    public void updateAllProperties() throws ObjectNotFoundException {
-	Level level;
-	for (String levelNumber : getLevels()) {
-	    Integer numLevel = Integer.parseInt(levelNumber);
-	    level = getLevel(numLevel);
-	    level.updateAllProperties(); 
-	}
-    }
-
 }

@@ -284,15 +284,16 @@ public class AuthoringController implements MVController{
     }
 
     public void writeToFile() throws ObjectNotFoundException {
-	myModel.updateAllProperties(); 
 	AuthoringModelWriter writer = new AuthoringModelWriter();
 	writer.write(myModel.getGame(), myModel.getGameName());
     }
+    
     @Override
     public void playControllerDemo(StageManager manager, String language) {
 	new PlayController(manager, language,
 		myModel).demoPlay(myModel.getGame());
     }
+    
     public void deleteObject(int level, String objectType, String objectName) {
 	try {
 	    myModel.deleteObject(level, objectType, objectName);
