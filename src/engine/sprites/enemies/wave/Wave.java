@@ -100,8 +100,6 @@ public class Wave {
 	}
     }
 
-
-
     /**
      * Decrements the number of a specified enemy remaining in the wave
      * 

@@ -36,7 +36,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param health: Initial health of the tower
      * @param value: Value of the tower for selling
      */
-    @SuppressWarnings("unchecked")
     public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher, properties);
 	mySize = size;

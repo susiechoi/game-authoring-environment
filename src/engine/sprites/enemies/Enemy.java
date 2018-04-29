@@ -1,20 +1,14 @@
 package engine.sprites.enemies;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 
-import engine.physics.ImageIntersecter;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.properties.CollisionProperty;
-import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.towers.launcher.Launcher;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 
 /**
  * This is used for the Enemy object in the game. It will use composition to implement
@@ -27,61 +21,34 @@ import javafx.scene.image.ImageView;
  */
 public class Enemy extends ShootingSprites implements FrontEndSprite{
 
-    private ImageIntersecter myIntersecter;
     private double mySize;
     private int pathIndex;
     private double pathAngle;
     private Point targetPosition;
-    private double myInitialHealth;
-    private double myHealthImpact;
-    private double mySpeed;
-    private double myKillReward;
     private boolean freeze;
 
     public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher, properties);
-	myIntersecter = new ImageIntersecter(this); 
 	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
-	myInitialHealth = getValue("HealthProperty");
-	myHealthImpact = getValue("DamageProperty");
-	mySpeed = getValue("SpeedProperty");
-	myKillReward = getValue("ValueProperty");
-	System.out.println(getValue("HealthProperty"));
-	System.out.println(getProperty("HealthProperty").getName() + " is  the health prop");
     }
 
-//    /**
-//     * Copy constructor
-//     */
-//    public Enemy(Enemy copiedEnemy) {
-//	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
-//	myIntersecter = copiedEnemy.getIntersecter(); 
-//    }
-    
     /**
      * Copy constructor
      */
     public Enemy(Enemy copiedEnemy) {
 	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
-	myIntersecter = new ImageIntersecter(this); 
 	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
-	myInitialHealth = getValue("HealthProperty");
-	myHealthImpact = getValue("DamageProperty");
-	mySpeed = getValue("SpeedProperty");
-	myKillReward = getValue("ValueProperty");
     }
-
 
     /**
      * Sets the initial spawning point of the enemy
      * @param initialPoint
      */
     public void setInitialPoint(Point initialPoint) {
-	System.out.println("INITIAL POINT: " +initialPoint);
 	targetPosition = initialPoint;
 	this.getImageView().setX(initialPoint.getX());
 	this.getImageView().setY(initialPoint.getY());
@@ -119,7 +86,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public Point currentPosition() {
 	Point position = new Point();
 	position.setLocation(this.getImageView().getX(), this.getImageView().getY());
-//	position.setLocation(120, 30);
 	return position;
     }
 
@@ -136,7 +102,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     }
 
     public int getMoney() {
-	// TODO Auto-generated method stub
 	return 0;
     }
 
@@ -158,10 +123,6 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	CollisionProperty myCollisionProperty = (CollisionProperty) collider.getPropertySuperclassType("CollisionProperty");
 	myCollisionProperty.collidesWith(this);
 	return this.isAlive();
-    }
-
-    private ImageIntersecter getIntersecter() {
-	return myIntersecter; 
     }
 
     @Override
