@@ -1,13 +1,12 @@
 /**
  * @author susiechoi
+ * @author Katherine Van Dyk
  * Abstract class for developing the fields for customizing 
  * (new or existing, depending on whether corresponding tower is new or existing) launcher/projectile object
  */
 
 package authoring.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -15,13 +14,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {	
-	public static final String OBJECT_TYPE = "Tower";
-	public static final String PROJECTILE_OBJECT_TYPE = "Projectile";
-	public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
-	public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
-	public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
-	public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
-	public static final String DEFAULT_BACKBUTTON_SCREENFLOW = "Back";
+    public static final String OBJECT_TYPE = "Tower";
+    public static final String PROJECTILE_OBJECT_TYPE = "Projectile";
+    public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
+    public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
+    public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
+    public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
+    public static final String DEFAULT_BACKBUTTON_SCREENFLOW = "Back";
 
     private String myObjectName; 
     private Slider myProjectileDamageSlider;
@@ -53,17 +52,17 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    try {
-	    setProperty(PROJECTILE_OBJECT_TYPE, "DamageProperty", 0.0, 0.0, myProjectileDamage);
-	    setProperty(PROJECTILE_OBJECT_TYPE, "ConstantSpeedProperty", myProjectileSpeed);
-	    setProperty(PROJECTILE_OBJECT_TYPE, "RangeProperty", myLauncherRange);
-	    setProperty(PROJECTILE_OBJECT_TYPE, "FireRateProperty", 0.0, 0.0, myLauncherRate);
-	    setSaved();
-	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
+		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myProjectileDamage);
+		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
+		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
+		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
+		setSaved();
+		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
 	    }
 	    catch(NullPointerException e1) {
 		getView().loadErrorAlert("NoSelection");
 	    }
-	    });
+	});
 	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 	vb.getChildren().add(backAndApplyButton);
 	return vb;
@@ -72,7 +71,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private void makeProjectileComponents(VBox vb) {
 	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	vb.getChildren().add(projectileImageSelect);
-	
+
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
 	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 	vb.getChildren().add(projectileDamage);
@@ -109,18 +108,4 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myLauncherRange", newValue);
 	});
     }
-
-    private void setProperty(String objectType, String propertyName, Object ...args) {
-	List<Object> attributes = makeList(args);
-	getView().setObjectAttributes(objectType, myObjectName, propertyName, attributes);
-    }
-
-    private List<Object> makeList(Object ...attributes) {
-	List<Object> list = new ArrayList<>();
-	for(Object attribute : attributes) {
-	    list.add(attribute);
-	}
-	return list;
-    }
-
 }

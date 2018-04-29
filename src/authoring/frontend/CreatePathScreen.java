@@ -3,23 +3,27 @@ package authoring.frontend;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 //import jdk.internal.jline.internal.Log;
+import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -34,9 +38,15 @@ public class CreatePathScreen extends PathScreen {
     private HBox pathHBox;
     private HBox startHBox;
     private HBox endHBox;
+    private AuthoringView myView;
+    private Button myPlusButton;
+    private Button myMinusButton;
+    private Button mySizeApplyButton;
+    private Stage myDialogStage;
 
     public CreatePathScreen(AuthoringView view) {
 	super(view);
+	myView = view;
 
     }
     @Override
@@ -54,10 +64,7 @@ public class CreatePathScreen extends PathScreen {
 		setSaved();
 		List<Point> startCoords = grid.getStartingPosition(grid.getCheckGrid());
 		if (startCoords.size() == 0) {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    alert.setTitle("Path Cutomization Error");
-		    alert.setContentText("Your path has no starting blocks");
-		    alert.showAndWait();
+		    getView().loadErrorAlert("PathNoStart");
 		}
 		for (Point point: startCoords) {
 		    gridCheck = false;
@@ -89,14 +96,11 @@ public class CreatePathScreen extends PathScreen {
 			getView().getObjectAttribute("Path", "", "myEndImage");
 			getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 		    } catch (ObjectNotFoundException e1) {
-//			Log.debug(e1);
+			Log.debug(e1);
 			getView().loadErrorScreen("NoObject");
 		    }
 		} else {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    alert.setTitle("Path Customization Error");
-		    alert.setContentText("Your path is incomplete - Please make sure that any start and end positions are connected");
-		    alert.showAndWait();
+		    getView().loadErrorAlert("PathCustomization");
 		}
 	    }
 	});
@@ -107,11 +111,111 @@ public class CreatePathScreen extends PathScreen {
     public void initializeGridSettings(CreatePathGrid gridIn) {
 	setPathPanel(myPathPanel, myPathToolBar);
 	setGridApplied(gridIn);
+//	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == 2) {
+//	    setPathInstructionPopup();
+//	    setGridUIComponents();
+//	}
     }
+
+    protected HBox makeSizingButtons() {
+	HBox sizingButtons = new HBox();
+	try {
+	    int buttonWidth = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonWidth"));
+	    int buttonHeight = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "SizeButtonHeight"));
+	    Image plusImg = new Image(DEFAULT_PLUS_IMAGE, buttonWidth, buttonHeight, true, false);
+	    myPlusButton = getUIFactory().makeImageButton("", plusImg);
+	    myPlusButton.setStyle("-fx-min-width: 50;");
+
+	    Image minusImg = new Image(DEFAULT_MINUS_IMAGE, buttonWidth, buttonHeight, true, false);
+	    myMinusButton = getUIFactory().makeImageButton("", minusImg);
+	    myMinusButton.setStyle("-fx-min-width: 50;");
+
+	    mySizeApplyButton = getUIFactory().makeTextButton("", "Apply");
+	    sizingButtons.getChildren().addAll(myPlusButton, myMinusButton, mySizeApplyButton);
+
+	    return sizingButtons;
+
+	}
+	catch(MissingPropertiesException e) {
+	    Log.debug(e);
+	    getView().loadErrorScreen("NoConstants");
+	    return null;
+	}
+    }
+
+    protected void setGridUIComponents() {
+	myPlusButton.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent event) {
+		try {
+		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+		    if (grid.getPathSize() < Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MaxGridSize"))) {
+			grid.setGridConstraints(pathGrid, grid.getPathSize() + gridResize);
+		    }
+		}
+		catch(MissingPropertiesException e) {
+		    Log.debug(e);
+		    getView().loadErrorScreen("NoFile");
+		}
+	    }
+	});
+
+	myMinusButton.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent event) {
+		try {
+		    int gridResize = Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "GridResize"));
+		    if (grid.getPathSize() > Integer.parseInt(getPropertiesReader().findVal(DEFAULT_CONSTANTS_FILEPATH, "MinGridSize"))) {
+			grid.setGridConstraints(pathGrid, grid.getPathSize() - gridResize);
+		    }
+		}
+		catch(MissingPropertiesException e) {
+		    Log.debug(e);
+		    getView().loadErrorScreen("NoFile");
+		}
+	    }
+	});
+
+	mySizeApplyButton.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent event) {
+		myPathPanel.getPanel().setDisable(false);
+		myPathToolBar.getPanel().setDisable(false);
+		grid.getGrid().setGridLinesVisible(false);
+		myDialogStage.close();
+	    }
+	});
+    }
+
+    public void setPathInstructionPopup() {
+
+	myDialogStage = new Stage();
+	VBox dialogVbox = new VBox();
+	dialogVbox.setMaxSize(500, 500);
+	Label popupTitle = new Label(getView().getErrorCheckedPrompt("PathPopupTitle"));
+	Label popupInstructions = new Label(getView().getErrorCheckedPrompt("PathInstructions"));
+	popupInstructions.setWrapText(true);
+	dialogVbox.getChildren().addAll(popupTitle, popupInstructions, makeSizingButtons());
+	Scene dialogScene = new Scene(dialogVbox);
+	dialogScene.getStylesheets().add(myView.getCurrentCSS());
+	myDialogStage.setScene(dialogScene);
+	myDialogStage.setAlwaysOnTop(true);
+	myPathPanel.getPanel().setDisable(true);
+	myPathToolBar.getPanel().setDisable(true);
+	grid.getGrid().setGridLinesVisible(true);
+	myDialogStage.setOnCloseRequest(event -> {
+	    myPathPanel.getPanel().setDisable(false);
+	    myPathToolBar.getPanel().setDisable(false);
+	    grid.getGrid().setGridLinesVisible(false);
+	});
+	myDialogStage.show();
+    }
+
 
     @Override
     public void setSpecificUIComponents() {
-	setGridUIComponents(myPathPanel, myPathToolBar);
+
+	//	setGridUIComponents(myPathPanel, myPathToolBar);
 	ImageView trashImage = myPathPanel.makeTrashImage();
 	trashImage.setOnDragOver(new EventHandler <DragEvent>() {
 	    @Override
@@ -145,46 +249,40 @@ public class CreatePathScreen extends PathScreen {
 
 	pathHBox = myPathToolBar.getPathHBox();
 	ComboBox<String> pathComboBox = (ComboBox<String>) ((VBox) pathHBox.getChildren().get(0)).getChildren().get(0);
-	pathComboBox.addEventHandler(ActionEvent.ACTION, e -> {
-	    String pathImageFilePath = "file:images/"+pathComboBox.getValue()+".png";
-	    myGrid.setPathImage(myPathPanel.getPanelPathImage().getPathImage());
-	    //	    myPathPanel.getPanelPathImage().setPath();
-	    myPathPanel.getPanelPathImage().setNewImage(new Image(pathImageFilePath));
-//	    changeGridImages(pathImageFilePath);
-	    //	    for (int i = 0; i < getGrid().getGrid().getChildren().size(); i++) {
-	    //		if (getGrid().getGrid().getChildren().get(i) instanceof ImageView) {
-	    //		    getGrid().getGrid().getChildren().remove(i);
-	    //		}
-	    //	    }
-	    //	   getGrid().getCheckGrid().getChildren().clear();
-	});
-
+	setPathImages(pathComboBox, "path");
 
 	startHBox = myPathToolBar.getStartHBox();
 	ComboBox<String> startComboBox = (ComboBox<String>) ((VBox) startHBox.getChildren().get(0)).getChildren().get(0);
-	startComboBox.addEventHandler(ActionEvent.ACTION, e -> {
-	    String startImageFilePath = "file:images/"+startComboBox.getValue()+".png";
-	    myGrid.setStartImage(myPathPanel.getPanelPathImage().getPathImage());
-	    //	    myPathPanel.getPanelPathImage().setStart();
-	    myPathPanel.getPanelStartImage().setNewImage(new Image(startImageFilePath));
-	});
+	setPathImages(startComboBox, "start");
 
 	endHBox = myPathToolBar.getEndHBox();
 	ComboBox<String> endComboBox = (ComboBox<String>) ((VBox) endHBox.getChildren().get(0)).getChildren().get(0);
-	endComboBox.addEventHandler(ActionEvent.ACTION, e -> {
-	    String endImageFilePath = "file:images/"+endComboBox.getValue()+".png";
-	    myGrid.setEndImage(myPathPanel.getPanelPathImage().getPathImage());
-	    //	    myPathPanel.getPanelPathImage().setEnd();
-	    myPathPanel.getPanelEndImage().setNewImage(new Image(endImageFilePath));
+	setPathImages(endComboBox, "end");
+    }
+
+    private void setPathImages(ComboBox<String> box, String pathType) {
+	box.addEventHandler(ActionEvent.ACTION, e -> {
+	    String pathImageFilePath = "file:images/"+box.getValue()+".png";
+	    if (pathType == "path") {
+		myGrid.setPathImage(myPathPanel.getPanelPathImage().getPathImage());
+		myPathPanel.getPanelPathImage().setNewImage(new Image(pathImageFilePath));
+	    } else if (pathType == "start") {
+		myGrid.setPathImage(myPathPanel.getPanelStartImage().getPathImage());
+		myPathPanel.getPanelStartImage().setNewImage(new Image(pathImageFilePath));
+	    } else if (pathType == "end") {
+		myGrid.setPathImage(myPathPanel.getPanelStartImage().getPathImage());
+		myPathPanel.getPanelEndImage().setNewImage(new Image(pathImageFilePath));
+	    }
+	    changeGridImages(pathImageFilePath, pathType);
 	});
     }
-    
-    //Might need to just remove path blocks when changing images
-//    private void changeGridImages(String imageFilePath) {
-//	for (int i = 0; i < myGrid.getColumnCount(); i++) {
-//		if (getGrid().getNode(getGrid().getCheckGrid(), i, j) != null && ((Label) getGrid().getNode(getGrid().getCheckGrid(), i, j)).getText() == "path") {
-		    //iterate through children of grid, change those ImageViews?
-//		}
-//	    }	
-//	}
+
+    private void changeGridImages(String imageFilePath, String pathType) {
+	for (int i = 0; i < getGrid().getGrid().getChildren().size(); i++) {
+	    Node node = getGrid().getGrid().getChildren().get(i);
+	    if (node instanceof ImageView && ((Label) getGrid().getNode(getGrid().getCheckGrid(), GridPane.getColumnIndex(node), GridPane.getRowIndex(node))).getText() == pathType) {
+		((ImageView) node).setImage(new Image(imageFilePath));
+	    }
+	}
+    }
 }
