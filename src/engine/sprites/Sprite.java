@@ -73,11 +73,6 @@ public class Sprite implements FrontEndSprite{
 	return myImageView;
     }
 
-    public void setImageString(String image) { //TODO RECONCILE WITH updateImage() below
-	myImageString = image; 
-	myImageView = new ImageView(new Image("file"+image, 50, 50, true, true));
-    }
-
     public void place(double newX, double newY) {
 	myImageView.setX(newX);
 	myImageView.setY(newY);
@@ -144,7 +139,7 @@ public class Sprite implements FrontEndSprite{
      * Updates the Imagepath and the ImageView given an input string
      * @param imagePath	String containing path to image
      */
-    protected void updateImage(String imagePath) {
+    public void updateImage(String imagePath) {
 	myImageString = imagePath; 
 	myWrapper.updateImageString(imagePath);
 	//		Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
