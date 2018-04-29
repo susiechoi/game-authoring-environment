@@ -367,7 +367,7 @@ public class AuthoringModel {
 	List<Path> paths = currentLevel.getPaths();
 	for(Path path: paths) {
 	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
-	    if(Math.abs(path.initialPoint().getX()-point.getX())<myPathSize && Math.abs(path.initialPoint().getY()-point.getY())<myPathSize) {
+	    if(Math.abs(path.initialPoint().getX()-point.getX())<60 && Math.abs(path.initialPoint().getY()-point.getY())<60) { // HELLOOO PLEASE CHANGE
 		   // path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
 		   // path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
 		return path;

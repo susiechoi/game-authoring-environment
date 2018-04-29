@@ -108,7 +108,7 @@ public class GamePanel extends Panel{
 	}
     }
 
-    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+    public void setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int col, int row) {
 		PathMaker pathMaker = new PathMaker();
 		GridPane grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, col, row, spriteAdd);
 		//	setGridConstraints(grid, imageMap);

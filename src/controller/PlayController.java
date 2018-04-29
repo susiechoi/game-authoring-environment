@@ -56,11 +56,12 @@ public class PlayController {
 		AuthoredGame playModel = myReader.createModel(pathToXML);
 		List<Level> levels = playModel.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);
-		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getGridWidth(), levels.get(0).getGridHeight());
+		myMediator.setPath(levels.get(0).getLevelPathMap(), levels.get(0).getBackGroundImage(), levels.get(0).getPathSize(), levels.get(0).getColumnCount(), levels.get(0).getRowCount());
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
 		System.out.println("starting animation");
 	}
+
 
 	/**
 	 * Creates a new demo play based on the AuthoringModel object authored by
