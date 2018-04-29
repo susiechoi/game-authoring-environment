@@ -115,7 +115,7 @@ public class AuthoringController implements MVController{
      * (or the default level if the user has not customized any level) 
      * @return integer of new level created
      */
-    public int addNewLevel() {
+    public int addNewLevel() throws ObjectNotFoundException{
 	return myModel.addNewLevel(); 
     }
 

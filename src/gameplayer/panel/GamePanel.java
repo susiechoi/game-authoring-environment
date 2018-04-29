@@ -93,6 +93,7 @@ public class GamePanel extends Panel{
 
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+	//System.out.println("setting the background i think");
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
 	if(!pathSet) {
 	    PathMaker pathMaker = new PathMaker();
