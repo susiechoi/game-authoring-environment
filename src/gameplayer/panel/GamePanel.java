@@ -164,18 +164,9 @@ public class GamePanel extends Panel{
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
 	    towerClick = true;
-	    if(!towerPlaceMode) moveTowerImageViewAction(tower);
 	});
     }
-
-    private void moveTowerImageViewAction(FrontEndTower tower) {
-	ImageView towerImage = tower.getImageView();
-	towerImage.setOnMouseClicked(args ->{
-	    GAME_SCREEN.towerClickedOn(tower);
-	    towerClick = true;
-	});
-    }
-
+    
     private void removeTowerRangeIndicator() {
 	spriteAdd.getChildren().remove(rangeIndicator);
 	towerSelected = null;
