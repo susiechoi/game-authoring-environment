@@ -153,8 +153,6 @@ public class GameScreen extends Screen {
 		Log.debug(e); //TODO!!!
 	    }
 	    SOUND_FACTORY.playBackgroundMusic();
-
-
 	}
 	else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
 	    SOUND_FACTORY.pauseBackgroundMusic();
@@ -189,12 +187,15 @@ public class GameScreen extends Screen {
 	return MEDIATOR.placeTower(position, tower.getName());
     }
 
+
     public void towerClickedOn(FrontEndTower tower) {
+    	SCREEN_MANAGER.moveTower(tower);
 	TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
 	UPGRADE_PANEL = new UpgradePanel(this, tower);
 	displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
+
 
     public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
 	BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
