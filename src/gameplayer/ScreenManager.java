@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
+
+import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -24,7 +26,7 @@ import javafx.scene.input.KeyEvent;
 
 /**
  * 
- * @author Ben Hodgson 4/11/18
+ * @author Ben Hodgson 4/11/18, Alexi Kontos and Andrew Arnold
  * 
  * Class to manage updating Screen elements that remain across the entire game
  * (score, level, health, currency, etc.)
@@ -59,6 +61,7 @@ public class ScreenManager extends View {
 			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
 		}
 		catch (MissingPropertiesException e) {
+			Log.debug(e);
 		}
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;

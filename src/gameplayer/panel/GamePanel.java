@@ -22,6 +22,11 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.shape.Circle;
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 
 
 public class GamePanel extends Panel{

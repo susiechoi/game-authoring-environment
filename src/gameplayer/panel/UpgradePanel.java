@@ -19,6 +19,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
+
 public class UpgradePanel extends SpecificPanel {
 
     //TODO don't have this be a static value
