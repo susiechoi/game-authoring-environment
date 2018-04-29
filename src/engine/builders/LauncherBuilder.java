@@ -18,7 +18,6 @@ import engine.sprites.towers.projectiles.Projectile;
  */
 public class LauncherBuilder {
     
-    @SuppressWarnings("unchecked")
     public Launcher construct(double fireRate, double fireRange, Projectile projectile) {
 	FireRateProperty rate = new FireRateProperty(0, 0, fireRate);
 	RangeProperty range = new RangeProperty(fireRange);

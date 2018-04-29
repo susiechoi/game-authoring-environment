@@ -49,7 +49,6 @@ public class EnemyManager extends ShootingSpriteManager {
 	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
-	    System.out.println(myEnemies.get(path).size());
 	    for (Enemy enemy : myEnemies.get(path)) {
 		newEnemies.get(path).add(enemy);
 		if (!enemy.isAlive()) {

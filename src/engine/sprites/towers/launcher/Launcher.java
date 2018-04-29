@@ -65,6 +65,7 @@ public class Launcher extends Manager<Projectile>{
      */
     //TODO implement to shoot at where enemy is going
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+	System.out.println("LAUNCHING");
 	timeSinceLastShot=0;
 	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
 	this.addToActiveList(launchedProjectile);

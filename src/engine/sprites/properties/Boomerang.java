@@ -21,6 +21,7 @@ public class Boomerang extends MovingProperty{
     
     @Override
     public void move(Projectile projectile, double elapsedTime) {
+	System.out.println("WADDDDDDDDDDDUPPPPPPPPPPPPPPP");
 	tCircle+=this.getProperty()*elapsedTime;
 	double x = projectile.getX();
 	double y = projectile.getY();

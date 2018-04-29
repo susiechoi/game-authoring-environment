@@ -22,7 +22,7 @@ public class ProjectileBuilder {
 	List<Property> properties = new ArrayList<>();
 	properties.add(new DamageProperty(0, 0, damage));
 	properties.add(new ConstantSpeedProperty(constantSpeedProperty));
-	properties.add(new Boomerang(constantSpeedProperty));
+	properties.add(new Boomerang(50));
 	return new Projectile(name, size, imagepath, properties);
     }
 

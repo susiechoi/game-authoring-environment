@@ -8,10 +8,10 @@ import engine.sprites.towers.projectiles.Projectile;
  *
  */
 
-public abstract class MovingProperty extends Property{
+public abstract class MovingProperty extends UpgradeProperty{
     
     public MovingProperty(double range) {
-	super(range);
+	super(0,0,range);
       }
     
     public abstract void move(Projectile projectile, double elapsedTime);
