@@ -11,7 +11,6 @@ import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
-import file.DataPointWriter;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -28,8 +27,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
  
     private Launcher myLauncher;
     private double mySize;
-    private DataPointWriter myKillWriter; 
-
     /**
      * Constructor for a Tower object that accepts parameter properties.
      * 
