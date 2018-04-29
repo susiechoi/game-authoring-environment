@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.builders.PropertyBuilder;
-import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
+import engine.sprites.properties.projectilesMoving.MovingProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

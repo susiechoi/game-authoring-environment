@@ -6,9 +6,9 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
-import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.SpeedProperty;
+import engine.sprites.properties.projectilesMoving.MovingProperty;
 import engine.sprites.enemies.Enemy;
 
 /**

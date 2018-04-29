@@ -86,10 +86,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     public void move(double elapsedTime) {
 	rotateImage();
-	double totalDistanceToMove = 50*elapsedTime; //getValue("SpeedProperty")*elapsedTime;
+	double totalDistanceToMove = this.getProperty("SpeedProperty").getProperty()*elapsedTime; 
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-//	System.out.println("Setting enemy " + this.getImageView() + " to x position " + this.getX()+xMove);
 	this.getImageView().setX(this.getX()+xMove);
 	this.getImageView().setY(this.getY()+yMove);
     }
