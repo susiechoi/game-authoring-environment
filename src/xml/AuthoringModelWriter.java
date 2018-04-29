@@ -1,4 +1,3 @@
-
 package xml;
 
 
@@ -36,6 +35,7 @@ public class AuthoringModelWriter implements XMLWriter {
 		parser = new XStream(new StaxDriver());
 		parser.autodetectAnnotations(true);
 		//parser.registerConverter(new ObservableListConverter(parser.getMapper()));
+
 	}
 
     /**

@@ -6,8 +6,10 @@ import java.util.List;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
+import engine.sprites.properties.MovingProperty;
+import engine.sprites.properties.Property;
+import engine.sprites.properties.SpeedProperty;
 import engine.sprites.enemies.Enemy;
-import engine.sprites.properties.DamageProperty;
 
 /**
  * Projectile class is a sprite that is launched from the tower
@@ -20,13 +22,11 @@ import engine.sprites.properties.DamageProperty;
 public class Projectile extends Sprite implements FrontEndSprite{
 
     private static final double mySpeedFactor = 1.5;
-    private DamageProperty myDamage;
-    private double mySpeed;
     private double mySize; 
-    private String myImage; 
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
     private int myHits = 1;
+    private MovingProperty myMovingProperty;
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -35,64 +35,59 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
      */
-    public Projectile(String name, DamageProperty damage, double size, String image, double speed) {
-	super(name, image, size);
-	myDamage = damage;
-	mySpeed = speed;
+    public Projectile(String name, double size, String image, List<Property> properties) {
+	super(name, image, size, properties);
 	mySize = size; 
-	myImage = image; 
 	hitTargets = new ArrayList<>();
+	for (Property p: properties) {
+	    System.out.println(p.getName() + " in projectile property list");
+	}
     }
 
+    /**
+     * Moves projectile and accelerates according to enemy speed
+     * 
+     * @param myProjectile
+     * @param target
+     * @param shooterX
+     * @param shooterY
+     */
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
-	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize());
+	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	myTarget = target;
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
-	    mySpeed = myEnemy.getSpeed()*mySpeedFactor;
+	    Double speed = myEnemy.getProperty("SpeedProperty").getProperty();
+	    this.addProperty(new SpeedProperty(0,0, mySpeedFactor*speed));
 	}
-	else {
-	    mySpeed = myProjectile.getSpeed();
-	}
-	myDamage = myProjectile.getDamageProperty();
 	this.place(shooterX, shooterY);
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
+	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
     }
 
     /**
      * Moves image in direction of it's orientation
      */
     public void move(double elapsedTime) {
-	if (this.myTarget.isAlive()) {
-	    rotateImage();
+	try {
+	    myMovingProperty.move(this, elapsedTime);
+	}catch(NullPointerException e) {
+	    //this means there is not movement property defined for the projectile, so don't move them
+	    System.out.println("no movement property");
+	    return;
 	}
-	double totalDistanceToMove = this.mySpeed*elapsedTime;
-	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
-	this.getImageView().setX(this.getX()+xMove);
-	this.getImageView().setY(this.getY()+yMove);
+	
     }
 
     /**
      * Rotates the image to face the target
      */
     private void rotateImage() {
-
 	double xDifference = myTarget.getX() - this.getX();
 	double yDifference = myTarget.getY() - this.getY();
 	double angleToRotateRads = Math.atan2(xDifference,yDifference);
 	this.setRotate(Math.toDegrees(angleToRotateRads));
-    }
-
-    /**
-     * Upgrades damage value of projectile
-     * 
-     * @param balance: New user's balance of money
-     * @return double representing new balance of user
-     */
-    public double upgradeDamage(double balance) {
-	return myDamage.upgrade(balance);
     }
 
     /**
@@ -101,28 +96,11 @@ public class Projectile extends Sprite implements FrontEndSprite{
      */
     @Override
     public double getDamage() {
-	return myDamage.getProperty();
+	return getValue("DamageProperty");
     }
-
-    public DamageProperty getDamageProperty() {
-	return myDamage;
-    }
-
-    public double getSpeed() {
-	return mySpeed;
-    }
-
-
-    public String getDamageName() {
-	return myDamage.getName();
-    }
-
-    public String getImage() {
-	return myImage; 
-    }
-
+    
     public double getSize() {
-	return mySize; 
+	return mySize;
     }
 
     /**
@@ -144,5 +122,16 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public boolean hasHit(ShootingSprites target) {
 	return this.hitTargets.contains(target);
     }
+    
+    public void setImage(String image) {
+	super.updateImage(image);
+    }
+    
+    public ShootingSprites getTarget() {
+	return myTarget;
+    }
 
+    public double getSpeed() {
+	return this.getProperty("SpeedProperty").getProperty();
+    }
 }

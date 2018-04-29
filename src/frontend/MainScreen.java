@@ -66,7 +66,7 @@ public class MainScreen extends Screen {
 				myView.loadErrorScreen("NoFile");
 			}
 		});
-		
+
 		//	HBox leftCenter = new HBox(newAuthorButt);
 		//	leftCenter.setAlignment(Pos.CENTER);
 		//	leftCenter.setMaxWidth(Double.MAX_VALUE);

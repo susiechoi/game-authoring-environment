@@ -1,6 +1,10 @@
 package engine.builders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.sprites.properties.HealthProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.properties.ValueProperty;
 import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
@@ -23,9 +27,14 @@ public class TowerBuilder {
      * @param healthCost: Cost to upgrade Health
      * @return Tower object
      */
+    @SuppressWarnings("unchecked")
     public Tower construct(String name, String imagepath, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) {
-	ValueProperty valueProperty = new ValueProperty(towerValue);
-    	HealthProperty healthProperty = new HealthProperty(healthCost, healthValue, health);
-	return new Tower(name, imagepath, size, launcher, healthProperty, valueProperty);
+    	System.out.println("IN BUILDER");
+    	System.out.println(name);
+    	System.out.println(imagepath);
+	List<Property> properties = new ArrayList<>();
+    	properties.add(new ValueProperty(towerValue));
+    	properties.add(new HealthProperty(healthCost, healthValue, health));
+	return new Tower(name, imagepath, size, launcher, properties);
     }
 }
