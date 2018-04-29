@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
+
+import authoring.frontend.CreatePathGrid;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -95,24 +97,25 @@ public class GamePanel extends Panel{
 
     }
 
-
+//SARAH TODO
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	//System.out.println("setting the background i think");
 	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
+	 PathMaker pathMaker = new PathMaker();
+	 GridPane newGrid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	if(!pathSet) {
-	    PathMaker pathMaker = new PathMaker();
-	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
-	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
-	    spriteAdd.getChildren().add(grid);
+	    spriteAdd.getChildren().add(newGrid);
 	    pathSet = true;
 	}
 	if(pathSet) {
+	   // grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
 	    spriteAdd.getChildren().remove(grid);
-	    spriteAdd.getChildren().add(grid);
+	    spriteAdd.getChildren().add(newGrid);
 	}
+	grid = newGrid;
 	return backgroundSet;
     }
 
