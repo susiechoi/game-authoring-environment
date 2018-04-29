@@ -51,6 +51,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 	vb.getChildren().add(enemySpeed);
 	mySpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    mySpeed = newValue;
+	    
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "mySpeed", newValue);
 	});
 	
