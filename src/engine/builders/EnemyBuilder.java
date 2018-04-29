@@ -18,7 +18,6 @@ import engine.sprites.towers.launcher.Launcher;
  */
 public class EnemyBuilder {
 
-    @SuppressWarnings("unchecked")
     public Enemy construct(String name, String image, double speed, double initialHealth, double healthImpact,
 	    double killReward, double killUpgradeCost, double killUpgradeValue, Launcher launcher) {
 	List<Property> properties = new ArrayList<>();

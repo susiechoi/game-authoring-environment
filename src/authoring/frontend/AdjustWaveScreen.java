@@ -32,7 +32,6 @@ public class AdjustWaveScreen extends PathScreen {
 	 */
 	@Override
 	public void initializeGridSettings(CreatePathGrid grid) {
-	    	System.out.println("here path issue");
 		setPathPanel(myWaveDirectionsPanel, myWaveToolBar);
 		grid.setUpForWaves(e -> {setPathPanel(new WavePanel(getView(), grid.getMostRecentlyClicked(), myWaveNumber), myWaveToolBar);});//TODO: action here!!!);
 	}
@@ -42,7 +41,7 @@ public class AdjustWaveScreen extends PathScreen {
 	 */
 	@Override
 	public void setSpecificUIComponents() {
-	    setGridUIComponents(myWaveDirectionsPanel, myWaveToolBar);
+//	    setGridUIComponents(myWaveDirectionsPanel, myWaveToolBar);
 	}
 	protected Parent populateScreenWithFields() {
 	    // TODO Auto-generated method stub

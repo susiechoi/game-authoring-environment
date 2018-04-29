@@ -5,9 +5,7 @@ import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
-
 import com.sun.javafx.tools.packager.Log;
-
 import authoring.AuthoringController;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
@@ -151,128 +149,128 @@ public class GameScreen extends Screen {
 	public void settingsTriggered(String setting) {
 		if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
 			SOUND_FACTORY.mute();
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
-			try{
+		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
+			try {
 				SOUND_FACTORY.setBackgroundMusic("stillDre");
-			}
-			catch (FileNotFoundException e) {
-			    Log.debug(e);
+			} catch (FileNotFoundException e) {
+				Log.debug(e);
 			}
 			SOUND_FACTORY.playBackgroundMusic();
 
 
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
+		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
 			SOUND_FACTORY.pauseBackgroundMusic();
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
+		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
 			BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("instrURL"), GAMEPLAYER_PROPERTIES);
 			pop.makePopupBrowser();
-		}
-		else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
+		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
 			BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
 			pop.makePopupBrowser();
 		}
 	}
 
-	/**
-	 * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
-	 * Additionally synchronizes the initial display value of each to the passed values
-	 * @param myCurrency	Engine's currency object
-	 * @param myScore	Engine's score object
-	 * @param myLives	Engine's lives object
-	 */
-	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
-		myCurrency.addListener(TOWER_PANEL.createCurrencyListener(myCurrency.get()));
-		myScore.addListener(SCORE_PANEL.createScoreListener(myScore.get()));
-		myLives.addListener(SCORE_PANEL.createHealthListener(myLives.get()));
+
+    /**
+     * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
+     * Additionally synchronizes the initial display value of each to the passed values
+     * @param myCurrency	Engine's currency object
+     * @param myScore	Engine's score object
+     * @param myLives	Engine's lives object
+     */
+    public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore, IntegerProperty myLives) {
+	myCurrency.addListener(TOWER_PANEL.createCurrencyListener(myCurrency.get()));
+	myScore.addListener(SCORE_PANEL.createScoreListener(myScore.get()));
+	myLives.addListener(SCORE_PANEL.createHealthListener(myLives.get()));
+    }
+
+
+    public void updateLevel(Integer newLevel) {
+	SCORE_PANEL.updateLevel(newLevel);
+    }
+
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
+	return MEDIATOR.placeTower(position, tower.getName());
+    }
+
+
+    public void towerClickedOn(FrontEndTower tower) {
+    	SCREEN_MANAGER.moveTower(tower);
+	TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
+	UPGRADE_PANEL = new UpgradePanel(this, tower);
+	displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
+	gamePane.setBottom(UPGRADE_PANEL.getPanel());
+    }
+
+
+    public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
+	BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
+	displayPane.setBottom(BUY_PANEL.getPanel());
+	gamePane.setBottom(UPGRADE_PANEL.getPanel());
+    }
+
+    private void settingsClickedOn() {
+	SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
+
+	displayPane.setBottom(SETTINGS_PANEL.getPanel());
+    }
+
+    public void blankGamePanelClick() {
+	gamePane.setBottom(null);
+	displayPane.setBottom(CONTROLS_PANEL.getPanel());
+    }
+
+    public void sellTower(FrontEndTower tower) {
+	GAME_PANEL.removeTower(tower);
+	MEDIATOR.sellTower(tower);
+	blankGamePanelClick();
+    }
+
+
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    }
+
+    private void setVertPanelsLeft() {
+	rootPane.getChildren().remove(displayPane);
+	rootPane.setRight(null);
+	rootPane.setLeft(displayPane);
+
+    }
+    private void setVertPanelsRight() {
+	rootPane.getChildren().remove(displayPane);
+	rootPane.setLeft(null);
+	rootPane.setRight(displayPane);
+    }
+
+    public void swapVertPanel() {
+	if(rootPane.getRight() == null) {
+	    setVertPanelsRight();
 	}
-
-
-	public void updateLevel(Integer newLevel) {
-		SCORE_PANEL.updateLevel(newLevel);
+	else {
+	    setVertPanelsLeft();
 	}
+    }
 
-	public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-		return MEDIATOR.placeTower(position, tower.getName());
-	}
+    public String getGameName() {
+	return SCREEN_MANAGER.getGameFilePath();
+    }
 
-	public void towerClickedOn(FrontEndTower tower) {
-		TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
-		UPGRADE_PANEL = new UpgradePanel(this, tower);
-		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
-		gamePane.setBottom(UPGRADE_PANEL.getPanel());
-	}
+    public ScreenManager getScreenManager() {
+	return SCREEN_MANAGER;
+    }
 
-	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
-		BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
-		displayPane.setBottom(BUY_PANEL.getPanel());
-		gamePane.setBottom(UPGRADE_PANEL.getPanel());
-	}
-
-	private void settingsClickedOn() {
-		SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
-		displayPane.setBottom(SETTINGS_PANEL.getPanel());
-	}
-
-	public void blankGamePanelClick() {
-		gamePane.setBottom(null);
-		displayPane.setBottom(CONTROLS_PANEL.getPanel());
-	}
-
-	public void sellTower(FrontEndTower tower) {
-		GAME_PANEL.removeTower(tower);
-		MEDIATOR.sellTower(tower);
-		blankGamePanelClick();
-	}
+    public void upgradeBought(FrontEndTower tower, String upgradeName) {
+	MEDIATOR.upgradeTower(tower, upgradeName);
+    }
 
 
-	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-		return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
-	}
+    public SoundFactory getSoundFactory() {
+	return SOUND_FACTORY;
+    }
 
-	private void setVertPanelsLeft() {
-		rootPane.getChildren().remove(displayPane);
-		rootPane.setRight(null);
-		rootPane.setLeft(displayPane);
-
-	}
-	private void setVertPanelsRight() {
-		rootPane.getChildren().remove(displayPane);
-		rootPane.setLeft(null);
-		rootPane.setRight(displayPane);
-	}
-
-	public void swapVertPanel() {
-		if(rootPane.getRight() == null) {
-			setVertPanelsRight();
-		}
-		else {
-			setVertPanelsLeft();
-		}
-	}
-
-	public String getGameName() {
-		return SCREEN_MANAGER.getGameFilePath();
-	}
-	
-	public ScreenManager getScreenManager() {
-		return SCREEN_MANAGER;
-	}
-
-	public void upgradeBought(FrontEndTower tower, String upgradeName) {
-		MEDIATOR.upgradeTower(tower, upgradeName);
-	}
-
-
-	public SoundFactory getSoundFactory() {
-		return SOUND_FACTORY;
-	}
-
-	public Map<String,String> getGameplayerProperties() {
-		return GAMEPLAYER_PROPERTIES;
-	}
+    public Map<String,String> getGameplayerProperties() {
+	return GAMEPLAYER_PROPERTIES;
+    }
 
 
 	private void gameStartAction() {
@@ -290,15 +288,16 @@ public class GameScreen extends Screen {
 		gamePane.setCenter(SPLASH_PANEL.getPanel());
 	}
 
-	public void gameLost() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-	}
 
-	public void nextLevel() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
-	}
+    public void gameLost() {
+	SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+    }
+
+    public void nextLevel() {
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+    }
 
 }
