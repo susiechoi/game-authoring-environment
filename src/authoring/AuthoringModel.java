@@ -331,7 +331,9 @@ public class AuthoringModel {
     public void deleteObject(int level, String objectType, String name) throws ObjectNotFoundException, DeleteDefaultException {
 	Level currentLevel = myGame.levelCheck(level);
 	spriteFactory.deleteSprite(objectType, currentLevel, name);
-    }
+    } 
+    
+    //1020
 
     /**
      * Used in the case that the user wants to edit an existing object:
