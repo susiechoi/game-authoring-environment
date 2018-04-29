@@ -2,9 +2,7 @@ package engine.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import engine.builders.PropertyBuilder;
-import engine.sprites.properties.MovingProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import javafx.scene.image.Image;
@@ -38,20 +36,16 @@ public class Sprite implements FrontEndSprite{
      */
     public Sprite(String name, String image, double size, List<Property> properties) {
 	myName = name;
-	myImageString = image;
-	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
+	setImageString(image);
 	myImageView.setPreserveRatio(true);
 	myProperties = new ArrayList<>();
 	myPropertyBuilder = new PropertyBuilder();
 	for(Property p : properties) {
-	  //  System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
 	    myProperties.add(this.makeProperty(p));
 	}
     }
 
     /**
-     * Return the String name of the sprite.
-     * 
      * @return String: the name of the Sprite
      */
     public String getName() {
@@ -154,7 +148,6 @@ public class Sprite implements FrontEndSprite{
 	return null;
     }
     
-
     /**
      * Handles upgrading the health of a tower
      */
@@ -186,7 +179,6 @@ public class Sprite implements FrontEndSprite{
 	}
 	
     }
-    
     
     public double getValue(String ID) {
 	for(Property property : myProperties) {

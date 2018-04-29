@@ -7,12 +7,13 @@ import authoring.factory.AttributeFinder;
 import authoring.factory.PropertyFactory;
 import authoring.frontend.AuthoringView;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
-import jdk.internal.jimage.ImageReader.Node;
+//import jdk.internal.jimage.ImageReader.Node;
 
 public class PropertyScreenFactory {
     PropertiesReader myPropertiesReader;
@@ -47,8 +48,8 @@ public class PropertyScreenFactory {
 	return vb;
     }
     
-    private void applyPropertyScreen(Node parent) {
-	for(Node node : parent.getChildren()) {
+    private void applyPropertyScreen(List<Node> children) {
+	for(Node node : children) {
 	    // add values to a list
 	    //send that list along with property info to the propertyfactory  
 	}

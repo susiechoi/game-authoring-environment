@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.KillProperty;
 import engine.sprites.properties.Property;
@@ -37,7 +36,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param health: Initial health of the tower
      * @param value: Value of the tower for selling
      */
-    @SuppressWarnings("unchecked")
     public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher, properties);
 	mySize = size;

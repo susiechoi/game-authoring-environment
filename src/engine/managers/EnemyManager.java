@@ -106,7 +106,8 @@ public class EnemyManager extends ShootingSpriteManager {
 	    pathEnemies.add(enemy);
 	    myEnemies.put(path, pathEnemies);
 	}
-    }    
+    }
+    
     /**
      * Clears all the current enemies in the map
      */
@@ -124,6 +125,5 @@ public class EnemyManager extends ShootingSpriteManager {
 	}
 	
     }
-
 
 }

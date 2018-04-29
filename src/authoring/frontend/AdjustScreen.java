@@ -8,9 +8,7 @@
 package authoring.frontend;
 
 abstract class AdjustScreen extends AuthoringScreen {
-		
-	public static final String DEFAULT_BACK_IMAGE = "images/back.gif"; 
-	
+			
 	protected AdjustScreen(AuthoringView view) {
 		super(view);
 	}
