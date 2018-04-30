@@ -54,12 +54,16 @@ public class Level {
 	 * - only difference from copiedLevel is that the level number is incremented
 	 * @throws MissingPropertiesException 
 	 */
-	public Level(Level copiedLevel) throws MissingPropertiesException {
-		myNumber = copiedLevel.getNumber() + 1; 
-		myWaves = copiedLevel.getWaveCopies(); 
-		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getCopiedTowers();
-		myEnemies = copiedLevel.getCopiedEnemies();
+	public Level(Level copiedLevel) {
+		myNumber = copiedLevel.getNumber(); 
+		myWaves = copiedLevel.getWaves(); 
+		myPaths = copiedLevel.getAllPaths(); 
+		myTowers = copiedLevel.getTowers();
+		myEnemies = copiedLevel.getEnemies();
+	}
+
+	private List<Path> getAllPaths() {
+	    return myPaths;
 	}
 
 	/**

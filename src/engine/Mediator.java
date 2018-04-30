@@ -288,11 +288,6 @@ public class Mediator implements MVController{
 	myScreenManager.getGameScreen().nextLevel();
     }
 
-
-    public void restartGame() throws MissingPropertiesException {
-	myGameEngine.getPlayState().restartLevel();
-    }
-
     @Override
     public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{
 	myPlayController.demoPlay(new AuthoringModel().getGame());
