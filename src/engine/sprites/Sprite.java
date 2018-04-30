@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.builders.PropertyBuilder;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
@@ -40,8 +42,9 @@ public class Sprite implements FrontEndSprite{
      * 
      * @param image: tower's initial image
      * @param size: size of tower's image
+     * @throws MissingPropertiesException 
      */
-    public Sprite(String name, String image, double size, List<Property> properties) {
+    public Sprite(String name, String image, double size, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
 	myImageString = image;
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
@@ -156,16 +159,9 @@ public class Sprite implements FrontEndSprite{
 	myImageView = myWrapper.toImageView();
     }
 
-    protected Property makeProperty(Property p) {
+    protected Property makeProperty(Property p) throws MissingPropertiesException {
 	return myPropertyBuilder.getProperty(p);
     }
-
-    //    protected void updateImage(String imagePath) {
-    //	myImageString = imagePath; 
-    //	Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
-    //	myImageView.setImage(newImage);
-    //	myImageView.setPreserveRatio(true);
-    //    }
 
     public Property getProperty(String ID) {
 	for(Property property : myProperties) {
@@ -193,19 +189,20 @@ public class Sprite implements FrontEndSprite{
     }
 
     public void addProperty(Property property) {
-	Property toRemove = null;
-	try {
-	    for(Property p : myProperties) {
-		if(property.getName().equals(p.getName())) {
-		    toRemove = p;
-		}
+	System.out.println("PROPERTY: " + property);
+	String type = property.getClass().getSuperclass().getSimpleName();
+	System.out.println("TYPE: "+ type);
+	Property toRemove = null; 
+	for(Property p : myProperties) {
+	    if(property.getName().equals(p.getName())) {
+		toRemove = p;
 	    }
-	    myProperties.remove(toRemove);
-	    myProperties.add(property);
-	}catch(NullPointerException e){
-	    return;
+	    else if(type.equals("CollisionProperty") || type.equals("MovingProperty")) {
+		toRemove = p;
+	    }
 	}
-
+	if(toRemove != null) myProperties.remove(toRemove);
+	myProperties.add(property);
     }
 
     public double getValue(String ID) {

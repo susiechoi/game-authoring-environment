@@ -79,7 +79,7 @@ public class AuthoredGame implements GameData {
     public Level levelCheck(int level) throws ObjectNotFoundException {
 	Level currentLevel = myLevels.get(level);
 	if (currentLevel == null) {
-	    throw new ObjectNotFoundException("Level " + level);
+	    throw new ObjectNotFoundException(Integer.toString(level));
 	}
 	return currentLevel;
     }

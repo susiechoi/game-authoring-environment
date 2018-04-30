@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 
@@ -33,7 +34,7 @@ public class Wave {
 	myTime = DEFAULT_WAVE_TIME;
     }
     
-    public Wave getCopy() {
+    public Wave getCopy() throws MissingPropertiesException {
 	Wave copy = new Wave();
 	copy.setWaveTime(myTime);
 	for(Path path : myWaveMap.keySet()) {
@@ -118,9 +119,10 @@ public class Wave {
      * Returns the first available enemy object in the wave.
      * 
      * @return Enemy: an enemy object
+     * @throws MissingPropertiesException 
      */
     @Deprecated
-    public Enemy getEnemy() {
+    public Enemy getEnemy() throws MissingPropertiesException {
 	for(Path path : myWaveMap.keySet()) {
 	   Enemy potentialEnemy = getEnemySpecificPath(path);
 	   if(potentialEnemy != null) {
@@ -131,7 +133,7 @@ public class Wave {
 
     }
     
-    public Enemy getEnemySpecificPath(Path path) {
+    public Enemy getEnemySpecificPath(Path path) throws MissingPropertiesException {
 	for (Entry<Enemy, Integer> entry : myWaveMap.get(path).entrySet()) {
 		if (entry.getValue() > 0) {
 		    Enemy retEnemy = entry.getKey();

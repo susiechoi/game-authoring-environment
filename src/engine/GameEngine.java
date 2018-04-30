@@ -1,7 +1,7 @@
 package engine;
 
 import java.io.IOException;
-
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,7 +26,6 @@ public class GameEngine {
 	private Mediator myMediator;
 	private Timeline ANIMATION;
 	private double timeFactor;
-	private boolean gameTriggered = false;
 
 	public GameEngine(Mediator mediator) {
 		myPlayState = null;
@@ -36,7 +35,13 @@ public class GameEngine {
 		setSpeed(DEFAULT_RELATIVE_SPEED);
 		// attach "game loop" to time line to play it
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-				e -> loop(SECOND_DELAY));
+				e -> {
+				    try {
+					loop(SECOND_DELAY);
+				    } catch (MissingPropertiesException e1) {
+					// TODO Auto-generated catch block
+				    }
+				});
 		ANIMATION = new Timeline();
 		ANIMATION.setCycleCount(Animation.INDEFINITE);
 		ANIMATION.getKeyFrames().add(frame);
@@ -56,8 +61,9 @@ public class GameEngine {
 	/**
 	 * Calls the update function every loop
 	 * @param elapsedTime
+	 * @throws MissingPropertiesException 
 	 */
-	public void loop(double elapsedTime) {
+	public void loop(double elapsedTime) throws MissingPropertiesException {
 		myPlayState.update(elapsedTime*timeFactor);
 	}
 
@@ -75,8 +81,7 @@ public class GameEngine {
 	 * Starts Game Loop animation, so Game State continuously loops
 	 */
 	public void start() {
-	    ANIMATION.play();
-
+		ANIMATION.play();
 	}
 
 	/**
@@ -128,10 +133,6 @@ public class GameEngine {
 		}
 	}
 
-
-	public void triggerGame() {
-		gameTriggered = true;
-	}
 
 
 }

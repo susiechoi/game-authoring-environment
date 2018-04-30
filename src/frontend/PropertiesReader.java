@@ -24,8 +24,8 @@ public class PropertiesReader {
 		Properties properties = loadProperties(filepath);
 		Map<String, String> readInProperties = read(properties);
 		for (String key : readInProperties.keySet()) {
-			if (readInProperties.get(key).equals(targetVal)) {
-				return key;
+			if (key.equals(targetVal)) {
+				return readInProperties.get(key);
 			}
 		}
 		return ""; 

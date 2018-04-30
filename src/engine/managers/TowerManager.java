@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Collection;
 import java.util.Map;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
@@ -55,7 +56,7 @@ public class TowerManager extends ShootingSpriteManager {
 	}
     }
 
-    public FrontEndTower place(Point location, String type) {
+    public FrontEndTower place(Point location, String type) throws MissingPropertiesException {
 	Tower newTower = new Tower(myTowerTypeToInstance.get(type));
 	newTower.move(location);
 	this.addToActiveList(newTower);

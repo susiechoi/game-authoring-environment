@@ -10,32 +10,29 @@ package authoring.factory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.level.Level;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.Tower;
+import frontend.PropertiesReader;
 import voogasalad.util.reflection.*;
 
-/**
- * 
- * @author katherinevandyk
- *
- */
 public class PropertyFactory {
-    
+
+    public static final String DEFAULT_PROPERTIES_FILES_PATH = "default_objects/Properties/properties.properties";
     private Map<String, Property> currentProperties;
-    protected ResourceBundle PROPERTIES = ResourceBundle.getBundle("engine/sprites/properties/resources/properties");
-    private final String PACKAGE = "engine.sprites.properties.";
-    
+    public static final String PACKAGE = "engine.sprites.properties.";
+
+
     public PropertyFactory() {
 	currentProperties = new HashMap<String, Property>();
     }
-    
-    public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException {
+
+    public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
 	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
 		Enemy enemy = currentLevel.getEnemy(objectName);
@@ -61,16 +58,13 @@ public class PropertyFactory {
 	    }
 	}
     }
-    
-    private Property getProperty(String objectName, String propertyName, List<Object> attributes) {
+
+    private Property getProperty(String objectName, String propertyName, List<Double> attributes) throws MissingPropertiesException {
 	Property ret;
 	String className = PACKAGE + propertyName;
-	String type = null;
-	for(String key : PROPERTIES.keySet()) {
-	    if(propertyName.equals(key)) {
-		type = (String) PROPERTIES.getObject(key);
-	    }
-	}
+	String type = new PropertiesReader().findKey(DEFAULT_PROPERTIES_FILES_PATH, propertyName);
+	System.out.println(className);
+	System.out.println(type);
 	if(type == null) {
 	    return null;
 	}
@@ -86,21 +80,20 @@ public class PropertyFactory {
 	currentProperties.put(objectName, ret);
 	return ret;
     }
-    
-    private Property createUpgradeProperty(String className, String type, List<Object> attributes) {
+
+    private Property createUpgradeProperty(String className, String type, List<Double> attributes) {
 	double cost = ((Double)attributes.get(0)).doubleValue();
 	double value =  ((Double)attributes.get(1)).doubleValue();
 	double property = ((Double)attributes.get(2)).doubleValue();
-	Reflection reflection = new Reflection();
-	System.out.println("Class name: " + className + " property: " + property);
-	return (UpgradeProperty) reflection.createInstance(className, cost, value, property );
+	//	System.out.println("Class name: " + className + " property: " + property);
+	return (UpgradeProperty) Reflection.createInstance(className, cost, value, property );
     }
 
     private Property createProperty(String className, String type, Object attribute) {
-	Reflection reflection = new Reflection();
-	return (Property) reflection.createInstance(className, (double) attribute);
+	System.out.println("CLASSNAME " + className);
+	return (Property) Reflection.createInstance(className, (double) attribute);
     }
-    
+
     public List<Object> retrieveProperty(String objectName, String propertyName) {
 	for(String object : currentProperties.keySet()) {
 	    if(object.equals(objectName)) {
@@ -109,5 +102,4 @@ public class PropertyFactory {
 	}
 	return null;
     }
-   
 }

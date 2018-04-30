@@ -3,6 +3,7 @@ package engine.sprites;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.physics.ImageIntersecter;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
@@ -15,6 +16,7 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  * @author Katherine Van Dyk
  * @author Ryan Pond 4/9
+ * 
  * @param image
  * @param projectileManager
  */
@@ -32,8 +34,9 @@ public abstract class ShootingSprites extends Sprite{
      * @param image: String denoting image path of sprite
      * @param size: Size parameter of the image
      * @param launcher: Launcher object specific to shooting sprite
+     * @throws MissingPropertiesException 
      */
-    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) {
+    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
 	super(name, image, size, properties);
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
@@ -50,7 +53,7 @@ public abstract class ShootingSprites extends Sprite{
 
     /**
      * This checks for collisions between the shooter's projectiles and this ShootingSprite
-     * @param shooter : Input shooter that is shooting projectiles
+     * @param target : Input shooter that is shooting projectiles
      * @return : a list of all sprites to be removed from screen (dead)
      */
     public List<Sprite> checkForCollision(ShootingSprites target) {
@@ -112,7 +115,7 @@ public abstract class ShootingSprites extends Sprite{
 	return myLauncher.hasReloaded(elapsedTime);
     }
 
-    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	return myLauncher.launch(target, shooterX, shooterY);
     }
 
@@ -143,18 +146,20 @@ public abstract class ShootingSprites extends Sprite{
      */
     //TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
+
 	//	System.out.println("gets here");
-	if(upgradeName.equals("test4")) {
+	if(upgradeName.equals("Armor_Upgrade")) {
 	    System.out.println("upgrade is working woo");
 	    return upgradeLauncherProperty(balance, "FireRateProperty");
 	}
-	if(upgradeName == "test3") {
+
+	if(upgradeName == "Health_Upgrade") {
 	    return upgradeProperty(balance, "HealthProperty");
 	}
-	if(upgradeName == "test2") {
+	if(upgradeName == "Damage_Upgrade") {
 	    return upgradeProperty(balance, "DamageProperty");
 	}
-	if(upgradeName == "test1") {
+	if(upgradeName == "Fire_Rate_Upgrade") {
 	    return upgradeLauncherProperty(balance, "RangeProperty");
 	}
 	return balance;

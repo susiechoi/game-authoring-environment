@@ -19,25 +19,14 @@ import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import voogasalad.util.soundfactory.*;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+
 
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
  */
-
-import voogasalad.util.soundfactory.*;
-
-
-
 public class GameScreen extends Screen {
 
 
@@ -66,7 +55,7 @@ public class GameScreen extends Screen {
 	MEDIATOR = mediator;
 	SOUND_FACTORY = MEDIATOR.getSoundFactory();
 	TOWER_PANEL = new TowerPanel(this);
-	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS);
+	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS, SCREEN_MANAGER);
 	SCORE_PANEL = new ScorePanel(this);
 	GAME_PANEL = new GamePanel(this);
     }
@@ -82,10 +71,13 @@ public class GameScreen extends Screen {
 	displayPane.setCenter(TOWER_PANEL.getPanel());
 	displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+
 	gamePane = new BorderPane();
 	gamePane.setTop(SCORE_PANEL.getPanel());
-	gamePane.setCenter(GAME_PANEL.getPanel());
-
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+	MEDIATOR.pause();
 	rootPane.setCenter(gamePane);
 	setVertPanelsLeft();
 	return rootPane;
@@ -189,7 +181,7 @@ public class GameScreen extends Screen {
     }
 
 
-    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException, MissingPropertiesException {
 	return MEDIATOR.placeTower(position, tower.getName());
     }
 
@@ -234,7 +226,6 @@ public class GameScreen extends Screen {
 	rootPane.getChildren().remove(displayPane);
 	rootPane.setRight(null);
 	rootPane.setLeft(displayPane);
-
     }
     private void setVertPanelsRight() {
 	rootPane.getChildren().remove(displayPane);
@@ -285,7 +276,21 @@ public class GameScreen extends Screen {
     public void nextLevel() {
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
-	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+	MEDIATOR.pause();
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> newLevel());
+
     }
+
+    private void newLevel() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
+
+    }
+
+    private void gameStart() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
+    }
+
 
 }

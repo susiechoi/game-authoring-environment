@@ -117,7 +117,7 @@ public class AuthoringController implements MVController{
      * (or the default level if the user has not customized any level) 
      * @return integer of new level created
      */
-    public int addNewLevel() {
+    public int addNewLevel() throws ObjectNotFoundException{
 	return myModel.addNewLevel(); 
     }
 
@@ -134,8 +134,9 @@ public class AuthoringController implements MVController{
     /**
      * Wraps Model method to autogenerate a level
      * @return int level number of new level
+     * @throws MissingPropertiesException 
      */
-    public int autogenerateLevel() {
+    public int autogenerateLevel() throws MissingPropertiesException {
 	return myModel.autogenerateLevel(); 
     }
 
@@ -276,8 +277,8 @@ public class AuthoringController implements MVController{
 	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
     }
 
-    public void setObjectAttributes(int level, String objectType, String name, String propertyName, List<Object> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
-	myModel.setObjectProperty(level, objectType, name, propertyName, attributes);
+    public void createProperty(int level, String objectType, String name, String propertyName, List<Double> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException, MissingPropertiesException {
+	myModel.createProperty(level, objectType, name, propertyName, attributes);
     }
 
     public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{

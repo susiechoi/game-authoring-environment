@@ -4,6 +4,8 @@ import engine.sprites.towers.FrontEndTower;
 import frontend.PromptReader;
 import gameplayer.screen.GameScreen;
 import frontend.UIFactory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
@@ -63,5 +65,17 @@ public class BuyPanel extends SpecificPanel {
         }
         return sb.toString().trim();
     }
+    private void checkAffordUpgrade() {
+	
+    }
+    
+    public ChangeListener<Number> createCurrencyListener() {
+  	return new ChangeListener<Number>() {
+  	    @Override
+  	    public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+  	    }
+  	};
+      }
+
 
 }

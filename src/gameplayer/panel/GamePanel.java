@@ -48,7 +48,6 @@ public class GamePanel extends Panel{
     private final String DEFAULT_BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
     private boolean backgroundSet;
-    private boolean pathSet;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
@@ -60,7 +59,6 @@ public class GamePanel extends Panel{
 	towerSelected =  null;
 	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
 	backgroundSet = false;
-	pathSet = false;
     }
 
     @Override
@@ -71,7 +69,13 @@ public class GamePanel extends Panel{
 	scroll = new ScrollPane(gamePane);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 
-	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+	gamePane.setOnMouseClicked(e -> {
+	    try {
+		handleMouseInput(e.getX(), e.getY());
+	    } catch (MissingPropertiesException e1) {
+		// TODO Auto-generated catch block
+	    }
+	});
 
 	spriteAdd = gamePane;
 	PANEL = scroll;
@@ -83,7 +87,7 @@ public class GamePanel extends Panel{
 	    return false;
 	}
 	ImageView imageView;
-	
+
 	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
 	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
 	spriteAdd.setMaxHeight(imageHeight);
@@ -100,19 +104,13 @@ public class GamePanel extends Panel{
 
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
-	if(!pathSet) {
-	    PathMaker pathMaker = new PathMaker();
+	backgroundSet = setBackgroundImage(backgroundImageFilePath);
+	if(backgroundSet) {
+	    PathMaker pathMaker = new PathMaker(GAMEPLAYER_PROPERTIES, GAME_SCREEN.getScreenManager());
 	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
-	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
-	    spriteAdd.getChildren().add(grid);
-	    pathSet = true;
-	}
-	if(pathSet) {
-	    spriteAdd.getChildren().remove(grid);
 	    spriteAdd.getChildren().add(grid);
 	}
 	return backgroundSet;
@@ -161,11 +159,10 @@ public class GamePanel extends Panel{
 	ImageView towerImage = tower.getImageView();
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
     }
-
+    
     private void removeTowerRangeIndicator() {
 	spriteAdd.getChildren().remove(rangeIndicator);
 	towerSelected = null;
@@ -215,7 +212,7 @@ public class GamePanel extends Panel{
 	towerPlaceMode = false;
     }
 
-    public void handleMouseInput(double x, double y) {
+    public void handleMouseInput(double x, double y) throws MissingPropertiesException {
 	if(towerPlaceMode) {
 	    try {
 		Point position = new Point((int)x,(int)y);
@@ -228,14 +225,14 @@ public class GamePanel extends Panel{
 	    }
 	    catch(CannotAffordException e){
 		Log.debug(e);
-		//TODO aaahhhhhhhhh
-		//GameScreen popup for cannot afford
+		resetCursor();
 	    }
+	    GAME_SCREEN.blankGamePanelClick();
 	}
 	else if(!towerClick) {
 	    removeTowerRangeIndicator();
+	    GAME_SCREEN.blankGamePanelClick();
 	}
-	GAME_SCREEN.blankGamePanelClick();
 	towerClick = false;
     }
 
