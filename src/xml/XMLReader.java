@@ -13,10 +13,10 @@ import data.GameData;
 public interface XMLReader {
 
 	/**
-	 * Main functional unit of an XMLReader object. Uses XStream to parse a file and return an AuthoringModel object.
+	 * Main functional unit of an XMLReader object. Uses XStream to parse a file and return an AuthoredGame or PlayState object.
 	 * 
 	 * @param filename name of file to be read
-	 * @return AuthoringModel based on specified file
+	 * @return GameData (AuthoredGame or PlayState) based on specified file
 	 */
 	public GameData createModel(String filename);
 	

@@ -22,20 +22,27 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 	public static final String DEFAULT_GAME_NAME_KEY = "myGameName"; 
 	public static final String DEFAULT_HEALTH_KEY = "myStartingHealth";
 	public static final String DEFAULT_MONEY_KEY = "myStartingMoney";
+	public static final String BACKGROUND_MUSIC_KEY = "myBackgroundMusic";
+	public static final String LEVEL_WIN_SOUND_KEY = "myLevelWinSound";
+	public static final String LEVEL_LOSS_SOUND_KEY = "myLevelLossSound";
 	public static final String DEFAULT_CSS_STYLES = "src/styling/CurrentCSS.properties";
 	public static final String OBJECT_TYPE = "Settings";
 	
     	private TextField myGameNameEntry;
 	private Slider myStartingHealthSlider;
 	private Slider myStartingCurrencySlider;
+	private String myBackgroundMusic;
+	private String myLevelWinSound;
+	private String myLevelLossSound;
 //	private ComboBox<String> myCSSFilenameChooser;
+	
 	
     	protected AdjustResourcesScreen(AuthoringView view) {
 		super(view);
 	}
 
 	/**
-	 * Creates features (specifically, sliders) that users can manipulate to change starting reosurces of player
+	 * Creates features (specifically, sliders) that users can manipulate to change starting resources of player
 	 */
 	@Override
 	public Parent populateScreenWithFields(){
@@ -43,6 +50,10 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyStartingResources")));
 
+		myBackgroundMusic = "stillDre";
+		myLevelWinSound = "applause";
+		myLevelLossSound  = "boo";
+		
 		Text settingsHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SettingsHeading"));
 		myGameNameEntry = getUIFactory().makeTextField();
 		vb.getChildren().add(settingsHeading);
@@ -91,6 +102,9 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		    	setSaved();
 		    	getView().setGameName(myGameNameEntry.getText());
 		    	getView().setObjectAttribute(OBJECT_TYPE, DEFAULT_GAME_NAME_KEY, myGameNameEntry.getText());
+		    	getView().setObjectAttribute(OBJECT_TYPE, BACKGROUND_MUSIC_KEY, myBackgroundMusic);
+		    	getView().setObjectAttribute(OBJECT_TYPE, LEVEL_WIN_SOUND_KEY, myLevelWinSound);
+		    	getView().setObjectAttribute(OBJECT_TYPE, LEVEL_LOSS_SOUND_KEY, myLevelLossSound);
 		    	getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
