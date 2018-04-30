@@ -62,7 +62,6 @@ public class MainScreen extends Screen {
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
 			    	Log.debug(e);
-				e.printStackTrace();
 				myView.loadErrorScreen("NoFile");
 			}
 		});

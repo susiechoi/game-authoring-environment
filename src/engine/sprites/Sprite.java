@@ -32,7 +32,8 @@ public class Sprite implements FrontEndSprite{
     private String myImageString;
     private PropertyBuilder myPropertyBuilder;
     private List<Property> myProperties;
-
+    private final String FILEPATH = "file:";
+    private final int SIZE = 50;
 
 
     /**
@@ -44,7 +45,7 @@ public class Sprite implements FrontEndSprite{
      * @param size: size of tower's image
      * @throws MissingPropertiesException 
      */
-    public Sprite(String name, String image, double size, List<Property> properties) throws MissingPropertiesException {
+    public Sprite(String name, String image, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
 	myImageString = image;
 	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
@@ -189,9 +190,7 @@ public class Sprite implements FrontEndSprite{
     }
 
     public void addProperty(Property property) {
-	System.out.println("PROPERTY: " + property);
 	String type = property.getClass().getSuperclass().getSimpleName();
-	System.out.println("TYPE: "+ type);
 	Property toRemove = null; 
 	for(Property p : myProperties) {
 	    if(property.getName().equals(p.getName())) {

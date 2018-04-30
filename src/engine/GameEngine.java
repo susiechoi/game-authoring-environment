@@ -1,12 +1,19 @@
 package engine;
 
+
 import java.io.IOException;
+
+import java.io.FileNotFoundException;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+
 import xml.BadGameDataException;
+import jdk.internal.jline.internal.Log;
+
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
@@ -23,13 +30,11 @@ public class GameEngine {
 	private final Integer DEFAULT_RELATIVE_SPEED = 5;
 	private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private PlayState myPlayState;
-	private Mediator myMediator;
 	private Timeline ANIMATION;
 	private double timeFactor;
 
-	public GameEngine(Mediator mediator) {
+	public GameEngine() {
 		myPlayState = null;
-		myMediator = mediator;
 		timeFactor = 1;
 
 		setSpeed(DEFAULT_RELATIVE_SPEED);
@@ -38,8 +43,10 @@ public class GameEngine {
 				e -> {
 				    try {
 					loop(SECOND_DELAY);
-				    } catch (MissingPropertiesException e1) {
-					// TODO Auto-generated catch block
+				    } catch (MissingPropertiesException i) {
+					Log.debug(i);
+				    } catch (FileNotFoundException i) {
+					Log.debug(i);
 				    }
 				});
 		ANIMATION = new Timeline();
@@ -62,8 +69,9 @@ public class GameEngine {
 	 * Calls the update function every loop
 	 * @param elapsedTime
 	 * @throws MissingPropertiesException 
+	 * @throws FileNotFoundException 
 	 */
-	public void loop(double elapsedTime) throws MissingPropertiesException {
+	public void loop(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
 		myPlayState.update(elapsedTime*timeFactor);
 	}
 

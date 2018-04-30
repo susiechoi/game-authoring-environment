@@ -105,8 +105,9 @@ public class Mediator implements MVController{
     /**
      * Starts a new play given a path to an AuthoringModel. To be called when a user chooses a file on the front end to start a new Play
      * @param filename	name of file
+     * @throws MissingPropertiesException 
      */
-    public void startPlay(String filename) {
+    public void startPlay(String filename) throws MissingPropertiesException {
 	myPlayController.newPlay(filename);
 	//myPlayController.setAuthoring();
     }

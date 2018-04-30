@@ -33,6 +33,6 @@ public class TowerBuilder {
 	List<Property> properties = new ArrayList<>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));
-	return new Tower(name, imagepath, size, launcher, properties);
+	return new Tower(name, imagepath, launcher, properties);
     }
 }

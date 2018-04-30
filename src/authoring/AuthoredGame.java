@@ -25,8 +25,11 @@ public class AuthoredGame implements GameData {
     private Settings mySettings; 
     private Map<Integer, Level> myLevels;
     private String myGameName;
-    //	private Path myPath;
 
+    /**
+     * 
+     * 
+     */
     protected AuthoredGame() {
 	myLevels = new HashMap<>();
     }
