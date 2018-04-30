@@ -204,7 +204,7 @@ public class CreatePathGrid {
 
     protected boolean checkPathConnected(GridPane grid, int row, int col) {
 	Label checkLabel = (Label) getNode(grid, col, row);
-	addCoordinates(row, col);
+
 	if (getNode(grid, col, row) != null) {
 	    if (checkLabel.getText() == "end") {
 //		addCoordinates(row, col);
@@ -214,7 +214,7 @@ public class CreatePathGrid {
 	    return false;
 	}
 	removeNode(grid, row, col);
-//	addCoordinates(row, col);
+	addCoordinates(row, col);
 
 	if ((checkPathConnected(grid, row + 1 , col)) == true) {
 	    grid.add(new Label("path"), col, row);

@@ -35,7 +35,7 @@ import voogasalad.util.soundfactory.*;
 public class GameScreen extends Screen {
 
 
-	private static final String DEFAULT_POPUP_STYLESHEET = "styling/jungleTheme.css";
+	private static final String DEFAULT_POPUP_STYLESHEET = "styling/GameAuthoringStartScreen.css";
 	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 	private final String DEFAULT_SHARED_STYLESHEET;
 	
@@ -162,10 +162,14 @@ public class GameScreen extends Screen {
 		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
 		    	Stage pop = new Stage();
 		    	VBox vb = new VBox();
-		    	vb.getChildren().add(new Text(MEDIATOR.getInstructions()));
+		    	Text text = new Text(MEDIATOR.getInstructions());
+		    	text.setWrappingWidth(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("InstructionsHeight")));
+		    	vb.getChildren().add(text);
 		    	Scene unstyled = new Scene(vb);
 		    	vb.getStylesheets().add(DEFAULT_POPUP_STYLESHEET);
+		    	
 		    	pop.setScene(unstyled);
+		    	pop.setHeight(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("InstructionsHeight")));
 		    	pop.show();
 		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
 			BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
