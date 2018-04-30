@@ -193,7 +193,7 @@ public class Mediator implements MVController{
      * @throws MissingPropertiesException 
      */
     public void restartLevel() throws MissingPropertiesException {
-	System.out.println("in restart");
+//	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
 
@@ -249,8 +249,8 @@ public class Mediator implements MVController{
 	}
     }
 
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 

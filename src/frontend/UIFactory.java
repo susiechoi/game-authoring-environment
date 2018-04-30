@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesError;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
@@ -306,6 +308,7 @@ public class UIFactory {
 					options2 = propertiesReader.read(propertiesReader.loadProperties(propertiesFilepath));
 				}
 				catch(MissingPropertiesException e2) {
+				    	Log.debug(e2);
 					e2.printStackTrace();
 					throw new MissingPropertiesError("");
 				}

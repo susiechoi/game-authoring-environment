@@ -71,7 +71,7 @@ public class AttributeFactory {
 	else if (objectType.equals("Path")) {
 	    Level currentLevel = game.levelCheck(level);
 	    Path path = currentLevel.getPath();
-	    System.out.println("PATH LEVEL LOADING FROM: " + level);
+//	    System.out.println("PATH LEVEL LOADING FROM: " + level);
 	    attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
 	}
 	else if(objectType.equals("Wave")) {

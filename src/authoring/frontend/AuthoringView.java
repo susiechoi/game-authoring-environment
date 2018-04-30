@@ -153,7 +153,7 @@ public class AuthoringView extends View {
 				}
 			}
 			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				System.out.println(clazz.getSimpleName());
+//				System.out.println(clazz.getSimpleName());
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
@@ -179,8 +179,8 @@ public class AuthoringView extends View {
 		goForwardFrom(id,  parameterList);
 	}
 
-	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
+	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height, boolean transparent) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height, transparent);
 	}
 
 	/**

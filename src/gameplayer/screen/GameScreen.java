@@ -71,9 +71,53 @@ public class GameScreen extends Screen {
 		rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
 		rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 
+<<<<<<< HEAD
 		displayPane = new BorderPane();
 		displayPane.setCenter(TOWER_PANEL.getPanel());
 		displayPane.setBottom(CONTROLS_PANEL.getPanel());
+=======
+    private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+
+    private final PromptReader PROMPTS;
+    private TowerPanel TOWER_PANEL;
+    private GamePanel GAME_PANEL;
+    private ScorePanel SCORE_PANEL;
+    private ControlsPanel CONTROLS_PANEL;
+    private UpgradePanel UPGRADE_PANEL;
+    private ScreenManager SCREEN_MANAGER;
+    private BorderPane displayPane;
+    private BorderPane gamePane;
+    private final Mediator MEDIATOR;
+    private BorderPane rootPane;
+    private SoundFactory SOUND_FACTORY;
+    private Map<String,String> GAMEPLAYER_PROPERTIES;
+
+    public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
+	SCREEN_MANAGER = ScreenController;
+	GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
+	setStyleSheet(GAMEPLAYER_PROPERTIES.get("themeStylesheet"));
+	PROMPTS = promptReader;
+	MEDIATOR = mediator;
+	SOUND_FACTORY = MEDIATOR.getSoundFactory();
+	TOWER_PANEL = new TowerPanel(this, SCREEN_MANAGER);
+	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS, SCREEN_MANAGER);
+	SCORE_PANEL = new ScorePanel(this);
+	GAME_PANEL = new GamePanel(this);
+    }
+
+
+    @Override
+    public Parent makeScreenWithoutStyling() {
+	rootPane = new BorderPane();
+	rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
+
+	displayPane = new BorderPane();
+	displayPane.setCenter(TOWER_PANEL.getPanel());
+	displayPane.setBottom(CONTROLS_PANEL.getPanel());
+
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+>>>>>>> 37e6387f110abce2af5f5b9ae8b834366ef58c16
 
 		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
 		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
@@ -212,6 +256,7 @@ public class GameScreen extends Screen {
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
 
+
     private void settingsClickedOn() {
 	SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
 	displayPane.setBottom(SETTINGS_PANEL.getPanel());
@@ -228,9 +273,8 @@ public class GameScreen extends Screen {
 	blankGamePanelClick();
     }
 
-
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 
@@ -238,6 +282,7 @@ public class GameScreen extends Screen {
 	rootPane.getChildren().remove(displayPane);
 	rootPane.setRight(null);
 	rootPane.setLeft(displayPane);
+
     }
     private void setVertPanelsRight() {
 	rootPane.getChildren().remove(displayPane);
@@ -297,7 +342,6 @@ public class GameScreen extends Screen {
     private void newLevel() {
 	gamePane.setCenter(GAME_PANEL.getPanel());
 	MEDIATOR.play();
-
     }
 
     private void gameStart() {

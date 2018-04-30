@@ -33,8 +33,8 @@ public class PropertyFactory {
     }
 
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
-	System.out.println("SETTING PROPERTY");
-	System.out.println(propertyName);
+//	System.out.println("SETTING PROPERTY");
+//	System.out.println(propertyName);
 	for (Double s : attributes) System.out.println(s);
 	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
@@ -74,8 +74,8 @@ public class PropertyFactory {
 	Property ret;
 	String className = PACKAGE + propertyName;
 	String type = new PropertiesReader().findKey(DEFAULT_PROPERTIES_FILES_PATH, propertyName);
-	System.out.println(className);
-	System.out.println(type);
+//	System.out.println(className);
+//	System.out.println(type);
 	if(type == null) {
 	    return null;
 	}
@@ -101,7 +101,7 @@ public class PropertyFactory {
     }
 
     private Property createProperty(String className, String type, Object attribute) {
-	System.out.println("CLASSNAME " + className);
+//	System.out.println("CLASSNAME " + className);
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
     

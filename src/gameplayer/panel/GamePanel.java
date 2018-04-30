@@ -104,12 +104,12 @@ public class GamePanel extends Panel{
 	return true;
     }
 
-
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
 	backgroundSet = setBackgroundImage(backgroundImageFilePath);
 	if(backgroundSet) {
 	    PathMaker pathMaker = new PathMaker(GAMEPLAYER_PROPERTIES, GAME_SCREEN.getScreenManager());
-	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
+
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
@@ -161,6 +161,7 @@ public class GamePanel extends Panel{
 	ImageView towerImage = tower.getImageView();
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
+	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
     }
@@ -183,8 +184,7 @@ public class GamePanel extends Panel{
 	    towImage.toFront();
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    //TODO let's not fail please!!
-	    System.out.println("Constants property file not found");
+//	    System.out.println("Constants property file not found");
 	}
     }
 

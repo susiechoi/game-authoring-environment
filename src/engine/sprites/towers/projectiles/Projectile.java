@@ -76,7 +76,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    myMovingProperty.move(this, elapsedTime);
 	}catch(NullPointerException e) {
 	    //this means there is not movement property defined for the projectile, so don't move them
-	    System.out.println("no movement property");
+//	    System.out.println("no movement property");
 	    return;
 	}
 	
