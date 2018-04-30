@@ -2,15 +2,11 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.sun.javafx.tools.packager.Log;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
-
 import java.awt.Point;
 import java.io.FileNotFoundException;
-
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
@@ -86,7 +82,7 @@ public class PlayState implements GameData {
 	//Background has to be passed after a layout pass has been done on the Scene in order to adapt to
 	//differences in computers screen size 
 	if(!backgroundSet) {
-	    backgroundSet = myMediator.setPath(myLevels.get(0).getLevelPathMap(), myLevels.get(0).getBackGroundImage(), myLevels.get(0).getPathSize(), myLevels.get(0).getGridWidth(), myLevels.get(0).getGridHeight());
+	    backgroundSet = myMediator.setPath(myLevels.get(0).getLevelPathMap(), myLevels.get(0).getBackGroundImage(), myLevels.get(0).getPathSize(), myLevels.get(0).getGridWidth(), myLevels.get(0).getGridHeight(), myLevels.get(0).getTransparent());
 	}
 	count++;
 	checkLoss();
@@ -261,7 +257,7 @@ public class PlayState implements GameData {
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	myMediator.updateLevel(currentLevel.myNumber());
 	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), 
-		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
+		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight(), currentLevel.getTransparent());
     }
 
     /**

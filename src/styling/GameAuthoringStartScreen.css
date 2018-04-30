@@ -125,6 +125,21 @@ ComboBox {
 	-fx-background-color: #488286; 
 }
 
+.toggle-button {
+	-fx-font-family: "Quicksand";
+	-fx-min-width: 200;		
+	-fx-min-height: 50;
+	-fx-background-color: #B7D5D4;
+}
+
+.toggle-button:hover {
+	-fx-font-size: 21pt; 
+   	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.toggle-button:selected {
+   	-fx-background-color: #488286
+}
+
 .chart-title {
 	-fx-font-family: "Quicksand";
 	-fx-font-size: 18pt; 

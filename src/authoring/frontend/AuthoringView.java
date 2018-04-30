@@ -179,8 +179,8 @@ public class AuthoringView extends View {
 		goForwardFrom(id,  parameterList);
 	}
 
-	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
+	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height, boolean transparent) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height, transparent);
 	}
 
 	/**

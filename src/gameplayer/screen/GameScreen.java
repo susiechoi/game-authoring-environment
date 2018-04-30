@@ -216,8 +216,8 @@ public class GameScreen extends Screen {
 	blankGamePanelClick();
     }
 
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 

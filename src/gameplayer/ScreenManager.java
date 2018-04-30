@@ -149,9 +149,9 @@ public class ScreenManager extends View {
 	}
 
 
-	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
 		checkGameScreenInitialization();
-		return GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+		return GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
