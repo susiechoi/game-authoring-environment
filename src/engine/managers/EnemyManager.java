@@ -2,7 +2,6 @@ package engine.managers;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class EnemyManager extends ShootingSpriteManager {
      */
     public EnemyManager() {
 	super();
-	myEnemies = new HashMap<Path, List<Enemy>>();
+	myEnemies = new HashMap<>();
     }
 
     /**
@@ -83,10 +82,6 @@ public class EnemyManager extends ShootingSpriteManager {
 	return curr.distance(target)<10;
     }
 
-    public void setEnemies(Collection<Enemy> enemies) {
-
-    }
-
     /**
      * Adds an enemy to the manager that's mapped to a specific path
      * 
@@ -100,7 +95,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	    myEnemies.put(path, pathEnemies);
 	}
 	else {
-	    List<Enemy> pathEnemies = new ArrayList<Enemy>();
+	    List<Enemy> pathEnemies = new ArrayList<>();
 	    pathEnemies.add(enemy);
 	    myEnemies.put(path, pathEnemies);
 	}
@@ -117,6 +112,7 @@ public class EnemyManager extends ShootingSpriteManager {
      * Method to remove enemies from the current enemies map
      * @param toBeRemoved
      */
+    @SuppressWarnings("unlikely-arg-type")
     public void removeFromMap(List<Sprite> toBeRemoved) {
 	for(Sprite s : toBeRemoved) {
 	    myEnemies.remove(s);
