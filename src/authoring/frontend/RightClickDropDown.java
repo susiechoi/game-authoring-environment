@@ -33,31 +33,24 @@ public class RightClickDropDown {
 
     public ContextMenu setupDropDown() {
 	ContextMenu contextMenu = new ContextMenu();
-	MenuItem item1 = new MenuItem("Rotate");
+	
+	MenuItem item1 = new MenuItem("Copy");
 	item1.setOnAction(new EventHandler<ActionEvent>() {
 	    @Override
 	    public void handle(ActionEvent event) {
-		myModel.rotate();
-	    }
-	});
-
-	MenuItem item2 = new MenuItem("Set Transparent");
-	item2.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(ActionEvent event) {
-		myModel.setTransparent();
+		myModel.copy();
 	    }
 	});
 	
-	MenuItem item3 = new MenuItem("Set Curved");
-	item3.setOnAction(new EventHandler<ActionEvent>() {
+	MenuItem item2 = new MenuItem("Paste");
+	item2.setOnAction(new EventHandler<ActionEvent>() {
 	    @Override
 	    public void handle(ActionEvent event) {
-		myModel.setCurved();
+		myModel.paste();
 	    }
 	});
 
-	contextMenu.getItems().addAll(item1, item2, item3);
+	contextMenu.getItems().addAll(item1, item2);
 	return contextMenu;
     }
 }

@@ -16,6 +16,7 @@ public abstract class PathScreen extends AdjustScreen {
     private StackPane pathRoot;
     protected GridPane pathGrid;
     protected CreatePathGrid grid;
+    
     protected PathScreen(AuthoringView view) {	
 	super(view);
 	setStyleSheet(view.getCurrentCSS());
@@ -39,9 +40,6 @@ public abstract class PathScreen extends AdjustScreen {
 	StackPane.setAlignment(toolbar.getPanel(), Pos.BOTTOM_LEFT);
     }
 
-    //this pops up at beginning...sets path size, does percent width..?
-   
-
     @Override
     public Parent makeScreenWithoutStyling() {
 
@@ -50,7 +48,6 @@ public abstract class PathScreen extends AdjustScreen {
 	makePanels();
 	initializeGridSettings(grid);
 	setSpecificUIComponents();
-	
 	return pathRoot; 	
     }
 

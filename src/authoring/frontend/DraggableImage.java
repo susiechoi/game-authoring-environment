@@ -1,10 +1,8 @@
 package authoring.frontend;
 
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,7 +12,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 
 /**
@@ -77,22 +74,6 @@ public class DraggableImage extends Parent {
     }
 
     public void setDraggable(GridPane grid, int row, int col) {
-	//		pathImage.setOnMouseEntered(new EventHandler <MouseEvent>() {
-	//			@Override
-	//			public void handle(MouseEvent event){
-	//				ColorAdjust colorAdjust = new ColorAdjust();
-	//				colorAdjust.setBrightness(0.3);
-	//				pathImage.setEffect(colorAdjust);
-	//				event.consume();    
-	//			}
-	//		});
-	//		pathImage.setOnMouseExited(new EventHandler <MouseEvent>() {
-	//			@Override
-	//			public void handle(MouseEvent event){
-	//				pathImage.setEffect(null);
-	//				event.consume();    
-	//			}
-	//		});
 
 	pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 	    @Override

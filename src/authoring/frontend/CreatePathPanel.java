@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -30,6 +29,8 @@ public class CreatePathPanel extends PathPanel {
     public static final int PANEL_PATH_SIZE = 90;
     public static final int PANEL_WIDTH = 330;
     public static final int PANEL_HEIGHT = 900;
+    public static final int TRASH_IMAGE_SIZE = 120;
+    public static final String TRASH_IMAGE = "file:images/trash.png";
     public static final String DEFAULT_PATH_IMAGE = "file:images/cobblestone.png";
     public static final String DEFAULT_START_IMAGE = "file:images/brick.png";
     public static final String DEFAULT_END_IMAGE = "file:images/darkstone.png";
@@ -44,6 +45,7 @@ public class CreatePathPanel extends PathPanel {
 
     public CreatePathPanel(AuthoringView view) {
 	super(view);
+	makeScreenWithoutStyling();
 	makePanel();
     }
 
@@ -53,35 +55,37 @@ public class CreatePathPanel extends PathPanel {
     }
 
     @Override
-    protected void makePanel() {
-
+    public Parent makeScreenWithoutStyling() {
 	pathPanel = new VBox();
 	pathPanel.setMaxSize(PANEL_WIDTH, PANEL_HEIGHT);
 	pathPanel.getStylesheets();
+	return pathPanel;
+    }
+
+    @Override
+    protected void makePanel() {
 
 	Label panelTitle = new Label("Drag and Drop Paths");
 	Label startLabel = new Label("Start:");
 	Label pathLabel = new Label("Path:");
 	Label endLabel = new Label("End:");
 
-	HBox pathHBox = new HBox();
-
 	pathImage = new DraggableImage(new Image(DEFAULT_PATH_IMAGE));
 	pathImage.setCopyDraggable();
-	pathImage.getPathImage().setId("path");
+	pathImage.getPathImage().setId(CreatePathGrid.PATH);
 
 	startImage = new DraggableImage(new Image(DEFAULT_START_IMAGE));
 	startImage.setCopyDraggable();
-	startImage.getPathImage().setId("start");
+	startImage.getPathImage().setId(CreatePathGrid.START);
 
 	endImage = new DraggableImage(new Image(DEFAULT_END_IMAGE));
 	endImage.setCopyDraggable();
-	endImage.getPathImage().setId("end");
+	endImage.getPathImage().setId(CreatePathGrid.END);
 
 	applyButton = getUIFactory().makeTextButton("", "Apply");
 	backButton = setupBackButton();
 
-	trashImage = new ImageView(new Image("file:images/trash.png", 120, 120, true, false));
+	trashImage = new ImageView(new Image(TRASH_IMAGE, TRASH_IMAGE_SIZE, TRASH_IMAGE_SIZE, true, false));
 
 	ToggleGroup radioGroup = new ToggleGroup();
 	ToggleButton transparentToggle = new ToggleButton("Make Path Transparent");
@@ -96,8 +100,21 @@ public class CreatePathPanel extends PathPanel {
 		}
 	    }
 	});
-
 	pathPanel.getChildren().addAll(panelTitle, startLabel, startImage.getPathImage(), pathLabel, pathImage.getPathImage(), endLabel, endImage.getPathImage(), trashImage, transparentToggle, applyButton, backButton);
+    }
+
+    @Override
+    protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
+	applyButton.setOnAction(
+		event -> {
+		    setSaved();
+		    e.handle(event);
+		});
+    }
+
+    @Override
+    protected Node getPanel() {
+	return pathPanel;
     }
 
     protected ImageView makeTrashImage() {
@@ -121,11 +138,6 @@ public class CreatePathPanel extends PathPanel {
 	return isTransparent;
     }
 
-    @Override
-    protected Node getPanel() {
-	return pathPanel;
-    }
-
 
     protected DraggableImage getPanelPathImage() {
 	return pathImage;
@@ -138,26 +150,4 @@ public class CreatePathPanel extends PathPanel {
     protected DraggableImage getPanelEndImage() {
 	return endImage;
     }
-
-    /** 
-     * TODO: this method is null - should be integrated
-     *
-     * @see frontend.Screen#makeScreenWithoutStyling()
-     */
-    @Override
-
-    public Parent makeScreenWithoutStyling() {
-	//TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
-	applyButton.setOnAction(
-		event -> {
-		    setSaved();
-		    e.handle(event);
-		});
-    }
 }
-

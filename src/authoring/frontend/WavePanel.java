@@ -39,6 +39,7 @@ public class WavePanel extends PathPanel{
 	private Integer myEnemyNumber;
 	private Integer myWaveNumber;
 	private WavePanel mySelf;
+	
 	public WavePanel(AuthoringView view, Point point, String waveNumber) {
 		super(view);
 //		if (grid == null) {
