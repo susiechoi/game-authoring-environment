@@ -49,6 +49,7 @@ public class PropertyScreen extends AuthoringScreen {
 		List<String> keys = null;
 		try {
 			keys = getView().getPropertiesReader().allKeys(myPropertiesFilepath);
+			for (String s : keys) System.out.println(s);
 		} catch (MissingPropertiesException e1) {
 			getView().loadErrorScreen(DEFAULT_NOFILEERROR_KEY);
 		}

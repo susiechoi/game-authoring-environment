@@ -52,7 +52,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 		makeTowerComponents(vb);
 		makeHealthComponents(vb);
 
-		vb.getChildren().add(makePropertySelector());
+		vb.getChildren().add(makePropertySelector(OBJECT_TYPE));
 
 		Button goToProjectileLauncherButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 		vb.getChildren().add(goToProjectileLauncherButton);
