@@ -102,7 +102,6 @@ public class GamePanel extends Panel{
 	}
 	spriteAdd.getChildren().add(imageView);
 	return true;
-
     }
 
 

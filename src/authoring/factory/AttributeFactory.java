@@ -25,6 +25,7 @@ public class AttributeFactory {
 	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
 		setObjectStringField(currentLevel.getEnemy(name), attribute, attributeValue);
+
 	    }
 	}
 	else if (objectType.equals("Tower")) {
@@ -91,7 +92,7 @@ public class AttributeFactory {
     private void setObjectStringField(Sprite spriteToSet, String attribute, Object attributeValue) {
 	    if(attribute.equals(DEFAULT_IMAGE_IDENTIFIER)) {
 		System.out.println("setting a tower/enemy image");
-		spriteToSet.setImageString((String) attributeValue);
+		spriteToSet.updateImage((String) attributeValue);
 	    }
 	    else if(attribute.equals(DEFAULT_PROJECTILE_IMAGE_IDENTIFIER) && spriteToSet instanceof ShootingSprites) {
 		System.out.println("setting a projectile image");

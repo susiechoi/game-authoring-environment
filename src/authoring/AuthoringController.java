@@ -2,6 +2,8 @@
  * 
  * @author susiechoi 
  * @author Ben Hodgson 4/9/18
+ * @author benauriemma
+ * @author Katherine Van Dyk
  *
  * Class that handles mediating creation of authoring environment objects (towers, enemies, path). 
  * Represents Controller in MVC of the authoring environment. 
@@ -11,6 +13,7 @@
 package authoring;
 import java.awt.Point;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +33,7 @@ import frontend.StageManager;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelReader;
 import xml.AuthoringModelWriter;
+import xml.BadGameDataException;
 
 
 public class AuthoringController implements MVController{
@@ -75,8 +79,8 @@ public class AuthoringController implements MVController{
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions) {
-	myModel.makeResources(gameName, startingHealth, starting$, css, theme, instructions);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	myModel.makeResources(gameName, startingHealth, starting$, css, theme, instructions, backgroundMusic, levelWinSound, levelLossSound);
     }
 
     // TODO
@@ -271,6 +275,17 @@ public class AuthoringController implements MVController{
 	myModel.makeSprite(objectType, level, name);
     }
 
+    /**
+     * Sets attribute of object through reflection
+     * @param level - level number of object whose value is to be set
+     * @param objectType - type of object whose value is to be set, e.g. Toewr
+     * @param objectName - name of object whose value is to be set, e.g. MyNewTower
+     * @param attribute - name of object attribute/field whose value is to be set, e.g. myTowerImage
+     * @param attributeValue - value of attribute to be set, 
+     * @throws ObjectNotFoundException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
     public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
     }
@@ -288,17 +303,23 @@ public class AuthoringController implements MVController{
 	desiredWave.setWaveTime(time);
     }
 
-    public void writeToFile() throws ObjectNotFoundException {
+    public void writeToFile() throws ObjectNotFoundException, BadGameDataException, IOException {
 	AuthoringModelWriter writer = new AuthoringModelWriter();
 	writer.write(myModel.getGame(), myModel.getGameName());
     }
     
     @Override
-    public void playControllerDemo(StageManager manager, String language) {
+    public void playControllerDemo(StageManager manager, String language) throws MissingPropertiesException {
 	new PlayController(manager, language,
 		myModel).demoPlay(myModel.getGame());
     }
     
+    /**
+     * Deletes object 
+     * @param level - level of object to be deleted
+     * @param objectType - type of object to be deleted, e.g. Toewr
+     * @param objectName - name of object to be deleted, e.g. MyNewTower
+     */
     public void deleteObject(int level, String objectType, String objectName) {
 	try {
 	    myModel.deleteObject(level, objectType, objectName);

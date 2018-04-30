@@ -25,6 +25,8 @@ public abstract class ShootingSprites extends Sprite{
     private Launcher myLauncher;
     private int deadCount;
     private ImageIntersecter intersector;
+    private final String HEALTH = "HealthProperty";
+    private final String RANGE = "RangeProperty";
     
     
     /**
@@ -37,20 +39,12 @@ public abstract class ShootingSprites extends Sprite{
      * @param launcher: Launcher object specific to shooting sprite
      * @throws MissingPropertiesException 
      */
-    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
-	super(name, image, size, properties);
+    public ShootingSprites(String name, String image, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
+	super(name, image, properties);
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
 	myLauncher = launcher;
     }
-
-    /**
-     * @return List of all active projectiles
-     */
-    public List<Projectile> getProjectiles(){
-	return myLauncher.getListOfActive();
-    }
-
 
     /**
      * This checks for collisions between the shooter's projectiles and this ShootingSprite
@@ -70,7 +64,7 @@ public abstract class ShootingSprites extends Sprite{
 		}
 	    }
 	}
-	for (Projectile deactivatedProjectile: projectilesToBeDeactivated) { //TODO implement method in shootingSprite (deactivateProjectile) that does this
+	for (Projectile deactivatedProjectile: projectilesToBeDeactivated) { 
 	    this.getLauncher().removeFromActiveList(deactivatedProjectile);
 	}
 	return toBeRemoved;
@@ -107,9 +101,14 @@ public abstract class ShootingSprites extends Sprite{
 	return toBeRemoved;
     }
 
+    /**
+     * Return whether or not a sprite has a target @param passedSprite in range
+     * 
+     * @return boolean, true if in range, false otherwise
+     */
     public boolean hasInRange(Sprite passedSprite) {
 	double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
-	return (distanceBetween <= myLauncher.getProperty("RangeProperty").getProperty());
+	return (distanceBetween <= myLauncher.getProperty(RANGE).getProperty());
     }
 
     public boolean hasReloaded(double elapsedTime) {
@@ -138,29 +137,25 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public boolean isAlive() {
-	return (this.getValue("HealthProperty") > 0);
+	return (this.getValue(HEALTH) > 0);
     }
 
     /**
      * Method that will upgrade the Sprite
      * @param upgradeName : Property to be upgraded
      */
-    //TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
 
-	//	System.out.println("gets here");
 	if(upgradeName.equals("Armor_Upgrade")) {
-	    System.out.println("upgrade is working woo");
 	    return upgradeLauncherProperty(balance, "FireRateProperty");
 	}
-
-	if(upgradeName == "Health_Upgrade") {
+	if(upgradeName.equals("Health_Upgrade")) {
 	    return upgradeProperty(balance, "HealthProperty");
 	}
-	if(upgradeName == "Damage_Upgrade") {
+	if(upgradeName.equals("Damage_Upgrade")) {
 	    return upgradeProperty(balance, "DamageProperty");
 	}
-	if(upgradeName == "Fire_Rate_Upgrade") {
+	if(upgradeName.equals("Fire_Rate_Upgrade")) {
 	    return upgradeLauncherProperty(balance, "RangeProperty");
 	}
 	return balance;
@@ -169,6 +164,7 @@ public abstract class ShootingSprites extends Sprite{
 
     public double upgradeProperty(double balance, String propertyName) {
 	UpgradeProperty propToUpgrade = (UpgradeProperty) this.getProperty(propertyName);
+	System.out.println("property is " + propToUpgrade.getClass().getSimpleName());
 	return propToUpgrade.upgrade(balance);
     }
 
@@ -190,7 +186,15 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public void loseHealth(double damage) {
-	((HealthProperty) this.getProperty("HealthProperty")).loseHealth(damage);
+	((HealthProperty) this.getProperty(HEALTH)).loseHealth(damage);
+    }
+    
+
+    /**
+     * @return List of all active projectiles
+     */
+    public List<Projectile> getProjectiles(){
+	return myLauncher.getListOfActive();
     }
     public void addLauncherProperty(Property property) {
 	myLauncher.addProperty(property);
@@ -207,5 +211,6 @@ public abstract class ShootingSprites extends Sprite{
 	myLauncher.setProjectileSound(sound);
     }
     
+
 
 }

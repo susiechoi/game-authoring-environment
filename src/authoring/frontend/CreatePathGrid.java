@@ -47,10 +47,10 @@ public class CreatePathGrid {
     private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
     private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
     private GridPane checkGrid;
-    private ArrayList<Point> pathCoords = new ArrayList<Point>();
-    private ArrayList<Point> startPoints = new ArrayList<Point>();
-    private ArrayList<Point> endPoints = new ArrayList<Point>();
-    private ArrayList<Point> pathPoints = new ArrayList<Point>();
+    private ArrayList<Point> pathCoords = new ArrayList<>();
+    private ArrayList<Point> startPoints = new ArrayList<>();
+    private ArrayList<Point> endPoints = new ArrayList<>();
+    private ArrayList<Point> pathPoints = new ArrayList<>();
     private Point myCurrentClicked;
     private DraggableImage path;
     private AuthoringView myView;
@@ -91,7 +91,6 @@ public class CreatePathGrid {
 
 	grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
 	populateGrid(grid);
-
 	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) { //TODO: better way to check if not default
 	    setGridConstraints(grid, (int) getView().getObjectAttribute("Path", "", "myPathSize"));
 	    grid.setStyle("-fx-background-image: url("+getView().getObjectAttribute("Path", "", "myBackgroundImage")+")");
@@ -206,6 +205,7 @@ public class CreatePathGrid {
 	Label checkLabel = (Label) getNode(grid, col, row);
 	if (getNode(grid, col, row) != null) {
 	    if (checkLabel.getText() == "end") {
+		addCoordinates(row, col);
 		return true;
 	    } 
 	} else {
@@ -214,19 +214,19 @@ public class CreatePathGrid {
 	removeNode(grid, row, col);
 	addCoordinates(row, col);
 
-	if ((checkPathConnected(grid, row + 1 , col)) == true) {
+	if ((checkPathConnected(grid, row + 1 , col))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}
-	if ((checkPathConnected(grid, row, col + 1)) == true) {
+	if ((checkPathConnected(grid, row, col + 1))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}
-	if ((checkPathConnected(grid, row, col - 1)) == true) {
+	if ((checkPathConnected(grid, row, col - 1))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}
-	if ((checkPathConnected(grid, row - 1, col)) == true) {
+	if ((checkPathConnected(grid, row - 1, col))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}

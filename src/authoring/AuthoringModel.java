@@ -3,6 +3,7 @@
  * @author susiechoi 
  * @author Ben Hodgson 4/8/18
  * @author Katie Van Dyk 4/24/18
+ * @author benauriemma
  * 
  * Represents the Model component of the Authoring environment's MVC. 
  * Receives input from Controller to determine what object to create/adjust
@@ -36,7 +37,6 @@ import frontend.PropertiesReader;
 
 public class AuthoringModel {
 
-
     public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
     public static final String DEFAULT_PROMPTS_FILE_KEY = "PromptsFile";
     public static final String DEFAULT_CONSTANTS_FILE_KEY = "ConstantFiles"; 
@@ -50,7 +50,6 @@ public class AuthoringModel {
     public static final int DEFAULT_FIRSTLEVEL_NUMBER = 1;
 
     private final GenericModel myGeneric;
-    private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
     private String DEFAULT_CONSTANT_FILEPATH;
     private PropertiesReader myPropertiesReader;
@@ -100,6 +99,7 @@ public class AuthoringModel {
 	currentLevel.addWave(wave);
     }
 
+
     public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
 	myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
 	myBackgroundImage = backgroundImage;
@@ -129,6 +129,16 @@ public class AuthoringModel {
 
     }
 
+    /**
+     * Makes & saves a tower in the authored game with values equal to that of the default tower
+     * @param level
+     * @param name - name of the tower
+     * @throws NoDuplicateNamesException
+     * @throws MissingPropertiesException
+     * @throws NumberFormatException
+     * @throws FileNotFoundException
+     * @throws ObjectNotFoundException
+     */
     public void makeTower(int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 	Level currentLevel = myGame.levelCheck(level);
 	if (currentLevel.containsTower(name)) {
@@ -138,6 +148,12 @@ public class AuthoringModel {
 	currentLevel.addTower(name, newTower);
     }
 
+    /**
+     * Checks if level exists and, if so, returns Level obj
+     * @param level - number of level 
+     * @return
+     * @throws ObjectNotFoundException
+     */
     public Level levelCheck(int level) throws ObjectNotFoundException {
 	return myGame.levelCheck(level);
     }
@@ -150,7 +166,7 @@ public class AuthoringModel {
      * @throws ObjectNotFoundException 
      */
     public List<String> getCurrentObjectOptions(int level, String objectType) throws ObjectNotFoundException {
-	List<String> listToReturn = new ArrayList<String>(); 
+	List<String> listToReturn = new ArrayList<>(); 
 	Level currentLevel = myGame.levelCheck(level);
 	if (objectType.equals("Enemy")) {
 	    listToReturn = currentLevel.getAllEnemies();  
@@ -183,15 +199,23 @@ public class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions) {
-	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, instructions);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, instructions, backgroundMusic, levelWinSound, levelLossSound);
 	myGame.setSettings(newSettings);
     }
 
-//    public Double getObjectPropertyAttribute(int level, String objectType, String name, String attribute){
-//	return propertyFactory.retrieveProperty(name, attribute);
-//    }
 
+
+    /**
+     * Creates property for object
+     * @param level - level of object whose Property is being created
+     * @param objectType - type of object whose Property will be created (e.g. Tower) 
+     * @param objectName - name of object whose Property will be created
+     * @param propertyName - name of Property to be created
+     * @param attributes - double attributes that compose the new Property 
+     * @throws ObjectNotFoundException
+     * @throws MissingPropertiesException
+     */
     public void createProperty(int level, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException{
 	Level currentLevel = myGame.levelCheck(level);
 	propertyFactory.setProperty(currentLevel, objectType, objectName, propertyName, attributes);
@@ -317,7 +341,9 @@ public class AuthoringModel {
 	List<Level> levels = myGame.unmodifiableLevels();
 	int newLevelNumber = levels.size()+1;
 	Level copiedLevel = levels.get(levels.size()-1);
-	myGame.addLevel(newLevelNumber, new Level(copiedLevel));
+	Level newLevel = new Level(copiedLevel);
+	newLevel.incrementNumber();
+	myGame.addLevel(newLevelNumber, newLevel);
 	return newLevelNumber; 
     }
 

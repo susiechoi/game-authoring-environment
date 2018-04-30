@@ -2,6 +2,7 @@
 /**
  * @author Sarah Bland
  * @author susiechoi
+ * @author benauriemma
  * 
  * Represents View of authoring environment's MVC. 
  * Allows for screen transitions and the communication of object altering/creation to Controller. 
@@ -10,6 +11,7 @@
 package authoring.frontend;
 import java.awt.Point;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import frontend.View;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.GridPane;
+import xml.BadGameDataException;
 
 public class AuthoringView extends View {
 
@@ -113,7 +116,6 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
-			e.printStackTrace();
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
@@ -167,7 +169,6 @@ public class AuthoringView extends View {
 		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 				| IllegalAccessException | InstantiationException e) {
 			Log.debug(e);	
-			e.printStackTrace();
 			loadErrorScreen("NoScreenFlow");
 		}
 	}
@@ -186,8 +187,8 @@ public class AuthoringView extends View {
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
 
-	public void makeResources(String gameName, double startingHealth, double starting$, String css, String instructions) {
-		myController.makeResources(gameName, startingHealth, starting$, css, getTheme(), instructions);
+	public void makeResources(String gameName, double startingHealth, double starting$, String instructions, String css, String backgroundMusic, String levelWinSound, String levelLossSound) {
+		myController.makeResources(gameName, startingHealth, starting$, css, getTheme(), instructions, backgroundMusic, levelWinSound, levelLossSound);
 	}
 
 	/**
@@ -276,7 +277,6 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);	
-			e.printStackTrace();
 			loadErrorAlert(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return new HashMap<>();
@@ -289,13 +289,12 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
-			e.printStackTrace();
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return 1;
 	}
 
-	protected void writeToFile() {
+	protected void writeToFile() throws BadGameDataException, IOException {
 		try {
 			myController.writeToFile();
 		} catch (ObjectNotFoundException e) {

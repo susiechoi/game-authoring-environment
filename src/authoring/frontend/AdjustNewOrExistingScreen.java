@@ -243,7 +243,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	}
 
 	protected List<Double> makeList(Double ...attributes) {
-		List<Double> list = new ArrayList<Double>();
+		List<Double> list = new ArrayList<>();
 		for(Double attribute : attributes) {
 			list.add(attribute);
 		}

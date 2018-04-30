@@ -1,18 +1,16 @@
 package controller;
 
-import java.awt.Point;
 import java.util.List;
-import java.util.Map;
 
 import authoring.AuthoredGame;
 import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.GameEngine;
 import engine.Mediator;
 import engine.PlayState;
 import engine.level.Level;
 import frontend.StageManager;
 import gameplayer.ScreenManager;
-import javafx.animation.Timeline;
 import xml.AuthoringModelReader;
 
 /**
@@ -38,7 +36,7 @@ public class PlayController {
 	 */
 	public PlayController(StageManager stageManager, String language, AuthoringModel model) {
 		myMediator = new Mediator(this);
-		myGameEngine = new GameEngine(myMediator);
+		myGameEngine = new GameEngine();
 		myScreenManager = new ScreenManager(stageManager, language, myMediator);
 		myReader = new AuthoringModelReader();
 		myMediator.setGameEngine(myGameEngine);
@@ -50,13 +48,15 @@ public class PlayController {
 	 * parameters to Engine
 	 * 
 	 * @param pathToXML: Path to game XML file
+	 * @throws MissingPropertiesException 
 	 */
-	public void newPlay(String pathToXML) {
+	public void newPlay(String pathToXML) throws MissingPropertiesException {
 		System.out.println("path to xml "+pathToXML);
 		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
 
 		AuthoredGame playModel = myReader.createModel(pathToXML);
+		playModel.reconstruct();
 		List<Level> levels = playModel.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);
 		myGameEngine.setPlayState(play);
@@ -70,8 +70,9 @@ public class PlayController {
 	 * the user
 	 * 
 	 * @param model: the AuthoringModel object authored by the user
+	 * @throws MissingPropertiesException 
 	 */
-	public void demoPlay(AuthoredGame model) {
+	public void demoPlay(AuthoredGame model) throws MissingPropertiesException {
 		myScreenManager.setGameFilePath(model.getGameName());
 		List<Level> levels = model.unmodifiableLevels();
 		myScreenManager.loadGameScreenNew();
@@ -80,8 +81,6 @@ public class PlayController {
 		myGameEngine.start();
 	}
 	
-
-
 	/**
 	 * Calls the ScreenManager to load the InstructionScreen
 	 */
