@@ -205,7 +205,8 @@ public class PlayState implements GameData {
 	try {
 	    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
 	} catch (FileNotFoundException e1) {
-	    e1.printStackTrace(); //TODO!!!
+	    Log.debug(e1);
+	    e1.printStackTrace(); 
 	}
     }
 
