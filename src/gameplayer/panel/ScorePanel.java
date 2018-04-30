@@ -57,7 +57,6 @@ public class ScorePanel extends ListenerPanel {
 
 	@Override
 	public void makePanel() {
-		//TODO Read words SCORE, LEVEL, and + from properties file
 		ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText"));
 		LevelText = new Label();
 		HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText"));

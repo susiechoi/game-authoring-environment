@@ -161,6 +161,7 @@ public class GamePanel extends Panel{
 	ImageView towerImage = tower.getImageView();
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
+	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
     }

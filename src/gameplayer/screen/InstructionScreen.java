@@ -17,10 +17,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.internal.jline.internal.Log;
 
 import java.util.Map;
 import java.util.logging.Logger;
+
+import com.sun.javafx.tools.packager.Log;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 
