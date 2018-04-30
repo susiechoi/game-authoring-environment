@@ -3,6 +3,8 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 
@@ -23,8 +25,6 @@ import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
-import jdk.internal.jline.internal.Log;
-
 
 /**
  * Handles the current state of the game, including current score, money, and lists
@@ -227,7 +227,7 @@ public class PlayState implements GameData {
 	    try {
 		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
 	    } catch (FileNotFoundException e) {
-		Log.debug(e);
+		//Log.debug(e);
 	    }
 	}
     }
@@ -314,7 +314,7 @@ public class PlayState implements GameData {
 	try {
 	    myMediator.getSoundFactory().playSoundEffect("cash");
 	} catch (FileNotFoundException e) {
-	    Log.debug(e);
+	    //Log.debug(e);
 	} 
     }
 

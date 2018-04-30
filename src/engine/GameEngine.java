@@ -3,6 +3,8 @@ package engine;
 
 import java.io.IOException;
 
+import com.sun.javafx.tools.packager.Log;
+
 import java.io.FileNotFoundException;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -12,8 +14,6 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import xml.BadGameDataException;
-import jdk.internal.jline.internal.Log;
-
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
@@ -44,9 +44,9 @@ public class GameEngine {
 				    try {
 					loop(SECOND_DELAY);
 				    } catch (MissingPropertiesException i) {
-					Log.debug(i);
+					//Log.debug(i);
 				    } catch (FileNotFoundException i) {
-					Log.debug(i);
+					//Log.debug(i);
 				    }
 				});
 		ANIMATION = new Timeline();
