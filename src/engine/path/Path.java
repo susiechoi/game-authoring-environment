@@ -100,7 +100,8 @@ public class Path {
 	}
 
 	public double pathAngle(int currIndex) {
-		return getAngle(myCoordinates.get(currIndex),myCoordinates.get(currIndex++));
+		currIndex++;
+		return getAngle(myCoordinates.get(currIndex),myCoordinates.get(currIndex));
 	}
 
 	public Map<String, List<Point>> getPathMap() {

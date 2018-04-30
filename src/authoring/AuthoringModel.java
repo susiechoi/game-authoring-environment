@@ -150,7 +150,7 @@ public class AuthoringModel {
      * @throws ObjectNotFoundException 
      */
     public List<String> getCurrentObjectOptions(int level, String objectType) throws ObjectNotFoundException {
-	List<String> listToReturn = new ArrayList<String>(); 
+	List<String> listToReturn = new ArrayList<>(); 
 	Level currentLevel = myGame.levelCheck(level);
 	if (objectType.equals("Enemy")) {
 	    listToReturn = currentLevel.getAllEnemies();  
