@@ -49,13 +49,12 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image(FILEPATH+image, SIZE, SIZE, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
+	myImageView = new ImageView(new Image(FILEPATH+image, SIZE, SIZE, true, true));
 	myImageView.setPreserveRatio(true);
 	myWrapper = new ImageWrapper(image);
 	myProperties = new ArrayList<>();
 	myPropertyBuilder = new PropertyBuilder();
 	for(Property p : properties) {
-	    //  System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
 	    myProperties.add(this.makeProperty(p));
 	}
     }
@@ -147,9 +146,6 @@ public class Sprite implements FrontEndSprite{
     public void updateImage(String imagePath) {
 	myImageString = imagePath; 
 	myWrapper.updateImageString(imagePath);
-	//		Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
-	//		System.out.println(myImageView == null);
-	//		myImageView.setImage(newImage);
 	myImageView = myWrapper.toImageView();
 	myImageView.setPreserveRatio(true);
     }
