@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import xml.BadGameDataException;
 
+
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
  * settings, etc.) or save/demo a game. Dependent on the View to house/relay information from the Model

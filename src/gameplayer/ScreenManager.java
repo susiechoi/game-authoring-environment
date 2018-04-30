@@ -86,7 +86,7 @@ public class ScreenManager extends View {
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
-		System.out.println("StageLoaded");
+//		System.out.println("StageLoaded");
 	}
 
 	public void loadMainScreen() {

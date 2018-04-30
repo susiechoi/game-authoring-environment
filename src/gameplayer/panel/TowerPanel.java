@@ -109,6 +109,7 @@ public class TowerPanel extends ListenerPanel {
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
 	    VIEW.loadErrorAlert("missingSwapButton");
+
 	}
 
 
@@ -175,7 +176,7 @@ public class TowerPanel extends ListenerPanel {
 	    voidButton.setOnMouseClicked(arg0 ->{ 
 
 		GAME_SCREEN.towerSelectedForPlacement(null);
-		System.out.println("nullhit");
+//		System.out.println("nullhit");
 
 	    });
 
