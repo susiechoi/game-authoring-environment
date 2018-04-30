@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import authoring.AuthoredGame;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import jdk.internal.jline.internal.Log;
 
 /**
  * Static class that creates XMLWriters/XMLReaders to handle data parsing. Holds a main method for testing purposes.
@@ -35,17 +36,17 @@ public class XMLFactory {
 			    return (XMLWriter) writer.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalAccessException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalArgumentException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			}
 		} catch (ClassNotFoundException | SecurityException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
@@ -67,20 +68,20 @@ public class XMLFactory {
 			    return (XMLReader) c.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalAccessException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalArgumentException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (InvocationTargetException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			}
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
