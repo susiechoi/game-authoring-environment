@@ -20,7 +20,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import com.sun.javafx.tools.packager.Log;
 
 /**
  * @author Brendan Cheng
