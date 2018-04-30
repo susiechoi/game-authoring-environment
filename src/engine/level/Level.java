@@ -362,6 +362,10 @@ public class Level {
 	public String getEndImage() {
 		return myPaths.get(myPaths.size()-1).getEndImage();
 	}
+	
+	public boolean getTransparent() {
+		return myPaths.get(myPaths.size()-1).getTransparent();
+	}
 
 	/**
 	 * Adds a wave to the level

@@ -22,8 +22,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import voogasalad.util.soundfactory.*;
 
-
-
 /**
  * @Author Alexi Kontos & Andrew Arnold
  */
@@ -216,8 +214,8 @@ public class GameScreen extends Screen {
 	blankGamePanelClick();
     }
 
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 
@@ -292,5 +290,16 @@ public class GameScreen extends Screen {
 	MEDIATOR.play();
     }
 
+
+
+	public void clickToShoot(FrontEndTower clickedTower, double x, double y) {
+	    System.out.println("going to mediator");
+	    try {
+		MEDIATOR.handleTowerClickToShoot(clickedTower, x, y);
+	    }catch(MissingPropertiesException e) {
+		SCREEN_MANAGER.loadErrorScreen("NoFile");
+	    }
+	    
+	}
 
 }

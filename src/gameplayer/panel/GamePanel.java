@@ -42,6 +42,7 @@ public class GamePanel extends Panel{
     private Boolean towerClick = false;
     private Circle rangeIndicator;
     private ScrollPane scroll;
+    private FrontEndTower clickedTower;
     private GridPane grid;
 
     //TODO changes this to be passed from mediator ******************************************************************************
@@ -104,12 +105,12 @@ public class GamePanel extends Panel{
 	return true;
     }
 
-
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
 	backgroundSet = setBackgroundImage(backgroundImageFilePath);
 	if(backgroundSet) {
 	    PathMaker pathMaker = new PathMaker(GAMEPLAYER_PROPERTIES, GAME_SCREEN.getScreenManager());
-	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
+	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
+
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
@@ -163,6 +164,8 @@ public class GamePanel extends Panel{
 	    GAME_SCREEN.towerClickedOn(tower);
 	    addRangeIndicator(tower);
 	    towerClick = true;
+	    clickedTower = tower;
+	    System.out.println("towerClick is TRUE  AND clicked tower = "+clickedTower);
 	});
     }
     
@@ -231,9 +234,12 @@ public class GamePanel extends Panel{
 	    }
 	    GAME_SCREEN.blankGamePanelClick();
 	}
-	else if(!towerClick) {
-	    removeTowerRangeIndicator();
+	else if (!towerClick) {
+	    if (clickedTower != null && !spriteAdd.getChildren().contains(rangeIndicator)) {
+		GAME_SCREEN.clickToShoot(clickedTower, x, y);
+	    }
 	    GAME_SCREEN.blankGamePanelClick();
+	    removeTowerRangeIndicator();
 	}
 	towerClick = false;
     }
