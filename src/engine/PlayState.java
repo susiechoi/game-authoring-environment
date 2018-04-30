@@ -47,7 +47,6 @@ public class PlayState implements GameData {
     private List<Level> myLevels;
     private Level currentLevel;
     private Level currentLevelCopy;
-    private int currlvl;
     private boolean backgroundSet;
 
     /**
@@ -62,8 +61,8 @@ public class PlayState implements GameData {
     public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
-	currlvl = 0;
 	currentLevel = myLevels.get(0);
+	currentLevelCopy = new Level(currentLevel);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	myScore = new SimpleIntegerProperty(score);
@@ -79,7 +78,7 @@ public class PlayState implements GameData {
 	backgroundSet = false;
     }
 
-    public void update(double elapsedTime) {
+    public void update(double elapsedTime) throws MissingPropertiesException {
 	//Background has to be passed after a layout pass has been done on the Scene in order to adapt to
 	//differences in computers screen size 
 	if(!backgroundSet) {
@@ -96,7 +95,7 @@ public class PlayState implements GameData {
 	handleCollisions(elapsedTime);
     }
 
-    private void handleCollisions(double elapsedTime) {
+    private void handleCollisions(double elapsedTime) throws MissingPropertiesException {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
@@ -119,15 +118,15 @@ public class PlayState implements GameData {
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
     }
 
-
-    private void spawnEnemies() {
-
+    private void spawnEnemies() throws MissingPropertiesException {
 	try {
 	    if (currentLevel.getWave(0).isFinished()) {
+		System.out.println("remove wave");
 		currentLevel.removeWave();   
 	    }
 	    Wave currentWave = currentLevel.getWave(0);
 	    for (Path currentPath : currentLevel.getPaths()) {
+		System.out.println("in path");
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
@@ -196,19 +195,22 @@ public class PlayState implements GameData {
 	}
     }
 
-    public void setLevel(int levelNumber) {
+    public void setLevel(int levelNumber) throws MissingPropertiesException {
 	clearLevel();
 	currentLevel = myLevels.get(levelNumber - 1);
 	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
 	myMediator.updateLevel(currentLevel.myNumber());
-	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), 
+		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
     /**
      * Restarts the level that you were currently on.
+     * @throws MissingPropertiesException 
      */
     public void restartLevel() {
+
 	clearLevel();
 	currentLevel = currentLevelCopy;
 	currentLevelCopy = new Level(currentLevel);
@@ -233,8 +235,9 @@ public class PlayState implements GameData {
      * @param towerType : Type of tower
      * @return : the front end tower
      * @throws CannotAffordException : thrown if the user does not have enough money
+     * @throws MissingPropertiesException 
      */
-    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException, MissingPropertiesException {
 	FrontEndTower placedTower = myTowerManager.place(location, towerType);
 	try {
 	    myResources.set(placedTower.purchase(myResources.get()));

@@ -3,6 +3,7 @@ package engine.builders;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.HealthProperty;
@@ -19,7 +20,7 @@ import engine.sprites.towers.launcher.Launcher;
 public class EnemyBuilder {
 
     public Enemy construct(String name, String image, double speed, double initialHealth, double healthImpact,
-	    double killReward, double killUpgradeCost, double killUpgradeValue, Launcher launcher) {
+	    double killReward, double killUpgradeCost, double killUpgradeValue, Launcher launcher) throws MissingPropertiesException {
 	List<Property> properties = new ArrayList<>();
 	properties.add(new HealthProperty(0, 0, initialHealth));
 	properties.add(new DamageProperty(0 , 0 , healthImpact));

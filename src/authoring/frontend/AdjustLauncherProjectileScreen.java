@@ -52,16 +52,16 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	makeProjectileComponents(vb);
 	makeLauncherComponents(vb);
 
-	Button backButton = setupBackButtonCustom(e-> {
-	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_BACKBUTTON_SCREENFLOW, getMySelectedObjectName());
-	}); 
+//	Button backButton = setupBackButtonCustom(e-> {
+//	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_BACKBUTTON_SCREENFLOW, getMySelectedObjectName());
+//	}); 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    try {
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myProjectileDamage);
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
+		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
+		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
 		setSaved();
 		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
 	    }
@@ -70,8 +70,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    }
 	});
 	vb.getChildren().add(makePropertySelector());
-	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
-	vb.getChildren().add(backAndApplyButton);
+//	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
+	vb.getChildren().add(applyButton);
 	return vb;
     }
 

@@ -310,8 +310,9 @@ public class AuthoringModel {
     /**
      * Autogenerates a new level based on the previous Level's settings (enemies, towers, etc.)
      * @return int corresponding to level number of level generated
+     * @throws MissingPropertiesException 
      */
-    public int autogenerateLevel() {
+    public int autogenerateLevel() throws MissingPropertiesException {
 	
 	List<Level> levels = myGame.unmodifiableLevels();
 	int newLevelNumber = levels.size()+1;

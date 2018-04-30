@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 import authoring.AuthoringController;
-import engine.GameEngine;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -33,8 +32,6 @@ import voogasalad.util.soundfactory.*;
  * @Author Alexi Kontos & Andrew Arnold
  */
 public class GameScreen extends Screen {
-
-
 	private static final String DEFAULT_POPUP_STYLESHEET = "styling/GameAuthoringStartScreen.css";
 	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 	private final String DEFAULT_SHARED_STYLESHEET;
@@ -141,7 +138,7 @@ public class GameScreen extends Screen {
 			settingsClickedOn();
 		}
 		else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
-			MEDIATOR.restartGame();
+			MEDIATOR.restartLevel();
 		}
 	}
 
@@ -191,123 +188,121 @@ public class GameScreen extends Screen {
 		myLives.addListener(SCORE_PANEL.createHealthListener(myLives.get()));
 	}
 
+    public void updateLevel(Integer newLevel) {
+	SCORE_PANEL.updateLevel(newLevel);
+    }
 
-	public void updateLevel(Integer newLevel) {
-		SCORE_PANEL.updateLevel(newLevel);
+
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException, MissingPropertiesException {
+	return MEDIATOR.placeTower(position, tower.getName());
+    }
+
+
+    public void towerClickedOn(FrontEndTower tower) {
+	SCREEN_MANAGER.moveTower(tower);
+	TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
+	UPGRADE_PANEL = new UpgradePanel(this, tower);
+	displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
+	gamePane.setBottom(UPGRADE_PANEL.getPanel());
+    }
+
+    public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
+	BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
+	displayPane.setBottom(BUY_PANEL.getPanel());
+	gamePane.setBottom(UPGRADE_PANEL.getPanel());
+    }
+
+    private void settingsClickedOn() {
+	SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
+	displayPane.setBottom(SETTINGS_PANEL.getPanel());
+    }
+
+    public void blankGamePanelClick() {
+	gamePane.setBottom(null);
+	displayPane.setBottom(CONTROLS_PANEL.getPanel());
+    }
+
+    public void sellTower(FrontEndTower tower) {
+	GAME_PANEL.removeTower(tower);
+	MEDIATOR.sellTower(tower);
+	blankGamePanelClick();
+    }
+
+
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    }
+
+
+    private void setVertPanelsLeft() {
+	rootPane.getChildren().remove(displayPane);
+	rootPane.setRight(null);
+	rootPane.setLeft(displayPane);
+    }
+    private void setVertPanelsRight() {
+	rootPane.getChildren().remove(displayPane);
+	rootPane.setLeft(null);
+	rootPane.setRight(displayPane);
+    }
+
+    public void swapVertPanel() {
+	if(rootPane.getRight() == null) {
+	    setVertPanelsRight();
 	}
-
-
-	public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
-		return MEDIATOR.placeTower(position, tower.getName());
+	else {
+	    setVertPanelsLeft();
 	}
+    }
+
+    public String getGameName() {
+	return SCREEN_MANAGER.getGameFilePath();
+    }
+
+    public ScreenManager getScreenManager() {
+	return SCREEN_MANAGER;
+    }
+
+    public void upgradeBought(FrontEndTower tower, String upgradeName) {
+	MEDIATOR.upgradeTower(tower, upgradeName);
+    }
 
 
-	public void towerClickedOn(FrontEndTower tower) {
-		SCREEN_MANAGER.moveTower(tower);
-		TowerInfoPanel TOWER_INFO_PANEL = new TowerInfoPanel(this,PROMPTS,tower);
-		UPGRADE_PANEL = new UpgradePanel(this, tower);
-		displayPane.setBottom(TOWER_INFO_PANEL.getPanel());
-		gamePane.setBottom(UPGRADE_PANEL.getPanel());
-	}
+    public SoundFactory getSoundFactory() {
+	return SOUND_FACTORY;
+    }
 
-	public void upgradeClickedOn(FrontEndTower tower, String upgradeName) {
-		BuyPanel BUY_PANEL = new BuyPanel(this,PROMPTS, tower,upgradeName);
-		displayPane.setBottom(BUY_PANEL.getPanel());
-		gamePane.setBottom(UPGRADE_PANEL.getPanel());
-	}
+    public Map<String,String> getGameplayerProperties() {
+	return GAMEPLAYER_PROPERTIES;
+    }
 
-	private void settingsClickedOn() {
-		SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
-		displayPane.setBottom(SETTINGS_PANEL.getPanel());
-	}
+    public void gameWon() {
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+    }
 
-	public void blankGamePanelClick() {
-		gamePane.setBottom(null);
-		displayPane.setBottom(CONTROLS_PANEL.getPanel());
-	}
+    public void gameLost() {
+	SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+    }
 
-	public void sellTower(FrontEndTower tower) {
-		GAME_PANEL.removeTower(tower);
-		MEDIATOR.sellTower(tower);
-		blankGamePanelClick();
-	}
+    public void nextLevel() {
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+	MEDIATOR.pause();
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> newLevel());
 
+    }
 
-	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-		return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
-	}
+    private void newLevel() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
 
+    }
 
-	private void setVertPanelsLeft() {
-		rootPane.getChildren().remove(displayPane);
-		rootPane.setRight(null);
-		rootPane.setLeft(displayPane);
-
-	}
-	private void setVertPanelsRight() {
-		rootPane.getChildren().remove(displayPane);
-		rootPane.setLeft(null);
-		rootPane.setRight(displayPane);
-	}
-
-	public void swapVertPanel() {
-		if(rootPane.getRight() == null) {
-			setVertPanelsRight();
-		}
-		else {
-			setVertPanelsLeft();
-		}
-	}
-
-	public String getGameName() {
-		return SCREEN_MANAGER.getGameFilePath();
-	}
-
-	public ScreenManager getScreenManager() {
-		return SCREEN_MANAGER;
-	}
-
-	public void upgradeBought(FrontEndTower tower, String upgradeName) {
-		MEDIATOR.upgradeTower(tower, upgradeName);
-	}
-
-
-	public SoundFactory getSoundFactory() {
-		return SOUND_FACTORY;
-	}
-
-	public Map<String,String> getGameplayerProperties() {
-		return GAMEPLAYER_PROPERTIES;
-	}
-
-	public void gameWon() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-	}
-
-	public void gameLost() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-	}
-
-	public void nextLevel() {
-		SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
-		gamePane.setCenter(SPLASH_PANEL.getPanel());
-		MEDIATOR.pause();
-		SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> newLevel());
-
-	}
-
-	private void newLevel() {
-		gamePane.setCenter(GAME_PANEL.getPanel());
-		MEDIATOR.play();
-
-	}
-
-	private void gameStart() {
-		gamePane.setCenter(GAME_PANEL.getPanel());
-		MEDIATOR.play();
-	}
+    private void gameStart() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
+    }
 
 	public String getInstructions() {
 		return MEDIATOR.getInstructions();

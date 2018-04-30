@@ -256,7 +256,7 @@ public class AuthoringView extends View {
 		return myController.getLevels(); 
 	}
 
-	protected void autogenerateLevel() {
+	protected void autogenerateLevel() throws MissingPropertiesException {
 		int newLevel = myController.autogenerateLevel(); 
 		setLevel(newLevel); 
 	}
