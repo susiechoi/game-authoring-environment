@@ -34,7 +34,7 @@ public class GraphMenuScreen extends AuthoringScreen {
 		vb.getChildren().add(screenTitle);
 		
 		List<String> availableGraphs = getUIFactory().getFileNames(DEFAULT_GRAPHS_FOLDER+myGraphType);
-		List<String> relevantGraphs = new ArrayList<String>(); 
+		List<String> relevantGraphs = new ArrayList<>(); 
 
 		for (String graphName : availableGraphs) {
 			String currGameName = getView().getGameName();

@@ -76,7 +76,7 @@ public class GenericModel {
 		return newPath;
 	}
 	
-	public Level generateGenericLevel(int levelNumber, Tower tower, Enemy enemy, Path path) {
+	public Level generateGenericLevel(int levelNumber, Tower tower, Enemy enemy, Path path) throws MissingPropertiesException {
 		Level level = new Level(levelNumber);
 		level.addTower(myDefaultName, new Tower(tower));
 		Enemy testEnemy = new Enemy(enemy);

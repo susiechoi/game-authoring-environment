@@ -22,6 +22,9 @@ import engine.sprites.towers.FrontEndTower;
 import frontend.StageManager;
 
 import java.awt.Point;
+import java.io.IOException;
+
+import xml.BadGameDataException;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
@@ -102,8 +105,9 @@ public class Mediator implements MVController{
     /**
      * Starts a new play given a path to an AuthoringModel. To be called when a user chooses a file on the front end to start a new Play
      * @param filename	name of file
+     * @throws MissingPropertiesException 
      */
-    public void startPlay(String filename) {
+    public void startPlay(String filename) throws MissingPropertiesException {
 	myPlayController.newPlay(filename);
 	//myPlayController.setAuthoring();
     }
@@ -111,8 +115,10 @@ public class Mediator implements MVController{
     /**
      * Saves current state of game in xml file
      * @param filename	String representing name of file. Path and ".xml" are handled by method in XML package.
+     * @throws IOException 
+     * @throws BadGameDataException 
      */
-    public void savePlay(String filename) {
+    public void savePlay(String filename) throws BadGameDataException, IOException {
 	PlaySaverWriter p = (PlaySaverWriter) XMLFactory.generateWriter("PlaySaverWriter");
 	p.write(myGameEngine.getPlayState(), filename);
     }
@@ -134,8 +140,9 @@ public class Mediator implements MVController{
      * @param towerType, type of tower to be placed
      * @return frontEndTower that can be used to refer to the tower in the future
      * @throws CannotAffordException 
+     * @throws MissingPropertiesException 
      */
-    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException, MissingPropertiesException {
 	//TODO add in money (decrement when purchased)
 	//	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
@@ -178,14 +185,14 @@ public class Mediator implements MVController{
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	//	System.out.println("upgrade is called OF TYPE " + upgradeName);
 	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
 
     /**
      * Called by the frontend when the restart button is pressed.
+     * @throws MissingPropertiesException 
      */
-    public void restartLevel() {
+    public void restartLevel() throws MissingPropertiesException {
 	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
@@ -286,12 +293,6 @@ public class Mediator implements MVController{
 	myScreenManager.getGameScreen().nextLevel();
     }
 
-
-	public void restartGame() {
-		myGameEngine.getPlayState().restartLevel();
-	}
-
-
     @Override
     public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{
 	myPlayController.demoPlay(new AuthoringModel().getGame());
@@ -304,7 +305,7 @@ public class Mediator implements MVController{
     public SoundFactory getSoundFactory() {
 	return mySoundFactory;
     }
-    
+
     public void moveTowers(FrontEndTower tower, KeyCode c) {
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }

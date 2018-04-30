@@ -1,6 +1,5 @@
 package engine.sprites.properties;
 
-import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 
 /**
@@ -9,7 +8,7 @@ import engine.sprites.enemies.Enemy;
  *
  */
 public abstract class CollisionProperty extends Property{
-
+    
     
     public CollisionProperty(double property) {
 	super(property);

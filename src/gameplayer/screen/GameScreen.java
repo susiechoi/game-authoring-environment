@@ -30,6 +30,7 @@ import voogasalad.util.soundfactory.*;
 public class GameScreen extends Screen {
 
 
+
     private final String DEFAULT_SHARED_STYLESHEET;
     private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
@@ -71,10 +72,13 @@ public class GameScreen extends Screen {
 	displayPane.setCenter(TOWER_PANEL.getPanel());
 	displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+
 	gamePane = new BorderPane();
 	gamePane.setTop(SCORE_PANEL.getPanel());
-	gamePane.setCenter(GAME_PANEL.getPanel());
-
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+	MEDIATOR.pause();
 	rootPane.setCenter(gamePane);
 	setVertPanelsLeft();
 	return rootPane;
@@ -131,7 +135,7 @@ public class GameScreen extends Screen {
 	    settingsClickedOn();
 	}
 	else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
-	    MEDIATOR.restartGame();
+	    MEDIATOR.restartLevel();
 	}
     }
 
@@ -178,7 +182,7 @@ public class GameScreen extends Screen {
     }
 
 
-    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException, MissingPropertiesException {
 	return MEDIATOR.placeTower(position, tower.getName());
     }
 
@@ -223,7 +227,6 @@ public class GameScreen extends Screen {
 	rootPane.getChildren().remove(displayPane);
 	rootPane.setRight(null);
 	rootPane.setLeft(displayPane);
-
     }
     private void setVertPanelsRight() {
 	rootPane.getChildren().remove(displayPane);
@@ -249,6 +252,7 @@ public class GameScreen extends Screen {
     }
 
     public void upgradeBought(FrontEndTower tower, String upgradeName) {
+	System.out.println("upgrade has bought");
 	MEDIATOR.upgradeTower(tower, upgradeName);
     }
 
@@ -274,8 +278,21 @@ public class GameScreen extends Screen {
     public void nextLevel() {
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
-	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+	MEDIATOR.pause();
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> newLevel());
 
     }
+
+    private void newLevel() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
+
+    }
+
+    private void gameStart() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
+    }
+
 
 }

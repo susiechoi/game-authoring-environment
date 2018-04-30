@@ -69,13 +69,22 @@ public class GamePanel extends Panel{
 	scroll = new ScrollPane(gamePane);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 
-	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+	gamePane.setOnMouseClicked(e -> {
+	    try {
+		handleMouseInput(e.getX(), e.getY());
+	    } catch (MissingPropertiesException e1) {
+		// TODO Auto-generated catch block
+	    }
+	});
 
 	spriteAdd = gamePane;
 	PANEL = scroll;
     }
 
     private boolean setBackgroundImage(String backgroundFilePath) {
+	if (PANEL == null) {
+	    makePanel();
+	}
 	Bounds centerBounds = scroll.getViewportBounds();
 	if(centerBounds.getHeight() ==0 && centerBounds.getWidth() == 0) {
 	    return false;
@@ -93,7 +102,6 @@ public class GamePanel extends Panel{
 	}
 	spriteAdd.getChildren().add(imageView);
 	return true;
-
     }
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
@@ -153,11 +161,10 @@ public class GamePanel extends Panel{
 	ImageView towerImage = tower.getImageView();
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
-	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
     }
-
+    
     private void removeTowerRangeIndicator() {
 	spriteAdd.getChildren().remove(rangeIndicator);
 	towerSelected = null;
@@ -207,7 +214,7 @@ public class GamePanel extends Panel{
 	towerPlaceMode = false;
     }
 
-    public void handleMouseInput(double x, double y) {
+    public void handleMouseInput(double x, double y) throws MissingPropertiesException {
 	if(towerPlaceMode) {
 	    try {
 		Point position = new Point((int)x,(int)y);

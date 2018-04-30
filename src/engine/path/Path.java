@@ -49,7 +49,6 @@ public class Path {
      * @return : returns the next point along the path index
      */
     public Point nextPosition(int pathIndex) {
-	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
 	return myCoordinates.get(pathIndex+1);
     }
 
