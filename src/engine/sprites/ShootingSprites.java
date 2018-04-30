@@ -25,6 +25,7 @@ public abstract class ShootingSprites extends Sprite{
     private int deadCount;
     private ImageIntersecter intersector;
     
+    
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
      * on the screen
@@ -189,5 +190,17 @@ public abstract class ShootingSprites extends Sprite{
     public void loseHealth(double damage) {
 	((HealthProperty) this.getProperty("HealthProperty")).loseHealth(damage);
     }
+    public void addLauncherProperty(Property property) {
+	myLauncher.addProperty(property);
+    }
+    
+    public void addProjectileProperty(Property property) {
+	myLauncher.addProjectileProperty(property);
+    }
+    
+    public void setProjectileImage(String image) {
+	myLauncher.setProjectileImage(image);
+    }
+    
 
 }

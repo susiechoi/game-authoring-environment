@@ -4,12 +4,16 @@ import authoring.AuthoredGame;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.level.Level;
 import engine.path.Path;
+import engine.sprites.ShootingSprites;
+import engine.sprites.Sprite;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 
 public class AttributeFactory {
-
+    public static final String DEFAULT_IMAGE_IDENTIFIER = "myImage";
+    public static final String DEFAULT_PROJECTILE_IMAGE_IDENTIFIER = "myProjectileImage";
+    public static final String DEFAULT_SOUND_IDENTIFIER = "mySound";
     private AttributeFinder attributeFinder; 
 
     public AttributeFactory() {
@@ -20,19 +24,13 @@ public class AttributeFactory {
 	if (objectType.equals("Enemy")) {
 	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
-		currentLevel.getEnemy(name).setImageString((String) attributeValue); 
-	    }
-	}
-	else if(objectType.equals("Projectile")) {
-	    Level currentLevel = game.levelCheck(level);
-	    if (currentLevel.containsTower(name)) {
-		currentLevel.getTower(name).setProjectileImage((String) attributeValue);
+		setObjectStringField(currentLevel.getEnemy(name), attribute, attributeValue);
 	    }
 	}
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
-		currentLevel.getTower(name).setImageString((String) attributeValue); 
+		setObjectStringField(currentLevel.getTower(name), attribute, attributeValue);
 	    }
 	}
 	else if (objectType.equals("Settings")) {
@@ -81,6 +79,16 @@ public class AttributeFactory {
 	} 
 	else return attributeValue; 
     }
-
+    private void setObjectStringField(Sprite spriteToSet, String attribute, Object attributeValue) {
+	    if(attribute.equals(DEFAULT_IMAGE_IDENTIFIER)) {
+		spriteToSet.setImageString((String) attributeValue);
+	    }
+	    else if(attribute.equals(DEFAULT_PROJECTILE_IMAGE_IDENTIFIER) && spriteToSet instanceof ShootingSprites) {
+		((ShootingSprites) spriteToSet).setProjectileImage((String) attributeValue);
+	    }
+	    else if(attribute.equals(DEFAULT_SOUND_IDENTIFIER)) {
+		spriteToSet.setSoundString((String) attributeValue);
+	    }
+	}
 
 }

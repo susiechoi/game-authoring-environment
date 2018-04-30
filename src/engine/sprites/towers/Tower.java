@@ -38,7 +38,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
 	super(name, image, size, launcher, properties);
 	mySize = size;
-	myLauncher = launcher;
 	addProperty(new KillProperty(0));
     }
 
@@ -108,18 +107,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return this.getLauncher().getPropertyValue("RangeProperty");
     }
 
-    public void addLauncherProperty(Property property) {
-	myLauncher.addProperty(property);
-    }
-    
-    public void addProjectileProperty(Property property) {
-	myLauncher.addProjectileProperty(property);
-    }
-    
-    public void setProjectileImage(String image) {
-	myLauncher.setProjectileImage(image);
-    }
-    
+
     public void move(KeyCode code) {
 	KeyMoveProperty keyMove = (KeyMoveProperty) getProperty("KeyMoveProperty"); 
 	if(keyMove != null) {

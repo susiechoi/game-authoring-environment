@@ -25,6 +25,7 @@ public class Sprite implements FrontEndSprite{
     private String myImageString;
     private PropertyBuilder myPropertyBuilder;
     private List<Property> myProperties;
+    private String mySoundString;
 
 
     /**
@@ -66,6 +67,9 @@ public class Sprite implements FrontEndSprite{
 	myImageView  = new ImageView(new Image("file:"+image, 50, 50, true, true));
     }
 
+    public void setSoundString(String sound) {
+	mySoundString = sound;
+    }
     public void place(double newX, double newY) {
 	myImageView.setX(newX);
 	myImageView.setY(newY);
