@@ -106,7 +106,18 @@ public class PlayState implements GameData {
 	myEnemyManager.setActiveList(activeEnemies);
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 
+	System.out.println("disregard");
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
+	    myMediator.addSpriteToScreen(projectile);
+	    try {
+		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // YIKES THAT'S AN EASY FAIL
+	    }
+	}
+	System.out.println("about to shoot");
+	System.out.println("tower manager size " + myTowerManager.getListOfActive().size());
+	for(Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	    try {
 		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
