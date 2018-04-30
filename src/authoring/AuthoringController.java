@@ -273,6 +273,17 @@ public class AuthoringController implements MVController{
 	myModel.makeSprite(objectType, level, name);
     }
 
+    /**
+     * Sets attribute of object through reflection
+     * @param level - level number of object whose value is to be set
+     * @param objectType - type of object whose value is to be set, e.g. Toewr
+     * @param objectName - name of object whose value is to be set, e.g. MyNewTower
+     * @param attribute - name of object attribute/field whose value is to be set, e.g. myTowerImage
+     * @param attributeValue - value of attribute to be set, 
+     * @throws ObjectNotFoundException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
     public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
     }
@@ -301,6 +312,12 @@ public class AuthoringController implements MVController{
 		myModel).demoPlay(myModel.getGame());
     }
     
+    /**
+     * Deletes object 
+     * @param level - level of object to be deleted
+     * @param objectType - type of object to be deleted, e.g. Toewr
+     * @param objectName - name of object to be deleted, e.g. MyNewTower
+     */
     public void deleteObject(int level, String objectType, String objectName) {
 	try {
 	    myModel.deleteObject(level, objectType, objectName);

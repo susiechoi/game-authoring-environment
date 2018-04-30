@@ -77,6 +77,10 @@
                 <x>807</x>
                 <y>302</y>
               </java.awt.Point>
+              <java.awt.Point>
+                <x>807</x>
+                <y>353</y>
+              </java.awt.Point>
             </myCoordinates>
             <myAngle>0.0</myAngle>
             <pathIndex>0</pathIndex>
@@ -158,7 +162,7 @@
                   <myValue>0.0</myValue>
                 </engine.sprites.properties.HealthProperty>
                 <engine.sprites.properties.ValueProperty>
-                  <myProperty>76.43311646333925</myProperty>
+                  <myProperty>0.0</myProperty>
                   <mySimpleName>ValueProperty</mySimpleName>
                 </engine.sprites.properties.ValueProperty>
               </myProperties>
@@ -181,14 +185,18 @@
                     <myReader/>
                   </myPropertyBuilder>
                   <myProperties>
+                    <engine.sprites.properties.HeatSeekingProperty>
+                      <myProperty>78.66241582639658</myProperty>
+                      <mySimpleName>HeatSeekingProperty</mySimpleName>
+                    </engine.sprites.properties.HeatSeekingProperty>
                     <engine.sprites.properties.DamageProperty>
                       <myProperty>500.0</myProperty>
                       <mySimpleName>DamageProperty</mySimpleName>
-                      <upgradeCost>0.0</upgradeCost>
-                      <upgradeValue>0.0</upgradeValue>
+                      <upgradeCost>66.87898165101458</upgradeCost>
+                      <upgradeValue>149.68152638453589</upgradeValue>
                     </engine.sprites.properties.DamageProperty>
                     <engine.sprites.properties.ConstantSpeedProperty>
-                      <myProperty>0.0</myProperty>
+                      <myProperty>50.0</myProperty>
                       <mySimpleName>ConstantSpeedProperty</mySimpleName>
                     </engine.sprites.properties.ConstantSpeedProperty>
                   </myProperties>
@@ -206,8 +214,8 @@
                   <engine.sprites.properties.FireRateProperty>
                     <myProperty>50.0</myProperty>
                     <mySimpleName>FireRateProperty</mySimpleName>
-                    <upgradeCost>0.0</upgradeCost>
-                    <upgradeValue>0.0</upgradeValue>
+                    <upgradeCost>85.98725507213811</upgradeCost>
+                    <upgradeValue>54.14012890712471</upgradeValue>
                   </engine.sprites.properties.FireRateProperty>
                 </launcherProperties>
               </myLauncher>

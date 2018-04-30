@@ -28,7 +28,7 @@ public class AuthoredGame implements GameData {
     //	private Path myPath;
 
     protected AuthoredGame() {
-	myLevels = new HashMap<Integer, Level>();
+	myLevels = new HashMap<>();
     }
     
     protected void setSettings(Settings newSettings) {
@@ -89,7 +89,7 @@ public class AuthoredGame implements GameData {
      * @return a list of all Levels currently made in this game
      */
     public List<Level> unmodifiableLevels() {
-	List<Level> ret = new ArrayList<Level>();
+	List<Level> ret = new ArrayList<>();
 	for(Level level : myLevels.values()) {
 	    ret.add(level);
 	}
@@ -102,7 +102,7 @@ public class AuthoredGame implements GameData {
      * @return List<String>: A list of unmodifiable level numbers as strings
      */
     public List<String> unmodifiableLevelNums() {
-	List<String> listToReturn = new ArrayList<String>(); 
+	List<String> listToReturn = new ArrayList<>(); 
 	for (Integer level : myLevels.keySet()) {
 	    listToReturn.add(Integer.toString(level));
 	}
