@@ -61,7 +61,7 @@ public class EnemyManager extends ShootingSpriteManager {
     
     private void moveEnemy(Enemy enemy, List<Sprite> deadEnemies, Path path, double elapsedTime) {
 	if (!enemy.isAlive()) {
-	    myEnemies.get(path).remove(enemy);
+	    return;
 	}
 	else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
 	    deadEnemies.add(enemy);
