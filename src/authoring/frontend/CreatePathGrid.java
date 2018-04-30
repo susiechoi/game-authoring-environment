@@ -47,10 +47,10 @@ public class CreatePathGrid {
     private ImageView endImage = new ImageView(new Image("file:images/darkstone.png"));
     private ImageView pathImage = new ImageView(new Image("file:images/cobblestone.png"));
     private GridPane checkGrid;
-    private ArrayList<Point> pathCoords = new ArrayList<Point>();
-    private ArrayList<Point> startPoints = new ArrayList<Point>();
-    private ArrayList<Point> endPoints = new ArrayList<Point>();
-    private ArrayList<Point> pathPoints = new ArrayList<Point>();
+    private ArrayList<Point> pathCoords = new ArrayList<>();
+    private ArrayList<Point> startPoints = new ArrayList<>();
+    private ArrayList<Point> endPoints = new ArrayList<>();
+    private ArrayList<Point> pathPoints = new ArrayList<>();
     private Point myCurrentClicked;
     private DraggableImage path;
     private AuthoringView myView;
@@ -204,31 +204,30 @@ public class CreatePathGrid {
 
     protected boolean checkPathConnected(GridPane grid, int row, int col) {
 	Label checkLabel = (Label) getNode(grid, col, row);
-	addCoordinates(row, col);
 	if (getNode(grid, col, row) != null) {
 	    if (checkLabel.getText() == "end") {
-//		addCoordinates(row, col);
+		addCoordinates(row, col);
 		return true;
 	    } 
 	} else {
 	    return false;
 	}
 	removeNode(grid, row, col);
-//	addCoordinates(row, col);
+	addCoordinates(row, col);
 
-	if ((checkPathConnected(grid, row + 1 , col)) == true) {
+	if ((checkPathConnected(grid, row + 1 , col))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}
-	if ((checkPathConnected(grid, row, col + 1)) == true) {
+	if ((checkPathConnected(grid, row, col + 1))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}
-	if ((checkPathConnected(grid, row, col - 1)) == true) {
+	if ((checkPathConnected(grid, row, col - 1))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}
-	if ((checkPathConnected(grid, row - 1, col)) == true) {
+	if ((checkPathConnected(grid, row - 1, col))) {
 	    grid.add(new Label("path"), col, row);
 	    return true;
 	}

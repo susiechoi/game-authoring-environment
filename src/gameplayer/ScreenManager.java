@@ -74,7 +74,7 @@ public class ScreenManager extends View {
 		STAGE_MANAGER.switchScreen(instructRoot);
 	}
 
-	public void loadGameScreenNew(String filepath) {
+	public void loadGameScreenNew(String filepath) throws MissingPropertiesException {
 		setGameFilePath(filepath);
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();

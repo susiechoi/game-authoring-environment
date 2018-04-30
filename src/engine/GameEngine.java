@@ -1,5 +1,10 @@
 package engine;
 
+import java.io.FileNotFoundException;
+
+import com.sun.javafx.tools.packager.Log;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,19 +25,25 @@ public class GameEngine {
 	private final Integer DEFAULT_RELATIVE_SPEED = 5;
 	private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private PlayState myPlayState;
-	private Mediator myMediator;
 	private Timeline ANIMATION;
 	private double timeFactor;
 
-	public GameEngine(Mediator mediator) {
+	public GameEngine() {
 		myPlayState = null;
-		myMediator = mediator;
 		timeFactor = 1;
 
 		setSpeed(DEFAULT_RELATIVE_SPEED);
 		// attach "game loop" to time line to play it
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-				e -> loop(SECOND_DELAY));
+				e -> {
+				    try {
+					loop(SECOND_DELAY);
+				    } catch (MissingPropertiesException i) {
+					Log.debug(i);
+				    } catch (FileNotFoundException i) {
+					Log.debug(i);
+				    }
+				});
 		ANIMATION = new Timeline();
 		ANIMATION.setCycleCount(Animation.INDEFINITE);
 		ANIMATION.getKeyFrames().add(frame);
@@ -52,8 +63,10 @@ public class GameEngine {
 	/**
 	 * Calls the update function every loop
 	 * @param elapsedTime
+	 * @throws MissingPropertiesException 
+	 * @throws FileNotFoundException 
 	 */
-	public void loop(double elapsedTime) {
+	public void loop(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
 		myPlayState.update(elapsedTime*timeFactor);
 	}
 

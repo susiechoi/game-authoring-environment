@@ -3,6 +3,7 @@ package engine.sprites.towers.projectiles;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
@@ -23,7 +24,6 @@ import engine.sprites.enemies.Enemy;
 public class Projectile extends Sprite implements FrontEndSprite{
 
     private static final double mySpeedFactor = 1.5;
-    private double mySize; 
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
     private int myHits = 1;
@@ -36,10 +36,10 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * 
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
+     * @throws MissingPropertiesException 
      */
-    public Projectile(String name, double size, String image, List<Property> properties, String shootingSound) {
-	super(name, image, size, properties);
-	mySize = size; 
+    public Projectile(String name, String image, List<Property> properties, String shootingSound) throws MissingPropertiesException {
+	super(name, image, properties);
 	hitTargets = new ArrayList<>();
 	myShootingSound = shootingSound;
     }
@@ -51,9 +51,10 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param target
      * @param shooterX
      * @param shooterY
+     * @throws MissingPropertiesException 
      */
-    public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
-	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
+    public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
+	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getProperties());
 	myTarget = target;
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
@@ -98,10 +99,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
     @Override
     public double getDamage() {
 	return getValue("DamageProperty");
-    }
-    
-    public double getSize() {
-	return mySize;
     }
 
     /**

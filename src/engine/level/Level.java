@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.frontend.exceptions.DeleteDefaultException;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
@@ -28,15 +29,11 @@ public class Level {
 
 	public static final String DEFAULT_OBJ_NAME = "Default";
 	
-	private final int myNumber;
+	private int myNumber;
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
 	private List<Wave> myWaves;
 	private Map<String, Enemy> myEnemies;
-
-	private int xLoc = 100;
-	private int yLoc = 100;
-	private int numEnemy = 0;
 
 	public Level(int number) {
 		myNumber = number;
@@ -51,15 +48,24 @@ public class Level {
 	 * Useful when autogenerating a new level from a prior one
 	 * @param copiedLevel - the level's parameters to be copied 
 	 * - only difference from copiedLevel is that the level number is incremented
+	 * @throws MissingPropertiesException 
 	 */
-	public Level(Level copiedLevel) {
-		myNumber = copiedLevel.getNumber() + 1; 
+	public Level(Level copiedLevel) throws MissingPropertiesException {
+		myNumber = copiedLevel.myNumber(); 
 		myWaves = copiedLevel.getWaveCopies(); 
 		myPaths = copiedLevel.getPaths(); 
 		myTowers = copiedLevel.getCopiedTowers();
 		myEnemies = copiedLevel.getCopiedEnemies();
 	}
 
+	private List<Path> getAllPaths() {
+	    return myPaths;
+	}
+
+	public void incrementNumber() {
+		this.myNumber = this.myNumber+1; 
+	}
+	
 	/**
 	 * 
 	 * @return int: The myNumber of the level Object
@@ -206,22 +212,6 @@ public class Level {
 		return(myWaves.size()>(num));
 	}
 
-	/**
-	 * Returns any new Enemy
-	 */
-	public Enemy getNewEnemy(Path path) { //TODO: do engine people want this to be based on wave? currently just doing first wave
-		Enemy waveEnemy = myWaves.get(0).getEnemySpecificPath(path);
-		if (waveEnemy != null) {
-			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
-			numEnemy++;
-		}
-		return waveEnemy;
-	}
-
-	public int getNumber() {
-		return myNumber; 
-	}
-
 	public List<Path> getPaths() {
 	    	List<Path> pathsWithoutDefault = new ArrayList<>();
 	    	for(Path path: myPaths) {
@@ -238,7 +228,7 @@ public class Level {
 		}
 		return myTowers;
 	}
-	public Map<String, Tower> getCopiedTowers(){
+	public Map<String, Tower> getCopiedTowers() throws MissingPropertiesException{
 	    Map<String, Tower> copy = new HashMap<>();
 	    for(String key : myTowers.keySet()) {
 		copy.put(key, new Tower(myTowers.get(key)));
@@ -249,7 +239,7 @@ public class Level {
 		return myEnemies; 
 	}
 	
-	public Map<String, Enemy> getCopiedEnemies(){
+	public Map<String, Enemy> getCopiedEnemies() throws MissingPropertiesException{
 	    Map<String, Enemy> copy = new HashMap<>();
 	    for(String key : myEnemies.keySet()) {
 		copy.put(key, new Enemy(myEnemies.get(key)));
@@ -276,7 +266,7 @@ public class Level {
 		return myWaves;
 	}
 	
-	protected List<Wave> getWaveCopies(){
+	protected List<Wave> getWaveCopies() throws MissingPropertiesException{
 	    List<Wave> copy = new ArrayList<>();
 	    for(Wave wave : myWaves) {
 		copy.add(wave.getCopy());

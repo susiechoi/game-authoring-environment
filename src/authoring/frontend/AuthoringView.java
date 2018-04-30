@@ -113,7 +113,6 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
-			e.printStackTrace();
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
@@ -167,7 +166,6 @@ public class AuthoringView extends View {
 		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 				| IllegalAccessException | InstantiationException e) {
 			Log.debug(e);	
-			e.printStackTrace();
 			loadErrorScreen("NoScreenFlow");
 		}
 	}
@@ -256,7 +254,7 @@ public class AuthoringView extends View {
 		return myController.getLevels(); 
 	}
 
-	protected void autogenerateLevel() {
+	protected void autogenerateLevel() throws MissingPropertiesException {
 		int newLevel = myController.autogenerateLevel(); 
 		setLevel(newLevel); 
 	}
@@ -276,7 +274,6 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);	
-			e.printStackTrace();
 			loadErrorAlert(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return new HashMap<>();
@@ -289,7 +286,6 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
-			e.printStackTrace();
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return 1;

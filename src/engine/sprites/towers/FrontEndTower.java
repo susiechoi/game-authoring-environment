@@ -8,7 +8,6 @@ import engine.sprites.FrontEndSprite;
  * Interface Gameplayer will use to populate tower-specific panels, and to trigger upgrades of tower
  * @author andrewarnold
  *
- *NOTE: let me know if you want us to pass any other information on our method calls
  */
 public interface FrontEndTower extends FrontEndSprite{
 

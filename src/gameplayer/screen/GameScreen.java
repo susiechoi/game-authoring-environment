@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 import authoring.AuthoringController;
-import engine.GameEngine;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -29,6 +28,7 @@ import voogasalad.util.soundfactory.*;
  * @Author Alexi Kontos & Andrew Arnold
  */
 public class GameScreen extends Screen {
+
 
 
     private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
@@ -70,10 +70,13 @@ public class GameScreen extends Screen {
 	displayPane.setCenter(TOWER_PANEL.getPanel());
 	displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
+	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+
 	gamePane = new BorderPane();
 	gamePane.setTop(SCORE_PANEL.getPanel());
-	gamePane.setCenter(GAME_PANEL.getPanel());
-
+	gamePane.setCenter(SPLASH_PANEL.getPanel());
+	MEDIATOR.pause();
 	rootPane.setCenter(gamePane);
 	setVertPanelsLeft();
 	return rootPane;
@@ -130,7 +133,7 @@ public class GameScreen extends Screen {
 	    settingsClickedOn();
 	}
 	else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
-	    MEDIATOR.restartGame();
+	    MEDIATOR.restartLevel();
 	}
     }
 
@@ -158,9 +161,6 @@ public class GameScreen extends Screen {
     }
 
 
-
-
-
     /**
      * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
      * Additionally synchronizes the initial display value of each to the passed values
@@ -180,7 +180,7 @@ public class GameScreen extends Screen {
     }
 
 
-    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException, MissingPropertiesException {
 	return MEDIATOR.placeTower(position, tower.getName());
     }
 
@@ -199,6 +199,7 @@ public class GameScreen extends Screen {
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
 
+
     private void settingsClickedOn() {
 	SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
 	displayPane.setBottom(SETTINGS_PANEL.getPanel());
@@ -214,7 +215,6 @@ public class GameScreen extends Screen {
 	MEDIATOR.sellTower(tower);
 	blankGamePanelClick();
     }
-
 
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
@@ -284,7 +284,6 @@ public class GameScreen extends Screen {
     private void newLevel() {
 	gamePane.setCenter(GAME_PANEL.getPanel());
 	MEDIATOR.play();
-
     }
 
     private void gameStart() {

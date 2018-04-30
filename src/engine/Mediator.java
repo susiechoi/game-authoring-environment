@@ -102,8 +102,9 @@ public class Mediator implements MVController{
     /**
      * Starts a new play given a path to an AuthoringModel. To be called when a user chooses a file on the front end to start a new Play
      * @param filename	name of file
+     * @throws MissingPropertiesException 
      */
-    public void startPlay(String filename) {
+    public void startPlay(String filename) throws MissingPropertiesException {
 	myPlayController.newPlay(filename);
 	//myPlayController.setAuthoring();
     }
@@ -134,8 +135,9 @@ public class Mediator implements MVController{
      * @param towerType, type of tower to be placed
      * @return frontEndTower that can be used to refer to the tower in the future
      * @throws CannotAffordException 
+     * @throws MissingPropertiesException 
      */
-    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException {
+    public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException, MissingPropertiesException {
 	//TODO add in money (decrement when purchased)
 	//	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
@@ -184,8 +186,9 @@ public class Mediator implements MVController{
 
     /**
      * Called by the frontend when the restart button is pressed.
+     * @throws MissingPropertiesException 
      */
-    public void restartLevel() {
+    public void restartLevel() throws MissingPropertiesException {
 	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
@@ -286,11 +289,6 @@ public class Mediator implements MVController{
 	myScreenManager.getGameScreen().nextLevel();
     }
 
-	public void restartGame() {
-		myGameEngine.getPlayState().restartLevel();
-	}
-
-
     @Override
     public void playControllerDemo(StageManager manager, String instructions) throws MissingPropertiesException{
 	myPlayController.demoPlay(new AuthoringModel().getGame());
@@ -303,7 +301,7 @@ public class Mediator implements MVController{
     public SoundFactory getSoundFactory() {
 	return mySoundFactory;
     }
-    
+
     public void moveTowers(FrontEndTower tower, KeyCode c) {
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }

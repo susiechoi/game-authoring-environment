@@ -2,6 +2,7 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -80,7 +81,12 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			});
 			Button autogenerateButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("AutogenerateLevel"));
 			autogenerateButton.setOnAction(e -> {
-				getView().autogenerateLevel(); 
+				try {
+				    getView().autogenerateLevel();
+				} catch (MissingPropertiesException e1) {
+				    // TODO Auto-generated catch block
+				    e1.printStackTrace();
+				} 
 				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDITEXISTINGLEVEL_KEY);
 			});
 			hbox.getChildren().add(levelChooser);

@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
+
 /**
  * @Author Alexi Kontos & Andrew Arnold
  */
@@ -61,7 +63,14 @@ public class InstructionScreen extends Screen {
 
 		continueButt = UIFACTORY.makeTextButton(GAMEPLAYER_PROPERTIES.get("buttonID"), PROMPTS.resourceDisplayText("ContinueButton"));
 		continueButt.setDisable(true);
-		continueButt.setOnMouseClicked(arg0 -> SCREEN_MANAGER.loadGameScreenNew(allGames.getValue()));
+		continueButt.setOnMouseClicked(arg0 -> {
+		    try {
+			SCREEN_MANAGER.loadGameScreenNew(allGames.getValue());
+		    } catch (MissingPropertiesException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		    }
+		});
 		//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenContinuation());
 		Button backButton = UIFACTORY.setupBackButton(e->{
 			SCREEN_MANAGER.toMain();

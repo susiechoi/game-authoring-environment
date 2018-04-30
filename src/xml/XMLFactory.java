@@ -3,6 +3,8 @@ package xml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoredGame;
 import authoring.frontend.exceptions.MissingPropertiesException;
 
@@ -35,17 +37,17 @@ public class XMLFactory {
 			    return (XMLWriter) writer.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalAccessException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalArgumentException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			}
 		} catch (ClassNotFoundException | SecurityException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
@@ -67,20 +69,20 @@ public class XMLFactory {
 			    return (XMLReader) c.newInstance();
 			} catch (InstantiationException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalAccessException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (IllegalArgumentException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			} catch (InvocationTargetException e) {
 			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+			    Log.debug(e);
 			}
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
