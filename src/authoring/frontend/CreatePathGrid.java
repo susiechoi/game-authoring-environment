@@ -206,7 +206,6 @@ public class CreatePathGrid {
 	Label checkLabel = (Label) getNode(grid, col, row);
 	if (getNode(grid, col, row) != null) {
 	    if (checkLabel.getText() == "end") {
-//		addCoordinates(row, col);
 		return true;
 	    } 
 	} else {

@@ -132,8 +132,9 @@ public class AuthoringController implements MVController{
     /**
      * Wraps Model method to autogenerate a level
      * @return int level number of new level
+     * @throws MissingPropertiesException 
      */
-    public int autogenerateLevel() {
+    public int autogenerateLevel() throws MissingPropertiesException {
 	return myModel.autogenerateLevel(); 
     }
 
