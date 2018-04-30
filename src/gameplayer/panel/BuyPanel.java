@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class that creates the panel needed to buy upgrades for specific tower when clicked on.
  */
 
 public class BuyPanel extends SpecificPanel {
@@ -54,6 +55,11 @@ public class BuyPanel extends SpecificPanel {
         PANEL = panelRoot;
     }
 
+    /**
+     * private method to split input to show correct upgrade name in the panel
+     * @param input
+     * @return
+     */
     private String splitInput(String input) {
         StringBuilder sb = new StringBuilder();
         if (input.contains("_")) {
@@ -68,7 +74,12 @@ public class BuyPanel extends SpecificPanel {
     private void checkAffordUpgrade() {
 	
     }
-    
+
+
+    /**
+     * Method to show the buying price of the upgrade on the button
+     * @return
+     */
     public ChangeListener<Number> createCurrencyListener() {
   	return new ChangeListener<Number>() {
   	    @Override

@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * @Author Alexi Kontos
+ * Class to create different 'splash screens' to notify the user of changes in the game's state (i.e. new level, loss, win)
  */
 
 
@@ -24,7 +25,7 @@ public class SplashPanel extends Panel {
         GAME_SCREEN = gameScreen;
         GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
         GAME_STATE = gameState;
-        GAME_INSTRUCTIONS = GAME_SCREEN.getInstructions()
+        //GAME_INSTRUCTIONS = GAME_SCREEN.getInstructions()
     }
 
     @Override
@@ -34,7 +35,7 @@ public class SplashPanel extends Panel {
 
         if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("gameStart"))) {
             titleLabel.setText(GAMEPLAYER_PROPERTIES.get("gameStartTitle"));
-            infoLabel.setText(GAMEPLAYER_PROPERTIES.get(GAME_INSTRUCTIONS));
+            infoLabel.setText(GAMEPLAYER_PROPERTIES.get("gameStartInfo"));
         }
         else if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("nextLevel"))) {
             titleLabel.setText(GAMEPLAYER_PROPERTIES.get("nextLevelTitle"));

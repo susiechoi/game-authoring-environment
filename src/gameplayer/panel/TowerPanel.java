@@ -31,14 +31,15 @@ import gameplayer.screen.GameScreen;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class to create a panel that holds all placeable towers that can be used during a game, along with the currency holder that tells
+ * the user how much money they currently have.
  */
 
 
 public class TowerPanel extends ListenerPanel {
 	
 	public static final String DEFAULT_SUBFOLDER_FILEPATH = "Currency/";
-	
-    //TODO read this from settings or properties file, even better would be autoscaling to fit space
+
     private int TOWER_IMAGE_SIZE;
 
     private GameScreen GAME_SCREEN;
@@ -66,8 +67,11 @@ public class TowerPanel extends ListenerPanel {
 	//currency = new SimpleIntegerProperty(); //tag: buyPanel button disable
 	setupWriters(); 
     }
-    
-    private void setupWriters() {
+
+	/**
+	 * private method to initialize writers for the currency
+	 */
+	private void setupWriters() {
     	try {
 			myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
 		} catch (FileNotFoundException e) {
@@ -134,7 +138,13 @@ public class TowerPanel extends ListenerPanel {
     }
 
 
-    private VBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
+	/**
+	 * private method to create the panel's interior. A VBox is created to hold the HBoxes that hold all towers.
+	 * Null tower buttons are placed to keep the layout even if there are an odd number of towers playable.
+	 * @param availableTowers
+	 * @return
+	 */
+	private VBox fillScrollWithTowers(List<FrontEndTower> availableTowers) {
 	VBox fullTowerHold = new VBox();
 	HBox towerHolder = new HBox();
 	int alternator = 0;
@@ -202,8 +212,11 @@ public class TowerPanel extends ListenerPanel {
     }
 
 
-
-    public void setAvailableTowers(List<FrontEndTower> availableTowers) {
+	/**
+	 * Method to link the available towers to place to the buttons created in the fillScrollWithTowers method
+	 * @param availableTowers
+	 */
+	public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerPane.getChildren().clear();
 
 	VBox filledWithTowers = fillScrollWithTowers(availableTowers);
@@ -214,8 +227,12 @@ public class TowerPanel extends ListenerPanel {
 	//towerPane.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
 
     }
-    
-    private void checkAffordTowers(int myCurrency) {
+
+	/**
+	 * Method to check if the user can afford the tower, if not the button is disabled.
+	 * @param myCurrency
+	 */
+	private void checkAffordTowers(int myCurrency) {
 	for(Entry<Button, FrontEndTower> entry : buttonMap.entrySet()) {
 	    if(entry.getValue().getTowerCost() > myCurrency) {
 		entry.getKey().setDisable(true);
@@ -226,7 +243,11 @@ public class TowerPanel extends ListenerPanel {
 	}
     }
 
-    private void updateCurrency(Integer newValue) {
+	/**
+	 * Method to update the currency of the player after purchasing a tower.
+	 * @param newValue
+	 */
+	private void updateCurrency(Integer newValue) {
     	myCurrencyWriter.recordDataPoint(newValue);
 	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
 	//currency.set(newValue); //tag: buyPanel button disable
@@ -248,7 +269,12 @@ public class TowerPanel extends ListenerPanel {
     }
 
 
-    public ChangeListener<Number> createCurrencyListener(int startCurrency) {
+	/**
+	 * Method to initialize the listener that dynamically updates currency the player has at all times.
+	 * @param startCurrency
+	 * @return
+	 */
+	public ChangeListener<Number> createCurrencyListener(int startCurrency) {
 	setInitialCurrency(startCurrency);
 	return new ChangeListener<Number>() {
 	    @Override

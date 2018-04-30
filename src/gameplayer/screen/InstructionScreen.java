@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class that creates the screen that holds the level select button in between the main screen and the actual game itself.
  */
 
 

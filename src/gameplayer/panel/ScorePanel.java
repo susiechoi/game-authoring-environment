@@ -28,6 +28,7 @@ import javafx.scene.control.Label;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class that creates the panel that display's the current level, the player's score, and the current health of the player
  */
 
 
@@ -54,7 +55,11 @@ public class ScorePanel extends ListenerPanel {
 	setupWriters(); 
     }
 
-    private void setupWriters() {
+
+	/**
+	 * Private method to create different DataPointWriters in order to store the data in the correct file
+	 */
+	private void setupWriters() {
 	try {
 	    myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH); 
 	} catch (IOException e) {
@@ -133,8 +138,12 @@ public class ScorePanel extends ListenerPanel {
     }
 
 
-
-    public ChangeListener<Number> createScoreListener(int startScore) {
+	/**
+	 * method to initialize the listener to dynamically update the player's score
+	 * @param startScore
+	 * @return
+	 */
+	public ChangeListener<Number> createScoreListener(int startScore) {
 	setInitalScore(startScore);
 	return new ChangeListener<Number>() {
 	    @Override
@@ -144,7 +153,12 @@ public class ScorePanel extends ListenerPanel {
 	};
     }
 
-    public ChangeListener<Number> createHealthListener(int startHealth) {
+	/**
+	 * method to initialize the listener to dynamically update the player's health.
+	 * @param startHealth
+	 * @return
+	 */
+	public ChangeListener<Number> createHealthListener(int startHealth) {
 	setInitialHealth(startHealth);
 	return new ChangeListener<Number>() {
 	    @Override

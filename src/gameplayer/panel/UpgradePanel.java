@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class that creates the panel that shows available upgrades once a tower is selected.
  */
 
 
@@ -61,7 +62,12 @@ public class UpgradePanel extends SpecificPanel {
 	PANEL = panelRoot;
     }
 
-    private void fillUpgrades(HBox availUpgrades) {
+	/**
+	 * Class to fill the HBox with a tower's specific upgrades. The buttons are created by taking the filepath and name from a map,
+	 * then putting them into the UIFactory to make image buttons of each and then set their utility through a call to the GAME_SCREEN
+	 * @param availUpgrades
+	 */
+	private void fillUpgrades(HBox availUpgrades) {
 	HBox upgrades = availUpgrades;
 	Integer UPGRADE_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("upgradeImageSize"));
 	String UPGRADE_NAMES_FILE_PATH = GAMEPLAYER_PROPERTIES.get("upgradeNamesFilePath");

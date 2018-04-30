@@ -20,6 +20,8 @@ import frontend.PromptReader;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class that creates the panel that holds the control buttons for the player to quit, pause, play, and open the settings
+ * throughout their gameplay
  */
 
 
@@ -58,6 +60,12 @@ public class ControlsPanel extends Panel{
 	}
 
 
+	/**
+	 * private method that takes in the control button names and filepaths and uses the UIFactory to create image buttons
+	 * for each button. The button's utility is created through a call to the GAME_SCREEN.
+	 * @param topControls
+	 * @param botControls
+	 */
 	private void makeControlButtons(HBox topControls, HBox botControls) {
 
 		String CONTROL_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("ControlButtonFilepath");

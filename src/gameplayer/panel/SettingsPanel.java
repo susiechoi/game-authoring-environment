@@ -16,6 +16,8 @@ import com.sun.javafx.tools.packager.Log;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class to create a panel that holds all of the settings buttons for when the user clicks the settings button in the
+ * controls panel.
  */
 
 
@@ -43,6 +45,11 @@ public class SettingsPanel extends Panel {
     }
 
 
+    /**
+     * private method that takes in the button names and filepaths and creates them via the UIFactory and makes their utility
+     * through a call to the GAME_SCREEN
+     * @param settingsBox
+     */
     private void makeSettingsButtons(VBox settingsBox) {
 
         String SETTINGS_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("settingsButtonFilepath");

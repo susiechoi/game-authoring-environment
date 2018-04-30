@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
+ * Class that creates a panel that holds the information and statistics of a specific tower when clicked on.
  */
 
 
@@ -47,6 +48,11 @@ public class TowerInfoPanel extends SpecificPanel {
 		PANEL = panelRoot;
 	}
 
+	/**
+	 * private class that builds a string from the towerStats map in order to display correctly
+	 * @param towerStats
+	 * @return
+	 */
 	private String prepareStats(Map<String,Integer> towerStats) {
 		StringBuilder sb = new StringBuilder();
 		for (Map.Entry<String,Integer> key: towerStats.entrySet()) {
@@ -54,6 +60,7 @@ public class TowerInfoPanel extends SpecificPanel {
 		}
 		return sb.toString();
 	}
+
 
 	public String getTowerInfoOnClick() {
 		//TODO Once backend is linked, write method to take information from button click on upgradePanel
