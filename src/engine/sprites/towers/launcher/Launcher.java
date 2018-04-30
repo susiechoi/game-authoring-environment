@@ -165,6 +165,9 @@ public class Launcher extends Manager<Projectile>{
     public Projectile getNewProjectile(double towerX, double towerY, double targetX, double targetY) {
 	Projectile newProjectile = new Projectile(myProjectile, towerX, towerY, targetX, targetY);
 	this.addToActiveList(newProjectile);
+	for (Projectile o: this.getListOfActive()) {
+	//    System.out.println("printing out active projectiles *******************************"+ o);
+	}
 	return newProjectile;
     }
 

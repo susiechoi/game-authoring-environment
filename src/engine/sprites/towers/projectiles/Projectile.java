@@ -73,27 +73,30 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	targetDestination.setLocation(target.getX(), target.getY());
     }
     
-    public Projectile(Projectile projectile, double startX, double startY, double targetX, double targetY) {
-	super(projectile.getName(), projectile.getImageString(), projectile.getSize(), projectile.getProperties());
+    public Projectile(Projectile myProjectile, double startX, double startY, double targetX, double targetY) {
+	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	this.place(startX, startY);
 //	System.out.println(" testing " + projectile.getPropertySuperclassType("MovingProperty"));
 //	System.out.println(" testing again " + projectile.getProperty("MovingProperty"));
-	this.myMovingProperty = (MovingProperty)projectile.getPropertySuperclassType("MovingProperty");
-	System.out.println(this.myMovingProperty+" this is the moving property for the projectile");
+	this.myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
+	//System.out.println("SPEED PROPERTY "+ this.getProperty("Constant") + " " +this.getProperty("MovingProperty")+ " " + this.getProperty("HeatSeekingProperty"));//this.getProperty("SpeedProperty").getProperty());
+	myMovingProperty.setProjectileOrigin(startX, startY);
 	targetDestination = new Point();
 	targetDestination.setLocation(targetX, targetY);
+	this.addProperty(new SpeedProperty(0,0,myProjectile.getProperty("ConstantSpeedProperty").getProperty()));
     }
 
     /**
      * Moves image in direction of it's orientation
      */
     public boolean move(double elapsedTime) {
-	  System.out.println(myMovingProperty);
 	try {
-	    return myMovingProperty.move(this, elapsedTime);
+	    boolean bool = myMovingProperty.move(this, elapsedTime);
+	    return bool;
 	}catch(NullPointerException e) {
 	    //this means there is not movement property defined for the projectile, so don't move them
-	    System.out.println("no movement property");
+	    System.out.println("no movement property  "+myMovingProperty);
+	    e.printStackTrace();
 	    return false;
 	}
 	

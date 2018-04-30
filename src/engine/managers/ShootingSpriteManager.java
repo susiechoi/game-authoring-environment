@@ -44,6 +44,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      */
     public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
 	List<Projectile> newProjectiles = new ArrayList<>();
+	//System.out.println(this.getListOfActive().get(0) + " ************ this is the active tower");
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
 	//	System.out.println("reloaded");
@@ -70,6 +71,7 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	for (ShootingSprites shootingSprite: this.getListOfActive()) {
 	    List<Projectile> removeSpritesProjectiles = new ArrayList<Projectile>();
 	    for (Projectile projectile: shootingSprite.getProjectiles()) {
+	//	System.out.println(projectile + " as i loop through to move");
 		if (projectile.move(elapsedTime)) {
 		    removeSpritesProjectiles.add(projectile);
 		}
