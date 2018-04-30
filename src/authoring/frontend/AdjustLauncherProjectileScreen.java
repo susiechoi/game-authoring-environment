@@ -8,8 +8,10 @@
 
 package authoring.frontend;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -31,7 +33,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 //    private Slider myLauncherRateSlider;
 //    private Slider myLauncherRangeSlider;
 //    private Slider myProjectileSizeSlider;
-    // TODO: bma
+    // TODO: add something for the sound -bma
     private Double myProjectileDamage;
     private Double myProjectileSpeed;
     private Double myLauncherRate;
@@ -76,11 +78,25 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     }
 
     private void makeProjectileComponents(VBox vb) {
-	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
-	vb.getChildren().add(projectileImageSelect);
+	HBox selectors = new HBox();
 	
-	//HBox projectileSoundSelect = 
-
+	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
+	selectors.getChildren().add(projectileImageSelect);
+	
+	
+	
+	String soundPropertiesFilePath = "src/sound/resources/soundFiles.properties";
+	ComboBox<String> soundDropdown;
+	try {
+	    soundDropdown = this.getUIFactory().makeTextDropdown(this.getPropertiesReader().allKeys(soundPropertiesFilePath));
+	    VBox projectileSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "New Sound Name:", ".wav", soundDropdown);
+	    selectors.getChildren().add(projectileSoundSelect);
+	} catch (MissingPropertiesException e) {
+	    e.printStackTrace(); //TODO
+	}
+	
+	vb.getChildren().add(selectors);
+	
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
 	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 	vb.getChildren().add(projectileDamage);
