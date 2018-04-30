@@ -29,7 +29,7 @@ public class PropertyFactory {
 
 
     public PropertyFactory() {
-	currentProperties = new HashMap<String, Property>();
+	currentProperties = new HashMap<>();
     }
 
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {

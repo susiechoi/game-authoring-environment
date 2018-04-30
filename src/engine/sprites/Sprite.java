@@ -175,7 +175,7 @@ public class Sprite implements FrontEndSprite{
 	    if(property.getName().equals(p.getName())) {
 		toRemove = p;
 	    }
-	    else if(type.equals("CollisionProperty") || type.equals("MovingProperty")) {
+	    else if(type.equals(p.getClass().getSuperclass().getSimpleName())) {
 		toRemove = p;
 	    }
 	}
@@ -199,6 +199,7 @@ public class Sprite implements FrontEndSprite{
      */
     public Property getPropertySuperclassType(String type) {
 	for(Property p : this.getProperties()) {
+	    System.out.println("property class is " + p.getClass().getSimpleName());
 	    if(p.getClass().getSuperclass().getSimpleName().equals(type)) {
 		return p;
 	    }

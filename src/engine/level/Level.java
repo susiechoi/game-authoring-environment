@@ -29,7 +29,7 @@ public class Level {
 
 	public static final String DEFAULT_OBJ_NAME = "Default";
 	
-	private final int myNumber;
+	private int myNumber;
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
 	private List<Wave> myWaves;
@@ -54,14 +54,22 @@ public class Level {
 	 * - only difference from copiedLevel is that the level number is incremented
 	 * @throws MissingPropertiesException 
 	 */
-	public Level(Level copiedLevel) throws MissingPropertiesException {
+	public Level(Level copiedLevel) {
 		myNumber = copiedLevel.getNumber(); 
-		myWaves = copiedLevel.getWaveCopies(); 
-		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getCopiedTowers();
-		myEnemies = copiedLevel.getCopiedEnemies();
+		myWaves = copiedLevel.getWaves(); 
+		myPaths = copiedLevel.getAllPaths(); 
+		myTowers = copiedLevel.getTowers();
+		myEnemies = copiedLevel.getEnemies();
 	}
 
+	private List<Path> getAllPaths() {
+	    return myPaths;
+	}
+
+	public void incrementNumber() {
+		this.myNumber = this.myNumber+1; 
+	}
+	
 	/**
 	 * 
 	 * @return int: The myNumber of the level Object

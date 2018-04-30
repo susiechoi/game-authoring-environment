@@ -62,6 +62,7 @@ public class PlayState implements GameData {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
+	currentLevelCopy = new Level(currentLevel);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	myScore = new SimpleIntegerProperty(score);
@@ -120,10 +121,12 @@ public class PlayState implements GameData {
     private void spawnEnemies() throws MissingPropertiesException {
 	try {
 	    if (currentLevel.getWave(0).isFinished()) {
+		System.out.println("remove wave");
 		currentLevel.removeWave();   
 	    }
 	    Wave currentWave = currentLevel.getWave(0);
 	    for (Path currentPath : currentLevel.getPaths()) {
+		System.out.println("in path");
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
@@ -198,14 +201,16 @@ public class PlayState implements GameData {
 	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	myMediator.updateLevel(currentLevel.myNumber());
-	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), 
+		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
     /**
      * Restarts the level that you were currently on.
      * @throws MissingPropertiesException 
      */
-    public void restartLevel() throws MissingPropertiesException {
+    public void restartLevel() {
+
 	clearLevel();
 	currentLevel = currentLevelCopy;
 	currentLevelCopy = new Level(currentLevel);

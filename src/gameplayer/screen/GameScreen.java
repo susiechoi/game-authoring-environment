@@ -30,6 +30,7 @@ import voogasalad.util.soundfactory.*;
 public class GameScreen extends Screen {
 
 
+
     private final String DEFAULT_SHARED_STYLESHEET;
     private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
@@ -134,7 +135,7 @@ public class GameScreen extends Screen {
 	    settingsClickedOn();
 	}
 	else if (control.equals(GAMEPLAYER_PROPERTIES.get("restart"))) {
-	    MEDIATOR.restartGame();
+	    MEDIATOR.restartLevel();
 	}
     }
 
