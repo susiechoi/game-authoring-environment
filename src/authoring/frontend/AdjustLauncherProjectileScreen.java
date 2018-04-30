@@ -8,6 +8,7 @@
 
 package authoring.frontend;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -61,8 +62,13 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		getView().loadErrorAlert("NoSelection");
 	    }
 	});
-	vb.getChildren().add(makePropertySelector(PROJECTILE_OBJECT_TYPE+DEFAULT_SUBFOLDERPATH_SEPARATOR+DEFAULT_MOVEMENTPROPERTY_SUBFOLDERNAME));
-	vb.getChildren().add(makePropertySelector(PROJECTILE_OBJECT_TYPE+DEFAULT_SUBFOLDERPATH_SEPARATOR+DEFAULT_COLLISIONPROPERTY_SUBFOLDERNAME));
+	
+	Parent movementPropertySelector = makePropertySelector(PROJECTILE_OBJECT_TYPE+DEFAULT_SUBFOLDERPATH_SEPARATOR+DEFAULT_MOVEMENTPROPERTY_SUBFOLDERNAME); 
+	Parent collisionPropertySelector = makePropertySelector(PROJECTILE_OBJECT_TYPE+DEFAULT_SUBFOLDERPATH_SEPARATOR+DEFAULT_COLLISIONPROPERTY_SUBFOLDERNAME, applyButton); 
+
+	vb.getChildren().add(movementPropertySelector);
+	vb.getChildren().add(collisionPropertySelector);
+	
 	vb.getChildren().add(applyButton);
 	return vb;
     }

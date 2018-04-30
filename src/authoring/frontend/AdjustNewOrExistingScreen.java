@@ -97,7 +97,20 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	protected abstract Parent populateScreenWithFields();
 
-	protected Node makePropertySelector(String subfolderPath) {
+	protected Parent makePropertySelector(String subfolderPath, Button applyButton) {
+		Parent propertySelector = makePropertySelector(subfolderPath);
+		for (Node n : propertySelector.getChildrenUnmodifiable()) {
+			if (n.getClass() == ComboBox.class) {
+				applyButton.setOnAction(e-> {
+					applyButton.setDisable(false);
+				});
+				applyButton.setDisable(true);
+			}
+		}
+		return propertySelector; 
+	}
+	
+	protected Parent makePropertySelector(String subfolderPath) {
 		HBox hb = new HBox(); 
 
 		String propertySelectionPrompt = getView().getErrorCheckedPrompt("PropertySelection");
