@@ -31,6 +31,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     private int myHits = 1;
     private MovingProperty myMovingProperty;
     private Point targetDestination;
+    private boolean unlimitedRangeProjectile; //used for click to shoot so that projectiles can go out of tower's range
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -46,6 +47,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	for (Property p: properties) {
 	    System.out.println(p.getName() + " in projectile property list");
 	}
+	unlimitedRangeProjectile = false;
     }
 
     /**
@@ -71,6 +73,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	myMovingProperty.setProjectileOrigin(shooterX, shooterY);
 	targetDestination = new Point();
 	targetDestination.setLocation(target.getX(), target.getY());
+	unlimitedRangeProjectile = false;
     }
     
     public Projectile(Projectile myProjectile, double startX, double startY, double targetX, double targetY) {
@@ -83,6 +86,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	myMovingProperty.setProjectileOrigin(startX, startY);
 	targetDestination = new Point();
 	targetDestination.setLocation(targetX, targetY);
+	unlimitedRangeProjectile = true;
+	hitTargets = new ArrayList<>();
 	this.addProperty(new SpeedProperty(0,0,myProjectile.getProperty("ConstantSpeedProperty").getProperty()));
     }
 
@@ -91,8 +96,11 @@ public class Projectile extends Sprite implements FrontEndSprite{
      */
     public boolean move(double elapsedTime) {
 	try {
-	    boolean bool = myMovingProperty.move(this, elapsedTime);
-	    return bool;
+	    boolean shouldProjectileBeRemoved = myMovingProperty.move(this, elapsedTime);
+	    if (unlimitedRangeProjectile) {
+		return this.hasReachedTargetPoint();
+	    }
+	    return shouldProjectileBeRemoved;
 	}catch(NullPointerException e) {
 	    //this means there is not movement property defined for the projectile, so don't move them
 	    System.out.println("no movement property  "+myMovingProperty);
@@ -100,6 +108,17 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    return false;
 	}
 	
+    }
+
+    /**
+     * this method is used for click-to-shoot projectiles to see if they've reached their target destination and should be removed
+     * @return
+     */
+    private boolean hasReachedTargetPoint() {
+	//System.out.println("checking if has reached target");
+	//System.out.println((this.targetDestination.getX()-5 <= this.getX() || this.getX() <= this.targetDestination.getX() + 5) && (this.targetDestination.getX() - 5) <= this.getY() || this.getY() <= this.targetDestination.getY()+5);
+	System.out.println("x "+ this.getX() + " y "+ this.getY() + " target x" + this.targetDestination.getX() + " y " + this.targetDestination.getY());
+	return ((this.targetDestination.getX()-5 <= this.getX() && this.getX() <= this.targetDestination.getX() + 5) && (this.targetDestination.getY() - 5 <= this.getY() && this.getY() <= this.targetDestination.getY()+5));
     }
 
     /**

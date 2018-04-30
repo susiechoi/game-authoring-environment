@@ -115,7 +115,6 @@ public class ScreenManager extends View {
 	}
 
 	public void display(FrontEndSprite sprite) {
-	    System.out.println(sprite + " is being displayed");
 		checkGameScreenInitialization();
 		GAME_SCREEN.displaySprite(sprite);
 	}
