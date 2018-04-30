@@ -183,14 +183,14 @@ public class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
-	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions) {
+	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, instructions);
 	myGame.setSettings(newSettings);
     }
 
-    public List<Object> getObjectProperty(int level, String objectType, String name, String attribute){
-	return propertyFactory.retrieveProperty(name, attribute);
-    }
+//    public Double getObjectPropertyAttribute(int level, String objectType, String name, String attribute){
+//	return propertyFactory.retrieveProperty(name, attribute);
+//    }
 
     public void createProperty(int level, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException{
 	Level currentLevel = myGame.levelCheck(level);

@@ -10,8 +10,8 @@ import engine.Settings;
  */
 public class SettingsBuilder {
     
-    public Settings construct(String gameName, double startingHealth, double startingMoney, String css, String theme) {
-	return new Settings(gameName, startingHealth, startingMoney, css, theme);
+    public Settings construct(String gameName, double startingHealth, double startingMoney, String css, String theme, String instructions) {
+	return new Settings(gameName, startingHealth, startingMoney, css, theme, instructions);
     }
 
 }

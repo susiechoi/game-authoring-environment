@@ -95,8 +95,9 @@ public class GenericModel {
 		int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
 		String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
 		String startingTheme = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingTheme");
+		String startingInstructions = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingInstructions");
 		return new SettingsBuilder().construct(defaultGameName, 
-			startingHealth, startingMoney, startingCSS, startingTheme);
+			startingHealth, startingMoney, startingCSS, startingTheme, startingInstructions);
 	}
 
 	/**

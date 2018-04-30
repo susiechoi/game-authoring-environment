@@ -46,7 +46,6 @@ public class CreatePathPanel extends PathPanel {
 	return applyButton;
     }
 
-    @Override
     protected void makePanel() {
 
 	pathPanel = new VBox();
@@ -121,8 +120,7 @@ public class CreatePathPanel extends PathPanel {
     @Override
 
     public Parent makeScreenWithoutStyling() {
-	//TODO Auto-generated method stub
-	return null;
+	return pathPanel;
     }
 
     @Override

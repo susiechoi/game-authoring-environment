@@ -24,7 +24,7 @@ public class SplashPanel extends Panel {
         GAME_SCREEN = gameScreen;
         GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
         GAME_STATE = gameState;
-        GAME_INSTRUCTIONS = GAME_SCREEN.getInstructions()
+        //GAME_INSTRUCTIONS = GAME_SCREEN.getInstructions();
     }
 
     @Override

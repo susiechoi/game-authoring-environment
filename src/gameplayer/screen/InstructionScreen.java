@@ -93,8 +93,7 @@ public class InstructionScreen extends Screen {
 
 	@Override
 	protected View getView() {
-		// TODO Auto-generated method stub
-		return null;
+		return SCREEN_MANAGER;
 	}
 }
 

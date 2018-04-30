@@ -17,7 +17,7 @@ public abstract class PathPanel extends AuthoringScreen {
 		super(view);
 	}
 	
-	protected abstract void makePanel();
+	//protected abstract void makePanel();
 	
 	protected abstract Button getApplyButton();
 	

@@ -20,7 +20,11 @@ import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import voogasalad.util.soundfactory.*;
 
 
@@ -31,9 +35,11 @@ import voogasalad.util.soundfactory.*;
 public class GameScreen extends Screen {
 
 
-	private final String DEFAULT_SHARED_STYLESHEET;
+	private static final String DEFAULT_POPUP_STYLESHEET = "styling/jungleTheme.css";
 	private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
-
+	private final String DEFAULT_SHARED_STYLESHEET;
+	
+	
 	private final PromptReader PROMPTS;
 	private TowerPanel TOWER_PANEL;
 	private GamePanel GAME_PANEL;
@@ -154,8 +160,13 @@ public class GameScreen extends Screen {
 		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
 			SOUND_FACTORY.pauseBackgroundMusic();
 		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
-			BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("instrURL"), GAMEPLAYER_PROPERTIES);
-			pop.makePopupBrowser();
+		    	Stage pop = new Stage();
+		    	VBox vb = new VBox();
+		    	vb.getChildren().add(new Text(MEDIATOR.getInstructions()));
+		    	Scene unstyled = new Scene(vb);
+		    	vb.getStylesheets().add(DEFAULT_POPUP_STYLESHEET);
+		    	pop.setScene(unstyled);
+		    	pop.show();
 		} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
 			BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
 			pop.makePopupBrowser();

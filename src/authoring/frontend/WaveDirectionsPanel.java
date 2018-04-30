@@ -88,14 +88,8 @@ public class WaveDirectionsPanel extends PathPanel{
 	myRoot.getChildren().add(pseudoRoot);
     }
     @Override
-    protected void makePanel() {
-	// TODO Auto-generated method stub
-	
-    }
-    @Override
     protected Button getApplyButton() {
-	// TODO Auto-generated method stub
-	return null;
+	return myApplyButton;
     }
     @Override
     protected Node getPanel() {

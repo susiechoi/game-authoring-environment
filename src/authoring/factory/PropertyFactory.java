@@ -38,12 +38,7 @@ public class PropertyFactory {
     }
     
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
-//	System.out.println("SETTING PROPERTY");
-//	System.out.println(currentLevel);
-//	System.out.println(objectType);
-//	System.out.println(objectName);
-//	System.out.println(propertyName);
-	for (Double d : attributes) System.out.println(d);
+	//for (Double d : attributes) System.out.println(d);
     	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
 		Enemy enemy = currentLevel.getEnemy(objectName);
@@ -102,10 +97,10 @@ public class PropertyFactory {
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
     
-    public List<Object> retrieveProperty(String objectName, String propertyName) {
+    public Double retrieveProperty(String objectName, String propertyName, int index) {
 	for(String object : currentProperties.keySet()) {
 	    if(object.equals(objectName)) {
-		return currentProperties.get(object).getAttributes();
+		return (Double)currentProperties.get(object).getAttributes().get(index);
 	    }
 	}
 	return null;
