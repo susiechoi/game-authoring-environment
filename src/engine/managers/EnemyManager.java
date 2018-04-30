@@ -51,34 +51,32 @@ public class EnemyManager extends ShootingSpriteManager {
      */
     public List<Sprite> moveEnemies(double elapsedTime) {
 	List<Sprite> deadEnemies = new ArrayList<>();
-	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
-	    newEnemies.put(path, new ArrayList<Enemy>());
 	    for (Enemy enemy : myEnemies.get(path)) {
-		newEnemies.get(path).add(enemy);
-		if (!enemy.isAlive()) {
-		    newEnemies.get(path).remove(enemy);
-		}
-		else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
-		    deadEnemies.add(enemy);
-		    newEnemies.get(path).remove(enemy);
-		}
-		else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
-		    enemy.move(elapsedTime);
-		}
-		else {
-		    Point newPosition = path.nextPosition(enemy.getIndex());
-		    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
-		    enemy.setNewPosition(newPosition);
-		    enemy.move(elapsedTime);
-		    enemy.setIndex(pathIndex);
-		    }
-		}
-	    myEnemies.get(path).removeAll(deadEnemies);
+		moveEnemy(enemy, deadEnemies, path, elapsedTime);
 	    }
-	
-	
+	    myEnemies.get(path).removeAll(deadEnemies);
+	}
 	return deadEnemies;
+    }
+    
+    private void moveEnemy(Enemy enemy, List<Sprite> deadEnemies, Path path, double elapsedTime) {
+	if (!enemy.isAlive()) {
+	    myEnemies.get(path).remove(enemy);
+	}
+	else if(path.checkKill(enemy.currentPosition()) && enemy.isAlive()) {
+	    deadEnemies.add(enemy);
+	}
+	else if(!isInRange(enemy.currentPosition(),enemy.targetPosition())) {
+	    enemy.move(elapsedTime);
+	}
+	else {
+	    Point newPosition = path.nextPosition(enemy.getIndex());
+	    int pathIndex = path.getIndex(enemy.currentPosition(), enemy.getIndex());
+	    enemy.setNewPosition(newPosition);
+	    enemy.move(elapsedTime);
+	    enemy.setIndex(pathIndex);
+	}
     }
 
     private boolean isInRange(Point curr, Point target) {
@@ -107,14 +105,14 @@ public class EnemyManager extends ShootingSpriteManager {
 	    myEnemies.put(path, pathEnemies);
 	}
     }
-    
+
     /**
      * Clears all the current enemies in the map
      */
     public void clearEnemiesMap() {
 	myEnemies.clear();
     }
-    
+
     /**
      * Method to remove enemies from the current enemies map
      * @param toBeRemoved
@@ -123,7 +121,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	for(Sprite s : toBeRemoved) {
 	    myEnemies.remove(s);
 	}
-	
+
     }
 
 }
