@@ -48,9 +48,13 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
     public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) throws MissingPropertiesException {
 	List<Projectile> newProjectiles = new ArrayList<>();
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
+	    System.out.println("active");
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
+		System.out.println("reloaded");
 		for (ShootingSprites passedSprite: passedSprites) {	//all the enemies
+		    System.out.println("passed");
 		    if (shootingSprite.hasReloaded(elapsedTime) && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {
+			System.out.println("gets down here");
 			Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			if (newProjectile != null) {
 			    newProjectiles.add(newProjectile);
