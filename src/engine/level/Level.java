@@ -52,10 +52,10 @@ public class Level {
 	 */
 	public Level(Level copiedLevel) throws MissingPropertiesException {
 		myNumber = copiedLevel.myNumber(); 
-		myWaves = copiedLevel.getWaveCopies(); 
-		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getCopiedTowers();
-		myEnemies = copiedLevel.getCopiedEnemies();
+		myWaves = copiedLevel.getWaves(); 
+		myPaths = copiedLevel.getAllPaths(); 
+		myTowers = copiedLevel.getTowers();
+		myEnemies = copiedLevel.getEnemies();
 	}
 
 	private List<Path> getAllPaths() {
