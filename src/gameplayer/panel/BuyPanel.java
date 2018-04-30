@@ -65,7 +65,6 @@ public class BuyPanel extends SpecificPanel {
         }
         return sb.toString().trim();
     }
-    
     private void checkAffordUpgrade() {
 	
     }
@@ -77,5 +76,6 @@ public class BuyPanel extends SpecificPanel {
   	    }
   	};
       }
+
 
 }

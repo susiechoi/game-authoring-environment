@@ -51,7 +51,7 @@ public abstract class ShootingSprites extends Sprite{
 
     /**
      * This checks for collisions between the shooter's projectiles and this ShootingSprite
-     * @param shooter : Input shooter that is shooting projectiles
+     * @param target : Input shooter that is shooting projectiles
      * @return : a list of all sprites to be removed from screen (dead)
      */
     public List<Sprite> checkForCollision(ShootingSprites target) {
@@ -144,18 +144,20 @@ public abstract class ShootingSprites extends Sprite{
      */
     //TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
+
 	//	System.out.println("gets here");
-	if(upgradeName.equals("test4")) {
+	if(upgradeName.equals("Armor_Upgrade")) {
 	    System.out.println("upgrade is working woo");
 	    return upgradeLauncherProperty(balance, "FireRateProperty");
 	}
-	if(upgradeName == "test3") {
+
+	if(upgradeName == "Health_Upgrade") {
 	    return upgradeProperty(balance, "HealthProperty");
 	}
-	if(upgradeName == "test2") {
+	if(upgradeName == "Damage_Upgrade") {
 	    return upgradeProperty(balance, "DamageProperty");
 	}
-	if(upgradeName == "test1") {
+	if(upgradeName == "Fire_Rate_Upgrade") {
 	    return upgradeLauncherProperty(balance, "RangeProperty");
 	}
 	return balance;
