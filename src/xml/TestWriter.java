@@ -5,10 +5,11 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
+
+import com.sun.javafx.tools.packager.Log;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
-import jdk.internal.jline.internal.Log;
 
 ///Put this at the top of the file:
 import java.io.File;
