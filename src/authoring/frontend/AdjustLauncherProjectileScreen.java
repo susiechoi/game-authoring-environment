@@ -8,8 +8,13 @@
 
 package authoring.frontend;
 
+import com.sun.javafx.tools.packager.Log;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,12 +31,12 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private String myObjectName; 
 
 
-//    private Slider myProjectileDamageSlider;
-//    private Slider myProjectileSpeedSlider; 
-//    private Slider myLauncherRateSlider;
-//    private Slider myLauncherRangeSlider;
-//    private Slider myProjectileSizeSlider;
-    // TODO: bma
+    //    private Slider myProjectileDamageSlider;
+    //    private Slider myProjectileSpeedSlider; 
+    //    private Slider myLauncherRateSlider;
+    //    private Slider myLauncherRangeSlider;
+    //    private Slider myProjectileSizeSlider;
+    // TODO: add something for the sound -bma
     private Double myProjectileDamage;
     private Double myProjectileSpeed;
     private Double myLauncherRate;
@@ -52,9 +57,9 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	makeProjectileComponents(vb);
 	makeLauncherComponents(vb);
 
-//	Button backButton = setupBackButtonCustom(e-> {
-//	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_BACKBUTTON_SCREENFLOW, getMySelectedObjectName());
-//	}); 
+	//	Button backButton = setupBackButtonCustom(e-> {
+	//	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_BACKBUTTON_SCREENFLOW, getMySelectedObjectName());
+	//	}); 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    try {
@@ -70,16 +75,35 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    }
 	});
 	vb.getChildren().add(makePropertySelector());
-//	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
+	//	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 	vb.getChildren().add(applyButton);
 	return vb;
     }
 
     private void makeProjectileComponents(VBox vb) {
+	HBox selectors = new HBox();
+
 	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
-	vb.getChildren().add(projectileImageSelect);
-	
-	//HBox projectileSoundSelect = 
+	selectors.getChildren().add(projectileImageSelect);
+
+
+
+	String soundPropertiesFilePath = "src/sound/resources/soundFiles.properties";
+	ComboBox<String> soundDropdown;
+	try {
+	    soundDropdown = this.getUIFactory().makeTextDropdown(this.getPropertiesReader().allKeys(soundPropertiesFilePath)); // TODO: this has no prompt, and the action for no choice is null
+
+	    soundDropdown.addEventHandler(ActionEvent.ACTION,e -> {
+		    getView().setObjectAttribute("Projectile", myObjectName, "mySound", soundDropdown.getSelectionModel().getSelectedItem()); 
+	    });
+	    
+	    VBox projectileSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "New Sound Name:", ".wav", soundDropdown);
+	    selectors.getChildren().add(projectileSoundSelect);
+	} catch (MissingPropertiesException e) {
+	    e.printStackTrace(); //TODO
+	}
+
+	vb.getChildren().add(selectors);
 
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
 	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
@@ -89,7 +113,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileDamage", newValue);
 	});
 
-//	Slider myProjectileSizeSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
+	//	Slider myProjectileSizeSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	Slider myProjectileSpeedSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
 	vb.getChildren().add(projectileSpeed);
