@@ -143,11 +143,11 @@ public class GameScreen extends Screen {
 	if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
 	    SOUND_FACTORY.mute();
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
-	    try {
-		SOUND_FACTORY.setBackgroundMusic("stillDre");
-	    } catch (FileNotFoundException e) {
-		Log.debug(e);
-	    }
+	    //try {
+	//	SOUND_FACTORY.setBackgroundMusic("stillDre");
+	  //  } catch (FileNotFoundException e) {
+	//	Log.debug(e);
+	  //  }
 	    SOUND_FACTORY.playBackgroundMusic();
 
 

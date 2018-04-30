@@ -9,8 +9,10 @@ package authoring.frontend;
 import com.sun.javafx.tools.packager.Log;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -49,10 +51,59 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		VBox vb = new VBox(); 
 
 		vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyStartingResources")));
+		
+		
+		String soundPropertiesFilePath = "src/sound/resources/soundFiles.properties";
+		HBox soundSelectors = new HBox();
+		
+		//VBox backgroundMusicSelector = getUIFactory().makeSoundSelector(getPropertiesReader(), soundPropertiesFilePath,  e = (String s) -> {this.setBackgroundMusic(s)});
+		
+		
+		
+		
+		
+		ComboBox<String> backgroundMusicDropdown;
+		try {
+		    backgroundMusicDropdown = this.getUIFactory().makeTextDropdown(this.getPropertiesReader().allKeys(soundPropertiesFilePath)); // TODO: this has no prompt, and the action for no choice is null
 
-		myBackgroundMusic = "stillDre";
-		myLevelWinSound = "applause";
-		myLevelLossSound  = "boo";
+		    backgroundMusicDropdown.addEventHandler(ActionEvent.ACTION,e -> setBackgroundMusic(backgroundMusicDropdown.getSelectionModel().getSelectedItem()));
+		    
+		    VBox backgroundMusicSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "Background Music:", ".wav", backgroundMusicDropdown);
+		    soundSelectors.getChildren().add(backgroundMusicSelect);
+		} catch (MissingPropertiesException e) {
+		    e.printStackTrace(); //TODO
+		}
+
+		ComboBox<String> levelWinSoundDropdown;
+		try {
+		    levelWinSoundDropdown = this.getUIFactory().makeTextDropdown(this.getPropertiesReader().allKeys(soundPropertiesFilePath)); // TODO: this has no prompt, and the action for no choice is null
+
+		    levelWinSoundDropdown.addEventHandler(ActionEvent.ACTION,e -> setLevelWinSound(levelWinSoundDropdown.getSelectionModel().getSelectedItem()));
+		    
+		    VBox levelWinSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "Level Win Sound:", ".wav", levelWinSoundDropdown);
+		    soundSelectors.getChildren().add(levelWinSoundSelect);
+		} catch (MissingPropertiesException e) {
+		    e.printStackTrace(); //TODO
+		}
+		
+		
+		ComboBox<String> levelLossSoundDropdown;
+		try {
+		    levelLossSoundDropdown = this.getUIFactory().makeTextDropdown(this.getPropertiesReader().allKeys(soundPropertiesFilePath)); // TODO: this has no prompt, and the action for no choice is null
+
+		    levelLossSoundDropdown.addEventHandler(ActionEvent.ACTION,e -> setLevelLossSound(levelLossSoundDropdown.getSelectionModel().getSelectedItem()));
+		    
+		    VBox levelLossSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "Level Loss Sound:", ".wav", levelLossSoundDropdown);
+		    soundSelectors.getChildren().add(levelLossSoundSelect);
+		} catch (MissingPropertiesException e) {
+		    e.printStackTrace(); //TODO
+		}
+		
+		
+		
+		//myBackgroundMusic = "stillDre";
+		//myLevelWinSound = "applause";
+		//myLevelLossSound  = "boo";
 		
 		Text settingsHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SettingsHeading"));
 		myGameNameEntry = getUIFactory().makeTextField();
@@ -96,6 +147,8 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 //			getView().setObjectAttribute(OBJECT_TYPE, "myCSSTheme", myCSSFilenameChooser.getSelectionModel().getSelectedItem()); 
 //		});
 		
+		vb.getChildren().add(soundSelectors);
+		
 		Button backButton = setupBackButton();
 		Button applyButton = getUIFactory().setupApplyButton();
 		applyButton.setOnAction(e -> {
@@ -112,6 +165,18 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		vb.getChildren().add(backAndApplyButton);
 		
 		return vb;
+	}
+	
+	public void setBackgroundMusic(String backgroundMusic) {
+	    myBackgroundMusic = backgroundMusic;
+	}
+	
+	public void setLevelWinSound(String levelWinSound) {
+	    myLevelWinSound = levelWinSound;
+	}
+	
+	public void setLevelLossSound(String levelLossSound) {
+	    myLevelLossSound = levelLossSound;
 	}
 
 	@Override
