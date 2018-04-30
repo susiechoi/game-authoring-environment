@@ -10,6 +10,8 @@ import engine.PlayState;
 public class PlayLoader implements XMLReader {
 
     private XStream parser;
+    private final String FILE_PATH = "SavedPlays/";
+    private final String FILE_TYPE = ".xml";
     
     public PlayLoader() {
 	parser = new XStream(new DomDriver());
@@ -17,7 +19,7 @@ public class PlayLoader implements XMLReader {
     
     @Override
     public PlayState createModel(String filename) {
-	    File f = new File("SavedPlays/" + filename + ".xml");
+	    File f = new File(FILE_PATH + filename + FILE_TYPE);
 	    PlayState g = (PlayState) parser.fromXML(f);
 	    return g;
     }

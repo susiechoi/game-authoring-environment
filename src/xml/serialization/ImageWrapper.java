@@ -28,7 +28,6 @@ public class ImageWrapper implements ImageViewSerializer {
     @Override
     public ImageView toImageView() {
 	ImageView image = new ImageView(new Image("file:"+myImagePath,50,50,true,true));
-	//ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(myImagePath), 50, 50, true, true));
 	image.setFitHeight(height);
 	image.setFitWidth(width);
 	System.out.println("ImageWrapper - IMAGEVIEW FILEPATH: " + myImagePath);
@@ -38,6 +37,10 @@ public class ImageWrapper implements ImageViewSerializer {
 	return image;
     }
     
+    /**
+     * Updates string representing this object's image filepath based on the parameter
+     * @param image	Filepath to change to
+     */
     public void updateImageString(String image) {
 	myImagePath = image;
     }

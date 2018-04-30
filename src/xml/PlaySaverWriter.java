@@ -1,12 +1,5 @@
 package xml;
 
-
-import java.io.File;
-
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -22,20 +15,13 @@ import data.GameData;
 
 public class PlaySaverWriter implements XMLWriter {
 
-	private Document d;
 	private XStream parser;
-	private Element game;
-	private File file;
+	private final String FILE_PATH = "SavedPlays/";
+	private final String FILE_TYPE = "SavedPlays/";
 	
 	public PlaySaverWriter() {
-		try {
-			d = XMLDocumentBuilder.initializeDoc();
-		} catch (ParserConfigurationException p) {
-			System.out.println("Bad configuration");
-		}
 		parser = new XStream(new DomDriver());
-		game = d.createElement("game");
-		d.appendChild(game);
+		parser.autodetectAnnotations(true);
 	}
 
 	@Override
@@ -44,18 +30,7 @@ public class PlaySaverWriter implements XMLWriter {
 		if (!g.getClass().getSimpleName().equals("PlayState")) {
 			throw new BadGameDataException("Incorrect GameData: Must use PlayState object to store correct data");
 		}
-//		//
-//		file = new File("SavedModels/" + filepath + ".xml");
-//		// Write data using XStream
-//		Element root = d.createElement("GameRules");
-//		root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
-//		try {
-//			XMLDocumentBuilder.saveXMLFile(d, file);
-//		} catch (TransformerFactoryConfigurationError | TransformerException e) {
-//			// TODO replace with error pop up?
-//			System.out.println("Error configuring XML file");
-//		}
-		XMLDocumentBuilder.stringToXML(parser.toXML(g), "SavedPlays/" + filepath + ".xml");
+		XMLDocumentBuilder.stringToXML(parser.toXML(g), FILE_PATH + filepath + FILE_TYPE);
 	}
 }
 

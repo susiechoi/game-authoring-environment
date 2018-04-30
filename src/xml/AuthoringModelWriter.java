@@ -15,18 +15,19 @@ public class AuthoringModelWriter implements XMLWriter {
 	 */
 
 	private XStream parser;
+	private final String FILE_PATH = "SavedModels/";
+	private final String FILE_TYPE = ".xml";
 
 	/**
-	 * Initializes file that will be written
+	 * Initializes XStream parser to write data. Set up parser so it can ignore @XStreamOmitField annotations
 	 */
 	public AuthoringModelWriter() {
 		parser = new XStream(new DomDriver());
 		parser.autodetectAnnotations(true);
-//		parser.registerConverter(new ObservableListConverter(parser.getMapper()));
 	}
 
     /**
-     * Implementation of write method that saves data for authoring to SavedModels folder
+     * Implementation of write method that saves AuthoredGame data for authoring to SavedModels folder
      */
     @Override
     public void write(GameData g, String filepath) throws BadGameDataException {
@@ -34,20 +35,8 @@ public class AuthoringModelWriter implements XMLWriter {
 	if (!g.getClass().getSimpleName().equals("AuthoredGame")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoredGame object to store correct data");
 	}
-//	file = new File("SavedModels/" + filepath + ".xml");
-//	// Write data using XStream
-//	Element root = d.createElement("GameRules");
-//	root.appendChild(XMLDocumentBuilder.addData(d, "AuthoringModel", parser.toXML(g)));
-//	// Save data
-//	try {
-//	    XMLDocumentBuilder.saveXMLFile(d, file);
-//	} catch (TransformerFactoryConfigurationError | TransformerException e) {
-//	    // TODO replace with error pop up?
-//	    System.out.println("Error configuring XML file");
-//	}
-//    }
 	
-	XMLDocumentBuilder.stringToXML(parser.toXML(g), "SavedModels/" + filepath + ".xml");
+	XMLDocumentBuilder.stringToXML(parser.toXML(g), FILE_PATH + filepath + FILE_TYPE);
 
     }
 
