@@ -96,6 +96,10 @@ public class Launcher extends Manager<Projectile>{
     public void setProjectileImage(String image){
 	myProjectile.setImage(image);
     }
+    
+    public void setProjectileSound(String sound) {
+	myProjectile.setShootingSound(sound);
+    }
 
     public void addProperty(Property property) {
 	Property toRemove = null;

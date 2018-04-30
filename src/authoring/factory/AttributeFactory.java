@@ -33,6 +33,15 @@ public class AttributeFactory {
 		setObjectStringField(currentLevel.getTower(name), attribute, attributeValue);
 	    }
 	}
+	else if (objectType.equals("Projectile")) {
+	    Level currentLevel = game.levelCheck(level);
+	    if (currentLevel.containsTower(name)) {
+		setObjectStringField(currentLevel.getTower(name), attribute, attributeValue);
+	    }
+	    else if (currentLevel.containsEnemy(name)) {
+		setObjectStringField(currentLevel.getEnemy(name), attribute, attributeValue);
+	    }
+	}
 	else if (objectType.equals("Settings")) {
 	    attributeFinder.setFieldValue(attribute, game.getSettings(), attributeValue);
 	}
@@ -81,13 +90,16 @@ public class AttributeFactory {
     }
     private void setObjectStringField(Sprite spriteToSet, String attribute, Object attributeValue) {
 	    if(attribute.equals(DEFAULT_IMAGE_IDENTIFIER)) {
+		System.out.println("setting a tower/enemy image");
 		spriteToSet.setImageString((String) attributeValue);
 	    }
 	    else if(attribute.equals(DEFAULT_PROJECTILE_IMAGE_IDENTIFIER) && spriteToSet instanceof ShootingSprites) {
+		System.out.println("setting a projectile image");
 		((ShootingSprites) spriteToSet).setProjectileImage((String) attributeValue);
 	    }
 	    else if(attribute.equals(DEFAULT_SOUND_IDENTIFIER)) {
-		spriteToSet.setSoundString((String) attributeValue);
+		System.out.println("setting a sound");
+		((ShootingSprites) spriteToSet).setSoundString(((String) attributeValue));
 	    }
 	}
 

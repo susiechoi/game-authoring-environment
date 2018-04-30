@@ -83,7 +83,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     private void makeProjectileComponents(VBox vb) {
 	HBox selectors = new HBox();
 
-	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
+	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	selectors.getChildren().add(projectileImageSelect);
 
 
@@ -100,6 +100,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    VBox projectileSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "New Sound Name:", ".wav", soundDropdown);
 	    selectors.getChildren().add(projectileSoundSelect);
 	} catch (MissingPropertiesException e) {
+	    
 	    e.printStackTrace(); //TODO
 	}
 

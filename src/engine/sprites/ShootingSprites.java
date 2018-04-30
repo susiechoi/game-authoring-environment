@@ -203,6 +203,9 @@ public abstract class ShootingSprites extends Sprite{
     public void setProjectileImage(String image) {
 	myLauncher.setProjectileImage(image);
     }
+    public void setSoundString(String sound) {
+	myLauncher.setProjectileSound(sound);
+    }
     
 
 }

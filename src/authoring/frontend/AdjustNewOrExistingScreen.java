@@ -207,7 +207,9 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		ComboBox<String> imageDropdownCopy = imageDropdown;
 		imageDropdown.addEventHandler(ActionEvent.ACTION,e -> {
 			try {
+			    	System.out.println("IMAGE NAME: " + imageName + " OBJECT NAME: " + mySelectedObjectName + " OBJECT TYPE: " + objectType);
 				getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
+	
 			}
 			catch(MissingPropertiesException e2) {
 				Log.debug(e2);
