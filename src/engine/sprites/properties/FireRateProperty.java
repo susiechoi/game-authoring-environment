@@ -22,10 +22,7 @@ public class FireRateProperty extends UpgradeProperty {
     }
 
     public boolean hasReloaded(double timeLastFired) {
-	if(timeLastFired >= 100/this.getProperty()) {
-	    return true;
-	}
-	return false;
+	return timeLastFired >= 100/this.getProperty();
     }
 
     public FireRateProperty(UpgradeProperty p) {

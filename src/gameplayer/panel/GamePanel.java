@@ -161,6 +161,7 @@ public class GamePanel extends Panel{
 	ImageView towerImage = tower.getImageView();
 	towerImage.setOnMouseClicked(args ->{
 	    GAME_SCREEN.towerClickedOn(tower);
+	    addRangeIndicator(tower);
 	    towerClick = true;
 	});
     }
@@ -183,8 +184,7 @@ public class GamePanel extends Panel{
 	    towImage.toFront();
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    //TODO let's not fail please!!
-	    System.out.println("Constants property file not found");
+//	    System.out.println("Constants property file not found");
 	}
     }
 

@@ -5,11 +5,10 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
+
+import com.sun.javafx.tools.packager.Log;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-
-import jdk.internal.jline.internal.Log;
-
 ///Put this at the top of the file:
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +26,7 @@ public class TestWriter {
 	    d = XMLDocumentBuilder.initializeDoc();
 	} catch (ParserConfigurationException e) {
 	    // TODO Auto-generated catch block
-	    Log.debug(e);
+	    //Log.debug(e);
 	}
     }
 //public void write(List<String> l, String filename) {
@@ -39,6 +38,7 @@ public class TestWriter {
 //    out.close();
 //} catch (IOException e1) {
 //    // TODO Auto-generated catch block
+//    Log.debug(e1);
 //    e1.printStackTrace();
 //}
 //}

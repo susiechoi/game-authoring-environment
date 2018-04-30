@@ -2,6 +2,7 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
 import java.awt.Point;
@@ -20,7 +21,6 @@ import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
-import jdk.internal.jline.internal.Log;
 
 
 /**
@@ -142,7 +142,7 @@ public class PlayState implements GameData {
 		currentWave.setWaveTime(time*FRAMES_PER_SECOND + count);		
 	    }
 	    for (Path currentPath : currentLevel.getPaths()) {
-		System.out.println("in path");
+//		System.out.println("in path");
 		try {
 		    spawnEnemy(currentWave, currentPath);
 		}
@@ -159,7 +159,7 @@ public class PlayState implements GameData {
     
     private void checkWin() throws MissingPropertiesException {
 	// Level is over
-	System.out.println("Checking for win");
+//	System.out.println("Checking for win");
 	if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()
 		&& deadEnemies()) {
 	    advanceLevel();
@@ -175,7 +175,7 @@ public class PlayState implements GameData {
     private boolean deadEnemies() {
 	for (ShootingSprites thisEnemy : myEnemyManager.getListOfActive()) {
 	    if (thisEnemy.isAlive()) {
-		System.out.println("Found an alive enemy");
+//		System.out.println("Found an alive enemy");
 		return false;
 	    }
 	}
@@ -201,7 +201,8 @@ public class PlayState implements GameData {
 	try {
 	    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
 	} catch (FileNotFoundException e1) {
-	    e1.printStackTrace(); //TODO!!!
+	    Log.debug(e1);
+	    e1.printStackTrace(); 
 	}
     }
 
@@ -217,14 +218,14 @@ public class PlayState implements GameData {
     
     private void checkLoss() {
 	if (myHealth.getValue() <= 0) {
-	    System.out.println("Lost game!");
+//	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();
 	    try {
 		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
 	    } catch (FileNotFoundException e) {
-		Log.debug(e);
+		//Log.debug(e);
 	    }
 	}
     }
@@ -311,7 +312,7 @@ public class PlayState implements GameData {
 	try {
 	    myMediator.getSoundFactory().playSoundEffect("cash");
 	} catch (FileNotFoundException e) {
-	    Log.debug(e);
+	    //Log.debug(e);
 	} 
     }
 
