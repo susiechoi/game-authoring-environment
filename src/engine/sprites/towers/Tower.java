@@ -120,6 +120,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public void move(KeyCode code) {
 	KeyMoveProperty keyMove = (KeyMoveProperty) getProperty("KeyMoveProperty"); 
 	if(keyMove != null) {
+	    System.out.println("found key property");
 	    keyMove.move(this, code);
 	}
     }

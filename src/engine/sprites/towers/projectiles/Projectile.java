@@ -121,7 +121,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     private boolean hasReachedTargetPoint() {
 	//System.out.println("checking if has reached target");
 	//System.out.println((this.targetDestination.getX()-5 <= this.getX() || this.getX() <= this.targetDestination.getX() + 5) && (this.targetDestination.getX() - 5) <= this.getY() || this.getY() <= this.targetDestination.getY()+5);
-	System.out.println("x "+ this.getX() + " y "+ this.getY() + " target x" + this.targetDestination.getX() + " y " + this.targetDestination.getY());
+	//System.out.println("x "+ this.getX() + " y "+ this.getY() + " target x" + this.targetDestination.getX() + " y " + this.targetDestination.getY());
 	return ((this.targetDestination.getX()-5 <= this.getX() && this.getX() <= this.targetDestination.getX() + 5) && (this.targetDestination.getY() - 5 <= this.getY() && this.getY() <= this.targetDestination.getY()+5));
     }
 

@@ -311,6 +311,7 @@ public class Mediator implements MVController{
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
+	System.out.println("IN MEDIATOR for moving towers");
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }
 

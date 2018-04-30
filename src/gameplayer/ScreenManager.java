@@ -191,6 +191,7 @@ public class ScreenManager extends View {
 	}
 	
 	public void moveTower(FrontEndTower tower) {
+	    System.out.println("LOOKING FOR KEY EVENT ");
 	        STAGE_MANAGER.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
 	            @Override
 	            public void handle(KeyEvent event) {

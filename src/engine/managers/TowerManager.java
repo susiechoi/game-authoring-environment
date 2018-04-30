@@ -52,6 +52,7 @@ public class TowerManager extends ShootingSpriteManager {
     @SuppressWarnings("unlikely-arg-type")
     public void moveTowers(FrontEndTower tower, KeyCode c) {
 	if(this.getListOfActive().contains(tower)) {
+	    System.out.println("found tower");
 	    ((Tower) tower).move(c);
 	}
     }
