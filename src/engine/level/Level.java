@@ -29,7 +29,7 @@ public class Level {
 
 	public static final String DEFAULT_OBJ_NAME = "Default";
 	
-	private final int myNumber;
+	private int myNumber;
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
 	private List<Wave> myWaves;
@@ -66,6 +66,10 @@ public class Level {
 	    return myPaths;
 	}
 
+	public void incrementNumber() {
+		this.myNumber = this.myNumber+1; 
+	}
+	
 	/**
 	 * 
 	 * @return int: The myNumber of the level Object
