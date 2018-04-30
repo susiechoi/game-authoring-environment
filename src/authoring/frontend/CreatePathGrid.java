@@ -337,7 +337,7 @@ public class CreatePathGrid {
     }
 
     protected List<Point> getAbsoluteCoordinates() {
-	System.out.println("PATH COORDS: " +pathCoords);
+//	System.out.println("PATH COORDS: " +pathCoords);
 	return pathCoords;
     }
 

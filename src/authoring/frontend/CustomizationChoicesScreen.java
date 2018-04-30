@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import xml.BadGameDataException;
+import jdk.internal.jline.internal.Log;
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
@@ -99,7 +100,9 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 				    getView().autogenerateLevel();
 				} catch (MissingPropertiesException e1) {
 				    // TODO Auto-generated catch block
+				    Log.debug(e1);
 				    e1.printStackTrace();
+				    getView().loadErrorScreen("NoFile");
 				} 
 				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDITEXISTINGLEVEL_KEY);
 			});

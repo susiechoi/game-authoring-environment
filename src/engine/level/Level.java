@@ -52,10 +52,10 @@ public class Level {
 	 */
 	public Level(Level copiedLevel) throws MissingPropertiesException {
 		myNumber = copiedLevel.myNumber(); 
-		myWaves = copiedLevel.getWaveCopies(); 
-		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getCopiedTowers();
-		myEnemies = copiedLevel.getCopiedEnemies();
+		myWaves = copiedLevel.getWaves(); 
+		myPaths = copiedLevel.getAllPaths(); 
+		myTowers = copiedLevel.getTowers();
+		myEnemies = copiedLevel.getEnemies();
 	}
 
 	private List<Path> getAllPaths() {
@@ -374,9 +374,9 @@ public class Level {
 	}
 	public void replacePaths(List<Path> currPaths) {
 	    myPaths.removeAll(getPaths());
-	    System.out.println("paths size adding" + currPaths.size());
+//	    System.out.println("paths size adding" + currPaths.size());
 	    myPaths.addAll(currPaths);
-	    System.out.println("path size after readding" + myPaths.size());
+//	    System.out.println("path size after readding" + myPaths.size());
 	    for(Wave wave : myWaves) {
 		wave.removeStalePaths(currPaths);
 	    }
