@@ -40,7 +40,7 @@ public class ScorePanel extends ListenerPanel {
 
 	private void setupWriters(int level) {
 		try {
-			System.out.println("HERE IT IS "+DEFAULT_SCORE_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR);
+//			System.out.println("HERE IT IS "+DEFAULT_SCORE_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR);
 			myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR); 
 		} catch (IOException e) {
 			Log.debug(e);

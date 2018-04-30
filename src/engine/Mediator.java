@@ -22,6 +22,9 @@ import engine.sprites.towers.FrontEndTower;
 import frontend.StageManager;
 
 import java.awt.Point;
+import java.io.IOException;
+
+import xml.BadGameDataException;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
@@ -112,8 +115,10 @@ public class Mediator implements MVController{
     /**
      * Saves current state of game in xml file
      * @param filename	String representing name of file. Path and ".xml" are handled by method in XML package.
+     * @throws IOException 
+     * @throws BadGameDataException 
      */
-    public void savePlay(String filename) {
+    public void savePlay(String filename) throws BadGameDataException, IOException {
 	PlaySaverWriter p = (PlaySaverWriter) XMLFactory.generateWriter("PlaySaverWriter");
 	p.write(myGameEngine.getPlayState(), filename);
     }
@@ -188,7 +193,6 @@ public class Mediator implements MVController{
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-	//	System.out.println("upgrade is called OF TYPE " + upgradeName);
 	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
 
@@ -197,7 +201,7 @@ public class Mediator implements MVController{
      * @throws MissingPropertiesException 
      */
     public void restartLevel() throws MissingPropertiesException {
-	System.out.println("in restart");
+//	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
 

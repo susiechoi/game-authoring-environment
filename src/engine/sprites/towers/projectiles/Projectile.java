@@ -111,6 +111,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    e.printStackTrace();
 	    return false;
 	}
+//	    System.out.println("no movement property");
 	
     }
 

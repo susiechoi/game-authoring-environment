@@ -113,7 +113,7 @@ public class TowerPanel extends ListenerPanel {
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    System.out.println("SwapButton Image Missing"); //TODO!!!
+//	    System.out.println("SwapButton Image Missing"); //TODO!!!
 	}
 
 
@@ -142,6 +142,7 @@ public class TowerPanel extends ListenerPanel {
 
 	for(FrontEndTower tower : availableTowers) {
 	    ImageView imageView = tower.getImageView();
+	    imageView.setVisible(true);
 	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
 	    //    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
 	    //    imageView.setPreserveRatio(false);
@@ -179,7 +180,7 @@ public class TowerPanel extends ListenerPanel {
 	    voidButton.setOnMouseClicked(arg0 ->{ 
 
 		GAME_SCREEN.towerSelectedForPlacement(null);
-		System.out.println("nullhit");
+//		System.out.println("nullhit");
 
 	    });
 
@@ -205,7 +206,6 @@ public class TowerPanel extends ListenerPanel {
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerPane.getChildren().clear();
-
 	VBox filledWithTowers = fillScrollWithTowers(availableTowers);
 
 	towerPane.getChildren().add(filledWithTowers);

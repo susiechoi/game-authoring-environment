@@ -19,11 +19,8 @@ import javafx.scene.input.KeyCode;
  * @author Katie Van Dyk
  * @author Ryan Pond
  */
-
-
 public class TowerManager extends ShootingSpriteManager {
 
-    //not sure exactly where this should be implemented/how the info for it will be passed in
     Map<String, Tower> myTowerTypeToInstance;
 
     /**
@@ -57,6 +54,13 @@ public class TowerManager extends ShootingSpriteManager {
 	}
     }
 
+    /**
+     * Places the tower in a specified location
+     * @param location : point location to be placed
+     * @param type : key to map that will have a tower type
+     * @return : front end tower that is returned to the Gameplayer
+     * @throws MissingPropertiesException
+     */
     public FrontEndTower place(Point location, String type) throws MissingPropertiesException {
 	Tower newTower = new Tower(myTowerTypeToInstance.get(type));
 	newTower.move(location);

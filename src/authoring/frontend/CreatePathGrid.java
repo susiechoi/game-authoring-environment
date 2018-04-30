@@ -91,7 +91,6 @@ public class CreatePathGrid {
 
 	grid.setStyle("-fx-background-image: url('file:images/generalbackground.jpg')"); 
 	populateGrid(grid);
-
 	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() > 2) { //TODO: better way to check if not default
 	    setGridConstraints(grid, (int) getView().getObjectAttribute("Path", "", "myPathSize"));
 	    grid.setStyle("-fx-background-image: url("+getView().getObjectAttribute("Path", "", "myBackgroundImage")+")");
@@ -338,7 +337,7 @@ public class CreatePathGrid {
     }
 
     protected List<Point> getAbsoluteCoordinates() {
-	System.out.println("PATH COORDS: " +pathCoords);
+//	System.out.println("PATH COORDS: " +pathCoords);
 	return pathCoords;
     }
 

@@ -24,9 +24,9 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
 
     private String myObjectName; 
-    private Double myProjectileDamage;
-    private Double myProjectileDamageCost; 
-    private Double myProjectileDamageValue; 
+//    private Double myProjectileDamage;
+//    private Double myProjectileDamageCost; 
+//    private Double myProjectileDamageValue; 
     private Double myProjectileSpeed;
     private Double myLauncherRate;
     private Double myLauncherRateValue;
@@ -50,7 +50,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    try {
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", myProjectileDamageCost, myProjectileDamageValue, myProjectileDamage);
+//		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", myProjectileDamageCost, myProjectileDamageValue, myProjectileDamage);
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
 		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
 		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "FireRateProperty", myLauncherRateCost, myLauncherRateValue, myLauncherRate);
@@ -70,26 +70,26 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	vb.getChildren().add(projectileImageSelect);
 	
-	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
-	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
-	vb.getChildren().add(projectileDamage);
-	myProjectileDamageSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myProjectileDamage = (Double) newValue;
-	});
-	
-	Slider myProjectileDamageValueSlider = getUIFactory().setupSlider(getMyMaxRange());
-	HBox projectileDamageValue = getUIFactory().setupSliderWithValue(myProjectileDamageValueSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeValue"));
-	vb.getChildren().add(projectileDamageValue);
-	myProjectileDamageValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myProjectileDamageValue = (Double) newValue;
-	});
-	
-	Slider myProjectileDamageCostSlider = getUIFactory().setupSlider(getMyMaxPrice());
-	HBox projectileDamageCost = getUIFactory().setupSliderWithValue(myProjectileDamageCostSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeCost"));
-	vb.getChildren().add(projectileDamageCost);
-	myProjectileDamageCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myProjectileDamageCost = (Double) newValue;
-	});
+//	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
+//	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
+//	vb.getChildren().add(projectileDamage);
+//	myProjectileDamageSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+//	    myProjectileDamage = (Double) newValue;
+//	});
+//	
+//	Slider myProjectileDamageValueSlider = getUIFactory().setupSlider(getMyMaxRange());
+//	HBox projectileDamageValue = getUIFactory().setupSliderWithValue(myProjectileDamageValueSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeValue"));
+//	vb.getChildren().add(projectileDamageValue);
+//	myProjectileDamageValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+//	    myProjectileDamageValue = (Double) newValue;
+//	});
+//	
+//	Slider myProjectileDamageCostSlider = getUIFactory().setupSlider(getMyMaxPrice());
+//	HBox projectileDamageCost = getUIFactory().setupSliderWithValue(myProjectileDamageCostSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeCost"));
+//	vb.getChildren().add(projectileDamageCost);
+//	myProjectileDamageCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+//	    myProjectileDamageCost = (Double) newValue;
+//	});
 
 	Slider myProjectileSpeedSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileSpeed"));

@@ -20,7 +20,7 @@ public class AttributeFactory {
 	if (objectType.equals("Enemy")) {
 	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {
-		currentLevel.getEnemy(name).setImageString((String) attributeValue); 
+		currentLevel.getEnemy(name).updateImage((String) attributeValue); 
 	    }
 	}
 	else if(objectType.equals("Projectile")) {
@@ -32,7 +32,7 @@ public class AttributeFactory {
 	else if (objectType.equals("Tower")) {
 	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsTower(name)) {
-		currentLevel.getTower(name).setImageString((String) attributeValue); 
+		currentLevel.getTower(name).updateImage((String) attributeValue); 
 	    }
 	}
 	else if (objectType.equals("Settings")) {
@@ -63,7 +63,7 @@ public class AttributeFactory {
 	else if (objectType.equals("Path")) {
 	    Level currentLevel = game.levelCheck(level);
 	    Path path = currentLevel.getPath();
-	    System.out.println("PATH LEVEL LOADING FROM: " + level);
+//	    System.out.println("PATH LEVEL LOADING FROM: " + level);
 	    attributeValue = attributeFinder.retrieveFieldValue(attribute, path);
 	}
 	else if(objectType.equals("Wave")) {
