@@ -39,6 +39,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jdk.internal.jline.internal.Log;
 
 public class UIFactory {
 
@@ -306,6 +307,7 @@ public class UIFactory {
 					options2 = propertiesReader.read(propertiesReader.loadProperties(propertiesFilepath));
 				}
 				catch(MissingPropertiesException e2) {
+				    	Log.debug(e2);
 					e2.printStackTrace();
 					throw new MissingPropertiesError("");
 				}

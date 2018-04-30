@@ -38,6 +38,7 @@ public class TestWriter {
 //    out.close();
 //} catch (IOException e1) {
 //    // TODO Auto-generated catch block
+//    Log.debug(e1);
 //    e1.printStackTrace();
 //}
 //}
