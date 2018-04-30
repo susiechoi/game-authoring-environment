@@ -147,6 +147,14 @@ public class Mediator implements MVController{
 	//	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
+    
+    public void handleTowerClickToShoot(FrontEndTower tower, double clickedX, double clickedY) throws MissingPropertiesException{
+	System.out.println("MADE IT TO MEDIATOR CALL");
+	Sprite shotProjectile = myGameEngine.getPlayState().handleClick(tower, clickedX, clickedY);
+	if (shotProjectile != null) {
+	    this.addSpriteToScreen(shotProjectile);
+	}
+    }
 
     /**
      * To be called by the backend any time a projectile or enemy should be added to the screen
@@ -193,7 +201,7 @@ public class Mediator implements MVController{
      * @throws MissingPropertiesException 
      */
     public void restartLevel() throws MissingPropertiesException {
-	System.out.println("in restart");
+//	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
 
@@ -249,8 +257,8 @@ public class Mediator implements MVController{
 	}
     }
 
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 
@@ -307,7 +315,11 @@ public class Mediator implements MVController{
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
+	System.out.println("IN MEDIATOR for moving towers");
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }
 
+    public String getInstructions() {
+        return myGameEngine.getPlayState().getInstructions();
+    }
 }

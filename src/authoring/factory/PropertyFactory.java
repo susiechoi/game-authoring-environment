@@ -33,8 +33,8 @@ public class PropertyFactory {
     }
 
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
-	System.out.println("SETTING PROPERTY");
-	System.out.println(propertyName);
+//	System.out.println("SETTING PROPERTY");
+//	System.out.println(propertyName);
 	for (Double s : attributes) System.out.println(s);
 	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
@@ -53,11 +53,19 @@ public class PropertyFactory {
 		Tower tower = currentLevel.getTower(objectName);
 		tower.addProjectileProperty(getProperty(objectName, propertyName, attributes));
 	    }
+	    if (currentLevel.containsEnemy(objectName)) {
+		Enemy enemy = currentLevel.getEnemy(objectName);
+		enemy.addProjectileProperty(getProperty(objectName, propertyName, attributes));
+	    }
 	}
 	else if (objectType.equals("Launcher")) {
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
 		tower.addLauncherProperty(getProperty(objectName, propertyName, attributes));
+	    }
+	    if (currentLevel.containsEnemy(objectName)) {
+		Enemy enemy = currentLevel.getEnemy(objectName);
+		enemy.addLauncherProperty(getProperty(objectName, propertyName, attributes));
 	    }
 	}
     }
@@ -66,8 +74,8 @@ public class PropertyFactory {
 	Property ret;
 	String className = PACKAGE + propertyName;
 	String type = new PropertiesReader().findKey(DEFAULT_PROPERTIES_FILES_PATH, propertyName);
-	System.out.println(className);
-	System.out.println(type);
+//	System.out.println(className);
+//	System.out.println(type);
 	if(type == null) {
 	    return null;
 	}
@@ -93,14 +101,14 @@ public class PropertyFactory {
     }
 
     private Property createProperty(String className, String type, Object attribute) {
-	System.out.println("CLASSNAME " + className);
+//	System.out.println("CLASSNAME " + className);
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
-
-    public List<Object> retrieveProperty(String objectName, String propertyName) {
+    
+    public Double retrieveProperty(String objectName, String propertyName, int index) {
 	for(String object : currentProperties.keySet()) {
 	    if(object.equals(objectName)) {
-		return currentProperties.get(object).getAttributes();
+		return (Double)currentProperties.get(object).getAttributes().get(index);
 	    }
 	}
 	return null;

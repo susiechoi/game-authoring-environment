@@ -11,8 +11,8 @@ import engine.Settings;
  */
 public class SettingsBuilder {
     
-    public Settings construct(String gameName, double startingHealth, double startingMoney, String css, String theme, String backgroundMusic, String levelWinSound, String levelLossSound) {
-	return new Settings(gameName, startingHealth, startingMoney, css, theme, backgroundMusic, levelWinSound, levelLossSound);
+    public Settings construct(String gameName, double startingHealth, double startingMoney, String css, String theme, String instructions, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	return new Settings(gameName, startingHealth, startingMoney, css, theme, instructions, backgroundMusic, levelWinSound, levelLossSound);
     }
 
 }

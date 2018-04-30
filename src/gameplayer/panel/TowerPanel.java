@@ -1,7 +1,5 @@
 package gameplayer.panel;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -24,6 +22,7 @@ import com.sun.javafx.tools.packager.Log;
 
 import frontend.PropertiesReader;
 import frontend.UIFactory;
+import frontend.View;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.towers.FrontEndTower;
 import file.DataPointWriter;
@@ -35,29 +34,26 @@ import gameplayer.screen.GameScreen;
 
 
 public class TowerPanel extends ListenerPanel {
-	
-	public static final String DEFAULT_SUBFOLDER_FILEPATH = "Currency/";
-	
-    //TODO read this from settings or properties file, even better would be autoscaling to fit space
-    private int TOWER_IMAGE_SIZE;
 
+    public static final String DEFAULT_SUBFOLDER_FILEPATH = "Currency/";
     private GameScreen GAME_SCREEN;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
-   // private IntegerProperty currency; //tag: buyPanel button disable
+    private final View VIEW;
+    // private IntegerProperty currency; //tag: buyPanel button disable
     private Map<Button, FrontEndTower> buttonMap;
 
     private DataPointWriter myCurrencyWriter; 
-    
-    //TODO change to only use availibleTowers
+
     //private final FileIO FILE_READER;
     private HBox towerPane;
 
 
-    public TowerPanel(GameScreen gameScreen) {
+    public TowerPanel(GameScreen gameScreen, View view) {
 	GAME_SCREEN = gameScreen;
+	VIEW = view;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 	//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
@@ -66,19 +62,18 @@ public class TowerPanel extends ListenerPanel {
 	//currency = new SimpleIntegerProperty(); //tag: buyPanel button disable
 	setupWriters(); 
     }
-    
+
     private void setupWriters() {
-    	try {
-			myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
-		} catch (FileNotFoundException e) {
-			GAME_SCREEN.loadErrorScreen("NoFile");
-		} 
+	try {
+	    myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
+	} catch (FileNotFoundException e) {
+	    GAME_SCREEN.loadErrorScreen("NoFile");
+	} 
     }
 
 
     @Override
     public void makePanel() {
-	TOWER_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("TowerImageSize"));
 	int swapButtonSize = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("SwapButtonSize"));
 	String assortedButtonFilePath = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
 
@@ -106,14 +101,15 @@ public class TowerPanel extends ListenerPanel {
 	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(assortedButtonFilePath, swapButtonSize, swapButtonSize);
 	    Button swapButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("swapButtonID"), buttonMap.get(GAMEPLAYER_PROPERTIES.get("swapButton")));
 	    swapButton.setOnMouseClicked(arg0 -> GAME_SCREEN.swapVertPanel());
-	    swapButton.setTooltip(new Tooltip(GAMEPLAYER_PROPERTIES.get("swapTooltip"))); //TODO make properties file
+	    swapButton.setTooltip(new Tooltip(GAMEPLAYER_PROPERTIES.get("swapTooltip")));
 	    HBox swapWrap = new HBox(swapButton);
 	    swapWrap.setId(GAMEPLAYER_PROPERTIES.get("swapWrapID"));
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    System.out.println("SwapButton Image Missing"); //TODO!!!
+	    VIEW.loadErrorAlert("missingSwapButton");
+
 	}
 
 
@@ -139,11 +135,11 @@ public class TowerPanel extends ListenerPanel {
 	HBox towerHolder = new HBox();
 	int alternator = 0;
 	Button prevTowerButton = new Button();
-
+	int towerImageSize = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("TowerImageSize"));
 	for(FrontEndTower tower : availableTowers) {
 	    ImageView imageView = tower.getImageView();
 	    imageView.setVisible(true);
-	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
+	    imageView.setFitWidth(towerImageSize);
 	    //    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
 	    //    imageView.setPreserveRatio(false);
 	    Button towerButton = UIFACTORY.makeImageViewButton(GAMEPLAYER_PROPERTIES.get("buttonID"),imageView);
@@ -174,13 +170,13 @@ public class TowerPanel extends ListenerPanel {
 	}
 	if(alternator%2 ==1) {
 	    ImageView voidView = new ImageView();
-	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
+	    voidView.setFitWidth(towerImageSize);
 	    //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton(GAMEPLAYER_PROPERTIES.get("buttonID"), voidView);
 	    voidButton.setOnMouseClicked(arg0 ->{ 
 
 		GAME_SCREEN.towerSelectedForPlacement(null);
-		System.out.println("nullhit");
+//		System.out.println("nullhit");
 
 	    });
 
@@ -214,7 +210,7 @@ public class TowerPanel extends ListenerPanel {
 	//towerPane.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
 
     }
-    
+
     private void checkAffordTowers(int myCurrency) {
 	for(Entry<Button, FrontEndTower> entry : buttonMap.entrySet()) {
 	    if(entry.getValue().getTowerCost() > myCurrency) {
@@ -227,16 +223,16 @@ public class TowerPanel extends ListenerPanel {
     }
 
     private void updateCurrency(Integer newValue) {
-    	myCurrencyWriter.recordDataPoint(newValue);
+	myCurrencyWriter.recordDataPoint(newValue);
 	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
 	//currency.set(newValue); //tag: buyPanel button disable
 	checkAffordTowers(newValue);
     }
-    
+
     //tag: buyPanel button disable
-//    public void attachBuyPanelCurrencyListener(ChangeListener<Number> listener) {
-//	currency.addListener(listener);
-//    }
+    //    public void attachBuyPanelCurrencyListener(ChangeListener<Number> listener) {
+    //	currency.addListener(listener);
+    //    }
 
     /**
      * Wrapper method on score to reduce order of call dependencies

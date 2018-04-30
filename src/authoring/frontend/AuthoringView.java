@@ -153,7 +153,7 @@ public class AuthoringView extends View {
 				}
 			}
 			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				System.out.println(clazz.getSimpleName());
+//				System.out.println(clazz.getSimpleName());
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
@@ -179,16 +179,16 @@ public class AuthoringView extends View {
 		goForwardFrom(id,  parameterList);
 	}
 
-	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
+	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height, boolean transparent) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height, transparent);
 	}
 
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
 
-	public void makeResources(String gameName, double startingHealth, double starting$, String css, String backgroundMusic, String levelWinSound, String levelLossSound) {
-		myController.makeResources(gameName, startingHealth, starting$, css, getTheme(), backgroundMusic, levelWinSound, levelLossSound);
+	public void makeResources(String gameName, double startingHealth, double starting$, String instructions, String css, String backgroundMusic, String levelWinSound, String levelLossSound) {
+		myController.makeResources(gameName, startingHealth, starting$, css, getTheme(), instructions, backgroundMusic, levelWinSound, levelLossSound);
 	}
 
 	/**

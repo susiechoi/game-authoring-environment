@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -11,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import xml.BadGameDataException;
+
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
@@ -99,7 +102,9 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 				    getView().autogenerateLevel();
 				} catch (MissingPropertiesException e1) {
 				    // TODO Auto-generated catch block
+				    Log.debug(e1);
 				    e1.printStackTrace();
+				    getView().loadErrorScreen("NoFile");
 				} 
 				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDITEXISTINGLEVEL_KEY);
 			});

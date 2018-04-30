@@ -78,7 +78,7 @@ public class UpgradePanel extends SpecificPanel {
 	}
 	catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    System.out.println("upgrade image load fail"); //TODO!!!
+//	    System.out.println("upgrade image load fail"); //TODO!!!
 	}
     }
 }

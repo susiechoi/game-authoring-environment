@@ -2,52 +2,123 @@ package authoring.frontend;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
+/**
+ * Creates the selection model that items get added to on shift selection and the functionalities of copy and paste
+ * @author erikriis
+ */
 public class SelectionModel {
+    public static final String CELL_SELECT_STYLE = "-fx-background-color: rgba(255,255,255, 0.3); -fx-background-radius: 10;";
+    public static final String CELL_DESELECT_STYLE = "-fx-background-color: rgba(0,0,0,0);";
+    private Set<Pane> selectedCells = new HashSet<>();
+    private Node selectedNode;
+    private Node copyNode;
+    private GridPane myGrid;
+    private GridPane myCheckGrid;
+    private int mySize;
 
-	Set<Node> selectedNodes = new HashSet<>();
+    /**
+     * Constructor for the Selection Model
+     * @param grid
+     * @param checkGrid
+     * @param size
+     */
+    public SelectionModel(GridPane grid, GridPane checkGrid, int size) {
+	myGrid = grid;
+	myCheckGrid = checkGrid;
+	mySize = size;
+    }
 
-	public void addNode(Node node) {
-		node.setStyle("-fx-effect: dropshadow(three-pass-box, lightblue, 2, 2, 0, 0);");
-		selectedNodes.add(node);
+    /**
+     * Adds a gridPane cell to selection model
+     * @param pane
+     */
+    public void addCell(Pane pane) {
+	pane.setStyle(CELL_SELECT_STYLE);
+	selectedCells.add(pane);
+    }
+
+    /**
+     * Removes a gridPane cell from selection model
+     * @param pane
+     */
+    public void removeCell(Pane pane) {
+	pane.setStyle(CELL_DESELECT_STYLE);
+	selectedCells.remove(pane);
+    }
+
+    /**
+     * Sets a path block node as "selected"
+     * @param node
+     */
+    public void addNode(Node node) {
+	if (selectedNode != null) {
+	    selectedNode.setEffect(null);
 	}
+	ColorAdjust colorAdjust = new ColorAdjust();
+	colorAdjust.setBrightness(0.5);
+	node.setEffect(colorAdjust);
+	selectedNode = node;
+    }
 
-	public void removeNode(Node node) {
-		node.setStyle("-fx-effect: null");
-		selectedNodes.remove(node);
-	}
+    /**
+     * Sets a path block node as "unselected"
+     * @param node
+     */
+    public void removeNode(Node node) {
+	node.setEffect(null);
+	selectedNode = null;
+    }
 
-	public void clear() {
-		while(!selectedNodes.isEmpty()) {
-			removeNode(selectedNodes.iterator().next());
+    /**
+     * Returns a set that contains all of the selected gridPane cells
+     * @return
+     */
+    public Set<Pane> getSelectedCells() {
+	return selectedCells;
+    }
+
+    /**
+     * Sets the selected path block node as "copied"
+     */
+    public void copy() {
+	copyNode = selectedNode;
+    }
+
+    /**
+     * Pastes the selected path block node into every selected gridPane cell
+     */
+    public void paste() { //fix
+	if (copyNode != null && copyNode instanceof ImageView) {
+	    for (Pane cell: selectedCells) {
+		int col = GridPane.getColumnIndex(cell);
+		int row = GridPane.getRowIndex(cell);
+		DraggableImage path = new DraggableImage(((ImageView) copyNode).getImage());
+		path.setDraggable(myCheckGrid, row, col);
+		path.getPathImage().setFitWidth(mySize);
+		path.getPathImage().setFitHeight(mySize);
+		if (path.getPathImage().getId() == CreatePathGrid.START) {
+		    System.out.println("PASTING START");
+		    myCheckGrid.add(new Label(CreatePathGrid.START), col, row);
+		    path.getPathImage().setId(CreatePathGrid.START);
+		} else if (path.getPathImage().getId() == CreatePathGrid.PATH) {
+		    myCheckGrid.add(new Label(CreatePathGrid.PATH), col, row);
+		    path.getPathImage().setId(CreatePathGrid.PATH);
+		} else if (path.getPathImage().getId() == CreatePathGrid.END) {
+		    myCheckGrid.add(new Label(CreatePathGrid.END), col, row);
+		    path.getPathImage().setId(CreatePathGrid.END);
 		}
+		myGrid.add(path.getPathImage(), col, row);
+		GridPane.setFillWidth(path.getPathImage(), true);
+		GridPane.setFillHeight(path.getPathImage(), true);
+	    }
 	}
-
-	public boolean contains(Node node) {
-		return selectedNodes.contains(node);
-	}
-
-	public 	Set<Node> getSelectedNodes() {
-		return selectedNodes;
-	}
-
-	public void rotate() {
-		for (Node node: selectedNodes) {
-			node.setRotate(node.getRotate() + 90);
-		}
-	}
-
-
-	public void copyAndPaste() {
-		for (Node node: selectedNodes) {
-			if (node instanceof ImageView) {
-				DraggableImage image = new DraggableImage(((ImageView) node).getImage());
-//				image.setCopyDraggable();
-			}
-		}
-	}
+    }
 }
 

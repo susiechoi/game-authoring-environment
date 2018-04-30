@@ -42,7 +42,7 @@ public class SpriteFactory {
 	}
 	Enemy newEnemy = myGeneric.generateGenericEnemy(name);
 	level.addEnemy(name, newEnemy);
-	System.out.println(level+" "+name);
+//	System.out.println(level+" "+name);
     }
 
     public void deleteSprite(String objectType, Level level, String name) throws ObjectNotFoundException, DeleteDefaultException {

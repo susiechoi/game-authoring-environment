@@ -44,6 +44,8 @@ public class AttributeFinder {
 		}
 		throw new ObjectNotFoundException(fieldName);
 	}
+	
+	//public void setStringValue(String attributeName, Object )
 
 
 	///**

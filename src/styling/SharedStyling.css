@@ -103,8 +103,6 @@ Text {
 	-fx-background-radius: 2em;
 }
 
-
-
 .scroll-bar:vertical .track-background,
 .scroll-bar:horizontal .track-background{
 	-fx-background-radius: 2em;

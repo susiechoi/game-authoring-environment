@@ -33,6 +33,7 @@ public class Driver extends Application {
 
     /**
      * Start the program
+     * 
      */
     public static void main (String[] args) {
 	launch(args);
