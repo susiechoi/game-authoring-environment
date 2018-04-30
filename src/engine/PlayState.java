@@ -26,7 +26,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
 
-
 /**
  * Handles the current state of the game, including current score, money, and lists
  * of active towers and enemies
@@ -228,7 +227,7 @@ public class PlayState implements GameData {
 	    try {
 		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
 	    } catch (FileNotFoundException e) {
-		Log.debug(e);
+		//Log.debug(e);
 	    }
 	}
     }
@@ -315,7 +314,7 @@ public class PlayState implements GameData {
 	try {
 	    myMediator.getSoundFactory().playSoundEffect("cash");
 	} catch (FileNotFoundException e) {
-	    Log.debug(e);
+	    //Log.debug(e);
 	} 
     }
 

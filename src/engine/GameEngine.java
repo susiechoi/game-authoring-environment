@@ -14,7 +14,6 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import xml.BadGameDataException;
-
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
@@ -45,9 +44,9 @@ public class GameEngine {
 				    try {
 					loop(SECOND_DELAY);
 				    } catch (MissingPropertiesException i) {
-					Log.debug(i);
+					//Log.debug(i);
 				    } catch (FileNotFoundException i) {
-					Log.debug(i);
+					//Log.debug(i);
 				    }
 				});
 		ANIMATION = new Timeline();

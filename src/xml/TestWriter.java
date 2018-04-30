@@ -10,7 +10,6 @@ import com.sun.javafx.tools.packager.Log;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
-
 ///Put this at the top of the file:
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class TestWriter {
 	    d = XMLDocumentBuilder.initializeDoc();
 	} catch (ParserConfigurationException e) {
 	    // TODO Auto-generated catch block
-	    Log.debug(e);
+	    //Log.debug(e);
 	}
     }
 //public void write(List<String> l, String filename) {
