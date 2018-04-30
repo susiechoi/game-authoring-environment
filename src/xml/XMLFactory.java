@@ -3,9 +3,10 @@ package xml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.AuthoredGame;
 import authoring.frontend.exceptions.MissingPropertiesException;
-import jdk.internal.jline.internal.Log;
 
 /**
  * Static class that creates XMLWriters/XMLReaders to handle data parsing. Holds a main method for testing purposes.

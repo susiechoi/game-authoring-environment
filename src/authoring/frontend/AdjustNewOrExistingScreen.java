@@ -101,7 +101,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		Parent propertySelector = makePropertySelector(subfolderPath);
 		for (Node n : propertySelector.getChildrenUnmodifiable()) {
 			if (n.getClass() == ComboBox.class) {
-				applyButton.setOnAction(e-> {
+				((ComboBox<String>)n).addEventFilter(ActionEvent.ACTION, e-> {
 					applyButton.setDisable(false);
 				});
 				applyButton.setDisable(true);
