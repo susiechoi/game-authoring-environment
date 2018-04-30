@@ -1,8 +1,6 @@
 package controller;
 
-import java.awt.Point;
 import java.util.List;
-import java.util.Map;
 
 import authoring.AuthoredGame;
 import authoring.AuthoringModel;
@@ -12,7 +10,6 @@ import engine.PlayState;
 import engine.level.Level;
 import frontend.StageManager;
 import gameplayer.ScreenManager;
-import javafx.animation.Timeline;
 import xml.AuthoringModelReader;
 
 /**
@@ -38,7 +35,7 @@ public class PlayController {
 	 */
 	public PlayController(StageManager stageManager, String language, AuthoringModel model) {
 		myMediator = new Mediator(this);
-		myGameEngine = new GameEngine(myMediator);
+		myGameEngine = new GameEngine();
 		myScreenManager = new ScreenManager(stageManager, language, myMediator);
 		myReader = new AuthoringModelReader();
 		myMediator.setGameEngine(myGameEngine);
@@ -80,8 +77,6 @@ public class PlayController {
 		myGameEngine.start();
 	}
 	
-
-
 	/**
 	 * Calls the ScreenManager to load the InstructionScreen
 	 */

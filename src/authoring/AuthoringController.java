@@ -2,6 +2,7 @@
  * 
  * @author susiechoi 
  * @author Ben Hodgson 4/9/18
+ * @author Katherine Van Dyk
  *
  * Class that handles mediating creation of authoring environment objects (towers, enemies, path). 
  * Represents Controller in MVC of the authoring environment. 

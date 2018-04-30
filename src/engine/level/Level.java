@@ -55,7 +55,7 @@ public class Level {
 	 * @throws MissingPropertiesException 
 	 */
 	public Level(Level copiedLevel) throws MissingPropertiesException {
-		myNumber = copiedLevel.getNumber() + 1; 
+		myNumber = copiedLevel.getNumber(); 
 		myWaves = copiedLevel.getWaveCopies(); 
 		myPaths = copiedLevel.getPaths(); 
 		myTowers = copiedLevel.getCopiedTowers();

@@ -64,7 +64,6 @@ public class Launcher extends Manager<Projectile>{
      * @throws MissingPropertiesException 
      * 
      */
-    //TODO implement to shoot at where enemy is going
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	timeSinceLastShot = 0;
 	Projectile launchedProjectile = new Projectile(myProjectile, target, shooterX, shooterY);

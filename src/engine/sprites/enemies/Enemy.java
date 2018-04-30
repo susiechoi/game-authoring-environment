@@ -22,14 +22,13 @@ import engine.sprites.towers.launcher.Launcher;
  */
 public class Enemy extends ShootingSprites implements FrontEndSprite{
 
-    private double mySize;
     private int pathIndex;
     private double pathAngle;
     private Point targetPosition;
     private boolean freeze;
 
-    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
-	super(name, image, size, launcher, properties);
+    public Enemy(String name, String image, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
+	super(name, image, launcher, properties);
 	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
@@ -40,7 +39,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @throws MissingPropertiesException 
      */
     public Enemy(Enemy copiedEnemy) throws MissingPropertiesException {
-	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
+	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.getLauncher(), copiedEnemy.getProperties());
 	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;

@@ -91,7 +91,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 
 //	Slider myProjectileSizeSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	Slider myProjectileSpeedSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
-	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
+	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileSpeed"));
 	vb.getChildren().add(projectileSpeed);
 	myProjectileSpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    myProjectileSpeed = (Double) newValue;
