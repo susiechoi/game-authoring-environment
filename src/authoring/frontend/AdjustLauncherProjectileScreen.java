@@ -15,28 +15,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {	
+
     public static final String PROJECTILE_OBJECT_TYPE = "Projectile";
     public static final String LAUNCHER_OBJECT_TYPE = "Launcher";
     public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
     public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
     public static final String PROJECTILE_FIELDS = "default_objects/ProjectileFields.properties";
     public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
-    public static final String DEFAULT_BACKBUTTON_SCREENFLOW = "Back";
 
     private String myObjectName; 
-
-
-//    private Slider myProjectileDamageSlider;
-//    private Slider myProjectileSpeedSlider; 
-//    private Slider myLauncherRateSlider;
-//    private Slider myLauncherRangeSlider;
-//    private Slider myProjectileSizeSlider;
-    // TODO: bma
     private Double myProjectileDamage;
+    private Double myProjectileDamageCost; 
+    private Double myProjectileDamageValue; 
     private Double myProjectileSpeed;
     private Double myLauncherRate;
+    private Double myLauncherRateValue;
+    private Double myLauncherRateCost;
     private Double myLauncherRange;
-
 
 
     protected AdjustLauncherProjectileScreen(AuthoringView view, String selectedObjectName) {
@@ -52,16 +47,13 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	makeProjectileComponents(vb);
 	makeLauncherComponents(vb);
 
-//	Button backButton = setupBackButtonCustom(e-> {
-//	    getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_BACKBUTTON_SCREENFLOW, getMySelectedObjectName());
-//	}); 
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    try {
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myProjectileDamage);
+		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", myProjectileDamageCost, myProjectileDamageValue, myProjectileDamage);
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
 		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
-		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
+		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "FireRateProperty", myLauncherRateCost, myLauncherRateValue, myLauncherRate);
 		setSaved();
 		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
 	    }
@@ -70,7 +62,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    }
 	});
 	vb.getChildren().add(makePropertySelector());
-//	HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
 	vb.getChildren().add(applyButton);
 	return vb;
     }
@@ -79,23 +70,32 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	vb.getChildren().add(projectileImageSelect);
 	
-	//HBox projectileSoundSelect = 
-
 	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
 	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
 	vb.getChildren().add(projectileDamage);
 	myProjectileDamageSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    myProjectileDamage = (Double) newValue;
-	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileDamage", newValue);
+	});
+	
+	Slider myProjectileDamageValueSlider = getUIFactory().setupSlider(getMyMaxRange());
+	HBox projectileDamageValue = getUIFactory().setupSliderWithValue(myProjectileDamageValueSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeValue"));
+	vb.getChildren().add(projectileDamageValue);
+	myProjectileDamageValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+	    myProjectileDamageValue = (Double) newValue;
+	});
+	
+	Slider myProjectileDamageCostSlider = getUIFactory().setupSlider(getMyMaxPrice());
+	HBox projectileDamageCost = getUIFactory().setupSliderWithValue(myProjectileDamageCostSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeCost"));
+	vb.getChildren().add(projectileDamageCost);
+	myProjectileDamageCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+	    myProjectileDamageCost = (Double) newValue;
 	});
 
-//	Slider myProjectileSizeSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	Slider myProjectileSpeedSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
-	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileUpgradeValue"));
+	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileSpeed"));
 	vb.getChildren().add(projectileSpeed);
 	myProjectileSpeedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    myProjectileSpeed = (Double) newValue;
-	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileSpeed", newValue);
 	});
     }
 
@@ -106,15 +106,28 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	vb.getChildren().add(launcherRate);
 	myLauncherRateSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    myLauncherRate = (Double) newValue;
-	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myLauncherRate", newValue);
 	});
+	
+	Slider myLauncherRateValueSlider = getUIFactory().setupSlider(getMyMaxRange());
+	HBox launcherRateValue = getUIFactory().setupSliderWithValue(myLauncherRateValueSlider, getErrorCheckedPrompt("LauncherRateUpgradeValue"));
+	vb.getChildren().add(launcherRateValue);
+	myLauncherRateValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+	    myLauncherRateValue = (Double) newValue;
+	});
+	
+	Slider myLauncherRateCostSlider = getUIFactory().setupSlider(getMyMaxPrice());
+	HBox launcherRateCost = getUIFactory().setupSliderWithValue(myLauncherRateCostSlider, getErrorCheckedPrompt("LauncherRateUpgradeCost"));
+	vb.getChildren().add(launcherRateCost);
+	myLauncherRateCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+	    myLauncherRateCost = (Double) newValue;
+	});
+	
 
 	Slider myLauncherRangeSlider = getUIFactory().setupSlider(getMyMaxRange());
 	HBox launcherRange = getUIFactory().setupSliderWithValue(myLauncherRangeSlider, getErrorCheckedPrompt("LauncherRange"));
 	vb.getChildren().add(launcherRange);
 	myLauncherRangeSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    myLauncherRange = (Double) newValue;
-	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myLauncherRange", newValue);
 	});
     }
 }

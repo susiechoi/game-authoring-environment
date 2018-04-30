@@ -29,15 +29,11 @@ public class Level {
 
 	public static final String DEFAULT_OBJ_NAME = "Default";
 	
-	private final int myNumber;
+	private int myNumber;
 	private List<Path> myPaths;
 	private Map<String, Tower> myTowers;
 	private List<Wave> myWaves;
 	private Map<String, Enemy> myEnemies;
-
-	private int xLoc = 100;
-	private int yLoc = 100;
-	private int numEnemy = 0;
 
 	public Level(int number) {
 		myNumber = number;
@@ -54,18 +50,22 @@ public class Level {
 	 * - only difference from copiedLevel is that the level number is incremented
 	 * @throws MissingPropertiesException 
 	 */
-	public Level(Level copiedLevel) {
-		myNumber = copiedLevel.getNumber(); 
-		myWaves = copiedLevel.getWaves(); 
-		myPaths = copiedLevel.getAllPaths(); 
-		myTowers = copiedLevel.getTowers();
-		myEnemies = copiedLevel.getEnemies();
+	public Level(Level copiedLevel) throws MissingPropertiesException {
+		myNumber = copiedLevel.myNumber(); 
+		myWaves = copiedLevel.getWaveCopies(); 
+		myPaths = copiedLevel.getPaths(); 
+		myTowers = copiedLevel.getCopiedTowers();
+		myEnemies = copiedLevel.getCopiedEnemies();
 	}
 
 	private List<Path> getAllPaths() {
 	    return myPaths;
 	}
 
+	public void incrementNumber() {
+		this.myNumber = this.myNumber+1; 
+	}
+	
 	/**
 	 * 
 	 * @return int: The myNumber of the level Object
@@ -212,23 +212,6 @@ public class Level {
 		return(myWaves.size()>(num));
 	}
 
-	/**
-	 * Returns any new Enemy
-	 * @throws MissingPropertiesException 
-	 */
-	public Enemy getNewEnemy(Path path) throws MissingPropertiesException { //TODO: do engine people want this to be based on wave? currently just doing first wave
-		Enemy waveEnemy = myWaves.get(0).getEnemySpecificPath(path);
-		if (waveEnemy != null) {
-			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
-			numEnemy++;
-		}
-		return waveEnemy;
-	}
-
-	public int getNumber() {
-		return myNumber; 
-	}
-
 	public List<Path> getPaths() {
 	    	List<Path> pathsWithoutDefault = new ArrayList<>();
 	    	for(Path path: myPaths) {
@@ -334,6 +317,7 @@ public class Level {
 
 
 	public Path getPath() {
+	    System.out.println("getPath() - MyPaths size" + myPaths.size());
 		return myPaths.get(myPaths.size() - 1);
 	}
 

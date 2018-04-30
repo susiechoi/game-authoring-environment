@@ -142,6 +142,7 @@ public class TowerPanel extends ListenerPanel {
 
 	for(FrontEndTower tower : availableTowers) {
 	    ImageView imageView = tower.getImageView();
+	    imageView.setVisible(true);
 	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
 	    //    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
 	    //    imageView.setPreserveRatio(false);
@@ -205,7 +206,6 @@ public class TowerPanel extends ListenerPanel {
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerPane.getChildren().clear();
-
 	VBox filledWithTowers = fillScrollWithTowers(availableTowers);
 
 	towerPane.getChildren().add(filledWithTowers);
