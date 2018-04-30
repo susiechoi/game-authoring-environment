@@ -26,7 +26,7 @@ public class EnemyBuilder {
 	properties.add(new DamageProperty(0 , 0 , healthImpact));
 	properties.add(new ValueProperty(killReward));
 	properties.add(new SpeedProperty(0, 0, speed));
-	Enemy newEnemy = new Enemy(name, image, speed, launcher, properties);
+	Enemy newEnemy = new Enemy(name, image, launcher, properties);
 	return newEnemy;
     }
 
