@@ -1,4 +1,5 @@
 package authoring.frontend;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import xml.BadGameDataException;
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
@@ -53,7 +55,13 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		});
 		Button demoButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
-		    	getView().writeToFile();
+		    	try {
+			    getView().writeToFile();
+			} catch (BadGameDataException e1) {
+			    getView().loadErrorScreen("Authored model is badly formatted");
+			} catch (IOException e1) {
+			    getView().loadErrorScreen("File couldn't be written");
+			}
 		    	getView().playControllerDemo();
 		});
 		Button saveButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("SaveLabel"));
@@ -61,7 +69,13 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		saveButton.setOnAction(e -> {
 		    	setSaved();
 		    	saveButton.setDisable(true);
-			getView().writeToFile();
+			try {
+			    getView().writeToFile();
+			} catch (BadGameDataException e1) {
+			    getView().loadErrorScreen("Authored model is badly formatted");
+			} catch (IOException e1) {
+			    getView().loadErrorScreen("File couldn't be written");
+			}
 		});
 		Button mainButton = setupBackButton();
 		String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");

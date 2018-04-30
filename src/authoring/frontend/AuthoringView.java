@@ -10,6 +10,7 @@
 package authoring.frontend;
 import java.awt.Point;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import frontend.View;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.GridPane;
+import xml.BadGameDataException;
 
 public class AuthoringView extends View {
 
@@ -290,7 +292,7 @@ public class AuthoringView extends View {
 	    return 1;
 	}
 
-	protected void writeToFile() {
+	protected void writeToFile() throws BadGameDataException, IOException {
 		try {
 		    myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
