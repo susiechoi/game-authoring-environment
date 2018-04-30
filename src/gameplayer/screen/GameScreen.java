@@ -19,17 +19,20 @@ import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import voogasalad.util.soundfactory.*;
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
  */
 public class GameScreen extends Screen {
-
-
-
-    private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    public static final String DEFAULT_POPUP_STYLESHEET = "styling/GameAuthoringStartScreen.css";
+    public static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    //public static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
     private final PromptReader PROMPTS;
     private TowerPanel TOWER_PANEL;
@@ -48,7 +51,7 @@ public class GameScreen extends Screen {
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 	SCREEN_MANAGER = ScreenController;
 	GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
-	setStyleSheet(GAMEPLAYER_PROPERTIES.get("themeStylesheet"));
+	setStyleSheet(DEFAULT_POPUP_STYLESHEET);
 	PROMPTS = promptReader;
 	MEDIATOR = mediator;
 	SOUND_FACTORY = MEDIATOR.getSoundFactory();
@@ -78,6 +81,7 @@ public class GameScreen extends Screen {
 	rootPane.setCenter(gamePane);
 	setVertPanelsLeft();
 	return rootPane;
+
     }
 
     public void towerSelectedForPlacement(FrontEndTower tower) {
@@ -150,8 +154,17 @@ public class GameScreen extends Screen {
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
 	    SOUND_FACTORY.pauseBackgroundMusic();
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
-	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("instrURL"), GAMEPLAYER_PROPERTIES);
-	    pop.makePopupBrowser();
+	    Stage pop = new Stage();
+	    VBox vb = new VBox();
+	    Text text = new Text(MEDIATOR.getInstructions());
+	    text.setWrappingWidth(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("InstructionsHeight")));
+	    vb.getChildren().add(text);
+	    Scene unstyled = new Scene(vb);
+	    vb.getStylesheets().add(DEFAULT_POPUP_STYLESHEET);
+
+	    pop.setScene(unstyled);
+	    pop.setHeight(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("InstructionsHeight")));
+	    pop.show();
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
 	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
 	    pop.makePopupBrowser();
@@ -171,7 +184,6 @@ public class GameScreen extends Screen {
 	myScore.addListener(SCORE_PANEL.createScoreListener(myScore.get()));
 	myLives.addListener(SCORE_PANEL.createHealthListener(myLives.get()));
     }
-
 
     public void updateLevel(Integer newLevel) {
 	SCORE_PANEL.updateLevel(newLevel);
@@ -290,16 +302,19 @@ public class GameScreen extends Screen {
 	MEDIATOR.play();
     }
 
+    public String getInstructions() {
+	return MEDIATOR.getInstructions();
+    }
 
 
-	public void clickToShoot(FrontEndTower clickedTower, double x, double y) {
-	    System.out.println("going to mediator");
-	    try {
-		MEDIATOR.handleTowerClickToShoot(clickedTower, x, y);
-	    }catch(MissingPropertiesException e) {
-		SCREEN_MANAGER.loadErrorScreen("NoFile");
-	    }
-	    
+    public void clickToShoot(FrontEndTower clickedTower, double x, double y) {
+	System.out.println("going to mediator");
+	try {
+	    MEDIATOR.handleTowerClickToShoot(clickedTower, x, y);
+	}catch(MissingPropertiesException e) {
+	    SCREEN_MANAGER.loadErrorScreen("NoFile");
 	}
+
+    }
 
 }

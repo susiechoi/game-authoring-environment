@@ -187,8 +187,8 @@ public class AuthoringView extends View {
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
 
-	public void makeResources(String gameName, double startingHealth, double starting$, String css, String backgroundMusic, String levelWinSound, String levelLossSound) {
-		myController.makeResources(gameName, startingHealth, starting$, css, getTheme(), backgroundMusic, levelWinSound, levelLossSound);
+	public void makeResources(String gameName, double startingHealth, double starting$, String instructions, String css, String backgroundMusic, String levelWinSound, String levelLossSound) {
+		myController.makeResources(gameName, startingHealth, starting$, css, getTheme(), instructions, backgroundMusic, levelWinSound, levelLossSound);
 	}
 
 	/**

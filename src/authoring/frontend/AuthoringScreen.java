@@ -9,13 +9,14 @@ import javafx.scene.control.Button;
 public abstract class AuthoringScreen extends Screen {
 	public static final String DEFAULT_CANCEL_KEY = "Cancel";
 	public static final String DEFAULT_NOTSAVED_KEY = "NotSaved";
+	public static final String DEFAULT_AUTHORING_SPECIFIC = "styling/GameAuthoringSpecific.css";
 	
     private AuthoringView myView;
     private boolean myIsSaved;
     
     public AuthoringScreen(AuthoringView view) {
 	super();
-	setStyleSheet(view.getCurrentCSS());
+	setStyleSheet(DEFAULT_AUTHORING_SPECIFIC);
 	myView = view;
 	myIsSaved = false;
 	setupCSSListener(); 
@@ -71,6 +72,15 @@ public abstract class AuthoringScreen extends Screen {
 	    }
     }
     protected Button setupBackButtonCustom(EventHandler<ActionEvent> e) {
-	return getUIFactory().setupBackButton(e, myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
+	return getUIFactory().setupBackButton(event ->{
+	    if(!myIsSaved) {
+		getView().loadErrorAlert(DEFAULT_NOTSAVED_KEY);
+		myIsSaved = true;
+	    }
+	    else {
+		e.handle(event);
+		getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());
+	    }
+	},myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
     }
 }

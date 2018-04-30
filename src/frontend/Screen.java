@@ -70,7 +70,7 @@ public abstract class Screen {
 		}
 	}
 
-	private void applyStyle(String stylesheet) {
+	public void applyStyle(String stylesheet) {
 		if (myRoot != null && stylesheet != null) {
 			myRoot.getStylesheets().add(stylesheet);
 		}

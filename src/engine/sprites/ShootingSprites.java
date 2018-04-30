@@ -30,6 +30,7 @@ public abstract class ShootingSprites extends Sprite{
     private final String HEALTH = "HealthProperty";
     private final String RANGE = "RangeProperty";
     
+    
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
      * on the screen
@@ -201,6 +202,21 @@ public abstract class ShootingSprites extends Sprite{
     public List<Projectile> getProjectiles(){
 	return myLauncher.getListOfActive();
     }
+    public void addLauncherProperty(Property property) {
+	myLauncher.addProperty(property);
+    }
+    
+    public void addProjectileProperty(Property property) {
+	myLauncher.addProjectileProperty(property);
+    }
+    
+    public void setProjectileImage(String image) {
+	myLauncher.setProjectileImage(image);
+    }
+    public void setSoundString(String sound) {
+	myLauncher.setProjectileSound(sound);
+    }
+    
 
 
 }

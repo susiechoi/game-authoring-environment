@@ -12,6 +12,7 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,6 +21,7 @@ import javafx.scene.text.Text;
 public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 	
 	public static final String DEFAULT_GAME_NAME_KEY = "myGameName"; 
+	public static final String DEFAULT_INSTRUCTIONS_KEY = "myInstructions";
 	public static final String DEFAULT_HEALTH_KEY = "myStartingHealth";
 	public static final String DEFAULT_MONEY_KEY = "myStartingMoney";
 	public static final String BACKGROUND_MUSIC_KEY = "myBackgroundMusic";
@@ -31,6 +33,7 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
     	private TextField myGameNameEntry;
 	private Slider myStartingHealthSlider;
 	private Slider myStartingCurrencySlider;
+	private TextArea myGameInstructionsEntry;
 	private String myBackgroundMusic;
 	private String myLevelWinSound;
 	private String myLevelLossSound;
@@ -56,6 +59,8 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		
 		Text settingsHeading = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SettingsHeading"));
 		myGameNameEntry = getUIFactory().makeTextField();
+		myGameInstructionsEntry = new TextArea();
+		HBox gameInstructions = getUIFactory().addPromptAndSetupHBox(myGameInstructionsEntry, getErrorCheckedPrompt("Instructions"));
 		vb.getChildren().add(settingsHeading);
 		int maxStartingHealth = 0;
 		int maxStartingCurrency = 0;
@@ -68,7 +73,8 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		    getView().loadErrorScreen("NoConstants");
 		}
 		HBox promptGameName = getUIFactory().addPromptAndSetupHBox(myGameNameEntry, getErrorCheckedPrompt("GameName"));
-		vb.getChildren().add(promptGameName);	
+		vb.getChildren().add(promptGameName);
+		vb.getChildren().add(gameInstructions);
 		myStartingHealthSlider = getUIFactory().setupSlider(maxStartingHealth);
 		myStartingHealthSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 			getView().setObjectAttribute(OBJECT_TYPE, DEFAULT_HEALTH_KEY, newValue);
@@ -102,9 +108,11 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		    	setSaved();
 		    	getView().setGameName(myGameNameEntry.getText());
 		    	getView().setObjectAttribute(OBJECT_TYPE, DEFAULT_GAME_NAME_KEY, myGameNameEntry.getText());
+		    	getView().setObjectAttribute(OBJECT_TYPE, DEFAULT_INSTRUCTIONS_KEY, myGameInstructionsEntry.getText());
 		    	getView().setObjectAttribute(OBJECT_TYPE, BACKGROUND_MUSIC_KEY, myBackgroundMusic);
 		    	getView().setObjectAttribute(OBJECT_TYPE, LEVEL_WIN_SOUND_KEY, myLevelWinSound);
 		    	getView().setObjectAttribute(OBJECT_TYPE, LEVEL_LOSS_SOUND_KEY, myLevelLossSound);
+
 		    	getView().goForwardFrom(this.getClass().getSimpleName()+"Apply");
 		});
 		HBox backAndApplyButton = getUIFactory().setupBackAndApplyButton(backButton, applyButton);
@@ -117,6 +125,7 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 	@Override
 	protected void populateFieldsWithData() {
 		myGameNameEntry.setText(getView().getObjectAttribute(OBJECT_TYPE, DEFAULT_GAME_NAME_KEY).toString());
+		myGameInstructionsEntry.setText(getView().getObjectAttribute(OBJECT_TYPE, DEFAULT_INSTRUCTIONS_KEY).toString());
 		getUIFactory().setSliderToValue(myStartingHealthSlider, getView().getObjectAttribute(OBJECT_TYPE, DEFAULT_HEALTH_KEY).toString());
 		getUIFactory().setSliderToValue(myStartingCurrencySlider, getView().getObjectAttribute(OBJECT_TYPE, DEFAULT_MONEY_KEY).toString());	
 	}

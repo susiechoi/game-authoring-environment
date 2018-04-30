@@ -45,7 +45,9 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
 	List<Projectile> newProjectiles = new ArrayList<>();
 	//System.out.println(this.getListOfActive().get(0) + " ************ this is the active tower");
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
+	    System.out.println("active");
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
+		System.out.println("reloaded");
 		for (ShootingSprites passedSprite: passedSprites) {	//all the enemies
 		    if (shootingSprite.hasReloaded(elapsedTime) && 
 			    shootingSprite.hasInRange(passedSprite)&& 

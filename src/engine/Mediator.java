@@ -319,4 +319,7 @@ public class Mediator implements MVController{
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }
 
+    public String getInstructions() {
+        return myGameEngine.getPlayState().getInstructions();
+    }
 }

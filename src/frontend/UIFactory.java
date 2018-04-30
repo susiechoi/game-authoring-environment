@@ -488,8 +488,10 @@ public class UIFactory {
 	}
 
 	public List<String> getFileNames(String folderName) {
+	    	System.out.println("folder name: ");
 		String currentDir = System.getProperty("user.dir");
 		File file = new File(currentDir + File.separator + folderName);
+		System.out.println(currentDir+ File.separator + folderName);
 		File[] fileArray = file.listFiles();
 		List<String> fileNames = new ArrayList<>();
 		for (File aFile : fileArray) {
