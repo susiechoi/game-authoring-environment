@@ -95,8 +95,11 @@ public class GenericModel {
 		int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
 		String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
 		String startingTheme = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingTheme");
+		String defaultBackgroundMusic = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "BackgroundMusic");
+		String defaultLevelWinSound = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "LevelWinSound");
+		String defaultLevelLossSound = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "LevelLossSound");
 		return new SettingsBuilder().construct(defaultGameName, 
-			startingHealth, startingMoney, startingCSS, startingTheme);
+			startingHealth, startingMoney, startingCSS, startingTheme, defaultBackgroundMusic, defaultLevelWinSound, defaultLevelLossSound);
 	}
 
 	/**
