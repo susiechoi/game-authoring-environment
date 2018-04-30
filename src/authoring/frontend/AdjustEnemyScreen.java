@@ -97,7 +97,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_SHOOTING_SCREENFLOW_KEY, myObjectName);
 			}
 			catch(NullPointerException e1) {
-				getView().loadErrorAlert(DEFAULT_NOSELECTION_ERRORKEY);
+				getView().loadErrorAlert(DEFAULT_NOSELECTION_ERRORKEY); 
 			}
 		});
 
