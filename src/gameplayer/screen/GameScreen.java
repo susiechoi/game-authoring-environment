@@ -285,7 +285,7 @@ public class GameScreen extends Screen {
 
 	private void newLevel() {
 		gamePane.setCenter(GAME_PANEL.getPanel());
-		MEDIATOR.play();
+//		MEDIATOR.play();
 
 	}
 

@@ -36,7 +36,7 @@ public class PlayController {
 	 * 
 	 * @param stage: Stage to mount Game Player on 
 	 */
-	public PlayController(StageManager stageManager, String language, AuthoringModel model) {
+	public PlayController(StageManager stageManager, String language) {
 		myMediator = new Mediator(this);
 		myGameEngine = new GameEngine(myMediator);
 		myScreenManager = new ScreenManager(stageManager, language, myMediator);
@@ -55,7 +55,6 @@ public class PlayController {
 		System.out.println("path to xml "+pathToXML);
 		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
-
 		AuthoredGame playModel = myReader.createModel(pathToXML);
 		List<Level> levels = playModel.unmodifiableLevels();
 		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);

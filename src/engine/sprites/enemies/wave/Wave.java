@@ -66,7 +66,6 @@ public class Wave {
     
     public void setWaveTime(double time) {
 	myTime = time;
-	System.out.println("My time!!!! " + myTime);
     }
 
     public void addEnemy(Enemy enemy, Path path, int number) {

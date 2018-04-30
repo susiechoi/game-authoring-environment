@@ -57,9 +57,9 @@ public class MainScreen extends Screen {
 		Button newGameButt = getUIFactory().makeTextButton("editbutton", myView.getErrorCheckedPrompt("Load"));
 		newGameButt.setOnAction(click->{
 			try {
-				new PlayController(myStageManager, DEFAULT_LANGUAGE, new AuthoringModel())
+				new PlayController(myStageManager, DEFAULT_LANGUAGE)
 				.loadInstructionScreen();
-			} catch (MissingPropertiesException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 			    	Log.debug(e);
 				e.printStackTrace();

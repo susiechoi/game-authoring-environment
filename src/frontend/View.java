@@ -91,9 +91,9 @@ public class View {
      }
     public void playControllerInstructions() {
 	try {
-	    new PlayController(myManager, myLanguage, new AuthoringModel()).loadInstructionScreen();
+	    new PlayController(myManager, myLanguage).loadInstructionScreen();
 	}
- 	catch(MissingPropertiesException e) {
+ 	catch(Exception e) {
  	    loadErrorScreen("NoFile");
  	}
      }

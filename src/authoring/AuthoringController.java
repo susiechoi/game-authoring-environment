@@ -294,8 +294,7 @@ public class AuthoringController implements MVController{
     
     @Override
     public void playControllerDemo(StageManager manager, String language) {
-	new PlayController(manager, language,
-		myModel).demoPlay(myModel.getGame());
+	new PlayController(manager, language).demoPlay(myModel.getGame());
     }
     
     public void deleteObject(int level, String objectType, String objectName) {
