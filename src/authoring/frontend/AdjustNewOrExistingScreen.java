@@ -51,7 +51,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 		super(view);
 		setConstants();
-		setSaved();
 		//		myFieldsPropertiesPath = fieldsPropertiesPath; 
 		myObjectDescription = objectDescription; 
 		mySelectedObjectName = selectedObjectName; 
@@ -61,7 +60,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view) {
 		super(view);
 		setConstants();
-		setSaved();
 	}
 
 	private void setConstants() {

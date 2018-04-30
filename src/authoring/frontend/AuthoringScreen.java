@@ -72,6 +72,15 @@ public abstract class AuthoringScreen extends Screen {
 	    }
     }
     protected Button setupBackButtonCustom(EventHandler<ActionEvent> e) {
-	return getUIFactory().setupBackButton(e, myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
+	return getUIFactory().setupBackButton(event ->{
+	    if(!myIsSaved) {
+		getView().loadErrorAlert(DEFAULT_NOTSAVED_KEY);
+		myIsSaved = true;
+	    }
+	    else {
+		e.handle(event);
+		getView().goBackFrom(this.getClass().getSuperclass().getSimpleName());
+	    }
+	},myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
     }
 }
