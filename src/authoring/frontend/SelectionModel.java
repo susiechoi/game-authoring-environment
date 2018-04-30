@@ -94,47 +94,31 @@ public class SelectionModel {
     /**
      * Pastes the selected path block node into every selected gridPane cell
      */
-    public void paste() {
+    public void paste() { //fix
 	if (copyNode != null && copyNode instanceof ImageView) {
 	    for (Pane cell: selectedCells) {
-		ImageView copyImage = new ImageView(((ImageView) copyNode).getImage());
-		copyImage.setFitHeight(mySize);
-		copyImage.setFitWidth(mySize);
-		if (copyImage.getId() == CreatePathGrid.START) {
-		    myCheckGrid.add(new Label(CreatePathGrid.START), GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell));
-		} else if (copyImage.getId() == CreatePathGrid.PATH) {
-		    myCheckGrid.add(new Label(CreatePathGrid.PATH), GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell));
-		} else if (copyImage.getId() == CreatePathGrid.END) {
-		    myCheckGrid.add(new Label(CreatePathGrid.END), GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell));
+		int col = GridPane.getColumnIndex(cell);
+		int row = GridPane.getRowIndex(cell);
+		DraggableImage path = new DraggableImage(((ImageView) copyNode).getImage());
+		path.setDraggable(myCheckGrid, row, col);
+		path.getPathImage().setFitWidth(mySize);
+		path.getPathImage().setFitHeight(mySize);
+		if (path.getPathImage().getId() == CreatePathGrid.START) {
+		    System.out.println("PASTING START");
+		    myCheckGrid.add(new Label(CreatePathGrid.START), col, row);
+		    path.getPathImage().setId(CreatePathGrid.START);
+		} else if (path.getPathImage().getId() == CreatePathGrid.PATH) {
+		    myCheckGrid.add(new Label(CreatePathGrid.PATH), col, row);
+		    path.getPathImage().setId(CreatePathGrid.PATH);
+		} else if (path.getPathImage().getId() == CreatePathGrid.END) {
+		    myCheckGrid.add(new Label(CreatePathGrid.END), col, row);
+		    path.getPathImage().setId(CreatePathGrid.END);
 		}
-		myGrid.add(copyImage, GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell));
+		myGrid.add(path.getPathImage(), col, row);
+		GridPane.setFillWidth(path.getPathImage(), true);
+		GridPane.setFillHeight(path.getPathImage(), true);
 	    }
 	}
-	
-//	for (String key: map.keySet()) {
-//	    String imageKey = key.substring(1);
-//	    List<Point> pointList = map.get(key);
-//	    for (int i = 0; i < pointList.size(); i++) {
-//		Point point = pointList.get(i);
-//		DraggableImage path = new DraggableImage(new Image(imageKey));
-//		path.setDraggable(checkGrid, (int)point.getY(), (int)point.getX());
-//		path.getPathImage().setFitWidth(pathSize);
-//		path.getPathImage().setFitHeight(pathSize);
-//		grid.add(path.getPathImage(), (int)point.getX(), (int)point.getY());
-//		if (key.equals("s"+myView.getObjectAttribute("Path", "", "myStartImage"))) {
-//		    checkGrid.add(new Label(START), (int)point.getX(), (int)point.getY());
-//		    path.getPathImage().setId(START);
-//		} else if (key.equals("p"+myView.getObjectAttribute("Path", "", "myPathImage"))) {
-//		    checkGrid.add(new Label(PATH), (int)point.getX(), (int)point.getY());
-//		    path.getPathImage().setId(PATH);
-//		} else if (key.equals("e"+myView.getObjectAttribute("Path", "", "myEndImage"))) {
-//		    checkGrid.add(new Label(END), (int)point.getX(), (int)point.getY());
-//		    path.getPathImage().setId(END);
-//		}
-//		GridPane.setFillWidth(path.getPathImage(), true);
-//		GridPane.setFillHeight(path.getPathImage(), true);
-//	    }
-//	}
     }
 }
 
