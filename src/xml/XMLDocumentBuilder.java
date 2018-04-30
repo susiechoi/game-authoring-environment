@@ -21,6 +21,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import jdk.internal.jline.internal.Log;
+
 /**
  * @author Brendan Cheng
  * 
@@ -100,7 +102,7 @@ public class XMLDocumentBuilder {
 		    writer.close();
 		} catch (IOException e) {
 		    // TODO Auto-generated catch block
-		    e.printStackTrace();
+		    Log.debug(e);
 		}
 	    }
 	

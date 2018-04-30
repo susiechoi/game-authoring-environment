@@ -25,6 +25,7 @@ import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
+import jdk.internal.jline.internal.Log;
 
 
 /**
@@ -82,7 +83,7 @@ public class PlayState implements GameData {
 	backgroundSet = false;
     }
 
-    public void update(double elapsedTime) throws MissingPropertiesException {
+    public void update(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
 	//Background has to be passed after a layout pass has been done on the Scene in order to adapt to
 	//differences in computers screen size 
 	if(!backgroundSet) {
@@ -97,7 +98,7 @@ public class PlayState implements GameData {
 	handleCollisions(elapsedTime);
     }
 
-    private void handleCollisions(double elapsedTime) throws MissingPropertiesException {
+    private void handleCollisions(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
@@ -113,7 +114,7 @@ public class PlayState implements GameData {
 	    try {
 		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
 	    } catch (FileNotFoundException e) {
-		e.printStackTrace(); // YIKES THAT'S AN EASY FAIL
+		throw new FileNotFoundException();
 	    }
 	}
 	updateScore(toBeRemoved);
@@ -151,7 +152,7 @@ public class PlayState implements GameData {
 		    spawnEnemy(currentWave, currentPath);
 		}
 		catch (Exception e) {
-		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
+		    // do nothing, path contains no enemies or is not ready to spawn
 		}
 	    }
 	}
@@ -205,7 +206,8 @@ public class PlayState implements GameData {
 	try {
 	    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
 	} catch (FileNotFoundException e1) {
-	    e1.printStackTrace(); //TODO!!!
+	    Log.debug(e1);
+	    e1.printStackTrace(); 
 	}
     }
 
@@ -228,7 +230,7 @@ public class PlayState implements GameData {
 	    try {
 		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
 	    } catch (FileNotFoundException e) {
-		e.printStackTrace(); // TODO: 
+		Log.debug(e);
 	    }
 	}
     }
@@ -313,9 +315,9 @@ public class PlayState implements GameData {
 	myResources.set(myResources.get()+myTowerManager.sell(tower));
 	myMediator.removeSpriteFromScreen(tower);
 	try {
-	    myMediator.getSoundFactory().playSoundEffect("cash"); //TODO: make custom
+	    myMediator.getSoundFactory().playSoundEffect("cash");
 	} catch (FileNotFoundException e) {
-	    e.printStackTrace(); //TODO
+	    Log.debug(e);
 	} 
     }
 

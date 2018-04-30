@@ -1,10 +1,13 @@
 package engine;
 
+import java.io.FileNotFoundException;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import jdk.internal.jline.internal.Log;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
@@ -34,8 +37,10 @@ public class GameEngine {
 				e -> {
 				    try {
 					loop(SECOND_DELAY);
-				    } catch (MissingPropertiesException e1) {
-					// TODO Auto-generated catch block
+				    } catch (MissingPropertiesException i) {
+					Log.debug(i);
+				    } catch (FileNotFoundException i) {
+					Log.debug(i);
 				    }
 				});
 		ANIMATION = new Timeline();
@@ -58,8 +63,9 @@ public class GameEngine {
 	 * Calls the update function every loop
 	 * @param elapsedTime
 	 * @throws MissingPropertiesException 
+	 * @throws FileNotFoundException 
 	 */
-	public void loop(double elapsedTime) throws MissingPropertiesException {
+	public void loop(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
 		myPlayState.update(elapsedTime*timeFactor);
 	}
 

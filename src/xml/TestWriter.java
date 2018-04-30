@@ -8,6 +8,8 @@ import org.w3c.dom.Document;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
+import jdk.internal.jline.internal.Log;
+
 ///Put this at the top of the file:
 import java.io.File;
 import java.net.MalformedURLException;
@@ -24,7 +26,7 @@ public class TestWriter {
 	    d = XMLDocumentBuilder.initializeDoc();
 	} catch (ParserConfigurationException e) {
 	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    Log.debug(e);
 	}
     }
 //public void write(List<String> l, String filename) {
@@ -36,6 +38,7 @@ public class TestWriter {
 //    out.close();
 //} catch (IOException e1) {
 //    // TODO Auto-generated catch block
+//    Log.debug(e1);
 //    e1.printStackTrace();
 //}
 //}
@@ -46,7 +49,7 @@ public class TestWriter {
 //		    parser.toXML(l, new FileWriter(file));
 //		} catch (IOException e) {
 //		    // TODO Auto-generated catch block
-//		    e.printStackTrace();
+//		    Log.debug(e);
 //		}
 	}
 //		// Write data using XStream
@@ -59,6 +62,7 @@ public class TestWriter {
 //		} catch (TransformerFactoryConfigurationError | TransformerException e) {
 //			// TODO replace with error pop up?
 //			System.out.println("Error configuring XML file");
+//			Log.debug(e);
 //		}
 //	}
 	
