@@ -36,9 +36,9 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	public static final String EMPTY_STRING = "";
 	public static final int DEFAULT_POPUP_WIDTH = 600;
 	public static final int DEFAULT_POPUP_HEIGHT = 300; 
-	
+
 	//	private String myFieldsPropertiesPath; 
-	private String myObjectDescription; 
+	//	private String myObjectDescription; 
 	private String mySelectedObjectName; 
 	private String myDefaultObjectName; 
 	private int myMaxHealthImpact;
@@ -54,7 +54,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		setConstants();
 		setSaved();
 		//		myFieldsPropertiesPath = fieldsPropertiesPath; 
-		myObjectDescription = objectDescription; 
+		//		myObjectDescription = objectDescription; 
 		mySelectedObjectName = selectedObjectName; 
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
 	}
@@ -96,7 +96,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	}
 
 	protected abstract Parent populateScreenWithFields();
-	
+
 	protected Node makePropertySelector(String subfolderPath) {
 		HBox hb = new HBox(); 
 
@@ -247,5 +247,5 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return list;
 	}
 
-   
+
 }
