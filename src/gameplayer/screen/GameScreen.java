@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
 import authoring.AuthoringController;
+import engine.GameEngine;
 import engine.Mediator;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.towers.CannotAffordException;
@@ -157,6 +158,9 @@ public class GameScreen extends Screen {
     }
 
 
+
+
+
     /**
      * Attaches listener which trigger automatic GamePlayer updates to the Engine's currency, score and health
      * Additionally synchronizes the initial display value of each to the passed values
@@ -272,8 +276,21 @@ public class GameScreen extends Screen {
     public void nextLevel() {
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("nextLevel"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
-	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gamePane.setCenter(GAME_PANEL.getPanel()));
+	MEDIATOR.pause();
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> newLevel());
 
     }
+
+    private void newLevel() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
+
+    }
+
+    private void gameStart() {
+	gamePane.setCenter(GAME_PANEL.getPanel());
+	MEDIATOR.play();
+    }
+
 
 }

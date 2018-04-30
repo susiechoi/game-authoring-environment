@@ -26,6 +26,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
+//import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 
 public class CreatePathScreen extends PathScreen {
 
@@ -98,7 +100,8 @@ public class CreatePathScreen extends PathScreen {
 			getView().getObjectAttribute("Path", "", "myEndImage");
 			getView().goForwardFrom(me.getClass().getSimpleName()+"Apply");
 		    } catch (ObjectNotFoundException e1) {
-//			Log.debug(e1);
+			//Log.debug(e1);
+
 			getView().loadErrorScreen("NoObject");
 		    }
 		} else {
@@ -139,7 +142,7 @@ public class CreatePathScreen extends PathScreen {
 
 	}
 	catch(MissingPropertiesException e) {
-//	    Log.debug(e);
+	    //Log.debug(e);
 	    getView().loadErrorScreen("NoConstants");
 	    return null;
 	}
@@ -156,7 +159,7 @@ public class CreatePathScreen extends PathScreen {
 		    }
 		}
 		catch(MissingPropertiesException e) {
-//		    Log.debug(e);
+		    //Log.debug(e);
 		    getView().loadErrorScreen("NoFile");
 		}
 	    }
@@ -172,7 +175,7 @@ public class CreatePathScreen extends PathScreen {
 		    }
 		}
 		catch(MissingPropertiesException e) {
-//		    Log.debug(e);
+		    //Log.debug(e);
 		    getView().loadErrorScreen("NoFile");
 		}
 	    }
