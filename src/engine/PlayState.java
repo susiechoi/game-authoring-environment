@@ -47,7 +47,6 @@ public class PlayState implements GameData {
     private List<Level> myLevels;
     private Level currentLevel;
     private Level currentLevelCopy;
-    private int currlvl;
     private boolean backgroundSet;
 
     /**
@@ -62,8 +61,8 @@ public class PlayState implements GameData {
     public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
-	currlvl = 0;
 	currentLevel = myLevels.get(0);
+	currentLevelCopy = new Level(currentLevel);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
 	myScore = new SimpleIntegerProperty(score);
@@ -124,10 +123,12 @@ public class PlayState implements GameData {
 
 	try {
 	    if (currentLevel.getWave(0).isFinished()) {
+		System.out.println("remove wave");
 		currentLevel.removeWave();   
 	    }
 	    Wave currentWave = currentLevel.getWave(0);
 	    for (Path currentPath : currentLevel.getPaths()) {
+		System.out.println("in path");
 		try {
 		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
 		    newEnemy.setInitialPoint(currentPath.initialPoint());
@@ -202,13 +203,16 @@ public class PlayState implements GameData {
 	currentLevelCopy = new Level(currentLevel);
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
 	myMediator.updateLevel(currentLevel.myNumber());
-	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
+	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), 
+		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }
 
     /**
      * Restarts the level that you were currently on.
      */
     public void restartLevel() {
+	System.out.println("restarting level playstate");
+	System.out.println("first level num " + currentLevel.myNumber());
 	clearLevel();
 	currentLevel = currentLevelCopy;
 	currentLevelCopy = new Level(currentLevel);

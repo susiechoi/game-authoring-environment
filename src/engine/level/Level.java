@@ -53,11 +53,15 @@ public class Level {
 	 * - only difference from copiedLevel is that the level number is incremented
 	 */
 	public Level(Level copiedLevel) {
-		myNumber = copiedLevel.getNumber() + 1; 
+		myNumber = copiedLevel.getNumber(); 
 		myWaves = copiedLevel.getWaveCopies(); 
-		myPaths = copiedLevel.getPaths(); 
+		myPaths = copiedLevel.getAllPaths(); 
 		myTowers = copiedLevel.getCopiedTowers();
 		myEnemies = copiedLevel.getCopiedEnemies();
+	}
+
+	private List<Path> getAllPaths() {
+	    return myPaths;
 	}
 
 	/**
