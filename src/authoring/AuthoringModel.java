@@ -99,13 +99,10 @@ public class AuthoringModel {
 	currentLevel.addWave(wave);
     }
 
-
-    public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
+    public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, 
+	    String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height, boolean transparent) throws ObjectNotFoundException {
 	myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
 	myBackgroundImage = backgroundImage;
-	//	System.out.println("BACKGROUND IMAGE PASSING: " +backgroundImage);
-	//				myPathCoordinates = coordinates;
-
 	Level currentLevel = myGame.levelCheck(level);
 	List<Path> newPathList = new ArrayList<>();
 	for(List<Point> list : coordinates) {
@@ -118,10 +115,10 @@ public class AuthoringModel {
 		}
 	    }
 	    if(!added) {
-		System.out.println("adding a new path!!!");
+//		System.out.println("adding a new path!!!");
 		List<List<Point>> listOfLists = new ArrayList<List<Point>>();
 		listOfLists.add(list);
-		Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
+		Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height, transparent);
 		newPathList.add(newPath);
 	    }
 	}

@@ -67,21 +67,7 @@ public class ScreenManager extends View {
 	}
 
 
-	//	public ScreenManager(StageManager stageManager, String language) {
-	//	    	
-	//		STAGE_MANAGER = stageManager;
-	//		try {
-	//			GAMEPLAYER_PROPERTIES = PROP_READ.read("src/gameplayer/gameplayer.properties");
-	//		}
-	//		catch (MissingPropertiesException e) {
-	//		}
-	//		PROMPTS = new PromptReader(language, this);
-	//		findSettings();
-	//	}
 
-
-
-	//TODO set Style sheets
 	public void loadInstructionScreen() {
 		InstructionScreen instructScreen = new InstructionScreen(this, PROMPTS);
 		Parent instructRoot = instructScreen.getScreen();
@@ -100,11 +86,13 @@ public class ScreenManager extends View {
 		GAME_SCREEN = new GameScreen(this, PROMPTS, MEDIATOR);
 		Parent gameScreenRoot = GAME_SCREEN.getScreen();
 		STAGE_MANAGER.switchScreen(gameScreenRoot);
-		System.out.println("StageLoaded");
+//		System.out.println("StageLoaded");
 	}
 
 	public void loadMainScreen() {
 		MainScreen mainScreen = new MainScreen(STAGE_MANAGER, this);
+		Parent mainScreenRoot = mainScreen.getScreen();
+		STAGE_MANAGER.switchScreen(mainScreenRoot);
 	}
 
 	public void updateLevelCount(Integer newLevelCount) {
@@ -161,9 +149,9 @@ public class ScreenManager extends View {
 	}
 
 
-	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
+	public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
 		checkGameScreenInitialization();
-		return GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+		return GAME_SCREEN.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
 	}
 
 	public void attachListeners(IntegerProperty myCurrency, IntegerProperty myScore,
@@ -191,6 +179,7 @@ public class ScreenManager extends View {
 	}
 	
 	public void moveTower(FrontEndTower tower) {
+	    System.out.println("LOOKING FOR KEY EVENT ");
 	        STAGE_MANAGER.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
 	            @Override
 	            public void handle(KeyEvent event) {

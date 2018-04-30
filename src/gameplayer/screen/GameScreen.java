@@ -22,8 +22,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import voogasalad.util.soundfactory.*;
 
-
-
 /**
  * @Author Alexi Kontos & Andrew Arnold
  */
@@ -31,7 +29,6 @@ public class GameScreen extends Screen {
 
 
 
-    private final String DEFAULT_SHARED_STYLESHEET;
     private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
     private final PromptReader PROMPTS;
@@ -51,11 +48,11 @@ public class GameScreen extends Screen {
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 	SCREEN_MANAGER = ScreenController;
 	GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
-	DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
+	setStyleSheet(GAMEPLAYER_PROPERTIES.get("themeStylesheet"));
 	PROMPTS = promptReader;
 	MEDIATOR = mediator;
 	SOUND_FACTORY = MEDIATOR.getSoundFactory();
-	TOWER_PANEL = new TowerPanel(this);
+	TOWER_PANEL = new TowerPanel(this, SCREEN_MANAGER);
 	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS, SCREEN_MANAGER);
 	SCORE_PANEL = new ScorePanel(this);
 	GAME_PANEL = new GamePanel(this);
@@ -66,7 +63,6 @@ public class GameScreen extends Screen {
     public Parent makeScreenWithoutStyling() {
 	rootPane = new BorderPane();
 	rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
-	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 
 	displayPane = new BorderPane();
 	displayPane.setCenter(TOWER_PANEL.getPanel());
@@ -201,6 +197,7 @@ public class GameScreen extends Screen {
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
 
+
     private void settingsClickedOn() {
 	SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
 	displayPane.setBottom(SETTINGS_PANEL.getPanel());
@@ -217,9 +214,8 @@ public class GameScreen extends Screen {
 	blankGamePanelClick();
     }
 
-
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 
@@ -227,6 +223,7 @@ public class GameScreen extends Screen {
 	rootPane.getChildren().remove(displayPane);
 	rootPane.setRight(null);
 	rootPane.setLeft(displayPane);
+
     }
     private void setVertPanelsRight() {
 	rootPane.getChildren().remove(displayPane);
@@ -286,7 +283,6 @@ public class GameScreen extends Screen {
     private void newLevel() {
 	gamePane.setCenter(GAME_PANEL.getPanel());
 	MEDIATOR.play();
-
     }
 
     private void gameStart() {
@@ -294,5 +290,16 @@ public class GameScreen extends Screen {
 	MEDIATOR.play();
     }
 
+
+
+	public void clickToShoot(FrontEndTower clickedTower, double x, double y) {
+	    System.out.println("going to mediator");
+	    try {
+		MEDIATOR.handleTowerClickToShoot(clickedTower, x, y);
+	    }catch(MissingPropertiesException e) {
+		SCREEN_MANAGER.loadErrorScreen("NoFile");
+	    }
+	    
+	}
 
 }
