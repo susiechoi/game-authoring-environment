@@ -84,6 +84,7 @@ public class TowerManager extends ShootingSpriteManager {
     public double upgrade(FrontEndTower tower, String upgradeName, double balance) {
 	for(ShootingSprites realTower : this.getListOfActive()) {
 	    if(realTower.hashCode() == tower.hashCode()) {
+		System.out.println("hash baby");
 		return realTower.upgrade(upgradeName, balance);
 	    }
 	}
