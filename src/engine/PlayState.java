@@ -145,7 +145,7 @@ public class PlayState implements GameData {
 		currentWave.setWaveTime(time*FRAMES_PER_SECOND + count);		
 	    }
 	    for (Path currentPath : currentLevel.getPaths()) {
-		System.out.println("in path");
+//		System.out.println("in path");
 		try {
 		    spawnEnemy(currentWave, currentPath);
 		}
@@ -162,7 +162,7 @@ public class PlayState implements GameData {
     
     private void checkWin() throws MissingPropertiesException {
 	// Level is over
-	System.out.println("Checking for win");
+//	System.out.println("Checking for win");
 	if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()
 		&& deadEnemies()) {
 	    advanceLevel();
@@ -178,7 +178,7 @@ public class PlayState implements GameData {
     private boolean deadEnemies() {
 	for (ShootingSprites thisEnemy : myEnemyManager.getListOfActive()) {
 	    if (thisEnemy.isAlive()) {
-		System.out.println("Found an alive enemy");
+//		System.out.println("Found an alive enemy");
 		return false;
 	    }
 	}
@@ -221,7 +221,7 @@ public class PlayState implements GameData {
     
     private void checkLoss() {
 	if (myHealth.getValue() <= 0) {
-	    System.out.println("Lost game!");
+//	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();

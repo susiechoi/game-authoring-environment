@@ -189,7 +189,7 @@ public class Mediator implements MVController{
      * @throws MissingPropertiesException 
      */
     public void restartLevel() throws MissingPropertiesException {
-	System.out.println("in restart");
+//	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
 

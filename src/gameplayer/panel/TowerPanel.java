@@ -113,7 +113,7 @@ public class TowerPanel extends ListenerPanel {
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    System.out.println("SwapButton Image Missing"); //TODO!!!
+//	    System.out.println("SwapButton Image Missing"); //TODO!!!
 	}
 
 
@@ -179,7 +179,7 @@ public class TowerPanel extends ListenerPanel {
 	    voidButton.setOnMouseClicked(arg0 ->{ 
 
 		GAME_SCREEN.towerSelectedForPlacement(null);
-		System.out.println("nullhit");
+//		System.out.println("nullhit");
 
 	    });
 
