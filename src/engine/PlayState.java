@@ -78,6 +78,11 @@ public class PlayState implements GameData {
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
 	backgroundSet = false;
+	try {
+	    myMediator.getSoundFactory().setBackgroundMusic(mySettings.getBackgroundMusic());
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace(); // TODO Auto-generated catch block
+	}
     }
 
     public void update(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
@@ -212,7 +217,7 @@ public class PlayState implements GameData {
 	setLevel(currentLevel.myNumber());
 	myMediator.nextLevel();
 	try {
-	    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
+	    myMediator.getSoundFactory().playSoundEffect(mySettings.getLevelWinSound());
 	} catch (FileNotFoundException e1) {
 	    Log.debug(e1);
 	    e1.printStackTrace(); 
@@ -236,7 +241,7 @@ public class PlayState implements GameData {
 	    myMediator.endLoop();
 	    myMediator.gameLost();
 	    try {
-		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
+		myMediator.getSoundFactory().playSoundEffect(mySettings.getLevelWinSound());
 	    } catch (FileNotFoundException e) {
 		//Log.debug(e);
 	    }
