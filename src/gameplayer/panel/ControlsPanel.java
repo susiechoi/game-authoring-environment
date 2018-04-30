@@ -74,7 +74,7 @@ public class ControlsPanel extends Panel{
 					} catch (MissingPropertiesException e) {
 						// TODO Auto-generated catch block
 					    	Log.debug(e);
-						e.printStackTrace();
+						GAME_SCREEN.loadErrorScreen("NoFile");
 					}
 				});
 				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control.getKey()+GAMEPLAYER_PROPERTIES.get("Tooltip"))));
