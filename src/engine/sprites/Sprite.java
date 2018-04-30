@@ -176,7 +176,7 @@ public class Sprite implements FrontEndSprite{
 	    if(property.getName().equals(p.getName())) {
 		toRemove = p;
 	    }
-	    else if(type.equals("CollisionProperty") || type.equals("MovingProperty")) {
+	    else if(type.equals(p.getClass().getSuperclass().getSimpleName())) {
 		toRemove = p;
 	    }
 	}

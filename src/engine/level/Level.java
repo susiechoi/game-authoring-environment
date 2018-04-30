@@ -35,10 +35,6 @@ public class Level {
 	private List<Wave> myWaves;
 	private Map<String, Enemy> myEnemies;
 
-	private int xLoc = 100;
-	private int yLoc = 100;
-	private int numEnemy = 0;
-
 	public Level(int number) {
 		myNumber = number;
 		myTowers = new HashMap<String, Tower>();
@@ -55,7 +51,7 @@ public class Level {
 	 * @throws MissingPropertiesException 
 	 */
 	public Level(Level copiedLevel) throws MissingPropertiesException {
-		myNumber = copiedLevel.getNumber() + 1; 
+		myNumber = copiedLevel.myNumber(); 
 		myWaves = copiedLevel.getWaveCopies(); 
 		myPaths = copiedLevel.getPaths(); 
 		myTowers = copiedLevel.getCopiedTowers();
@@ -206,23 +202,6 @@ public class Level {
 	}
 	public boolean containsWaveNumber(int num) {
 		return(myWaves.size()>(num));
-	}
-
-	/**
-	 * Returns any new Enemy
-	 * @throws MissingPropertiesException 
-	 */
-	public Enemy getNewEnemy(Path path) throws MissingPropertiesException { //TODO: do engine people want this to be based on wave? currently just doing first wave
-		Enemy waveEnemy = myWaves.get(0).getEnemySpecificPath(path);
-		if (waveEnemy != null) {
-			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
-			numEnemy++;
-		}
-		return waveEnemy;
-	}
-
-	public int getNumber() {
-		return myNumber; 
 	}
 
 	public List<Path> getPaths() {
