@@ -1,5 +1,7 @@
 package engine.sprites;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import xml.serialization.ImageWrapper;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -23,15 +26,19 @@ import javafx.scene.image.ImageView;
 public class Sprite implements FrontEndSprite{
 
     private String myName;
-    private ImageView myImageView;
+    @XStreamOmitField
+    private transient ImageView myImageView;
+    private ImageWrapper myWrapper;
     private String myImageString;
     private PropertyBuilder myPropertyBuilder;
     private List<Property> myProperties;
 
 
+
     /**
      * Constructor that takes in a sprite's image
      * Source for the image path fix: https://stackoverflow.com/questions/16099427/cannot-load-image-in-javafx @author susiechoi
+     * Source for resizing image: https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
      * 
      * @param image: tower's initial image
      * @param size: size of tower's image
@@ -39,16 +46,21 @@ public class Sprite implements FrontEndSprite{
      */
     public Sprite(String name, String image, double size, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
-	setImageString(image);
+	myImageString = image;
+	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	myImageView.setPreserveRatio(true);
+	myWrapper = new ImageWrapper(image);
 	myProperties = new ArrayList<>();
 	myPropertyBuilder = new PropertyBuilder();
 	for(Property p : properties) {
+	    //  System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
 	    myProperties.add(this.makeProperty(p));
 	}
     }
 
     /**
+     * Return the String name of the sprite.
+     * 
      * @return String: the name of the Sprite
      */
     public String getName() {
@@ -62,11 +74,6 @@ public class Sprite implements FrontEndSprite{
      */
     public ImageView getImageView() { 
 	return myImageView;
-    }
-
-    public void setImageString(String image) {
-	myImageString = image;
-	myImageView  = new ImageView(new Image("file:"+image, 50, 50, true, true));
     }
 
     public void place(double newX, double newY) {
@@ -131,11 +138,25 @@ public class Sprite implements FrontEndSprite{
 	return 0;
     }
 
-    protected void updateImage(String imagePath) {
+    /**
+     * Updates the Imagepath and the ImageView given an input string
+     * @param imagePath	String containing path to image
+     */
+    public void updateImage(String imagePath) {
 	myImageString = imagePath; 
-	Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
-	myImageView.setImage(newImage);
+	myWrapper.updateImageString(imagePath);
+	//		Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
+	//		System.out.println(myImageView == null);
+	//		myImageView.setImage(newImage);
+	myImageView = myWrapper.toImageView();
 	myImageView.setPreserveRatio(true);
+    }
+
+    /**
+     * Sets ImageView upon loading a Sprite from XML
+     */
+    public void loadImage() {
+	myImageView = myWrapper.toImageView();
     }
 
     protected Property makeProperty(Property p) throws MissingPropertiesException {
@@ -207,5 +228,6 @@ public class Sprite implements FrontEndSprite{
 	}
 	return null;
     }
+
 
 }

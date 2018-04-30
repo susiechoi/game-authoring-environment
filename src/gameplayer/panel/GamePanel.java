@@ -82,6 +82,7 @@ public class GamePanel extends Panel{
     }
 
     private boolean setBackgroundImage(String backgroundFilePath) {
+	System.out.println(scroll == null);
 	Bounds centerBounds = scroll.getViewportBounds();
 	if(centerBounds.getHeight() ==0 && centerBounds.getWidth() == 0) {
 	    return false;

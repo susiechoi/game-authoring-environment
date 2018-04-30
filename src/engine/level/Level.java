@@ -334,6 +334,7 @@ public class Level {
 
 
 	public Path getPath() {
+	    System.out.println("getPath() - MyPaths size" + myPaths.size());
 		return myPaths.get(myPaths.size() - 1);
 	}
 

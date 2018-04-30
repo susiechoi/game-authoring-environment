@@ -22,6 +22,9 @@ import engine.sprites.towers.FrontEndTower;
 import frontend.StageManager;
 
 import java.awt.Point;
+import java.io.IOException;
+
+import xml.BadGameDataException;
 import xml.PlayLoader;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
@@ -111,8 +114,10 @@ public class Mediator implements MVController{
     /**
      * Saves current state of game in xml file
      * @param filename	String representing name of file. Path and ".xml" are handled by method in XML package.
+     * @throws IOException 
+     * @throws BadGameDataException 
      */
-    public void savePlay(String filename) {
+    public void savePlay(String filename) throws BadGameDataException, IOException {
 	PlaySaverWriter p = (PlaySaverWriter) XMLFactory.generateWriter("PlaySaverWriter");
 	p.write(myGameEngine.getPlayState(), filename);
     }

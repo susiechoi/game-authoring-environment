@@ -11,6 +11,7 @@
 package authoring;
 import java.awt.Point;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import frontend.StageManager;
 import javafx.scene.layout.GridPane;
 import xml.AuthoringModelReader;
 import xml.AuthoringModelWriter;
+import xml.BadGameDataException;
 
 
 public class AuthoringController implements MVController{
@@ -288,7 +290,7 @@ public class AuthoringController implements MVController{
 	desiredWave.setWaveTime(time);
     }
 
-    public void writeToFile() throws ObjectNotFoundException {
+    public void writeToFile() throws ObjectNotFoundException, BadGameDataException, IOException {
 	AuthoringModelWriter writer = new AuthoringModelWriter();
 	writer.write(myModel.getGame(), myModel.getGameName());
     }
