@@ -5,10 +5,8 @@ import java.util.List;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.properties.ConstantSpeedProperty;
-import engine.sprites.properties.DamageCollisionProperty;
 import engine.sprites.properties.DamageProperty;
 import engine.sprites.properties.Property;
-import engine.sprites.properties.RandomShotProperty;
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -25,7 +23,6 @@ public class ProjectileBuilder {
 	List<Property> properties = new ArrayList<>();
 	properties.add(new DamageProperty(0, 0, damage));
 	properties.add(new ConstantSpeedProperty(constantSpeedProperty));
-	return new Projectile(name, size, imagepath, properties, shootingSound);
+	return new Projectile(name, imagepath, properties, shootingSound);
     }
-
 }

@@ -36,6 +36,7 @@ import javafx.scene.input.KeyCode;
  */
 public class PlayState implements GameData {
 
+    private final int FRAMES_PER_SECOND = 60;
     private int count;
     private IntegerProperty myScore;
     private IntegerProperty myResources;
@@ -57,8 +58,9 @@ public class PlayState implements GameData {
      * @param score
      * @param resources
      * @param universalTime
+     * @throws MissingPropertiesException 
      */
-    public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
+    public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) throws MissingPropertiesException {
 	myMediator = mediator;
 	myLevels = levels;
 	currentLevel = myLevels.get(0);
@@ -86,12 +88,10 @@ public class PlayState implements GameData {
 	}
 	count++;
 	checkLoss();
-	if (count % 120 == 0) {
+	if (count % FRAMES_PER_SECOND == 0) {
 	    spawnEnemies();
 	}
-	List<Sprite> deadEnemies = myEnemyManager.moveEnemies(elapsedTime);
-	updateHealth(deadEnemies);
-	myMediator.removeListOfSpritesFromScreen(deadEnemies);
+	checkPathEnd(elapsedTime);
 	handleCollisions(elapsedTime);
     }
 
@@ -117,22 +117,36 @@ public class PlayState implements GameData {
 	updateScore(toBeRemoved);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
     }
+    
+    /**
+     * Checks if enemies have reached the end of the path. Removes the enemies from the
+     * screen and the enemy manager object if they reach the end of the path.
+     */
+    private void checkPathEnd(double elapsedTime) {
+	List<Sprite> endPathEnemies = myEnemyManager.moveEnemies(elapsedTime);
+	updateHealth(endPathEnemies);
+	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
+	activeEnemies.removeAll(endPathEnemies);
+	myEnemyManager.removeFromMap(endPathEnemies);
+	myEnemyManager.setActiveList(activeEnemies);
+	myMediator.removeListOfSpritesFromScreen(endPathEnemies);
+    }
+
 
     private void spawnEnemies() throws MissingPropertiesException {
 	try {
-	    if (currentLevel.getWave(0).isFinished()) {
-		System.out.println("remove wave");
-		currentLevel.removeWave();   
-	    }
 	    Wave currentWave = currentLevel.getWave(0);
+	    if (currentWave.isFinished()) {
+		double time = currentWave.getWaveTime();
+		currentLevel.removeWave();  
+		currentWave = currentLevel.getWave(0);
+		// TODO remove magic number! put FPS in constant file
+		currentWave.setWaveTime(time*FRAMES_PER_SECOND + count);		
+	    }
 	    for (Path currentPath : currentLevel.getPaths()) {
 		System.out.println("in path");
 		try {
-		    Enemy newEnemy = currentWave.getEnemySpecificPath(currentPath);
-		    newEnemy.setInitialPoint(currentPath.initialPoint());
-		    myEnemyManager.addEnemy(currentPath, newEnemy);
-		    myEnemyManager.addToActiveList(newEnemy);
-		    myMediator.addSpriteToScreen(newEnemy);
+		    spawnEnemy(currentWave, currentPath);
 		}
 		catch (Exception e) {
 		    // do nothing, path contains no enemies TODO this seems like e.printstacktrace? not trying to die
@@ -141,25 +155,67 @@ public class PlayState implements GameData {
 	}
 	catch (Exception e) {
 	    // Level is over
-	    if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()) {
-		currentLevel = myLevels.get(currentLevel.myNumber());
-		myMediator.updateLevel(currentLevel.myNumber());
-		setLevel(currentLevel.myNumber());
-		// TODO: call Mediator to trigger next level
-		myMediator.nextLevel();
-		try {
-		    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
-		} catch (FileNotFoundException e1) {
-		    e1.printStackTrace(); //TODO!!!
-		}
-		
-	    }
-	    else {
-		// TODO: end game, player won
-			myMediator.gameWon();
+	    checkWin();
+	}
+    }
+    
+    private void checkWin() throws MissingPropertiesException {
+	// Level is over
+	System.out.println("Checking for win");
+	if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()
+		&& deadEnemies()) {
+	    advanceLevel();
+	}
+	else {
+	    // TODO: end game, player won. 
+	    if (deadEnemies()) {
+		myMediator.gameWon();
 	    }
 	}
     }
+    
+    private boolean deadEnemies() {
+	for (ShootingSprites thisEnemy : myEnemyManager.getListOfActive()) {
+	    if (thisEnemy.isAlive()) {
+		System.out.println("Found an alive enemy");
+		return false;
+	    }
+	}
+	return true;
+    }
+    
+    private void advanceLevel() throws MissingPropertiesException {
+	List<Level> newLevels = new ArrayList<Level>();
+	for (Level thisLevel : myLevels) {
+	    if (thisLevel.equals(currentLevel)) {
+		newLevels.add(currentLevelCopy);
+	    }
+	    else {
+		newLevels.add(thisLevel);
+	    }
+	}
+	myLevels = newLevels;
+	currentLevel = myLevels.get(currentLevel.myNumber());
+	currentLevelCopy = new Level(currentLevel);
+	myMediator.updateLevel(currentLevel.myNumber());
+	setLevel(currentLevel.myNumber());
+	myMediator.nextLevel();
+	try {
+	    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
+	} catch (FileNotFoundException e1) {
+	    e1.printStackTrace(); //TODO!!!
+	}
+    }
+
+    
+    private void spawnEnemy(Wave wave, Path path) throws MissingPropertiesException {
+	Enemy newEnemy = wave.getEnemySpecificPath(path, count);
+	newEnemy.setInitialPoint(path.initialPoint());
+	myEnemyManager.addEnemy(path, newEnemy);
+	myEnemyManager.addToActiveList(newEnemy);
+	myMediator.addSpriteToScreen(newEnemy);
+    }
+
     
     private void checkLoss() {
 	if (myHealth.getValue() <= 0) {
@@ -199,7 +255,7 @@ public class PlayState implements GameData {
 	clearLevel();
 	currentLevel = myLevels.get(levelNumber - 1);
 	currentLevelCopy = new Level(currentLevel);
-	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	myMediator.updateLevel(currentLevel.myNumber());
 	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), 
 		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
@@ -209,8 +265,7 @@ public class PlayState implements GameData {
      * Restarts the level that you were currently on.
      * @throws MissingPropertiesException 
      */
-    public void restartLevel() {
-
+    public void restartLevel() throws MissingPropertiesException {
 	clearLevel();
 	currentLevel = currentLevelCopy;
 	currentLevelCopy = new Level(currentLevel);
@@ -226,7 +281,6 @@ public class PlayState implements GameData {
 	myTowerManager.getListOfActive().clear();
 	myEnemyManager.getListOfActive().clear();
 	myEnemyManager.clearEnemiesMap();
-
     }
 
     /**

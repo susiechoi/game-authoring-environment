@@ -36,7 +36,6 @@ import frontend.PropertiesReader;
 
 public class AuthoringModel {
 
-
     public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
     public static final String DEFAULT_PROMPTS_FILE_KEY = "PromptsFile";
     public static final String DEFAULT_CONSTANTS_FILE_KEY = "ConstantFiles"; 

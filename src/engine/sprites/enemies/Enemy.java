@@ -22,14 +22,17 @@ import engine.sprites.towers.launcher.Launcher;
  */
 public class Enemy extends ShootingSprites implements FrontEndSprite{
 
-    private double mySize;
     private int pathIndex;
     private double pathAngle;
     private Point targetPosition;
     private boolean freeze;
-
-    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
-	super(name, image, size, launcher, properties);
+    private final String VALUE = "ValueProperty";
+    private final String COLLISION = "CollisionProperty";
+    private final String SPEED = "SpeedProperty";
+    private final String DAMAGE = "DamageProperty";
+    
+    public Enemy(String name, String image, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
+	super(name, image, launcher, properties);
 	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
@@ -40,7 +43,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      * @throws MissingPropertiesException 
      */
     public Enemy(Enemy copiedEnemy) throws MissingPropertiesException {
-	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
+	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.getLauncher(), copiedEnemy.getProperties());
 	freeze = false;
 	pathIndex = 0;
 	pathAngle = 0;
@@ -65,7 +68,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 	    return;
 	}
 	rotateImage();
-	double totalDistanceToMove = this.getProperty("SpeedProperty").getProperty()*elapsedTime; 
+	double totalDistanceToMove = this.getProperty(SPEED).getProperty()*elapsedTime; 
 	double xMove = Math.sin(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(this.getRotate()))*totalDistanceToMove;
 	this.getImageView().setX(this.getX()+xMove);
@@ -114,7 +117,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public double getDamage() {
-	return getValue("DamageProperty");
+	return getValue(DAMAGE);
     }
 
     /**
@@ -122,14 +125,14 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
      */
     @Override
     public boolean handleCollision(Sprite collider) {
-	CollisionProperty myCollisionProperty = (CollisionProperty) collider.getPropertySuperclassType("CollisionProperty");
+	CollisionProperty myCollisionProperty = (CollisionProperty) collider.getPropertySuperclassType(COLLISION);
 	myCollisionProperty.collidesWith(this);
 	return this.isAlive();
     }
 
     @Override
     public int getPointValue() {
-	return (int) getValue("ValueProperty");
+	return (int) getValue(VALUE);
     }
     
     public void setIndex(int i) {
@@ -151,13 +154,4 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     public void freeze(double duration) {
 	freeze = true;
     }
-   
-//    public void updateProperties() {
-//	myProperties = new ArrayList<>();
-//	myProperties.add(new HealthProperty(0, 0, myInitialHealth));
-//	myProperties.add(new DamageProperty(0, 0, myHealthImpact)); 
-//	myProperties.add(new ValueProperty(myKillReward));
-//	myProperties.add(new SpeedProperty(0, 0, 50));
-//	updateImage(myImage);
-//    }
 }
