@@ -45,7 +45,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	super(name, image, size, launcher, properties);
 	mySize = size;
 	myLauncher = launcher;
-	addProperty(new KillProperty(0));
 	towerStats = new HashMap<>();
 	setupTowerStats();
 
@@ -60,13 +59,15 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher(), copiedTower.getProperties()); 
 	mySize = copiedTower.mySize;
 	myLauncher = copiedTower.getLauncher();
-	addProperty(new KillProperty(0));
 	towerStats = new HashMap<>();
 	setupTowerStats();
     }
 
     private void setupTowerStats() {
 	for(Property p : getProperties()) {
+	    towerStats.put(p.getName(), (int) p.getProperty());
+	}
+	for(Property p : this.getLauncher().getProperties()) {
 	    towerStats.put(p.getName(), (int) p.getProperty());
 	}
     }
