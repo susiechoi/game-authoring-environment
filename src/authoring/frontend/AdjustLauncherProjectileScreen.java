@@ -68,7 +68,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 
 	vb.getChildren().add(movementPropertySelector);
 	vb.getChildren().add(collisionPropertySelector);
-	
+		
 	vb.getChildren().add(applyButton);
 	return vb;
     }
