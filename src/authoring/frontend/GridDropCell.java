@@ -10,10 +10,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Creates the cells that populate the gridPane and allow for the pahtBlocks to be dropped onto them
+ * @author erikriis
+ */
 public class GridDropCell {
     private GridPane myGrid;
     private GridPane myCheckGrid;
 
+    /**
+     * Constructs an instance of the drop cell
+     * @param grid
+     * @param checkGrid
+     * @param col
+     * @param row
+     */
     GridDropCell(GridPane grid, GridPane checkGrid, int col, int row) {
 	StackPane cell = new StackPane();
 	myGrid = grid;
@@ -21,6 +32,13 @@ public class GridDropCell {
 	setCellDragProperties(cell, col, row);
     }
 
+    /**
+     * Sets the setOnDragOver and setOnDragDropped functionalities to the cell
+     * @param cell
+     * @param col
+     * @param row
+     * @return cell
+     */
     private Pane setCellDragProperties(Pane cell, int col, int row) {
 	cell.setOnDragOver(new EventHandler <DragEvent>() {
 	    public void handle(DragEvent event) {

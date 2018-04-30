@@ -13,7 +13,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-
 /**
  * Class to create/manage the GridPane for path authoring and display.
  * @author Erik Riis
@@ -35,6 +34,12 @@ public class CreatePathGrid {
     private int myGridWidth;
     private int myGridHeight;
 
+    /**
+     * Constructor for creating the path grid
+     * @param view
+     * @param width
+     * @param height
+     */
     public CreatePathGrid(AuthoringView view, int width, int height) {
 	myView = view;
 	myGridWidth = width;
@@ -42,7 +47,9 @@ public class CreatePathGrid {
     }
 
     /**
-     * @return
+     * Constructs the GridPane and sets its background and row/column constraints, initializes a shift selection functionality
+     * to select a path block and then copy and paste it to any selected grid cells
+     * @return grid
      */
     protected GridPane makePathGrid() {
 	grid = new GridPane();
@@ -70,6 +77,10 @@ public class CreatePathGrid {
 	return grid;
     }
 
+    /**
+     * Populates the grid cells with pane that except drag drop events in order to drag and drop the path blocks
+     * @param grid
+     */
     private void populateGridCells(GridPane grid) { 
 	for (int x = 0 ; x < grid.getColumnCount(); x++) {
 	    for (int y = 0 ; y < grid.getRowCount(); y++) {
@@ -77,7 +88,12 @@ public class CreatePathGrid {
 	    }
 	}
     }
-
+    
+    /**
+     * Sets the constraints for the rows and columns of the GridPane according to the desired path size and the grid height/width 
+     * @param grid
+     * @param size
+     */
     protected void setGridConstraints(GridPane grid, int size) {
 	grid.getColumnConstraints().clear();
 	grid.getRowConstraints().clear();
@@ -94,6 +110,11 @@ public class CreatePathGrid {
 	}
     }
 
+    /**
+     * Populates the GridPane with draggable images when loading a previously constructed path for a level
+     * @param map
+     * @param pathSize
+     */
     private void addImagesToGrid(Map<String, List<Point>> map, int pathSize) {
 	checkGrid.getChildren().clear();
 	for (String key: map.keySet()) {
@@ -122,6 +143,14 @@ public class CreatePathGrid {
 	}
     }
 
+    /**
+     * Recursively iterates the GridPane following the path blocks to check if the start blocks and end blocks are connected
+     * and adds coordinates at each step that enemies will follow in the game engine
+     * @param grid
+     * @param row
+     * @param col
+     * @return boolean that indicates if the path is complete
+     */
     protected boolean checkPathConnected(GridPane grid, int row, int col) {
 	Label checkLabel = (Label) getNode(grid, col, row);
 	if (getNode(grid, col, row) != null) {
@@ -153,6 +182,12 @@ public class CreatePathGrid {
 	return false;
     }
 
+    /**
+     * Adds a coordinate point that represents the coordinate absolute location (not row/col index) in the pane to a list 
+     * for enemies to follow in game engine
+     * @param row
+     * @param col
+     */
     protected void addCoordinates(int row, int col) {
 	Bounds nodeBounds = getNode(grid, col, row).getBoundsInParent();
 	double x = nodeBounds.getMinX();
@@ -161,7 +196,12 @@ public class CreatePathGrid {
 	pathCoords.add(point);
     }
 
-    protected List<Point> getStartingPosition(GridPane grid) { //TODO: refactor, should not iterate through grid for this and getGridImageCoordinates
+    /**
+     * Iterates through the grid to find all of the starting positions in the GridPane as row and column indexes
+     * @param grid
+     * @return startPoints
+     */
+    protected List<Point> getStartingPosition(GridPane grid) { 
 	startPoints = new ArrayList<Point>();
 	for (int x = 0; x < grid.getColumnCount(); x++) {
 	    for (int y = 0; y < grid.getRowCount(); y++) {
@@ -173,6 +213,15 @@ public class CreatePathGrid {
 	return startPoints;
     }
 
+    /**
+     * Creates a map that correlates a path image file to all of its locations within the GridPane so that the GamePlayer frontend 
+     * can reconstruct the path
+     * @param grid
+     * @param startImage
+     * @param pathImage
+     * @param endImage
+     * @return gridImageCoordinates
+     */
     protected HashMap<String, List<Point>> getGridImageCoordinates(GridPane grid, String startImage, String pathImage, String endImage) {
 	List<Point> pathPoints = new ArrayList<Point>();
 	List<Point> endPoints = new ArrayList<Point>();
@@ -192,6 +241,13 @@ public class CreatePathGrid {
 	return gridImageCoordinates;
     }
 
+    /**
+     * Finds a node within a gridPane given a row and column index
+     * @param gridPane
+     * @param col
+     * @param row
+     * @return node
+     */
     protected Node getNode(GridPane gridPane, int col, int row) {
 	Node result = null;
 	for (Node node : gridPane.getChildren()) {
@@ -206,6 +262,12 @@ public class CreatePathGrid {
 	return result;
     }
 
+    /**
+     * Removes a node from a gridPane at a given row and column index
+     * @param grid
+     * @param row
+     * @param col
+     */
     protected void removeNode(GridPane grid, int row, int col) {
 	for(Node node : grid.getChildren()) {
 	    if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
@@ -214,6 +276,12 @@ public class CreatePathGrid {
 	    }
 	} 
     }
+    
+    /**
+     * Copies the gridPane that is used for checking if the grid is completed in chechPathConnected
+     * @param grid
+     * @return copiedGrid
+     */
     public GridPane copyGrid(GridPane grid) {
 	GridPane copiedGrid = new GridPane();
 	for (int x = 0; x < grid.getColumnCount(); x++) {
@@ -230,31 +298,58 @@ public class CreatePathGrid {
 	return copiedGrid;
     }
 
-
+    /**
+     * Gets the width of the gridPane
+     * @return myGridWidth
+     */
     public int getGridWidth() {
 	return myGridWidth;
     }
 
+    /**
+     * Gets the height of the gridPane
+     * @return myGridHeight
+     */
     public int getGridHeight() {
 	return myGridHeight;
     }
 
+    /**
+     * Returns the main gridPane
+     * @return grid
+     */
     protected GridPane getGrid() {
 	return grid;
     }
 
+    /**
+     * returns the gridPane that is used for checking path completion
+     * @return checkGrid
+     */
     protected GridPane getCheckGrid() {
 	return checkGrid;
     }
 
+    /**
+     * Sets the background of the gridPane
+     * @param backGroundFileName
+     */
     protected void setBackgroundImage(String backGroundFileName) {
 	grid.setStyle("-fx-background-image: url(" + backGroundFileName + ")");
     }
 
+    /**
+     * Gets the size of each path block
+     * @return pathSize
+     */
     protected int getPathSize() {
 	return pathSize;
     }
 
+    /**
+     * Gets the absolute coordinates of each block in the gridPane (not row/col index)
+     * @return pathCoords
+     */
     protected List<Point> getAbsoluteCoordinates() {
 	return pathCoords;
     }

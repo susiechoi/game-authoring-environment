@@ -33,13 +33,16 @@ public class CreatePathToolBar extends PathToolBar {
     public static final String START_BUTTON_TEXT = "Choose Start Image";
     public static final String PATH_BUTTON_TEXT = "Choose Path Image";
     public static final String END_BUTTON_TEXT = "Choose End Image";
-    
     private HBox startImageSelect;
     private HBox endImageSelect;
     private HBox pathImageSelect;
     private HBox backgroundImageSelect;
     private AuthoringView myView;
 
+    /**
+     * Constructor for the path toolbar
+     * @param view
+     */
     public CreatePathToolBar(AuthoringView view) {
 	super(view);
 	myView = view;
@@ -73,6 +76,12 @@ public class CreatePathToolBar extends PathToolBar {
 	return getToolBar();
     }
 
+    /**
+     * Initializes functionality of a given image button which when pressed creates a popup containing an image selector for changing
+     * the background and path block images
+     * @param button
+     * @param imageSelector
+     */
     private void setImageButtonEvent(Button button, HBox imageSelector) {
 	button.setOnAction(new EventHandler<ActionEvent>() {
 	    @Override
@@ -88,6 +97,13 @@ public class CreatePathToolBar extends PathToolBar {
 	});
     }
 
+    /**
+     * Creates the image selectors for changing the background and path block images
+     * @param objectType
+     * @param imageName
+     * @param propertiesFilepath
+     * @return
+     */
     protected HBox makeImageSelector(String objectType, String imageName, String propertiesFilepath){
 	HBox imageSelect = new HBox();
 	ComboBox<String> imageDropdown = new ComboBox<String>();
@@ -112,18 +128,34 @@ public class CreatePathToolBar extends PathToolBar {
 	return imageSelect;
     }
     
+    /**
+     * Gets the HBox containing the path image selector
+     * @return pathImageSelect
+     */
     public HBox getPathHBox() {
 	return pathImageSelect;
     }
 
+    /**
+     * Gets the HBox containing the start image selector
+     * @return startImageSelect
+     */
     public HBox getStartHBox() {
 	return startImageSelect;
     }
 
+    /**
+     * Gets the HBox containing the end image selector
+     * @return endImageSelect
+     */
     public HBox getEndHBox() {
 	return endImageSelect;
     }
-
+    
+    /**
+     * Gets the HBox containing the background image selector
+     * @return backgroundImageSelect
+     */
     public HBox getBackgroundHBox() {
 	return backgroundImageSelect;
     }

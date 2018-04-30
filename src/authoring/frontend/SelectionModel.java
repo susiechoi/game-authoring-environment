@@ -9,6 +9,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Creates the selection model that items get added to on shift selection and the functionalities of copy and paste
+ * @author erikriis
+ */
 public class SelectionModel {
     public static final String CELL_SELECT_STYLE = "-fx-background-color: rgba(255,255,255, 0.3); -fx-background-radius: 10;";
     public static final String CELL_DESELECT_STYLE = "-fx-background-color: rgba(0,0,0,0);";
@@ -19,22 +23,40 @@ public class SelectionModel {
     private GridPane myCheckGrid;
     private int mySize;
 
+    /**
+     * Constructor for the Selection Model
+     * @param grid
+     * @param checkGrid
+     * @param size
+     */
     public SelectionModel(GridPane grid, GridPane checkGrid, int size) {
 	myGrid = grid;
 	myCheckGrid = checkGrid;
 	mySize = size;
     }
 
+    /**
+     * Adds a gridPane cell to selection model
+     * @param pane
+     */
     public void addCell(Pane pane) {
 	pane.setStyle(CELL_SELECT_STYLE);
 	selectedCells.add(pane);
     }
 
+    /**
+     * Removes a gridPane cell from selection model
+     * @param pane
+     */
     public void removeCell(Pane pane) {
 	pane.setStyle(CELL_DESELECT_STYLE);
 	selectedCells.remove(pane);
     }
 
+    /**
+     * Sets a path block node as "selected"
+     * @param node
+     */
     public void addNode(Node node) {
 	if (selectedNode != null) {
 	    selectedNode.setEffect(null);
@@ -45,20 +67,33 @@ public class SelectionModel {
 	selectedNode = node;
     }
 
+    /**
+     * Sets a path block node as "unselected"
+     * @param node
+     */
     public void removeNode(Node node) {
 	node.setEffect(null);
 	selectedNode = null;
     }
 
+    /**
+     * Returns a set that contains all of the selected gridPane cells
+     * @return
+     */
     public Set<Pane> getSelectedCells() {
 	return selectedCells;
     }
 
+    /**
+     * Sets the selected path block node as "copied"
+     */
     public void copy() {
 	copyNode = selectedNode;
     }
 
-    //fix this
+    /**
+     * Pastes the selected path block node into every selected gridPane cell
+     */
     public void paste() {
 	if (copyNode != null && copyNode instanceof ImageView) {
 	    for (Pane cell: selectedCells) {

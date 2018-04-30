@@ -117,6 +117,10 @@ public class CreatePathPanel extends PathPanel {
 	return pathPanel;
     }
 
+    /**
+     * Creates the trash image in the panel that allows for dragging and dropping path blocks to delete them from the gridPane
+     * @return trashImage
+     */
     protected ImageView makeTrashImage() {
 	trashImage.setOnDragDropped(new EventHandler <DragEvent>() {
 	    @Override
@@ -134,19 +138,34 @@ public class CreatePathPanel extends PathPanel {
 	return trashImage;
     }
 
+    /**
+     * gets a boolean that discerns if the user has toggled for the path blocks to be transparent in the Game Player
+     * @return isTransparent
+     */
     protected boolean getTransparent() {
 	return isTransparent;
     }
 
-
+    /**
+     * Gets the DraggableImage that represents a path block
+     * @return pathImage
+     */
     protected DraggableImage getPanelPathImage() {
 	return pathImage;
     }
-
+    
+    /**
+     * Gets the DraggableImage that represents a start block
+     * @return startImage
+     */
     protected DraggableImage getPanelStartImage() {
 	return startImage;
     }
 
+    /**
+     * Gets the DraggableImage that represents an end block
+     * @return endImage
+     */
     protected DraggableImage getPanelEndImage() {
 	return endImage;
     }

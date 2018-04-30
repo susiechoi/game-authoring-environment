@@ -22,10 +22,18 @@ import javafx.scene.layout.GridPane;
 public class DraggableImage extends Parent {
     private ImageView pathImage;
 
+    /**
+     * Constructor of draggable image object that represents the path blocks in path builder
+     * @param image
+     */
     public DraggableImage(Image image) {
 	setPathImage(image);
     }
 
+    /**
+     * Sets the ImageView of the draggable image object
+     * @param image
+     */
     private void setPathImage(Image image) {
 	pathImage = new ImageView();
 	pathImage.setImage(image);
@@ -33,6 +41,10 @@ public class DraggableImage extends Parent {
 	pathImage.setFitWidth(CreatePathPanel.PANEL_PATH_SIZE);
     }
 
+    /**
+     * Sets the draggable image so that the image can be dragged but its location (in the panel) stays the same
+     * @return pathImage
+     */
     public ImageView setCopyDraggable() {
 	pathImage.setOnMouseEntered(new EventHandler <MouseEvent>() {
 	    @Override
@@ -73,8 +85,13 @@ public class DraggableImage extends Parent {
 	return pathImage;
     }
 
+    /**
+     * Sets the draggable image so that it can be dragged and its previous location deleted for dragging in the gridPane
+     * @param grid
+     * @param row
+     * @param col
+     */
     public void setDraggable(GridPane grid, int row, int col) {
-
 	pathImage.setOnDragDetected(new EventHandler <MouseEvent>() {
 	    @Override
 	    public void handle(MouseEvent event){
@@ -98,6 +115,12 @@ public class DraggableImage extends Parent {
 	});
     }
 
+    /**
+     * Removes node from the gridPane given a row and column index
+     * @param grid
+     * @param row
+     * @param col
+     */
     public void removeNode(GridPane grid, int row, int col) {
 	for(Node node : grid.getChildren()) {
 	    if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
@@ -107,10 +130,18 @@ public class DraggableImage extends Parent {
 	} 
     }
 
+    /**
+     * Sets a new image to the draggable image object
+     * @param image
+     */
     protected void setNewImage(Image image) {
 	pathImage.setImage(image);
     }
 
+    /**
+     * Gets the imageView of the draggable image object
+     * @return pathImage
+     */
     protected ImageView getPathImage() {
 	return pathImage;
     }

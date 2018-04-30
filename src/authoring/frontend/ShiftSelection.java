@@ -7,11 +7,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Allows for users to select one path block at a time and multiple gridPane cells in order to copy and paste path blocks if they click
+ * the corresponding items while holding the Shift key
+ * @author erikriis
+ *
+ */
 public class ShiftSelection {
 
     private SelectionModel selectionModel;
     private Pane myGroup;
 
+    /**
+     * Initializes the shift selection functionality and adds the corresponding items to a selection model that holds the selected items
+     * @param group
+     * @param model
+     */
     public ShiftSelection(Pane group, SelectionModel model) {
 	this.selectionModel = model;
 	this.myGroup = group;

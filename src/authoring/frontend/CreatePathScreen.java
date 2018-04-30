@@ -22,8 +22,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Sets up the entire create path screen
+ * @author erikriis
+ *
+ */
 public class CreatePathScreen extends PathScreen {
-
     public static final int POPUP_SIZE = 500;
     private CreatePathPanel myPathPanel;
     private CreatePathToolBar myPathToolBar;
@@ -37,6 +41,10 @@ public class CreatePathScreen extends PathScreen {
     private Button mySizeApplyButton;
     private Stage myDialogStage;
 
+    /**
+     * Constructor for the create path screen
+     * @param view
+     */
     public CreatePathScreen(AuthoringView view) {
 	super(view);
 	myView = view;
@@ -48,7 +56,22 @@ public class CreatePathScreen extends PathScreen {
 	myPathToolBar = new CreatePathToolBar(getView());
 	me = this;
     }
-
+    
+    @Override
+    public void initializeGridSettings(CreatePathGrid gridIn) {
+	setPathPanel(myPathPanel, myPathToolBar);
+	setGridApplied(gridIn);
+//	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == 2) {
+//	    setPathInstructionPopup();
+//	    setGridUIComponents();
+//	}
+    }
+    
+    /**
+     * Sets the functionality of the apply button in the create path screen which checks for path completion and send the path info to
+     * game engine and game player or throws error alerts if the path is not complete
+     * @param grid
+     */
     private void setGridApplied(CreatePathGrid grid) {
 	myPathPanel.setApplyButtonAction(new EventHandler<ActionEvent>() {
 	    @Override
@@ -90,17 +113,11 @@ public class CreatePathScreen extends PathScreen {
 	    }
 	});
     }
-  
-    @Override
-    public void initializeGridSettings(CreatePathGrid gridIn) {
-	setPathPanel(myPathPanel, myPathToolBar);
-	setGridApplied(gridIn);
-//	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == 2) {
-//	    setPathInstructionPopup();
-//	    setGridUIComponents();
-//	}
-    }
-
+    
+    /**
+     * Sets an HBox containing the path sizing (plus and minus) buttons
+     * @return sizingButtons
+     */
     protected HBox makeSizingButtons() {
 	HBox sizingButtons = new HBox();
 	try {
@@ -125,6 +142,9 @@ public class CreatePathScreen extends PathScreen {
 	}
     }
 
+    /**
+     * Sets functionality for the sizing buttons and size apply button
+     */
     protected void setGridUIComponents() {
 	myPlusButton.setOnAction(new EventHandler<ActionEvent>() {
 	    @Override
@@ -167,8 +187,10 @@ public class CreatePathScreen extends PathScreen {
 	});
     }
 
+    /**
+     * Sets the popup that contains the path builder instructions and the path sizing buttons which must be set before setting path blocks
+     */
     public void setPathInstructionPopup() {
-
 	myDialogStage = new Stage();
 	VBox dialogVbox = new VBox();
 	dialogVbox.setMaxSize(POPUP_SIZE, POPUP_SIZE);
@@ -242,7 +264,12 @@ public class CreatePathScreen extends PathScreen {
     private ComboBox<String> getComboBox(HBox hb)  {
 	return (ComboBox<String>) ((VBox) hb.getChildren().get(0)).getChildren().get(0);
     }
-
+    
+    /**
+     * Changes the path block images in the panel 
+     * @param box
+     * @param pathType
+     */
     private void setPathImages(ComboBox<String> box, String pathType) {
 	box.addEventHandler(ActionEvent.ACTION, e -> {
 	    String pathImageFilePath = "file:images/"+box.getValue()+".png";
@@ -257,6 +284,11 @@ public class CreatePathScreen extends PathScreen {
 	});
     }
 
+    /**
+     * Changes the corresponding path block images in the gridPane
+     * @param imageFilePath
+     * @param pathType
+     */
     private void changeGridImages(String imageFilePath, String pathType) {
 	for (int i = 0; i < getGrid().getGrid().getChildren().size(); i++) {
 	    Node node = getGrid().getGrid().getChildren().get(i);
