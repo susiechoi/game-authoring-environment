@@ -138,7 +138,7 @@ public class Sprite implements FrontEndSprite{
     protected Property makeProperty(Property p) {
 	return myPropertyBuilder.getProperty(p);
     }
-    
+
     public Property getProperty(String ID) {
 	for(Property property : myProperties) {
 	    if(property != null && property.getName().equals(ID)) {
@@ -147,7 +147,7 @@ public class Sprite implements FrontEndSprite{
 	}
 	return null;
     }
-    
+
     /**
      * Handles upgrading the health of a tower
      */
@@ -159,27 +159,28 @@ public class Sprite implements FrontEndSprite{
 	}
 	return balance;
     }
-    
+
     public List<Property> getProperties(){
 	return myProperties;
     }
-    
+
     public void addProperty(Property property) {
-	Property toRemove = null;
-	try {
-	    for(Property p : myProperties) {
-		    if(property.getName().equals(p.getName())) {
-			toRemove = p;
-		    }
-		}
-		myProperties.remove(toRemove);
-		myProperties.add(property);
-	}catch(NullPointerException e){
-	    return;
+	System.out.println("PROPERTY: " + property);
+	String type = property.getClass().getSuperclass().getSimpleName();
+	System.out.println("TYPE: "+ type);
+	Property toRemove = null; 
+	for(Property p : myProperties) {
+	    if(property.getName().equals(p.getName())) {
+		toRemove = p;
+	    }
+	    else if(type.equals("CollisionProperty") || type.equals("MovingProperty")) {
+		toRemove = p;
+	    }
 	}
-	
+	if(toRemove != null) myProperties.remove(toRemove);
+	myProperties.add(property);
     }
-    
+
     public double getValue(String ID) {
 	for(Property property : myProperties) {
 	    if(property.getName().equals(ID)) {
@@ -188,7 +189,7 @@ public class Sprite implements FrontEndSprite{
 	}
 	return 0;
     }
-    
+
     /**
      * Returns the superclass of name 'type' (i.e MovingProperty, CollisionProperty, etc)
      * @param type
@@ -196,9 +197,9 @@ public class Sprite implements FrontEndSprite{
      */
     public Property getPropertySuperclassType(String type) {
 	for(Property p : this.getProperties()) {
-		if(p.getClass().getSuperclass().getSimpleName().equals(type)) {
-		    return p;
-		}
+	    if(p.getClass().getSuperclass().getSimpleName().equals(type)) {
+		return p;
+	    }
 	}
 	return null;
     }

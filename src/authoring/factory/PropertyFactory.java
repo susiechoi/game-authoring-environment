@@ -21,11 +21,6 @@ import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
 import voogasalad.util.reflection.*;
 
-/**
- * 
- * @author katherinevandyk
- *
- */
 public class PropertyFactory {
     
 	public static final String DEFAULT_PROPERTIES_FILES_PATH = "default_objects/Properties/properties.properties";
@@ -38,12 +33,12 @@ public class PropertyFactory {
     }
     
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
-//	System.out.println("SETTING PROPERTY");
+	System.out.println("SETTING PROPERTY");
 //	System.out.println(currentLevel);
 //	System.out.println(objectType);
 //	System.out.println(objectName);
 //	System.out.println(propertyName);
-	for (Double d : attributes) System.out.println(d);
+//	for (Double d : attributes) System.out.println(d);
     	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
 		Enemy enemy = currentLevel.getEnemy(objectName);
@@ -74,6 +69,8 @@ public class PropertyFactory {
 	Property ret;
 	String className = PACKAGE + propertyName;
 	String type = new PropertiesReader().findKey(DEFAULT_PROPERTIES_FILES_PATH, propertyName);
+	System.out.println(className);
+	System.out.println(type);
 	if(type == null) {
 	    return null;
 	}
@@ -99,6 +96,7 @@ public class PropertyFactory {
     }
 
     private Property createProperty(String className, String type, Object attribute) {
+	System.out.println("CLASSNAME " + className);
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
     
