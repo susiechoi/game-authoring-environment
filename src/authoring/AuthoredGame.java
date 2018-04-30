@@ -11,6 +11,8 @@ import data.GameData;
 import engine.Settings;
 import engine.level.Level;
 import engine.path.Path;
+import engine.sprites.enemies.Enemy;
+import engine.sprites.towers.Tower;
 
 /**
  * 
@@ -113,5 +115,21 @@ public class AuthoredGame implements GameData {
     public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 	return levelCheck(levelNum).getPaths().get(name-1);
     }
-
+    
+    /**
+     * Only called by AuthoringModelReader; used to reconstruct/reinitialize all ImageViews that were serialized
+     */
+    public void reconstruct() {
+	for (Integer i:myLevels.keySet()) {
+	    Level thisLevel = myLevels.get(i);
+	    for (String enemyName:thisLevel.getAllEnemies()) {
+		Enemy enemy = thisLevel.getEnemy(enemyName);
+		enemy.loadImage();
+	    }
+	    for (String towerName:thisLevel.getAllTowers()) {
+		Tower tower = thisLevel.getTower(towerName);
+		tower.loadImage();
+	    }
+	}
+    }
 }

@@ -144,17 +144,17 @@ public abstract class ShootingSprites extends Sprite{
      * @param upgradeName : Property to be upgraded
      */
     public double upgrade(String upgradeName, double balance) {
+
 	if(upgradeName.equals("Armor_Upgrade")) {
 	    return upgradeLauncherProperty(balance, "FireRateProperty");
 	}
-
-	if(upgradeName == "Health_Upgrade") {
+	if(upgradeName.equals("Health_Upgrade")) {
 	    return upgradeProperty(balance, "HealthProperty");
 	}
-	if(upgradeName == "Damage_Upgrade") {
+	if(upgradeName.equals("Damage_Upgrade")) {
 	    return upgradeProperty(balance, "DamageProperty");
 	}
-	if(upgradeName == "Fire_Rate_Upgrade") {
+	if(upgradeName.equals("Fire_Rate_Upgrade")) {
 	    return upgradeLauncherProperty(balance, "RangeProperty");
 	}
 	return balance;
@@ -163,6 +163,7 @@ public abstract class ShootingSprites extends Sprite{
 
     public double upgradeProperty(double balance, String propertyName) {
 	UpgradeProperty propToUpgrade = (UpgradeProperty) this.getProperty(propertyName);
+	System.out.println("property is " + propToUpgrade.getClass().getSimpleName());
 	return propToUpgrade.upgrade(balance);
     }
 

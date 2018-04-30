@@ -1,5 +1,8 @@
 package engine;
 
+
+import java.io.IOException;
+
 import java.io.FileNotFoundException;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
@@ -7,7 +10,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-//import jdk.internal.jline.internal.Log;
+import xml.BadGameDataException;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
@@ -98,8 +101,10 @@ public class GameEngine {
 
 	/**
 	 * Saves current Game State to File
+	 * @throws IOException 
+	 * @throws BadGameDataException 
 	 */
-	public void savePlay(String filename) {
+	public void savePlay(String filename) throws BadGameDataException, IOException {
 		PlaySaverWriter p = (PlaySaverWriter) XMLFactory.generateWriter("PlaySaverWriter");
 		p.write(myPlayState, filename);
 	}
