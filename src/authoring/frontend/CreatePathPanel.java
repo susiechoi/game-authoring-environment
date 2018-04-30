@@ -54,13 +54,9 @@ public class CreatePathPanel extends PathPanel {
 	return applyButton;
     }
 
-<<<<<<< HEAD
-    protected void makePanel() {
 
-=======
     @Override
     public Parent makeScreenWithoutStyling() {
->>>>>>> 37e6387f110abce2af5f5b9ae8b834366ef58c16
 	pathPanel = new VBox();
 	pathPanel.setMaxSize(PANEL_WIDTH, PANEL_HEIGHT);
 	pathPanel.getStylesheets();
@@ -174,29 +170,4 @@ public class CreatePathPanel extends PathPanel {
     protected DraggableImage getPanelEndImage() {
 	return endImage;
     }
-<<<<<<< HEAD
-
-    /** 
-     * TODO: this method is null - should be integrated
-     *
-     * @see frontend.Screen#makeScreenWithoutStyling()
-     */
-    @Override
-
-    public Parent makeScreenWithoutStyling() {
-	return pathPanel;
-    }
-
-    @Override
-    protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
-	applyButton.setOnAction(
-		event -> {
-		    setSaved();
-		    e.handle(event);
-		});
-    }
 }
-
-=======
-}
->>>>>>> 37e6387f110abce2af5f5b9ae8b834366ef58c16

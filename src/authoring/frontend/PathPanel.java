@@ -21,14 +21,10 @@ public abstract class PathPanel extends AuthoringScreen {
 		super(view);
 	}
 	
-<<<<<<< HEAD
-	//protected abstract void makePanel();
-=======
 	/**
 	 * Sets the path panel components
 	 */
 	protected abstract void makePanel();
->>>>>>> 37e6387f110abce2af5f5b9ae8b834366ef58c16
 	
 	/**
 	 * Gets the apply button that must be located in a path panel

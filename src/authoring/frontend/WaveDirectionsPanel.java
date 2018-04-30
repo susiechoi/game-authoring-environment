@@ -105,6 +105,11 @@ public class WaveDirectionsPanel extends PathPanel{
 	// TODO Auto-generated method stub
 	return null;
     }
+    @Override
+    protected void makePanel() {
+	// TODO Auto-generated method stub
+	
+    }
 
 
 }

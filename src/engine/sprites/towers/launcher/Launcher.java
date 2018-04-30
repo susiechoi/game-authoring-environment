@@ -171,5 +171,14 @@ public class Launcher extends Manager<Projectile>{
 	return myProjectile.getDamage();
     }
 
+    public Projectile getNewProjectile(double towerX, double towerY, double targetX, double targetY) throws MissingPropertiesException{
+	Projectile newProjectile = new Projectile(myProjectile, towerX, towerY, targetX, targetY);
+	this.addToActiveList(newProjectile);
+	for (Projectile o: this.getListOfActive()) {
+	//    System.out.println("printing out active projectiles *******************************"+ o);
+	}
+	return newProjectile;
+    }
+
 }
 
