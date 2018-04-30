@@ -213,7 +213,7 @@ public class CreatePathGrid {
 	    return false;
 	}
 	removeNode(grid, row, col);
-//	addCoordinates(row, col);
+	addCoordinates(row, col);
 
 	if ((checkPathConnected(grid, row + 1 , col))) {
 	    grid.add(new Label("path"), col, row);
