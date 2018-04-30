@@ -2,6 +2,7 @@
  * 
  * @author susiechoi 
  * @author Ben Hodgson 4/9/18
+ * @author benauriemma
  *
  * Class that handles mediating creation of authoring environment objects (towers, enemies, path). 
  * Represents Controller in MVC of the authoring environment. 
@@ -77,8 +78,8 @@ public class AuthoringController implements MVController{
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
-	myModel.makeResources(gameName, startingHealth, starting$, css, theme);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	myModel.makeResources(gameName, startingHealth, starting$, css, theme, backgroundMusic, levelWinSound, levelLossSound);
     }
 
     // TODO
