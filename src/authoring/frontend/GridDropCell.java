@@ -42,15 +42,15 @@ public class GridDropCell {
 		    path.getPathImage().fitWidthProperty().bind(cell.widthProperty()); 
 		    path.getPathImage().fitHeightProperty().bind(cell.heightProperty());
 		    myGrid.add(path.getPathImage(), col, row);
-		    if (((ImageView) event.getGestureSource()).getId() == "start") {	
-			path.getPathImage().setId("start");
-			myCheckGrid.add(new Label("start"), col, row);
-		    } else if (((ImageView) event.getGestureSource()).getId() == "end") {
-			path.getPathImage().setId("end");
-			myCheckGrid.add(new Label("end"), col, row);
-		    } else if (((ImageView) event.getGestureSource()).getId() == "path") {
-			path.getPathImage().setId("path");
-			myCheckGrid.add(new Label("path"), col, row);
+		    if (((ImageView) event.getGestureSource()).getId() == CreatePathGrid.START) {	
+			path.getPathImage().setId(CreatePathGrid.START);
+			myCheckGrid.add(new Label(CreatePathGrid.START), col, row);
+		    } else if (((ImageView) event.getGestureSource()).getId() == CreatePathGrid.END) {
+			path.getPathImage().setId(CreatePathGrid.END);
+			myCheckGrid.add(new Label(CreatePathGrid.END), col, row);
+		    } else if (((ImageView) event.getGestureSource()).getId() == CreatePathGrid.PATH) {
+			path.getPathImage().setId(CreatePathGrid.PATH);
+			myCheckGrid.add(new Label(CreatePathGrid.PATH), col, row);
 		    }
 		    success = true;
 		}
