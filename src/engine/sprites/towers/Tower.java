@@ -29,6 +29,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
  
     private Launcher myLauncher;
     private double mySize;
+    private Map<String, Integer> towerStats;
+
+
     /**
      * Constructor for a Tower object that accepts parameter properties.
      * 
@@ -43,6 +46,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	mySize = size;
 	myLauncher = launcher;
 	addProperty(new KillProperty(0));
+	towerStats = new HashMap<>();
+	setupTowerStats();
+
+
     }
 
     /**
@@ -51,6 +58,17 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(Tower copiedTower) throws MissingPropertiesException {
 	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher(), copiedTower.getProperties()); 
+	mySize = copiedTower.mySize;
+	myLauncher = copiedTower.getLauncher();
+	addProperty(new KillProperty(0));
+	towerStats = new HashMap<>();
+	setupTowerStats();
+    }
+
+    private void setupTowerStats() {
+	for(Property p : getProperties()) {
+	    towerStats.put(p.getName(), (int) p.getProperty());
+	}
     }
 
     /**
@@ -87,12 +105,10 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     }
 
     public Map<String, Integer> getTowerStats(){
-	Map<String, Integer> propertyStats = new HashMap<String, Integer>();
-	for(Property p : getProperties()) {
-	    propertyStats.put(p.getName(), (int) p.getProperty());
-	}
-	return propertyStats;
+	towerStats.put("Enemies Killed", (int) this.getDeadCount());
+	return towerStats;
     }
+
 
     @Override
     public int purchase(int myResources) throws CannotAffordException {

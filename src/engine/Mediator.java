@@ -179,7 +179,6 @@ public class Mediator implements MVController{
      * @param upgradeName
      */
     public void upgradeTower(FrontEndTower tower, String upgradeName) {
-		System.out.println("upgrade is called OF TYPE " + upgradeName);
 	myGameEngine.getPlayState().upgradeTower(tower, upgradeName);
     }
 
