@@ -3,6 +3,7 @@
  * @author susiechoi 
  * @author Ben Hodgson 4/9/18
  * @author benauriemma
+ * @author Katherine Van Dyk
  *
  * Class that handles mediating creation of authoring environment objects (towers, enemies, path). 
  * Represents Controller in MVC of the authoring environment. 
@@ -308,7 +309,7 @@ public class AuthoringController implements MVController{
     }
     
     @Override
-    public void playControllerDemo(StageManager manager, String language) {
+    public void playControllerDemo(StageManager manager, String language) throws MissingPropertiesException {
 	new PlayController(manager, language,
 		myModel).demoPlay(myModel.getGame());
     }
