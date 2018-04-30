@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.sprites.properties.ClickToShootProperty;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.ValueProperty;
@@ -27,12 +28,9 @@ public class TowerBuilder {
      * @param healthValue: Upgrade increment of Health
      * @param healthCost: Cost to upgrade Health
      * @return Tower object
+     * @throws MissingPropertiesException 
      */
-    @SuppressWarnings("unchecked")
-    public Tower construct(String name, String imagepath, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) {
-    	System.out.println("IN BUILDER");
-    	System.out.println(name);
-    	System.out.println(imagepath);
+    public Tower construct(String name, String imagepath, double size, double health, double healthValue, double healthCost, Launcher launcher, double towerValue, double towerUpgradeCost, double towerUpgradeValue) throws MissingPropertiesException {
 	List<Property> properties = new ArrayList<>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));

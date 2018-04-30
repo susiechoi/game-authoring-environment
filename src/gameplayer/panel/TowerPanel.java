@@ -1,5 +1,7 @@
 package gameplayer.panel;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -13,8 +15,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.sun.javafx.tools.packager.Log;
 
@@ -24,6 +28,11 @@ import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.towers.FrontEndTower;
 import file.DataPointWriter;
 import gameplayer.screen.GameScreen;
+
+/**
+ * @Author Alexi Kontos & Andrew Arnold
+ */
+
 
 public class TowerPanel extends ListenerPanel {
 	
@@ -37,6 +46,8 @@ public class TowerPanel extends ListenerPanel {
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
+   // private IntegerProperty currency; //tag: buyPanel button disable
+    private Map<Button, FrontEndTower> buttonMap;
 
     private DataPointWriter myCurrencyWriter; 
     
@@ -51,7 +62,8 @@ public class TowerPanel extends ListenerPanel {
 	//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-
+	buttonMap = new HashMap<Button, FrontEndTower>();
+	//currency = new SimpleIntegerProperty(); //tag: buyPanel button disable
 	setupWriters(); 
     }
     
@@ -138,6 +150,7 @@ public class TowerPanel extends ListenerPanel {
 	    towerButton.setMaxWidth(Double.MAX_VALUE);
 	    towerButton.setMaxHeight(Double.MAX_VALUE);
 	    towerButton.setOnMouseClicked(arg0 -> GAME_SCREEN.towerSelectedForPlacement(tower));
+	    buttonMap.put(towerButton, tower);
 	    if(alternator%2 == 0) {
 		towerHolder = new HBox();
 		towerHolder.setFillHeight(true);
@@ -201,11 +214,29 @@ public class TowerPanel extends ListenerPanel {
 	//towerPane.prefWidthProperty().bind(towerDisplay.prefWidthProperty());
 
     }
+    
+    private void checkAffordTowers(int myCurrency) {
+	for(Entry<Button, FrontEndTower> entry : buttonMap.entrySet()) {
+	    if(entry.getValue().getTowerCost() > myCurrency) {
+		entry.getKey().setDisable(true);
+	    }
+	    else {
+		entry.getKey().setDisable(false);
+	    }
+	}
+    }
 
     private void updateCurrency(Integer newValue) {
     	myCurrencyWriter.recordDataPoint(newValue);
 	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
+	//currency.set(newValue); //tag: buyPanel button disable
+	checkAffordTowers(newValue);
     }
+    
+    //tag: buyPanel button disable
+//    public void attachBuyPanelCurrencyListener(ChangeListener<Number> listener) {
+//	currency.addListener(listener);
+//    }
 
     /**
      * Wrapper method on score to reduce order of call dependencies

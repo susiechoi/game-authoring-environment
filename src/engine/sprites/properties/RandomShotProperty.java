@@ -25,7 +25,6 @@ public class RandomShotProperty extends MovingProperty{
 
     @Override
     public boolean move(Projectile projectile, double elapsedTime) {
-	System.out.println("random shooting");
 	if(!hasSetPath) {
 	    rotate(projectile);
 	}

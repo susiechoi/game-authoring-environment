@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
@@ -20,6 +21,7 @@ import engine.sprites.enemies.Enemy;
  * 
  * @author Katherine Van Dyk
  * @author Ryan Pond
+ * @author benauriemma
  *
  */
 public class Projectile extends Sprite implements FrontEndSprite{
@@ -32,6 +34,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     private MovingProperty myMovingProperty;
     private Point targetDestination;
     private boolean unlimitedRangeProjectile; //used for click to shoot so that projectiles can go out of tower's range
+    private String myShootingSound;
 
     /**
      * Constructor that takes in a damage value and image, and creates a projectile
@@ -39,15 +42,14 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * 
      * @param damage: Damage property objects that illustrates how much damage a projectile exerts on enemy
      * @param image: image of projectile
+     * @throws MissingPropertiesException 
      */
-    public Projectile(String name, double size, String image, List<Property> properties) {
+    public Projectile(String name, double size, String image, List<Property> properties, String shootingSound) throws MissingPropertiesException {
 	super(name, image, size, properties);
 	mySize = size; 
 	hitTargets = new ArrayList<>();
-	for (Property p: properties) {
-	    System.out.println(p.getName() + " in projectile property list");
-	}
 	unlimitedRangeProjectile = false;
+	myShootingSound = shootingSound;
     }
 
     /**
@@ -57,8 +59,9 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param target
      * @param shooterX
      * @param shooterY
+     * @throws MissingPropertiesException 
      */
-    public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) {
+    public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	myTarget = target;
 	if (target instanceof Enemy) {
@@ -74,9 +77,10 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	targetDestination = new Point();
 	targetDestination.setLocation(target.getX(), target.getY());
 	unlimitedRangeProjectile = false;
+	myShootingSound = myProjectile.getShootingSound();
     }
     
-    public Projectile(Projectile myProjectile, double startX, double startY, double targetX, double targetY) {
+    public Projectile(Projectile myProjectile, double startX, double startY, double targetX, double targetY) throws MissingPropertiesException{
 	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
 	this.place(startX, startY);
 //	System.out.println(" testing " + projectile.getPropertySuperclassType("MovingProperty"));
@@ -89,6 +93,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	unlimitedRangeProjectile = true;
 	hitTargets = new ArrayList<>();
 	this.addProperty(new SpeedProperty(0,0,myProjectile.getProperty("ConstantSpeedProperty").getProperty()));
+	myShootingSound = myProjectile.getShootingSound();
     }
 
     /**
@@ -181,5 +186,9 @@ public class Projectile extends Sprite implements FrontEndSprite{
 
     public Point getTargetDestination() {
 	return targetDestination;
+    }
+    
+    public String getShootingSound() {
+	return myShootingSound;
     }
 }

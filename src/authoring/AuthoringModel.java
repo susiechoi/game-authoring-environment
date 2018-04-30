@@ -36,22 +36,22 @@ import frontend.PropertiesReader;
 
 public class AuthoringModel {
 
-	public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
-	public static final String DEFAULT_PROMPTS_FILE_KEY = "PromptsFile";
-	public static final String DEFAULT_CONSTANTS_FILE_KEY = "ConstantFiles"; 
-	public static final String DEFAULT_OBJECT_NAME_KEY = "DefaultObjectName"; 
-	public static final String DEFAULT_GAME_NAME_KEY = "NewGame";
-	public static final String DEFAULT_STARTINGHEALTH_KEY = "StartingHealth"; 
-	public static final String DEFAULT_STARTINGMONEY_KEY = "StartingMoney";
-	public static final String DEFAULT_STARTINGCSS_KEY = "StartingCSS";
-	public static final String DEFAULT_STARTINGTHEME_KEY = "StartingTheme";
-	public static final String DEFAULT_WAVENAME_SEPARATOR = " ";
-	public static final int DEFAULT_FIRSTLEVEL_NUMBER = 1;
-	
-    private final GenericModel myGeneric = new GenericModel();
+
+    public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
+    public static final String DEFAULT_PROMPTS_FILE_KEY = "PromptsFile";
+    public static final String DEFAULT_CONSTANTS_FILE_KEY = "ConstantFiles"; 
+    public static final String DEFAULT_OBJECT_NAME_KEY = "DefaultObjectName"; 
+    public static final String DEFAULT_GAME_NAME_KEY = "NewGame";
+    public static final String DEFAULT_STARTINGHEALTH_KEY = "StartingHealth"; 
+    public static final String DEFAULT_STARTINGMONEY_KEY = "StartingMoney";
+    public static final String DEFAULT_STARTINGCSS_KEY = "StartingCSS";
+    public static final String DEFAULT_STARTINGTHEME_KEY = "StartingTheme";
+    public static final String DEFAULT_WAVENAME_SEPARATOR = " ";
+    public static final int DEFAULT_FIRSTLEVEL_NUMBER = 1;
+
+    private final GenericModel myGeneric;
     private final String mySettingsFile = "default_objects/Settings.properties";
     private final AuthoredGame myGame;
-    private String DEFAULT_PROMPTS;
     private String DEFAULT_CONSTANT_FILEPATH;
     private PropertiesReader myPropertiesReader;
     private String myDefaultName; 
@@ -71,43 +71,24 @@ public class AuthoringModel {
     }
 
     public AuthoringModel(AuthoredGame game) throws MissingPropertiesException {
-	myGame = game;
+	myGeneric = new GenericModel(); 
+    	myGame = game;
 	spriteFactory = new SpriteFactory(myGeneric);
     }
-    
-	private void populateInstanceVariables() throws MissingPropertiesException {
-		myPropertiesReader = new PropertiesReader();
-		DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, DEFAULT_CONSTANTS_FILE_KEY);
-		myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, DEFAULT_OBJECT_NAME_KEY);
-		try {
-			myDefaultTower = myGeneric.generateGenericTower();
-			myDefaultEnemy = myGeneric.generateGenericEnemy();
-			myDefaultPath = myGeneric.generateGenericPath();
-			myGame.setSettings(myGeneric.generateGenericSettings());
-			myGame.addLevel(DEFAULT_FIRSTLEVEL_NUMBER, myGeneric.generateGenericLevel(DEFAULT_FIRSTLEVEL_NUMBER, myDefaultTower, myDefaultEnemy, myDefaultPath));
-		} catch (NumberFormatException | FileNotFoundException e) {
-			throw new MissingPropertiesException(myDefaultName);
-		}
+
+    private void populateInstanceVariables() throws MissingPropertiesException {
+	myPropertiesReader = new PropertiesReader();
+	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, DEFAULT_CONSTANTS_FILE_KEY);
+	myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, DEFAULT_OBJECT_NAME_KEY);
+	try {
+	    myDefaultTower = myGeneric.generateGenericTower();
+	    myDefaultEnemy = myGeneric.generateGenericEnemy();
+	    myDefaultPath = myGeneric.generateGenericPath();
+	    myGame.setSettings(myGeneric.generateGenericSettings());
+	    myGame.addLevel(DEFAULT_FIRSTLEVEL_NUMBER, myGeneric.generateGenericLevel(DEFAULT_FIRSTLEVEL_NUMBER, myDefaultTower, myDefaultEnemy, myDefaultPath));
+	} catch (NumberFormatException | FileNotFoundException e) {
+	    throw new MissingPropertiesException(myDefaultName);
 	}
-
-    private void setupDefaultSettings() throws MissingPropertiesException {
-	String defaultGameName = myPropertiesReader.findVal(DEFAULT_PROMPTS, "NewGame");
-	int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
-	int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
-	String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
-	String startingTheme = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingTheme");
-	Settings newSettings = new SettingsBuilder().construct(defaultGameName, 
-		startingHealth, startingMoney, startingCSS, startingTheme);
-	myGame.setSettings(newSettings);
-    } 
-
-    private void setupDefaultLevel() {
-	Level firstLevel = new Level(1);
-	firstLevel.addTower(myDefaultName, new Tower(myDefaultTower));
-	Enemy testEnemy = new Enemy(myDefaultEnemy);
-	firstLevel.addEnemy(myDefaultName, testEnemy);
-	firstLevel.addPath(myDefaultPath);
-	myGame.addLevel(1, firstLevel);
     }
 
     /**
@@ -122,16 +103,29 @@ public class AuthoringModel {
     public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
 	myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
 	myBackgroundImage = backgroundImage;
-//	System.out.println("BACKGROUND IMAGE PASSING: " +backgroundImage);
+	//	System.out.println("BACKGROUND IMAGE PASSING: " +backgroundImage);
 	//				myPathCoordinates = coordinates;
 
 	Level currentLevel = myGame.levelCheck(level);
+	List<Path> newPathList = new ArrayList<>();
 	for(List<Point> list : coordinates) {
-	    List<List<Point>> listOfLists = new ArrayList<List<Point>>();
-	    listOfLists.add(list);
-	    Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
-	    currentLevel.addPath(newPath);
+	    boolean added = false;
+	    for(Path path : currentLevel.getPaths()) {
+		if(list.get(0).equals(path.initialPoint())){
+		    path.updatePathPoints(list, imageCoordinates);
+		    newPathList.add(path);
+		    added = true;
+		}
+	    }
+	    if(!added) {
+		System.out.println("adding a new path!!!");
+		List<List<Point>> listOfLists = new ArrayList<List<Point>>();
+		listOfLists.add(list);
+		Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
+		newPathList.add(newPath);
+	    }
 	}
+	currentLevel.replacePaths(newPathList);
 
     }
 
@@ -198,7 +192,7 @@ public class AuthoringModel {
 	return propertyFactory.retrieveProperty(name, attribute);
     }
 
-    public void setObjectProperty(int level, String objectType, String objectName, String propertyName, List<Object> attributes) throws ObjectNotFoundException{
+    public void createProperty(int level, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException{
 	Level currentLevel = myGame.levelCheck(level);
 	propertyFactory.setProperty(currentLevel, objectType, objectName, propertyName, attributes);
     }
@@ -285,26 +279,28 @@ public class AuthoringModel {
      * Adds a new level to the authored game, based on the previous level that the user has created
      * (or the default level if the user has not customized any level) 
      */
-    public int addNewLevel() {
-	int newLevelNumber = autogenerateLevel(); 
+    public int addNewLevel() throws ObjectNotFoundException{
+	List<Level> levels = myGame.unmodifiableLevels();
+	int newLevelNumber = levels.size()+1;
+	Level newLevel = new Level(newLevelNumber);
+	newLevel.addPath(levels.get(levels.size()-1).getDefaultPath());
+	myGame.addLevel(newLevelNumber, newLevel);
+	return newLevelNumber; 
 	//		int newLevelNumber = myLevels.size()+1; 
 	//		myLevels.put(newLevelNumber, new Level(newLevelNumber));
-	return newLevelNumber; 
     }
 
     public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
 	Level currentLevel = myGame.levelCheck(level);
-	System.out.println("POINT WANTED: " + point.toString());
-	Point initialPointBufferOne = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())+2);
-	Point initialPointBufferTwo = new Point((int) Math.round(point.getX())+2, (int) Math.round(point.getY()));
-	Point initialPointBufferThree = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())-2);
-	Point initialPointBufferFour = new Point((int)Math.round(point.getX())-2, (int) Math.round(point.getY()));
+//	Point initialPointBufferOne = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())+2);
+//	Point initialPointBufferTwo = new Point((int) Math.round(point.getX())+2, (int) Math.round(point.getY()));
+//	Point initialPointBufferThree = new Point((int) Math.round(point.getX()), (int) Math.round(point.getY())-2);
+//	Point initialPointBufferFour = new Point((int)Math.round(point.getX())-2, (int) Math.round(point.getY()));
 	List<Path> paths = currentLevel.getPaths();
 	for(Path path: paths) {
-	    System.out.println("POINT MATCHING: " + path.initialPoint().toString());
 	    if(Math.abs(path.initialPoint().getX()-point.getX())<60 && Math.abs(path.initialPoint().getY()-point.getY())<60) { // HELLOOO PLEASE CHANGE
-		   // path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
-		   // path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
+		// path.initialPoint().equals(point) || path.initialPoint().equals(initialPointBufferOne) || path.initialPoint().equals(initialPointBufferTwo) || 
+		// path.initialPoint().equals(initialPointBufferThree) || path.initialPoint().equals(initialPointBufferFour)){
 		return path;
 	    }
 	}
@@ -314,8 +310,10 @@ public class AuthoringModel {
     /**
      * Autogenerates a new level based on the previous Level's settings (enemies, towers, etc.)
      * @return int corresponding to level number of level generated
+     * @throws MissingPropertiesException 
      */
-    public int autogenerateLevel() {
+    public int autogenerateLevel() throws MissingPropertiesException {
+	
 	List<Level> levels = myGame.unmodifiableLevels();
 	int newLevelNumber = levels.size()+1;
 	Level copiedLevel = levels.get(levels.size()-1);
@@ -332,8 +330,6 @@ public class AuthoringModel {
 	Level currentLevel = myGame.levelCheck(level);
 	spriteFactory.deleteSprite(objectType, currentLevel, name);
     } 
-    
-    //1020
 
     /**
      * Used in the case that the user wants to edit an existing object:
@@ -350,5 +346,6 @@ public class AuthoringModel {
     public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 	attributeFactory.setObjectAttribute(level, objectType, name, attribute, attributeValue, myGame);
     }
+    
 }
 

@@ -3,6 +3,7 @@ package engine.sprites.towers.launcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.builders.PropertyBuilder;
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
@@ -34,9 +35,8 @@ public class Launcher extends Manager<Projectile>{
 	timeSinceLastShot = 0;
     }
 
-    public Launcher(Launcher launcher) {
+    public Launcher(Launcher launcher) throws MissingPropertiesException {
 	launcherProperties = new ArrayList<Property>();
-	//TODO do we have to do this
 	for(Property p : launcher.getProperties()) {
 	    launcherProperties.add(myPropertyFactory.getProperty(p));
 	}
@@ -61,15 +61,13 @@ public class Launcher extends Manager<Projectile>{
 
     /**
      * Launch method will make sure that enough time has passed since last shot and then fire a new projectile
+     * @throws MissingPropertiesException 
      * 
      */
     //TODO implement to shoot at where enemy is going
-    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
-//	System.out.println("LAUNCHING");
-	timeSinceLastShot=0;
-//	System.out.println(myProjectile.getProperty("Boomerang")+ " is boomerang prop in launcher");
-	Projectile launchedProjectile = new Projectile(myProjectile, target,shooterX, shooterY);
-	System.out.println("launched Projectile " + launchedProjectile.getProperties().size());
+    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
+	timeSinceLastShot = 0;
+	Projectile launchedProjectile = new Projectile(myProjectile, target, shooterX, shooterY);
 	this.addToActiveList(launchedProjectile);
 	return launchedProjectile;
     }
@@ -162,7 +160,7 @@ public class Launcher extends Manager<Projectile>{
 	return myProjectile.getDamage();
     }
 
-    public Projectile getNewProjectile(double towerX, double towerY, double targetX, double targetY) {
+    public Projectile getNewProjectile(double towerX, double towerY, double targetX, double targetY) throws MissingPropertiesException{
 	Projectile newProjectile = new Projectile(myProjectile, towerX, towerY, targetX, targetY);
 	this.addToActiveList(newProjectile);
 	for (Projectile o: this.getListOfActive()) {

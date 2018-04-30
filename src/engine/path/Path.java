@@ -47,7 +47,6 @@ public class Path {
      * @return : returns the next point along the path index
      */
     public Point nextPosition(int pathIndex) {
-//	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
 	return myCoordinates.get(pathIndex+1);
     }
 
@@ -95,7 +94,6 @@ public class Path {
 		//	    currentPos.setLocation(newX, newY);
 		//	    return currentPos; 
 		//	}
-	    	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
 		return myCoordinates.get(pathIndex+1);
 	}
 
@@ -151,5 +149,9 @@ public class Path {
 	
 	public String getEndImage( ) {
 		return myEndImage;
+	}
+	public void updatePathPoints(List<Point> newCoords, Map<String, List<Point>> newImageMap) {
+	    myCoordinates = newCoords;
+	    myPathMap = newImageMap;
 	}
 }

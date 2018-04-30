@@ -3,6 +3,8 @@ package engine.managers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
 import engine.sprites.towers.projectiles.Projectile;
@@ -41,16 +43,14 @@ public class ShootingSpriteManager extends Manager<ShootingSprites>{
      * The Manager shoots from it's Launcher at the passedSprites
      * @param passedSprites : target being shot at
      * @return Projectiles to add to the front end view
+     * @throws MissingPropertiesException 
      */
-    public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) {
+    public List<Projectile> shoot(List<ShootingSprites> passedSprites, double elapsedTime) throws MissingPropertiesException {
 	List<Projectile> newProjectiles = new ArrayList<>();
 	//System.out.println(this.getListOfActive().get(0) + " ************ this is the active tower");
 	for (ShootingSprites shootingSprite: this.getListOfActive()) { //all the towers
 	    if(shootingSprite.hasReloaded(elapsedTime)) {
-	//	System.out.println("reloaded");
 		for (ShootingSprites passedSprite: passedSprites) {	//all the enemies
-	//	    System.out.println("enemies");
-
 		    if (shootingSprite.hasReloaded(elapsedTime) && shootingSprite.hasInRange(passedSprite)&& passedSprite!=null) {
 			Projectile newProjectile = shootingSprite.launch(passedSprite, shootingSprite.getX(), shootingSprite.getY());
 			if (newProjectile != null) {
