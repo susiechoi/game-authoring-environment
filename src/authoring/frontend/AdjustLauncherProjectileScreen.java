@@ -65,8 +65,8 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    try {
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", 0.0, 0.0, myProjectileDamage);
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
-		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
+		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
+		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "FireRateProperty", 0.0, 0.0, myLauncherRate);
 		setSaved();
 		getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_APPLYBUTTON_SCREENFLOW);
 	    }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.frontend.exceptions.DeleteDefaultException;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
@@ -51,13 +52,18 @@ public class Level {
 	 * Useful when autogenerating a new level from a prior one
 	 * @param copiedLevel - the level's parameters to be copied 
 	 * - only difference from copiedLevel is that the level number is incremented
+	 * @throws MissingPropertiesException 
 	 */
 	public Level(Level copiedLevel) {
-		myNumber = copiedLevel.getNumber() + 1; 
-		myWaves = copiedLevel.getWaveCopies(); 
-		myPaths = copiedLevel.getPaths(); 
-		myTowers = copiedLevel.getCopiedTowers();
-		myEnemies = copiedLevel.getCopiedEnemies();
+		myNumber = copiedLevel.getNumber(); 
+		myWaves = copiedLevel.getWaves(); 
+		myPaths = copiedLevel.getAllPaths(); 
+		myTowers = copiedLevel.getTowers();
+		myEnemies = copiedLevel.getEnemies();
+	}
+
+	private List<Path> getAllPaths() {
+	    return myPaths;
 	}
 
 	/**
@@ -208,8 +214,9 @@ public class Level {
 
 	/**
 	 * Returns any new Enemy
+	 * @throws MissingPropertiesException 
 	 */
-	public Enemy getNewEnemy(Path path) { //TODO: do engine people want this to be based on wave? currently just doing first wave
+	public Enemy getNewEnemy(Path path) throws MissingPropertiesException { //TODO: do engine people want this to be based on wave? currently just doing first wave
 		Enemy waveEnemy = myWaves.get(0).getEnemySpecificPath(path);
 		if (waveEnemy != null) {
 			waveEnemy.place(xLoc + 50*numEnemy, yLoc+50*numEnemy);
@@ -238,7 +245,7 @@ public class Level {
 		}
 		return myTowers;
 	}
-	public Map<String, Tower> getCopiedTowers(){
+	public Map<String, Tower> getCopiedTowers() throws MissingPropertiesException{
 	    Map<String, Tower> copy = new HashMap<>();
 	    for(String key : myTowers.keySet()) {
 		copy.put(key, new Tower(myTowers.get(key)));
@@ -249,7 +256,7 @@ public class Level {
 		return myEnemies; 
 	}
 	
-	public Map<String, Enemy> getCopiedEnemies(){
+	public Map<String, Enemy> getCopiedEnemies() throws MissingPropertiesException{
 	    Map<String, Enemy> copy = new HashMap<>();
 	    for(String key : myEnemies.keySet()) {
 		copy.put(key, new Enemy(myEnemies.get(key)));
@@ -276,7 +283,7 @@ public class Level {
 		return myWaves;
 	}
 	
-	protected List<Wave> getWaveCopies(){
+	protected List<Wave> getWaveCopies() throws MissingPropertiesException{
 	    List<Wave> copy = new ArrayList<>();
 	    for(Wave wave : myWaves) {
 		copy.add(wave.getCopy());
