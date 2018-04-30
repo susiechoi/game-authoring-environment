@@ -23,12 +23,9 @@ import javafx.scene.input.KeyCode;
  * @author Ryan Pond
  */
 public class Tower extends ShootingSprites implements FrontEndTower {
-
-    private int FAKE_X = 100000;
-    private int FAKE_Y = 100000;
  
     private Launcher myLauncher;
-    private double mySize;
+
     /**
      * Constructor for a Tower object that accepts parameter properties.
      * 
@@ -38,9 +35,8 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param value: Value of the tower for selling
      * @throws MissingPropertiesException 
      */
-    public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
-	super(name, image, size, launcher, properties);
-	mySize = size;
+    public Tower(String name, String image, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
+	super(name, image, launcher, properties);
 	myLauncher = launcher;
 	addProperty(new KillProperty(0));
     }
@@ -50,7 +46,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @throws MissingPropertiesException 
      */
     public Tower(Tower copiedTower) throws MissingPropertiesException {
-	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher(), copiedTower.getProperties()); 
+	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.getLauncher(), copiedTower.getProperties()); 
     }
 
     /**
@@ -66,14 +62,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     @Override
     public int sell() {
-	removeAllProjectiles();
 	return (int) getValue("ValueProperty");
-    }
-
-    private void removeAllProjectiles() {
-	for(Projectile projectile : this.getProjectiles()) {
-	    projectile.place(FAKE_X, FAKE_Y);
-	}
     }
 
     /**

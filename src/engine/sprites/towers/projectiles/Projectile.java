@@ -27,7 +27,6 @@ import engine.sprites.enemies.Enemy;
 public class Projectile extends Sprite implements FrontEndSprite{
 
     private static final double mySpeedFactor = 1.5;
-    private double mySize; 
     private ShootingSprites myTarget;
     private List<Sprite> hitTargets;
     private int myHits = 1;
@@ -44,9 +43,8 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @param image: image of projectile
      * @throws MissingPropertiesException 
      */
-    public Projectile(String name, double size, String image, List<Property> properties, String shootingSound) throws MissingPropertiesException {
-	super(name, image, size, properties);
-	mySize = size; 
+    public Projectile(String name, String image, List<Property> properties, String shootingSound) throws MissingPropertiesException {
+	super(name, image, properties);
 	hitTargets = new ArrayList<>();
 	unlimitedRangeProjectile = false;
 	myShootingSound = shootingSound;
@@ -62,7 +60,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
      * @throws MissingPropertiesException 
      */
     public Projectile(Projectile myProjectile, ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
-	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
+	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getProperties());
 	myTarget = target;
 	if (target instanceof Enemy) {
 	    Enemy myEnemy = (Enemy) target;
@@ -82,7 +80,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     }
     
     public Projectile(Projectile myProjectile, double startX, double startY, double targetX, double targetY) throws MissingPropertiesException{
-	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getSize(), myProjectile.getProperties());
+	super(myProjectile.getName(),myProjectile.getImageString(), myProjectile.getProperties());
 	this.place(startX, startY);
 //	System.out.println(" testing " + projectile.getPropertySuperclassType("MovingProperty"));
 //	System.out.println(" testing again " + projectile.getProperty("MovingProperty"));
@@ -144,10 +142,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
     @Override
     public double getDamage() {
 	return getValue("DamageProperty");
-    }
-    
-    public double getSize() {
-	return mySize;
     }
 
     /**

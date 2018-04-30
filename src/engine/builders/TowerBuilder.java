@@ -34,7 +34,6 @@ public class TowerBuilder {
 	List<Property> properties = new ArrayList<>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));
-    	properties.add(new ClickToShootProperty(20));
-	return new Tower(name, imagepath, size, launcher, properties);
+	return new Tower(name, imagepath, launcher, properties);
     }
 }

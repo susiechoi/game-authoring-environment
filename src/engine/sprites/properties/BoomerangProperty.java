@@ -1,8 +1,5 @@
 package engine.sprites.properties;
 
-import java.awt.Point;
-import java.util.List;
-
 import engine.sprites.towers.projectiles.Projectile;
 
 /**

@@ -1,7 +1,6 @@
 package controller;
 
 import authoring.AuthoringController;
-import engine.Mediator;
 import frontend.MainScreen;
 import frontend.StageManager;
 import frontend.View;
