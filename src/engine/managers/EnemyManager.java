@@ -50,7 +50,7 @@ public class EnemyManager extends ShootingSpriteManager {
      * @return List<Sprite>: A list of enemy objects that have reached the end of the path
      */
     public List<Sprite> moveEnemies(double elapsedTime) {
-	List<Sprite> deadEnemies = new ArrayList<>();
+	List<Sprite> deadEnemies = new ArrayList<Sprite>();
 	Map<Path, List<Enemy>> newEnemies = new HashMap<Path, List<Enemy>>();
 	for (Path path : myEnemies.keySet()) {
 	    newEnemies.put(path, new ArrayList<Enemy>());
@@ -102,7 +102,7 @@ public class EnemyManager extends ShootingSpriteManager {
 	    myEnemies.put(path, pathEnemies);
 	}
 	else {
-	    List<Enemy> pathEnemies = new ArrayList<>();
+	    List<Enemy> pathEnemies = new ArrayList<Enemy>();
 	    pathEnemies.add(enemy);
 	    myEnemies.put(path, pathEnemies);
 	}

@@ -166,7 +166,7 @@ public class PlayState implements GameData {
     public void update(double elapsedTime) {
 	count++;
 	checkLoss();
-	if (count % 120 == 0) {
+	if (count % FRAMES_PER_SECOND == 0) {
 	    spawnEnemies(elapsedTime);
 	}
 	checkPathEnd(elapsedTime);

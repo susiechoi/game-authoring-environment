@@ -41,7 +41,6 @@ public class GamePanel extends Panel{
     private final UIFactory UIFACTORY;
     private Boolean towerClick = false;
     private Circle rangeIndicator;
-    private GridPane currentGrid;
     private ScrollPane scroll;
     private GridPane grid;
 
@@ -49,7 +48,6 @@ public class GamePanel extends Panel{
     private final String DEFAULT_BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
     private boolean backgroundSet;
-    private boolean pathSet;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
@@ -61,7 +59,6 @@ public class GamePanel extends Panel{
 	towerSelected =  null;
 	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
 	backgroundSet = false;
-	pathSet = false;
     }
 
     @Override
@@ -79,7 +76,7 @@ public class GamePanel extends Panel{
     }
 
     private boolean setBackgroundImage(String backgroundFilePath) {
-	if (scroll == null) {
+	if (PANEL == null) {
 	    makePanel();
 	}
 	Bounds centerBounds = scroll.getViewportBounds();
@@ -102,6 +99,7 @@ public class GamePanel extends Panel{
 
     }
 
+
     public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
 	backgroundSet = setBackgroundImage(backgroundImageFilePath);
 	if(backgroundSet) {
@@ -110,15 +108,6 @@ public class GamePanel extends Panel{
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
-	    if (currentGrid != null) {
-		spriteAdd.getChildren().remove(currentGrid);
-	    }
-	    currentGrid = grid;
-	    spriteAdd.getChildren().add(currentGrid);
-	    pathSet = true;
-	}
-	if(pathSet) {
-	    spriteAdd.getChildren().remove(grid);
 	    spriteAdd.getChildren().add(grid);
 	}
 	return backgroundSet;
@@ -244,5 +233,4 @@ public class GamePanel extends Panel{
 	}
 	towerClick = false;
     }
-
 }
