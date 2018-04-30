@@ -228,7 +228,7 @@ public class GamePanel extends Panel{
 	    }
 	}
 	else if (!towerClick) {
-	    if (clickedTower != null) {
+	    if (clickedTower != null && !spriteAdd.getChildren().contains(rangeIndicator)) {
 		GAME_SCREEN.clickToShoot(clickedTower, x, y);
 	    }
 	    GAME_SCREEN.blankGamePanelClick();
