@@ -252,6 +252,7 @@ public class GameScreen extends Screen {
     }
 
     public void upgradeBought(FrontEndTower tower, String upgradeName) {
+	System.out.println("upgrade has bought");
 	MEDIATOR.upgradeTower(tower, upgradeName);
     }
 
