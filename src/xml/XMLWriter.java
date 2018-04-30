@@ -1,6 +1,8 @@
 
 package xml;
 
+import java.io.IOException;
+
 import data.GameData;
 
 /**
@@ -17,7 +19,8 @@ public interface XMLWriter {
 	 *
 	 * @param g		A GameData object (in this case, AuthoredGame or PlayState) whose data will be read and written to an XML file
 	 * @param filepath	filename to which file will be saved. Don't include .xml
+	 * @throws IOException 
 	 */
-	public void write(GameData g, String filepath);
+	public void write(GameData g, String filepath) throws IOException;
 
 }

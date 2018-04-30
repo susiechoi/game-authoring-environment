@@ -92,15 +92,10 @@ public class XMLDocumentBuilder {
      * @param data	data to be written
      * @param filename	name of file to be written to
      */
-    public static void stringToXML(String data, String filename) {
-	try {
-	    BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-	    writer.write(data);
-	    writer.close();
-	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+    public static void stringToXML(String data, String filename) throws IOException {
+	BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+	writer.write(data);
+	writer.close();
     }
 
 }

@@ -1,5 +1,7 @@
 package xml;
 
+import java.io.IOException;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -25,7 +27,7 @@ public class PlaySaverWriter implements XMLWriter {
 	}
 
 	@Override
-	public void write(GameData g, String filepath) {
+	public void write(GameData g, String filepath) throws BadGameDataException, IOException  {
 		// check type
 		if (!g.getClass().getSimpleName().equals("PlayState")) {
 			throw new BadGameDataException("Incorrect GameData: Must use PlayState object to store correct data");

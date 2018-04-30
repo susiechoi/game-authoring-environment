@@ -1,5 +1,7 @@
 package xml;
 
+import java.io.IOException;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -28,9 +30,10 @@ public class AuthoringModelWriter implements XMLWriter {
 
     /**
      * Implementation of write method that saves AuthoredGame data for authoring to SavedModels folder
+     * @throws IOException 
      */
     @Override
-    public void write(GameData g, String filepath) throws BadGameDataException {
+    public void write(GameData g, String filepath) throws BadGameDataException, IOException {
 	// check type
 	if (!g.getClass().getSimpleName().equals("AuthoredGame")) {
 	    throw new BadGameDataException("Incorrect GameData: Must use AuthoredGame object to store correct data");
