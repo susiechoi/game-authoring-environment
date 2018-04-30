@@ -27,7 +27,7 @@ public class TestWriter {
 	    d = XMLDocumentBuilder.initializeDoc();
 	} catch (ParserConfigurationException e) {
 	    // TODO Auto-generated catch block
-	    Log.debug(e);
+	    //Log.debug(e);
 	}
     }
 //public void write(List<String> l, String filename) {

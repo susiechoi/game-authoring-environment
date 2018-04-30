@@ -3,6 +3,7 @@
  * @author susiechoi 
  * @author Ben Hodgson 4/8/18
  * @author Katie Van Dyk 4/24/18
+ * @author benauriemma
  * 
  * Represents the Model component of the Authoring environment's MVC. 
  * Receives input from Controller to determine what object to create/adjust
@@ -198,8 +199,8 @@ public class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme) {
-	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, backgroundMusic, levelWinSound, levelLossSound);
 	myGame.setSettings(newSettings);
     }
 
