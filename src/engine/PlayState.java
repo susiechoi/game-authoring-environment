@@ -47,7 +47,6 @@ public class PlayState implements GameData {
     private List<Level> myLevels;
     private Level currentLevel;
     private Level currentLevelCopy;
-    private int currlvl;
     private boolean backgroundSet;
 
     /**
@@ -62,7 +61,6 @@ public class PlayState implements GameData {
     public PlayState(Mediator mediator, List<Level> levels, int score, Settings settings, double universalTime) {
 	myMediator = mediator;
 	myLevels = levels;
-	currlvl = 0;
 	currentLevel = myLevels.get(0);
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myEnemyManager = new EnemyManager();
@@ -198,7 +196,7 @@ public class PlayState implements GameData {
 	clearLevel();
 	currentLevel = myLevels.get(levelNumber - 1);
 	currentLevelCopy = new Level(currentLevel);
-	myTowerManager.setAvailableTowers(currentLevel.getTowers().values()); //maybe change so that it adds on to the List and doesn't overwrite old towers
+	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	myMediator.updateLevel(currentLevel.myNumber());
 	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
     }

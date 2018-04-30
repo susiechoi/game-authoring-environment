@@ -14,9 +14,6 @@ public class Path {
 
 	private final double THRESHOLD = 5;
 	private List<Point> myCoordinates;
-	private List<List<Point>> newCoordinates;
-	private double myAngle;
-	private int pathIndex;
 	private int myPathSize;
 	private int myWidth;
 	private int myHeight;
@@ -35,8 +32,6 @@ public class Path {
 		myPathSize = pathSize;
 		myWidth = width;
 		myHeight = height;
-		pathIndex = 0;
-//		myAngle = getAngle(myCoordinates.get(pathIndex), myCoordinates.get(pathIndex+1));
 		myPathMap = imageCoordinates;
 	}
 
@@ -82,20 +77,6 @@ public class Path {
 	 * @param mySpeed
 	 */
 	public Point nextPosition(Point currentPos, int pathIndex, double pathAngle) {
-		//	if(checkBounds(currentPos, pathIndex)) {
-		//	    currentPos = myCoordinates.get(pathIndex+1);
-		//	    return currentPos;
-		//	}
-		//	else {
-		//	    System.out.println("here");
-		//	    // 	System.out.println("CURRENT XPOS: " + currentPos.getX());
-		//	    // 	System.out.println("CURRENT YPOS: " + currentPos.getY());
-		//	    double newX = currentPos.getX() + OFFSET - Math.cos(pathAngle) * 3;
-		//	    double newY = currentPos.getY() + OFFSET + Math.sin(pathAngle) * 3;
-		//	    currentPos.setLocation(newX, newY);
-		//	    return currentPos; 
-		//	}
-	    	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
 		return myCoordinates.get(pathIndex+1);
 	}
 
