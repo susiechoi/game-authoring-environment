@@ -119,7 +119,6 @@ public class PlayState implements GameData {
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
     }
 
-
     private void spawnEnemies() throws MissingPropertiesException {
 	try {
 	    if (currentLevel.getWave(0).isFinished()) {
