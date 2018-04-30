@@ -3,6 +3,7 @@ package engine.builders;
 import java.util.ArrayList;
 import java.util.List;
 
+import engine.sprites.properties.ClickToShootProperty;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;

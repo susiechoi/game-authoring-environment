@@ -13,10 +13,12 @@ import engine.managers.TowerManager;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
+import engine.sprites.properties.ClickProperty;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -329,8 +331,24 @@ public class PlayState implements GameData {
     public String getStyling() throws MissingPropertiesException {
     	return mySettings.getCSSTheme();
     }
+    
+    public Sprite handleClick(FrontEndTower activeTower, double clickedX, double clickedY) throws MissingPropertiesException{
+	Tower tower = (Tower) activeTower;
+	System.out.println("THIS IS THE TOWER "+ tower);
+	//System.out.println("THIS IS CLICK PROPERTY");
+	if (tower.getProperty("ClickToShootProperty") != null) {
+	    System.out.println("GOT CLICKED PROPETY");
+	    ClickProperty myClickProp = (ClickProperty) tower.getProperty("ClickProperty");
+	    Sprite sprite = (Sprite) tower.getNewProjectile(clickedX, clickedY);
+	    //System.out.println((Sprite) tower.getNewProjectile(clickedX, clickedY) + " this is what's returned");
+	    System.out.println(sprite +  " x is "+ sprite.getX() + " y "+ sprite.getY() + " tower x "+ activeTower.getImageView().getX()+" "+ activeTower.getImageView().getY());
+	    return sprite;
+	}
+	return null;
+    }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
+	System.out.println("in playstate move towers");
 	myTowerManager.moveTowers(tower, c);
     }
 }
