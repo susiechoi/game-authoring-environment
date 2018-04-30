@@ -73,6 +73,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
 	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
+	System.out.println("this is the moving property "+ myMovingProperty);
 	myMovingProperty.setProjectileOrigin(shooterX, shooterY);
 	targetDestination = new Point();
 	targetDestination.setLocation(target.getX(), target.getY());
