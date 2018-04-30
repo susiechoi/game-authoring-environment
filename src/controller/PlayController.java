@@ -4,6 +4,7 @@ import java.util.List;
 
 import authoring.AuthoredGame;
 import authoring.AuthoringModel;
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.GameEngine;
 import engine.Mediator;
 import engine.PlayState;
@@ -47,8 +48,9 @@ public class PlayController {
 	 * parameters to Engine
 	 * 
 	 * @param pathToXML: Path to game XML file
+	 * @throws MissingPropertiesException 
 	 */
-	public void newPlay(String pathToXML) {
+	public void newPlay(String pathToXML) throws MissingPropertiesException {
 		System.out.println("path to xml "+pathToXML);
 		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
@@ -67,8 +69,9 @@ public class PlayController {
 	 * the user
 	 * 
 	 * @param model: the AuthoringModel object authored by the user
+	 * @throws MissingPropertiesException 
 	 */
-	public void demoPlay(AuthoredGame model) {
+	public void demoPlay(AuthoredGame model) throws MissingPropertiesException {
 		myScreenManager.setGameFilePath(model.getGameName());
 		List<Level> levels = model.unmodifiableLevels();
 		myScreenManager.loadGameScreenNew();

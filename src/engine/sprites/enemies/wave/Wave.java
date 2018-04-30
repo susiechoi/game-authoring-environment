@@ -19,10 +19,10 @@ import engine.sprites.enemies.Enemy;
  * Class used for defining a wave of enemies to appear in a level
  */
 public class Wave {
-    public static final int DEFAULT_WAVE_TIME = 5;
+    public static final int DEFAULT_WAVE_TIME = 3;
 
     private Map<Path, Map<Enemy, Integer>> myWaveMap;
-    private int myTime;
+    private double myTime;
 
     @Deprecated
     public Wave(Path path) {
@@ -61,11 +61,11 @@ public class Wave {
 	myWaveMap.put(new Path(null, null, null, null, null, null, 0, number, number), enemyMap);
     }
     
-    public int getWaveTime() {
+    public double getWaveTime() {
 	return myTime;
     }
     
-    public void setWaveTime(int time) {
+    public void setWaveTime(double time) {
 	myTime = time;
     }
 
@@ -122,9 +122,9 @@ public class Wave {
      * @throws MissingPropertiesException 
      */
     @Deprecated
-    public Enemy getEnemy() throws MissingPropertiesException {
+    public Enemy getEnemy(int count) throws MissingPropertiesException {
 	for(Path path : myWaveMap.keySet()) {
-	   Enemy potentialEnemy = getEnemySpecificPath(path);
+	   Enemy potentialEnemy = getEnemySpecificPath(path, count);
 	   if(potentialEnemy != null) {
 	       return potentialEnemy;
 	   }
@@ -133,9 +133,20 @@ public class Wave {
 
     }
     
-    public Enemy getEnemySpecificPath(Path path) throws MissingPropertiesException {
+    /**
+     * Returns an enemy object specific to the given path argument if the path contains
+     * an enemy and the count argument is greater than or equal to the Wave objects field
+     * myTime. If count is given as -1 then an enemy is always returned if the path 
+     * contains an enemy. 
+     * 
+     * @param path: the path specific to the enemy object returned
+     * @param count: the loop count from the game loop, or -1 if no loop count is necessary
+     * @return Enemy: an enemy object specific to the path argument
+     * @throws MissingPropertiesException 
+     */
+    public Enemy getEnemySpecificPath(Path path, int count) throws MissingPropertiesException {
 	for (Entry<Enemy, Integer> entry : myWaveMap.get(path).entrySet()) {
-		if (entry.getValue() > 0) {
+		if (entry.getValue() > 0 && (count >= myTime || count == -1)) {
 		    Enemy retEnemy = entry.getKey();
 		    decrementEnemyCount(retEnemy, path);
 		    return new Enemy(retEnemy);
