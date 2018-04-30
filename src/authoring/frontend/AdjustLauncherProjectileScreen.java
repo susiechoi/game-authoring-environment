@@ -109,14 +109,14 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	});
 	
 	Slider myLauncherRateValueSlider = getUIFactory().setupSlider(getMyMaxRange());
-	HBox launcherRateValue = getUIFactory().setupSliderWithValue(myLauncherRateValueSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeValue"));
+	HBox launcherRateValue = getUIFactory().setupSliderWithValue(myLauncherRateValueSlider, getErrorCheckedPrompt("LauncherRateUpgradeValue"));
 	vb.getChildren().add(launcherRateValue);
 	myLauncherRateValueSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    myLauncherRateValue = (Double) newValue;
 	});
 	
 	Slider myLauncherRateCostSlider = getUIFactory().setupSlider(getMyMaxPrice());
-	HBox launcherRateCost = getUIFactory().setupSliderWithValue(myLauncherRateCostSlider, getErrorCheckedPrompt("ProjectileDamageUpgradeCost"));
+	HBox launcherRateCost = getUIFactory().setupSliderWithValue(myLauncherRateCostSlider, getErrorCheckedPrompt("LauncherRateUpgradeCost"));
 	vb.getChildren().add(launcherRateCost);
 	myLauncherRateCostSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
 	    myLauncherRateCost = (Double) newValue;
