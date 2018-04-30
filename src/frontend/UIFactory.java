@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesError;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
@@ -39,7 +41,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jdk.internal.jline.internal.Log;
 
 public class UIFactory {
 

@@ -2,6 +2,8 @@ package authoring.frontend;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -9,7 +11,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.internal.jline.internal.Log;
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
