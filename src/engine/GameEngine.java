@@ -1,5 +1,6 @@
 package engine;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -33,7 +34,13 @@ public class GameEngine {
 		setSpeed(DEFAULT_RELATIVE_SPEED);
 		// attach "game loop" to time line to play it
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-				e -> loop(SECOND_DELAY));
+				e -> {
+				    try {
+					loop(SECOND_DELAY);
+				    } catch (MissingPropertiesException e1) {
+					// TODO Auto-generated catch block
+				    }
+				});
 		ANIMATION = new Timeline();
 		ANIMATION.setCycleCount(Animation.INDEFINITE);
 		ANIMATION.getKeyFrames().add(frame);
@@ -53,8 +60,9 @@ public class GameEngine {
 	/**
 	 * Calls the update function every loop
 	 * @param elapsedTime
+	 * @throws MissingPropertiesException 
 	 */
-	public void loop(double elapsedTime) {
+	public void loop(double elapsedTime) throws MissingPropertiesException {
 		myPlayState.update(elapsedTime*timeFactor);
 	}
 

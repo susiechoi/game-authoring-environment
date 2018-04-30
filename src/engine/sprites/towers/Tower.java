@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.ShootingSprites;
 import engine.sprites.properties.KeyMoveProperty;
 import engine.sprites.properties.KillProperty;
@@ -34,8 +36,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      * @param launcher: Type of launcher that the Tower inherits 
      * @param health: Initial health of the tower
      * @param value: Value of the tower for selling
+     * @throws MissingPropertiesException 
      */
-    public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) {
+    public Tower(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
 	super(name, image, size, launcher, properties);
 	mySize = size;
 	myLauncher = launcher;
@@ -44,8 +47,9 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
     /**
      * Copy constructor
+     * @throws MissingPropertiesException 
      */
-    public Tower(Tower copiedTower) {
+    public Tower(Tower copiedTower) throws MissingPropertiesException {
 	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.mySize, copiedTower.getLauncher(), copiedTower.getProperties()); 
     }
 

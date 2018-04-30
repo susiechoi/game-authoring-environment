@@ -3,6 +3,7 @@ package engine.sprites;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.physics.ImageIntersecter;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
@@ -33,8 +34,9 @@ public abstract class ShootingSprites extends Sprite{
      * @param image: String denoting image path of sprite
      * @param size: Size parameter of the image
      * @param launcher: Launcher object specific to shooting sprite
+     * @throws MissingPropertiesException 
      */
-    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) {
+    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
 	super(name, image, size, properties);
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
@@ -113,7 +115,7 @@ public abstract class ShootingSprites extends Sprite{
 	return myLauncher.hasReloaded(elapsedTime);
     }
 
-    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	return myLauncher.launch(target, shooterX, shooterY);
     }
 

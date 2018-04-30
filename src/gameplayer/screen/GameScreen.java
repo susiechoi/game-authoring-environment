@@ -178,7 +178,7 @@ public class GameScreen extends Screen {
     }
 
 
-    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException {
+    public FrontEndTower placeTower(FrontEndTower tower, Point position) throws CannotAffordException, MissingPropertiesException {
 	return MEDIATOR.placeTower(position, tower.getName());
     }
 

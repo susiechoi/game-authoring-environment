@@ -2,6 +2,8 @@ package engine.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.builders.PropertyBuilder;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
@@ -33,8 +35,9 @@ public class Sprite implements FrontEndSprite{
      * 
      * @param image: tower's initial image
      * @param size: size of tower's image
+     * @throws MissingPropertiesException 
      */
-    public Sprite(String name, String image, double size, List<Property> properties) {
+    public Sprite(String name, String image, double size, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
 	setImageString(image);
 	myImageView.setPreserveRatio(true);
@@ -135,7 +138,7 @@ public class Sprite implements FrontEndSprite{
 	myImageView.setPreserveRatio(true);
     }
 
-    protected Property makeProperty(Property p) {
+    protected Property makeProperty(Property p) throws MissingPropertiesException {
 	return myPropertyBuilder.getProperty(p);
     }
 

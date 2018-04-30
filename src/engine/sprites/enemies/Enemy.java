@@ -3,6 +3,7 @@ package engine.sprites.enemies;
 import java.awt.Point;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.FrontEndSprite;
 import engine.sprites.ShootingSprites;
 import engine.sprites.Sprite;
@@ -27,7 +28,7 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
     private Point targetPosition;
     private boolean freeze;
 
-    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) {
+    public Enemy(String name, String image, double size, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
 	super(name, image, size, launcher, properties);
 	freeze = false;
 	pathIndex = 0;
@@ -36,8 +37,9 @@ public class Enemy extends ShootingSprites implements FrontEndSprite{
 
     /**
      * Copy constructor
+     * @throws MissingPropertiesException 
      */
-    public Enemy(Enemy copiedEnemy) {
+    public Enemy(Enemy copiedEnemy) throws MissingPropertiesException {
 	super(copiedEnemy.getName(), copiedEnemy.getImageString(), copiedEnemy.mySize, copiedEnemy.getLauncher(), copiedEnemy.getProperties());
 	freeze = false;
 	pathIndex = 0;

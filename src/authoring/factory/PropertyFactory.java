@@ -22,24 +22,18 @@ import frontend.PropertiesReader;
 import voogasalad.util.reflection.*;
 
 public class PropertyFactory {
-    
-	public static final String DEFAULT_PROPERTIES_FILES_PATH = "default_objects/Properties/properties.properties";
-	private Map<String, Property> currentProperties;
+
+    public static final String DEFAULT_PROPERTIES_FILES_PATH = "default_objects/Properties/properties.properties";
+    private Map<String, Property> currentProperties;
     public static final String PACKAGE = "engine.sprites.properties.";
 
-    
+
     public PropertyFactory() {
 	currentProperties = new HashMap<String, Property>();
     }
-    
+
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
-	System.out.println("SETTING PROPERTY");
-//	System.out.println(currentLevel);
-//	System.out.println(objectType);
-//	System.out.println(objectName);
-//	System.out.println(propertyName);
-//	for (Double d : attributes) System.out.println(d);
-    	if (objectType.equals("Enemy")) {
+	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
 		Enemy enemy = currentLevel.getEnemy(objectName);
 		enemy.addProperty(getProperty(objectName, propertyName, attributes));
@@ -64,7 +58,7 @@ public class PropertyFactory {
 	    }
 	}
     }
-    
+
     private Property getProperty(String objectName, String propertyName, List<Double> attributes) throws MissingPropertiesException {
 	Property ret;
 	String className = PACKAGE + propertyName;
@@ -86,12 +80,12 @@ public class PropertyFactory {
 	currentProperties.put(objectName, ret);
 	return ret;
     }
-    
+
     private Property createUpgradeProperty(String className, String type, List<Double> attributes) {
 	double cost = ((Double)attributes.get(0)).doubleValue();
 	double value =  ((Double)attributes.get(1)).doubleValue();
 	double property = ((Double)attributes.get(2)).doubleValue();
-//	System.out.println("Class name: " + className + " property: " + property);
+	//	System.out.println("Class name: " + className + " property: " + property);
 	return (UpgradeProperty) Reflection.createInstance(className, cost, value, property );
     }
 
@@ -99,7 +93,7 @@ public class PropertyFactory {
 	System.out.println("CLASSNAME " + className);
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
-    
+
     public List<Object> retrieveProperty(String objectName, String propertyName) {
 	for(String object : currentProperties.keySet()) {
 	    if(object.equals(objectName)) {
@@ -108,5 +102,4 @@ public class PropertyFactory {
 	}
 	return null;
     }
-   
 }
