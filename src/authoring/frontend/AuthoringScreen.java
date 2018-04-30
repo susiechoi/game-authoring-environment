@@ -9,13 +9,14 @@ import javafx.scene.control.Button;
 public abstract class AuthoringScreen extends Screen {
 	public static final String DEFAULT_CANCEL_KEY = "Cancel";
 	public static final String DEFAULT_NOTSAVED_KEY = "NotSaved";
+	public static final String DEFAULT_AUTHORING_SPECIFIC = "styling/GameAuthoringSpecific.css";
 	
     private AuthoringView myView;
     private boolean myIsSaved;
     
     public AuthoringScreen(AuthoringView view) {
 	super();
-	setStyleSheet(view.getCurrentCSS());
+	setStyleSheet(DEFAULT_AUTHORING_SPECIFIC);
 	myView = view;
 	myIsSaved = false;
 	setupCSSListener(); 
