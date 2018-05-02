@@ -244,6 +244,7 @@ public class AuthoringController implements MVController{
 	myModel = new AuthoringModel(reader.createModel(gameName));
 	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDIT_BUTTON_CTRLFLOW, getGameName());
+	
     }
 
     /**

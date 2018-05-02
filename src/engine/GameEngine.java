@@ -80,7 +80,7 @@ public class GameEngine {
 	 * @throws FileNotFoundException 
 	 */
 	public void loop(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
-	    System.out.println(myPlayState.toString());
+	    //System.out.println(myPlayState.toString());
 	    myPlayState.update(elapsedTime*timeFactor);
 	}
 
