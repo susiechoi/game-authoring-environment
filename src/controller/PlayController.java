@@ -51,7 +51,7 @@ public class PlayController {
 	 * @throws MissingPropertiesException 
 	 */
 	public void newPlay(String pathToXML) throws MissingPropertiesException {
-//		System.out.println("path to xml "+pathToXML);
+		System.out.println("path to xml "+pathToXML);
 		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
 
@@ -61,7 +61,7 @@ public class PlayController {
 		PlayState play = new PlayState(myMediator, levels, 0, playModel.getSettings(), 0);
 		myGameEngine.setPlayState(play);
 		myGameEngine.start();
-//		System.out.println("starting animation");
+		System.out.println("starting animation");
 	}
 
 

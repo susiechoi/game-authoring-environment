@@ -98,7 +98,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	    VBox projectileSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "New Sound Name:", ".wav", soundDropdown);
 	    selectors.getChildren().add(projectileSoundSelect);
 	} catch (MissingPropertiesException e) {
-	    
+	    getView().loadErrorAlert("NoFile");
 	    e.printStackTrace(); //TODO
 	}
 
