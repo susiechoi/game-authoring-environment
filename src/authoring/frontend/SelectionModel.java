@@ -103,14 +103,18 @@ public class SelectionModel {
 		path.setDraggable(myCheckGrid, row, col);
 		path.getPathImage().setFitWidth(mySize);
 		path.getPathImage().setFitHeight(mySize);
+		
+		System.out.println("GET ID: " +path.getPathImage());
 		if (path.getPathImage().getId() == CreatePathGrid.START) {
 		    System.out.println("PASTING START");
 		    myCheckGrid.add(new Label(CreatePathGrid.START), col, row);
 		    path.getPathImage().setId(CreatePathGrid.START);
 		} else if (path.getPathImage().getId() == CreatePathGrid.PATH) {
+		    System.out.println("PASTING PATH");
 		    myCheckGrid.add(new Label(CreatePathGrid.PATH), col, row);
 		    path.getPathImage().setId(CreatePathGrid.PATH);
 		} else if (path.getPathImage().getId() == CreatePathGrid.END) {
+		    System.out.println("PASTING END");
 		    myCheckGrid.add(new Label(CreatePathGrid.END), col, row);
 		    path.getPathImage().setId(CreatePathGrid.END);
 		}
