@@ -79,6 +79,8 @@ public class PlayState implements GameData {
 	count = 0;
 	backgroundSet = false;
 	try {
+	    System.out.println("BACKGROUNDMUSIC");
+	    System.out.println(mySettings.getBackgroundMusic());
 	    myMediator.getSoundFactory().setBackgroundMusic(mySettings.getBackgroundMusic());
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace(); // TODO Auto-generated catch block
