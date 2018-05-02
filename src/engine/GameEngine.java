@@ -65,6 +65,9 @@ public class GameEngine {
 		
 	}
 
+	/**
+	 * @return current PlayState being used to play game
+	 */
 	public PlayState getPlayState() {
 		return myPlayState;
 	}

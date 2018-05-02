@@ -82,6 +82,8 @@ public class AuthoringModel {
     private void populateInstanceVariables() throws MissingPropertiesException {
 	myPropertiesReader = new PropertiesReader();
 	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, DEFAULT_CONSTANTS_FILE_KEY);
+	System.out.println("Trying to set default constant");
+	System.out.println(DEFAULT_CONSTANT_FILEPATH);
 	myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, DEFAULT_OBJECT_NAME_KEY);
 	try {
 	    myDefaultTower = myGeneric.generateGenericTower();
@@ -342,6 +344,7 @@ public class AuthoringModel {
     public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException, MissingPropertiesException {
 	Level currentLevel = myGame.levelCheck(level);
 	List<Path> paths = currentLevel.getPaths();
+	
 	int pathSize = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "PathSize"));
 	for(Path path: paths) {
 	    if(Math.abs(path.initialPoint().getX()-point.getX())<pathSize && Math.abs(path.initialPoint().getY()-point.getY())<pathSize) { // HELLOOO PLEASE CHANGE
