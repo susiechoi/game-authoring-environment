@@ -60,13 +60,13 @@ public class CreatePathGrid {
 
 	checkGrid = new GridPane();
 	checkGrid.setMaxSize(myGridWidth, myGridHeight);
-	setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
+//	setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
 	SelectionModel model = new SelectionModel(grid, checkGrid, pathSize);
 	new ShiftSelection(grid, model);
 
 	grid.setStyle("-fx-background-image: url(" + DEFAULT_BACKGROUND_IMAGE + ")"); 
-	populateGridCells(grid);
+//	populateGridCells(grid);
 	
 	@SuppressWarnings("unchecked")
 	Map<String, List<Point>> loadedPathMap = (Map<String, List<Point>>) myView.getObjectAttribute("Path", "", "myPathMap");
@@ -74,6 +74,7 @@ public class CreatePathGrid {
 	if (loadedPathMap.size() > DEFAULT_SIZE) {
 	    setGridConstraints(grid, (int) myView.getObjectAttribute("Path", "", "myPathSize"));
 	    grid.setStyle("-fx-background-image: url("+myView.getObjectAttribute("Path", "", "myBackgroundImage")+")");
+	    System.out.println("SIZE AFTER LOAD: " +(int) myView.getObjectAttribute("Path", "", "myPathSize"));
 	    addImagesToGrid(loadedPathMap, (int) myView.getObjectAttribute("Path", "", "myPathSize"));
 	}
 	return grid;
@@ -100,16 +101,18 @@ public class CreatePathGrid {
 	grid.getColumnConstraints().clear();
 	grid.getRowConstraints().clear();
 	pathSize = size;
+	 System.out.println("SIZE BEFORE LOAD: " +pathSize);
 	for (int i = 0; i < myGridWidth/pathSize; i++) {
 	    ColumnConstraints colConst = new ColumnConstraints();
-	    colConst.setPercentWidth(myGridWidth/pathSize);
+	    colConst.setPrefWidth(pathSize);
 	    grid.getColumnConstraints().add(colConst);
 	}
 	for (int i = 0; i < myGridHeight/pathSize; i++) {
 	    RowConstraints rowConst = new RowConstraints();
-	    rowConst.setPercentHeight(myGridHeight/pathSize);
+	    rowConst.setPrefHeight(pathSize);
 	    grid.getRowConstraints().add(rowConst);         
 	}
+	populateGridCells(grid);
     }
 
     /**

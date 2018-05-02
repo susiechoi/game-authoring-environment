@@ -3,6 +3,8 @@ package authoring.frontend;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.event.ActionEvent;
@@ -59,13 +61,14 @@ public class CreatePathScreen extends PathScreen {
     }
     
     @Override
+    @SuppressWarnings("unchecked")
     protected void initializeGridSettings(CreatePathGrid gridIn) {
 	setPathPanel(myPathPanel, myPathToolBar);
 	setGridApplied(gridIn);
-//	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == CreatePathGrid.DEFAULT_SIZE) {
-//	    setPathInstructionPopup();
-//	    setGridUIComponents();
-//	}
+	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == CreatePathGrid.DEFAULT_SIZE) {
+	    setPathInstructionPopup();
+	    setGridUIComponents();
+	}
     }
     
     /**

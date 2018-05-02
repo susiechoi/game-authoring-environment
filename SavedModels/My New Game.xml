@@ -4,7 +4,7 @@
     <myStartingHealth>100.0</myStartingHealth>
     <myStartingMoney>1000.0</myStartingMoney>
     <myCSSTheme>Modern</myCSSTheme>
-    <myGameTheme>Duke</myGameTheme>
+    <myGameTheme>Apocalypse</myGameTheme>
     <myInstructions>https://en.wikipedia.org/wiki/Tower_defense</myInstructions>
     <myBackgroundMusic>epic</myBackgroundMusic>
     <myLevelWinSound>applause</myLevelWinSound>
