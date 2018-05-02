@@ -18,11 +18,13 @@ public class SplashPanel extends Panel {
     private GameScreen GAME_SCREEN;
     private String GAME_STATE;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
+    private String GAME_INSTRUCTIONS;
 
     public SplashPanel(GameScreen gameScreen, String gameState) {
         GAME_SCREEN = gameScreen;
         GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
         GAME_STATE = gameState;
+        //GAME_INSTRUCTIONS = GAME_SCREEN.getInstructions();
     }
 
     @Override
@@ -32,7 +34,7 @@ public class SplashPanel extends Panel {
 
         if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("gameStart"))) {
             titleLabel.setText(GAMEPLAYER_PROPERTIES.get("gameStartTitle"));
-            infoLabel.setText(GAMEPLAYER_PROPERTIES.get("gameStartInfo"));
+            infoLabel.setText(GAMEPLAYER_PROPERTIES.get(GAME_INSTRUCTIONS));
         }
         else if (GAME_STATE.equals(GAMEPLAYER_PROPERTIES.get("nextLevel"))) {
             titleLabel.setText(GAMEPLAYER_PROPERTIES.get("nextLevelTitle"));

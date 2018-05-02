@@ -79,8 +79,8 @@ public class AuthoringController implements MVController{
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String backgroundMusic, String levelWinSound, String levelLossSound) {
-	myModel.makeResources(gameName, startingHealth, starting$, css, theme, backgroundMusic, levelWinSound, levelLossSound);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	myModel.makeResources(gameName, startingHealth, starting$, css, theme, instructions, backgroundMusic, levelWinSound, levelLossSound);
     }
 
     // TODO

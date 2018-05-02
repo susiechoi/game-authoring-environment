@@ -5,9 +5,11 @@ import java.util.List;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.physics.ImageIntersecter;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -27,6 +29,7 @@ public abstract class ShootingSprites extends Sprite{
     private ImageIntersecter intersector;
     private final String HEALTH = "HealthProperty";
     private final String RANGE = "RangeProperty";
+    
     
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
@@ -53,7 +56,10 @@ public abstract class ShootingSprites extends Sprite{
     public List<Sprite> checkForCollision(ShootingSprites target) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
-	toBeRemoved.addAll(this.checkTowerEnemyCollision(target));
+	if (this instanceof Tower) {
+	    toBeRemoved.addAll(this.checkTowerEnemyCollision(target));
+	}
+	
 	for (Projectile projectile: this.getProjectiles()) {
 	    if(target.intersects(projectile) && !(projectile.hasHit(target))){
 		toBeRemoved.addAll(objectCollision(target, projectile)); //checks collisions between projectiles and enemy/tower
@@ -90,12 +96,13 @@ public abstract class ShootingSprites extends Sprite{
      * @param shooter
      * @return
      */
-    public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
+    public List<Sprite> checkTowerEnemyCollision(ShootingSprites enemy) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
-	if (intersector.overlaps(shooter.getImageView())) {
-	    if(this.handleCollision(shooter)) {
+	if (intersector.overlaps(enemy.getImageView())) {
+	    if(this.handleCollision(enemy)) {
 		toBeRemoved.add(this);
 	    }
+	    toBeRemoved.add(enemy);
 	}
 	return toBeRemoved;
     }
@@ -195,6 +202,21 @@ public abstract class ShootingSprites extends Sprite{
     public List<Projectile> getProjectiles(){
 	return myLauncher.getListOfActive();
     }
+    public void addLauncherProperty(Property property) {
+	myLauncher.addProperty(property);
+    }
+    
+    public void addProjectileProperty(Property property) {
+	myLauncher.addProjectileProperty(property);
+    }
+    
+    public void setProjectileImage(String image) {
+	myLauncher.setProjectileImage(image);
+    }
+    public void setSoundString(String sound) {
+	myLauncher.setProjectileSound(sound);
+    }
+    
 
 
 }

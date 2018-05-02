@@ -34,7 +34,8 @@ public class Sprite implements FrontEndSprite{
     private List<Property> myProperties;
     private final String FILEPATH = "file:";
     private final int SIZE = 50;
-
+    private final String COLLISION = "CollisionProperty";
+    private final String DAMAGE = "DamageProperty";
 
     /**
      * Constructor that takes in a sprite's image
@@ -48,7 +49,7 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
+	myImageView = new ImageView(new Image(FILEPATH+image, SIZE, SIZE, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	myImageView.setPreserveRatio(true);
 	myWrapper = new ImageWrapper(image);
 	myProperties = new ArrayList<>();
@@ -196,7 +197,7 @@ public class Sprite implements FrontEndSprite{
 	    if(property.getName().equals(p.getName())) {
 		toRemove = p;
 	    }
-	    else if(type.equals(p.getClass().getSuperclass().getSimpleName())) {
+	    else if(type.equals(p.getClass().getSuperclass().getSimpleName()) && (type.equals(COLLISION) || type.equals(DAMAGE))) {
 		toRemove = p;
 	    }
 	}

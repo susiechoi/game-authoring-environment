@@ -13,10 +13,12 @@ import engine.managers.TowerManager;
 import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
+import engine.sprites.properties.ClickProperty;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
 import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -76,6 +78,11 @@ public class PlayState implements GameData {
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	count = 0;
 	backgroundSet = false;
+	try {
+	    myMediator.getSoundFactory().setBackgroundMusic(mySettings.getBackgroundMusic());
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace(); // TODO Auto-generated catch block
+	}
     }
 
     public void update(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
@@ -104,12 +111,23 @@ public class PlayState implements GameData {
 	myEnemyManager.setActiveList(activeEnemies);
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 
+	System.out.println("disregard");
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	    try {
 		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
 	    } catch (FileNotFoundException e) {
 		throw new FileNotFoundException();
+	    }
+	}
+	System.out.println("about to shoot");
+	System.out.println("tower manager size " + myTowerManager.getListOfActive().size());
+	for(Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive(), elapsedTime)) {
+	    myMediator.addSpriteToScreen(projectile);
+	    try {
+		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // YIKES THAT'S AN EASY FAIL
 	    }
 	}
 	updateScore(toBeRemoved);
@@ -199,7 +217,7 @@ public class PlayState implements GameData {
 	setLevel(currentLevel.myNumber());
 	myMediator.nextLevel();
 	try {
-	    myMediator.getSoundFactory().playSoundEffect("traphorn"); // I DONT KNOW IF THIS ONE WORKS
+	    myMediator.getSoundFactory().playSoundEffect(mySettings.getLevelWinSound());
 	} catch (FileNotFoundException e1) {
 	    Log.debug(e1);
 	    e1.printStackTrace(); 
@@ -223,7 +241,7 @@ public class PlayState implements GameData {
 	    myMediator.endLoop();
 	    myMediator.gameLost();
 	    try {
-		myMediator.getSoundFactory().playSoundEffect("boo"); // ALSO SHOULD BE CUSTOMIZED
+		myMediator.getSoundFactory().playSoundEffect(mySettings.getLevelWinSound());
 	    } catch (FileNotFoundException e) {
 		//Log.debug(e);
 	    }
@@ -329,8 +347,28 @@ public class PlayState implements GameData {
     public String getStyling() throws MissingPropertiesException {
     	return mySettings.getCSSTheme();
     }
+    
+    public Sprite handleClick(FrontEndTower activeTower, double clickedX, double clickedY) throws MissingPropertiesException{
+	Tower tower = (Tower) activeTower;
+	System.out.println("THIS IS THE TOWER "+ tower);
+	//System.out.println("THIS IS CLICK PROPERTY");
+	if (tower.getProperty("ClickToShootProperty") != null) {
+	    System.out.println("GOT CLICKED PROPETY");
+	    ClickProperty myClickProp = (ClickProperty) tower.getProperty("ClickProperty");
+	    Sprite sprite = (Sprite) tower.getNewProjectile(clickedX, clickedY);
+	    //System.out.println((Sprite) tower.getNewProjectile(clickedX, clickedY) + " this is what's returned");
+	    System.out.println(sprite +  " x is "+ sprite.getX() + " y "+ sprite.getY() + " tower x "+ activeTower.getImageView().getX()+" "+ activeTower.getImageView().getY());
+	    return sprite;
+	}
+	return null;
+    }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
+	System.out.println("in playstate move towers");
 	myTowerManager.moveTowers(tower, c);
     }
+
+    public String getInstructions() {
+    	return mySettings.getInstructions();
+	}
 }

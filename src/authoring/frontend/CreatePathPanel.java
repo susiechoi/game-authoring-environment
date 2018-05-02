@@ -54,6 +54,7 @@ public class CreatePathPanel extends PathPanel {
 	return applyButton;
     }
 
+
     @Override
     public Parent makeScreenWithoutStyling() {
 	pathPanel = new VBox();

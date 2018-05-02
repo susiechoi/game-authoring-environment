@@ -374,6 +374,27 @@ public class UIFactory {
 		return hb; 
 	}
 	
+	/*
+	public VBox makeSoundSelector(PropertiesReader propertiesReader, String soundPropertiesFilePath, EventHandler<ActionEvent> action) {
+	   
+		ComboBox<String> soundDropdown;
+		try {
+		    soundDropdown = this.makeTextDropdown(propertiesReader.allKeys(soundPropertiesFilePath)); // TODO: this has no prompt, and the action for no choice is null
+		    soundDropdown.addEventHandler(ActionEvent.ACTION, action);
+		    
+		    //actionForProjectile = e -> {view.setObjectAttribute("Projectile", myObjectName, "mySound", soundDropdown.getSelectionModel().getSelectedItem());}
+		    
+		    VBox soundSelect = this.setupSelector(propertiesReader, "", soundPropertiesFilePath, "Load New Sound", "New Sound Name:", ".wav", soundDropdown);
+		    return soundSelect;
+		} catch (MissingPropertiesException e) {
+		    
+		    e.printStackTrace(); //TODO
+		    return null;
+		}
+
+	}
+	*/
+	
 	public HBox setupSliderWithValue(Slider slider, String prompt) {
 		return setupSliderWithValue("", slider, prompt);
 	}
@@ -488,8 +509,10 @@ public class UIFactory {
 	}
 
 	public List<String> getFileNames(String folderName) {
+	    	System.out.println("folder name: ");
 		String currentDir = System.getProperty("user.dir");
 		File file = new File(currentDir + File.separator + folderName);
+		System.out.println(currentDir+ File.separator + folderName);
 		File[] fileArray = file.listFiles();
 		List<String> fileNames = new ArrayList<>();
 		for (File aFile : fileArray) {

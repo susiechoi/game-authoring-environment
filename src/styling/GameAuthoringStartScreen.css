@@ -55,12 +55,20 @@ TextField {
 
 
 VBox {
+    -fx-background-size: cover;
+    -fx-alignment: center;
+    -fx-border-color: transparent;
 	-fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;
 }
 
 HBox {
+    -fx-background-size: cover;
+    -fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-alignment: center;
+    -fx-border-color: transparent;
 	-fx-padding: 5;
     -fx-spacing: 5;
     -fx-alignment: center;
@@ -68,8 +76,6 @@ HBox {
 
 .button {
 	-fx-font-family: "Quicksand";
-	-fx-min-width: 200;		
-	-fx-min-height: 50;
 	-fx-background-color: #B7D5D4;
 }
 
@@ -143,4 +149,12 @@ ComboBox {
 .chart-title {
 	-fx-font-family: "Quicksand";
 	-fx-font-size: 18pt; 
+}
+#towerPanel{
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
 }

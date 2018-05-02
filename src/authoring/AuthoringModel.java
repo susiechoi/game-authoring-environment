@@ -196,22 +196,12 @@ public class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String backgroundMusic, String levelWinSound, String levelLossSound) {
-	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, backgroundMusic, levelWinSound, levelLossSound);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, instructions, backgroundMusic, levelWinSound, levelLossSound);
 	myGame.setSettings(newSettings);
     }
 
-    /**
-     * Gets List of objects that composes a Property
-     * @param level - level of the object whose Property is requested
-     * @param objectType - type of object whose Properties will be searched (e.g. Tower)
-     * @param name - name of object whose Properties will be searched
-     * @param attribute - name of attribute/Property
-     * @return
-     */
-    public List<Object> getObjectProperty(int level, String objectType, String name, String attribute){
-	return propertyFactory.retrieveProperty(name, attribute);
-    }
+
 
     /**
      * Creates property for object

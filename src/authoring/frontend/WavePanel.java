@@ -42,9 +42,6 @@ public class WavePanel extends PathPanel{
 	
 	public WavePanel(AuthoringView view, Point point, String waveNumber) {
 		super(view);
-//		if (grid == null) {
-//			myPathNumber = 1;
-//		}
 		myPath = getView().getPathWithStartingPoint(getView().getLevel(), point);
 		
 		if(waveNumber.equals("Default")) {
@@ -65,7 +62,6 @@ public class WavePanel extends PathPanel{
 		makePanel();
 	}
 	
-	@Override
 	public void makePanel() {
 		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPath, myWaveNumber);
 		myRoot = new VBox();
@@ -147,7 +143,6 @@ public class WavePanel extends PathPanel{
 	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
-		// TODO Auto-generated method stub
-		return null;
+		return myRoot;
 	}
 }
