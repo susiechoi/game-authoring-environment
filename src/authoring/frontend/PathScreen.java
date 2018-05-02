@@ -7,7 +7,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 
-public abstract class PathScreen extends AdjustScreen {
+/**
+ * Abstract class of Screens that include a view of the Path (currently PathScreens and WaveScreens,
+ * but open to extension by other types of screens). Dependent on concrete classed to make the
+ * specific panel and toolbar, but creates the grid and allows specific setup options.
+ * @author erik riis
+ * @author Sarahbland
+ *
+ */
+public abstract class PathScreen extends AuthoringScreen {
 
     public static final String DEFAULT_OWN_STYLESHEET = "styling/CreatePath.css";
     public static final String DEFAULT_PLUS_IMAGE = "file:images/plus.png";
@@ -40,6 +48,10 @@ public abstract class PathScreen extends AdjustScreen {
 	StackPane.setAlignment(toolbar.getPanel(), Pos.BOTTOM_LEFT);
     }
 
+    /** (non-Javadoc)
+     * Creates basic screen components (
+     * @see frontend.Screen#makeScreenWithoutStyling()
+     */
     @Override
     public Parent makeScreenWithoutStyling() {
 
@@ -51,11 +63,11 @@ public abstract class PathScreen extends AdjustScreen {
 	return pathRoot; 	
     }
 
-    public abstract void makePanels();
+    protected abstract void makePanels();
 
-    public abstract void initializeGridSettings(CreatePathGrid grid);
+    protected abstract void initializeGridSettings(CreatePathGrid grid);
 
-    public abstract void setSpecificUIComponents();
+    protected abstract void setSpecificUIComponents();
 
     protected CreatePathGrid getGrid() {
 	return grid;

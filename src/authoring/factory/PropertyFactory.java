@@ -32,6 +32,16 @@ public class PropertyFactory {
 	currentProperties = new HashMap<>();
     }
 
+    /**
+     * Sets a Property for a specific object
+     * @param currentLevel is level containing object
+     * @param objectType is type of object (ie. Tower)
+     * @param objectName is user-given name of object
+     * @param propertyName is name of Property being assigned
+     * @param attributes is list of Doubles needed to specify the Property
+     * @throws ObjectNotFoundException
+     * @throws MissingPropertiesException
+     */
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
 //	System.out.println("SETTING PROPERTY");
 //	System.out.println(propertyName);
@@ -105,6 +115,13 @@ public class PropertyFactory {
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
     
+    /**
+     * Retrieves a specific attribute from a Property object
+     * @param objectName is name of Object that has property
+     * @param propertyName is name of Property (ie. FreezingProperty)
+     * @param index is index within attribute list of attribute desired
+     * @return Double attribute
+     */
     public Double retrieveProperty(String objectName, String propertyName, int index) {
 	for(String object : currentProperties.keySet()) {
 	    if(object.equals(objectName)) {

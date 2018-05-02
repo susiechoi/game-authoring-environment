@@ -19,7 +19,7 @@ class AdjustTowerScreen extends AdjustNewOrExistingScreen {
 	public static final String TOWER_IMAGES = "images/TowerImageNames.properties";
 	public static final String TOWER_IMAGE_PREFIX = "images/ThemeSpecificImages/TowerImages/";
 	public static final String TOWER_IMAGE_SUFFIX = "TowerImageNames.properties";
-	static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
+	public static final String TOWER_FIELDS = "default_objects/TowerFields.properties";
 	public static final String DEFAULT_PROJECTILE_IMAGE = "Bullet";
 
 	private Slider myTowerHealthUpgradeValueSlider;
