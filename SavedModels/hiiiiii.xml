@@ -5,7 +5,7 @@
     <myStartingMoney>1000.0</myStartingMoney>
     <myCSSTheme>Modern</myCSSTheme>
     <myGameTheme>Duke</myGameTheme>
-    <myInstructions>https://en.wikipedia.org/wiki/Tower_defense</myInstructions>
+    <myInstructions>These are the new instructions :)))))</myInstructions>
     <myBackgroundMusic>stillDre</myBackgroundMusic>
     <myLevelWinSound>applause</myLevelWinSound>
     <myLevelLossSound>boo</myLevelLossSound>
@@ -28,6 +28,8 @@
                 <y>3</y>
               </java.awt.Point>
             </myCoordinates>
+            <myAngle>0.0</myAngle>
+            <pathIndex>0</pathIndex>
             <myPathSize>60</myPathSize>
             <myWidth>17</myWidth>
             <myHeight>10</myHeight>
@@ -55,6 +57,7 @@
             <myPathImage>images/cobblestone.png</myPathImage>
             <myStartImage>images/brick.png</myStartImage>
             <myEndImage>images/darkstone.png</myEndImage>
+            <isTransparent>false</isTransparent>
           </engine.path.Path>
           <engine.path.Path>
             <THRESHOLD>5.0</THRESHOLD>
@@ -84,6 +87,8 @@
                 <y>416</y>
               </java.awt.Point>
             </myCoordinates>
+            <myAngle>0.0</myAngle>
+            <pathIndex>0</pathIndex>
             <myPathSize>50</myPathSize>
             <myWidth>950</myWidth>
             <myHeight>617</myHeight>
@@ -132,6 +137,7 @@
             <myPathImage>file:images/cobblestone.png</myPathImage>
             <myStartImage>file:images/brick.png</myStartImage>
             <myEndImage>file:images/darkstone.png</myEndImage>
+            <isTransparent>false</isTransparent>
           </engine.path.Path>
         </myPaths>
         <myTowers>
@@ -211,6 +217,7 @@
                   <SIZE>50</SIZE>
                   <hitTargets/>
                   <myHits>1</myHits>
+                  <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
                   <myShootingSound>applause</myShootingSound>
                 </myProjectile>
                 <timeSinceLastShot>0.0</timeSinceLastShot>
@@ -321,6 +328,7 @@
                   <SIZE>50</SIZE>
                   <hitTargets/>
                   <myHits>1</myHits>
+                  <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
                   <myShootingSound>cannon</myShootingSound>
                 </myProjectile>
                 <timeSinceLastShot>0.0</timeSinceLastShot>
@@ -449,6 +457,7 @@
                           <SIZE>50</SIZE>
                           <hitTargets/>
                           <myHits>1</myHits>
+                          <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
                           <myShootingSound>cannon</myShootingSound>
                         </myProjectile>
                         <timeSinceLastShot>0.0</timeSinceLastShot>
@@ -570,6 +579,7 @@
                   <SIZE>50</SIZE>
                   <hitTargets/>
                   <myHits>1</myHits>
+                  <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
                   <myShootingSound>cannon</myShootingSound>
                 </myProjectile>
                 <timeSinceLastShot>0.0</timeSinceLastShot>
@@ -601,6 +611,18 @@
             </engine.sprites.enemies.Enemy>
           </entry>
         </myEnemies>
+      </engine.level.Level>
+    </entry>
+    <entry>
+      <int>2</int>
+      <engine.level.Level>
+        <myNumber>2</myNumber>
+        <myPaths>
+          <engine.path.Path reference="../../../../entry/engine.level.Level/myPaths/engine.path.Path"/>
+        </myPaths>
+        <myTowers/>
+        <myWaves/>
+        <myEnemies/>
       </engine.level.Level>
     </entry>
   </myLevels>

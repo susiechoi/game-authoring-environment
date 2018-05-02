@@ -6,6 +6,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+/**
+ * Umbrella abstract class for all screens involved with Authoring. Includes 
+ * methods to return AuthoringView as well as CSS information and methods to aid
+ * in saving error checking and back button production (functionality shared
+ * by all Authoring screens).
+ * @author Sarahbland
+ * @author Susie Choi
+ *
+ */
 public abstract class AuthoringScreen extends Screen {
 	public static final String DEFAULT_CANCEL_KEY = "Cancel";
 	public static final String DEFAULT_NOTSAVED_KEY = "NotSaved";
@@ -31,6 +40,10 @@ public abstract class AuthoringScreen extends Screen {
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @return AuthoringView object
+	 * @see frontend.Screen#getView()
+	 */
 	@Override
     public AuthoringView getView() {
 	return myView;

@@ -8,6 +8,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Class that aids in creating dropdowns in the pathscreen when a user
+ * right clicks on a specific block. Can be used to create other dropdowns
+ * in other contexts as well.
+ * @author erik riis
+ *
+ */
 public class RightClickDropDown {
     private Node myNode;
     private SelectionModel myModel;
@@ -19,7 +26,11 @@ public class RightClickDropDown {
 	setRightClickDropDown();
     }
 
-    public void setRightClickDropDown() {
+    /**
+     * Sets a dropdown on right click for the node given when the class was
+     * constructed.
+     */
+    private void setRightClickDropDown() {
 	ContextMenu dropDown = setupDropDown();
 	myNode.setOnMousePressed(new EventHandler<MouseEvent>() {
 	    @Override
@@ -31,7 +42,7 @@ public class RightClickDropDown {
 	});
     }
 
-    public ContextMenu setupDropDown() {
+    private ContextMenu setupDropDown() {
 	ContextMenu contextMenu = new ContextMenu();
 	
 	MenuItem item1 = new MenuItem("Copy");

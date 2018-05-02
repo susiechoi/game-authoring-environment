@@ -22,6 +22,11 @@ public class CustomizeLevelScreen extends AuthoringScreen {
 		setSaved();
 	}
 
+	/**
+	 * Makes all UI elements (specifically buttons) that physically create
+	 * the screen.
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 

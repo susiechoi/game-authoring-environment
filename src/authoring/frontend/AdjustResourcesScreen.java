@@ -175,15 +175,15 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 		return vb;
 	}
 	
-	public void setBackgroundMusic(String backgroundMusic) {
+	protected void setBackgroundMusic(String backgroundMusic) {
 	    myBackgroundMusic = backgroundMusic;
 	}
 	
-	public void setLevelWinSound(String levelWinSound) {
+	protected void setLevelWinSound(String levelWinSound) {
 	    myLevelWinSound = levelWinSound;
 	}
 	
-	public void setLevelLossSound(String levelLossSound) {
+	protected void setLevelLossSound(String levelLossSound) {
 	    myLevelLossSound = levelLossSound;
 	}
 

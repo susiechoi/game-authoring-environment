@@ -114,23 +114,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			newLevelHBox.getChildren().add(autogenerateButton);
 		}
 		
-//		HBox songSelector = new HBox();
-//		ComboBox<String> songDropdown = new ComboBox<>();
-//		try {
-//			songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
-//		}
-//		catch(MissingPropertiesException e){
-//			getView().loadErrorScreen("NoFile");
-//		}
-//		ImageView imageDisplay = new ImageView(); 
-//		try {
-//			songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song"), getErrorCheckedPrompt("NewSong"),
-//					getErrorCheckedPrompt("NewSongName"), songDropdown, imageDisplay);
-//		}
-//		catch(MissingPropertiesException e) {
-//			getView().loadErrorScreen("NoFile");
-//		}
-//		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
 		Button visualizations = getUIFactory().makeTextButton(getErrorCheckedPrompt(DEFAULT_GRAPHS_KEY));
 
