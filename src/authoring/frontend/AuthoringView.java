@@ -270,7 +270,7 @@ public class AuthoringView extends View {
 		return myLevel; 
 	}
 
-	protected void setGameName(String gameName) {
+	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
 

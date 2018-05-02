@@ -239,10 +239,12 @@ public class AuthoringController implements MVController{
      * @throws MissingPropertiesException 
      */
     public void setModel(String gameName) throws MissingPropertiesException {
+	myView.setGameName(gameName);
 	AuthoringModelReader reader = new AuthoringModelReader();
 	myModel = new AuthoringModel(reader.createModel(gameName));
 	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDIT_BUTTON_CTRLFLOW, getGameName());
+	
     }
 
     /**
