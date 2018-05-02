@@ -31,6 +31,7 @@ public class CreatePathScreen extends PathScreen {
     public static final int POPUP_SIZE = 500;
     private CreatePathPanel myPathPanel;
     private CreatePathToolBar myPathToolBar;
+    private GridHelper gridCommand = new GridHelper();
     private String myBackgroundImage = CreatePathGrid.DEFAULT_BACKGROUND_IMAGE;
     private List<List<Point>> myCoords = new ArrayList<List<Point>>();
     private boolean gridCheck = false;
@@ -61,7 +62,7 @@ public class CreatePathScreen extends PathScreen {
     protected void initializeGridSettings(CreatePathGrid gridIn) {
 	setPathPanel(myPathPanel, myPathToolBar);
 	setGridApplied(gridIn);
-//	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == 2) {
+//	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == CreatePathGrid.DEFAULT_SIZE) {
 //	    setPathInstructionPopup();
 //	    setGridUIComponents();
 //	}
@@ -292,7 +293,7 @@ public class CreatePathScreen extends PathScreen {
     private void changeGridImages(String imageFilePath, String pathType) {
 	for (int i = 0; i < getGrid().getGrid().getChildren().size(); i++) {
 	    Node node = getGrid().getGrid().getChildren().get(i);
-	    if (node instanceof ImageView && ((Label) getGrid().getNode(getGrid().getCheckGrid(), GridPane.getColumnIndex(node), GridPane.getRowIndex(node))).getText() == pathType) {
+	    if (node instanceof ImageView && ((Label) gridCommand.getNode(getGrid().getCheckGrid(), GridPane.getColumnIndex(node), GridPane.getRowIndex(node))).getText() == pathType) {
 		((ImageView) node).setImage(new Image(imageFilePath));
 	    }
 	}
