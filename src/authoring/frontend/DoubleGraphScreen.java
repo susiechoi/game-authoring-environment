@@ -5,6 +5,12 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Class used to graph two game graphs at once (i.e. graph the score for 
+ * two different plays of the same game).
+ * @author Susie Choi
+ *
+ */
 public class DoubleGraphScreen extends GraphScreen {
 
 	private String myGame1FilePath; 
@@ -16,6 +22,10 @@ public class DoubleGraphScreen extends GraphScreen {
 		myGame2FilePath = game2Path; 
 	}
 
+	/**
+	 * Makes the UI elements necessary to render the screen.
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox();

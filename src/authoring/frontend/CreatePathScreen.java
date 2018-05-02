@@ -51,14 +51,14 @@ public class CreatePathScreen extends PathScreen {
 
     }
     @Override
-    public void makePanels() {
+    protected void makePanels() {
 	myPathPanel = new CreatePathPanel(getView());
 	myPathToolBar = new CreatePathToolBar(getView());
 	me = this;
     }
     
     @Override
-    public void initializeGridSettings(CreatePathGrid gridIn) {
+    protected void initializeGridSettings(CreatePathGrid gridIn) {
 	setPathPanel(myPathPanel, myPathToolBar);
 	setGridApplied(gridIn);
 //	if (((Map<String, List<Point>>) getView().getObjectAttribute("Path", "", "myPathMap")).size() == 2) {
@@ -218,7 +218,7 @@ public class CreatePathScreen extends PathScreen {
 
 
     @Override
-    public void setSpecificUIComponents() {
+    protected void setSpecificUIComponents() {
 	ImageView trashImage = myPathPanel.makeTrashImage();
 	trashImage.setOnDragOver(new EventHandler <DragEvent>() {
 	    @Override

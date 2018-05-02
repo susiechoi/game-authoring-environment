@@ -49,7 +49,7 @@ public class CreatePathToolBar extends PathToolBar {
     }
 
     @Override
-    public void makePanel() {
+    protected void makePanel() {
 
 	backgroundImageSelect = makeImageSelector("BackGround", "", BACKGROUND_IMAGE_PREFIX + getView().getTheme() + BACKGROUND_IMAGE_SUFFIX);
 	pathImageSelect = makeImageSelector("BackGround", "", PATH_IMAGE_PREFIX + getView().getTheme() + PATH_IMAGE_SUFFIX);
@@ -71,6 +71,11 @@ public class CreatePathToolBar extends PathToolBar {
 	getToolBar().getChildren().addAll(backgroundImageButton, startImageButton, pathImageButton, endImageButton);
     }
     
+    /**
+     * All screen elements are made in the various other methods, so getToolBar()
+     * triggers them
+     * @see frontend.Screen#makeScreenWithoutStyling()
+     */
     @Override
     public Parent makeScreenWithoutStyling() {
 	return getToolBar();

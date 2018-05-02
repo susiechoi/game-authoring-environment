@@ -31,7 +31,7 @@ public class AdjustWaveScreen extends PathScreen {
 
     }
 
-    public void makePanels() {
+    protected void makePanels() {
 	myWaveDirectionsPanel = new WaveDirectionsPanel(getView(), myWaveNumber);
 	myWaveToolBar = new WaveToolBar(getView());
     }
@@ -95,14 +95,6 @@ public class AdjustWaveScreen extends PathScreen {
     @Override
     public void setSpecificUIComponents() {
 	//	    setGridUIComponents(myWaveDirectionsPanel, myWaveToolBar);
-    }
-    protected Parent populateScreenWithFields() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-    protected void populateFieldsWithData() {
-	// TODO Auto-generated method stub
-
     }
 }
 

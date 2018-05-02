@@ -10,6 +10,12 @@ import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 
+/**
+ * Factory class that handles setting/getting object attributes from Sprites
+ * @author Katie Van Dyk
+ * @author Sarahbland
+ *
+ */
 public class AttributeFactory {
     public static final String DEFAULT_IMAGE_IDENTIFIER = "myImage";
     public static final String DEFAULT_PROJECTILE_IMAGE_IDENTIFIER = "myProjectileImage";
@@ -20,6 +26,19 @@ public class AttributeFactory {
 	attributeFinder = new AttributeFinder();
     }
 
+    /**
+     * Sets object attributes not associated with a specific Property (i.e.
+     * images or sounds) or attributes for objects without Properties (like Settings)
+     * @param level is level containing object
+     * @param objectType is type of object (i.e. Tower)
+     * @param name is user-given name of object
+     * @param attribute is attribute needed to be changed
+     * @param attributeValue is value attribute will be given
+     * @param game is AuthoredGame containing object
+     * @throws ObjectNotFoundException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
     public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue, AuthoredGame game) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
 	if (objectType.equals("Enemy")) {
 	    Level currentLevel = game.levelCheck(level);
@@ -48,6 +67,21 @@ public class AttributeFactory {
 	}
     }
 
+    /**
+     * Gets object attributes not associated with a specific Property (i.e.
+     * images or sounds) or attributes for objects without Properties (like Settings)
+     * @param level is level containing object
+     * @param objectType is type of object (i.e. Tower)
+     * @param name is user-given name of object
+     * @param attribute is attribute needed to be found
+     * @param game is AuthoredGame containing object
+     * @return value of desired attribute
+     * @throws NoSuchFieldException
+     * @throws SecurityException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws ObjectNotFoundException
+     */
     public Object getObjectAttribute(int level, String objectType, String name, String attribute, AuthoredGame game) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ObjectNotFoundException {
 	Object attributeValue = null;
 	AttributeFinder attributeFinder = new AttributeFinder(); 

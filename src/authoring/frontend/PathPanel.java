@@ -33,14 +33,14 @@ public abstract class PathPanel extends AuthoringScreen {
 	protected abstract Button getApplyButton();
 	
 	/**
-	 * Gets the path Panel
+	 * Gets the path Panel for attaching to screen
 	 * @return panel
 	 */
 	protected abstract Node getPanel();
 	
 	/**
-	 * Sets the apply button
-	 * @param e
+	 * Sets an action to be done upon pressing the Apply button
+	 * @param e is EventHandler specifying action to be completed on Apply
 	 */
 	protected abstract void setApplyButtonAction(EventHandler<ActionEvent> e);
 }

@@ -56,11 +56,18 @@ public class GameEngine {
 
 	}
 
+	/**
+	 * Sets new playState when a new play is initiated
+	 * @param p
+	 */
 	public void setPlayState(PlayState p) {
 		myPlayState = p;
 		
 	}
 
+	/**
+	 * @return current PlayState being used to play game
+	 */
 	public PlayState getPlayState() {
 		return myPlayState;
 	}

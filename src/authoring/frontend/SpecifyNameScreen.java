@@ -11,6 +11,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 //import jdk.internal.jline.internal.Log;
 
+/**
+ * Abstract class for screens that ask the user to provide a name for a new
+ * object (such as a new Tower or Enemy).
+ * @author SusieChoi
+ *
+ */
 abstract class SpecifyNameScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_TOWER_TYPE = "Tower";
