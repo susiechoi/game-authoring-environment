@@ -1,14 +1,11 @@
 <authoring.AuthoredGame>
   <mySettings>
-    <myGameName>My New Game</myGameName>
+    <myGameName>sarah testing</myGameName>
     <myStartingHealth>100.0</myStartingHealth>
     <myStartingMoney>1000.0</myStartingMoney>
     <myCSSTheme>Modern</myCSSTheme>
     <myGameTheme>Duke</myGameTheme>
     <myInstructions>https://en.wikipedia.org/wiki/Tower_defense</myInstructions>
-    <myBackgroundMusic>epic</myBackgroundMusic>
-    <myLevelWinSound>applause</myLevelWinSound>
-    <myLevelLossSound>boo</myLevelLossSound>
   </mySettings>
   <myLevels>
     <entry>
@@ -63,20 +60,16 @@
             <THRESHOLD>5.0</THRESHOLD>
             <myCoordinates>
               <java.awt.Point>
-                <x>650</x>
+                <x>750</x>
+                <y>104</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>750</x>
                 <y>156</y>
               </java.awt.Point>
               <java.awt.Point>
-                <x>650</x>
+                <x>750</x>
                 <y>208</y>
-              </java.awt.Point>
-              <java.awt.Point>
-                <x>650</x>
-                <y>260</y>
-              </java.awt.Point>
-              <java.awt.Point>
-                <x>650</x>
-                <y>312</y>
               </java.awt.Point>
             </myCoordinates>
             <myAngle>0.0</myAngle>
@@ -89,8 +82,8 @@
                 <string>sfile:images/brick.png</string>
                 <list>
                   <java.awt.Point>
-                    <x>13</x>
-                    <y>3</y>
+                    <x>15</x>
+                    <y>2</y>
                   </java.awt.Point>
                 </list>
               </entry>
@@ -98,16 +91,12 @@
                 <string>pfile:images/cobblestone.png</string>
                 <list>
                   <java.awt.Point>
-                    <x>13</x>
+                    <x>15</x>
+                    <y>3</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>15</x>
                     <y>4</y>
-                  </java.awt.Point>
-                  <java.awt.Point>
-                    <x>13</x>
-                    <y>5</y>
-                  </java.awt.Point>
-                  <java.awt.Point>
-                    <x>13</x>
-                    <y>6</y>
                   </java.awt.Point>
                 </list>
               </entry>
@@ -115,8 +104,8 @@
                 <string>efile:images/darkstone.png</string>
                 <list>
                   <java.awt.Point>
-                    <x>13</x>
-                    <y>7</y>
+                    <x>15</x>
+                    <y>5</y>
                   </java.awt.Point>
                 </list>
               </entry>
@@ -253,23 +242,23 @@
                 <map>
                   <entry>
                     <engine.sprites.enemies.Enemy>
-                      <myName>a</myName>
+                      <myName>enemy</myName>
                       <myWrapper>
-                        <myImagePath>images/zombie.png</myImagePath>
+                        <myImagePath>images/squirrel.png</myImagePath>
                         <height>0.0</height>
                         <width>0.0</width>
                         <x>0.0</x>
                         <y>0.0</y>
                         <visible>false</visible>
                       </myWrapper>
-                      <myImageString>images/zombie.png</myImageString>
+                      <myImageString>images/squirrel.png</myImageString>
                       <myPropertyBuilder>
                         <PACKAGE>engine.sprites.properties.</PACKAGE>
                         <myReader/>
                       </myPropertyBuilder>
                       <myProperties>
                         <engine.sprites.properties.ValueProperty>
-                          <myProperty>100.40160642570281</myProperty>
+                          <myProperty>80.32128514056225</myProperty>
                           <mySimpleName>ValueProperty</mySimpleName>
                         </engine.sprites.properties.ValueProperty>
                         <engine.sprites.properties.DamageProperty>
@@ -279,7 +268,7 @@
                           <upgradeValue>0.0</upgradeValue>
                         </engine.sprites.properties.DamageProperty>
                         <engine.sprites.properties.HealthProperty>
-                          <myProperty>16.867469879518072</myProperty>
+                          <myProperty>24.497991967871485</myProperty>
                           <mySimpleName>HealthProperty</mySimpleName>
                           <upgradeCost>0.0</upgradeCost>
                           <upgradeValue>0.0</upgradeValue>
@@ -287,7 +276,7 @@
                           <myValue>0.0</myValue>
                         </engine.sprites.properties.HealthProperty>
                         <engine.sprites.properties.SpeedProperty>
-                          <myProperty>5.8232931726907635</myProperty>
+                          <myProperty>9.63855421686747</myProperty>
                           <mySimpleName>SpeedProperty</mySimpleName>
                           <upgradeCost>0.0</upgradeCost>
                           <upgradeValue>0.0</upgradeValue>
@@ -301,7 +290,7 @@
                         <active/>
                         <available/>
                         <myProjectile>
-                          <myName>a</myName>
+                          <myName>enemy</myName>
                           <myWrapper>
                             <myImagePath>images/bullet.png</myImagePath>
                             <height>0.0</height>
@@ -363,7 +352,7 @@
                       <SPEED>SpeedProperty</SPEED>
                       <DAMAGE>DamageProperty</DAMAGE>
                     </engine.sprites.enemies.Enemy>
-                    <int>50</int>
+                    <int>20</int>
                   </entry>
                 </map>
               </entry>
@@ -373,7 +362,7 @@
         </myWaves>
         <myEnemies>
           <entry>
-            <string>a</string>
+            <string>enemy</string>
             <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry/engine.sprites.enemies.Enemy"/>
           </entry>
           <entry>
@@ -494,5 +483,5 @@
       </engine.level.Level>
     </entry>
   </myLevels>
-  <myGameName>My New Game</myGameName>
+  <myGameName>sarah testing</myGameName>
 </authoring.AuthoredGame>
