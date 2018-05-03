@@ -2,6 +2,7 @@ package authoring.frontend;
 
 import java.io.FileNotFoundException;
 
+import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import authoring.frontend.exceptions.ObjectNotFoundException;
 import javafx.scene.Parent;
@@ -9,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-//import jdk.internal.jline.internal.Log;
 
 /**
  * Abstract class for screens that ask the user to provide a name for a new
@@ -39,10 +39,10 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 	try {
 	    myDefaultObjectName = getPropertiesReader().findVal(DEFAULT_CONSTANTS, "DefaultObjectName");
 	} catch (NumberFormatException e) {
-//	    Log.error(e);
+	    Log.debug(e);
 	    getView().loadErrorScreen("BadConstants");
 	} catch (MissingPropertiesException e) {
-//	    Log.error(e);
+	    Log.debug(e);
 	    getView().loadErrorScreen("NoConstants");
 	}
     }
@@ -68,8 +68,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 		    try {
 			getView().makeSprite(DEFAULT_TOWER_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException | ObjectNotFoundException e1) {
-			// TODO Auto-generated catch block
-//			Log.error(e);
+			Log.debug(e1);
 			getView().loadErrorScreen(DEFAULT_NO_OBJECT_ERROR_KEY);
 		    }
 		}
@@ -78,8 +77,7 @@ abstract class SpecifyNameScreen extends AuthoringScreen {
 			getView().makeSprite(DEFAULT_ENEMY_TYPE, myNameField.getText());
 		    } catch (NumberFormatException | FileNotFoundException
 			    | ObjectNotFoundException e1) {
-			// TODO Auto-generated catch block
-//			 Log.error(e);
+			 Log.debug(e1);
 			getView().loadErrorScreen(DEFAULT_NO_OBJECT_ERROR_KEY);
 		    }
 		}

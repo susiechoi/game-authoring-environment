@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
  * @author Susie Choi
  *
  */
+
 public abstract class AuthoringScreen extends Screen {
 	public static final String DEFAULT_CANCEL_KEY = "Cancel";
 	public static final String DEFAULT_NOTSAVED_KEY = "NotSaved";
@@ -48,12 +49,15 @@ public abstract class AuthoringScreen extends Screen {
     public AuthoringView getView() {
 	return myView;
     }
+	
     protected boolean getIsSaved() {
 	return myIsSaved;
     }
+    
     protected void setSaved() {
 	myIsSaved = true;
     }
+    
     protected String getErrorCheckedPrompt(String prompt) {
 	return myView.getErrorCheckedPrompt(prompt);
     }
@@ -70,6 +74,7 @@ public abstract class AuthoringScreen extends Screen {
 		},myView.getErrorCheckedPrompt(DEFAULT_CANCEL_KEY));
 	    
     }
+    
     protected Button setupBackButtonSuperclass() {
 	{
 		return getUIFactory().setupBackButton(e -> {
@@ -84,6 +89,7 @@ public abstract class AuthoringScreen extends Screen {
 		    
 	    }
     }
+    
     protected Button setupBackButtonCustom(EventHandler<ActionEvent> e) {
 	return getUIFactory().setupBackButton(event ->{
 	    if(!myIsSaved) {

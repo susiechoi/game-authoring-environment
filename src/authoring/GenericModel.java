@@ -35,13 +35,6 @@ public class GenericModel {
 
 
 	private String DEFAULT_SHOOTING_SOUND;
-//	private String DEFAULT_ENEMY_IMAGES;
-//	private String DEFAULT_ENEMY_IMAGE;
-//	private String DEFAULT_TOWER_IMAGES;
-//	private String DEFAULT_IMAGES_SUFFIX;
-//	private String DEFAULT_PROJECTILE_IMAGES;
-//	private String DEFAULT_TOWER_IMAGE;
-//	private String DEFAULT_PROJECTILE_IMAGE;
 	private String DEFAULT_TOWER_FILEPATH;
 	private String DEFAULT_ENEMY_FILEPATH;
 	private String DEFAULT_PATH_START;
@@ -249,13 +242,6 @@ public class GenericModel {
 		myPropertiesReader = new PropertiesReader();
 
 		DEFAULT_SHOOTING_SOUND = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ShootingSound");
-//		DEFAULT_ENEMY_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "EnemyImages");
-//		DEFAULT_ENEMY_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Enemy");
-//		DEFAULT_TOWER_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "TowerImages");
-//		DEFAULT_IMAGES_SUFFIX =  myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ImageSuffix");
-//		DEFAULT_PROJECTILE_IMAGES = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "ProjectileImages");
-//		DEFAULT_TOWER_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Tower");
-//		DEFAULT_PROJECTILE_IMAGE = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "Projectile");
 		DEFAULT_TOWER_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "TowerFiles");
 		DEFAULT_ENEMY_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "EnemyFiles");
 		DEFAULT_PATH_START = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "PathStart");

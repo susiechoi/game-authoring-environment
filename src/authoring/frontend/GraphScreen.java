@@ -1,3 +1,11 @@
+/**
+ * Abstract class used to display graphs of game play behavior to authoring users.
+ * Used to graph metrics such as currency and score over time to give authors more
+ * information about the efficacy of their games.
+ * @author Susie Choi
+ *
+ */
+
 package authoring.frontend;
 
 import java.io.BufferedReader;
@@ -12,18 +20,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 
-/**
- * Abstract class used to display graphs of game play behavior to authoring users.
- * Used to graph metrics such as currency and score over time to give authors more
- * information about the efficacy of their games.
- * @author Susie Choi
- *
- */
 abstract class GraphScreen extends AuthoringScreen {
 	
 	protected String myGraphType; 
 	
-	public GraphScreen(AuthoringView view, String graphType) {
+	protected GraphScreen(AuthoringView view, String graphType) {
 		super(view);
 		myGraphType = graphType; 
 		setSaved(); 

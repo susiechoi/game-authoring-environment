@@ -34,11 +34,10 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
 	public static final String DEFAULT_COLLISION_KEYWORD = "Collision";
 	public static final String EMPTY_STRING = "";
-	public static final int DEFAULT_POPUP_WIDTH = 600;
-	public static final int DEFAULT_POPUP_HEIGHT = 300; 
+	public static final String DEFAULT_POPUP_WIDTH_KEYWORD = "PopupWidth";
+	public static final String DEFAULT_POPUP_HEIGHT_KEYWORD = "PopupHeight";
+	public static final String DEFAULT_NOCONSTANTS_ERROR_KEY = "NoConstants";
 
-	//	private String myFieldsPropertiesPath; 
-	//	private String myObjectDescription; 
 	private String mySelectedObjectName; 
 	private String myDefaultObjectName; 
 	private int myMaxHealthImpact;
@@ -52,8 +51,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 		super(view);
 		setConstants();
-		//		myFieldsPropertiesPath = fieldsPropertiesPath; 
-		//		myObjectDescription = objectDescription; 
 		mySelectedObjectName = selectedObjectName; 
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
 	}
@@ -76,7 +73,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			getView().loadErrorScreen("BadConstants");
 		} catch (MissingPropertiesException e) {
 			Log.debug(e);
-			getView().loadErrorScreen("NoConstants");
+			getView().loadErrorScreen(DEFAULT_NOCONSTANTS_ERROR_KEY);
 		}
 
 	}
@@ -129,8 +126,13 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			Parent propScreenRoot = new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), subfolderPath, mySelectedObjectName, propertyPopup).getScreen(); 
 			propertyPopup.setScene(new Scene(propScreenRoot));
 			propertyPopup.show();
-			propertyPopup.setHeight(DEFAULT_POPUP_HEIGHT);
-			propertyPopup.setWidth(DEFAULT_POPUP_WIDTH);
+			try {
+				propertyPopup.setHeight(Double.parseDouble(getPropertiesReader().findVal(DEFAULT_CONSTANTS, DEFAULT_POPUP_HEIGHT_KEYWORD)));
+				propertyPopup.setWidth(Double.parseDouble(getPropertiesReader().findVal(DEFAULT_CONSTANTS, DEFAULT_POPUP_WIDTH_KEYWORD)));
+			} catch (NumberFormatException | MissingPropertiesException e1) {
+				Log.debug(e1);
+				getView().loadErrorScreen(DEFAULT_NOCONSTANTS_ERROR_KEY);
+			}
 		});
 		hb.getChildren().addAll(availableProperties, addPropertyButton);
 		return hb; 

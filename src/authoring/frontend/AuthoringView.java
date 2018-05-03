@@ -1,4 +1,3 @@
-
 /**
  * @author Sarah Bland
  * @author susiechoi
@@ -271,6 +270,10 @@ public class AuthoringView extends View {
 		return myLevel; 
 	}
 
+	/**
+	 * Changes game name, useful in displaying game name to user on main screen
+	 * @param gameName
+	 */
 	public void setGameName(String gameName) {
 		myController.setGameName(gameName);
 	}
@@ -388,6 +391,10 @@ public class AuthoringView extends View {
 		}
 	}
 
+	/**
+	 * Sets game theme, useful in determining which image options to display to user for sprites
+	 * @param selectedTheme
+	 */
 	public void setTheme(String selectedTheme) {
 		myTheme = selectedTheme; 
 		setObjectAttribute(DEFAULT_SETTINGS_OBJ_NAME, DEFAULT_THEME_IDENTIFIER, myTheme);
