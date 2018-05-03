@@ -13,6 +13,5 @@ abstract class AdjustScreen extends AuthoringScreen {
 		super(view);
 	}
 	
-	
 
 }

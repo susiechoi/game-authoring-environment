@@ -1,3 +1,13 @@
+/**
+ * Class to create the original screen users see when entering the Game Authoring environment. 
+ * Dependent on the AuthoringView to create it correctly and on the UIFactory to make UI
+ * elements correctly. Also dependent on View to correctly lead Screenflow and load the next
+ * screen.
+ * @author Sarahbland
+ * @author susiechoi
+ *
+ */
+
 package authoring.frontend;
 
 import java.util.ArrayList;
@@ -14,15 +24,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-/**
- * Class to create the original screen users see when entering the Game Authoring environment. 
- * Dependent on the AuthoringView to create it correctly and on the UIFactory to make UI
- * elements correctly. Also dependent on View to correctly lead Screenflow and load the next
- * screen.
- * @author Sarahbland
- * @author susiechoi
- *
- */
 public class StartScreen extends AuthoringScreen {
 	
 	public static final String DEFAULT_NEW_SCREENFLOW_IDETIFIER = "New";

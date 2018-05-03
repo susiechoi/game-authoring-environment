@@ -1,3 +1,11 @@
+/**
+ * Class to create Screen where users choose which elements they would like to customize (a level,
+ * settings, etc.) or save/demo a game. Dependent on the View to house/relay information from the Model
+ * and on View screenflow methods to send the user to the correct next screen.
+ * @author Sarahbland
+ * @author susiechoi
+ */
+
 package authoring.frontend;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,15 +21,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import xml.BadGameDataException;
-
-
-/**
- * Class to create Screen where users choose which elements they would like to customize (a level,
- * settings, etc.) or save/demo a game. Dependent on the View to house/relay information from the Model
- * and on View screenflow methods to send the user to the correct next screen.
- * @author Sarahbland
- * @author susiechoi
- */
 
 public class CustomizationChoicesScreen extends AuthoringScreen {
 	
@@ -39,7 +38,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 	 * @see frontend.Screen#makeScreenWithoutStyling()
 	 */
 	@Override
-	
 	public Parent makeScreenWithoutStyling(){
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();

@@ -4,6 +4,7 @@
  * @author Ben Hodgson 4/8/18
  * @author Katie Van Dyk 4/24/18
  * @author benauriemma
+ * @author Sarah Bland
  * 
  * Represents the Model component of the Authoring environment's MVC. 
  * Receives input from Controller to determine what object to create/adjust
@@ -35,10 +36,6 @@ import engine.sprites.enemies.wave.Wave;
 import engine.sprites.towers.Tower;
 import frontend.PropertiesReader;
 
-/**
- * @author Sarahbland
- *
- */
 public class AuthoringModel {
 
     public static final String DEFAULT_SETTINGS_FILE = "default_objects/Settings.properties";
