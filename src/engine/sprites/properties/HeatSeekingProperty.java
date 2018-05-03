@@ -1,5 +1,7 @@
 package engine.sprites.properties;
 
+import java.awt.Point;
+
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -20,23 +22,23 @@ public class HeatSeekingProperty extends MovingProperty{
     }
 
     @Override
-    public void move(Projectile projectile, double elapsedTime) {
-	System.out.println("heat seeking");
-	ShootingSprites myTarget = projectile.getTarget();
-	if (myTarget.isAlive()) {
-	    rotateImage(projectile, myTarget);
+    public boolean move(Projectile projectile, double elapsedTime) {
+	if (projectile.isTargetAlive()) {
+	    rotateImage(projectile, projectile.getTargetDestination());
 	}
 	double totalDistanceToMove = projectile.getSpeed()*elapsedTime;
 	double xMove = Math.sin(Math.toRadians(projectile.getRotate()))*totalDistanceToMove;
 	double yMove = Math.cos(Math.toRadians(projectile.getRotate()))*totalDistanceToMove;
 	projectile.getImageView().setX(projectile.getX()+xMove);
 	projectile.getImageView().setY(projectile.getY()+yMove);
+	
+	return this.checkIfProjectileIsOutOfRange(projectile);
     }
 
     /**
      * Rotates the image to face the target
      */
-    private void rotateImage(Projectile projectile, ShootingSprites myTarget) {
+    private void rotateImage(Projectile projectile, Point myTarget) {
 	double xDifference = myTarget.getX() - projectile.getX();
 	double yDifference = myTarget.getY() - projectile.getY();
 	double angleToRotateRads = Math.atan2(xDifference,yDifference);

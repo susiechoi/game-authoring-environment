@@ -11,6 +11,13 @@ import engine.level.Level;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.towers.Tower;
 
+/**
+ * Class to create a generic Sprite when the user wants to specify a new one.
+ * Used before user specifies parameters/Properties for a given Sprite.
+ * @author Katie Van Dyk
+ * @author Susie Choi
+ * @author Sarah Bland
+ */
 public class SpriteFactory {
 
     GenericModel myGeneric;
@@ -19,6 +26,17 @@ public class SpriteFactory {
 	myGeneric = generic;
     }
 
+    /**
+     * Makes a generic Sprite
+     * @param objectType is type of Sprite desired and adds to level
+     * @param level Sprite being added to
+     * @param name is user-specified name of Sprite
+     * @throws NumberFormatException
+     * @throws FileNotFoundException
+     * @throws NoDuplicateNamesException
+     * @throws MissingPropertiesException
+     * @throws ObjectNotFoundException
+     */
     public void makeSprite(String objectType, Level level, String name) throws NumberFormatException, FileNotFoundException, NoDuplicateNamesException, MissingPropertiesException, ObjectNotFoundException {
 	if(objectType.equals("Tower")) {
 	    makeTower(level, name);
@@ -42,7 +60,7 @@ public class SpriteFactory {
 	}
 	Enemy newEnemy = myGeneric.generateGenericEnemy(name);
 	level.addEnemy(name, newEnemy);
-	System.out.println(level+" "+name);
+//	System.out.println(level+" "+name);
     }
 
     public void deleteSprite(String objectType, Level level, String name) throws ObjectNotFoundException, DeleteDefaultException {

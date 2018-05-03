@@ -43,13 +43,13 @@ public class GamePanel extends Panel{
     private Boolean towerClick = false;
     private Circle rangeIndicator;
     private ScrollPane scroll;
+    private FrontEndTower clickedTower;
     private GridPane grid;
 	private GameplayerAlert ALERT;
 
     private final String DEFAULT_BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
     private boolean backgroundSet;
-    private boolean pathSet;
 
     public GamePanel(GameScreen gameScreen) {
 	GAME_SCREEN = gameScreen;
@@ -60,7 +60,6 @@ public class GamePanel extends Panel{
 	towerSelected =  null;
 	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
 	backgroundSet = false;
-	pathSet = false;
     }
 
     @Override
@@ -70,19 +69,28 @@ public class GamePanel extends Panel{
 	scroll = new ScrollPane(gamePane);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
 
-	gamePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+	gamePane.setOnMouseClicked(e -> {
+	    try {
+		handleMouseInput(e.getX(), e.getY());
+	    } catch (MissingPropertiesException e1) {
+		// TODO Auto-generated catch block
+	    }
+	});
 
 	spriteAdd = gamePane;
 	PANEL = scroll;
     }
 
     private boolean setBackgroundImage(String backgroundFilePath) {
+	if(PANEL == null) {
+	    makePanel();
+	}
 	Bounds centerBounds = scroll.getViewportBounds();
 	if(centerBounds.getHeight() ==0 && centerBounds.getWidth() == 0) {
 	    return false;
 	}
 	ImageView imageView;
-	
+
 	double imageWidth = centerBounds.getWidth() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxWidthMultiplier"));
 	double imageHeight = centerBounds.getHeight() * Double.parseDouble(GAMEPLAYER_PROPERTIES.get("sandboxHeightMultiplier"));
 	spriteAdd.setMaxHeight(imageHeight);
@@ -94,21 +102,19 @@ public class GamePanel extends Panel{
 	}
 	spriteAdd.getChildren().add(imageView);
 	return true;
-
     }
 
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	backgroundSet = setBackgroundImage(backgroundImageFilePath);
+	if(backgroundSet) {
+	    PathMaker pathMaker = new PathMaker(GAMEPLAYER_PROPERTIES, GAME_SCREEN.getScreenManager());
+	    grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
 
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	backgroundSet =  setBackgroundImage(backgroundImageFilePath);
-	spriteAdd.getChildren().remove(grid);
-	PathMaker pathMaker = new PathMaker();
-	grid = pathMaker.initGrid(imageMap, backgroundImageFilePath, pathSize, width, height);
-	    //	setGridConstraints(grid, imageMap);
 	    if (spriteAdd == null) {
 		makePanel();
 	    }
 	    spriteAdd.getChildren().add(grid);
-	    pathSet = true;
+	}
 	return backgroundSet;
     }
 
@@ -157,9 +163,11 @@ public class GamePanel extends Panel{
 	    GAME_SCREEN.towerClickedOn(tower);
 	    addRangeIndicator(tower);
 	    towerClick = true;
+	    clickedTower = tower;
+	    System.out.println("towerClick is TRUE  AND clicked tower = "+clickedTower);
 	});
     }
-
+    
     private void removeTowerRangeIndicator() {
 	spriteAdd.getChildren().remove(rangeIndicator);
 	towerSelected = null;
@@ -180,6 +188,7 @@ public class GamePanel extends Panel{
 	    Log.debug(e);
 		ALERT = new GameplayerAlert(e.getMessage());
 	    System.out.println("Constants property file not found");
+
 	}
     }
 
@@ -209,7 +218,7 @@ public class GamePanel extends Panel{
 	towerPlaceMode = false;
     }
 
-    public void handleMouseInput(double x, double y) {
+    public void handleMouseInput(double x, double y) throws MissingPropertiesException {
 	if(towerPlaceMode) {
 	    try {
 		Point position = new Point((int)x,(int)y);
@@ -224,12 +233,17 @@ public class GamePanel extends Panel{
 		Log.debug(e);
 		ALERT = new GameplayerAlert(e.getMessage());
 		//GameScreen popup for cannot afford
+		resetCursor();
 	    }
+	    GAME_SCREEN.blankGamePanelClick();
 	}
-	else if(!towerClick) {
+	else if (!towerClick) {
+	    if (clickedTower != null && !spriteAdd.getChildren().contains(rangeIndicator)) {
+		GAME_SCREEN.clickToShoot(clickedTower, x, y);
+	    }
+	    GAME_SCREEN.blankGamePanelClick();
 	    removeTowerRangeIndicator();
 	}
-	GAME_SCREEN.blankGamePanelClick();
 	towerClick = false;
     }
 

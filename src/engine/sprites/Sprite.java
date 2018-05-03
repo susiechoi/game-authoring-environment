@@ -1,12 +1,17 @@
 package engine.sprites;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.builders.PropertyBuilder;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import xml.serialization.ImageWrapper;
 
 /**
  * Interface for an actor in the current Game. All game objects are sprites and have images
@@ -21,31 +26,44 @@ import javafx.scene.image.ImageView;
 public class Sprite implements FrontEndSprite{
 
     private String myName;
-    private ImageView myImageView;
+    @XStreamOmitField
+    private transient ImageView myImageView;
+    private ImageWrapper myWrapper;
     private String myImageString;
     private PropertyBuilder myPropertyBuilder;
     private List<Property> myProperties;
-
+    private final String FILEPATH = "file:";
+    private final int SIZE = 50;
+    private final String COLLISION = "CollisionProperty";
+    private final String DAMAGE = "DamageProperty";
 
     /**
      * Constructor that takes in a sprite's image
      * Source for the image path fix: https://stackoverflow.com/questions/16099427/cannot-load-image-in-javafx @author susiechoi
+     * Source for resizing image: https://stackoverflow.com/questions/27894945/how-do-i-resize-an-imageview-image-in-javafx
      * 
      * @param image: tower's initial image
      * @param size: size of tower's image
+     * @throws MissingPropertiesException 
      */
-    public Sprite(String name, String image, double size, List<Property> properties) {
+    public Sprite(String name, String image, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
-	setImageString(image);
+	myImageString = image;
+	myImageView = new ImageView(new Image(FILEPATH+image, SIZE, SIZE, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	myImageView.setPreserveRatio(true);
+	myWrapper = new ImageWrapper(image);
 	myProperties = new ArrayList<>();
 	myPropertyBuilder = new PropertyBuilder();
 	for(Property p : properties) {
+	    //  System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
 	    myProperties.add(this.makeProperty(p));
 	}
+	System.out.println("Making it to the end of sprite");
     }
 
     /**
+     * Return the String name of the sprite.
+     * 
      * @return String: the name of the Sprite
      */
     public String getName() {
@@ -59,11 +77,6 @@ public class Sprite implements FrontEndSprite{
      */
     public ImageView getImageView() { 
 	return myImageView;
-    }
-
-    public void setImageString(String image) {
-	myImageString = image;
-	myImageView  = new ImageView(new Image("file:"+image, 50, 50, true, true));
     }
 
     public void place(double newX, double newY) {
@@ -128,17 +141,31 @@ public class Sprite implements FrontEndSprite{
 	return 0;
     }
 
-    protected void updateImage(String imagePath) {
+    /**
+     * Updates the Imagepath and the ImageView given an input string
+     * @param imagePath	String containing path to image
+     */
+    public void updateImage(String imagePath) {
 	myImageString = imagePath; 
-	Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
-	myImageView.setImage(newImage);
+	myWrapper.updateImageString(imagePath);
+	//		Image newImage = new Image("file:"+imagePath, 50, 50, true, true); 
+	//		System.out.println(myImageView == null);
+	//		myImageView.setImage(newImage);
+	myImageView = myWrapper.toImageView();
 	myImageView.setPreserveRatio(true);
     }
 
-    protected Property makeProperty(Property p) {
+    /**
+     * Sets ImageView upon loading a Sprite from XML
+     */
+    public void loadImage() {
+	myImageView = myWrapper.toImageView();
+    }
+
+    protected Property makeProperty(Property p) throws MissingPropertiesException {
 	return myPropertyBuilder.getProperty(p);
     }
-    
+
     public Property getProperty(String ID) {
 	for(Property property : myProperties) {
 	    if(property != null && property.getName().equals(ID)) {
@@ -147,7 +174,7 @@ public class Sprite implements FrontEndSprite{
 	}
 	return null;
     }
-    
+
     /**
      * Handles upgrading the health of a tower
      */
@@ -159,27 +186,26 @@ public class Sprite implements FrontEndSprite{
 	}
 	return balance;
     }
-    
+
     public List<Property> getProperties(){
 	return myProperties;
     }
-    
+
     public void addProperty(Property property) {
-	Property toRemove = null;
-	try {
-	    for(Property p : myProperties) {
-		    if(property.getName().equals(p.getName())) {
-			toRemove = p;
-		    }
-		}
-		myProperties.remove(toRemove);
-		myProperties.add(property);
-	}catch(NullPointerException e){
-	    return;
+	String type = property.getClass().getSuperclass().getSimpleName();
+	Property toRemove = null; 
+	for(Property p : myProperties) {
+	    if(property.getName().equals(p.getName())) {
+		toRemove = p;
+	    }
+	    else if(type.equals(p.getClass().getSuperclass().getSimpleName()) && (type.equals(COLLISION) || type.equals(DAMAGE))) {
+		toRemove = p;
+	    }
 	}
-	
+	if(toRemove != null) myProperties.remove(toRemove);
+	myProperties.add(property);
     }
-    
+
     public double getValue(String ID) {
 	for(Property property : myProperties) {
 	    if(property.getName().equals(ID)) {
@@ -188,7 +214,7 @@ public class Sprite implements FrontEndSprite{
 	}
 	return 0;
     }
-    
+
     /**
      * Returns the superclass of name 'type' (i.e MovingProperty, CollisionProperty, etc)
      * @param type
@@ -196,11 +222,13 @@ public class Sprite implements FrontEndSprite{
      */
     public Property getPropertySuperclassType(String type) {
 	for(Property p : this.getProperties()) {
-		if(p.getClass().getSuperclass().getSimpleName().equals(type)) {
-		    return p;
-		}
+//	    System.out.println("property class is " + p.getClass().getSimpleName());
+	    if(p.getClass().getSuperclass().getSimpleName().equals(type)) {
+		return p;
+	    }
 	}
 	return null;
     }
+
 
 }

@@ -45,6 +45,7 @@ public class Manager<E> {
 
     public void addToAvailableList(E sprite) {
 	available.add(sprite);
+	System.out.println("AVAILABLE: " + available.size());
     }
     
     public void removeFromActiveList(E sprite) {
@@ -55,17 +56,4 @@ public class Manager<E> {
     	active = activeSprites;
     }
 
-    /**
-     * Checks for collisions between between the list of active actors held by the Manager the method
-     * was called on and the list of active actors passed as a parameter
-     * @param passedSprites
-     */
-    //    public void checkForCollisions(List<Sprite> passedSprites) {
-    //    	for (Sprite activeSprite: this.getObservableListOfActive()) {
-    //    		for (Sprite passedActor: passedSprites) {
-    //    			ShootingSprites shootingSprite = (ShootingSprites) passedActor;
-    //    			activeSprite.checkForCollision(shootingSprite, shootingSprite.getProjectiles());
-    //    		}
-    //    	}
-    //    }
 }

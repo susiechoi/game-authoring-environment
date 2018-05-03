@@ -3,10 +3,13 @@ package engine.sprites;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.physics.ImageIntersecter;
+import engine.sprites.enemies.Enemy;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
+import engine.sprites.towers.Tower;
 import engine.sprites.towers.launcher.Launcher;
 import engine.sprites.towers.projectiles.Projectile;
 
@@ -15,6 +18,7 @@ import engine.sprites.towers.projectiles.Projectile;
  * @author Miles Todzo
  * @author Katherine Van Dyk
  * @author Ryan Pond 4/9
+ * 
  * @param image
  * @param projectileManager
  */
@@ -23,6 +27,9 @@ public abstract class ShootingSprites extends Sprite{
     private Launcher myLauncher;
     private int deadCount;
     private ImageIntersecter intersector;
+    private final String HEALTH = "HealthProperty";
+    private final String RANGE = "RangeProperty";
+    
     
     /**
      * Shooting sprite that is holds a launcher and is able to shoot at other sprites
@@ -32,31 +39,27 @@ public abstract class ShootingSprites extends Sprite{
      * @param image: String denoting image path of sprite
      * @param size: Size parameter of the image
      * @param launcher: Launcher object specific to shooting sprite
+     * @throws MissingPropertiesException 
      */
-    public ShootingSprites(String name, String image, double size, Launcher launcher, List<Property> properties) {
-	super(name, image, size, properties);
+    public ShootingSprites(String name, String image, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
+	super(name, image, properties);
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
 	myLauncher = launcher;
     }
 
     /**
-     * @return List of all active projectiles
-     */
-    public List<Projectile> getProjectiles(){
-	return myLauncher.getListOfActive();
-    }
-
-
-    /**
      * This checks for collisions between the shooter's projectiles and this ShootingSprite
-     * @param shooter : Input shooter that is shooting projectiles
+     * @param target : Input shooter that is shooting projectiles
      * @return : a list of all sprites to be removed from screen (dead)
      */
     public List<Sprite> checkForCollision(ShootingSprites target) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	List<Projectile> projectilesToBeDeactivated = new ArrayList<>();
-	toBeRemoved.addAll(this.checkTowerEnemyCollision(target));
+	if (this instanceof Tower) {
+	    toBeRemoved.addAll(this.checkTowerEnemyCollision(target));
+	}
+	
 	for (Projectile projectile: this.getProjectiles()) {
 	    if(target.intersects(projectile) && !(projectile.hasHit(target))){
 		toBeRemoved.addAll(objectCollision(target, projectile)); //checks collisions between projectiles and enemy/tower
@@ -66,7 +69,7 @@ public abstract class ShootingSprites extends Sprite{
 		}
 	    }
 	}
-	for (Projectile deactivatedProjectile: projectilesToBeDeactivated) { //TODO implement method in shootingSprite (deactivateProjectile) that does this
+	for (Projectile deactivatedProjectile: projectilesToBeDeactivated) { 
 	    this.getLauncher().removeFromActiveList(deactivatedProjectile);
 	}
 	return toBeRemoved;
@@ -93,26 +96,32 @@ public abstract class ShootingSprites extends Sprite{
      * @param shooter
      * @return
      */
-    public List<Sprite> checkTowerEnemyCollision(ShootingSprites shooter) {
+    public List<Sprite> checkTowerEnemyCollision(ShootingSprites enemy) {
 	List<Sprite> toBeRemoved = new ArrayList<>();
-	if (intersector.overlaps(shooter.getImageView())) {
-	    if(this.handleCollision(shooter)) {
+	if (intersector.overlaps(enemy.getImageView())) {
+	    if(this.handleCollision(enemy)) {
 		toBeRemoved.add(this);
 	    }
+	    toBeRemoved.add(enemy);
 	}
 	return toBeRemoved;
     }
 
+    /**
+     * Return whether or not a sprite has a target @param passedSprite in range
+     * 
+     * @return boolean, true if in range, false otherwise
+     */
     public boolean hasInRange(Sprite passedSprite) {
 	double distanceBetween = Math.sqrt(Math.pow(passedSprite.getX()-this.getX(),2)+Math.pow(passedSprite.getY()-this.getY(), 2));
-	return (distanceBetween <= myLauncher.getProperty("RangeProperty").getProperty());
+	return (distanceBetween <= myLauncher.getProperty(RANGE).getProperty());
     }
 
     public boolean hasReloaded(double elapsedTime) {
 	return myLauncher.hasReloaded(elapsedTime);
     }
 
-    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	return myLauncher.launch(target, shooterX, shooterY);
     }
 
@@ -134,27 +143,25 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public boolean isAlive() {
-	return (this.getValue("HealthProperty") > 0);
+	return (this.getValue(HEALTH) > 0);
     }
 
     /**
      * Method that will upgrade the Sprite
      * @param upgradeName : Property to be upgraded
      */
-    //TODO: GET RID OF MAGIC NAMES -> PROPERTIES FILE
     public double upgrade(String upgradeName, double balance) {
-	//	System.out.println("gets here");
-	if(upgradeName.equals("test4")) {
-	    System.out.println("upgrade is working woo");
+
+	if(upgradeName.equals("Armor_Upgrade")) {
 	    return upgradeLauncherProperty(balance, "FireRateProperty");
 	}
-	if(upgradeName == "test3") {
+	if(upgradeName.equals("Health_Upgrade")) {
 	    return upgradeProperty(balance, "HealthProperty");
 	}
-	if(upgradeName == "test2") {
+	if(upgradeName.equals("Damage_Upgrade")) {
 	    return upgradeProperty(balance, "DamageProperty");
 	}
-	if(upgradeName == "test1") {
+	if(upgradeName.equals("Fire_Rate_Upgrade")) {
 	    return upgradeLauncherProperty(balance, "RangeProperty");
 	}
 	return balance;
@@ -163,6 +170,7 @@ public abstract class ShootingSprites extends Sprite{
 
     public double upgradeProperty(double balance, String propertyName) {
 	UpgradeProperty propToUpgrade = (UpgradeProperty) this.getProperty(propertyName);
+	System.out.println("property is " + propToUpgrade.getClass().getSimpleName());
 	return propToUpgrade.upgrade(balance);
     }
 
@@ -184,7 +192,31 @@ public abstract class ShootingSprites extends Sprite{
     }
 
     public void loseHealth(double damage) {
-	((HealthProperty) this.getProperty("HealthProperty")).loseHealth(damage);
+	((HealthProperty) this.getProperty(HEALTH)).loseHealth(damage);
     }
+    
+
+    /**
+     * @return List of all active projectiles
+     */
+    public List<Projectile> getProjectiles(){
+	return myLauncher.getListOfActive();
+    }
+    public void addLauncherProperty(Property property) {
+	myLauncher.addProperty(property);
+    }
+    
+    public void addProjectileProperty(Property property) {
+	myLauncher.addProjectileProperty(property);
+    }
+    
+    public void setProjectileImage(String image) {
+	myLauncher.setProjectileImage(image);
+    }
+    public void setSoundString(String sound) {
+	myLauncher.setProjectileSound(sound);
+    }
+    
+
 
 }

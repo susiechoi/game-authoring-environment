@@ -36,10 +36,6 @@ Text {
 	-fx-background-radius: 6;
 }
 
-.img-view:hover {
-    -fx-effect: dropshadow(three-pass-box, black, 40, 0.0 , 0 , 5);
-}
-
 .sizebuttons {
         -fx-min-width: 20;
         -fx-min-height: 50;
@@ -102,8 +98,6 @@ Text {
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
 }
-
-
 
 .scroll-bar:vertical .track-background,
 .scroll-bar:horizontal .track-background{

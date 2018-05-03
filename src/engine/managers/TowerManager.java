@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Collection;
 import java.util.Map;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.FrontEndTower;
 import engine.sprites.towers.Tower;
@@ -18,11 +19,8 @@ import javafx.scene.input.KeyCode;
  * @author Katie Van Dyk
  * @author Ryan Pond
  */
-
-
 public class TowerManager extends ShootingSpriteManager {
 
-    //not sure exactly where this should be implemented/how the info for it will be passed in
     Map<String, Tower> myTowerTypeToInstance;
 
     /**
@@ -51,11 +49,19 @@ public class TowerManager extends ShootingSpriteManager {
     @SuppressWarnings("unlikely-arg-type")
     public void moveTowers(FrontEndTower tower, KeyCode c) {
 	if(this.getListOfActive().contains(tower)) {
+	    System.out.println("found tower");
 	    ((Tower) tower).move(c);
 	}
     }
 
-    public FrontEndTower place(Point location, String type) {
+    /**
+     * Places the tower in a specified location
+     * @param location : point location to be placed
+     * @param type : key to map that will have a tower type
+     * @return : front end tower that is returned to the Gameplayer
+     * @throws MissingPropertiesException
+     */
+    public FrontEndTower place(Point location, String type) throws MissingPropertiesException {
 	Tower newTower = new Tower(myTowerTypeToInstance.get(type));
 	newTower.move(location);
 	this.addToActiveList(newTower);

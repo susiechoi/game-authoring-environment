@@ -80,6 +80,7 @@ public class UpgradePanel extends SpecificPanel {
 	    Log.debug(e);
 		ALERT = new GameplayerAlert(e.getMessage());
 	    System.out.println("upgrade image load fail");
+
 	}
     }
 }

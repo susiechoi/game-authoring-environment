@@ -8,7 +8,6 @@ import engine.sprites.FrontEndSprite;
  * Interface Gameplayer will use to populate tower-specific panels, and to trigger upgrades of tower
  * @author andrewarnold
  *
- *NOTE: let me know if you want us to pass any other information on our method calls
  */
 public interface FrontEndTower extends FrontEndSprite{
 
@@ -35,12 +34,18 @@ public interface FrontEndTower extends FrontEndSprite{
     public int sell();
 
     /**
-     * 
-     * @param myResources
+     * Tells engine a tower was attempted to be placed/purchased
+     * @param myResources	the current currency value
      * @return Updated resources value
      * @throws CannotAffordException 
      */
     public int purchase(int myResources) throws CannotAffordException;
+    
+    /**
+     * Getter for tower cost
+     * @return The price of this tower
+     */
+    public int getTowerCost();
 
     public double getTowerRange();
 

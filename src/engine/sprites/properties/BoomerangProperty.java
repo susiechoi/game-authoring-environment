@@ -1,7 +1,5 @@
 package engine.sprites.properties;
 
-import java.awt.Point;
-
 import engine.sprites.towers.projectiles.Projectile;
 
 /**
@@ -14,26 +12,23 @@ import engine.sprites.towers.projectiles.Projectile;
 public class BoomerangProperty extends MovingProperty{
     private double tCircle = 0.0;
     private double range = 50;
-    
-    public BoomerangProperty(double speed) {
-	super(speed);
+
+    public BoomerangProperty(double range) {
+	super(range);
     }
-    
+
     @Override
-    public void move(Projectile projectile, double elapsedTime) {
-//	tCircle+=this.getProperty()*elapsedTime;
+    public boolean move(Projectile projectile, double elapsedTime) {
 	tCircle += 1;
 	double x = projectile.getX();
 	double y = projectile.getY();
 	projectile.getImageView().setX(range* Math.cos(tCircle) + x);
 	projectile.getImageView().setY(range* Math.sin(tCircle) + y);
-
-//	Projectile movingProjectile = (Projectile) args[0];
-//	Point origin = (Point) args[1];
+	return (tCircle >= 360);
     }
-    
+
     public BoomerangProperty(Property p) {
 	super(p.getProperty());
     }
-	
+
 }

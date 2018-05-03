@@ -51,7 +51,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 		super(view);
 		setConstants();
-		setSaved();
 		//		myFieldsPropertiesPath = fieldsPropertiesPath; 
 		myObjectDescription = objectDescription; 
 		mySelectedObjectName = selectedObjectName; 
@@ -61,7 +60,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view) {
 		super(view);
 		setConstants();
-		setSaved();
 	}
 
 	private void setConstants() {
@@ -209,7 +207,9 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		ComboBox<String> imageDropdownCopy = imageDropdown;
 		imageDropdown.addEventHandler(ActionEvent.ACTION,e -> {
 			try {
+			    	System.out.println("IMAGE NAME: " + imageName + " OBJECT NAME: " + mySelectedObjectName + " OBJECT TYPE: " + objectType);
 				getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
+	
 			}
 			catch(MissingPropertiesException e2) {
 				Log.debug(e2);
@@ -224,6 +224,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			ActionEvent fakeSelection = new ActionEvent();
 			if(key.equals(EMPTY_STRING)) {
 				imageDropdown.getSelectionModel().select(0);
+				imageDropdown.fireEvent(fakeSelection);
 			}
 			else {
 				imageDropdown.getSelectionModel().select(key);
@@ -243,7 +244,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	}
 
 	protected List<Double> makeList(Double ...attributes) {
-		List<Double> list = new ArrayList<Double>();
+		List<Double> list = new ArrayList<>();
 		for(Double attribute : attributes) {
 			list.add(attribute);
 		}

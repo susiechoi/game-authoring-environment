@@ -27,13 +27,15 @@ public class SettingsPanel extends Panel {
     private final UIFactory UIFACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private GameplayerAlert ALERT;
+    private SoundFactory SOUND_FACTORY;
+
 
     public SettingsPanel(GameScreen gameScreen) {
         GAME_SCREEN = gameScreen;
         GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
         PROP_READ = new PropertiesReader();
         UIFACTORY = new UIFactory();
-//        SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
+        SOUND_FACTORY = GAME_SCREEN.getSoundFactory();
     }
 
     @Override
@@ -50,7 +52,7 @@ public class SettingsPanel extends Panel {
         String SETTINGS_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("settingsButtonFilepath");
         Integer DEFAULT_SETTINGS_BUTTON_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("settingsButtonSize"));
 
-//        settingsBox.getChildren().add(SOUND_FACTORY.createVolumeSlider());
+       settingsBox.getChildren().add(SOUND_FACTORY.createVolumeSlider());
         try {
 
             Map<String,Image> settingsMap = PROP_READ.keyToImageMap(SETTINGS_BUTTON_FILEPATH, DEFAULT_SETTINGS_BUTTON_SIZE, DEFAULT_SETTINGS_BUTTON_SIZE);

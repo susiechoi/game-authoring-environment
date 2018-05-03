@@ -1,6 +1,5 @@
 package authoring.frontend;
 
-
 import com.sun.javafx.tools.packager.Log;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
@@ -30,64 +29,70 @@ public class CreatePathToolBar extends PathToolBar {
     public static final String START_IMAGE_SUFFIX = "StartImageNames.properties";
     public static final String END_IMAGE_PREFIX = "images/ThemeSpecificImages/EndImages/";
     public static final String END_IMAGE_SUFFIX = "EndImageNames.properties";
+    public static final String BACKGROUND_BUTTON_TEXT = "Choose Background Image";
+    public static final String START_BUTTON_TEXT = "Choose Start Image";
+    public static final String PATH_BUTTON_TEXT = "Choose Path Image";
+    public static final String END_BUTTON_TEXT = "Choose End Image";
     private HBox startImageSelect;
     private HBox endImageSelect;
     private HBox pathImageSelect;
     private HBox backgroundImageSelect;
     private AuthoringView myView;
 
+    /**
+     * Constructor for the path toolbar
+     * @param view
+     */
     public CreatePathToolBar(AuthoringView view) {
 	super(view);
 	myView = view;
     }
 
     @Override
-    public void makePanel() {
+    protected void makePanel() {
 
 	backgroundImageSelect = makeImageSelector("BackGround", "", BACKGROUND_IMAGE_PREFIX + getView().getTheme() + BACKGROUND_IMAGE_SUFFIX);
 	pathImageSelect = makeImageSelector("BackGround", "", PATH_IMAGE_PREFIX + getView().getTheme() + PATH_IMAGE_SUFFIX);
 	startImageSelect = makeImageSelector("BackGround", "", START_IMAGE_PREFIX + getView().getTheme() + START_IMAGE_SUFFIX);
 	endImageSelect = makeImageSelector("BackGround", "", END_IMAGE_PREFIX + getView().getTheme() + END_IMAGE_SUFFIX);
 
-	Button backgroundImageButton = getUIFactory().makeTextButton("", "Choose Background Image");
+	Button backgroundImageButton = getUIFactory().makeTextButton("", BACKGROUND_BUTTON_TEXT);
 	setImageButtonEvent(backgroundImageButton, backgroundImageSelect);
 
-	Button pathImageButton = getUIFactory().makeTextButton("", "Choose Path Image");
+	Button pathImageButton = getUIFactory().makeTextButton("", PATH_BUTTON_TEXT);
 	setImageButtonEvent(pathImageButton, pathImageSelect);
 
-	Button startImageButton = getUIFactory().makeTextButton("", "Choose Start Image");
+	Button startImageButton = getUIFactory().makeTextButton("", START_BUTTON_TEXT);
 	setImageButtonEvent(startImageButton, startImageSelect);
 
-	Button endImageButton = getUIFactory().makeTextButton("", "Choose End Image");
+	Button endImageButton = getUIFactory().makeTextButton("", END_BUTTON_TEXT);
 	setImageButtonEvent(endImageButton, endImageSelect);
 
-//	getToolBar().setMaxHeight(TOOLBAR_HEIGHT);
 	getToolBar().getChildren().addAll(backgroundImageButton, startImageButton, pathImageButton, endImageButton);
     }
-
-    public HBox getPathHBox() {
-	return pathImageSelect;
+    
+    /**
+     * All screen elements are made in the various other methods, so getToolBar()
+     * triggers them
+     * @see frontend.Screen#makeScreenWithoutStyling()
+     */
+    @Override
+    public Parent makeScreenWithoutStyling() {
+	return getToolBar();
     }
 
-    public HBox getStartHBox() {
-	return startImageSelect;
-    }
-
-    public HBox getEndHBox() {
-	return endImageSelect;
-    }
-
-    public HBox getBackgroundHBox() {
-	return backgroundImageSelect;
-    }
-
+    /**
+     * Initializes functionality of a given image button which when pressed creates a popup containing an image selector for changing
+     * the background and path block images
+     * @param button
+     * @param imageSelector
+     */
     private void setImageButtonEvent(Button button, HBox imageSelector) {
 	button.setOnAction(new EventHandler<ActionEvent>() {
 	    @Override
 	    public void handle(ActionEvent event) {
 		Stage dialog = new Stage();
 		VBox dialogVbox = new VBox();
-		//			dialogVbox.setMaxSize(600, 300);
 		dialogVbox.getChildren().add(imageSelector);
 		Scene dialogScene = new Scene(dialogVbox);
 		dialogScene.getStylesheets().add(myView.getCurrentCSS());
@@ -97,6 +102,13 @@ public class CreatePathToolBar extends PathToolBar {
 	});
     }
 
+    /**
+     * Creates the image selectors for changing the background and path block images
+     * @param objectType
+     * @param imageName
+     * @param propertiesFilepath
+     * @return
+     */
     protected HBox makeImageSelector(String objectType, String imageName, String propertiesFilepath){
 	HBox imageSelect = new HBox();
 	ComboBox<String> imageDropdown = new ComboBox<String>();
@@ -107,42 +119,50 @@ public class CreatePathToolBar extends PathToolBar {
 	    Log.debug(e);
 	    getView().loadErrorScreen("NoImageFile");
 	} 
-	ComboBox<String> imageDropdownCopy = imageDropdown;
+	
 	imageDropdown.addEventHandler(ActionEvent.ACTION,e -> {
-	 
-	    //	    try {
-	    //		getView().setObjectAttribute(objectType, mySelectedObjectName, "my" + imageName + "Image", getPropertiesReader().findVal(propertiesFilepath, imageDropdownCopy.getSelectionModel().getSelectedItem())); 
-	    //	    }
-	    //	    catch(MissingPropertiesException e2) {
-	    //		Log.debug(e2);
-	    //		getView().loadErrorScreen("NoImageFile");
-	    //	    }
 	});
 
 	try {
 	    imageSelect = getUIFactory().setupImageSelector(getPropertiesReader(), "", propertiesFilepath, 50, getErrorCheckedPrompt("NewImage"), getErrorCheckedPrompt("LoadImage"),
 		    getErrorCheckedPrompt("NewImageName"),imageDropdown, imageDisplay);
-	    //	    String key = getPropertiesReader().findKey(propertiesFilepath, (String)getView().getObjectAttribute(objectType, mySelectedObjectName, "myImage"));
-	    //	    ActionEvent fakeSelection = new ActionEvent();
-	    //	    if(key.equals("")) {
-	    //		imageDropdown.getSelectionModel().select(0);
-	    //	    }
-	    //	    else {
-	    //		imageDropdown.getSelectionModel().select(key);
-	    //		imageDropdown.fireEvent(fakeSelection);
-	    //	    }
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
 	    getView().loadErrorScreen("NoImageFile");
 	}
 	return imageSelect;
     }
+    
+    /**
+     * Gets the HBox containing the path image selector
+     * @return pathImageSelect
+     */
+    public HBox getPathHBox() {
+	return pathImageSelect;
+    }
 
+    /**
+     * Gets the HBox containing the start image selector
+     * @return startImageSelect
+     */
+    public HBox getStartHBox() {
+	return startImageSelect;
+    }
 
-    @Override
-    public Parent makeScreenWithoutStyling() {
-	//TODO Auto-generated method stub
-	return null;
+    /**
+     * Gets the HBox containing the end image selector
+     * @return endImageSelect
+     */
+    public HBox getEndHBox() {
+	return endImageSelect;
+    }
+    
+    /**
+     * Gets the HBox containing the background image selector
+     * @return backgroundImageSelect
+     */
+    public HBox getBackgroundHBox() {
+	return backgroundImageSelect;
     }
 }
 

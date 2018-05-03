@@ -1,9 +1,20 @@
 package engine;
 
+
+import java.io.IOException;
+
+import com.sun.javafx.tools.packager.Log;
+
+import java.io.FileNotFoundException;
+
+import com.sun.javafx.tools.packager.Log;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import xml.BadGameDataException;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;
 
@@ -20,31 +31,43 @@ public class GameEngine {
 	private final Integer DEFAULT_RELATIVE_SPEED = 5;
 	private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private PlayState myPlayState;
-	private Mediator myMediator;
 	private Timeline ANIMATION;
 	private double timeFactor;
-	private boolean gameTriggered = false;
 
-	public GameEngine(Mediator mediator) {
+	public GameEngine() {
 		myPlayState = null;
-		myMediator = mediator;
 		timeFactor = 1;
 
 		setSpeed(DEFAULT_RELATIVE_SPEED);
 		// attach "game loop" to time line to play it
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-				e -> loop(SECOND_DELAY));
+				e -> {
+				    try {
+					loop(SECOND_DELAY);
+				    } catch (MissingPropertiesException i) {
+					//Log.debug(i);
+				    } catch (FileNotFoundException i) {
+					//Log.debug(i);
+				    }
+				});
 		ANIMATION = new Timeline();
 		ANIMATION.setCycleCount(Animation.INDEFINITE);
 		ANIMATION.getKeyFrames().add(frame);
 
 	}
 
+	/**
+	 * Sets new playState when a new play is initiated
+	 * @param p
+	 */
 	public void setPlayState(PlayState p) {
 		myPlayState = p;
 		
 	}
 
+	/**
+	 * @return current PlayState being used to play game
+	 */
 	public PlayState getPlayState() {
 		return myPlayState;
 	}
@@ -53,9 +76,12 @@ public class GameEngine {
 	/**
 	 * Calls the update function every loop
 	 * @param elapsedTime
+	 * @throws MissingPropertiesException 
+	 * @throws FileNotFoundException 
 	 */
-	public void loop(double elapsedTime) {
-		myPlayState.update(elapsedTime*timeFactor);
+	public void loop(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
+	    //System.out.println(myPlayState.toString());
+	    myPlayState.update(elapsedTime*timeFactor);
 	}
 
 
@@ -72,8 +98,7 @@ public class GameEngine {
 	 * Starts Game Loop animation, so Game State continuously loops
 	 */
 	public void start() {
-	    ANIMATION.play();
-
+		ANIMATION.play();
 	}
 
 	/**
@@ -88,8 +113,10 @@ public class GameEngine {
 
 	/**
 	 * Saves current Game State to File
+	 * @throws IOException 
+	 * @throws BadGameDataException 
 	 */
-	public void savePlay(String filename) {
+	public void savePlay(String filename) throws BadGameDataException, IOException {
 		PlaySaverWriter p = (PlaySaverWriter) XMLFactory.generateWriter("PlaySaverWriter");
 		p.write(myPlayState, filename);
 	}
@@ -123,10 +150,6 @@ public class GameEngine {
 		}
 	}
 
-
-	public void triggerGame() {
-		gameTriggered = true;
-	}
 
 
 }

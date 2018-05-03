@@ -14,13 +14,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.sun.javafx.tools.packager.Log;
 
 import frontend.PropertiesReader;
 import frontend.UIFactory;
+import frontend.View;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.sprites.towers.FrontEndTower;
 import file.DataPointWriter;
@@ -32,48 +35,46 @@ import gameplayer.screen.GameScreen;
 
 
 public class TowerPanel extends ListenerPanel {
-	
-	public static final String DEFAULT_SUBFOLDER_FILEPATH = "Currency/";
-	
-    //TODO read this from settings or properties file, even better would be autoscaling to fit space
-    private int TOWER_IMAGE_SIZE;
 
+    public static final String DEFAULT_SUBFOLDER_FILEPATH = "Currency/";
     private GameScreen GAME_SCREEN;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
-    private GameplayerAlert ALERT;
+    private final View VIEW;
+    // private IntegerProperty currency; //tag: buyPanel button disable
+    private Map<Button, FrontEndTower> buttonMap;
 
     private DataPointWriter myCurrencyWriter; 
-    
-    //TODO change to only use availibleTowers
+
     //private final FileIO FILE_READER;
     private HBox towerPane;
 
 
-    public TowerPanel(GameScreen gameScreen) {
+    public TowerPanel(GameScreen gameScreen, View view) {
 	GAME_SCREEN = gameScreen;
+	VIEW = view;
 	GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 	//	money = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("defaultMoney"));
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-
+	buttonMap = new HashMap<Button, FrontEndTower>();
+	//currency = new SimpleIntegerProperty(); //tag: buyPanel button disable
 	setupWriters(); 
     }
-    
+
     private void setupWriters() {
-    	try {
-			myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
-		} catch (FileNotFoundException e) {
-			GAME_SCREEN.loadErrorScreen("NoFile");
-		} 
+	try {
+	    myCurrencyWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SUBFOLDER_FILEPATH);
+	} catch (FileNotFoundException e) {
+	    GAME_SCREEN.loadErrorScreen("NoFile");
+	} 
     }
 
 
     @Override
     public void makePanel() {
-	TOWER_IMAGE_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("TowerImageSize"));
 	int swapButtonSize = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("SwapButtonSize"));
 	String assortedButtonFilePath = GAMEPLAYER_PROPERTIES.get("AssortedButtonFilepath");
 
@@ -108,8 +109,7 @@ public class TowerPanel extends ListenerPanel {
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-		ALERT = new GameplayerAlert(e.getMessage());
-	    System.out.println("SwapButton Image Missing");
+	    VIEW.loadErrorAlert("missingSwapButton");
 	}
 
 
@@ -135,10 +135,11 @@ public class TowerPanel extends ListenerPanel {
 	HBox towerHolder = new HBox();
 	int alternator = 0;
 	Button prevTowerButton = new Button();
-
+	int towerImageSize = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("TowerImageSize"));
 	for(FrontEndTower tower : availableTowers) {
 	    ImageView imageView = tower.getImageView();
-	    imageView.setFitWidth(TOWER_IMAGE_SIZE);
+	    imageView.setVisible(true);
+	    imageView.setFitWidth(towerImageSize);
 	    //    imageView.setFitHeight(TOWER_IMAGE_SIZE); 
 	    //    imageView.setPreserveRatio(false);
 	    Button towerButton = UIFACTORY.makeImageViewButton(GAMEPLAYER_PROPERTIES.get("buttonID"),imageView);
@@ -146,6 +147,7 @@ public class TowerPanel extends ListenerPanel {
 	    towerButton.setMaxWidth(Double.MAX_VALUE);
 	    towerButton.setMaxHeight(Double.MAX_VALUE);
 	    towerButton.setOnMouseClicked(arg0 -> GAME_SCREEN.towerSelectedForPlacement(tower));
+	    buttonMap.put(towerButton, tower);
 	    if(alternator%2 == 0) {
 		towerHolder = new HBox();
 		towerHolder.setFillHeight(true);
@@ -168,13 +170,13 @@ public class TowerPanel extends ListenerPanel {
 	}
 	if(alternator%2 ==1) {
 	    ImageView voidView = new ImageView();
-	    voidView.setFitWidth(TOWER_IMAGE_SIZE);
+	    voidView.setFitWidth(towerImageSize);
 	    //	    voidView.setFitHeight(TOWER_IMAGE_SIZE);
 	    Button voidButton = UIFACTORY.makeImageViewButton(GAMEPLAYER_PROPERTIES.get("buttonID"), voidView);
 	    voidButton.setOnMouseClicked(arg0 ->{ 
 
 		GAME_SCREEN.towerSelectedForPlacement(null);
-		System.out.println("nullhit");
+//		System.out.println("nullhit");
 
 	    });
 
@@ -200,7 +202,6 @@ public class TowerPanel extends ListenerPanel {
 
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {
 	towerPane.getChildren().clear();
-
 	VBox filledWithTowers = fillScrollWithTowers(availableTowers);
 
 	towerPane.getChildren().add(filledWithTowers);
@@ -210,10 +211,28 @@ public class TowerPanel extends ListenerPanel {
 
     }
 
-    private void updateCurrency(Integer newValue) {
-    	myCurrencyWriter.recordDataPoint(newValue);
-	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
+    private void checkAffordTowers(int myCurrency) {
+	for(Entry<Button, FrontEndTower> entry : buttonMap.entrySet()) {
+	    if(entry.getValue().getTowerCost() > myCurrency) {
+		entry.getKey().setDisable(true);
+	    }
+	    else {
+		entry.getKey().setDisable(false);
+	    }
+	}
     }
+
+    private void updateCurrency(Integer newValue) {
+	myCurrencyWriter.recordDataPoint(newValue);
+	currencyDisplay.setText(GAMEPLAYER_PROPERTIES.get("currencyText") +newValue);
+	//currency.set(newValue); //tag: buyPanel button disable
+	checkAffordTowers(newValue);
+    }
+
+    //tag: buyPanel button disable
+    //    public void attachBuyPanelCurrencyListener(ChangeListener<Number> listener) {
+    //	currency.addListener(listener);
+    //    }
 
     /**
      * Wrapper method on score to reduce order of call dependencies

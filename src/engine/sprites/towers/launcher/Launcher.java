@@ -3,6 +3,7 @@ package engine.sprites.towers.launcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.builders.PropertyBuilder;
 import engine.managers.Manager;
 import engine.sprites.ShootingSprites;
@@ -27,20 +28,23 @@ public class Launcher extends Manager<Projectile>{
     private double timeSinceLastShot;
     private List<Property> launcherProperties;
     private PropertyBuilder myPropertyFactory;
+    private boolean fakeBool;
 
     public Launcher(Projectile projectile, List<Property> properties) {
 	myProjectile = projectile;
 	launcherProperties = properties;
 	timeSinceLastShot = 0;
+	fakeBool=false;
     }
 
-    public Launcher(Launcher launcher) {
+    public Launcher(Launcher launcher) throws MissingPropertiesException {
 	launcherProperties = new ArrayList<Property>();
 	for(Property p : launcher.getProperties()) {
 	    launcherProperties.add(myPropertyFactory.getProperty(p));
 	}
 	myProjectile = launcher.getProjectile();
 	timeSinceLastShot = 0;
+	fakeBool = false;
     }
 
     /**
@@ -60,10 +64,10 @@ public class Launcher extends Manager<Projectile>{
 
     /**
      * Launch method will make sure that enough time has passed since last shot and then fire a new projectile
+     * @throws MissingPropertiesException 
      * 
      */
-    //TODO implement to shoot at where enemy is going
-    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) {
+    public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	timeSinceLastShot = 0;
 	Projectile launchedProjectile = new Projectile(myProjectile, target, shooterX, shooterY);
 	this.addToActiveList(launchedProjectile);
@@ -93,6 +97,10 @@ public class Launcher extends Manager<Projectile>{
 
     public void setProjectileImage(String image){
 	myProjectile.setImage(image);
+    }
+    
+    public void setProjectileSound(String sound) {
+	myProjectile.setShootingSound(sound);
     }
 
     public void addProperty(Property property) {
@@ -127,7 +135,12 @@ public class Launcher extends Manager<Projectile>{
      */
     public boolean hasReloaded(double elapsedTime) {
 	FireRateProperty fireRate = (FireRateProperty) this.getProperty("FireRateProperty");
+	//System.out.println("fire rate is " + fireRate.getProperty());
 	boolean hasReloaded = fireRate.hasReloaded(timeSinceLastShot);
+	if(!fakeBool) {
+	    fakeBool = true;
+	    return true;
+	}
 	timeSinceLastShot+=elapsedTime;
 	return hasReloaded;
     }
@@ -156,6 +169,15 @@ public class Launcher extends Manager<Projectile>{
     
     public double getDamage() {
 	return myProjectile.getDamage();
+    }
+
+    public Projectile getNewProjectile(double towerX, double towerY, double targetX, double targetY) throws MissingPropertiesException{
+	Projectile newProjectile = new Projectile(myProjectile, towerX, towerY, targetX, targetY);
+	this.addToActiveList(newProjectile);
+	for (Projectile o: this.getListOfActive()) {
+	//    System.out.println("printing out active projectiles *******************************"+ o);
+	}
+	return newProjectile;
     }
 
 }

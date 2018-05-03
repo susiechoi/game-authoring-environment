@@ -1,13 +1,19 @@
 package authoring.frontend;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.tools.packager.Log;
+
+import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import xml.BadGameDataException;
+
 
 /**
  * Class to create Screen where users choose which elements they would like to customize (a level,
@@ -53,7 +59,13 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		});
 		Button demoButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("DemoLabel"));
 		demoButton.setOnAction(e -> {
-		    	getView().writeToFile();
+		    	try {
+			    getView().writeToFile();
+			} catch (BadGameDataException e1) {
+			    getView().loadErrorScreen("Authored model is badly formatted");
+			} catch (IOException e1) {
+			    getView().loadErrorScreen("File couldn't be written");
+			}
 		    	getView().playControllerDemo();
 		});
 		Button saveButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("SaveLabel"));
@@ -61,7 +73,13 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 		saveButton.setOnAction(e -> {
 		    	setSaved();
 		    	saveButton.setDisable(true);
-			getView().writeToFile();
+			try {
+			    getView().writeToFile();
+			} catch (BadGameDataException e1) {
+			    getView().loadErrorScreen("Authored model is badly formatted");
+			} catch (IOException e1) {
+			    getView().loadErrorScreen("File couldn't be written");
+			}
 		});
 		Button mainButton = setupBackButton();
 		String levelPrompt = getErrorCheckedPrompt("EditDropdownLabel");
@@ -80,7 +98,14 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			});
 			Button autogenerateButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("AutogenerateLevel"));
 			autogenerateButton.setOnAction(e -> {
-				getView().autogenerateLevel(); 
+				try {
+				    getView().autogenerateLevel();
+				} catch (MissingPropertiesException e1) {
+				    // TODO Auto-generated catch block
+				    Log.debug(e1);
+				    e1.printStackTrace();
+				    getView().loadErrorScreen("NoFile");
+				} 
 				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDITEXISTINGLEVEL_KEY);
 			});
 			hbox.getChildren().add(levelChooser);
@@ -89,23 +114,6 @@ public class CustomizationChoicesScreen extends AuthoringScreen {
 			newLevelHBox.getChildren().add(autogenerateButton);
 		}
 		
-//		HBox songSelector = new HBox();
-//		ComboBox<String> songDropdown = new ComboBox<>();
-//		try {
-//			songDropdown = getUIFactory().makeTextDropdown("", getPropertiesReader().allKeys(TEST_PROPERTIES));
-//		}
-//		catch(MissingPropertiesException e){
-//			getView().loadErrorScreen("NoFile");
-//		}
-//		ImageView imageDisplay = new ImageView(); 
-//		try {
-//			songSelector = getUIFactory().setupImageSelector(getPropertiesReader(), "", TEST_PROPERTIES, 100, getErrorCheckedPrompt("Song"), getErrorCheckedPrompt("NewSong"),
-//					getErrorCheckedPrompt("NewSongName"), songDropdown, imageDisplay);
-//		}
-//		catch(MissingPropertiesException e) {
-//			getView().loadErrorScreen("NoFile");
-//		}
-//		HBox songPrompted = getUIFactory().addPromptAndSetupHBox("", songSelector, getErrorCheckedPrompt("Song"));
 
 		Button visualizations = getUIFactory().makeTextButton(getErrorCheckedPrompt(DEFAULT_GRAPHS_KEY));
 

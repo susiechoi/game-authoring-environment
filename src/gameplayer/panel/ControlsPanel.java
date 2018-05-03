@@ -7,6 +7,7 @@ import com.sun.javafx.tools.packager.Log;
 
 import frontend.PropertiesReader;
 import frontend.UIFactory;
+import frontend.View;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import gameplayer.GameplayerAlert;
 import gameplayer.screen.GameScreen;
@@ -31,14 +32,15 @@ public class ControlsPanel extends Panel{
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private final UIFactory UIFACTORY;
 	private final PropertiesReader PROP_READ;
-	private GameplayerAlert ALERT;
+	private final View myView;
 
-	public ControlsPanel(GameScreen gameScreen, PromptReader promptReader) {
+	public ControlsPanel(GameScreen gameScreen, PromptReader promptReader, View view) {
 		GAME_SCREEN = gameScreen;
 		GAMEPLAYER_PROPERTIES = GAME_SCREEN.getGameplayerProperties();
 		UIFACTORY = new UIFactory();
 		PROP_READ = new PropertiesReader();
 		PROMPTS = promptReader;
+		myView = view;
 	}
 
 
@@ -62,7 +64,6 @@ public class ControlsPanel extends Panel{
 		String CONTROL_BUTTON_FILEPATH = GAMEPLAYER_PROPERTIES.get("ControlButtonFilepath");
 		Integer DEFAULT_CONTROL_BUTTON_SIZE = Integer.parseInt(GAMEPLAYER_PROPERTIES.get("ControlButtonSize"));
 		try {
-
 			Map<String,Image> controlsMap = PROP_READ.keyToImageMap(CONTROL_BUTTON_FILEPATH, DEFAULT_CONTROL_BUTTON_SIZE, DEFAULT_CONTROL_BUTTON_SIZE);
 			int controlsSplit = controlsMap.keySet().size()/2;
 			int count = 0;
@@ -73,7 +74,7 @@ public class ControlsPanel extends Panel{
 						GAME_SCREEN.controlTriggered(control.getKey());
 					} catch (MissingPropertiesException e) {
 					    	Log.debug(e);
-						ALERT = new GameplayerAlert(e.getMessage());
+						GAME_SCREEN.loadErrorScreen("NoFile");
 					}
 				});
 				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control.getKey()+GAMEPLAYER_PROPERTIES.get("Tooltip"))));
@@ -87,9 +88,7 @@ public class ControlsPanel extends Panel{
 			}
 		} catch (MissingPropertiesException e) {
 		    Log.debug(e);
-			//something went wrong and we don't have the control images
-			ALERT = new GameplayerAlert(e.getMessage());
-			//probably have default images that aren't the ones specified by authoring
+		    myView.loadErrorAlert("missingControlButtonProperties");
 		}
 	}
 }

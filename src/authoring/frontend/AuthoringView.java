@@ -2,6 +2,7 @@
 /**
  * @author Sarah Bland
  * @author susiechoi
+ * @author benauriemma
  * 
  * Represents View of authoring environment's MVC. 
  * Allows for screen transitions and the communication of object altering/creation to Controller. 
@@ -10,6 +11,7 @@
 package authoring.frontend;
 import java.awt.Point;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -32,13 +34,13 @@ import frontend.View;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.GridPane;
-
+import xml.BadGameDataException;
 public class AuthoringView extends View {
 
 	public static final String DEFAULT_SCREENFLOW_FILEPATH = "src/frontend/ScreenFlow.properties";
 	public static final String DEFAULT_ERROR_FILEPATH_BEGINNING = "languages/";
 	public static final String DEFAULT_ERROR_FILEPATH_END = "/Errors.properties";
-	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringStartScreen.css";
+	public static final String DEFAULT_AUTHORING_CSS = "styling/GameAuthoringSpecific.css";
 	public static final String DEFAULT_LANGUAGE = "English";
 	public static final String DEFAULT_THEME_IDENTIFIER = "myGameTheme";
 	public static final String DEFAULT_SETTINGS_OBJ_NAME = "Settings"; 
@@ -113,7 +115,6 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
-			e.printStackTrace();
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 	}
@@ -126,17 +127,21 @@ public class AuthoringView extends View {
 	protected void goForwardFrom(String id) {
 		goForwardFrom(id, "");
 	}
-
-	public void goForwardFrom(String id, List<String> name) {
+	
+	
+	/**
+	 * Controls Screenflow from a certain screen based on Reflection and
+	 * the Screenflow properties file
+	 * @param id is name of current class (key to properties file)
+	 * @param name is List of Object Names needed to construct next screen
+	 * (i.e. an AdjustTowerScreen would need the name of the Tower)
+	 */
+	protected void goForwardFrom(String id, List<String> name) {
 		try {
 			String nextScreenClass = myPropertiesReader.findVal(DEFAULT_SCREENFLOW_FILEPATH, id);
 			Class<?> clazz = Class.forName(nextScreenClass);
 			Constructor<?> constructor = clazz.getDeclaredConstructors()[0];
 			if(constructor.getParameterTypes().length == 2) {
-				//			if(constructor.getParameterTypes()[1].equals(AuthoringModel.class)) {
-				//				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, myModel);
-				//				myStageManager.switchScreen(nextScreen.getScreen());
-				//			}
 				if(constructor.getParameterTypes()[1].equals(ArrayList.class)) {
 					AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this, name);
 					myStageManager.switchScreen(nextScreen.getScreen());
@@ -151,14 +156,10 @@ public class AuthoringView extends View {
 				}
 			}
 			else if(constructor.getParameterTypes()[0].equals(AuthoringView.class)) {
-				System.out.println(clazz.getSimpleName());
+//				System.out.println(clazz.getSimpleName());
 				AuthoringScreen nextScreen = (AuthoringScreen) constructor.newInstance(this);
 				myStageManager.switchScreen(nextScreen.getScreen());
 			}
-			//		else if(constructor.getParameterTypes()[0].equals(ScreenManager.class)) {
-			//			Screen nextScreen = (Screen) constructor.newInstance(new ScreenManager(myStageManager, DEFAULT_LANGUAGE));
-			//			myStageManager.switchScreen(nextScreen.getScreen());
-			//		} 
 			else {
 				throw new MissingPropertiesException("");
 			}
@@ -166,34 +167,39 @@ public class AuthoringView extends View {
 		}
 		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 				| IllegalAccessException | InstantiationException e) {
-			Log.debug(e);	
 			e.printStackTrace();
+		    	Log.debug(e);	
 			loadErrorScreen("NoScreenFlow");
 		}
 	}
-
+	
+	/**
+	 * @see goForwardFrom above
+	 * @param id is ID of current screen
+	 * @param name is name necessary to construct next screen
+	 */
 	public void goForwardFrom(String id, String name) {
 		ArrayList<String> parameterList= new ArrayList<>();
 		parameterList.add(name);
 		goForwardFrom(id,  parameterList);
 	}
 
-	public void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
-		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
+	protected void makePath(GridPane grid, List<List<Point>> coordinates, HashMap<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height, boolean transparent) throws ObjectNotFoundException {
+		myController.makePath(myLevel, grid, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height, transparent);
 	}
 
 	/**
 	 * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
 	 */
 
-	public void makeResources(String gameName, double startingHealth, double starting$, String css) {
-		myController.makeResources(gameName, startingHealth, starting$, css, getTheme());
+	protected void makeResources(String gameName, double startingHealth, double starting$, String instructions, String css, String backgroundMusic, String levelWinSound, String levelLossSound) {
+		myController.makeResources(gameName, startingHealth, starting$, css, getTheme(), instructions, backgroundMusic, levelWinSound, levelLossSound);
 	}
 
 	/**
 	 * Method through which information can be retrieved from AuthoringModel re: the current objects of a given type are available for editing
 	 */
-	public List<String> getCurrentObjectOptions(String objectType) {
+	protected List<String> getCurrentObjectOptions(String objectType) {
 		List<String> availableObjectOptions = new ArrayList<>(); 
 		try {
 			availableObjectOptions = myController.getCurrentObjectOptions(myLevel, objectType);
@@ -204,7 +210,7 @@ public class AuthoringView extends View {
 		return availableObjectOptions; 
 	}
 
-	public Object getObjectAttribute(String objectType, String attribute) {
+	protected Object getObjectAttribute(String objectType, String attribute) {
 		return getObjectAttribute(objectType, "", attribute);
 	}
 
@@ -212,7 +218,7 @@ public class AuthoringView extends View {
 	 * Method through which information about object fields can be requested
 	 * Invoked when populating authoring frontend screens used to edit existing objects
 	 */
-	public Object getObjectAttribute(String objectType, String objectName, String attribute) {
+	protected Object getObjectAttribute(String objectType, String objectName, String attribute) {
 		Object returnedObjectAttribute = ""; 
 		try {
 			returnedObjectAttribute = myController.getObjectAttribute(myLevel, objectType, objectName, attribute);
@@ -256,7 +262,7 @@ public class AuthoringView extends View {
 		return myController.getLevels(); 
 	}
 
-	protected void autogenerateLevel() {
+	protected void autogenerateLevel() throws MissingPropertiesException {
 		int newLevel = myController.autogenerateLevel(); 
 		setLevel(newLevel); 
 	}
@@ -276,7 +282,6 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);	
-			e.printStackTrace();
 			loadErrorAlert(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return new HashMap<>();
@@ -289,13 +294,12 @@ public class AuthoringView extends View {
 		}
 		catch(ObjectNotFoundException e) {
 			Log.debug(e);
-			e.printStackTrace();
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}
 		return 1;
 	}
 
-	protected void writeToFile() {
+	protected void writeToFile() throws BadGameDataException, IOException {
 		try {
 			myController.writeToFile();
 		} catch (ObjectNotFoundException e) {
@@ -346,7 +350,7 @@ public class AuthoringView extends View {
 	//		} 
 	//	}
 
-	public void makeSprite(String objectType, String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
+	protected void makeSprite(String objectType, String name) throws NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 		try {
 			myController.makeSprite(objectType, myLevel, name);
 		} catch (MissingPropertiesException e) {
@@ -358,11 +362,11 @@ public class AuthoringView extends View {
 		} 
 	}
 
-	public void setObjectAttribute(String objectType, String attribute, Object attributeValue) {
+	protected void setObjectAttribute(String objectType, String attribute, Object attributeValue) {
 		setObjectAttribute(objectType, "", attribute, attributeValue);
 	}
 	
-	public void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
+	protected void setObjectAttribute(String objectType, String name, String attribute, Object attributeValue) {
 		try {
 			myController.setObjectAttribute(myLevel, objectType, name, attribute, attributeValue);
 		} catch (IllegalArgumentException | IllegalAccessException | ObjectNotFoundException e) {
@@ -371,7 +375,7 @@ public class AuthoringView extends View {
 		}
 	}
 
-	public void createProperty(String objectType, String name, String propertyName, List<Double> attributes) {
+	protected void createProperty(String objectType, String name, String propertyName, List<Double> attributes) {
 		try {
 			try {
 				myController.createProperty(myLevel, objectType, name, propertyName, attributes);
@@ -389,7 +393,7 @@ public class AuthoringView extends View {
 		setObjectAttribute(DEFAULT_SETTINGS_OBJ_NAME, DEFAULT_THEME_IDENTIFIER, myTheme);
 	}
 
-	public String getTheme() {
+	protected String getTheme() {
 		if (myTheme == null) {
 			try {
 				myTheme = (String) myController.getObjectAttribute(1, DEFAULT_SETTINGS_OBJ_NAME, "", DEFAULT_THEME_IDENTIFIER);
@@ -405,7 +409,7 @@ public class AuthoringView extends View {
 		try {
 			return myController.getPathWithStartingPoint(level, point);
 		}
-		catch(ObjectNotFoundException e) {
+		catch(ObjectNotFoundException | MissingPropertiesException e) {
 			Log.debug(e);
 			loadErrorScreen(DEFAULT_NOOBJECTERROR_KEY);
 		}

@@ -11,6 +11,8 @@ import data.GameData;
 import engine.Settings;
 import engine.level.Level;
 import engine.path.Path;
+import engine.sprites.enemies.Enemy;
+import engine.sprites.towers.Tower;
 
 /**
  * 
@@ -23,10 +25,8 @@ public class AuthoredGame implements GameData {
     private Settings mySettings; 
     private Map<Integer, Level> myLevels;
     private String myGameName;
-    //	private Path myPath;
-
     protected AuthoredGame() {
-	myLevels = new HashMap<Integer, Level>();
+	myLevels = new HashMap<>();
     }
     
     protected void setSettings(Settings newSettings) {
@@ -64,6 +64,11 @@ public class AuthoredGame implements GameData {
 	return mySettings.startingMoney();
     }
     
+    
+    /**
+     * @return Settings object of this game (contains info about 
+     * instructions, game name, and starting currency)
+     */
     public Settings getSettings() {
 	return mySettings;
     }
@@ -87,7 +92,7 @@ public class AuthoredGame implements GameData {
      * @return a list of all Levels currently made in this game
      */
     public List<Level> unmodifiableLevels() {
-	List<Level> ret = new ArrayList<Level>();
+	List<Level> ret = new ArrayList<>();
 	for(Level level : myLevels.values()) {
 	    ret.add(level);
 	}
@@ -100,15 +105,38 @@ public class AuthoredGame implements GameData {
      * @return List<String>: A list of unmodifiable level numbers as strings
      */
     public List<String> unmodifiableLevelNums() {
-	List<String> listToReturn = new ArrayList<String>(); 
+	List<String> listToReturn = new ArrayList<>(); 
 	for (Integer level : myLevels.keySet()) {
 	    listToReturn.add(Integer.toString(level));
 	}
 	return Collections.unmodifiableList(listToReturn); 
     }
     
+    /**
+     * Returns a path based on the name (integer value) of that path
+     * @param name is int value "name" of this path
+     * @param levelNum is level containing path
+     * @return Path object corresponding to that name
+     * @throws ObjectNotFoundException
+     */
     public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 	return levelCheck(levelNum).getPaths().get(name-1);
     }
-
+    
+    /**
+     * Only called by AuthoringModelReader; used to reconstruct/reinitialize all ImageViews that were serialized
+     */
+    public void reconstruct() {
+	for (Integer i:myLevels.keySet()) {
+	    Level thisLevel = myLevels.get(i);
+	    for (String enemyName:thisLevel.getAllEnemies()) {
+		Enemy enemy = thisLevel.getEnemy(enemyName);
+		enemy.loadImage();
+	    }
+	    for (String towerName:thisLevel.getAllTowers()) {
+		Tower tower = thisLevel.getTower(towerName);
+		tower.loadImage();
+	    }
+	}
+    }
 }

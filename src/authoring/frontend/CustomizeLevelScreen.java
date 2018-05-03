@@ -18,10 +18,15 @@ public class CustomizeLevelScreen extends AuthoringScreen {
 	
 	protected CustomizeLevelScreen(AuthoringView view) {
 		super(view);
-		System.out.println("trying to make a customizelevelscreen");
+//		System.out.println("trying to make a customizelevelscreen");
 		setSaved();
 	}
 
+	/**
+	 * Makes all UI elements (specifically buttons) that physically create
+	 * the screen.
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox(); 

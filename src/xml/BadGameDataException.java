@@ -8,20 +8,18 @@ package xml;
  *
  */
 public class BadGameDataException extends RuntimeException{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7370199345461366056L;
-	public BadGameDataException() {
-        super();
+
+    private static final long serialVersionUID = -7370199345461366056L;
+    public BadGameDataException() {
+	super();
     }
     public BadGameDataException(String s) {
-        super(s);
+	super(s);
     }
     public BadGameDataException(String s, Throwable throwable) {
-        super(s, throwable);
+	super(s, throwable);
     }
     public BadGameDataException(Throwable throwable) {
-        super(throwable);
+	super(throwable);
     }
 }

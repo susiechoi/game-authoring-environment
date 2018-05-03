@@ -45,7 +45,7 @@ public class MainScreen extends Screen {
 	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
-	    	System.out.println("makin a mainscreen");
+//	    	System.out.println("makin a mainscreen");
 		VBox rootBox = new VBox();
 		Text title = getUIFactory().makeScreenTitleText(myView.getErrorCheckedPrompt("Welcome"));
 		Button newAuthorButt = getUIFactory().makeTextButton("editbutton", myView.getErrorCheckedPrompt("Author"));
@@ -62,7 +62,6 @@ public class MainScreen extends Screen {
 			} catch (MissingPropertiesException e) {
 				// TODO Auto-generated catch block
 			    	Log.debug(e);
-				e.printStackTrace();
 				myView.loadErrorScreen("NoFile");
 			}
 		});
