@@ -135,7 +135,7 @@ public class Launcher extends Manager<Projectile>{
      */
     public boolean hasReloaded(double elapsedTime) {
 	FireRateProperty fireRate = (FireRateProperty) this.getProperty("FireRateProperty");
-	System.out.println("fire rate is " + fireRate.getProperty());
+	//System.out.println("fire rate is " + fireRate.getProperty());
 	boolean hasReloaded = fireRate.hasReloaded(timeSinceLastShot);
 	if(!fakeBool) {
 	    fakeBool = true;

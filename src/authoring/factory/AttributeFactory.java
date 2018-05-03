@@ -40,6 +40,7 @@ public class AttributeFactory {
      * @throws IllegalAccessException
      */
     public void setObjectAttribute(int level, String objectType, String name, String attribute, Object attributeValue, AuthoredGame game) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException {
+	//System.out.println("level passed: " + level);
 	if (objectType.equals("Enemy")) {
 	    Level currentLevel = game.levelCheck(level);
 	    if (currentLevel.containsEnemy(name)) {

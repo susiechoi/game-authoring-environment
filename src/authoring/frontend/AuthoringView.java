@@ -167,7 +167,8 @@ public class AuthoringView extends View {
 		}
 		catch(MissingPropertiesException | ClassNotFoundException | InvocationTargetException
 				| IllegalAccessException | InstantiationException e) {
-			Log.debug(e);	
+			e.printStackTrace();
+		    	Log.debug(e);	
 			loadErrorScreen("NoScreenFlow");
 		}
 	}

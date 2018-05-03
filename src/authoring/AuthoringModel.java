@@ -77,23 +77,32 @@ public class AuthoringModel {
 	myGeneric = new GenericModel(); 
     	myGame = game;
 	spriteFactory = new SpriteFactory(myGeneric);
+	try {
+	populateDefaultObjects();
+	}
+	catch(FileNotFoundException e) {
+	    throw new MissingPropertiesException(e.getLocalizedMessage());
+	}
     }
 
     private void populateInstanceVariables() throws MissingPropertiesException {
-	myPropertiesReader = new PropertiesReader();
-	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, DEFAULT_CONSTANTS_FILE_KEY);
-	System.out.println("Trying to set default constant");
-	System.out.println(DEFAULT_CONSTANT_FILEPATH);
-	myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, DEFAULT_OBJECT_NAME_KEY);
+	
 	try {
-	    myDefaultTower = myGeneric.generateGenericTower();
-	    myDefaultEnemy = myGeneric.generateGenericEnemy();
-	    myDefaultPath = myGeneric.generateGenericPath();
+	    populateDefaultObjects();
 	    myGame.setSettings(myGeneric.generateGenericSettings());
 	    myGame.addLevel(DEFAULT_FIRSTLEVEL_NUMBER, myGeneric.generateGenericLevel(DEFAULT_FIRSTLEVEL_NUMBER, myDefaultTower, myDefaultEnemy, myDefaultPath));
 	} catch (NumberFormatException | FileNotFoundException e) {
 	    throw new MissingPropertiesException(myDefaultName);
 	}
+    }
+    
+    private void populateDefaultObjects() throws MissingPropertiesException, FileNotFoundException{
+	myPropertiesReader = new PropertiesReader();
+	DEFAULT_CONSTANT_FILEPATH = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, DEFAULT_CONSTANTS_FILE_KEY);
+	myDefaultName = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, DEFAULT_OBJECT_NAME_KEY); 
+	myDefaultTower = myGeneric.generateGenericTower();
+	myDefaultEnemy = myGeneric.generateGenericEnemy();
+	myDefaultPath = myGeneric.generateGenericPath();
     }
 
     /**
@@ -191,7 +200,9 @@ public class AuthoringModel {
 	if (objectType.equals("Enemy")) {
 	    listToReturn = currentLevel.getAllEnemies();  
 	    if (listToReturn.size() == 0) {
-		listToReturn.add(myDefaultEnemy.getName());
+		System.out.println("IS DEFAULT ENEMY NULL");
+		System.out.println(myDefaultEnemy);
+		//listToReturn.add(myDefaultEnemy.getName());
 	    }
 	} else if (objectType.equals("Tower")) {
 	    listToReturn = currentLevel.getAllTowers();

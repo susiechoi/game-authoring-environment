@@ -58,6 +58,7 @@ public class Sprite implements FrontEndSprite{
 	    //  System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
 	    myProperties.add(this.makeProperty(p));
 	}
+	System.out.println("Making it to the end of sprite");
     }
 
     /**

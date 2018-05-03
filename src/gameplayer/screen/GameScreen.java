@@ -64,6 +64,7 @@ public class GameScreen extends Screen {
 
     @Override
     public Parent makeScreenWithoutStyling() {
+	MEDIATOR.pause();
 	rootPane = new BorderPane();
 	rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
 
@@ -72,7 +73,9 @@ public class GameScreen extends Screen {
 	displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
-	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> {
+	    gameStart();
+	});
 
 	gamePane = new BorderPane();
 	gamePane.setTop(SCORE_PANEL.getPanel());
@@ -275,11 +278,13 @@ public class GameScreen extends Screen {
     }
 
     public void gameWon() {
+	MEDIATOR.pause();
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
     }
 
     public void gameLost() {
+	MEDIATOR.pause();
 	SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
     }
