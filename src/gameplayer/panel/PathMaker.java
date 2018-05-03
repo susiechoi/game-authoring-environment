@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 import com.sun.javafx.tools.packager.Log;
+import gameplayer.GameplayerAlert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -20,6 +21,7 @@ public class PathMaker {
 
     private GridPane grid;
     private int myPathSize;
+    private GameplayerAlert ALERT;
 
     public GridPane initGrid(Map<String, List<Point>> map, String backgroundImage, int pathSize, int width, int height) {
 	grid = new GridPane();
@@ -42,14 +44,14 @@ public class PathMaker {
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
 		Point point = pointList.get(i);
-		// TODO handle IllegalArgumentException where key is invalid
 		ImageView image = new ImageView();
 		try{
 		    image = new ImageView(new Image(imageKey));
 		}
 		catch(IllegalArgumentException e){
 		    Log.debug(e);
-		    image = new ImageView(); //TODO this should not be hardcoded
+		    image = new ImageView();
+			ALERT = new GameplayerAlert(e.getMessage());
 		}
 		image.setFitWidth(myPathSize);
 		image.setFitHeight(myPathSize);

@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import gameplayer.GameplayerAlert;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -26,13 +27,13 @@ import javafx.scene.layout.VBox;
 
 public class UpgradePanel extends SpecificPanel {
 
-    //TODO don't have this be a static value
+
 
     private final GameScreen GAME_SCREEN;
     private final UIFactory UI_FACTORY;
     private PropertiesReader PROP_READ;
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
-
+	private GameplayerAlert ALERT;
 
     public UpgradePanel (GameScreen gameScreen, FrontEndTower tower) {
 	super(tower);
@@ -45,7 +46,6 @@ public class UpgradePanel extends SpecificPanel {
 
     @Override
     public void makePanel() {
-	//TODO read in text from properties file
 	HBox towerUpgrades = new HBox();
 	fillUpgrades(towerUpgrades);
 	towerUpgrades.setFillHeight(true);
@@ -78,7 +78,8 @@ public class UpgradePanel extends SpecificPanel {
 	}
 	catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    System.out.println("upgrade image load fail"); //TODO!!!
+		ALERT = new GameplayerAlert(e.getMessage());
+	    System.out.println("upgrade image load fail");
 	}
     }
 }

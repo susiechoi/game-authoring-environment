@@ -1,6 +1,7 @@
 package gameplayer.panel;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
+import gameplayer.GameplayerAlert;
 import javafx.scene.control.Button;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
@@ -25,6 +26,7 @@ public class SettingsPanel extends Panel {
     private final PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
+    private GameplayerAlert ALERT;
 
     public SettingsPanel(GameScreen gameScreen) {
         GAME_SCREEN = gameScreen;
@@ -59,8 +61,9 @@ public class SettingsPanel extends Panel {
             }
         }
         catch (MissingPropertiesException e) {
-            Log.debug(e); 
-            System.out.println("Settings button images missing"); //TODO!!!
+            Log.debug(e);
+            ALERT = new GameplayerAlert(e.getMessage());
+            System.out.println("Settings button images missing");
         }
     }
 

@@ -49,6 +49,7 @@ public class ScreenManager extends View {
 	private final PromptReader PROMPTS;
 	private PropertiesReader PROP_READ = new PropertiesReader();
 	private Map<String, String> GAMEPLAYER_PROPERTIES;
+	private GameplayerAlert ALERT;
 
 	//private final FileIO FILE_READER;
 
@@ -60,6 +61,7 @@ public class ScreenManager extends View {
 		}
 		catch (MissingPropertiesException e) {
 			Log.debug(e);
+			ALERT = new GameplayerAlert(e.getMessage());
 		}
 		PROMPTS = new PromptReader(language, this);
 		myLanguage = language;

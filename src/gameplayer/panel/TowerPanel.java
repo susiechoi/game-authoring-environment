@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import gameplayer.GameplayerAlert;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -42,6 +43,7 @@ public class TowerPanel extends ListenerPanel {
     private PropertiesReader PROP_READ;
     private final UIFactory UIFACTORY;
     private Button currencyDisplay;
+    private GameplayerAlert ALERT;
 
     private DataPointWriter myCurrencyWriter; 
     
@@ -99,14 +101,15 @@ public class TowerPanel extends ListenerPanel {
 	    Map<String, Image> buttonMap = PROP_READ.keyToImageMap(assortedButtonFilePath, swapButtonSize, swapButtonSize);
 	    Button swapButton = UIFACTORY.makeImageButton(GAMEPLAYER_PROPERTIES.get("swapButtonID"), buttonMap.get(GAMEPLAYER_PROPERTIES.get("swapButton")));
 	    swapButton.setOnMouseClicked(arg0 -> GAME_SCREEN.swapVertPanel());
-	    swapButton.setTooltip(new Tooltip(GAMEPLAYER_PROPERTIES.get("swapTooltip"))); //TODO make properties file
+	    swapButton.setTooltip(new Tooltip(GAMEPLAYER_PROPERTIES.get("swapTooltip")));
 	    HBox swapWrap = new HBox(swapButton);
 	    swapWrap.setId(GAMEPLAYER_PROPERTIES.get("swapWrapID"));
 	    swapWrap.setAlignment(Pos.CENTER_RIGHT);
 	    currencyAndSwap.getChildren().add(swapWrap);
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-	    System.out.println("SwapButton Image Missing"); //TODO!!!
+		ALERT = new GameplayerAlert(e.getMessage());
+	    System.out.println("SwapButton Image Missing");
 	}
 
 

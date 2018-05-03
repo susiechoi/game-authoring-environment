@@ -8,6 +8,7 @@ import com.sun.javafx.tools.packager.Log;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import gameplayer.GameplayerAlert;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class ControlsPanel extends Panel{
 	private Map<String,String> GAMEPLAYER_PROPERTIES;
 	private final UIFactory UIFACTORY;
 	private final PropertiesReader PROP_READ;
+	private GameplayerAlert ALERT;
 
 	public ControlsPanel(GameScreen gameScreen, PromptReader promptReader) {
 		GAME_SCREEN = gameScreen;
@@ -70,9 +72,8 @@ public class ControlsPanel extends Panel{
 					try {
 						GAME_SCREEN.controlTriggered(control.getKey());
 					} catch (MissingPropertiesException e) {
-						// TODO Auto-generated catch block
 					    	Log.debug(e);
-						e.printStackTrace();
+						ALERT = new GameplayerAlert(e.getMessage());
 					}
 				});
 				controlButton.setTooltip(new Tooltip(PROMPTS.resourceDisplayText(control.getKey()+GAMEPLAYER_PROPERTIES.get("Tooltip"))));
@@ -87,7 +88,7 @@ public class ControlsPanel extends Panel{
 		} catch (MissingPropertiesException e) {
 		    Log.debug(e);
 			//something went wrong and we don't have the control images
-			//TODO something reasonable here
+			ALERT = new GameplayerAlert(e.getMessage());
 			//probably have default images that aren't the ones specified by authoring
 		}
 	}

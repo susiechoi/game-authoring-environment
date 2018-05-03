@@ -15,6 +15,7 @@ import frontend.PromptReader;
 import frontend.Screen;
 import frontend.View;
 import gameplayer.BrowserPopup;
+import gameplayer.GameplayerAlert;
 import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
@@ -57,6 +58,7 @@ public class GameScreen extends Screen {
     private BorderPane rootPane;
     private SoundFactory SOUND_FACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
+    private GameplayerAlert ALERT;
 
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 	SCREEN_MANAGER = ScreenController;
@@ -153,7 +155,8 @@ public class GameScreen extends Screen {
 	    try {
 		SOUND_FACTORY.setBackgroundMusic("stillDre");
 	    } catch (FileNotFoundException e) {
-		Log.debug(e);
+		    Log.debug(e);
+            ALERT = new GameplayerAlert(e.getMessage());
 	    }
 	    SOUND_FACTORY.playBackgroundMusic();
 
