@@ -36,9 +36,7 @@ public class DoubleGraphScreen extends GraphScreen {
 		LineChart<Number, Number> graph2 = makeGraph(parseTitle(myGame2FilePath)); 
 		addPointsToGraph(myGame2FilePath, graph2);
 		
-		vb.getChildren().addAll(graphTitle, graph, graph2, setupBackButtonCustom(e -> {
-			getView().getStageManager().switchScreen(new GraphMenuScreen(getView(), myGraphType).getScreen());
-		}));
+		vb.getChildren().addAll(graphTitle, graph, graph2, setupBackButton());
 
 		return vb;
 	}

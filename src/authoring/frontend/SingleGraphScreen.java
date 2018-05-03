@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
  * Class that creates Screen to allow users to view a single screen depicting
  * a graph of a certain game attribute (currency, etc.). Dependent on gameplayer
  * to record information correctly.
- * @author SusieChoi
+ * @author susiechoi
  *
  */
 public class SingleGraphScreen extends GraphScreen {
@@ -33,9 +33,7 @@ public class SingleGraphScreen extends GraphScreen {
 		Text graphTitle = getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("GraphTitle"));
 		LineChart<Number, Number> graph = makeGraph(parseTitle(myGameFilepath)); 
 		addPointsToGraph(myGameFilepath, graph);
-		vb.getChildren().addAll(graphTitle, graph, setupBackButtonCustom(e -> {
-			getView().getStageManager().switchScreen(new GraphMenuScreen(getView(), myGraphType).getScreen());
-		}));
+		vb.getChildren().addAll(graphTitle, graph, setupBackButton());
 		
 		return vb;
 	}
