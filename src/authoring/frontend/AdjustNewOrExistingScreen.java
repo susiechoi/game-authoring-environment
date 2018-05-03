@@ -224,6 +224,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			ActionEvent fakeSelection = new ActionEvent();
 			if(key.equals(EMPTY_STRING)) {
 				imageDropdown.getSelectionModel().select(0);
+				imageDropdown.fireEvent(fakeSelection);
 			}
 			else {
 				imageDropdown.getSelectionModel().select(key);

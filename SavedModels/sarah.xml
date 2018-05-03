@@ -391,21 +391,21 @@
                     <engine.sprites.enemies.Enemy>
                       <myName>enemy</myName>
                       <myWrapper>
-                        <myImagePath>images/unc.png</myImagePath>
+                        <myImagePath>images/thebull.png</myImagePath>
                         <height>0.0</height>
                         <width>0.0</width>
                         <x>0.0</x>
                         <y>0.0</y>
                         <visible>false</visible>
                       </myWrapper>
-                      <myImageString>images/unc.png</myImageString>
+                      <myImageString>images/thebull.png</myImageString>
                       <myPropertyBuilder>
                         <PACKAGE>engine.sprites.properties.</PACKAGE>
                         <myReader/>
                       </myPropertyBuilder>
                       <myProperties>
                         <engine.sprites.properties.ValueProperty>
-                          <myProperty>204.81927710843374</myProperty>
+                          <myProperty>319.2771084337349</myProperty>
                           <mySimpleName>ValueProperty</mySimpleName>
                         </engine.sprites.properties.ValueProperty>
                         <engine.sprites.properties.DamageProperty>
@@ -415,7 +415,7 @@
                           <upgradeValue>0.0</upgradeValue>
                         </engine.sprites.properties.DamageProperty>
                         <engine.sprites.properties.HealthProperty>
-                          <myProperty>22.08835341365462</myProperty>
+                          <myProperty>29.71887550200803</myProperty>
                           <mySimpleName>HealthProperty</mySimpleName>
                           <upgradeCost>0.0</upgradeCost>
                           <upgradeValue>0.0</upgradeValue>
@@ -423,7 +423,7 @@
                           <myValue>0.0</myValue>
                         </engine.sprites.properties.HealthProperty>
                         <engine.sprites.properties.SpeedProperty>
-                          <myProperty>9.437751004016064</myProperty>
+                          <myProperty>16.46586345381526</myProperty>
                           <mySimpleName>SpeedProperty</mySimpleName>
                           <upgradeCost>0.0</upgradeCost>
                           <upgradeValue>0.0</upgradeValue>
