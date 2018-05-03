@@ -111,7 +111,7 @@ public class PropertyFactory {
     }
 
     private Property createProperty(String className, String type, Object attribute) {
-//	System.out.println("CLASSNAME " + className);
+	System.out.println("CLASSNAME " + className);
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
     

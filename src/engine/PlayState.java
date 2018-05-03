@@ -14,6 +14,7 @@ import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.properties.ClickProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
@@ -103,6 +104,7 @@ public class PlayState implements GameData {
     private void handleCollisions(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
@@ -110,6 +112,7 @@ public class PlayState implements GameData {
 	myEnemyManager.removeFromMap(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
+	toBeRemoved.addAll(myEnemyManager.moveProjectiles(elapsedTime));
 
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
@@ -119,6 +122,7 @@ public class PlayState implements GameData {
 		throw new FileNotFoundException();
 	    }
 	}
+	System.out.println("ENEMIES ABOUT TO SHOOT **************************************************************************");
 	for(Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	    try {
@@ -127,10 +131,12 @@ public class PlayState implements GameData {
 		e.printStackTrace(); // YIKES THAT'S AN EASY FAIL
 	    }
 	}
+	System.out.println("ENEMIES DONE SHOOTING **************************************************************************");
+
 	updateScore(toBeRemoved);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
     }
-    
+
     /**
      * Checks if enemies have reached the end of the path. Removes the enemies from the
      * screen and the enemy manager object if they reach the end of the path.
@@ -349,9 +355,14 @@ public class PlayState implements GameData {
     
     public Sprite handleClick(FrontEndTower activeTower, double clickedX, double clickedY) throws MissingPropertiesException{
 	Tower tower = (Tower) activeTower;
+	for (Property p: tower.getProperties()) {
+	    System.out.println(p.getName());
+	}
+	System.out.println("handling click " + tower.getProperty("ClickToShootProperty"));
 	if (tower.getProperty("ClickToShootProperty") != null) {
 	    ClickProperty myClickProp = (ClickProperty) tower.getProperty("ClickProperty");
 	    Sprite sprite = (Sprite) tower.getNewProjectile(clickedX, clickedY);
+	    System.out.println(sprite);
 	    return sprite;
 	}
 	return null;

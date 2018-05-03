@@ -67,11 +67,13 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	    Double speed = myEnemy.getProperty("SpeedProperty").getProperty();
 	    this.addProperty(new SpeedProperty(0,0, mySpeedFactor*speed));
 	}
+	else {
+	    this.addProperty(new SpeedProperty(0,0, myProjectile.getProperty("ConstantSpeedProperty").getProperty()));
+	}
 	this.place(shooterX, shooterY);
 	this.rotateImage();
 	hitTargets = new ArrayList<>();
 	myMovingProperty = (MovingProperty) this.getPropertySuperclassType("MovingProperty");
-	System.out.println("this is the moving property "+ myMovingProperty);
 	myMovingProperty.setProjectileOrigin(shooterX, shooterY);
 	targetDestination = new Point();
 	targetDestination.setLocation(target.getX(), target.getY());
@@ -135,16 +137,6 @@ public class Projectile extends Sprite implements FrontEndSprite{
 	double angleToRotateRads = Math.atan2(xDifference,yDifference);
 	this.setRotate(Math.toDegrees(angleToRotateRads));
     }
-
-    /**
-     * 
-     * @return : the amount of damage this Projectile does
-     */
-    @Override
-    public double getDamage() {
-	return getValue("DamageProperty");
-    }
-
     /**
      * @return true if should be removed
      */
@@ -174,6 +166,7 @@ public class Projectile extends Sprite implements FrontEndSprite{
     }
 
     public double getSpeed() {
+//	return 10;
 	return this.getProperty("SpeedProperty").getProperty();
     }
     public void setProjectileTarget(Point newTargetDestination) {

@@ -114,7 +114,7 @@ public class Sprite implements FrontEndSprite{
      * @return
      */
     public double getDamage() {
-	return 0.0;
+	return getValue("DamageCollisionProperty");
     }
 
 
@@ -187,6 +187,7 @@ public class Sprite implements FrontEndSprite{
     }
 
     public void addProperty(Property property) {
+	System.out.println(property.getName());
 	String type = property.getClass().getSuperclass().getSimpleName();
 	Property toRemove = null; 
 	for(Property p : myProperties) {
@@ -203,7 +204,10 @@ public class Sprite implements FrontEndSprite{
 
     public double getValue(String ID) {
 	for(Property property : myProperties) {
-	    if(property.getName().equals(ID)) {
+	    if (ID.equals("DamageProperty"))
+	    System.out.println(property.getName() + " " + property.getClass().getSuperclass().getSimpleName());
+	    if(property.getName().equals(ID) || property.getClass().getSuperclass().getSimpleName().equals(ID)) {
+		System.out.println("This is prop val "+ property.getProperty());
 		return property.getProperty();
 	    }
 	}

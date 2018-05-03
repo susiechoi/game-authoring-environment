@@ -33,7 +33,9 @@ public class HealthProperty extends UpgradeProperty {
      */
     public void loseHealth(double healthLost) {
 	double newValue = this.getProperty() - healthLost;
+	System.out.println("here's the new value " + healthLost);
 	this.setProperty(newValue);
+	System.out.println("actual value "+ this.getProperty());
     }
 
     /**

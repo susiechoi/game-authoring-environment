@@ -72,6 +72,7 @@ public class Launcher extends Manager<Projectile>{
      */
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	timeSinceLastShot = 0;
+	System.out.println(target);
 	Projectile launchedProjectile = new Projectile(myProjectile, target, shooterX, shooterY);
 	this.addToActiveList(launchedProjectile);
 	return launchedProjectile;

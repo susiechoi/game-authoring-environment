@@ -34,6 +34,9 @@ public class TowerBuilder {
 	List<Property> properties = new ArrayList<>();
     	properties.add(new ValueProperty(towerValue));
     	properties.add(new HealthProperty(healthCost, healthValue, health));
+    	for (Property p: properties) {
+    	    System.out.println(p.getName());
+    	}
 	return new Tower(name, imagepath, launcher, properties);
     }
 }

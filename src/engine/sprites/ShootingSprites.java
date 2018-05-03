@@ -6,6 +6,7 @@ import java.util.List;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import engine.physics.ImageIntersecter;
 import engine.sprites.enemies.Enemy;
+import engine.sprites.properties.CollisionProperty;
 import engine.sprites.properties.HealthProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
@@ -62,8 +63,10 @@ public abstract class ShootingSprites extends Sprite{
 	
 	for (Projectile projectile: this.getProjectiles()) {
 	    if(target.intersects(projectile) && !(projectile.hasHit(target))){
+		System.out.println("We've got a hit !!!");
 		toBeRemoved.addAll(objectCollision(target, projectile)); //checks collisions between projectiles and enemy/tower
 		if (projectile.handleCollision(target)) {
+		    System.out.println("projectile being removed");
 		    toBeRemoved.add(projectile);
 		    projectilesToBeDeactivated.add(projectile);
 		}
@@ -85,8 +88,12 @@ public abstract class ShootingSprites extends Sprite{
     private List<Sprite> objectCollision(Sprite target, Sprite collider) {
 	List<Sprite> deadSprites = new ArrayList<>();
 	if(!target.handleCollision(collider)) {
+	    System.out.println("tower being removed");
 	    deadCount++;
 	    deadSprites.add(target);
+	    if (target instanceof ShootingSprites) {
+		deadSprites.addAll(((ShootingSprites) target).getLauncher().getListOfActive());
+	    }
 	}
 	return deadSprites;
     }
@@ -187,6 +194,7 @@ public abstract class ShootingSprites extends Sprite{
     @Override
     public boolean handleCollision(Sprite collider) {
 	this.loseHealth(collider.getDamage());
+	System.out.println(this.getProperty(HEALTH).getProperty() + " this is the tower health");
 	return this.isAlive();
     }
 
@@ -215,7 +223,4 @@ public abstract class ShootingSprites extends Sprite{
     public void setSoundString(String sound) {
 	myLauncher.setProjectileSound(sound);
     }
-    
-
-
 }
