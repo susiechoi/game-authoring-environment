@@ -40,7 +40,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
      */
     public Tower(String name, String image, Launcher launcher, List<Property> properties) throws MissingPropertiesException {
 	super(name, image, launcher, properties);
-	myLauncher = launcher;
 	towerStats = new HashMap<>();
 	setupTowerStats();
 
@@ -53,7 +52,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public Tower(Tower copiedTower) throws MissingPropertiesException {
 	super(copiedTower.getName(), copiedTower.getImageString(), copiedTower.getLauncher(), copiedTower.getProperties()); 
 	mySize = copiedTower.mySize;
-	myLauncher = copiedTower.getLauncher();
 	towerStats = new HashMap<>();
 	setupTowerStats();
     }
@@ -120,15 +118,15 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 
 
     public void addLauncherProperty(Property property) {
-	myLauncher.addProperty(property);
+	this.getLauncher().addProperty(property);
     }
     
     public void addProjectileProperty(Property property) {
-	myLauncher.addProjectileProperty(property);
+	this.getLauncher().addProjectileProperty(property);
     }
     
     public void setProjectileImage(String image) {
-	myLauncher.setProjectileImage(image);
+	this.getLauncher().setProjectileImage(image);
     }
     
     public Projectile getNewProjectile(double targetX, double targetY) throws MissingPropertiesException {

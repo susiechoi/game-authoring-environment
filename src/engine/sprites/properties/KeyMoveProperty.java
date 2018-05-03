@@ -24,7 +24,6 @@ public class KeyMoveProperty extends Property {
     }
 	
     public void move(Tower tower, KeyCode code) {
-	System.out.println("IN PROPERTY MOVE METHOD");
 	getSpeed(code);
 	double xMove = tower.getX() + xVel * elapsedTime; 
 	double yMove = tower.getY() + yVel * elapsedTime;

@@ -317,7 +317,6 @@ public class Level {
 
 
 	public Path getPath() {
-	    System.out.println("getPath() - MyPaths size" + myPaths.size());
 		return myPaths.get(myPaths.size() - 1);
 	}
 
@@ -378,9 +377,7 @@ public class Level {
 	}
 	public void replacePaths(List<Path> currPaths) {
 	    myPaths.removeAll(getPaths());
-//	    System.out.println("paths size adding" + currPaths.size());
 	    myPaths.addAll(currPaths);
-//	    System.out.println("path size after readding" + myPaths.size());
 	    for(Wave wave : myWaves) {
 		wave.removeStalePaths(currPaths);
 	    }
