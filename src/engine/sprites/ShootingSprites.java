@@ -45,7 +45,7 @@ public abstract class ShootingSprites extends Sprite{
 	super(name, image, properties);
 	deadCount = 0;
 	intersector = new ImageIntersecter(this);
-	myLauncher = launcher;
+	myLauncher = new Launcher(launcher);
     }
 
     /**
