@@ -9,6 +9,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Menu screen where user can choose which graphs they would like to view for the 
+ * specified game.
+ * @author Susie Choi
+ *
+ */
 public class GraphMenuScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_GRAPHS_FOLDER = "graphing/";
@@ -26,6 +32,11 @@ public class GraphMenuScreen extends AuthoringScreen {
 		return DEFAULT_GRAPHS_FOLDER+myGraphType+"/"+dropdownSelection;
 	}
 
+	/* (non-Javadoc)
+	 * Creates UI elements (specifically button choices) that allow the user
+	 * to select which graph he or she would like to view.
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox();

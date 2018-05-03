@@ -40,7 +40,7 @@ public class ScorePanel extends ListenerPanel {
 
 	private void setupWriters(int level) {
 		try {
-			System.out.println("HERE IT IS "+DEFAULT_SCORE_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR);
+//			System.out.println("HERE IT IS "+DEFAULT_SCORE_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR);
 			myScoreWriter = new DataPointWriter(GAME_SCREEN.getGameName(), DEFAULT_SCORE_PATH+DEFAULT_LEVEL_IDENTIFIER+level+DEFAULT_FILENAME_SEPARATOR); 
 		} catch (IOException e) {
 			Log.debug(e);
@@ -57,7 +57,6 @@ public class ScorePanel extends ListenerPanel {
 
 	@Override
 	public void makePanel() {
-		//TODO Read words SCORE, LEVEL, and + from properties file
 		ScoreText = new Label(GAMEPLAYER_PROPERTIES.get("scoreText"));
 		LevelText = new Label();
 		HealthText = new Label(GAMEPLAYER_PROPERTIES.get("healthText"));
@@ -85,6 +84,7 @@ public class ScorePanel extends ListenerPanel {
 		myScoreWriter.recordDataPoint(newScore);
 		ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
 	}
+
 
 	private void updateHealth(Integer newHealth) {
 		myHealthWriter.recordDataPoint(newHealth);
@@ -138,3 +138,4 @@ public class ScorePanel extends ListenerPanel {
 		};
 	}
 }
+

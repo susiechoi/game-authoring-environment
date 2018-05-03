@@ -24,7 +24,7 @@ public class RandomShotProperty extends MovingProperty{
     }
 
     @Override
-    public void move(Projectile projectile, double elapsedTime) {
+    public boolean move(Projectile projectile, double elapsedTime) {
 	if(!hasSetPath) {
 	    rotate(projectile);
 	}
@@ -33,6 +33,8 @@ public class RandomShotProperty extends MovingProperty{
 	double yMove = Math.cos(Math.toRadians(projectile.getRotate()))*totalDistanceToMove;
 	projectile.getImageView().setX(projectile.getX()+xMove);
 	projectile.getImageView().setY(projectile.getY()+yMove);
+	
+	return this.checkIfProjectileIsOutOfRange(projectile);
     }
     
     private void rotate(Projectile projectile) {

@@ -12,6 +12,7 @@ import engine.sprites.properties.KillProperty;
 import engine.sprites.properties.Property;
 import engine.sprites.properties.UpgradeProperty;
 import engine.sprites.towers.launcher.Launcher;
+import engine.sprites.towers.projectiles.Projectile;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -42,7 +43,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myLauncher = launcher;
 	towerStats = new HashMap<>();
 	setupTowerStats();
-
 
     }
 
@@ -118,6 +118,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return this.getLauncher().getPropertyValue("RangeProperty");
     }
 
+
     public void addLauncherProperty(Property property) {
 	myLauncher.addProperty(property);
     }
@@ -130,16 +131,19 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	myLauncher.setProjectileImage(image);
     }
     
+    public Projectile getNewProjectile(double targetX, double targetY) throws MissingPropertiesException {
+	return this.getLauncher().getNewProjectile(this.getX(), this.getY(), targetX, targetY);
+    }
     public void move(KeyCode code) {
 	KeyMoveProperty keyMove = (KeyMoveProperty) getProperty("KeyMoveProperty"); 
 	if(keyMove != null) {
+	    System.out.println("found key property");
 	    keyMove.move(this, code);
 	}
     }
     @Override
     public int getTowerCost() {
 	 return (int) getValue("ValueProperty");
-
     }
 
 }

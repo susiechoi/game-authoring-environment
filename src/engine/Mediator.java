@@ -19,6 +19,7 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
 import frontend.StageManager;
 
 import java.awt.Point;
@@ -147,6 +148,21 @@ public class Mediator implements MVController{
 	//	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
+    
+    /**
+     * Method called when a click-to-shoot tower is clicked
+     * @param tower is Tower shooting
+     * @param clickedX is X coordinate where user clicked to shoot
+     * @param clickedY is Y coordinate where user clicked to shoot
+     * @throws MissingPropertiesException
+     */
+    public void handleTowerClickToShoot(FrontEndTower tower, double clickedX, double clickedY) throws MissingPropertiesException{
+	System.out.println("MADE IT TO MEDIATOR CALL");
+	Sprite shotProjectile = myGameEngine.getPlayState().handleClick(tower, clickedX, clickedY);
+	if (shotProjectile != null) {
+	    this.addSpriteToScreen(shotProjectile);
+	}
+    }
 
     /**
      * To be called by the backend any time a projectile or enemy should be added to the screen
@@ -164,6 +180,10 @@ public class Mediator implements MVController{
 	myScreenManager.remove(sprite);
     }
 
+    /**
+     * Sets available towers on the screen based on authored towers
+     * @param availableTowers
+     */
     public void setAvailableTowers(List<FrontEndTower> availableTowers) {  
 	myScreenManager.setAvailableTowers(availableTowers);
     }
@@ -193,7 +213,7 @@ public class Mediator implements MVController{
      * @throws MissingPropertiesException 
      */
     public void restartLevel() throws MissingPropertiesException {
-	System.out.println("in restart");
+//	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
 
@@ -220,6 +240,7 @@ public class Mediator implements MVController{
 	myGameEngine.setSpeed(sliderValue);
     }
 
+    
     /**
      * to be called by the backend to tell the frontend the new level number
      * @param newLevel
@@ -249,8 +270,18 @@ public class Mediator implements MVController{
 	}
     }
 
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    /**
+     * Sets up the path based on information from the authoring side
+     * @param imageMap is map of image filepaths to their 
+     * @param backgroundImageFilePath
+     * @param pathSize
+     * @param width
+     * @param height
+     * @param transparent
+     * @return
+     */
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 
@@ -289,7 +320,8 @@ public class Mediator implements MVController{
 	myScreenManager.getGameScreen().gameWon();
     }
 
-    public void nextLevel() {
+    public void nextLevel(List<FrontEndTower> availableTowers) {
+	setAvailableTowers(availableTowers);
 	myScreenManager.getGameScreen().nextLevel();
     }
 
@@ -307,7 +339,11 @@ public class Mediator implements MVController{
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
+	System.out.println("IN MEDIATOR for moving towers");
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }
 
+    public String getInstructions() {
+        return myGameEngine.getPlayState().getInstructions();
+    }
 }

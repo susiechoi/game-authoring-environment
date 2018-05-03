@@ -14,6 +14,13 @@ import javafx.scene.layout.VBox;
 //import jdk.internal.jimage.ImageReader.Node;
 import javafx.stage.Stage;
 
+/**
+ * Class that creates popup allowing user to specify a Property for a specific
+ * Sprite. Dependent upon the Screen that creates an option to create it.
+ * @author SusieChoi
+ * @author SarahBland
+ *
+ */
 public class PropertyScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_NOFILEERROR_KEY = "NoFile";
@@ -42,6 +49,12 @@ public class PropertyScreen extends AuthoringScreen {
 		myStage = stage;
 	}
 
+	/* (non-Javadoc)
+	 * Creates specific UI components for the popup. The necessary sliders and
+	 * fields are read from a properties file specifying the attributes necessary
+	 * to create a Property
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {
 		VBox vb = new VBox();

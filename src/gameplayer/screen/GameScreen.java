@@ -15,24 +15,25 @@ import frontend.PromptReader;
 import frontend.Screen;
 import frontend.View;
 import gameplayer.BrowserPopup;
+import gameplayer.GameplayerAlert;
 import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import voogasalad.util.soundfactory.*;
-
-
 
 /**
  * @Author Alexi Kontos & Andrew Arnold
  */
 public class GameScreen extends Screen {
-
-
-
-    private final String DEFAULT_SHARED_STYLESHEET;
-    private static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    public static final String DEFAULT_POPUP_STYLESHEET = "styling/GameAuthoringStartScreen.css";
+    public static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
+    //public static final String PROPERTIES_FILE_PATH = "src/sound/resources/soundFiles.properties";
 
     private final PromptReader PROMPTS;
     private TowerPanel TOWER_PANEL;
@@ -47,15 +48,16 @@ public class GameScreen extends Screen {
     private BorderPane rootPane;
     private SoundFactory SOUND_FACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
+    private GameplayerAlert ALERT;
 
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 	SCREEN_MANAGER = ScreenController;
 	GAMEPLAYER_PROPERTIES = SCREEN_MANAGER.getGameplayerProperties();
-	DEFAULT_SHARED_STYLESHEET = GAMEPLAYER_PROPERTIES.get("defaultSharedStyleSheet");
+	setStyleSheet(DEFAULT_POPUP_STYLESHEET);
 	PROMPTS = promptReader;
 	MEDIATOR = mediator;
 	SOUND_FACTORY = MEDIATOR.getSoundFactory();
-	TOWER_PANEL = new TowerPanel(this);
+	TOWER_PANEL = new TowerPanel(this, SCREEN_MANAGER);
 	CONTROLS_PANEL = new ControlsPanel(this, PROMPTS, SCREEN_MANAGER);
 	SCORE_PANEL = new ScorePanel(this);
 	GAME_PANEL = new GamePanel(this);
@@ -64,16 +66,18 @@ public class GameScreen extends Screen {
 
     @Override
     public Parent makeScreenWithoutStyling() {
+	MEDIATOR.pause();
 	rootPane = new BorderPane();
 	rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
-	rootPane.getStylesheets().add(DEFAULT_SHARED_STYLESHEET);
 
 	displayPane = new BorderPane();
 	displayPane.setCenter(TOWER_PANEL.getPanel());
 	displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
-	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> {
+	    gameStart();
+	});
 
 	gamePane = new BorderPane();
 	gamePane.setTop(SCORE_PANEL.getPanel());
@@ -82,6 +86,7 @@ public class GameScreen extends Screen {
 	rootPane.setCenter(gamePane);
 	setVertPanelsLeft();
 	return rootPane;
+
     }
 
     public void towerSelectedForPlacement(FrontEndTower tower) {
@@ -143,19 +148,23 @@ public class GameScreen extends Screen {
 	if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
 	    SOUND_FACTORY.mute();
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
-	    try {
-		SOUND_FACTORY.setBackgroundMusic("stillDre");
-	    } catch (FileNotFoundException e) {
-		Log.debug(e);
-	    }
 	    SOUND_FACTORY.playBackgroundMusic();
 
 
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("pauseMusic"))) {
 	    SOUND_FACTORY.pauseBackgroundMusic();
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("instructions"))) {
-	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("instrURL"), GAMEPLAYER_PROPERTIES);
-	    pop.makePopupBrowser();
+	    Stage pop = new Stage();
+	    VBox vb = new VBox();
+	    Text text = new Text(MEDIATOR.getInstructions());
+	    text.setWrappingWidth(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("InstructionsHeight")));
+	    vb.getChildren().add(text);
+	    Scene unstyled = new Scene(vb);
+	    vb.getStylesheets().add(DEFAULT_POPUP_STYLESHEET);
+
+	    pop.setScene(unstyled);
+	    pop.setHeight(Integer.parseInt(GAMEPLAYER_PROPERTIES.get("InstructionsHeight")));
+	    pop.show();
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("help"))) {
 	    BrowserPopup pop = new BrowserPopup(GAMEPLAYER_PROPERTIES.get("helpURL"), GAMEPLAYER_PROPERTIES);
 	    pop.makePopupBrowser();
@@ -175,7 +184,6 @@ public class GameScreen extends Screen {
 	myScore.addListener(SCORE_PANEL.createScoreListener(myScore.get()));
 	myLives.addListener(SCORE_PANEL.createHealthListener(myLives.get()));
     }
-
 
     public void updateLevel(Integer newLevel) {
 	SCORE_PANEL.updateLevel(newLevel);
@@ -201,6 +209,7 @@ public class GameScreen extends Screen {
 	gamePane.setBottom(UPGRADE_PANEL.getPanel());
     }
 
+
     private void settingsClickedOn() {
 	SettingsPanel SETTINGS_PANEL = new SettingsPanel(this);
 	displayPane.setBottom(SETTINGS_PANEL.getPanel());
@@ -217,9 +226,8 @@ public class GameScreen extends Screen {
 	blankGamePanelClick();
     }
 
-
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return GAME_PANEL.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 
@@ -227,6 +235,7 @@ public class GameScreen extends Screen {
 	rootPane.getChildren().remove(displayPane);
 	rootPane.setRight(null);
 	rootPane.setLeft(displayPane);
+
     }
     private void setVertPanelsRight() {
 	rootPane.getChildren().remove(displayPane);
@@ -266,11 +275,13 @@ public class GameScreen extends Screen {
     }
 
     public void gameWon() {
+	MEDIATOR.pause();
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
     }
 
     public void gameLost() {
+	MEDIATOR.pause();
 	SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
     }
@@ -286,7 +297,6 @@ public class GameScreen extends Screen {
     private void newLevel() {
 	gamePane.setCenter(GAME_PANEL.getPanel());
 	MEDIATOR.play();
-
     }
 
     private void gameStart() {
@@ -294,5 +304,19 @@ public class GameScreen extends Screen {
 	MEDIATOR.play();
     }
 
+    public String getInstructions() {
+	return MEDIATOR.getInstructions();
+    }
+
+
+    public void clickToShoot(FrontEndTower clickedTower, double x, double y) {
+	System.out.println("going to mediator");
+	try {
+	    MEDIATOR.handleTowerClickToShoot(clickedTower, x, y);
+	}catch(MissingPropertiesException e) {
+	    SCREEN_MANAGER.loadErrorScreen("NoFile");
+	}
+
+    }
 
 }

@@ -5,6 +5,13 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Class that creates Screen to allow users to view a single screen depicting
+ * a graph of a certain game attribute (currency, etc.). Dependent on gameplayer
+ * to record information correctly.
+ * @author SusieChoi
+ *
+ */
 public class SingleGraphScreen extends GraphScreen {
 	
 	private String myGameFilepath;
@@ -15,6 +22,10 @@ public class SingleGraphScreen extends GraphScreen {
 		setSaved(); 
 	}
 
+	/*
+	 * Creates UI components (specifically graph) that user sees on screen.
+	 * @see frontend.Screen#makeScreenWithoutStyling()
+	 */
 	@Override
 	public Parent makeScreenWithoutStyling() {	
 		VBox vb = new VBox();

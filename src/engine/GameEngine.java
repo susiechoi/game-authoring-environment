@@ -7,6 +7,8 @@ import com.sun.javafx.tools.packager.Log;
 
 import java.io.FileNotFoundException;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -54,11 +56,18 @@ public class GameEngine {
 
 	}
 
+	/**
+	 * Sets new playState when a new play is initiated
+	 * @param p
+	 */
 	public void setPlayState(PlayState p) {
 		myPlayState = p;
 		
 	}
 
+	/**
+	 * @return current PlayState being used to play game
+	 */
 	public PlayState getPlayState() {
 		return myPlayState;
 	}
@@ -71,7 +80,8 @@ public class GameEngine {
 	 * @throws FileNotFoundException 
 	 */
 	public void loop(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
-		myPlayState.update(elapsedTime*timeFactor);
+	    //System.out.println(myPlayState.toString());
+	    myPlayState.update(elapsedTime*timeFactor);
 	}
 
 

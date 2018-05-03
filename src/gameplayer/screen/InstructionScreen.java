@@ -17,8 +17,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
 import java.util.Map;
 import java.util.logging.Logger;
+
+import com.sun.javafx.tools.packager.Log;
 
 import authoring.frontend.exceptions.MissingPropertiesException;
 
@@ -49,7 +52,6 @@ public class InstructionScreen extends Screen {
 		VBox rootBox = new VBox();
 		String titleText = GAMEPLAYER_PROPERTIES.get("newGameText"); 
 		Text title = getUIFactory().makeScreenTitleText(titleText);
-		// TODO: Make a load game button
 		//	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 		//	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew());
 
@@ -68,7 +70,9 @@ public class InstructionScreen extends Screen {
 			SCREEN_MANAGER.loadGameScreenNew(allGames.getValue());
 		    } catch (MissingPropertiesException e1) {
 			// TODO Auto-generated catch block
+			Log.debug(e1);
 			e1.printStackTrace();
+			getView().loadErrorScreen("NoFile");
 		    }
 		});
 		//	continueButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenContinuation());
@@ -102,8 +106,7 @@ public class InstructionScreen extends Screen {
 
 	@Override
 	protected View getView() {
-		// TODO Auto-generated method stub
-		return null;
+		return SCREEN_MANAGER;
 	}
 }
 

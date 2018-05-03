@@ -25,11 +25,6 @@ public class AuthoredGame implements GameData {
     private Settings mySettings; 
     private Map<Integer, Level> myLevels;
     private String myGameName;
-
-    /**
-     * 
-     * 
-     */
     protected AuthoredGame() {
 	myLevels = new HashMap<>();
     }
@@ -69,6 +64,11 @@ public class AuthoredGame implements GameData {
 	return mySettings.startingMoney();
     }
     
+    
+    /**
+     * @return Settings object of this game (contains info about 
+     * instructions, game name, and starting currency)
+     */
     public Settings getSettings() {
 	return mySettings;
     }
@@ -112,6 +112,13 @@ public class AuthoredGame implements GameData {
 	return Collections.unmodifiableList(listToReturn); 
     }
     
+    /**
+     * Returns a path based on the name (integer value) of that path
+     * @param name is int value "name" of this path
+     * @param levelNum is level containing path
+     * @return Path object corresponding to that name
+     * @throws ObjectNotFoundException
+     */
     public Path getPathFromName(int name, int levelNum) throws ObjectNotFoundException {
 	return levelCheck(levelNum).getPaths().get(name-1);
     }

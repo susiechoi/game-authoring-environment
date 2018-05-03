@@ -34,7 +34,6 @@ public class TowerInfoPanel extends SpecificPanel {
 
 	@Override
 	public void makePanel() {
-		//TODO add SellTower info pri
 		Map<String,Integer> towerStats = TOWER.getTowerStats();
 		Label TowerInfo = new Label(prepareStats(towerStats));
 		Button sellTower = UI_FACTORY.makeTextButton(GAMEPLAYER_PROPERTIES.get("buttonID"), PROMPTS.resourceDisplayText("SellTowerButton"));
@@ -55,10 +54,5 @@ public class TowerInfoPanel extends SpecificPanel {
 		return sb.toString();
 	}
 
-	public String getTowerInfoOnClick() {
-		//TODO Once backend is linked, write method to take information from button click on upgradePanel
-		//TODO and send it over to the buyPanel
-		return null;
-	}
 
 }

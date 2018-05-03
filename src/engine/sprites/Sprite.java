@@ -34,7 +34,8 @@ public class Sprite implements FrontEndSprite{
     private List<Property> myProperties;
     private final String FILEPATH = "file:";
     private final int SIZE = 50;
-
+    private final String COLLISION = "CollisionProperty";
+    private final String DAMAGE = "DamageProperty";
 
     /**
      * Constructor that takes in a sprite's image
@@ -48,7 +49,7 @@ public class Sprite implements FrontEndSprite{
     public Sprite(String name, String image, List<Property> properties) throws MissingPropertiesException {
 	myName = name;
 	myImageString = image;
-	myImageView = new ImageView(new Image("file:"+image, 50, 50, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
+	myImageView = new ImageView(new Image(FILEPATH+image, SIZE, SIZE, true, true)); // TODO REPLACE WITH NON-MAGIC VALUES
 	myImageView.setPreserveRatio(true);
 	myWrapper = new ImageWrapper(image);
 	myProperties = new ArrayList<>();
@@ -57,6 +58,7 @@ public class Sprite implements FrontEndSprite{
 	    //  System.out.println("ABOUT TO MAKE PROPERTIES" + p + " ****************");
 	    myProperties.add(this.makeProperty(p));
 	}
+	System.out.println("Making it to the end of sprite");
     }
 
     /**
@@ -196,7 +198,7 @@ public class Sprite implements FrontEndSprite{
 	    if(property.getName().equals(p.getName())) {
 		toRemove = p;
 	    }
-	    else if(type.equals(p.getClass().getSuperclass().getSimpleName())) {
+	    else if(type.equals(p.getClass().getSuperclass().getSimpleName()) && (type.equals(COLLISION) || type.equals(DAMAGE))) {
 		toRemove = p;
 	    }
 	}
@@ -220,7 +222,7 @@ public class Sprite implements FrontEndSprite{
      */
     public Property getPropertySuperclassType(String type) {
 	for(Property p : this.getProperties()) {
-	    System.out.println("property class is " + p.getClass().getSimpleName());
+//	    System.out.println("property class is " + p.getClass().getSimpleName());
 	    if(p.getClass().getSuperclass().getSimpleName().equals(type)) {
 		return p;
 	    }
