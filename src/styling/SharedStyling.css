@@ -36,10 +36,6 @@ Text {
 	-fx-background-radius: 6;
 }
 
-.img-view:hover {
-    -fx-effect: dropshadow(three-pass-box, black, 40, 0.0 , 0 , 5);
-}
-
 .sizebuttons {
         -fx-min-width: 20;
         -fx-min-height: 50;

@@ -4,7 +4,7 @@
     <myStartingHealth>100.0</myStartingHealth>
     <myStartingMoney>1000.0</myStartingMoney>
     <myCSSTheme>Modern</myCSSTheme>
-    <myGameTheme>Duke</myGameTheme>
+    <myGameTheme>Apocalypse</myGameTheme>
     <myInstructions>https://en.wikipedia.org/wiki/Tower_defense</myInstructions>
     <myBackgroundMusic>epic</myBackgroundMusic>
     <myLevelWinSound>applause</myLevelWinSound>
@@ -59,6 +59,8 @@
             <myEndImage>images/darkstone.png</myEndImage>
             <isTransparent>false</isTransparent>
           </engine.path.Path>
+<<<<<<< HEAD:SavedModels/My New Game.xml
+=======
           <engine.path.Path>
             <THRESHOLD>5.0</THRESHOLD>
             <myCoordinates>
@@ -127,6 +129,7 @@
             <myEndImage>file:images/darkstone.png</myEndImage>
             <isTransparent>false</isTransparent>
           </engine.path.Path>
+>>>>>>> 2680a8cb98076d9c63eab3cf90668374682182f2:SavedModels/for the love of GOD.xml
         </myPaths>
         <myTowers>
           <entry>
@@ -245,6 +248,11 @@
             </engine.sprites.towers.Tower>
           </entry>
         </myTowers>
+<<<<<<< HEAD:SavedModels/My New Game.xml
+        <myWaves/>
+        <myEnemies>
+          <entry>
+=======
         <myWaves>
           <engine.sprites.enemies.wave.Wave>
             <myWaveMap>
@@ -377,6 +385,7 @@
             <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry/engine.sprites.enemies.Enemy"/>
           </entry>
           <entry>
+>>>>>>> 2680a8cb98076d9c63eab3cf90668374682182f2:SavedModels/for the love of GOD.xml
             <string>Default</string>
             <engine.sprites.enemies.Enemy>
               <myName>Default</myName>

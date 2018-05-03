@@ -27,6 +27,7 @@ public class GridDropCell {
      */
     GridDropCell(GridPane grid, GridPane checkGrid, int col, int row) {
 	StackPane cell = new StackPane();
+	cell.setMinSize(0, 0);
 	myGrid = grid;
 	myCheckGrid = checkGrid;
 	setCellDragProperties(cell, col, row);
