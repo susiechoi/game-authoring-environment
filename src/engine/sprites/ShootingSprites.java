@@ -170,7 +170,6 @@ public abstract class ShootingSprites extends Sprite{
 
     public double upgradeProperty(double balance, String propertyName) {
 	UpgradeProperty propToUpgrade = (UpgradeProperty) this.getProperty(propertyName);
-	System.out.println("property is " + propToUpgrade.getClass().getSimpleName());
 	return propToUpgrade.upgrade(balance);
     }
 

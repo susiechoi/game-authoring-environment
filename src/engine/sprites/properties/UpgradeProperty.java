@@ -40,8 +40,6 @@ public abstract class UpgradeProperty extends Property {
      */
     public double upgrade(double balance) {
 	if(canUpgrade(balance)) {
-	    System.out.println("can upgrade it");
-	    System.out.println("upgrade Val current is " + upgradeValue);
 	    double newValue = this.getProperty() + upgradeValue;
 	    this.setProperty(newValue);
 	    return balance - upgradeCost;

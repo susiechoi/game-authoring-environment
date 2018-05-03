@@ -57,7 +57,6 @@ public class Sprite implements FrontEndSprite{
 	for(Property p : properties) {
 	    myProperties.add(this.makeProperty(p));
 	}
-	System.out.println("Making it to the end of sprite");
     }
 
     /**
@@ -218,7 +217,6 @@ public class Sprite implements FrontEndSprite{
      */
     public Property getPropertySuperclassType(String type) {
 	for(Property p : this.getProperties()) {
-//	    System.out.println("property class is " + p.getClass().getSimpleName());
 	    if(p.getClass().getSuperclass().getSimpleName().equals(type)) {
 		return p;
 	    }

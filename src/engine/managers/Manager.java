@@ -45,7 +45,6 @@ public class Manager<E> {
 
     public void addToAvailableList(E sprite) {
 	available.add(sprite);
-	System.out.println("AVAILABLE: " + available.size());
     }
     
     public void removeFromActiveList(E sprite) {
