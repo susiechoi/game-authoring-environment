@@ -248,7 +248,7 @@ public class PlayState implements GameData {
 	    try {
 		myMediator.getSoundFactory().playSoundEffect(mySettings.getLevelWinSound());
 	    } catch (FileNotFoundException e) {
-		//Log.debug(e);
+		Log.debug(e);
 	    }
 	}
     }
@@ -335,7 +335,7 @@ public class PlayState implements GameData {
 	try {
 	    myMediator.getSoundFactory().playSoundEffect("cash");
 	} catch (FileNotFoundException e) {
-	    //Log.debug(e);
+	    Log.debug(e);
 	} 
     }
 

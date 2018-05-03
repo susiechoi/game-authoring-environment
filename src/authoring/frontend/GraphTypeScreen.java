@@ -15,16 +15,16 @@ import javafx.scene.text.Text;
  * @author SusieChoi
  *
  */
-public class GraphTypeScreen extends AuthoringScreen {
+class GraphTypeScreen extends AuthoringScreen {
 	
 	public static final String DEFAULT_GRAPHING_FOLDER = "graphing/";
 
-	public GraphTypeScreen(AuthoringView view) {
+	protected GraphTypeScreen(AuthoringView view) {
 		super(view);
 		setSaved(); 
 	}
-
-	/* (non-Javadoc)
+	
+	/**
 	 * Adds UI elements (specifically buttons) that allow user to make
 	 * choices about what kind of graphs they would like to see.
 	 * @see frontend.Screen#makeScreenWithoutStyling()

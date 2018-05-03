@@ -56,15 +56,9 @@ public class AdjustResourcesScreen extends AdjustNewOrExistingScreen {
 
 	vb.getChildren().add(getUIFactory().makeScreenTitleText(getErrorCheckedPrompt("SpecifyStartingResources")));
 
-
-
 	HBox soundSelectors = new HBox();
 
 	//VBox backgroundMusicSelector = getUIFactory().makeSoundSelector(getPropertiesReader(), soundPropertiesFilePath,  e = (String s) -> {this.setBackgroundMusic(s)});
-
-
-
-
 
 	ComboBox<String> backgroundMusicDropdown;
 	try {

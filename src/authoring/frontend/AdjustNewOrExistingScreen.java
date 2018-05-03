@@ -32,12 +32,12 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	public static final String DEFAULT_OBJATTRIBUTEDNE_KEY = "ObjectAttributeDNE"; 
 	public static final String DEFAULT_NOIMAGEFILE_KEY = "NoImageFile";
 	public static final String DEFAULT_CONSTANTS = "src/frontend/Constants.properties";
+	public static final String DEFAULT_COLLISION_KEYWORD = "Collision";
 	public static final String EMPTY_STRING = "";
-	public static final int DEFAULT_POPUP_WIDTH = 600;
-	public static final int DEFAULT_POPUP_HEIGHT = 300; 
-	
-	//	private String myFieldsPropertiesPath; 
-	private String myObjectDescription; 
+	public static final String DEFAULT_POPUP_WIDTH_KEYWORD = "PopupWidth";
+	public static final String DEFAULT_POPUP_HEIGHT_KEYWORD = "PopupHeight";
+	public static final String DEFAULT_NOCONSTANTS_ERROR_KEY = "NoConstants";
+
 	private String mySelectedObjectName; 
 	private String myDefaultObjectName; 
 	private int myMaxHealthImpact;
@@ -51,8 +51,6 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 	protected AdjustNewOrExistingScreen(AuthoringView view, String selectedObjectName, String fieldsPropertiesPath, String objectDescription) {
 		super(view);
 		setConstants();
-		//		myFieldsPropertiesPath = fieldsPropertiesPath; 
-		myObjectDescription = objectDescription; 
 		mySelectedObjectName = selectedObjectName; 
 		myIsNewObject = selectedObjectName.equals(myDefaultObjectName);
 	}
@@ -75,7 +73,7 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 			getView().loadErrorScreen("BadConstants");
 		} catch (MissingPropertiesException e) {
 			Log.debug(e);
-			getView().loadErrorScreen("NoConstants");
+			getView().loadErrorScreen(DEFAULT_NOCONSTANTS_ERROR_KEY);
 		}
 
 	}
@@ -94,14 +92,27 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 
 	protected abstract Parent populateScreenWithFields();
 
-	protected Node makePropertySelector() {
+	protected Parent makePropertySelector(String subfolderPath, Button applyButton) {
+		Parent propertySelector = makePropertySelector(subfolderPath);
+		for (Node n : propertySelector.getChildrenUnmodifiable()) {
+			if (n.getClass() == ComboBox.class) {
+				((ComboBox<String>)n).addEventFilter(ActionEvent.ACTION, e-> {
+					applyButton.setDisable(false);
+				});
+				applyButton.setDisable(true);
+			}
+		}
+		return propertySelector; 
+	}
+	
+	protected Parent makePropertySelector(String subfolderPath) {
 		HBox hb = new HBox(); 
 
 		String propertySelectionPrompt = getView().getErrorCheckedPrompt("PropertySelection");
 
 		ArrayList<String> propertyOptions = new ArrayList<>();
 		propertyOptions.add(propertySelectionPrompt);
-		propertyOptions.addAll(getUIFactory().getFileNames(DEFAULT_PROPERTIES_FILES_PREFIX+myObjectDescription));
+		propertyOptions.addAll(getUIFactory().getFileNames(DEFAULT_PROPERTIES_FILES_PREFIX+subfolderPath));
 
 		Button addPropertyButton = getUIFactory().makeTextButton(propertySelectionPrompt);
 
@@ -111,17 +122,18 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 				propertySelectionPrompt);
 		addPropertyButton.setDisable(true);
 		addPropertyButton.setOnAction(e -> {
-//			getView().getStageManager().switchScreen(
-//					new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName, this)
-//					.getScreen());
 			Stage propertyPopup = new Stage();
-			Parent propScreenRoot = new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), myObjectDescription, mySelectedObjectName, propertyPopup).getScreen(); 
+			Parent propScreenRoot = new PropertyScreen(getView(), availableProperties.getSelectionModel().getSelectedItem(), subfolderPath, mySelectedObjectName, propertyPopup).getScreen(); 
 			propertyPopup.setScene(new Scene(propScreenRoot));
 			propertyPopup.show();
-			propertyPopup.setHeight(DEFAULT_POPUP_HEIGHT);
-			propertyPopup.setWidth(DEFAULT_POPUP_WIDTH);
+			try {
+				propertyPopup.setHeight(Double.parseDouble(getPropertiesReader().findVal(DEFAULT_CONSTANTS, DEFAULT_POPUP_HEIGHT_KEYWORD)));
+				propertyPopup.setWidth(Double.parseDouble(getPropertiesReader().findVal(DEFAULT_CONSTANTS, DEFAULT_POPUP_WIDTH_KEYWORD)));
+			} catch (NumberFormatException | MissingPropertiesException e1) {
+				Log.debug(e1);
+				getView().loadErrorScreen(DEFAULT_NOCONSTANTS_ERROR_KEY);
+			}
 		});
-
 		hb.getChildren().addAll(availableProperties, addPropertyButton);
 		return hb; 
 	}
@@ -251,5 +263,5 @@ abstract class AdjustNewOrExistingScreen extends AdjustScreen {
 		return list;
 	}
 
-   
+
 }

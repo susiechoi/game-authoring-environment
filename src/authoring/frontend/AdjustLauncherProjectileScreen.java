@@ -7,9 +7,6 @@
  */
 
 package authoring.frontend;
-
-import com.sun.javafx.tools.packager.Log;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -22,6 +19,9 @@ import javafx.scene.layout.VBox;
 class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {	
 
     public static final String PROJECTILE_OBJECT_TYPE = "Projectile";
+    public static final String DEFAULT_SUBFOLDERPATH_SEPARATOR = "/";
+    public static final String DEFAULT_MOVEMENTPROPERTY_SUBFOLDERNAME = "Movement";
+    public static final String DEFAULT_COLLISIONPROPERTY_SUBFOLDERNAME = "Collision";
     public static final String LAUNCHER_OBJECT_TYPE = "Launcher";
     public static final String PROJECTILE_IMAGE_PREFIX = "images/ThemeSpecificImages/ProjectileImages/";
     public static final String PROJECTILE_IMAGE_SUFFIX = "ProjectileImageNames.properties";
@@ -29,15 +29,12 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
     public static final String DEFAULT_APPLYBUTTON_SCREENFLOW = "Apply";
 
     private String myObjectName; 
-
-
     //    private Slider myProjectileDamageSlider;
     //    private Slider myProjectileSpeedSlider; 
     //    private Slider myLauncherRateSlider;
     //    private Slider myLauncherRangeSlider;
     //    private Slider myProjectileSizeSlider;
     // TODO: add something for the sound -bma
-    private Double myProjectileDamage;
     private Double myProjectileSpeed;
     private Double myLauncherRate;
     private Double myLauncherRateValue;
@@ -61,7 +58,6 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	Button applyButton = getUIFactory().setupApplyButton();
 	applyButton.setOnAction(e -> {
 	    try {
-//		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "DamageProperty", myProjectileDamageCost, myProjectileDamageValue, myProjectileDamage);
 		setProperty(PROJECTILE_OBJECT_TYPE, myObjectName, "ConstantSpeedProperty", myProjectileSpeed);
 		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "RangeProperty", myLauncherRange);
 		setProperty(LAUNCHER_OBJECT_TYPE, myObjectName, "FireRateProperty", myLauncherRateCost, myLauncherRateValue, myLauncherRate);
@@ -72,8 +68,15 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 		getView().loadErrorAlert("NoSelection");
 	    }
 	});
-	vb.getChildren().add(makePropertySelector());
+	
+	Parent movementPropertySelector = makePropertySelector(PROJECTILE_OBJECT_TYPE+DEFAULT_SUBFOLDERPATH_SEPARATOR+DEFAULT_MOVEMENTPROPERTY_SUBFOLDERNAME); 
+	Parent collisionPropertySelector = makePropertySelector(PROJECTILE_OBJECT_TYPE+DEFAULT_SUBFOLDERPATH_SEPARATOR+DEFAULT_COLLISIONPROPERTY_SUBFOLDERNAME, applyButton); 
+
+	vb.getChildren().add(movementPropertySelector);
+	vb.getChildren().add(collisionPropertySelector);
+		
 	vb.getChildren().add(applyButton);
+	
 	return vb;
     }
 
@@ -81,38 +84,28 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 
 	HBox selectors = new HBox();
 
-	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
-	selectors.getChildren().add(projectileImageSelect);
-
-
-
+	// 86-101 ben auriemma
 	String soundPropertiesFilePath = "src/sound/resources/soundFiles.properties";
 	ComboBox<String> soundDropdown;
 	try {
 	    soundDropdown = this.getUIFactory().makeTextDropdown(this.getPropertiesReader().allKeys(soundPropertiesFilePath)); // TODO: this has no prompt, and the action for no choice is null
 
 	    soundDropdown.addEventHandler(ActionEvent.ACTION,e -> {
-		    getView().setObjectAttribute("Projectile", myObjectName, "mySound", soundDropdown.getSelectionModel().getSelectedItem()); 
+		    getView().setObjectAttribute(PROJECTILE_OBJECT_TYPE, myObjectName, "mySound", soundDropdown.getSelectionModel().getSelectedItem()); 
 	    });
 	    
 	    VBox projectileSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "New Sound Name:", ".wav", soundDropdown);
 	    selectors.getChildren().add(projectileSoundSelect);
 	} catch (MissingPropertiesException e) {
 	    getView().loadErrorAlert("NoFile");
-	    e.printStackTrace(); //TODO
+	    e.printStackTrace(); 
 	}
 
+	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, PROJECTILE_OBJECT_TYPE, PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
+	selectors.getChildren().add(projectileImageSelect);
+	
 	vb.getChildren().add(selectors);
 
-	Slider myProjectileDamageSlider = getUIFactory().setupSlider(getMyMaxRange());
-	HBox projectileDamage = getUIFactory().setupSliderWithValue(myProjectileDamageSlider, getErrorCheckedPrompt("ProjectileDamage"));
-	vb.getChildren().add(projectileDamage);
-	myProjectileDamageSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-	    myProjectileDamage = (Double) newValue;
-	    //	getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myProjectileDamage", newValue);
-	});
-
-	//	Slider myProjectileSizeSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	Slider myProjectileSpeedSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileSpeed"));
 	vb.getChildren().add(projectileSpeed);

@@ -1,3 +1,10 @@
+/**
+ * Menu screen where user can choose which graphs they would like to view for the 
+ * specified game.
+ * @author Susie Choi
+ *
+ */
+
 package authoring.frontend;
 
 import java.util.ArrayList;
@@ -9,12 +16,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-/**
- * Menu screen where user can choose which graphs they would like to view for the 
- * specified game.
- * @author Susie Choi
- *
- */
 public class GraphMenuScreen extends AuthoringScreen {
 
 	public static final String DEFAULT_GRAPHS_FOLDER = "graphing/";
@@ -32,7 +33,7 @@ public class GraphMenuScreen extends AuthoringScreen {
 		return DEFAULT_GRAPHS_FOLDER+myGraphType+"/"+dropdownSelection;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * Creates UI elements (specifically button choices) that allow the user
 	 * to select which graph he or she would like to view.
 	 * @see frontend.Screen#makeScreenWithoutStyling()
@@ -64,12 +65,8 @@ public class GraphMenuScreen extends AuthoringScreen {
 				e -> {singleButton.setDisable(true);}, choosePrompt);
 		singleButton.setDisable(true);
 		singleButton.setOnAction(e -> {
-//			ArrayList<String> args = new ArrayList<>(); 
 			String fullFilepath  = makeFullFilepath(singleChooser.getSelectionModel().getSelectedItem()); 
-//			args.add(fullFilepath);
-//			args.add(myGraphType);
 			getView().getStageManager().switchScreen(new SingleGraphScreen(getView(), fullFilepath, myGraphType).getScreen());
-//			getView().goForwardFrom(this.getClass().getSimpleName()+"Single", args);
 		});
 		
 		vb.getChildren().addAll(singleChooser, singleButton);
@@ -87,14 +84,9 @@ public class GraphMenuScreen extends AuthoringScreen {
 			e -> {compareButton.setDisable(true);}, choosePrompt);
 		compareButton.setDisable(true);
 		compareButton.setOnAction(e -> {
-//			ArrayList<String> args = new ArrayList<>(); 
 			String game1Path = makeFullFilepath(game1Chooser.getSelectionModel().getSelectedItem()); 
 			String game2Path = makeFullFilepath(game2Chooser.getSelectionModel().getSelectedItem()); 
-//			args.add(game1Path);
-//			args.add(game2Path);
-//			args.add(myGraphType);
 			getView().getStageManager().switchScreen(new DoubleGraphScreen(getView(), game1Path, game2Path, myGraphType).getScreen());
-//			getView().goForwardFrom(this.getClass().getSimpleName()+"Double", args);
 		});
 
 		vb.getChildren().addAll(game1Chooser, game2Chooser, compareButton);

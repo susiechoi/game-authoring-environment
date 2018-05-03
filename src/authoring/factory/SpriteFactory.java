@@ -15,7 +15,7 @@ import engine.sprites.towers.Tower;
  * Class to create a generic Sprite when the user wants to specify a new one.
  * Used before user specifies parameters/Properties for a given Sprite.
  * @author Katie Van Dyk
- * @author Susie Choi
+ * @author susiechoi
  * @author Sarah Bland
  */
 public class SpriteFactory {
