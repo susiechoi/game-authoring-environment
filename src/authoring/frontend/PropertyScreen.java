@@ -44,7 +44,9 @@ public class PropertyScreen extends AuthoringScreen {
 		super(view);
 		myPropertiesFilepath = DEFAULT_PROPERTIES_FILES_PREFIX+objectType+DEFAULT_FILEPATH_SEPARATOR+propertyName+DEFAULT_PROPERTIES_FILES_SUFFIX; 
 		myPropertyName = propertyName;
-		myObjectType = objectType;
+		if (objectType.contains(DEFAULT_FILEPATH_SEPARATOR)) {
+			myObjectType = objectType.split(DEFAULT_FILEPATH_SEPARATOR)[0];
+		}
 		myObjectName = objectName;
 		myStage = stage;
 	}

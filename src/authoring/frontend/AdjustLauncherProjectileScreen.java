@@ -76,6 +76,7 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 	vb.getChildren().add(collisionPropertySelector);
 		
 	vb.getChildren().add(applyButton);
+	
 	return vb;
     }
 
@@ -83,28 +84,28 @@ class AdjustLauncherProjectileScreen extends AdjustNewOrExistingScreen {
 
 	HBox selectors = new HBox();
 
+	// 86-101 ben auriemma
 	String soundPropertiesFilePath = "src/sound/resources/soundFiles.properties";
 	ComboBox<String> soundDropdown;
 	try {
 	    soundDropdown = this.getUIFactory().makeTextDropdown(this.getPropertiesReader().allKeys(soundPropertiesFilePath)); // TODO: this has no prompt, and the action for no choice is null
 
 	    soundDropdown.addEventHandler(ActionEvent.ACTION,e -> {
-		    getView().setObjectAttribute("Projectile", myObjectName, "mySound", soundDropdown.getSelectionModel().getSelectedItem()); 
+		    getView().setObjectAttribute(PROJECTILE_OBJECT_TYPE, myObjectName, "mySound", soundDropdown.getSelectionModel().getSelectedItem()); 
 	    });
 	    
 	    VBox projectileSoundSelect = this.getUIFactory().setupSelector(this.getPropertiesReader(), "", soundPropertiesFilePath, "Load New Sound", "New Sound Name:", ".wav", soundDropdown);
 	    selectors.getChildren().add(projectileSoundSelect);
 	} catch (MissingPropertiesException e) {
 	    getView().loadErrorAlert("NoFile");
-	    e.printStackTrace(); //TODO
+	    e.printStackTrace(); 
 	}
 
-	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, "Projectile", PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
+	HBox projectileImageSelect = makeImageSelector(PROJECTILE_OBJECT_TYPE, PROJECTILE_OBJECT_TYPE, PROJECTILE_IMAGE_PREFIX+getView().getTheme()+PROJECTILE_IMAGE_SUFFIX);
 	selectors.getChildren().add(projectileImageSelect);
 	
 	vb.getChildren().add(selectors);
 
-	//	Slider myProjectileSizeSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	Slider myProjectileSpeedSlider = getUIFactory().setupSlider(getMyMaxUpgradeIncrement());
 	HBox projectileSpeed = getUIFactory().setupSliderWithValue(myProjectileSpeedSlider, getErrorCheckedPrompt("ProjectileSpeed"));
 	vb.getChildren().add(projectileSpeed);
