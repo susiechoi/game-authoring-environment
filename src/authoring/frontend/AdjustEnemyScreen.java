@@ -83,7 +83,7 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 			//getView().setObjectAttribute(OBJECT_TYPE, myObjectName, "myKillReward", newValue);
 		});
 		
-		vb.getChildren().add(makePropertySelector());
+		vb.getChildren().add(makePropertySelector(OBJECT_TYPE));
 
 		Button goToProjectileLauncherButton = getUIFactory().makeTextButton(getErrorCheckedPrompt("CustomizeProjectileLauncher"));
 		vb.getChildren().add(goToProjectileLauncherButton);

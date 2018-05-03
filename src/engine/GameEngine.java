@@ -45,9 +45,9 @@ public class GameEngine {
 				    try {
 					loop(SECOND_DELAY);
 				    } catch (MissingPropertiesException i) {
-					//Log.debug(i);
+					Log.debug(i);
 				    } catch (FileNotFoundException i) {
-					//Log.debug(i);
+					Log.debug(i);
 				    }
 				});
 		ANIMATION = new Timeline();

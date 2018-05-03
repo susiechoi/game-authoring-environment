@@ -43,8 +43,10 @@ public class PropertyFactory {
      * @throws MissingPropertiesException
      */
     public void setProperty(Level currentLevel, String objectType, String objectName, String propertyName, List<Double> attributes) throws ObjectNotFoundException, MissingPropertiesException {
-//	System.out.println("SETTING PROPERTY");
-//	System.out.println(propertyName);
+//	System.out.println("*****************SETTING PROPERTY********************");
+//	System.out.println(propertyName+" IS THE PROPERTY NAME");
+//	System.out.println(objectName+" IS THE NAME OF THE OBJECT");
+//	System.out.println(objectType+" IS THE OBJECT TYPE");
 	for (Double s : attributes) System.out.println(s);
 	if (objectType.equals("Enemy")) {
 	    if (currentLevel.containsEnemy(objectName)) {
