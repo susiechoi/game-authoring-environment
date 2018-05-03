@@ -118,6 +118,7 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	return this.getLauncher().getPropertyValue("RangeProperty");
     }
 
+
     public void addLauncherProperty(Property property) {
 	myLauncher.addProperty(property);
     }

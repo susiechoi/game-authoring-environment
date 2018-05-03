@@ -19,6 +19,7 @@ import engine.sprites.FrontEndSprite;
 import engine.sprites.Sprite;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
+import engine.sprites.towers.Tower;
 import frontend.StageManager;
 
 import java.awt.Point;
@@ -239,6 +240,7 @@ public class Mediator implements MVController{
 	myGameEngine.setSpeed(sliderValue);
     }
 
+    
     /**
      * to be called by the backend to tell the frontend the new level number
      * @param newLevel
@@ -318,7 +320,8 @@ public class Mediator implements MVController{
 	myScreenManager.getGameScreen().gameWon();
     }
 
-    public void nextLevel() {
+    public void nextLevel(List<FrontEndTower> availableTowers) {
+	setAvailableTowers(availableTowers);
 	myScreenManager.getGameScreen().nextLevel();
     }
 
