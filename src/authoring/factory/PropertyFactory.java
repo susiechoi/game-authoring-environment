@@ -53,11 +53,19 @@ public class PropertyFactory {
 		Tower tower = currentLevel.getTower(objectName);
 		tower.addProjectileProperty(getProperty(objectName, propertyName, attributes));
 	    }
+	    if (currentLevel.containsEnemy(objectName)) {
+		Enemy enemy = currentLevel.getEnemy(objectName);
+		enemy.addProjectileProperty(getProperty(objectName, propertyName, attributes));
+	    }
 	}
 	else if (objectType.equals("Launcher")) {
 	    if (currentLevel.containsTower(objectName)) {
 		Tower tower = currentLevel.getTower(objectName);
 		tower.addLauncherProperty(getProperty(objectName, propertyName, attributes));
+	    }
+	    if (currentLevel.containsEnemy(objectName)) {
+		Enemy enemy = currentLevel.getEnemy(objectName);
+		enemy.addLauncherProperty(getProperty(objectName, propertyName, attributes));
 	    }
 	}
     }
@@ -96,11 +104,11 @@ public class PropertyFactory {
 //	System.out.println("CLASSNAME " + className);
 	return (Property) Reflection.createInstance(className, (double) attribute);
     }
-
-    public List<Object> retrieveProperty(String objectName, String propertyName) {
+    
+    public Double retrieveProperty(String objectName, String propertyName, int index) {
 	for(String object : currentProperties.keySet()) {
 	    if(object.equals(objectName)) {
-		return currentProperties.get(object).getAttributes();
+		return (Double)currentProperties.get(object).getAttributes().get(index);
 	    }
 	}
 	return null;

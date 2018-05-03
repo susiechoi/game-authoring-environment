@@ -257,8 +257,8 @@ public class Mediator implements MVController{
 	}
     }
 
-    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height) {
-	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height);
+    public boolean setPath(Map<String, List<Point>> imageMap, String backgroundImageFilePath, int pathSize, int width, int height, boolean transparent) {
+	return myScreenManager.setPath(imageMap, backgroundImageFilePath, pathSize, width, height, transparent);
     }
 
 
@@ -319,4 +319,7 @@ public class Mediator implements MVController{
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }
 
+    public String getInstructions() {
+        return myGameEngine.getPlayState().getInstructions();
+    }
 }

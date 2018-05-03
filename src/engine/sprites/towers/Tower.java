@@ -44,7 +44,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
 	towerStats = new HashMap<>();
 	setupTowerStats();
 
-
     }
 
     /**
@@ -134,7 +133,6 @@ public class Tower extends ShootingSprites implements FrontEndTower {
     public Projectile getNewProjectile(double targetX, double targetY) throws MissingPropertiesException {
 	return this.getLauncher().getNewProjectile(this.getX(), this.getY(), targetX, targetY);
     }
-
     public void move(KeyCode code) {
 	KeyMoveProperty keyMove = (KeyMoveProperty) getProperty("KeyMoveProperty"); 
 	if(keyMove != null) {

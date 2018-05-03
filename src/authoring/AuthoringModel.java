@@ -99,13 +99,10 @@ public class AuthoringModel {
 	currentLevel.addWave(wave);
     }
 
-
-    public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException {
+    public void makePath(int level, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, 
+	    String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height, boolean transparent) throws ObjectNotFoundException {
 	myImageMap = imageCoordinates; //map (row/column), coordinates is absoluteCoordinates
 	myBackgroundImage = backgroundImage;
-	//	System.out.println("BACKGROUND IMAGE PASSING: " +backgroundImage);
-	//				myPathCoordinates = coordinates;
-
 	Level currentLevel = myGame.levelCheck(level);
 	List<Path> newPathList = new ArrayList<>();
 	for(List<Point> list : coordinates) {
@@ -121,7 +118,7 @@ public class AuthoringModel {
 //		System.out.println("adding a new path!!!");
 		List<List<Point>> listOfLists = new ArrayList<List<Point>>();
 		listOfLists.add(list);
-		Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height);
+		Path newPath = new PathBuilder().construct(listOfLists, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height, transparent);
 		newPathList.add(newPath);
 	    }
 	}
@@ -199,22 +196,12 @@ public class AuthoringModel {
      * Method through which information can be sent to instantiate or edit a path object
      * Wraps constructor in case of new object creation
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String backgroundMusic, String levelWinSound, String levelLossSound) {
-	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, backgroundMusic, levelWinSound, levelLossSound);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	Settings newSettings = new SettingsBuilder().construct(gameName, startingHealth, starting$, css, theme, instructions, backgroundMusic, levelWinSound, levelLossSound);
 	myGame.setSettings(newSettings);
     }
 
-    /**
-     * Gets List of objects that composes a Property
-     * @param level - level of the object whose Property is requested
-     * @param objectType - type of object whose Properties will be searched (e.g. Tower)
-     * @param name - name of object whose Properties will be searched
-     * @param attribute - name of attribute/Property
-     * @return
-     */
-    public List<Object> getObjectProperty(int level, String objectType, String name, String attribute){
-	return propertyFactory.retrieveProperty(name, attribute);
-    }
+
 
     /**
      * Creates property for object

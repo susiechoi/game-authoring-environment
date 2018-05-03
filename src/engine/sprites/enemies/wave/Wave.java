@@ -58,7 +58,7 @@ public class Wave {
     public void addEnemy(Enemy enemy, int number) {
 	Map<Enemy, Integer> enemyMap = new HashMap<>();
 	enemyMap.put(enemy, number);
-	myWaveMap.put(new Path(null, null, null, null, null, null, 0, number, number), enemyMap);
+	myWaveMap.put(new Path(null, null, null, null, null, null, 0, number, number, false), enemyMap);
     }
     
     public double getWaveTime() {

@@ -187,4 +187,10 @@ public class Projectile extends Sprite implements FrontEndSprite{
     public String getShootingSound() {
 	return myShootingSound;
     }
+
+    
+    public void setShootingSound(String sound) {
+	myShootingSound = sound;
+    }
+    
 }

@@ -9,7 +9,6 @@ import org.w3c.dom.Document;
 import com.sun.javafx.tools.packager.Log;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-
 ///Put this at the top of the file:
 import java.io.File;
 import java.io.IOException;

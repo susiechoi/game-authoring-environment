@@ -79,8 +79,8 @@ public class AuthoringController implements MVController{
     /**
      * Method through which information can be sent to instantiate or edit the Resources object in Authoring Model;
      */
-    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String backgroundMusic, String levelWinSound, String levelLossSound) {
-	myModel.makeResources(gameName, startingHealth, starting$, css, theme, backgroundMusic, levelWinSound, levelLossSound);
+    public void makeResources(String gameName, double startingHealth, double starting$, String css, String theme, String instructions, String backgroundMusic, String levelWinSound, String levelLossSound) {
+	myModel.makeResources(gameName, startingHealth, starting$, css, theme, instructions, backgroundMusic, levelWinSound, levelLossSound);
     }
 
     // TODO
@@ -88,8 +88,8 @@ public class AuthoringController implements MVController{
      * Method through which information can be sent to instantiate or edit a Path in Authoring Model
      * @throws ObjectNotFoundException 
      */
-    public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height) throws ObjectNotFoundException { 
-	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height); 
+    public void makePath(int level, GridPane grid, List<List<Point>> coordinates, Map<String, List<Point>> imageCoordinates, String backgroundImage, String pathImage, String startImage, String endImage, int pathSize, int width, int height, boolean transparent) throws ObjectNotFoundException { 
+	myModel.makePath(level, coordinates, imageCoordinates, backgroundImage, pathImage, startImage, endImage, pathSize, width, height, transparent); 
 	myImageMap = imageCoordinates;
     }
 

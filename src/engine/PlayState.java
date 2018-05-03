@@ -2,15 +2,11 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.sun.javafx.tools.packager.Log;
-
 import authoring.frontend.exceptions.MissingPropertiesException;
 import data.GameData;
-
 import java.awt.Point;
 import java.io.FileNotFoundException;
-
 import engine.level.Level;
 import engine.managers.EnemyManager;
 import engine.managers.TowerManager;
@@ -27,6 +23,7 @@ import engine.sprites.towers.projectiles.Projectile;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
+
 
 /**
  * Handles the current state of the game, including current score, money, and lists
@@ -87,7 +84,7 @@ public class PlayState implements GameData {
 	//Background has to be passed after a layout pass has been done on the Scene in order to adapt to
 	//differences in computers screen size 
 	if(!backgroundSet) {
-	    backgroundSet = myMediator.setPath(myLevels.get(0).getLevelPathMap(), myLevels.get(0).getBackGroundImage(), myLevels.get(0).getPathSize(), myLevels.get(0).getGridWidth(), myLevels.get(0).getGridHeight());
+	    backgroundSet = myMediator.setPath(myLevels.get(0).getLevelPathMap(), myLevels.get(0).getBackGroundImage(), myLevels.get(0).getPathSize(), myLevels.get(0).getGridWidth(), myLevels.get(0).getGridHeight(), myLevels.get(0).getTransparent());
 	}
 	count++;
 	checkLoss();
@@ -109,12 +106,23 @@ public class PlayState implements GameData {
 	myEnemyManager.setActiveList(activeEnemies);
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
 
+	System.out.println("disregard");
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	    try {
 		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
 	    } catch (FileNotFoundException e) {
 		throw new FileNotFoundException();
+	    }
+	}
+	System.out.println("about to shoot");
+	System.out.println("tower manager size " + myTowerManager.getListOfActive().size());
+	for(Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive(), elapsedTime)) {
+	    myMediator.addSpriteToScreen(projectile);
+	    try {
+		myMediator.getSoundFactory().playSoundEffect(projectile.getShootingSound()); // THIS SHOULD BE CUSTOMIZED: should be something like playSoundEffect(projectile.getSound())
+	    } catch (FileNotFoundException e) {
+		e.printStackTrace(); // YIKES THAT'S AN EASY FAIL
 	    }
 	}
 	updateScore(toBeRemoved);
@@ -262,7 +270,7 @@ public class PlayState implements GameData {
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
 	myMediator.updateLevel(currentLevel.myNumber());
 	myMediator.setPath(currentLevel.getLevelPathMap(), currentLevel.getBackGroundImage(), 
-		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight());
+		currentLevel.getPathSize(), currentLevel.getGridWidth(), currentLevel.getGridHeight(), currentLevel.getTransparent());
     }
 
     /**
@@ -354,4 +362,8 @@ public class PlayState implements GameData {
 	System.out.println("in playstate move towers");
 	myTowerManager.moveTowers(tower, c);
     }
+
+    public String getInstructions() {
+    	return mySettings.getInstructions();
+	}
 }

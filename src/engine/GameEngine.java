@@ -7,12 +7,13 @@ import com.sun.javafx.tools.packager.Log;
 
 import java.io.FileNotFoundException;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-
 import xml.BadGameDataException;
 import xml.PlaySaverWriter;
 import xml.XMLFactory;

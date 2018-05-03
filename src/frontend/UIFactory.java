@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.tools.packager.Log;
+
 import authoring.frontend.exceptions.MissingPropertiesError;
 import authoring.frontend.exceptions.MissingPropertiesException;
 import javafx.beans.value.ChangeListener;
@@ -39,7 +41,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jdk.internal.jline.internal.Log;
 
 public class UIFactory {
 
@@ -487,8 +488,10 @@ public class UIFactory {
 	}
 
 	public List<String> getFileNames(String folderName) {
+	    	System.out.println("folder name: ");
 		String currentDir = System.getProperty("user.dir");
 		File file = new File(currentDir + File.separator + folderName);
+		System.out.println(currentDir+ File.separator + folderName);
 		File[] fileArray = file.listFiles();
 		List<String> fileNames = new ArrayList<>();
 		for (File aFile : fileArray) {

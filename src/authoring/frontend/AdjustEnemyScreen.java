@@ -94,10 +94,10 @@ class AdjustEnemyScreen extends AdjustNewOrExistingScreen {
 				setProperty(OBJECT_TYPE, myObjectName, "HealthProperty", 0.0, 0.0, myInitialHealth);
 				setProperty(OBJECT_TYPE, myObjectName, "SpeedProperty", 0.0, 0.0, mySpeed);
 				setSaved();
-				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_SHOOTING_SCREENFLOW_KEY);
+				getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_SHOOTING_SCREENFLOW_KEY, myObjectName);
 			}
 			catch(NullPointerException e1) {
-				getView().loadErrorAlert(DEFAULT_NOSELECTION_ERRORKEY);
+				getView().loadErrorAlert(DEFAULT_NOSELECTION_ERRORKEY); 
 			}
 		});
 

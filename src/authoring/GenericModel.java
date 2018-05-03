@@ -72,7 +72,7 @@ public class GenericModel {
 		dummyPathEndPoints.add(new Point(2, 3));
 		pathImages.put(DEFAULT_PATH_START, dummyPathStartPoints);
 		pathImages.put(DEFAULT_PATH_END, dummyPathEndPoints);
-		Path newPath = new PathBuilder().construct(dummyCoordinates, pathImages, DEFAULT_BACKGROUND_IMAGE, DEFAULT_PATH_MIDDLE, DEFAULT_PATH_START, DEFAULT_PATH_END, 60, 1020/60, 650/60);
+		Path newPath = new PathBuilder().construct(dummyCoordinates, pathImages, DEFAULT_BACKGROUND_IMAGE, DEFAULT_PATH_MIDDLE, DEFAULT_PATH_START, DEFAULT_PATH_END, 60, 1020/60, 650/60, false);
 		return newPath;
 	}
 	
@@ -95,11 +95,13 @@ public class GenericModel {
 		int startingMoney = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingMoney"));
 		String startingCSS = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingCSS");
 		String startingTheme = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingTheme");
+		String startingInstructions = myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingInstructions");
 		String defaultBackgroundMusic = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "BackgroundMusic");
 		String defaultLevelWinSound = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "LevelWinSound");
 		String defaultLevelLossSound = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "LevelLossSound");
 		return new SettingsBuilder().construct(defaultGameName, 
-			startingHealth, startingMoney, startingCSS, startingTheme, defaultBackgroundMusic, defaultLevelWinSound, defaultLevelLossSound);
+			startingHealth, startingMoney, startingCSS, startingTheme, startingInstructions, defaultBackgroundMusic, defaultLevelWinSound, defaultLevelLossSound);
+
 	}
 
 	/**
