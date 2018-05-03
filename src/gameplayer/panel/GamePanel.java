@@ -10,6 +10,7 @@ import engine.sprites.towers.CannotAffordException;
 import engine.sprites.towers.FrontEndTower;
 import frontend.PropertiesReader;
 import frontend.UIFactory;
+import gameplayer.GameplayerAlert;
 import gameplayer.screen.GameScreen;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -44,8 +45,8 @@ public class GamePanel extends Panel{
     private ScrollPane scroll;
     private FrontEndTower clickedTower;
     private GridPane grid;
+	private GameplayerAlert ALERT;
 
-    //TODO changes this to be passed from mediator ******************************************************************************
     private final String DEFAULT_BACKGROUND_FILE_PATH;
     private String CONSTANTS_FILE_PATH;
     private boolean backgroundSet;
@@ -56,7 +57,6 @@ public class GamePanel extends Panel{
 	DEFAULT_BACKGROUND_FILE_PATH = GAMEPLAYER_PROPERTIES.get("defaultBackgroundFilePath");
 	PROP_READ = new PropertiesReader();
 	UIFACTORY = new UIFactory();
-	//TODO probably a better way of doing this (thread canceling towerPlacement)
 	towerSelected =  null;
 	CONSTANTS_FILE_PATH = GAMEPLAYER_PROPERTIES.get("constantsFilePath");
 	backgroundSet = false;
@@ -65,7 +65,6 @@ public class GamePanel extends Panel{
     @Override
     public void makePanel() {
 
-	//TODO potentially fix needed?
 	Pane gamePane = new Pane();
 	scroll = new ScrollPane(gamePane);
 	gamePane.setId(GAMEPLAYER_PROPERTIES.get("gamePanelID"));
@@ -134,7 +133,7 @@ public class GamePanel extends Panel{
      * @param tower will be null if tower placement is canceled
      */
     public void towerSelected(FrontEndTower tower) {
-	if(tower!= null && tower != towerSelected ) { //TODO (thread canceling towerPlacement)
+	if(tower!= null && tower != towerSelected ) {
 	    towerSelected = tower;
 	    ImageView towerImage = tower.getImageView();
 	    towerPlaceMode = true;
@@ -151,7 +150,7 @@ public class GamePanel extends Panel{
 	    spriteAdd.setOnMouseMoved(e -> {
 		rangeIndicator.setCenterX(e.getX()+(towerImage.getImage().getWidth()/2));
 		rangeIndicator.setCenterY(e.getY()+(towerImage.getImage().getHeight()/2)); });
-	} else { //TODO (thread canceling towerPlacement)
+	} else {
 	    //maybe make a new towerContructor which creates a null tower?
 	    resetCursor();
 	    towerPlaceMode = false;
@@ -187,7 +186,9 @@ public class GamePanel extends Panel{
 	    towImage.toFront();
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
-//	    System.out.println("Constants property file not found");
+		ALERT = new GameplayerAlert(e.getMessage());
+	    System.out.println("Constants property file not found");
+
 	}
     }
 
@@ -230,6 +231,8 @@ public class GamePanel extends Panel{
 	    }
 	    catch(CannotAffordException e){
 		Log.debug(e);
+		ALERT = new GameplayerAlert(e.getMessage());
+		//GameScreen popup for cannot afford
 		resetCursor();
 	    }
 	    GAME_SCREEN.blankGamePanelClick();

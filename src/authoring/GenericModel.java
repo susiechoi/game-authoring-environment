@@ -59,6 +59,13 @@ public class GenericModel {
 	}
 
 
+	/**
+	 * Creates a generic path that the game begins with in the case that
+	 * a user does not make a path
+	 * @return Path to be added to generic level
+	 * @throws NumberFormatException
+	 * @throws FileNotFoundException
+	 */
 	public Path generateGenericPath() throws NumberFormatException, FileNotFoundException {
 		List<Point> dummyPathPoints = new ArrayList<>();
 		dummyPathPoints.add(new Point(2, 2));
@@ -76,6 +83,16 @@ public class GenericModel {
 		return newPath;
 	}
 	
+	/**
+	 * Creates a generic Level object so that all parameters have defaults
+	 * if a user does not choose to change them
+	 * @param levelNumber is number of the generic level
+	 * @param tower is generic tower populating level
+	 * @param enemy is generic enemy populating level
+	 * @param path is generic path populating level
+	 * @return generic Level object
+	 * @throws MissingPropertiesException
+	 */
 	public Level generateGenericLevel(int levelNumber, Tower tower, Enemy enemy, Path path) throws MissingPropertiesException {
 		Level level = new Level(levelNumber);
 		level.addTower(myDefaultName, new Tower(tower));
@@ -85,10 +102,21 @@ public class GenericModel {
 		return level; 
 	}
 	
+	/**
+	 * Creates default Settings object
+	 * @return default Settings object
+	 * @throws MissingPropertiesException
+	 */
 	public Settings generateGenericSettings() throws MissingPropertiesException {
 		return generateGenericSettings(myDefaultName);
 	}
 
+	/**
+	 * Creates a generic Settings object to give users a default example
+	 * @param name is default generic settings name
+	 * @return generic Settings game
+	 * @throws MissingPropertiesException
+	 */
 	public Settings generateGenericSettings(String name) throws MissingPropertiesException {
 		String defaultGameName = myPropertiesReader.findVal(DEFAULT_SETTINGS_FILE, "NewGame");
 		int startingHealth = Integer.parseInt(myPropertiesReader.findVal(DEFAULT_CONSTANT_FILEPATH, "StartingHealth"));
@@ -151,7 +179,8 @@ public class GenericModel {
 	 * @throws MissingPropertiesException 
 	 */
 	public Tower generateGenericTower() throws NumberFormatException, FileNotFoundException, MissingPropertiesException {
-		return generateGenericTower(myDefaultName);
+
+	    return generateGenericTower(myDefaultName);
 	}
     
 	/**

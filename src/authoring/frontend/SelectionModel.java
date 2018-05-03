@@ -17,8 +17,8 @@ public class SelectionModel {
     public static final String CELL_SELECT_STYLE = "-fx-background-color: rgba(255,255,255, 0.3); -fx-background-radius: 10;";
     public static final String CELL_DESELECT_STYLE = "-fx-background-color: rgba(0,0,0,0);";
     private Set<Pane> selectedCells = new HashSet<>();
-    private Node selectedNode;
-    private Node copyNode;
+    private ImageView selectedNode;
+    private ImageView copyImage;
     private GridPane myGrid;
     private GridPane myCheckGrid;
     private int mySize;
@@ -29,7 +29,10 @@ public class SelectionModel {
      * @param checkGrid
      * @param size
      */
+
+
     public SelectionModel(GridPane grid, GridPane checkGrid, int size) {
+	
 	myGrid = grid;
 	myCheckGrid = checkGrid;
 	mySize = size;
@@ -57,7 +60,7 @@ public class SelectionModel {
      * Sets a path block node as "selected"
      * @param node
      */
-    public void addNode(Node node) {
+    public void addImage(ImageView node) {
 	if (selectedNode != null) {
 	    selectedNode.setEffect(null);
 	}
@@ -88,29 +91,31 @@ public class SelectionModel {
      * Sets the selected path block node as "copied"
      */
     public void copy() {
-	copyNode = selectedNode;
+	selectedNode.setEffect(null);
+	copyImage = selectedNode;
     }
 
     /**
      * Pastes the selected path block node into every selected gridPane cell
      */
-    public void paste() { //fix
-	if (copyNode != null && copyNode instanceof ImageView) {
+    public void paste() { 
+	
+	if (copyImage != null) {
 	    for (Pane cell: selectedCells) {
+		cell.setStyle(CELL_DESELECT_STYLE);
 		int col = GridPane.getColumnIndex(cell);
 		int row = GridPane.getRowIndex(cell);
-		DraggableImage path = new DraggableImage(((ImageView) copyNode).getImage());
+		DraggableImage path = new DraggableImage(copyImage.getImage());
 		path.setDraggable(myCheckGrid, row, col);
 		path.getPathImage().setFitWidth(mySize);
 		path.getPathImage().setFitHeight(mySize);
-		if (path.getPathImage().getId() == CreatePathGrid.START) {
-		    System.out.println("PASTING START");
+		if (copyImage.getId() == CreatePathGrid.START) {
 		    myCheckGrid.add(new Label(CreatePathGrid.START), col, row);
 		    path.getPathImage().setId(CreatePathGrid.START);
-		} else if (path.getPathImage().getId() == CreatePathGrid.PATH) {
+		} else if (copyImage.getId() == CreatePathGrid.PATH) {
 		    myCheckGrid.add(new Label(CreatePathGrid.PATH), col, row);
 		    path.getPathImage().setId(CreatePathGrid.PATH);
-		} else if (path.getPathImage().getId() == CreatePathGrid.END) {
+		} else if (copyImage.getId() == CreatePathGrid.END) {
 		    myCheckGrid.add(new Label(CreatePathGrid.END), col, row);
 		    path.getPathImage().setId(CreatePathGrid.END);
 		}

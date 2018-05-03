@@ -85,6 +85,7 @@ public class ScorePanel extends ListenerPanel {
 		ScoreText.setText(GAMEPLAYER_PROPERTIES.get("scoreText") + newScore);
 	}
 
+
 	private void updateHealth(Integer newHealth) {
 		myHealthWriter.recordDataPoint(newHealth);
 		HealthText.setText(GAMEPLAYER_PROPERTIES.get("healthText")+ newHealth);
@@ -137,3 +138,4 @@ public class ScorePanel extends ListenerPanel {
 		};
 	}
 }
+

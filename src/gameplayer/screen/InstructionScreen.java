@@ -52,7 +52,6 @@ public class InstructionScreen extends Screen {
 		VBox rootBox = new VBox();
 		String titleText = GAMEPLAYER_PROPERTIES.get("newGameText"); 
 		Text title = getUIFactory().makeScreenTitleText(titleText);
-		// TODO: Make a load game button
 		//	Button newGameButt = UIFACTORY.makeTextButton(".button", PROMPTS.resourceDisplayText("NewGameButton"));
 		//	newGameButt.setOnMouseClicked((arg0) -> SCREEN_MANAGER.loadGameScreenNew());
 

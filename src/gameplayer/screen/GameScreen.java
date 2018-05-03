@@ -15,6 +15,7 @@ import frontend.PromptReader;
 import frontend.Screen;
 import frontend.View;
 import gameplayer.BrowserPopup;
+import gameplayer.GameplayerAlert;
 import gameplayer.ScreenManager;
 import gameplayer.panel.*;
 import javafx.beans.property.IntegerProperty;
@@ -47,6 +48,7 @@ public class GameScreen extends Screen {
     private BorderPane rootPane;
     private SoundFactory SOUND_FACTORY;
     private Map<String,String> GAMEPLAYER_PROPERTIES;
+    private GameplayerAlert ALERT;
 
     public GameScreen(ScreenManager ScreenController, PromptReader promptReader, Mediator mediator) {
 	SCREEN_MANAGER = ScreenController;
@@ -64,6 +66,7 @@ public class GameScreen extends Screen {
 
     @Override
     public Parent makeScreenWithoutStyling() {
+	MEDIATOR.pause();
 	rootPane = new BorderPane();
 	rootPane.setId(GAMEPLAYER_PROPERTIES.get("GameScreenRootID"));
 
@@ -72,7 +75,9 @@ public class GameScreen extends Screen {
 	displayPane.setBottom(CONTROLS_PANEL.getPanel());
 
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameStart"));
-	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> gameStart());
+	SPLASH_PANEL.getPanel().setOnMouseClicked(arg0 -> {
+	    gameStart();
+	});
 
 	gamePane = new BorderPane();
 	gamePane.setTop(SCORE_PANEL.getPanel());
@@ -143,11 +148,6 @@ public class GameScreen extends Screen {
 	if (setting.equals(GAMEPLAYER_PROPERTIES.get("volumeToggle"))) {
 	    SOUND_FACTORY.mute();
 	} else if (setting.equals(GAMEPLAYER_PROPERTIES.get("playMusic"))) {
-	    try {
-		SOUND_FACTORY.setBackgroundMusic("stillDre");
-	    } catch (FileNotFoundException e) {
-		Log.debug(e);
-	    }
 	    SOUND_FACTORY.playBackgroundMusic();
 
 
@@ -275,11 +275,13 @@ public class GameScreen extends Screen {
     }
 
     public void gameWon() {
+	MEDIATOR.pause();
 	SplashPanel SPLASH_PANEL = new SplashPanel(this, GAMEPLAYER_PROPERTIES.get("gameWon"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
     }
 
     public void gameLost() {
+	MEDIATOR.pause();
 	SplashPanel SPLASH_PANEL = new SplashPanel(this,GAMEPLAYER_PROPERTIES.get("gameLost"));
 	gamePane.setCenter(SPLASH_PANEL.getPanel());
     }

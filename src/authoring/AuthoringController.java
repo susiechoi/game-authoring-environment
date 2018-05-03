@@ -244,8 +244,14 @@ public class AuthoringController implements MVController{
 	myModel = new AuthoringModel(reader.createModel(gameName));
 	myView.setModel(myModel);
 	myView.goForwardFrom(this.getClass().getSimpleName()+DEFAULT_EDIT_BUTTON_CTRLFLOW, getGameName());
+	
     }
 
+    /**
+     * Sets the AuthoringModel currently being used by this AuthoringController
+     * (based on which game chosen from StartScreen)
+     * @param model is new AuthoringModel to be used going forward
+     */
     public void setModel(AuthoringModel model) {
 	myModel = model;
     }
@@ -258,7 +264,14 @@ public class AuthoringController implements MVController{
     public Map<String, List<Point>> getGrid() {
 	return myImageMap;
     }
-    public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException {
+    /**
+     * Returns a path with a certain starting point (used for matching with Waves)
+     * @param level is level of wave
+     * @param point is Point object of desired starting location
+     * @return Path object with that particular starting point
+     * @throws ObjectNotFoundException
+     */
+    public Path getPathWithStartingPoint(int level, Point point) throws ObjectNotFoundException, MissingPropertiesException {
 	return myModel.getPathWithStartingPoint(level, point);
     }
     /**
@@ -271,6 +284,17 @@ public class AuthoringController implements MVController{
 	return myModel.getHighestWaveNumber(level);
     }
 
+    /**
+     * Makes a new Sprite (Enemy, Tower, or Projectile)
+     * @param objectType is type of object (Enemy, Tower, or Projectile)
+     * @param level is level to be added to
+     * @param name is user-specified name of sprite
+     * @throws NoDuplicateNamesException
+     * @throws MissingPropertiesException
+     * @throws NumberFormatException
+     * @throws FileNotFoundException
+     * @throws ObjectNotFoundException
+     */
     public void makeSprite(String objectType, int level, String name) throws NoDuplicateNamesException, MissingPropertiesException, NumberFormatException, FileNotFoundException, ObjectNotFoundException {
 	myModel.makeSprite(objectType, level, name);
     }
@@ -290,10 +314,29 @@ public class AuthoringController implements MVController{
 	myModel.setObjectAttribute(level, objectType, name, attribute, attributeValue);
     }
 
+    /**
+     * Gives a new property to a Sprite (examples include a ClickToShoot property, etc.)
+     * @param level is level Sprite is in
+     * @param objectType is type of Sprite (Projectile, Enemy, or Tower)
+     * @param name is user-given name of sprite
+     * @param propertyName is name of Property
+     * @param attributes are the Double attributes necessary to create this property
+     * @throws ObjectNotFoundException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws MissingPropertiesException
+     */
     public void createProperty(int level, String objectType, String name, String propertyName, List<Double> attributes) throws ObjectNotFoundException, IllegalArgumentException, IllegalAccessException, MissingPropertiesException {
 	myModel.createProperty(level, objectType, name, propertyName, attributes);
     }
 
+    /**
+     * Sets time between waves based on user input
+     * @param level is level containing wave
+     * @param waveNumber is number of that Wave
+     * @param time is time until next wave
+     * @throws ObjectNotFoundException
+     */
     public void setWaveTime(int level, int waveNumber, int time) throws ObjectNotFoundException{
 	Level currentLevel = myModel.getLevel(level);
 	if(!currentLevel.containsWaveNumber(waveNumber)) {
@@ -303,11 +346,23 @@ public class AuthoringController implements MVController{
 	desiredWave.setWaveTime(time);
     }
 
+    /**
+     * Saves an XML file with current AuthoredGame to be used for reauthoring or gameplay
+     * @throws ObjectNotFoundException
+     * @throws BadGameDataException
+     * @throws IOException
+     */
     public void writeToFile() throws ObjectNotFoundException, BadGameDataException, IOException {
 	AuthoringModelWriter writer = new AuthoringModelWriter();
 	writer.write(myModel.getGame(), myModel.getGameName());
     }
     
+    /**
+     * Method used to demo a game
+     * @param StageManager contains current stage
+     * @param language is current language
+     * @see controller.MVController#playControllerDemo(frontend.StageManager, java.lang.String)
+     */
     @Override
     public void playControllerDemo(StageManager manager, String language) throws MissingPropertiesException {
 	new PlayController(manager, language,

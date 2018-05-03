@@ -62,7 +62,7 @@ public class WavePanel extends PathPanel{
 		makePanel();
 	}
 	
-	public void makePanel() {
+	protected void makePanel() {
 		Map<String, Integer> enemyMap = getView().getEnemyNameToNumberMap(getView().getLevel(), myPath, myWaveNumber);
 		myRoot = new VBox();
 		myRoot.setMaxSize(280, 900);
@@ -138,7 +138,7 @@ public class WavePanel extends PathPanel{
 	}
 
 	/**
-	 * Do-nothing method for now - to refactor!
+	 * Returns myRoot, which is Parent which will be styled by CSS in Screen
 	 * @see frontend.Screen#makeScreenWithoutStyling()
 	 */
 	@Override

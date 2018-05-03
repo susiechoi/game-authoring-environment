@@ -87,6 +87,22 @@ HBox {
    	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
+.toggle-button {
+	-fx-font-family: "Quicksand";
+	-fx-background-color: #B7D5D4;
+	-fx-min-width: 200;		
+	-fx-min-height: 50;
+}
+
+.toggle-button:hover{
+   	-fx-font-size: 21pt; 
+   	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.toggle-button:selected{
+	-fx-background-color: #488286
+}
+
 ComboBox {
 	-fx-font-family: "Quicksand";
 	-fx-background-color: #B7D5D4;
@@ -96,8 +112,8 @@ ComboBox {
 
 .combo-box:hover {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-
 }
+
 
 #selector {
 	-fx-background-color: #488286;
@@ -146,3 +162,4 @@ ComboBox {
 .scroll-bar:vertical .track-background,
 .scroll-bar:horizontal .track-background {
 }
+

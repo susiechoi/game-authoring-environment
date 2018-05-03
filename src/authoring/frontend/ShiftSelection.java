@@ -36,7 +36,9 @@ public class ShiftSelection {
 		} else if (!event.isShiftDown() && event.getButton() != MouseButton.SECONDARY && event.getTarget() instanceof StackPane) {
 		    selectionModel.removeCell((Pane) event.getTarget());
 		} else if (event.isShiftDown() && event.getTarget() instanceof ImageView) {
-		    selectionModel.addNode((Node) event.getTarget());
+		    ImageView selectedImage = (ImageView) event.getTarget();
+		    selectedImage.setId(((ImageView) event.getTarget()).getId());
+		    selectionModel.addImage(selectedImage);
 		    new RightClickDropDown((Node) event.getTarget(), selectionModel);
 		} else if (!event.isShiftDown() && event.getButton() != MouseButton.SECONDARY && event.getTarget() instanceof ImageView) {
 		    selectionModel.removeNode((Node) event.getTarget());
@@ -44,4 +46,4 @@ public class ShiftSelection {
 	    }
 	});
     }
-}
+ }

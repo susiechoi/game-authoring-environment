@@ -9,6 +9,7 @@ import frontend.PropertiesReader;
 import frontend.UIFactory;
 import frontend.View;
 import authoring.frontend.exceptions.MissingPropertiesException;
+import gameplayer.GameplayerAlert;
 import gameplayer.screen.GameScreen;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -72,7 +73,6 @@ public class ControlsPanel extends Panel{
 					try {
 						GAME_SCREEN.controlTriggered(control.getKey());
 					} catch (MissingPropertiesException e) {
-						// TODO Auto-generated catch block
 					    	Log.debug(e);
 						GAME_SCREEN.loadErrorScreen("NoFile");
 					}

@@ -21,6 +21,7 @@ public class PathMaker {
 
     private GridPane grid;
     private int myPathSize;
+
     private final Map<String,String> GAMEPLAYER_PROPERTIES;
     private final View myView;
 
@@ -50,7 +51,6 @@ public class PathMaker {
 	    List<Point> pointList = map.get(key);
 	    for (int i = 0; i < pointList.size(); i++) {
 		Point point = pointList.get(i);
-		// TODO handle IllegalArgumentException where key is invalid
 		ImageView image = new ImageView();
 		try{
 		    image = new ImageView(new Image(imageKey));

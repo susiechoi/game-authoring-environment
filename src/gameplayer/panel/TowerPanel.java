@@ -1,5 +1,6 @@
 package gameplayer.panel;
 
+import gameplayer.GameplayerAlert;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -109,7 +110,6 @@ public class TowerPanel extends ListenerPanel {
 	} catch (MissingPropertiesException e) {
 	    Log.debug(e);
 	    VIEW.loadErrorAlert("missingSwapButton");
-
 	}
 
 

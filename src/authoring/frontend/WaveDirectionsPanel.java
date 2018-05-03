@@ -16,6 +16,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Class that creates a Panel to show users instructions on how to select
+ * a path to create a wave for and to allow users to specify time until the next
+ * wave. Dependent on the grid to create correctly.
+ * @author Sarahbland
+ *
+ */
 public class WaveDirectionsPanel extends PathPanel{
     private int myWaveNumber;
     private Slider myTimeSlider;
@@ -24,11 +31,9 @@ public class WaveDirectionsPanel extends PathPanel{
     public WaveDirectionsPanel(AuthoringView view, String waveNumber) {
 	super(view);
 	if(waveNumber.equals("Default")) { //coming from new wave
-	    // System.out.println("level it thinks" + getView().getLevel());
 	    myWaveNumber = getView().getHighestWaveNumber(getView().getLevel())+1;
 	    try {
 		getView().setWaveTime(myWaveNumber,Integer.parseInt(getPropertiesReader().findVal(AdjustNewOrExistingScreen.DEFAULT_CONSTANTS, "DefaultWaveTime")));
-		//System.out.println("highest wave number directions: " + getView().getHighestWaveNumber(getView().getLevel()));
 	    }
 	    catch(MissingPropertiesException e) {
 		 Log.debug(e);
@@ -97,18 +102,20 @@ public class WaveDirectionsPanel extends PathPanel{
     }
     @Override
     protected void setApplyButtonAction(EventHandler<ActionEvent> e) {
-	// TODO Auto-generated method stub
-	
+	myApplyButton.setOnAction(event -> {e.handle(event);});
     }
+    /**
+     * myRoot is Parent that will need styling added to it, so it is returned by
+     * this method.
+     * @see frontend.Screen#makeScreenWithoutStyling()
+     */
     @Override
     public Parent makeScreenWithoutStyling() {
-	// TODO Auto-generated method stub
-	return null;
+	return myRoot;
     }
     @Override
     protected void makePanel() {
-	// TODO Auto-generated method stub
-	
+	myRoot = new VBox();
     }
 
 

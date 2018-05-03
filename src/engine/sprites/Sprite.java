@@ -57,6 +57,7 @@ public class Sprite implements FrontEndSprite{
 	for(Property p : properties) {
 	    myProperties.add(this.makeProperty(p));
 	}
+	System.out.println("Making it to the end of sprite");
     }
 
     /**

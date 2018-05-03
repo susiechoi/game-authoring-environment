@@ -21,6 +21,7 @@ import javafx.scene.layout.RowConstraints;
 public class CreatePathGrid {
 
     public static final int INITIAL_PATH_SIZE = 50; 
+    public static final int DEFAULT_SIZE = 2;
     public static final String DEFAULT_BACKGROUND_IMAGE = "file:images/generalbackground.jpg"; 
     public static final String START = "start";
     public static final String PATH = "path";
@@ -33,6 +34,7 @@ public class CreatePathGrid {
     private AuthoringView myView;
     private int myGridWidth;
     private int myGridHeight;
+    private GridHelper gridCommand = new GridHelper();
 
     /**
      * Constructor for creating the path grid
@@ -54,22 +56,19 @@ public class CreatePathGrid {
     protected GridPane makePathGrid() {
 	grid = new GridPane();
 	grid.setMaxSize(myGridWidth, myGridHeight); 
-	setGridConstraints(grid, INITIAL_PATH_SIZE);
 
 	checkGrid = new GridPane();
 	checkGrid.setMaxSize(myGridWidth, myGridHeight);
-	setGridConstraints(checkGrid, INITIAL_PATH_SIZE);
 
 	SelectionModel model = new SelectionModel(grid, checkGrid, pathSize);
 	new ShiftSelection(grid, model);
 
 	grid.setStyle("-fx-background-image: url(" + DEFAULT_BACKGROUND_IMAGE + ")"); 
-	populateGridCells(grid);
+	setGridConstraints(grid, INITIAL_PATH_SIZE);
 	
 	@SuppressWarnings("unchecked")
 	Map<String, List<Point>> loadedPathMap = (Map<String, List<Point>>) myView.getObjectAttribute("Path", "", "myPathMap");
-
-	if (loadedPathMap.size() > 2) {
+	if (loadedPathMap.size() > DEFAULT_SIZE) {
 	    setGridConstraints(grid, (int) myView.getObjectAttribute("Path", "", "myPathSize"));
 	    grid.setStyle("-fx-background-image: url("+myView.getObjectAttribute("Path", "", "myBackgroundImage")+")");
 	    addImagesToGrid(loadedPathMap, (int) myView.getObjectAttribute("Path", "", "myPathSize"));
@@ -108,6 +107,7 @@ public class CreatePathGrid {
 	    rowConst.setPercentHeight(myGridHeight/pathSize);
 	    grid.getRowConstraints().add(rowConst);         
 	}
+	populateGridCells(grid);
     }
 
     /**
@@ -152,15 +152,15 @@ public class CreatePathGrid {
      * @return boolean that indicates if the path is complete
      */
     protected boolean checkPathConnected(GridPane grid, int row, int col) {
-	Label checkLabel = (Label) getNode(grid, col, row);
-	if (getNode(grid, col, row) != null) {
+	Label checkLabel = (Label) gridCommand.getNode(grid, col, row);
+	if (gridCommand.getNode(grid, col, row) != null) {
 	    if (checkLabel.getText() == END) {
 		return true;
 	    } 
 	} else {
 	    return false;
 	}
-	removeNode(grid, row, col);
+	gridCommand.removeNode(grid, row, col);
 	addCoordinates(row, col);
 
 	if ((checkPathConnected(grid, row + 1 , col)) == true) {
@@ -189,7 +189,7 @@ public class CreatePathGrid {
      * @param col
      */
     protected void addCoordinates(int row, int col) {
-	Bounds nodeBounds = getNode(grid, col, row).getBoundsInParent();
+	Bounds nodeBounds = gridCommand.getNode(grid, col, row).getBoundsInParent();
 	double x = nodeBounds.getMinX();
 	double y = nodeBounds.getMinY();
 	Point point = new Point((int) Math.round(x), (int) Math.round(y));
@@ -205,7 +205,7 @@ public class CreatePathGrid {
 	startPoints = new ArrayList<Point>();
 	for (int x = 0; x < grid.getColumnCount(); x++) {
 	    for (int y = 0; y < grid.getRowCount(); y++) {
-		if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals(START)) {
+		if (gridCommand.getNode(grid, x, y) != null && ((Label) gridCommand.getNode(grid, x, y)).getText().equals(START)) {
 		    startPoints.add(new Point(x, y));
 		}
 	    }
@@ -228,9 +228,9 @@ public class CreatePathGrid {
 	HashMap<String, List<Point>> gridImageCoordinates = new HashMap<String, List<Point>>();
 	for (int x = 0; x < grid.getColumnCount(); x++) {
 	    for (int y = 0; y < grid.getRowCount(); y++) {
-		if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals(PATH)) {
+		if (gridCommand.getNode(grid, x, y) != null && ((Label) gridCommand.getNode(grid, x, y)).getText().equals(PATH)) {
 		    pathPoints.add(new Point(x, y));
-		} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText().equals(END)) {
+		} else if (gridCommand.getNode(grid, x, y) != null && ((Label) gridCommand.getNode(grid, x, y)).getText().equals(END)) {
 		    endPoints.add(new Point(x, y));
 		}
 	    }
@@ -239,42 +239,6 @@ public class CreatePathGrid {
 	gridImageCoordinates.put("e"+endImage, endPoints);
 	gridImageCoordinates.put("p"+pathImage, pathPoints);
 	return gridImageCoordinates;
-    }
-
-    /**
-     * Finds a node within a gridPane given a row and column index
-     * @param gridPane
-     * @param col
-     * @param row
-     * @return node
-     */
-    protected Node getNode(GridPane gridPane, int col, int row) {
-	Node result = null;
-	for (Node node : gridPane.getChildren()) {
-	    if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
-		result = null;
-	    }
-	    if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-		result = node;
-		break;
-	    }
-	}
-	return result;
-    }
-
-    /**
-     * Removes a node from a gridPane at a given row and column index
-     * @param grid
-     * @param row
-     * @param col
-     */
-    protected void removeNode(GridPane grid, int row, int col) {
-	for(Node node : grid.getChildren()) {
-	    if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-		grid.getChildren().remove(node);
-		break;
-	    }
-	} 
     }
     
     /**
@@ -286,11 +250,11 @@ public class CreatePathGrid {
 	GridPane copiedGrid = new GridPane();
 	for (int x = 0; x < grid.getColumnCount(); x++) {
 	    for (int y = 0; y < grid.getRowCount(); y++) {
-		if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == START) {
+		if (gridCommand.getNode(grid, x, y) != null && ((Label) gridCommand.getNode(grid, x, y)).getText() == START) {
 		    copiedGrid.add(new Label(START), x, y);
-		} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == PATH) {
+		} else if (gridCommand.getNode(grid, x, y) != null && ((Label) gridCommand.getNode(grid, x, y)).getText() == PATH) {
 		    copiedGrid.add(new Label(PATH), x, y);
-		} else if (getNode(grid, x, y) != null && ((Label) getNode(grid, x, y)).getText() == END) {
+		} else if (gridCommand.getNode(grid, x, y) != null && ((Label) gridCommand.getNode(grid, x, y)).getText() == END) {
 		    copiedGrid.add(new Label(END), x, y);
 		}
 	    }
