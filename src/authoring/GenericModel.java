@@ -179,7 +179,8 @@ public class GenericModel {
 	 * @throws MissingPropertiesException 
 	 */
 	public Tower generateGenericTower() throws NumberFormatException, FileNotFoundException, MissingPropertiesException {
-		return generateGenericTower(myDefaultName);
+
+	    return generateGenericTower(myDefaultName);
 	}
     
 	/**
