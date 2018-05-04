@@ -96,7 +96,6 @@ public class Path {
 	//	    currentPos.setLocation(newX, newY);
 	//	    return currentPos; 
 	//	}
-	System.out.println("NEXT POSITION: " +myCoordinates.get(pathIndex+1));
 	return myCoordinates.get(pathIndex+1);
     }
 

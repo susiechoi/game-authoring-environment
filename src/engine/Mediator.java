@@ -145,7 +145,6 @@ public class Mediator implements MVController{
      */
     public FrontEndTower placeTower(Point location, String towerType) throws CannotAffordException, MissingPropertiesException {
 	//TODO add in money (decrement when purchased)
-	//	System.out.println(myGameEngine.getPlayState());
 	return myGameEngine.getPlayState().placeTower(location, towerType);
     }
     
@@ -157,7 +156,6 @@ public class Mediator implements MVController{
      * @throws MissingPropertiesException
      */
     public void handleTowerClickToShoot(FrontEndTower tower, double clickedX, double clickedY) throws MissingPropertiesException{
-	System.out.println("MADE IT TO MEDIATOR CALL");
 	Sprite shotProjectile = myGameEngine.getPlayState().handleClick(tower, clickedX, clickedY);
 	if (shotProjectile != null) {
 	    this.addSpriteToScreen(shotProjectile);
@@ -213,7 +211,6 @@ public class Mediator implements MVController{
      * @throws MissingPropertiesException 
      */
     public void restartLevel() throws MissingPropertiesException {
-//	System.out.println("in restart");
 	myGameEngine.getPlayState().restartLevel();
     }
 
@@ -339,7 +336,6 @@ public class Mediator implements MVController{
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
-	System.out.println("IN MEDIATOR for moving towers");
 	myGameEngine.getPlayState().moveTowers(tower, c);
     }
 

@@ -110,7 +110,7 @@ public class PropertyFactory {
 	private Property createProperty(String className, String type, Object attribute) {
 		return (Property) Reflection.createInstance(className, (double) attribute);
 	}
-
+    
 	/**
 	 * Retrieves a specific attribute from a Property object
 	 * @param objectName is name of Object that has property

@@ -31,6 +31,7 @@ public class Launcher extends Manager<Projectile>{
     private boolean fakeBool;
 
     public Launcher(Projectile projectile, List<Property> properties) {
+	super();
 	myProjectile = projectile;
 	launcherProperties = properties;
 	timeSinceLastShot = 0;
@@ -38,6 +39,8 @@ public class Launcher extends Manager<Projectile>{
     }
 
     public Launcher(Launcher launcher) throws MissingPropertiesException {
+	super();
+	myPropertyFactory = new PropertyBuilder();
 	launcherProperties = new ArrayList<Property>();
 	for(Property p : launcher.getProperties()) {
 	    launcherProperties.add(myPropertyFactory.getProperty(p));
@@ -69,6 +72,7 @@ public class Launcher extends Manager<Projectile>{
      */
     public Projectile launch(ShootingSprites target, double shooterX, double shooterY) throws MissingPropertiesException {
 	timeSinceLastShot = 0;
+	System.out.println(target);
 	Projectile launchedProjectile = new Projectile(myProjectile, target, shooterX, shooterY);
 	this.addToActiveList(launchedProjectile);
 	return launchedProjectile;

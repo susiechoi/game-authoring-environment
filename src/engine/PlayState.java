@@ -14,6 +14,7 @@ import engine.path.Path;
 import engine.sprites.enemies.Enemy;
 import engine.sprites.enemies.wave.Wave;
 import engine.sprites.properties.ClickProperty;
+import engine.sprites.properties.Property;
 import engine.sprites.ShootingSprites;
 import engine.sprites.towers.CannotAffordException;
 import engine.sprites.Sprite;
@@ -79,8 +80,6 @@ public class PlayState implements GameData {
 	count = 0;
 	backgroundSet = false;
 	try {
-	//    System.out.println("BACKGROUNDMUSIC");
-	//    System.out.println(mySettings.getBackgroundMusic());
 	    myMediator.getSoundFactory().setBackgroundMusic(mySettings.getBackgroundMusic());
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace(); // TODO Auto-generated catch block
@@ -105,6 +104,7 @@ public class PlayState implements GameData {
     private void handleCollisions(double elapsedTime) throws MissingPropertiesException, FileNotFoundException {
 	List<Sprite> toBeRemoved = new ArrayList<>();
 	toBeRemoved.addAll(myTowerManager.checkForCollisions(myEnemyManager.getListOfActive()));
+	toBeRemoved.addAll(myEnemyManager.checkForCollisions(myTowerManager.getListOfActive()));
 	List<ShootingSprites> activeEnemies = myEnemyManager.getListOfActive();
 	List<ShootingSprites> activeTowers = myTowerManager.getListOfActive();
 	activeEnemies.removeAll(toBeRemoved);
@@ -112,8 +112,8 @@ public class PlayState implements GameData {
 	myEnemyManager.removeFromMap(toBeRemoved);
 	myEnemyManager.setActiveList(activeEnemies);
 	toBeRemoved.addAll(myTowerManager.moveProjectiles(elapsedTime));
+	toBeRemoved.addAll(myEnemyManager.moveProjectiles(elapsedTime));
 
-	//System.out.println("disregard");
 	for (Projectile projectile: myTowerManager.shoot(myEnemyManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	    try {
@@ -122,8 +122,7 @@ public class PlayState implements GameData {
 		throw new FileNotFoundException();
 	    }
 	}
-	//System.out.println("about to shoot");
-	//System.out.println("tower manager size " + myTowerManager.getListOfActive().size());
+	System.out.println("ENEMIES ABOUT TO SHOOT **************************************************************************");
 	for(Projectile projectile: myEnemyManager.shoot(myTowerManager.getListOfActive(), elapsedTime)) {
 	    myMediator.addSpriteToScreen(projectile);
 	    try {
@@ -132,10 +131,12 @@ public class PlayState implements GameData {
 		e.printStackTrace(); // YIKES THAT'S AN EASY FAIL
 	    }
 	}
+	System.out.println("ENEMIES DONE SHOOTING **************************************************************************");
+
 	updateScore(toBeRemoved);
 	myMediator.removeListOfSpritesFromScreen(toBeRemoved);
     }
-    
+
     /**
      * Checks if enemies have reached the end of the path. Removes the enemies from the
      * screen and the enemy manager object if they reach the end of the path.
@@ -162,7 +163,6 @@ public class PlayState implements GameData {
 		currentWave.setWaveTime(time*FRAMES_PER_SECOND + count);		
 	    }
 	    for (Path currentPath : currentLevel.getPaths()) {
-//		System.out.println("in path");
 		try {
 		    spawnEnemy(currentWave, currentPath);
 		}
@@ -179,7 +179,6 @@ public class PlayState implements GameData {
     
     private void checkWin() throws MissingPropertiesException {
 	// Level is over
-//	System.out.println("Checking for win");
 	if (currentLevel.isFinished() && currentLevel.myNumber() < myLevels.size()
 		&& deadEnemies()) {
 	    advanceLevel();
@@ -195,7 +194,6 @@ public class PlayState implements GameData {
     private boolean deadEnemies() {
 	for (ShootingSprites thisEnemy : myEnemyManager.getListOfActive()) {
 	    if (thisEnemy.isAlive()) {
-//		System.out.println("Found an alive enemy");
 		return false;
 	    }
 	}
@@ -220,7 +218,6 @@ public class PlayState implements GameData {
 	List<FrontEndTower> availableTowers = new ArrayList<>();
 	
 	availableTowers.addAll(currentLevel.getTowers().values());
-	System.out.println("available tower number: " + availableTowers.size());
 	try {
 	    myMediator.getSoundFactory().playSoundEffect(mySettings.getLevelWinSound());
 	} catch (FileNotFoundException e1) {
@@ -229,7 +226,6 @@ public class PlayState implements GameData {
 	}
 	myTowerManager = new TowerManager(currentLevel.getTowers());
 	myTowerManager.setAvailableTowers(currentLevel.getTowers().values());
-	System.out.println("available towers in manager: " + myTowerManager.getListOfAvailable().size());
 	myMediator.nextLevel(availableTowers);
 
     }
@@ -246,7 +242,6 @@ public class PlayState implements GameData {
     
     private void checkLoss() {
 	if (myHealth.getValue() <= 0) {
-//	    System.out.println("Lost game!");
 	    myMediator.pause();
 	    myMediator.endLoop();
 	    myMediator.gameLost();
@@ -360,21 +355,20 @@ public class PlayState implements GameData {
     
     public Sprite handleClick(FrontEndTower activeTower, double clickedX, double clickedY) throws MissingPropertiesException{
 	Tower tower = (Tower) activeTower;
-	//System.out.println("THIS IS THE TOWER "+ tower);
-	//System.out.println("THIS IS CLICK PROPERTY");
+	for (Property p: tower.getProperties()) {
+	    System.out.println(p.getName());
+	}
+	System.out.println("handling click " + tower.getProperty("ClickToShootProperty"));
 	if (tower.getProperty("ClickToShootProperty") != null) {
-	 //   System.out.println("GOT CLICKED PROPETY");
 	    ClickProperty myClickProp = (ClickProperty) tower.getProperty("ClickProperty");
 	    Sprite sprite = (Sprite) tower.getNewProjectile(clickedX, clickedY);
-	    //System.out.println((Sprite) tower.getNewProjectile(clickedX, clickedY) + " this is what's returned");
-	 //   System.out.println(sprite +  " x is "+ sprite.getX() + " y "+ sprite.getY() + " tower x "+ activeTower.getImageView().getX()+" "+ activeTower.getImageView().getY());
+	    System.out.println(sprite);
 	    return sprite;
 	}
 	return null;
     }
 
     public void moveTowers(FrontEndTower tower, KeyCode c) {
-	//System.out.println("in playstate move towers");
 	myTowerManager.moveTowers(tower, c);
     }
 

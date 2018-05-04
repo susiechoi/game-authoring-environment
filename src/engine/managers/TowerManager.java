@@ -49,7 +49,6 @@ public class TowerManager extends ShootingSpriteManager {
     @SuppressWarnings("unlikely-arg-type")
     public void moveTowers(FrontEndTower tower, KeyCode c) {
 	if(this.getListOfActive().contains(tower)) {
-	    System.out.println("found tower");
 	    ((Tower) tower).move(c);
 	}
     }
@@ -63,6 +62,7 @@ public class TowerManager extends ShootingSpriteManager {
      */
     public FrontEndTower place(Point location, String type) throws MissingPropertiesException {
 	Tower newTower = new Tower(myTowerTypeToInstance.get(type));
+//	System.out.println(newTower.getLauncher());
 	newTower.move(location);
 	this.addToActiveList(newTower);
 	newTower.place(location.getX(), location.getY());
