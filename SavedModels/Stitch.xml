@@ -6,9 +6,9 @@
     <myCSSTheme>Modern</myCSSTheme>
     <myGameTheme>General</myGameTheme>
     <myInstructions>https://en.wikipedia.org/wiki/Tower_defense</myInstructions>
-    <myBackgroundMusic>epic</myBackgroundMusic>
-    <myLevelWinSound>applause</myLevelWinSound>
-    <myLevelLossSound>boo</myLevelLossSound>
+    <myBackgroundMusic>hawaiianrollercoast</myBackgroundMusic>
+    <myLevelWinSound>StitchSaysHi</myLevelWinSound>
+    <myLevelLossSound>StitchSaysHi</myLevelLossSound>
   </mySettings>
   <myLevels>
     <entry>
@@ -560,7 +560,7 @@
               </myPropertyBuilder>
               <myProperties>
                 <engine.sprites.properties.KeyMoveProperty>
-                  <myProperty>153.2258064516129</myProperty>
+                  <myProperty>169.3548387096774</myProperty>
                   <mySimpleName>KeyMoveProperty</mySimpleName>
                   <xVel>0.0</xVel>
                   <yVel>0.0</yVel>
@@ -569,10 +569,10 @@
                 <engine.sprites.properties.HealthProperty>
                   <myProperty>500.0</myProperty>
                   <mySimpleName>HealthProperty</mySimpleName>
-                  <upgradeCost>32.25806451612903</upgradeCost>
-                  <upgradeValue>500.0</upgradeValue>
-                  <myCost>32.25806451612903</myCost>
-                  <myValue>500.0</myValue>
+                  <upgradeCost>0.0</upgradeCost>
+                  <upgradeValue>0.0</upgradeValue>
+                  <myCost>0.0</myCost>
+                  <myValue>0.0</myValue>
                 </engine.sprites.properties.HealthProperty>
                 <engine.sprites.properties.ValueProperty>
                   <myProperty>500.0</myProperty>
@@ -633,7 +633,6 @@
                   <hitTargets/>
                   <myHits>1</myHits>
                   <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
-                  <myShootingSound>cannon</myShootingSound>
                 </myProjectile>
                 <timeSinceLastShot>0.0</timeSinceLastShot>
                 <launcherProperties>
@@ -644,8 +643,8 @@
                   <engine.sprites.properties.FireRateProperty>
                     <myProperty>50.0</myProperty>
                     <mySimpleName>FireRateProperty</mySimpleName>
-                    <upgradeCost>44.35483870967742</upgradeCost>
-                    <upgradeValue>36.29032258064517</upgradeValue>
+                    <upgradeCost>0.0</upgradeCost>
+                    <upgradeValue>0.0</upgradeValue>
                   </engine.sprites.properties.FireRateProperty>
                 </launcherProperties>
                 <fakeBool>false</fakeBool>
@@ -681,236 +680,8 @@
           <engine.sprites.enemies.wave.Wave>
             <myWaveMap>
               <entry>
-                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[2]"/>
+                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[4]"/>
                 <map>
-                  <entry>
-                    <engine.sprites.enemies.Enemy>
-                      <myName>Lettuce</myName>
-                      <myWrapper>
-                        <myImagePath>images/lettuce.png</myImagePath>
-                        <height>0.0</height>
-                        <width>0.0</width>
-                        <x>0.0</x>
-                        <y>0.0</y>
-                        <visible>false</visible>
-                      </myWrapper>
-                      <myImageString>images/lettuce.png</myImageString>
-                      <myPropertyBuilder>
-                        <PACKAGE>engine.sprites.properties.</PACKAGE>
-                        <myReader/>
-                      </myPropertyBuilder>
-                      <myProperties>
-                        <engine.sprites.properties.ValueProperty>
-                          <myProperty>149.19354838709677</myProperty>
-                          <mySimpleName>ValueProperty</mySimpleName>
-                        </engine.sprites.properties.ValueProperty>
-                        <engine.sprites.properties.DamageProperty>
-                          <myProperty>0.0</myProperty>
-                          <mySimpleName>DamageProperty</mySimpleName>
-                          <upgradeCost>0.0</upgradeCost>
-                          <upgradeValue>0.0</upgradeValue>
-                        </engine.sprites.properties.DamageProperty>
-                        <engine.sprites.properties.HealthProperty>
-                          <myProperty>2.4193548387096775</myProperty>
-                          <mySimpleName>HealthProperty</mySimpleName>
-                          <upgradeCost>0.0</upgradeCost>
-                          <upgradeValue>0.0</upgradeValue>
-                          <myCost>0.0</myCost>
-                          <myValue>0.0</myValue>
-                        </engine.sprites.properties.HealthProperty>
-                        <engine.sprites.properties.SpeedProperty>
-                          <myProperty>10.080645161290322</myProperty>
-                          <mySimpleName>SpeedProperty</mySimpleName>
-                          <upgradeCost>0.0</upgradeCost>
-                          <upgradeValue>0.0</upgradeValue>
-                        </engine.sprites.properties.SpeedProperty>
-                      </myProperties>
-                      <FILEPATH>file:</FILEPATH>
-                      <SIZE>50</SIZE>
-                      <COLLISION defined-in="engine.sprites.Sprite">CollisionProperty</COLLISION>
-                      <DAMAGE defined-in="engine.sprites.Sprite">DamageProperty</DAMAGE>
-                      <myLauncher>
-                        <active/>
-                        <available/>
-                        <myProjectile>
-                          <myName>Lettuce</myName>
-                          <myWrapper>
-                            <myImagePath>images/bullet.png</myImagePath>
-                            <height>0.0</height>
-                            <width>0.0</width>
-                            <x>0.0</x>
-                            <y>0.0</y>
-                            <visible>false</visible>
-                          </myWrapper>
-                          <myImageString>images/bullet.png</myImageString>
-                          <myPropertyBuilder>
-                            <PACKAGE>engine.sprites.properties.</PACKAGE>
-                            <myReader/>
-                          </myPropertyBuilder>
-                          <myProperties>
-                            <engine.sprites.properties.DamageProperty>
-                              <myProperty>0.0</myProperty>
-                              <mySimpleName>DamageProperty</mySimpleName>
-                              <upgradeCost>0.0</upgradeCost>
-                              <upgradeValue>0.0</upgradeValue>
-                            </engine.sprites.properties.DamageProperty>
-                            <engine.sprites.properties.ConstantSpeedProperty>
-                              <myProperty>0.0</myProperty>
-                              <mySimpleName>ConstantSpeedProperty</mySimpleName>
-                            </engine.sprites.properties.ConstantSpeedProperty>
-                          </myProperties>
-                          <FILEPATH>file:</FILEPATH>
-                          <SIZE>50</SIZE>
-                          <COLLISION>CollisionProperty</COLLISION>
-                          <DAMAGE>DamageProperty</DAMAGE>
-                          <hitTargets/>
-                          <myHits>1</myHits>
-                          <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
-                          <myShootingSound>cannon</myShootingSound>
-                        </myProjectile>
-                        <timeSinceLastShot>0.0</timeSinceLastShot>
-                        <launcherProperties>
-                          <engine.sprites.properties.FireRateProperty>
-                            <myProperty>0.0</myProperty>
-                            <mySimpleName>FireRateProperty</mySimpleName>
-                            <upgradeCost>0.0</upgradeCost>
-                            <upgradeValue>0.0</upgradeValue>
-                          </engine.sprites.properties.FireRateProperty>
-                          <engine.sprites.properties.RangeProperty>
-                            <myProperty>0.0</myProperty>
-                            <mySimpleName>RangeProperty</mySimpleName>
-                          </engine.sprites.properties.RangeProperty>
-                        </launcherProperties>
-                        <fakeBool>false</fakeBool>
-                      </myLauncher>
-                      <deadCount>0</deadCount>
-                      <intersector/>
-                      <HEALTH>HealthProperty</HEALTH>
-                      <RANGE>RangeProperty</RANGE>
-                      <pathIndex>0</pathIndex>
-                      <pathAngle>0.0</pathAngle>
-                      <freeze>false</freeze>
-                      <VALUE>ValueProperty</VALUE>
-                      <COLLISION>CollisionProperty</COLLISION>
-                      <SPEED>SpeedProperty</SPEED>
-                      <DAMAGE>DamageProperty</DAMAGE>
-                    </engine.sprites.enemies.Enemy>
-                    <int>1</int>
-                  </entry>
-                  <entry>
-                    <engine.sprites.enemies.Enemy>
-                      <myName>Turkey</myName>
-                      <myWrapper>
-                        <myImagePath>images/turkey.png</myImagePath>
-                        <height>0.0</height>
-                        <width>0.0</width>
-                        <x>0.0</x>
-                        <y>0.0</y>
-                        <visible>false</visible>
-                      </myWrapper>
-                      <myImageString>images/turkey.png</myImageString>
-                      <myPropertyBuilder>
-                        <PACKAGE>engine.sprites.properties.</PACKAGE>
-                        <myReader/>
-                      </myPropertyBuilder>
-                      <myProperties>
-                        <engine.sprites.properties.ValueProperty>
-                          <myProperty>205.6451612903226</myProperty>
-                          <mySimpleName>ValueProperty</mySimpleName>
-                        </engine.sprites.properties.ValueProperty>
-                        <engine.sprites.properties.DamageProperty>
-                          <myProperty>0.0</myProperty>
-                          <mySimpleName>DamageProperty</mySimpleName>
-                          <upgradeCost>0.0</upgradeCost>
-                          <upgradeValue>0.0</upgradeValue>
-                        </engine.sprites.properties.DamageProperty>
-                        <engine.sprites.properties.HealthProperty>
-                          <myProperty>7.258064516129033</myProperty>
-                          <mySimpleName>HealthProperty</mySimpleName>
-                          <upgradeCost>0.0</upgradeCost>
-                          <upgradeValue>0.0</upgradeValue>
-                          <myCost>0.0</myCost>
-                          <myValue>0.0</myValue>
-                        </engine.sprites.properties.HealthProperty>
-                        <engine.sprites.properties.SpeedProperty>
-                          <myProperty>20.967741935483872</myProperty>
-                          <mySimpleName>SpeedProperty</mySimpleName>
-                          <upgradeCost>0.0</upgradeCost>
-                          <upgradeValue>0.0</upgradeValue>
-                        </engine.sprites.properties.SpeedProperty>
-                      </myProperties>
-                      <FILEPATH>file:</FILEPATH>
-                      <SIZE>50</SIZE>
-                      <COLLISION defined-in="engine.sprites.Sprite">CollisionProperty</COLLISION>
-                      <DAMAGE defined-in="engine.sprites.Sprite">DamageProperty</DAMAGE>
-                      <myLauncher>
-                        <active/>
-                        <available/>
-                        <myProjectile>
-                          <myName>Turkey</myName>
-                          <myWrapper>
-                            <myImagePath>images/bullet.png</myImagePath>
-                            <height>0.0</height>
-                            <width>0.0</width>
-                            <x>0.0</x>
-                            <y>0.0</y>
-                            <visible>false</visible>
-                          </myWrapper>
-                          <myImageString>images/bullet.png</myImageString>
-                          <myPropertyBuilder>
-                            <PACKAGE>engine.sprites.properties.</PACKAGE>
-                            <myReader/>
-                          </myPropertyBuilder>
-                          <myProperties>
-                            <engine.sprites.properties.DamageProperty>
-                              <myProperty>0.0</myProperty>
-                              <mySimpleName>DamageProperty</mySimpleName>
-                              <upgradeCost>0.0</upgradeCost>
-                              <upgradeValue>0.0</upgradeValue>
-                            </engine.sprites.properties.DamageProperty>
-                            <engine.sprites.properties.ConstantSpeedProperty>
-                              <myProperty>0.0</myProperty>
-                              <mySimpleName>ConstantSpeedProperty</mySimpleName>
-                            </engine.sprites.properties.ConstantSpeedProperty>
-                          </myProperties>
-                          <FILEPATH>file:</FILEPATH>
-                          <SIZE>50</SIZE>
-                          <COLLISION>CollisionProperty</COLLISION>
-                          <DAMAGE>DamageProperty</DAMAGE>
-                          <hitTargets/>
-                          <myHits>1</myHits>
-                          <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
-                          <myShootingSound>cannon</myShootingSound>
-                        </myProjectile>
-                        <timeSinceLastShot>0.0</timeSinceLastShot>
-                        <launcherProperties>
-                          <engine.sprites.properties.FireRateProperty>
-                            <myProperty>0.0</myProperty>
-                            <mySimpleName>FireRateProperty</mySimpleName>
-                            <upgradeCost>0.0</upgradeCost>
-                            <upgradeValue>0.0</upgradeValue>
-                          </engine.sprites.properties.FireRateProperty>
-                          <engine.sprites.properties.RangeProperty>
-                            <myProperty>0.0</myProperty>
-                            <mySimpleName>RangeProperty</mySimpleName>
-                          </engine.sprites.properties.RangeProperty>
-                        </launcherProperties>
-                        <fakeBool>false</fakeBool>
-                      </myLauncher>
-                      <deadCount>0</deadCount>
-                      <intersector/>
-                      <HEALTH>HealthProperty</HEALTH>
-                      <RANGE>RangeProperty</RANGE>
-                      <pathIndex>0</pathIndex>
-                      <pathAngle>0.0</pathAngle>
-                      <freeze>false</freeze>
-                      <VALUE>ValueProperty</VALUE>
-                      <COLLISION>CollisionProperty</COLLISION>
-                      <SPEED>SpeedProperty</SPEED>
-                      <DAMAGE>DamageProperty</DAMAGE>
-                    </engine.sprites.enemies.Enemy>
-                    <int>2</int>
-                  </entry>
                   <entry>
                     <engine.sprites.enemies.Enemy>
                       <myName>Tomato</myName>
@@ -1028,10 +799,238 @@
                 </map>
               </entry>
               <entry>
-                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[4]"/>
+                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[2]"/>
                 <map>
                   <entry>
-                    <engine.sprites.enemies.Enemy reference="../../../../entry/map/entry[3]/engine.sprites.enemies.Enemy"/>
+                    <engine.sprites.enemies.Enemy>
+                      <myName>Turkey</myName>
+                      <myWrapper>
+                        <myImagePath>images/turkey.png</myImagePath>
+                        <height>0.0</height>
+                        <width>0.0</width>
+                        <x>0.0</x>
+                        <y>0.0</y>
+                        <visible>false</visible>
+                      </myWrapper>
+                      <myImageString>images/turkey.png</myImageString>
+                      <myPropertyBuilder>
+                        <PACKAGE>engine.sprites.properties.</PACKAGE>
+                        <myReader/>
+                      </myPropertyBuilder>
+                      <myProperties>
+                        <engine.sprites.properties.ValueProperty>
+                          <myProperty>205.6451612903226</myProperty>
+                          <mySimpleName>ValueProperty</mySimpleName>
+                        </engine.sprites.properties.ValueProperty>
+                        <engine.sprites.properties.DamageProperty>
+                          <myProperty>0.0</myProperty>
+                          <mySimpleName>DamageProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.DamageProperty>
+                        <engine.sprites.properties.HealthProperty>
+                          <myProperty>7.258064516129033</myProperty>
+                          <mySimpleName>HealthProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                          <myCost>0.0</myCost>
+                          <myValue>0.0</myValue>
+                        </engine.sprites.properties.HealthProperty>
+                        <engine.sprites.properties.SpeedProperty>
+                          <myProperty>20.967741935483872</myProperty>
+                          <mySimpleName>SpeedProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.SpeedProperty>
+                      </myProperties>
+                      <FILEPATH>file:</FILEPATH>
+                      <SIZE>50</SIZE>
+                      <COLLISION defined-in="engine.sprites.Sprite">CollisionProperty</COLLISION>
+                      <DAMAGE defined-in="engine.sprites.Sprite">DamageProperty</DAMAGE>
+                      <myLauncher>
+                        <active/>
+                        <available/>
+                        <myProjectile>
+                          <myName>Turkey</myName>
+                          <myWrapper>
+                            <myImagePath>images/bullet.png</myImagePath>
+                            <height>0.0</height>
+                            <width>0.0</width>
+                            <x>0.0</x>
+                            <y>0.0</y>
+                            <visible>false</visible>
+                          </myWrapper>
+                          <myImageString>images/bullet.png</myImageString>
+                          <myPropertyBuilder>
+                            <PACKAGE>engine.sprites.properties.</PACKAGE>
+                            <myReader/>
+                          </myPropertyBuilder>
+                          <myProperties>
+                            <engine.sprites.properties.DamageProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>DamageProperty</mySimpleName>
+                              <upgradeCost>0.0</upgradeCost>
+                              <upgradeValue>0.0</upgradeValue>
+                            </engine.sprites.properties.DamageProperty>
+                            <engine.sprites.properties.ConstantSpeedProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>ConstantSpeedProperty</mySimpleName>
+                            </engine.sprites.properties.ConstantSpeedProperty>
+                          </myProperties>
+                          <FILEPATH>file:</FILEPATH>
+                          <SIZE>50</SIZE>
+                          <COLLISION>CollisionProperty</COLLISION>
+                          <DAMAGE>DamageProperty</DAMAGE>
+                          <hitTargets/>
+                          <myHits>1</myHits>
+                          <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
+                          <myShootingSound>cannon</myShootingSound>
+                        </myProjectile>
+                        <timeSinceLastShot>0.0</timeSinceLastShot>
+                        <launcherProperties>
+                          <engine.sprites.properties.FireRateProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>FireRateProperty</mySimpleName>
+                            <upgradeCost>0.0</upgradeCost>
+                            <upgradeValue>0.0</upgradeValue>
+                          </engine.sprites.properties.FireRateProperty>
+                          <engine.sprites.properties.RangeProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>RangeProperty</mySimpleName>
+                          </engine.sprites.properties.RangeProperty>
+                        </launcherProperties>
+                        <fakeBool>false</fakeBool>
+                      </myLauncher>
+                      <deadCount>0</deadCount>
+                      <intersector/>
+                      <HEALTH>HealthProperty</HEALTH>
+                      <RANGE>RangeProperty</RANGE>
+                      <pathIndex>0</pathIndex>
+                      <pathAngle>0.0</pathAngle>
+                      <freeze>false</freeze>
+                      <VALUE>ValueProperty</VALUE>
+                      <COLLISION>CollisionProperty</COLLISION>
+                      <SPEED>SpeedProperty</SPEED>
+                      <DAMAGE>DamageProperty</DAMAGE>
+                    </engine.sprites.enemies.Enemy>
+                    <int>2</int>
+                  </entry>
+                  <entry>
+                    <engine.sprites.enemies.Enemy>
+                      <myName>Lettuce</myName>
+                      <myWrapper>
+                        <myImagePath>images/lettuce.png</myImagePath>
+                        <height>0.0</height>
+                        <width>0.0</width>
+                        <x>0.0</x>
+                        <y>0.0</y>
+                        <visible>false</visible>
+                      </myWrapper>
+                      <myImageString>images/lettuce.png</myImageString>
+                      <myPropertyBuilder>
+                        <PACKAGE>engine.sprites.properties.</PACKAGE>
+                        <myReader/>
+                      </myPropertyBuilder>
+                      <myProperties>
+                        <engine.sprites.properties.ValueProperty>
+                          <myProperty>149.19354838709677</myProperty>
+                          <mySimpleName>ValueProperty</mySimpleName>
+                        </engine.sprites.properties.ValueProperty>
+                        <engine.sprites.properties.DamageProperty>
+                          <myProperty>0.0</myProperty>
+                          <mySimpleName>DamageProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.DamageProperty>
+                        <engine.sprites.properties.HealthProperty>
+                          <myProperty>2.4193548387096775</myProperty>
+                          <mySimpleName>HealthProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                          <myCost>0.0</myCost>
+                          <myValue>0.0</myValue>
+                        </engine.sprites.properties.HealthProperty>
+                        <engine.sprites.properties.SpeedProperty>
+                          <myProperty>10.080645161290322</myProperty>
+                          <mySimpleName>SpeedProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.SpeedProperty>
+                      </myProperties>
+                      <FILEPATH>file:</FILEPATH>
+                      <SIZE>50</SIZE>
+                      <COLLISION defined-in="engine.sprites.Sprite">CollisionProperty</COLLISION>
+                      <DAMAGE defined-in="engine.sprites.Sprite">DamageProperty</DAMAGE>
+                      <myLauncher>
+                        <active/>
+                        <available/>
+                        <myProjectile>
+                          <myName>Lettuce</myName>
+                          <myWrapper>
+                            <myImagePath>images/bullet.png</myImagePath>
+                            <height>0.0</height>
+                            <width>0.0</width>
+                            <x>0.0</x>
+                            <y>0.0</y>
+                            <visible>false</visible>
+                          </myWrapper>
+                          <myImageString>images/bullet.png</myImageString>
+                          <myPropertyBuilder>
+                            <PACKAGE>engine.sprites.properties.</PACKAGE>
+                            <myReader/>
+                          </myPropertyBuilder>
+                          <myProperties>
+                            <engine.sprites.properties.DamageProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>DamageProperty</mySimpleName>
+                              <upgradeCost>0.0</upgradeCost>
+                              <upgradeValue>0.0</upgradeValue>
+                            </engine.sprites.properties.DamageProperty>
+                            <engine.sprites.properties.ConstantSpeedProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>ConstantSpeedProperty</mySimpleName>
+                            </engine.sprites.properties.ConstantSpeedProperty>
+                          </myProperties>
+                          <FILEPATH>file:</FILEPATH>
+                          <SIZE>50</SIZE>
+                          <COLLISION>CollisionProperty</COLLISION>
+                          <DAMAGE>DamageProperty</DAMAGE>
+                          <hitTargets/>
+                          <myHits>1</myHits>
+                          <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
+                          <myShootingSound>cannon</myShootingSound>
+                        </myProjectile>
+                        <timeSinceLastShot>0.0</timeSinceLastShot>
+                        <launcherProperties>
+                          <engine.sprites.properties.FireRateProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>FireRateProperty</mySimpleName>
+                            <upgradeCost>0.0</upgradeCost>
+                            <upgradeValue>0.0</upgradeValue>
+                          </engine.sprites.properties.FireRateProperty>
+                          <engine.sprites.properties.RangeProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>RangeProperty</mySimpleName>
+                          </engine.sprites.properties.RangeProperty>
+                        </launcherProperties>
+                        <fakeBool>false</fakeBool>
+                      </myLauncher>
+                      <deadCount>0</deadCount>
+                      <intersector/>
+                      <HEALTH>HealthProperty</HEALTH>
+                      <RANGE>RangeProperty</RANGE>
+                      <pathIndex>0</pathIndex>
+                      <pathAngle>0.0</pathAngle>
+                      <freeze>false</freeze>
+                      <VALUE>ValueProperty</VALUE>
+                      <COLLISION>CollisionProperty</COLLISION>
+                      <SPEED>SpeedProperty</SPEED>
+                      <DAMAGE>DamageProperty</DAMAGE>
+                    </engine.sprites.enemies.Enemy>
+                    <int>1</int>
+                  </entry>
+                  <entry>
+                    <engine.sprites.enemies.Enemy reference="../../../../entry/map/entry/engine.sprites.enemies.Enemy"/>
                     <int>2</int>
                   </entry>
                 </map>
@@ -1161,19 +1160,19 @@
           <engine.sprites.enemies.wave.Wave>
             <myWaveMap>
               <entry>
-                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[5]"/>
+                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[4]"/>
                 <map>
                   <entry>
-                    <engine.sprites.enemies.Enemy reference="../../../../../../engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry[2]/engine.sprites.enemies.Enemy"/>
+                    <engine.sprites.enemies.Enemy reference="../../../../../../engine.sprites.enemies.wave.Wave/myWaveMap/entry[2]/map/entry[2]/engine.sprites.enemies.Enemy"/>
                     <int>1</int>
                   </entry>
                 </map>
               </entry>
               <entry>
-                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[4]"/>
+                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[5]"/>
                 <map>
                   <entry>
-                    <engine.sprites.enemies.Enemy reference="../../../../../../engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry/engine.sprites.enemies.Enemy"/>
+                    <engine.sprites.enemies.Enemy reference="../../../../../../engine.sprites.enemies.wave.Wave/myWaveMap/entry[2]/map/entry/engine.sprites.enemies.Enemy"/>
                     <int>1</int>
                   </entry>
                 </map>
@@ -1182,7 +1181,7 @@
                 <engine.path.Path reference="../../../../../myPaths/engine.path.Path[3]"/>
                 <map>
                   <entry>
-                    <engine.sprites.enemies.Enemy reference="../../../../../../engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry[3]/engine.sprites.enemies.Enemy"/>
+                    <engine.sprites.enemies.Enemy reference="../../../../../../engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry/engine.sprites.enemies.Enemy"/>
                     <int>2</int>
                   </entry>
                 </map>
@@ -1194,15 +1193,15 @@
         <myEnemies>
           <entry>
             <string>Lettuce</string>
-            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry/engine.sprites.enemies.Enemy"/>
+            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry[2]/map/entry[2]/engine.sprites.enemies.Enemy"/>
           </entry>
           <entry>
             <string>Turkey</string>
-            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry[2]/engine.sprites.enemies.Enemy"/>
+            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry[2]/map/entry/engine.sprites.enemies.Enemy"/>
           </entry>
           <entry>
             <string>Tomato</string>
-            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry[3]/engine.sprites.enemies.Enemy"/>
+            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry/engine.sprites.enemies.Enemy"/>
           </entry>
           <entry>
             <string>Default</string>
@@ -1321,6 +1320,655 @@
           <entry>
             <string>Bread</string>
             <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry[3]/map/entry/engine.sprites.enemies.Enemy"/>
+          </entry>
+        </myEnemies>
+      </engine.level.Level>
+    </entry>
+    <entry>
+      <int>2</int>
+      <engine.level.Level>
+        <myNumber>2</myNumber>
+        <myPaths>
+          <engine.path.Path reference="../../../../entry/engine.level.Level/myPaths/engine.path.Path"/>
+          <engine.path.Path>
+            <THRESHOLD>5.0</THRESHOLD>
+            <myCoordinates>
+              <java.awt.Point>
+                <x>404</x>
+                <y>0</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>51</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>102</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>153</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>204</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>255</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>306</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>356</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>407</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>458</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>509</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>404</x>
+                <y>560</y>
+              </java.awt.Point>
+            </myCoordinates>
+            <myAngle>0.0</myAngle>
+            <pathIndex>0</pathIndex>
+            <myPathSize>50</myPathSize>
+            <myWidth>1110</myWidth>
+            <myHeight>662</myHeight>
+            <myPathMap>
+              <entry>
+                <string>sfile:images/brick.png</string>
+                <list>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>0</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>0</y>
+                  </java.awt.Point>
+                </list>
+              </entry>
+              <entry>
+                <string>pfile:images/cobblestone.png</string>
+                <list>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>1</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>2</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>3</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>4</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>5</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>6</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>7</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>8</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>9</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>10</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>11</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>1</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>2</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>3</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>4</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>5</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>6</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>7</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>8</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>9</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>10</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>11</y>
+                  </java.awt.Point>
+                </list>
+              </entry>
+              <entry>
+                <string>efile:images/darkstone.png</string>
+                <list>
+                  <java.awt.Point>
+                    <x>8</x>
+                    <y>12</y>
+                  </java.awt.Point>
+                  <java.awt.Point>
+                    <x>17</x>
+                    <y>12</y>
+                  </java.awt.Point>
+                </list>
+              </entry>
+            </myPathMap>
+            <myBackgroundImage>file:images/kitchen.png</myBackgroundImage>
+            <myPathImage>file:images/cobblestone.png</myPathImage>
+            <myStartImage>file:images/brick.png</myStartImage>
+            <myEndImage>file:images/darkstone.png</myEndImage>
+            <isTransparent>true</isTransparent>
+          </engine.path.Path>
+          <engine.path.Path>
+            <THRESHOLD>5.0</THRESHOLD>
+            <myCoordinates>
+              <java.awt.Point>
+                <x>858</x>
+                <y>0</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>51</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>102</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>153</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>204</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>255</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>306</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>356</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>407</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>458</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>509</y>
+              </java.awt.Point>
+              <java.awt.Point>
+                <x>858</x>
+                <y>560</y>
+              </java.awt.Point>
+            </myCoordinates>
+            <myAngle>0.0</myAngle>
+            <pathIndex>0</pathIndex>
+            <myPathSize>50</myPathSize>
+            <myWidth>1110</myWidth>
+            <myHeight>662</myHeight>
+            <myPathMap reference="../../engine.path.Path[2]/myPathMap"/>
+            <myBackgroundImage>file:images/kitchen.png</myBackgroundImage>
+            <myPathImage>file:images/cobblestone.png</myPathImage>
+            <myStartImage>file:images/brick.png</myStartImage>
+            <myEndImage>file:images/darkstone.png</myEndImage>
+            <isTransparent>true</isTransparent>
+          </engine.path.Path>
+        </myPaths>
+        <myTowers>
+          <entry>
+            <string>Stitch2</string>
+            <engine.sprites.towers.Tower>
+              <myName>Stitch2</myName>
+              <myWrapper>
+                <myImagePath>images/stitch.png</myImagePath>
+                <height>0.0</height>
+                <width>0.0</width>
+                <x>0.0</x>
+                <y>0.0</y>
+                <visible>false</visible>
+              </myWrapper>
+              <myImageString>images/stitch.png</myImageString>
+              <myPropertyBuilder>
+                <PACKAGE>engine.sprites.properties.</PACKAGE>
+                <myReader/>
+              </myPropertyBuilder>
+              <myProperties>
+                <engine.sprites.properties.KeyMoveProperty>
+                  <myProperty>169.3548387096774</myProperty>
+                  <mySimpleName>KeyMoveProperty</mySimpleName>
+                  <xVel>0.0</xVel>
+                  <yVel>0.0</yVel>
+                  <elapsedTime>0.25</elapsedTime>
+                </engine.sprites.properties.KeyMoveProperty>
+                <engine.sprites.properties.HealthProperty>
+                  <myProperty>500.0</myProperty>
+                  <mySimpleName>HealthProperty</mySimpleName>
+                  <upgradeCost>0.0</upgradeCost>
+                  <upgradeValue>0.0</upgradeValue>
+                  <myCost>0.0</myCost>
+                  <myValue>0.0</myValue>
+                </engine.sprites.properties.HealthProperty>
+                <engine.sprites.properties.ValueProperty>
+                  <myProperty>500.0</myProperty>
+                  <mySimpleName>ValueProperty</mySimpleName>
+                </engine.sprites.properties.ValueProperty>
+              </myProperties>
+              <FILEPATH>file:</FILEPATH>
+              <SIZE>50</SIZE>
+              <COLLISION>CollisionProperty</COLLISION>
+              <DAMAGE>DamageProperty</DAMAGE>
+              <myLauncher defined-in="engine.sprites.ShootingSprites">
+                <active/>
+                <available/>
+                <myProjectile>
+                  <myName>Stitch2</myName>
+                  <myWrapper>
+                    <myImagePath>images/blank.png</myImagePath>
+                    <height>0.0</height>
+                    <width>0.0</width>
+                    <x>0.0</x>
+                    <y>0.0</y>
+                    <visible>false</visible>
+                  </myWrapper>
+                  <myImageString>images/blank.png</myImageString>
+                  <myPropertyBuilder>
+                    <PACKAGE>engine.sprites.properties.</PACKAGE>
+                    <myReader/>
+                  </myPropertyBuilder>
+                  <myProperties>
+                    <engine.sprites.properties.DamageProperty>
+                      <myProperty>0.0</myProperty>
+                      <mySimpleName>DamageProperty</mySimpleName>
+                      <upgradeCost>0.0</upgradeCost>
+                      <upgradeValue>0.0</upgradeValue>
+                    </engine.sprites.properties.DamageProperty>
+                    <engine.sprites.properties.DamageCollisionProperty>
+                      <myProperty>500.0</myProperty>
+                      <mySimpleName>DamageCollisionProperty</mySimpleName>
+                      <myDamage>500.0</myDamage>
+                    </engine.sprites.properties.DamageCollisionProperty>
+                    <engine.sprites.properties.HeatSeekingProperty>
+                      <myProperty>500.0</myProperty>
+                      <mySimpleName>HeatSeekingProperty</mySimpleName>
+                      <projectileOrigin>
+                        <x>0</x>
+                        <y>0</y>
+                      </projectileOrigin>
+                    </engine.sprites.properties.HeatSeekingProperty>
+                    <engine.sprites.properties.ConstantSpeedProperty>
+                      <myProperty>50.0</myProperty>
+                      <mySimpleName>ConstantSpeedProperty</mySimpleName>
+                    </engine.sprites.properties.ConstantSpeedProperty>
+                  </myProperties>
+                  <FILEPATH>file:</FILEPATH>
+                  <SIZE>50</SIZE>
+                  <COLLISION>CollisionProperty</COLLISION>
+                  <DAMAGE>DamageProperty</DAMAGE>
+                  <hitTargets/>
+                  <myHits>1</myHits>
+                  <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
+                  <myShootingSound>StitchSaysHi</myShootingSound>
+                </myProjectile>
+                <timeSinceLastShot>0.0</timeSinceLastShot>
+                <launcherProperties>
+                  <engine.sprites.properties.RangeProperty>
+                    <myProperty>28.225806451612904</myProperty>
+                    <mySimpleName>RangeProperty</mySimpleName>
+                  </engine.sprites.properties.RangeProperty>
+                  <engine.sprites.properties.FireRateProperty>
+                    <myProperty>50.0</myProperty>
+                    <mySimpleName>FireRateProperty</mySimpleName>
+                    <upgradeCost>0.0</upgradeCost>
+                    <upgradeValue>0.0</upgradeValue>
+                  </engine.sprites.properties.FireRateProperty>
+                </launcherProperties>
+                <fakeBool>false</fakeBool>
+              </myLauncher>
+              <deadCount>0</deadCount>
+              <intersector/>
+              <HEALTH>HealthProperty</HEALTH>
+              <RANGE>RangeProperty</RANGE>
+              <myLauncher reference="../myLauncher"/>
+              <mySize>0.0</mySize>
+              <towerStats>
+                <entry>
+                  <string>RangeProperty</string>
+                  <int>0</int>
+                </entry>
+                <entry>
+                  <string>HealthProperty</string>
+                  <int>100</int>
+                </entry>
+                <entry>
+                  <string>ValueProperty</string>
+                  <int>300</int>
+                </entry>
+                <entry>
+                  <string>FireRateProperty</string>
+                  <int>0</int>
+                </entry>
+              </towerStats>
+            </engine.sprites.towers.Tower>
+          </entry>
+        </myTowers>
+        <myWaves>
+          <engine.sprites.enemies.wave.Wave>
+            <myWaveMap>
+              <entry>
+                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[3]"/>
+                <map>
+                  <entry>
+                    <engine.sprites.enemies.Enemy>
+                      <myName>Turkey2</myName>
+                      <myWrapper>
+                        <myImagePath>images/turkey.png</myImagePath>
+                        <height>0.0</height>
+                        <width>0.0</width>
+                        <x>0.0</x>
+                        <y>0.0</y>
+                        <visible>false</visible>
+                      </myWrapper>
+                      <myImageString>images/turkey.png</myImageString>
+                      <myPropertyBuilder>
+                        <PACKAGE>engine.sprites.properties.</PACKAGE>
+                        <myReader/>
+                      </myPropertyBuilder>
+                      <myProperties>
+                        <engine.sprites.properties.ValueProperty>
+                          <myProperty>250.0</myProperty>
+                          <mySimpleName>ValueProperty</mySimpleName>
+                        </engine.sprites.properties.ValueProperty>
+                        <engine.sprites.properties.DamageProperty>
+                          <myProperty>0.0</myProperty>
+                          <mySimpleName>DamageProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.DamageProperty>
+                        <engine.sprites.properties.HealthProperty>
+                          <myProperty>2.4193548387096775</myProperty>
+                          <mySimpleName>HealthProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                          <myCost>0.0</myCost>
+                          <myValue>0.0</myValue>
+                        </engine.sprites.properties.HealthProperty>
+                        <engine.sprites.properties.SpeedProperty>
+                          <myProperty>25.0</myProperty>
+                          <mySimpleName>SpeedProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.SpeedProperty>
+                      </myProperties>
+                      <FILEPATH>file:</FILEPATH>
+                      <SIZE>50</SIZE>
+                      <COLLISION defined-in="engine.sprites.Sprite">CollisionProperty</COLLISION>
+                      <DAMAGE defined-in="engine.sprites.Sprite">DamageProperty</DAMAGE>
+                      <myLauncher>
+                        <active/>
+                        <available/>
+                        <myProjectile>
+                          <myName>Turkey2</myName>
+                          <myWrapper>
+                            <myImagePath>images/bullet.png</myImagePath>
+                            <height>0.0</height>
+                            <width>0.0</width>
+                            <x>0.0</x>
+                            <y>0.0</y>
+                            <visible>false</visible>
+                          </myWrapper>
+                          <myImageString>images/bullet.png</myImageString>
+                          <myPropertyBuilder>
+                            <PACKAGE>engine.sprites.properties.</PACKAGE>
+                            <myReader/>
+                          </myPropertyBuilder>
+                          <myProperties>
+                            <engine.sprites.properties.DamageProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>DamageProperty</mySimpleName>
+                              <upgradeCost>0.0</upgradeCost>
+                              <upgradeValue>0.0</upgradeValue>
+                            </engine.sprites.properties.DamageProperty>
+                            <engine.sprites.properties.ConstantSpeedProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>ConstantSpeedProperty</mySimpleName>
+                            </engine.sprites.properties.ConstantSpeedProperty>
+                          </myProperties>
+                          <FILEPATH>file:</FILEPATH>
+                          <SIZE>50</SIZE>
+                          <COLLISION>CollisionProperty</COLLISION>
+                          <DAMAGE>DamageProperty</DAMAGE>
+                          <hitTargets/>
+                          <myHits>1</myHits>
+                          <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
+                          <myShootingSound>cannon</myShootingSound>
+                        </myProjectile>
+                        <timeSinceLastShot>0.0</timeSinceLastShot>
+                        <launcherProperties>
+                          <engine.sprites.properties.FireRateProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>FireRateProperty</mySimpleName>
+                            <upgradeCost>0.0</upgradeCost>
+                            <upgradeValue>0.0</upgradeValue>
+                          </engine.sprites.properties.FireRateProperty>
+                          <engine.sprites.properties.RangeProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>RangeProperty</mySimpleName>
+                          </engine.sprites.properties.RangeProperty>
+                        </launcherProperties>
+                        <fakeBool>false</fakeBool>
+                      </myLauncher>
+                      <deadCount>0</deadCount>
+                      <intersector/>
+                      <HEALTH>HealthProperty</HEALTH>
+                      <RANGE>RangeProperty</RANGE>
+                      <pathIndex>0</pathIndex>
+                      <pathAngle>0.0</pathAngle>
+                      <freeze>false</freeze>
+                      <VALUE>ValueProperty</VALUE>
+                      <COLLISION>CollisionProperty</COLLISION>
+                      <SPEED>SpeedProperty</SPEED>
+                      <DAMAGE>DamageProperty</DAMAGE>
+                    </engine.sprites.enemies.Enemy>
+                    <int>1</int>
+                  </entry>
+                </map>
+              </entry>
+              <entry>
+                <engine.path.Path reference="../../../../../myPaths/engine.path.Path[2]"/>
+                <map>
+                  <entry>
+                    <engine.sprites.enemies.Enemy>
+                      <myName>Lettuce2</myName>
+                      <myWrapper>
+                        <myImagePath>images/lettuce.png</myImagePath>
+                        <height>0.0</height>
+                        <width>0.0</width>
+                        <x>0.0</x>
+                        <y>0.0</y>
+                        <visible>false</visible>
+                      </myWrapper>
+                      <myImageString>images/lettuce.png</myImageString>
+                      <myPropertyBuilder>
+                        <PACKAGE>engine.sprites.properties.</PACKAGE>
+                        <myReader/>
+                      </myPropertyBuilder>
+                      <myProperties>
+                        <engine.sprites.properties.ValueProperty>
+                          <myProperty>201.61290322580643</myProperty>
+                          <mySimpleName>ValueProperty</mySimpleName>
+                        </engine.sprites.properties.ValueProperty>
+                        <engine.sprites.properties.DamageProperty>
+                          <myProperty>0.0</myProperty>
+                          <mySimpleName>DamageProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.DamageProperty>
+                        <engine.sprites.properties.HealthProperty>
+                          <myProperty>8.064516129032258</myProperty>
+                          <mySimpleName>HealthProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                          <myCost>0.0</myCost>
+                          <myValue>0.0</myValue>
+                        </engine.sprites.properties.HealthProperty>
+                        <engine.sprites.properties.SpeedProperty>
+                          <myProperty>35.88709677419355</myProperty>
+                          <mySimpleName>SpeedProperty</mySimpleName>
+                          <upgradeCost>0.0</upgradeCost>
+                          <upgradeValue>0.0</upgradeValue>
+                        </engine.sprites.properties.SpeedProperty>
+                      </myProperties>
+                      <FILEPATH>file:</FILEPATH>
+                      <SIZE>50</SIZE>
+                      <COLLISION defined-in="engine.sprites.Sprite">CollisionProperty</COLLISION>
+                      <DAMAGE defined-in="engine.sprites.Sprite">DamageProperty</DAMAGE>
+                      <myLauncher>
+                        <active/>
+                        <available/>
+                        <myProjectile>
+                          <myName>Lettuce2</myName>
+                          <myWrapper>
+                            <myImagePath>images/bullet.png</myImagePath>
+                            <height>0.0</height>
+                            <width>0.0</width>
+                            <x>0.0</x>
+                            <y>0.0</y>
+                            <visible>false</visible>
+                          </myWrapper>
+                          <myImageString>images/bullet.png</myImageString>
+                          <myPropertyBuilder>
+                            <PACKAGE>engine.sprites.properties.</PACKAGE>
+                            <myReader/>
+                          </myPropertyBuilder>
+                          <myProperties>
+                            <engine.sprites.properties.DamageProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>DamageProperty</mySimpleName>
+                              <upgradeCost>0.0</upgradeCost>
+                              <upgradeValue>0.0</upgradeValue>
+                            </engine.sprites.properties.DamageProperty>
+                            <engine.sprites.properties.ConstantSpeedProperty>
+                              <myProperty>0.0</myProperty>
+                              <mySimpleName>ConstantSpeedProperty</mySimpleName>
+                            </engine.sprites.properties.ConstantSpeedProperty>
+                          </myProperties>
+                          <FILEPATH>file:</FILEPATH>
+                          <SIZE>50</SIZE>
+                          <COLLISION>CollisionProperty</COLLISION>
+                          <DAMAGE>DamageProperty</DAMAGE>
+                          <hitTargets/>
+                          <myHits>1</myHits>
+                          <unlimitedRangeProjectile>false</unlimitedRangeProjectile>
+                          <myShootingSound>cannon</myShootingSound>
+                        </myProjectile>
+                        <timeSinceLastShot>0.0</timeSinceLastShot>
+                        <launcherProperties>
+                          <engine.sprites.properties.FireRateProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>FireRateProperty</mySimpleName>
+                            <upgradeCost>0.0</upgradeCost>
+                            <upgradeValue>0.0</upgradeValue>
+                          </engine.sprites.properties.FireRateProperty>
+                          <engine.sprites.properties.RangeProperty>
+                            <myProperty>0.0</myProperty>
+                            <mySimpleName>RangeProperty</mySimpleName>
+                          </engine.sprites.properties.RangeProperty>
+                        </launcherProperties>
+                        <fakeBool>false</fakeBool>
+                      </myLauncher>
+                      <deadCount>0</deadCount>
+                      <intersector/>
+                      <HEALTH>HealthProperty</HEALTH>
+                      <RANGE>RangeProperty</RANGE>
+                      <pathIndex>0</pathIndex>
+                      <pathAngle>0.0</pathAngle>
+                      <freeze>false</freeze>
+                      <VALUE>ValueProperty</VALUE>
+                      <COLLISION>CollisionProperty</COLLISION>
+                      <SPEED>SpeedProperty</SPEED>
+                      <DAMAGE>DamageProperty</DAMAGE>
+                    </engine.sprites.enemies.Enemy>
+                    <int>2</int>
+                  </entry>
+                </map>
+              </entry>
+            </myWaveMap>
+            <myTime>3.0</myTime>
+          </engine.sprites.enemies.wave.Wave>
+        </myWaves>
+        <myEnemies>
+          <entry>
+            <string>Lettuce2</string>
+            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry[2]/map/entry/engine.sprites.enemies.Enemy"/>
+          </entry>
+          <entry>
+            <string>Turkey2</string>
+            <engine.sprites.enemies.Enemy reference="../../../myWaves/engine.sprites.enemies.wave.Wave/myWaveMap/entry/map/entry/engine.sprites.enemies.Enemy"/>
           </entry>
         </myEnemies>
       </engine.level.Level>
