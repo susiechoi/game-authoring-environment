@@ -51,7 +51,6 @@ public class PlayController {
 	 * @throws MissingPropertiesException 
 	 */
 	public void newPlay(String pathToXML) throws MissingPropertiesException {
-		System.out.println("path to xml "+pathToXML);
 		myScreenManager.setGameFilePath(pathToXML);
 		myReader = new AuthoringModelReader();
 

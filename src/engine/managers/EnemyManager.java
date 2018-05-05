@@ -40,7 +40,6 @@ public class EnemyManager extends ShootingSpriteManager {
 
     }
 
-
     /**
      * Moves all the enemies along the path on every step.
      * If the enemy isn't alive, remove it from the enemy manager. If the enemy reaches the end 

@@ -1,6 +1,5 @@
 package engine;
 
-
 import java.io.IOException;
 
 import com.sun.javafx.tools.packager.Log;
@@ -53,7 +52,6 @@ public class GameEngine {
 		ANIMATION = new Timeline();
 		ANIMATION.setCycleCount(Animation.INDEFINITE);
 		ANIMATION.getKeyFrames().add(frame);
-
 	}
 
 	/**
