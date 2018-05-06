@@ -12,7 +12,8 @@
  * 3. GraphScreen rested on the assumption that the source of datapoints would be saved files. Flexibility has been introduced in Graph
  * 		by allowing clients to add points to the graph in real time. This opens the door for new applications of graph displays, such as in 
  * 		generating real-time visualizations of score during gameplay. 
- * 4. Methods have been fragmented so as to enhance flexibility associated with changing techniques at a specific step of the graph creation or point-parsing process.
+ * 4. Methods have been fragmented so as to enhance flexibility associated with changing techniques at a specific step of the graph creation or point-parsing process,
+ * 		such as the parsing of information about file delimiters or axis-bound-adjustmet. 
  */
 
 package file;
