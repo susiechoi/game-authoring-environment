@@ -72,13 +72,11 @@ abstract class GraphScreen extends AuthoringScreen {
 						series.getData().add(new XYChart.Data<Number, Number>(Integer.parseInt(xyCoors[0]), Integer.parseInt(xyCoors[1])));
 						if (min) {
 							if (x.getLowerBound() == 0 ||  (x.getLowerBound() > Integer.parseInt(xyCoors[0]))) {
-								//System.out.println("MY MIN IS "+Integer.parseInt(xyCoors[0]));
 								x.setLowerBound(Integer.parseInt(xyCoors[0]));
 							}
 							min = false; 
 						}
 						if (x.getUpperBound() < Integer.parseInt(xyCoors[0])) {
-						//	System.out.println("mY MAX IS "+Integer.parseInt(xyCoors[0]));
 							x.setUpperBound(Integer.parseInt(xyCoors[0]));
 						}
 					}

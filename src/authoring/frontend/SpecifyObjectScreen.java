@@ -95,7 +95,7 @@ abstract class SpecifyObjectScreen extends AuthoringScreen {
 	 * @param object - type of object being made
 	 * @return Button to add to Parent
 	 */
-	protected Button makeCreateNewObjectButton(String object) {
+	private Button makeCreateNewObjectButton(String object) {
 		Button newObjectButton = getUIFactory().makeTextButton(DEFAULT_NEWOBJECT_TEXT+object); 
 		newObjectButton.setOnAction(event -> {
 			getView().goForwardFrom(this.getClass().getSimpleName()+DEFAULT_NEW_SCREENFLOW, myDefaultName);

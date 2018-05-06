@@ -13,6 +13,10 @@ import java.util.Calendar;
 
 public class DataPointWriter {
 	
+	public static final String DEFAULT_CONSTANTS_FILEPATH = "src/frontend/Constants.properties";
+	public static final String DEFAULT_COORDINATELENGTH_KEY = "CoordinateLength";
+	public static final String DEFAULT_XINDEX_KEY = "XIndex";
+	public static final String DEFAULT_YINDEX_KEY = "YIndex"; 
 	public static final String DEFAULT_DATE_FORMAT = "MM-dd-yyyy_hh-mm-ss"; 
 	public static final String DEFAULT_DATAPOINTS_FILEPATH = "graphing/";
 	public static final String DEFAULT_FILENAME_SEPARATOR = "_";
